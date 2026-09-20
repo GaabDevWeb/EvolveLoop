@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Instala MegaBrain / CursorSKILLS no Cursor global (~/.cursor + ~/.agents).
+# Instala EvolveLoop no Cursor global (~/.cursor + ~/.agents).
 # Uso (de qualquer PC, após clonar):
 #   bash scripts/install-agents-global.sh
 set -euo pipefail
@@ -25,7 +25,7 @@ echo "REPO_ROOT=$REPO_ROOT"
 
 mkdir -p "$GLOBAL_SKILLS" "$GLOBAL_COMMANDS" "$GLOBAL_HOOKS" "$GLOBAL_AGENTS" "$GLOBAL_RULES"
 
-# --- Pipeline MegaBrain ---
+# --- Pipeline EvolveLoop ---
 SKILLS=(
   orquestrar planner testing po-review security frontend-pro backend
   documentation prd database adr architect devops skill-authoring agent-authoring
@@ -46,9 +46,9 @@ for skill in "${SKILLS[@]}"; do
 done
 
 if [[ -d "$CURSOR_SKILLS_SRC/orquestrar" ]]; then
-  ln -sfn "$CURSOR_SKILLS_SRC/orquestrar" "$GLOBAL_SKILLS/MegaBrain"
-  ln -sfn "$CURSOR_SKILLS_SRC/orquestrar" "$GLOBAL_AGENTS/MegaBrain"
-  echo "  skill alias: MegaBrain -> orquestrar"
+  ln -sfn "$CURSOR_SKILLS_SRC/orquestrar" "$GLOBAL_SKILLS/EvolveLoop"
+  ln -sfn "$CURSOR_SKILLS_SRC/orquestrar" "$GLOBAL_AGENTS/EvolveLoop"
+  echo "  skill alias: EvolveLoop -> orquestrar"
 fi
 
 # --- Tier 3 (globais) ---
@@ -64,7 +64,7 @@ if [[ -d "$GLOBAL_SKILLS_SRC" ]]; then
 fi
 
 # --- Commands / ---
-# Preferir ficheiros versionados no repo (MegaBrain, wiki, mem, …).
+# Preferir ficheiros versionados no repo (evolve, wiki, mem, …).
 if [[ -d "$CURSOR_CMD_SRC" ]]; then
   shopt -s nullglob
   for cmd_file in "$CURSOR_CMD_SRC"/*.md; do
@@ -82,7 +82,7 @@ write_global_cmd() {
     return 0
   fi
   cat > "$dest" << EOF
-# ${name} — CursorSKILLS / MegaBrain (global)
+# ${name} — EvolveLoop (global)
 
 Invocação **\`/${name}\`**.
 
@@ -93,12 +93,13 @@ EOF
   echo "  command: ${name}.md (generated)"
 }
 
-rm -f "$GLOBAL_COMMANDS/orquestrar.md"
-write_global_cmd "MegaBrain" "orquestrar" "$(cat <<'MEGABRAIN_EXTRA'
+rm -f "$GLOBAL_COMMANDS/orquestrar.md" "$GLOBAL_COMMANDS/MegaBrain.md"
+write_global_cmd "evolve" "orquestrar" "$(cat <<'EVOLVE_EXTRA'
 3. Runtime: `$ORCHESTRATOR_ROOT` — `agents-orch engine`
 
 **HARD-GATE:** imagem anexada → `~/.agents/skills/image-to-code/SKILL.md`
-MEGABRAIN_EXTRA
+**Canonical command:** `/evolve` (public). Legacy `/MegaBrain` is not installed on public main.
+EVOLVE_EXTRA
 )"
 write_global_cmd "planejar" "planner"
 write_global_cmd "prd" "prd" "$(cat <<'PRD_EXTRA'
@@ -144,15 +145,16 @@ fi
 
 # --- Rules ---
 if [[ -f "$RULES_SRC/Rules.md" ]]; then
-  cat > "$GLOBAL_RULES/megabrain.mdc" << EOF
+  rm -f "$GLOBAL_RULES/megabrain.mdc" 2>/dev/null || true
+  cat > "$GLOBAL_RULES/evolveloop.mdc" << EOF
 ---
-description: Regras MegaBrain / CursorSKILLS — prioridade máxima em todo workspace
+description: EvolveLoop rules — max priority in every workspace
 alwaysApply: true
 ---
 
 $(cat "$RULES_SRC/Rules.md")
 EOF
-  echo "  rules: megabrain.mdc"
+  echo "  rules: evolveloop.mdc"
 fi
 if [[ -f "$RULES_SRC/wiki-agent.mdc" ]]; then
   rm -f "$GLOBAL_RULES/gaabwiki-agent.mdc" 2>/dev/null || true
@@ -162,7 +164,7 @@ fi
 
 # --- agents.env ---
 cat > "$ENV_FILE" << EOF
-# CursorSKILLS / MegaBrain — carregado por hooks e scripts
+# EvolveLoop — sourced by hooks and scripts
 export AGENTS_ROOT="$REPO_ROOT"
 export ORCHESTRATOR_ROOT="\$AGENTS_ROOT/orchestrator"
 export ORCHESTRATOR_JOBS_DIR="\${ORCHESTRATOR_JOBS_DIR:-\$ORCHESTRATOR_ROOT/jobs}"
@@ -191,7 +193,7 @@ if [[ -f "$MCP_SRC/mcp.json" ]]; then
 
   GITHUB_PAT="${GITHUB_PAT:-YOUR_GITHUB_PAT}"
   FIRECRAWL_API_KEY="${FIRECRAWL_API_KEY:-YOUR_FIRECRAWL_API_KEY}"
-  FILESYSTEM_ROOT="${FILESYSTEM_ROOT:-$HOME/Documentos}"
+  FILESYSTEM_ROOT="${FILESYSTEM_ROOT:-$HOME}"
 
   # Cursor não expande ${VAR} — materializar valores
   python3 - <<'PY' "$GLOBAL_CURSOR/mcp.json" "$GITHUB_PAT" "$FIRECRAWL_API_KEY" "$FILESYSTEM_ROOT"
@@ -235,7 +237,7 @@ echo "  AGENTS_ROOT=$REPO_ROOT"
 echo "  Skills:     ~/.cursor/skills/ + ~/.agents/skills/"
 echo "  Commands:   ~/.cursor/commands/"
 echo "  Hooks:      ~/.cursor/hooks.json"
-echo "  Rules:      ~/.cursor/rules/megabrain.mdc + wiki-agent.mdc"
+echo "  Rules:      ~/.cursor/rules/evolveloop.mdc + wiki-agent.mdc"
 echo "  MCP:        ~/.cursor/mcp.json"
 echo "  CLI:        agents-orch"
 echo ""
@@ -243,4 +245,5 @@ echo "Próximos passos:"
 echo "  1. cp mcp/mcp.env.example ~/.cursor/mcp.env  # se ainda não"
 echo "  2. Editar secrets e re-correr este script"
 echo "  3. Reiniciar o Cursor"
-echo "  4. Em qualquer projeto: /MegaBrain — ..."
+echo "  4. Em qualquer projeto: /evolve"
+echo "  5. Definir WIKI_ROOT no agents.env se usar grounding Wiki"

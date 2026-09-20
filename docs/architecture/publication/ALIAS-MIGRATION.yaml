@@ -1,0 +1,21 @@
+old:
+  - /MegaBrain
+  - MegaBrain
+  - CursorSKILLS (folder/historical identity)
+
+new:
+  - /evolve
+  - EvolveLoop
+
+status:
+  canonical: /evolve
+  legacy: /MegaBrain
+  conflict_check: "/evolve command file did not exist; no technical conflict; chose /evolve"
+
+scope:
+  main:
+    canonical_only: true
+    MegaBrain_command: removed
+  GaabType:
+    legacy_alias_allowed: true
+    MegaBrain_command: thin redirect to /evolve flow

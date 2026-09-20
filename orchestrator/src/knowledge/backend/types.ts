@@ -1,5 +1,5 @@
 /**
- * KnowledgeBackend — minimal seam between MegaBrain core and retrieval implementations.
+ * KnowledgeBackend — minimal seam between EvolveLoop core and retrieval implementations.
  * Backend-agnostic: no host paths, no personal identity, no Cursor/Obsidian assumptions.
  *
  * Reuses EvidenceSet from capabilities/results (existing abstraction).

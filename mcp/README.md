@@ -1,4 +1,4 @@
-# MCPs pré-configurados (MegaBrain / CursorSKILLS)
+# MCPs pré-configurados (EvolveLoop / EvolveLoop)
 
 Lista alinhada ao setup activo do autor. Sem secrets no repositório.
 

@@ -1,7 +1,7 @@
 {
   "name": "@agents/orchestrator",
   "version": "2.0.0",
-  "description": "Orquestrador v2 — Execution Engine baseado em Capability IR",
+  "description": "EvolveLoop orchestrator — Execution Engine based on Capability IR",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

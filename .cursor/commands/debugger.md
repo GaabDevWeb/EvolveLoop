@@ -1,4 +1,4 @@
-# debugger — Agent Package / MegaBrain
+# debugger — Agent Package / EvolveLoop
 
 Invocação **`/debugger`** (alias **`/debug`** → mesmo skill).
 

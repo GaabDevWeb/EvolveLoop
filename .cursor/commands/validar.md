@@ -1,4 +1,4 @@
-# validar — Agent Package / MegaBrain
+# validar — Agent Package / EvolveLoop
 
 Invocação **`/validar`**.
 

@@ -1,4 +1,4 @@
-# backend — Agent Package / MegaBrain
+# backend — Agent Package / EvolveLoop
 
 Invocação **`/backend`**.
 

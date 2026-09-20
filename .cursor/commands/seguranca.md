@@ -1,4 +1,4 @@
-# seguranca — Agent Package / MegaBrain
+# seguranca — Agent Package / EvolveLoop
 
 Invocação **`/seguranca`**.
 

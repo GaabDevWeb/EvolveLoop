@@ -1,5 +1,5 @@
-# MegaBrain default profile — configuration / personalization boundary
-# Profile ≠ Runtime. Core loads this; personal paths live in env (WIKI_ROOT), not here.
+# EvolveLoop default profile — portable public defaults
+# Profile ≠ Runtime. Core loads this; host paths live in env (WIKI_ROOT), not here.
 id: default
 version: "1.0.0"
 
@@ -8,14 +8,16 @@ knowledge:
   backend: wiki
 
 memory:
-  # Episodic session memory (wiki-mem) — complementary to Knowledge retrieval
-  enabled: true
+  # Episodic session memory (wiki-mem) — PUBLIC_OPTIONAL / opt-in
+  enabled: false
   provider: wiki-mem
 
 # Host-specific values (WIKI_ROOT, AGENTS_ROOT, models) belong in environment /
 # agents.env — never hardcode usernames or absolute home paths in this file.
 environment:
-  # workspace_root: set via AGENTS_ROOT / Cursor workspace — not duplicated here
-  notes: "Set WIKI_ROOT (canonical) and optionally RAG_REPO_ROOT as alias"
+  notes: >
+    Set WIKI_ROOT (canonical vault path) and optionally RAG_REPO_ROOT as alias.
+    Set AGENTS_ROOT to this repository root when installing globally.
+    Optional: KNOWLEDGE_BACKEND=wiki|fake (tests).
 
 preferences: {}

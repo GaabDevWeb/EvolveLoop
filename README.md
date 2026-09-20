@@ -1,308 +1,145 @@
-# CursorSKILLS — MegaBrain Setup Portátil
+# EvolveLoop
 
-**Repo:** [GaabDevWeb/CursorSKILLS](https://github.com/GaabDevWeb/CursorSKILLS)  
-**Objectivo:** clonar noutro PC e ter o mesmo setup Cursor (skills, agents, commands, rules, hooks, MCPs, MegaBrain).
+**Controlled, observation-first agent development architecture** — local-first, gated, modular.
 
-Documento técnico profundo do fluxo: [`docs/MegaBrain-Ecosystem.md`](docs/MegaBrain-Ecosystem.md)  
-Stack Wiki + RAG + loops (2026-08): [`docs/cursor-megabrain-rag-stack.md`](docs/cursor-megabrain-rag-stack.md)
+EvolveLoop is a reusable system for orchestrating specialized agents with explicit capabilities, providers, policy, knowledge, evidence, evaluation, and a frozen V1 **evolution loop**. It is not a chatbot product, not a claim of fully autonomous self-modification, and not a hosted SaaS.
 
----
-
-## O que vem neste repositório
-
-| Pasta / ficheiro | Conteúdo |
-|------------------|----------|
-| `.cursor/skills/` | Pipeline MegaBrain + `wiki` + `wiki-mem` |
-| `.cursor/commands/` | `/MegaBrain`, `/wiki`, `/mem`, `/prd`, `/planejar`, … |
-| `.cursor/hooks/` + `hooks.json` | Pickup do orchestrator + memória episódica |
-| `Agents/` | Espelhos Markdown dos agentes |
-| `Rules/` | `Rules.md` (MegaBrain) + `wiki-agent.mdc` (wiki always-on) |
-| `global-skills/` | Skills Tier 3 (`brainstorming`, `image-to-code`, `grill-me`, …) |
-| `mcp/` | `mcp.json` pré-configurado + `mcp.env.example` |
-| `orchestrator/` | Runtime TypeScript (sem `node_modules`) |
-| `agent-setup/` | Instalador declarativo (`agent install --profile …`) |
-| `scripts/install-agents-global.sh` | Instalação global num PC novo |
-| `docs/` | Ecossistema MegaBrain + dossier stack Wiki/RAG |
-
-**Não inclui** (de propósito, pacote lean): `*-workspace/`, `.tools/codeql`, `.venv-*`, `node_modules`, runs de eval gigantes, índice LanceDB da vault (`karpathyWiki/rag/.data/`).
+| Layer | Public identity |
+|-------|-----------------|
+| Project | **EvolveLoop** |
+| Entrypoint | **`/evolve`** |
+| Knowledge default | **Wiki** (`KnowledgeBackend`) |
+| Personal distribution | **GaabType** (profile overlay — not a second core) |
+| Legacy alias | MegaBrain / `/MegaBrain` (non-public; optional on personal profiles) |
 
 ---
 
-## Instalação noutro PC (do zero)
+## Why it exists
 
-### Pré-requisitos
+Coding agents need more than prompts: they need **routing**, **gates**, **evidence**, and **honest limits**. EvolveLoop packages a Capability IR → Policy → Scheduler → Providers pipeline, hard gates for design/vision/knowledge, and an observation-first evolution subsystem (EvolveLoop V1) that proposes change under gates — not silent self-rewrites.
 
-- [Cursor](https://cursor.com/) instalado
-- Git + SSH com acesso ao GitHub
-- Node.js 20+ (MCPs via `npx`, orchestrator opcional)
-- Docker (só se fores usar o MCP `docker`)
-
-### 1. Clonar
-
-```bash
-git clone git@github.com:GaabDevWeb/CursorSKILLS.git ~/CursorSKILLS
-cd ~/CursorSKILLS
-```
-
-### 2. Secrets dos MCPs
-
-```bash
-cp mcp/mcp.env.example ~/.cursor/mcp.env
-# Editar: GITHUB_PAT, FIRECRAWL_API_KEY, FILESYSTEM_ROOT
-nano ~/.cursor/mcp.env
-```
-
-### 3. Instalar globalmente
-
-```bash
-bash scripts/install-agents-global.sh
-```
-
-Isto cria/actualiza:
-
-- `~/.cursor/skills/` → symlinks para este clone
-- `~/.agents/skills/` → pipeline + Tier 3
-- `~/.cursor/commands/` → todos os `/comandos`
-- `~/.cursor/rules/megabrain.mdc` + `wiki-agent.mdc`
-- `~/.cursor/hooks.json` (orchestrator + `wiki-mem`)
-- `~/.cursor/commands/` incluindo `/wiki` e `/mem`
-- `~/.cursor/agents.env`
-- `~/.cursor/mcp.json` (com secrets materializados)
-- `~/.local/bin/agents-orch`
-
-### 4. Reiniciar o Cursor
-
-Fecha e abre o Cursor para carregar commands, hooks, rules e MCPs.
-
-### 5. Autenticar MCPs OAuth
-
-Na primeira utilização no Cursor (Settings → MCP):
-
-- **Sentry** — Authenticate
-- **Linear** — fluxo mcp-remote
-- **Railway** — Authenticate
-- **Figma** — instalar plugin oficial *Figma* (não está no `mcp.json`)
-
-### 6. Testar
-
-Abre **qualquer** pasta de projeto e no chat:
+## Core architecture
 
 ```text
-/MegaBrain — cria um endpoint de health check com testes
+Agent  →  Capability  →  Provider
+                ↓
+             Policy / PDA
+                ↓
+             Runtime / Evidence
+                ↓
+        Knowledge (Wiki default)
+                ↓
+     Telemetry · Evals · Evolution
 ```
 
----
+See [docs/architecture/public/OVERVIEW.md](docs/architecture/public/OVERVIEW.md).
 
-## Fluxo MegaBrain (100%)
+### Delivery flow
 
 ```text
-/MegaBrain
-    │
-    ├─ Fase 0    /wiki         → HARD-GATE Wiki + RAG (packs, BM25, LanceDB)
-    ├─ [opcional] brainstorming / grill-me   (Tier 3)
-    ├─ Fase 0.5  /prd          → docs/ (HARD-GATE: aprovação humana)
-    ├─ Fase 1    /planejar     → Task Graph + DoD
-    ├─ Fase 2    /backend ∥ /frontend-pro ∥ /database
-    ├─ Fase 2.5  /frontend-review (modo Review/Audit)
-    ├─ Fase 3    /testes       → VERDE | VERMELHO
-    ├─ Fase 4    /seguranca    → SEGURO | BLOQUEADO
-    ├─ Fase 4b   /devops       (opcional)
-    ├─ Fase 5    /validar      → OK | Ajustes (subagente ISOLADO)
-    └─ Fase 6    /documentar   → README / docs finais
+Input → Routing → Brainstorming? → PRD → Grill-me [when applicable]
+  → Planner → PDA → Testing → Debugger [when needed]
+  → Gates → Validator → Documentation
 ```
 
-**Decisão após cada gate:** `continuar` | `corrigir` | `replanejar`
-
-**HARD-GATES:**
-
-1. Trabalho técnico → grounding Wiki + RAG (`/wiki`, skill `wiki`) **antes** de planear/implementar
-2. Imagem anexada → obrigatório `image-to-code` + Vision no `frontend-pro`
-3. Feature nova → `/prd` aprovado antes de `/planejar`
-
-Outer loop: erro → `partial` | `plan_reset` | `full_ground` (não reboot cego). PDA: `plan|exec|gate|explore|critic|librarian` com `GATE_BUNDLE` herdado.
-
-Detalhe fase a fase: [`docs/MegaBrain-Ecosystem.md`](docs/MegaBrain-Ecosystem.md) · stack actual: [`docs/cursor-megabrain-rag-stack.md`](docs/cursor-megabrain-rag-stack.md)
-
----
-
-## Comandos `/` (mapa completo)
-
-| Comando | Skill | Papel |
-|---------|-------|-------|
-| `/MegaBrain` | `orquestrar` | Raiz — SSOT, PDA, ciclo completo |
-| `/wiki` | `wiki` | Grounding vault + RAG (packs, scout/search) |
-| `/mem` | `wiki-mem` | Memória episódica (`.ai/sessions/`) |
-| `/prd` | `prd` | Product-spec upstream (docs/) |
-| `/adr` | `adr` | Architecture Decision Record |
-| `/planejar` | `planner` | Task Graph |
-| `/backend` | `backend` | Worker API/servidor |
-| `/frontend` / `/frontend-pro` | `frontend-pro` | UI Build / Review / Vision |
-| `/database` | `database` | Schema & migrações |
-| `/testes` | `testing` | Gate testes |
-| `/seguranca` | `security` | Gate segurança v2.1 |
-| `/devops` | `devops` | CI/CD & deploy |
-| `/validar` | `po-review` | Aceite PO (isolado) |
-| `/documentar` | `documentation` | Docs finais |
-| `/skill-authoring` | `skill-authoring` | Criar/melhorar skills |
-
----
-
-## Skills incluídas
-
-### Tier 1 — pipeline (`.cursor/skills/`)
-
-`orquestrar` · `wiki` · `wiki-mem` · `prd` · `planner` · `backend` · `frontend-pro` · `testing` · `security` · `po-review` · `documentation`
-
-### Tier 2 — condicionais
-
-`database` · `adr` · `devops` · `skill-authoring`
-
-### Tier 3 — globais (`global-skills/` → `~/.agents/skills/`)
-
-`brainstorming` · `grill-me` · `image-to-code` · `find-skills` · `executing-plans` · `writing-plans` · `systematic-debugging` · `subagent-driven-development` · `finishing-a-development-branch` · `agent-browser` · `frontend-design` · `ui-ux-pro-max` · `technical-library-dossier`
-
----
-
-## Agents espelho (`Agents/`)
-
-Atalhos Markdown (não substituem `SKILL.md`):
-
-- `Orquestrador-v2.md` → MegaBrain  
-- `Prd.md` · `Planner.md` · `backend.md` · `Security.md` · `Po-review.md` · `DocumentationAgent.md` · `Skill-authoring.md`
-
----
-
-## Rules
-
-- `Rules/Rules.md` → `~/.cursor/rules/megabrain.mdc` (`alwaysApply: true`)
-- `Rules/wiki-agent.mdc` → `~/.cursor/rules/wiki-agent.mdc` (`alwaysApply: true`)
-
-Princípios MegaBrain: não inventar, analisar antes de agir, plano em tarefas complexas, DRY, validar edge cases.
-
-Wiki: grounding em toda interação técnica; após editar código, append `{Projeto}/log.md` no vault. Vault canónico: [GaabDevWeb/karpathyWiki](https://github.com/GaabDevWeb/karpathyWiki) (não vive neste repo).
-
----
-
-## MCPs pré-configurados
-
-Ver [`mcp/README.md`](mcp/README.md).
-
-| MCP | Auth |
-|-----|------|
-| context7, playwright, browsermcp, puppeteer, sequential-thinking, memory | nenhuma |
-| filesystem | `FILESYSTEM_ROOT` em `mcp.env` |
-| github | `GITHUB_PAT` |
-| firecrawl | `FIRECRAWL_API_KEY` |
-| docker | Docker Desktop/Engine + gateway |
-| sentry, linear, railway | OAuth no Cursor |
-| Figma | Plugin Cursor (separado) |
-
----
-
-## Subagentes (PDA)
-
-O MegaBrain **delega** via Protocolo de Delegação Autónoma:
-
-1. Briefing (estrutura + objectivo + impedimentos)
-2. Subagente (`generalPurpose` / isolado para PO)
-3. Filho devolve `[ENTREGA CONSOLIDADA]` + `[ENCERRAMENTO]`
-4. Raiz decide pela matriz e actualiza `.agent_history.md` **no projeto alvo**
-
-Persistência por projeto (não no CursorSKILLS):
-
-- `.agent_history.md`
-- `docs/` (PRD, ADR, …)
-- `memory/<feature_id>/`
-- `telemetry/evidence/`
-- `.frontend-review/`
-
----
-
-## Agent Setup (instalador declarativo)
-
-Além de `scripts/install-agents-global.sh`, o pacote `agent-setup/` instala por perfil:
-
-```bash
-cd agent-setup && ./bootstrap.sh
-agent doctor
-agent install --profile standard   # minimal | standard | full
-```
-
-`full` liga PATH do RAG da vault e systemd `wiki-watch` (índice always-on). O código do RAG continua na vault `karpathyWiki/rag/`.
-
----
-
-## Orchestrator TypeScript (opcional)
-
-```bash
-cd orchestrator
-npm install
-npm run build
-# CLI global (após install-agents-global.sh):
-agents-orch test
-agents-orch engine -- --ir path.ir.yaml --discovery --jobs-dir ./jobs
-```
-
-Variáveis em `~/.cursor/agents.env`:
-
-```bash
-export AGENTS_ROOT="/caminho/para/CursorSKILLS"
-export ORCHESTRATOR_ROOT="$AGENTS_ROOT/orchestrator"
-```
-
----
-
-## Actualizar noutro PC
-
-```bash
-cd ~/CursorSKILLS
-git pull
-bash scripts/install-agents-global.sh
-# reiniciar Cursor
-```
-
----
-
-## Checklist “setup igual ao PC original”
-
-- [ ] Clone SSH feito
-- [ ] `~/.cursor/mcp.env` preenchido
-- [ ] `install-agents-global.sh` corrido sem erros
-- [ ] Cursor reiniciado
-- [ ] `/MegaBrain` aparece nos commands
-- [ ] MCPs listados em Settings → MCP (verdes / autenticados)
-- [ ] Plugin Figma instalado (se usares design-to-code)
-- [ ] Teste num projeto dummy com `/planejar` ou `/MegaBrain`
-
----
-
-## Estrutura do repo
+### Evolution flow (V1, observation-first)
 
 ```text
-CursorSKILLS/
-├── README.md                 ← este ficheiro
-├── GLOBAL-SETUP.md
-├── Agents/
-├── agent-setup/              ← CLI `agent install` (perfis)
-├── Rules/                    ← megabrain + wiki-agent
-├── docs/MegaBrain-Ecosystem.md
-├── docs/cursor-megabrain-rag-stack.md
-├── mcp/
-│   ├── mcp.json
-│   ├── mcp.env.example
-│   └── README.md
-├── global-skills/            ← Tier 3
-├── orchestrator/             ← engine TS
-├── scripts/install-agents-global.sh
-└── .cursor/
-    ├── skills/               ← MegaBrain + pipeline
-    ├── commands/
-    ├── hooks/
-    └── hooks.json
+Execution → Observation → Signal → Pattern → Need → RCA
+  → Evolution Candidate → Gate → Outcome
 ```
+
+V1 is **frozen** with documented limitations (observation vocabulary, external production gate, incomplete Evidence/Eval/Feedback adapters). Status: `V1_READY_WITH_LIMITATIONS`.
+
+## Hard gates
+
+| Gate | Mode |
+|------|------|
+| `knowledge-grounding` | Required when the flow needs wiki/RAG context |
+| `grill-me` | Conditional, fail-closed (after PRD, before plan when policy says so) |
+| `image-to-code` | Hard gate when images are attached for UI work |
+
+## Local-first philosophy
+
+- Runs in your environment (Cursor + optional Node orchestrator).
+- Knowledge corpus is **your** Wiki vault via `WIKI_ROOT` — not shipped.
+- Episodic memory (`wiki-mem`) is **optional** on the public default profile.
+- Secrets stay in env / untracked files — never in git.
+
+## Profiles
+
+```text
+EvolveLoop (main)
+   └── profiles/default.yaml   → portable public defaults
+
+GaabType (personal branch/profile)
+   └── same core
+       + profiles/gaabtype/*   → personal Wiki path, memory, hooks, project maps
+```
+
+**GaabType does not duplicate** orchestrator, agents, EvolveLoop, or KnowledgeBackend source.
+
+## Quick start
+
+1. Clone this repository.
+2. Open it in Cursor (or attach [`AGENT.md`](AGENT.md) to your agent).
+3. Let the agent follow **AGENT.md**: detect → inspect → backup → ask → configure → install → validate → report.
+4. Set `WIKI_ROOT` if you use Wiki grounding (create new, use existing, or skip with documented limits).
+5. Optional: enable memory in profile / hooks when you want episodic continuity.
+
+Manual install helpers: `scripts/install-agents-global.sh`, `agent-setup/` (declarative profiles). Prefer AGENT.md for first-time setup.
+
+### Environment (portable)
+
+| Variable | Role |
+|----------|------|
+| `WIKI_ROOT` | Canonical Wiki vault path |
+| `RAG_REPO_ROOT` | Alias of `WIKI_ROOT` |
+| `KNOWLEDGE_BACKEND` | Override (`wiki` default; `fake` for tests) |
+| `AGENTS_ROOT` | Repo root for global skill/agent install |
+| `ORCHESTRATOR_ROOT` | Path to `orchestrator/` when using the engine |
+| `EVOLVELOOP_PROFILE_PATH` | Optional profile file override |
+
+External Wiki CLI module (when used): `WIKI_CLI_MODULE` — implementation detail of the vault tooling; **not** a public product identity.
+
+## Repository map
+
+| Path | Role |
+|------|------|
+| `orchestrator/` | Execution Engine (Capability IR, policy, EvolveLoop, KnowledgeBackend) |
+| `.cursor/skills/` | Essential skill pack + Wiki |
+| `.cursor/commands/` | `/evolve`, `/wiki`, `/prd`, `/planejar`, … |
+| `profiles/default.yaml` | Public defaults |
+| `Agents/` | Human-readable agent mirrors |
+| `global-skills/` | Tier-3 essentials (e.g. grill-me, image-to-code) |
+| `docs/` | Getting started, concepts, architecture |
+
+## Limitations (honest)
+
+- Not “fully autonomous” or “production-proven self-modifying AI”.
+- EvolveLoop V1 is **observation-first** and gated.
+- Production deployment gates remain **external** to this repo’s claims.
+- Some Evidence / Eval / Feedback adapters are not fully connected.
+- Live observation vocabulary is intentionally limited in V1.
+
+## Security
+
+See [SECURITY.md](SECURITY.md). Treat MCP, filesystem, and agent tools as powerful; keep secrets out of the tree.
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md). Preserve contracts, hard gates, and skill discipline. No arbitrary framework additions.
+
+## License
+
+[MIT](LICENSE) — see also [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+
+## Roadmap (high level)
+
+- Fresh-clone and clean-environment validation (next phase).
+- Full regression / eval battery (next phase).
+- Public release (not done in this extraction).
 
 ---
 
-## Licença / uso
-
-Setup pessoal de skills Cursor. Ajusta secrets e paths ao teu ambiente. Não commits `~/.cursor/mcp.env` nem tokens.
+*Legacy name MegaBrain referred to an earlier personal branding of this architecture. Public identity is EvolveLoop.*

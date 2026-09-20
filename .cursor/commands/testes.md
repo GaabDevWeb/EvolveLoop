@@ -1,4 +1,4 @@
-# testes — Agent Package / MegaBrain
+# testes — Agent Package / EvolveLoop
 
 Invocação **`/testes`**.
 

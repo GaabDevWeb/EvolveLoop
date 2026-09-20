@@ -1,98 +1,66 @@
 ---
-description: Wiki obrigatória — grounding em toda interação de agente + registo na wiki após editar código (global)
+description: Wiki grounding — knowledge context for agent work (global)
 alwaysApply: true
 ---
 
-# Wiki — loop global do Agent
+# Wiki — agent grounding loop
 
-Vault: `$WIKI_ROOT` (alias: `$RAG_REPO_ROOT`) — required; no hardcoded user path  
+Vault: `$WIKI_ROOT` (alias: `$RAG_REPO_ROOT`) — set via environment; no hardcoded user path  
 Skill: `wiki` (`~/.cursor/skills/wiki/`) · comando `/wiki`  
 Script: `bash ~/.cursor/skills/wiki/scripts/ground.sh …`
 
-Isto aplica-se a **todos** os workspaces neste Cursor (não só ao vault).
+Applies to all workspaces when knowledge grounding is required.
 
 ---
 
-## 1. Toda interação — usar a wiki como contexto
+## 1. Use the wiki as context
 
-Antes de planear ou implementar (código, arquitectura, contratos, debug de domínio Gaab):
+Before planning or implementing (code, architecture, contracts):
 
-1. Identificar o **projeto** (kernelbot | orbitbot | iss | portifolio | xray-spec | rag/meta-wiki | outro).
-2. Correr grounding via skill **wiki** (pack se conhecido + scout/search), ou `/wiki`.
-3. Respeitar o template da skill (Fontes / Contratos / GAPs / Método / Handoff).
-4. **Não** inventar contratos: se a wiki não disser, declarar GAP.
+1. Identify the project / domain.
+2. Run grounding via skill **wiki** (pack if known + scout/search), or `/wiki`.
+3. Follow the skill template (Sources / Contracts / GAPs / Method / Handoff).
+4. Do not invent contracts: if the wiki does not say, declare GAP.
 
-### Excepções (podem saltar scout amplo)
+### Exceptions (may skip broad scout)
 
-- Pedidos triviais sem domínio (cálculo, formatação, “o que é X?” genérico fora do ecossistema).
-- Pedido **só** de clarificação / conversa sem acção técnica.
+- Trivial requests without domain (calculation, formatting, generic “what is X?”).
+- Clarification-only conversation with no technical action.
 
-Nesses casos: uma linha `Wiki: n/a (pedido trivial)` basta.
+In those cases: one line `Wiki: n/a (trivial)` is enough.
 
-### Projectos mapeados (grounding obrigatório se houver código/arquitectura)
+Anti-pattern: do not use `wiki vibe` / Composer CLI as the coding brain — the Agent implements.
 
-| Sinal no workspace | Pack / pasta wiki |
-|--------------------|-------------------|
-| KernelBot | `kernelbot-rag` → `KernelBot/wiki/` |
-| OrbitBot | `orbitbot-kernel` → `OrbitBot/` |
-| ISS / Portifolio / Xray-Spec | pastas homónimas no vault |
-| karpathyWiki / wiki-rag | `.ai/` + `rag/` |
+### Episodic memory (optional)
 
-Anti-padrão: **não** usar `wiki vibe` / Composer CLI como cérebro — coding fica neste Agent.
-
-### Memória episódica (complemento)
-
-Continuidade entre chats: `~/.cursor/skills/wiki-mem/` + `.ai/sessions/LATEST.md`.  
-**Não** substitui grounding wiki/RAG. Search: `python3 ~/.cursor/hooks/wiki-mem/mem.py search "…"`.  
-Promoção a canónico: `mem.py promote` → append `{Projeto}/log.md` (nunca `raw/`).
+Continuity across chats: skill `wiki-mem` / `/mem` + `.ai/sessions/LATEST.md`.  
+**Does not** replace wiki/RAG grounding. Public default: memory **off** unless profile enables it.
 
 ---
 
-## 2. Toda edição de código — registar na wiki
+## 2. After code edits — register in the wiki
 
-Se o Agent **criar, editar ou apagar** ficheiros de código (ou configs de runtime) num repo:
+If the Agent creates, edits, or deletes code (or runtime configs) in a repo:
 
-**No mesmo turno** (ou no fecho da tarefa), actualizar a Wiki:
+In the same turn (or at task close), update the wiki vault:
 
-### Obrigatório (append)
+1. Append `{Project}/log.md` (append-only event).
+2. If the change is a decision / relevant audit: also `.agent_history.md` when that is the project’s canonical place.
+3. If contracts / architecture / state change: update synthesized `{Project}/wiki/` pages — **never** rewrite `raw/`.
 
-1. **`{Projeto}/log.md`** no vault (ex.: `KernelBot/log.md`, `OrbitBot/log.md`) — evento append-only.
-2. Se a mudança for decisão / auditoria relevante: também **`.agent_history.md`** na raiz do vault (ou do repo, se já existir e for o sítio canónico do projecto).
+### Exceptions
 
-### Se a mudança alterar contratos / arquitectura / estado
-
-Actualizar a página sintetizada correspondente em `{Projeto}/wiki/` (ex.: `current-state`, `decisions`, `known-issues`, `rag`) — **não** reescrever `raw/` (imutável).
-
-### Formato mínimo em `log.md`
-
-```markdown
-## [YYYY-MM-DD] agent | <repo> | <resumo-curto>
-
-- **Repos:** <path do código tocado>
-- **Mudança:** <1–3 bullets do que mudou e porquê>
-- **Branch:** <se conhecida>
-- **Wiki:** <páginas actualizadas ou "só log">
-- **GAP:** <se código e wiki divergirem>
-```
-
-### Excepções ao registo
-
-- Edits **só** dentro do vault que já são o próprio registo.
-- Reverts/experimentos descartados **sem** commit e sem pedido para documentar — opcional; se o utilizador pediu persistir, registar.
-- Pedidos explícitos do utilizador: “não actualizes a wiki”.
+- Edits only inside the vault that are already the registry itself.
+- Explicit user request: “do not update the wiki”.
 
 ---
 
-## 3. Ordem canónica
+## 3. Canonical order
 
 ```
-pedido → grounding wiki (skill) → editar código → registar wiki (log ± páginas) → responder
+request → wiki grounding → edit code → register wiki (log ± pages) → respond
 ```
 
-Nunca: código mergeado na resposta sem linha de log quando houve edição real.
+## 4. Precedence
 
----
-
-## 4. Precedência
-
-Código verificado > wiki. Se contradisserem: corrigir a wiki ou marcar `GAP`/`status` — não silenciar.
+Verified code > wiki. If they conflict: fix the wiki or mark `GAP`/`status` — do not silence.

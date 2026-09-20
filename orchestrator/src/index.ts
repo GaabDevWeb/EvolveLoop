@@ -104,9 +104,11 @@ export { WikiKnowledgeBackend, resolveWikiRoot, resolveWikiCliModule } from "./k
 export { FakeKnowledgeBackend } from "./knowledge/backend/fake-backend.js";
 export {
   loadMegaBrainProfile,
+  loadEvolveLoopProfile,
   resolveKnowledgeBackendId,
   DEFAULT_PROFILE,
   type MegaBrainProfile,
+  type EvolveLoopProfile,
 } from "./config/profile.js";
 export { MemoryStore } from "./memory/memory-store.js";
 export { FilesystemMemoryStore } from "./memory/filesystem-memory-store.js";

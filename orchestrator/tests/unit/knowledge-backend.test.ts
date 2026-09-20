@@ -87,11 +87,12 @@ describe("KnowledgeBackend seam", () => {
   });
 });
 
-describe("MegaBrain profile boundary", () => {
+describe("EvolveLoop profile boundary", () => {
   afterEach(() => {
     delete process.env.AGENTS_ROOT;
     delete process.env.KNOWLEDGE_BACKEND;
     delete process.env.MEGABRAIN_PROFILE_PATH;
+    delete process.env.EVOLVELOOP_PROFILE_PATH;
   });
 
   it("loads profiles/default.yaml when AGENTS_ROOT set", () => {
@@ -100,7 +101,7 @@ describe("MegaBrain profile boundary", () => {
     const p = loadMegaBrainProfile();
     expect(p.id).toBe("default");
     expect(p.knowledge.backend).toBe("wiki");
-    expect(p.memory.enabled).toBe(true);
+    expect(p.memory.enabled).toBe(false);
   });
 
   it("DEFAULT_PROFILE is wiki without file", () => {

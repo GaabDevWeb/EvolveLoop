@@ -1,4 +1,4 @@
-# frontend-pro — Agent Package / MegaBrain
+# frontend-pro — Agent Package / EvolveLoop
 
 Invocação **`/frontend-pro`**.
 

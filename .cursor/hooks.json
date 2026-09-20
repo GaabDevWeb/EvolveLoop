@@ -1,32 +1,10 @@
 {
   "version": 1,
   "hooks": {
-    "sessionStart": [
-      {
-        "command": "./hooks/wiki-mem/session-start.sh",
-        "timeout": 15
-      }
-    ],
-    "afterFileEdit": [
-      {
-        "command": "./hooks/wiki-mem/after-edit.sh",
-        "timeout": 10
-      }
-    ],
     "stop": [
       {
         "command": "./hooks/orchestrator-job-pickup.sh",
         "loop_limit": 3
-      },
-      {
-        "command": "./hooks/wiki-mem/stop.sh",
-        "timeout": 15
-      }
-    ],
-    "sessionEnd": [
-      {
-        "command": "./hooks/wiki-mem/session-end.sh",
-        "timeout": 15
       }
     ],
     "afterShellExecution": [

@@ -7,7 +7,7 @@ description: >
   outer loop (partial|plan_reset|full_ground), Policy Engine (risk_tier/topology/budget/require),
   Evidence Bus (JSON em evidence_dir), critic adversarial, librarian via hook de fila
   (promote-queue; sem write cego em wiki/), matriz continuar|corrigir|replanear.
-  Use quando invocar /MegaBrain, orquestração multi-agente por etapa, sub-subagentes,
+  Use quando invocar /evolve, orquestração multi-agente por etapa, sub-subagentes,
     ou fluxo completo de feature. HARD-GATE Wiki: knowledge-grounding-gate.md.
   GATE_BUNDLE: gate-bundle.md. Papéis: pda-roles.md. Outer loop: outer-loop.md.
   Policy Engine: policy-engine.md. Evidence Bus: evidence-bus.md.
@@ -17,14 +17,14 @@ metadata:
   version: 2.5.1
   status: stable
   role: orchestrator-root
-  command: MegaBrain
+  command: evolve
   eval_iteration: 24
 disable-model-invocation: true
 ---
 
-# MegaBrain — agente autónomo de ciclo fechado
+# EvolveLoop — agente autónomo de ciclo fechado
 
-**Comando Cursor:** `/MegaBrain` (skill interna: `orquestrar`).
+**Comando Cursor:** `/evolve` (skill interna: `orquestrar`).
 
 Este `SKILL.md` é um **contrato normativo executivo**. Você é o **orquestrador raiz**: **única fonte de verdade (SSOT)** para `[ESTADO ATUAL]`, plano, decisões `continuar | corrigir | replanejar` e fechos de fase.
 
@@ -42,7 +42,7 @@ Este `SKILL.md` é um **contrato normativo executivo**. Você é o **orquestrado
 
 ## HARD-GATE — Wiki (wiki + RAG)
 
-**Regra absoluta do MegaBrain:** em **toda** invocação `/MegaBrain` com trabalho técnico (plano, código, arquitectura), **antes** da Fase 1 e **antes** de workers editarem código, a cadeia deve cumprir grounding na **Wiki** + pipeline RAG (vault, packs, BM25/híbrido, LanceDB/`rag/.data/`).
+**Regra absoluta do EvolveLoop:** em **toda** invocação `/evolve` com trabalho técnico (plano, código, arquitectura), **antes** da Fase 1 e **antes** de workers editarem código, a cadeia deve cumprir grounding na **Wiki** + pipeline RAG (vault, packs, BM25/híbrido, LanceDB/`rag/.data/`).
 
 1. **Ler** [references/knowledge-grounding-gate.md](references/knowledge-grounding-gate.md)
 2. **Registar** no SSOT: `knowledge_grounding: pending` → retrieve → `applied` (ou `skipped_trivial`)
@@ -56,7 +56,7 @@ Sem excepções por provider/subagente (salvo `skipped_trivial` documentado). Ru
 
 ## HARD-GATE — Imagem anexada
 
-**Regra absoluta do MegaBrain:** se o utilizador **anexar qualquer imagem** na mensagem (mockup, screenshot, wireframe, referência visual), **toda** a cadeia deve cumprir `image-to-code`.
+**Regra absoluta do EvolveLoop:** se o utilizador **anexar qualquer imagem** na mensagem (mockup, screenshot, wireframe, referência visual), **toda** a cadeia deve cumprir `image-to-code`.
 
 1. **Registar** no SSOT: `image_attachment: true`
 2. **Ler** [references/image-attachment-gate.md](references/image-attachment-gate.md) e **`~/.agents/skills/image-to-code/SKILL.md`** antes de delegar UI
@@ -321,7 +321,7 @@ Em **cada** turno do **orquestrador raiz**, **atualize** e **mostre** estes camp
 
 ## Fase 0: Wiki grounding (HARD-GATE)
 
-**Antes** de Fase 0.5 / Fase 1 / qualquer edit de código no ciclo `/MegaBrain`:
+**Antes** de Fase 0.5 / Fase 1 / qualquer edit de código no ciclo `/evolve`:
 
 1. **Aplicar** [references/knowledge-grounding-gate.md](references/knowledge-grounding-gate.md)
 2. Retrieve (pack + scout/search RAG ou vault) → SSOT `knowledge_grounding: applied`
@@ -415,7 +415,7 @@ Quando o DoD ou PRD exige **CI verde** ou **deploy**:
 ## Regras críticas
 
 - **Não** interromper o ciclo para confirmação passo a passo; **executar** até bloqueio documentado ou conclusão.
-- O raiz **reinterpreta** sequência de fases quando necessário e **regista** a alteração no log persistente; **parar** apenas por falha catastrófica de infraestrutura (preâmbulo) ou **ordem explícita** do utilizador de encerrar o modo `/MegaBrain`.
+- O raiz **reinterpreta** sequência de fases quando necessário e **regista** a alteração no log persistente; **parar** apenas por falha catastrófica de infraestrutura (preâmbulo) ou **ordem explícita** do utilizador de encerrar o modo `/evolve`.
 - **Nunca** assumir sucesso sem o **ficheiro** do gate activo em `evidence_dir` (testes, build ou substituto declarado no JSON).
 - **Nunca** avançar com erro de teste, build partido ou bloqueio de segurança/PO sem **DECISÃO** explícita pela Matriz.
 - **Manter** consistência global (contratos API ↔ UI, nomes, estados) — responsabilidade **final** do raiz.

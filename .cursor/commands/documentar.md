@@ -1,4 +1,4 @@
-# documentar — Agent Package / MegaBrain
+# documentar — Agent Package / EvolveLoop
 
 Invocação **`/documentar`**.
 

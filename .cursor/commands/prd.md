@@ -3,7 +3,7 @@
 Invocação **`/prd`**.
 
 1. **Ler** `.cursor/skills/prd/SKILL.md` (SSOT normativo)
-2. AGENTS_ROOT: `~/.cursor/agents.env` (se pipeline MegaBrain)
+2. AGENTS_ROOT: `~/.cursor/agents.env` (se pipeline EvolveLoop)
 3. Produzir pacote documental em `docs/` **antes** de código — modos `full-package` | `update-spec` | `delta-only`
 4. **DO NOT:** implementar; decisões arquitecturais isoladas → handoff `/adr` (ou Architect)
 5. **HARD-GATE:** aguardar aprovação humana antes de `/planejar`

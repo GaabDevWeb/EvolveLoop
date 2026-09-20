@@ -1,5 +1,5 @@
 /**
- * MegaBrain skill-gate decision helpers (policy parity).
+ * EvolveLoop skill-gate decision helpers (policy parity).
  * Observe/eval harness — NOT Execution Engine enforcement.
  * Canonical contracts: grill-me-gate.md, image-attachment-gate.md
  */

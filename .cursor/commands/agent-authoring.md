@@ -1,4 +1,4 @@
-# agent-authoring — fábrica de agentes MegaBrain
+# agent-authoring — fábrica de agentes EvolveLoop
 
 Invocação **`/agent-authoring`**.
 

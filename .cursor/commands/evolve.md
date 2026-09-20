@@ -1,6 +1,6 @@
-# MegaBrain — CursorSKILLS / MegaBrain (global)
+# EvolveLoop — public entrypoint (`/evolve`)
 
-Invocação **`/MegaBrain`**.
+Invocação **`/evolve`**.
 
 1. **Ler** `~/.cursor/skills/orquestrar/SKILL.md` (contrato normativo)
 2. AGENTS_ROOT: `~/.cursor/agents.env`
@@ -10,9 +10,9 @@ Invocação **`/MegaBrain`**.
 → `~/.cursor/skills/orquestrar/references/gate-bundle.md`  
 → `~/.cursor/skills/orquestrar/references/pda-roles.md`
 
-**HARD-GATE — Wiki (wiki + RAG):** antes de planear/implementar →  
+**HARD-GATE — Wiki (knowledge grounding):** antes de planear/implementar →  
 `~/.cursor/skills/orquestrar/references/knowledge-grounding-gate.md`  
-**Vault:** `$WIKI_ROOT` (alias `$RAG_REPO_ROOT`) — required; no hardcoded user path.  
+**Vault:** `$WIKI_ROOT` (alias `$RAG_REPO_ROOT`) — required when grounding applies; no hardcoded user path.  
 **Skill:** `wiki` é atalho, não exclusivo. Após código → `log.md` no vault. Pipeline `rag/` (ingest, BM25, híbrido, LanceDB, packs).
 
 **Outer loop:** erro → reentrada `partial` | `plan_reset` | `full_ground` (não reboot cego); teto `max_outer_cycles` (default 5) →  
@@ -23,8 +23,10 @@ Invocação **`/MegaBrain`**.
 
 **Evidence Bus:** `memory/<feature_id>/evidence/` (`evidence_dir`) — gates lêem/gravam JSON; `continuar` exige o **ficheiro** do gate activo no disco (ex. `gate.testing.json`). Não misturar com `.ai/sessions` nem com o vault. → `~/.cursor/skills/orquestrar/references/evidence-bus.md`
 
-**Episódico (complemento):** `.ai/sessions/` + skill `wiki-mem` / `/mem` — continuidade de sessão; não substitui o gate wiki. Hook `stop`/`sessionEnd` **enfileira** `promote-queue.md`; **não** escreve `{Projeto}/wiki/` nem `raw/`. O papel `librarian` / Agent **promove** a fila.
+**Episódico (opcional):** `.ai/sessions/` + skill `wiki-mem` / `/mem` — continuidade de sessão; **não** substitui o gate wiki. Na distribuição pública, memória episódica é **opt-in** (profile). Hook `stop`/`sessionEnd` **enfileira** `promote-queue.md`; **não** escreve `{Projeto}/wiki/` nem `raw/`. O papel `librarian` / Agent **promove** a fila.
 
 **HARD-GATE — Imagem anexada:** → `~/.agents/skills/image-to-code/SKILL.md` (policy; ≠ TS engine enforcement)
 
 **HARD-GATE — Grill-me (design/planning):** após `/prd` aprovado, antes de `/planejar` quando Policy exige → `~/.agents/skills/grill-me/SKILL.md` + `grill-me-gate.md` (fail-closed)
+
+**Legacy:** o nome interno histórico *EvolveLoop* e o comando `/EvolveLoop` são aliases legados — não são a marca pública. O nome interno histórico *MegaBrain* e `/MegaBrain` são aliases legados. Use `/evolve`.

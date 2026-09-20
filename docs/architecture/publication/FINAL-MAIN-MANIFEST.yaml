@@ -1,0 +1,51 @@
+project:
+  name: EvolveLoop
+  alias: evolve
+
+main:
+  core:
+    - orchestrator/
+    - KnowledgeBackend + WikiKnowledgeBackend + FakeKnowledgeBackend
+    - EvolveLoop V1 (frozen)
+    - Policy / PDA / Evidence / Capability / Provider
+  skills:
+    - .cursor/skills/* essential pack
+    - global-skills/* validated pack
+    - wiki
+    - wiki-mem (available; hooks opt-in)
+    - grill-me
+    - image-to-code
+  agents:
+    - Agents/* generic mirrors
+  commands:
+    - evolve
+    - wiki
+    - mem (optional)
+    - prd planejar backend frontend-pro testes debugger validar documentar ...
+  providers:
+    - orchestrator/src/providers/*
+  profiles:
+    - profiles/default.yaml
+  docs:
+    - README.md AGENT.md
+    - docs/getting-started docs/concepts docs/operations docs/evaluation docs/development
+    - docs/architecture/public
+    - curated architecture audits
+
+excluded:
+  personal:
+    - profiles/gaabtype (GaabType branch only)
+    - personal project pack tables in wiki-agent
+    - MegaBrain public command
+  host:
+    - /home/gaab defaults
+    - Documentos locale defaults
+  historical:
+    - docs/internal/historical/*
+  local:
+    - memory/ *-workspace/ .prune-snapshots/ (gitignore)
+
+hard_gates:
+  - grill-me
+  - image-to-code
+  - knowledge-grounding

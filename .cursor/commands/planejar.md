@@ -1,4 +1,4 @@
-# planejar — Agent Package / MegaBrain
+# planejar — Agent Package / EvolveLoop
 
 Invocação **`/planejar`**.
 

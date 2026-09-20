@@ -1,0 +1,23 @@
+structural_precheck_main:
+  result: PASS
+  checks:
+    evolve_cmd: True
+    no_megabrain_cmd: True
+    default_profile: True
+    agent_md: True
+    readme: True
+    license: True
+    security: True
+    contrib: True
+    coc: True
+    evolveloop_rule: True
+    knowledge_backend: True
+    grill_me: True
+    image_to_code: True
+    hooks_no_wikimem_session: True
+    profile_no_home_gaab: True
+    profile_memory_off: True
+    ok_types.ts: True
+    ok_resolve.ts: True
+    ok_wiki-backend.ts: True
+    ok_fake-backend.ts: True
