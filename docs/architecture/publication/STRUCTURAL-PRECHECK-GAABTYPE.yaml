@@ -1,0 +1,10 @@
+structural_precheck_gaabtype:
+  result: PASS
+  checks:
+    gaabtype_profile: True
+    projects_map: True
+    megabrain_alias: True
+    evolve_still: True
+    hooks_wikimem: True
+    no_orch_dup: True
+    core_orchestrator: True
