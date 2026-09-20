@@ -4,7 +4,7 @@ import { join } from "node:path";
 import {
   evaluateGrillMeTransition,
   evaluateImageToCodeGate,
-} from "../../src/policy/megabrain-skill-gates.js";
+} from "../../src/policy/skill-gates.js";
 import { discoverAllManifests } from "../../src/discovery/provider-discovery.js";
 
 const ROOT = join(import.meta.dirname, "../../..");

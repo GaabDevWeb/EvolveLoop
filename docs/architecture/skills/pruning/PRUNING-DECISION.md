@@ -6,7 +6,7 @@
 
 ## Pergunta empírica
 
-> Depois de remover todas as skills não essenciais ao core, o MegaBrain continua executando o mesmo fluxo com a mesma segurança estrutural e sem degradação material de qualidade?
+> Depois de remover todas as skills não essenciais ao core, o EvolveLoop continua executando o mesmo fluxo com a mesma segurança estrutural e sem degradação material de qualidade?
 
 ## Resposta (evidência)
 

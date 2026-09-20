@@ -349,7 +349,7 @@ Ordem preferida de retrieve: `ground.sh` / skill `wiki` → `wiki-ingest` → le
 
 **Fronteira:** `brainstorming` = diálogo; `prd` = docs formais; `grill-me` = stress-test HITL (autoridade operacional — **não** skill `grilling` separada). ADR isolado mid-cycle → `/adr`. Análise/redesign estrutural (sem pacote PRD) → `/architect`.
 
-**Nota Superpowers:** `writing-plans` / SDD / `executing-plans` / `finishing-a-development-branch` são path **paralelo instalado**, **não** o pipeline canónico MegaBrain (Fase 1+ = planner + PDA).
+**Nota Superpowers:** `writing-plans` / SDD / `executing-plans` / `finishing-a-development-branch` são path **paralelo instalado**, **não** o pipeline canónico EvolveLoop (Fase 1+ = planner + PDA).
 
 ## Fase 1: Planeamento
 

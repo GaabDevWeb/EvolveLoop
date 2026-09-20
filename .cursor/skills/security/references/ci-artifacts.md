@@ -8,7 +8,7 @@ A revisão **termina em artifacts**, não só Markdown.
 |-----------|---------------|-----|
 | **Markdown** | `security-report.md` ou no chat | humanos, PR body |
 | **JSON** | `security-findings.json` | pipelines, dashboards |
-| **Evidence gate** | `telemetry/evidence/<node_id>.json` | MegaBrain Orquestrador |
+| **Evidence gate** | `telemetry/evidence/<node_id>.json` | EvolveLoop Orquestrador |
 | **SARIF** | `security-results.sarif` | GitHub/GitLab code scanning |
 
 ## JSON schema (mínimo)

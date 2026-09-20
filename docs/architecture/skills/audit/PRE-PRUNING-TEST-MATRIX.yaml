@@ -7,7 +7,7 @@ tests:
     area: grill-me
     case: trivial task → gate not required
     result: PASS
-    evidence: megabrain-skill-gates.test.ts
+    evidence: skill-gates.test.ts
   - id: GM-02
     area: grill-me
     case: PRD scope → gate required

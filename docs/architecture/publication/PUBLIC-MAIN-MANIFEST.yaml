@@ -13,10 +13,10 @@ main:
       risk: MEDIUM
     - path: .cursor/commands/
       reason_in_main: user entrypoints
-      personal_coupling: medium (PT names, MegaBrain brand)
+      personal_coupling: medium (PT names, EvolveLoop brand)
       migration_required: brand rename later; locale pack optional
       risk: MEDIUM
-    - path: .cursor/rules/megabrain.mdc
+    - path: .cursor/rules/evolveloop.mdc
       reason_in_main: discipline rules
       personal_coupling: naming only
       migration_required: rename with brand
@@ -57,7 +57,7 @@ main:
       migration_required: curate user-facing subset
       risk: LOW
     - path: Rules/Rules.md
-      reason_in_main: source for megabrain.mdc
+      reason_in_main: source for evolveloop.mdc
       personal_coupling: naming
       migration_required: brand
       risk: LOW
@@ -74,7 +74,7 @@ main:
       reason_in_main: pack inventory
       migration_required: refresh completeness
       risk: LOW
-  commands: [MegaBrain, wiki, prd, planejar, backend, frontend-pro, testes, seguranca, validar, documentar, debugger, grill-me, ...]
+  commands: [EvolveLoop, wiki, prd, planejar, backend, frontend-pro, testes, seguranca, validar, documentar, debugger, grill-me, ...]
   skills: [orquestrar, wiki, prd, planner, workers, gates, grill-me, image-to-code, tier3 pruned]
   agents: [Orquestrador, Wiki, workers, gates]
   providers: [deterministic/*, knowledge WikiBackend, cursor-skill providers]

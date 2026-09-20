@@ -6,7 +6,7 @@
 ## Model
 
 ```text
-MegaBrain
+EvolveLoop
    │
    ▼
 Knowledge  (abstraction: contracts knowledge.* + EvidenceSet + KnowledgeStore)

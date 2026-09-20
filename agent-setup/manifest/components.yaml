@@ -8,9 +8,9 @@ rules:
     managed_by: agent-setup
     profiles: [minimal, standard, full]
 
-  - name: megabrain
-    source: bundled:cursor/rules/megabrain.mdc
-    destination: "~/.cursor/rules/megabrain.mdc"
+  - name: evolveloop
+    source: bundled:cursor/rules/evolveloop.mdc
+    destination: "~/.cursor/rules/evolveloop.mdc"
     scope: global
     managed_by: agent-setup
     profiles: [minimal, standard, full]
@@ -21,9 +21,9 @@ commands:
     destination: "~/.cursor/commands/wiki.md"
     profiles: [minimal, standard, full]
 
-  - name: MegaBrain
-    source: bundled:cursor/commands/MegaBrain.md
-    destination: "~/.cursor/commands/MegaBrain.md"
+  - name: evolve
+    source: bundled:cursor/commands/evolve.md
+    destination: "~/.cursor/commands/evolve.md"
     profiles: [minimal, standard, full]
 
   - name: mem
@@ -54,12 +54,12 @@ skills:
     also_link: "~/.agents/skills/orquestrar"
     dependencies: [cursor_skills_repo]
 
-  - name: MegaBrain
+  - name: evolve
     source: repo:${AGENTS_ROOT}/.cursor/skills/orquestrar
-    destination: "~/.cursor/skills/MegaBrain"
+    destination: "~/.cursor/skills/evolve"
     install: symlink
     profiles: [standard, full]
-    also_link: "~/.agents/skills/MegaBrain"
+    also_link: "~/.agents/skills/evolve"
 
   - name: skill-authoring
     source: repo:${AGENTS_ROOT}/.cursor/skills/skill-authoring

@@ -34,4 +34,4 @@ Pedidos que outrora ativariam skills removidas:
 
 Não se afirma “mais preciso só porque o catálogo é menor”. Afirma-se:
 
-> Core MegaBrain + hard gates + providers/commands/agents intactos; 7 skills non-core removidas; suites estruturais verdes; sem regressão material observável nos testes existentes.
+> Core EvolveLoop + hard gates + providers/commands/agents intactos; 7 skills non-core removidas; suites estruturais verdes; sem regressão material observável nos testes existentes.

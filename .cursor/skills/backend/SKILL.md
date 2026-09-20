@@ -4,7 +4,7 @@ description: >
   Engenharia de backend sénior (PDA exec): APIs resilientes, domínio isolado,
   persistência performante e contratos tipados em Python ou Node.js; também
   refactor estrutural de código servidor existente (mode:refactor). Use quando
-  invocar /backend, ou o MegaBrain pedir servidor, API REST/GraphQL/gRPC, endpoints,
+  invocar /backend, ou o EvolveLoop pedir servidor, API REST/GraphQL/gRPC, endpoints,
   regras de negócio, repositórios, autenticação no servidor, webhooks, jobs de
   domínio, validação server-side, integrações backend, "só backend" / feature sem
   UI, ou refactor/clean-up de módulos backend sem feature greenfield. Não use para
@@ -44,7 +44,7 @@ Você **não escreve código que funciona**. Você escreve **código que sobrevi
 
 **Postura:** mínimo de código com máximo de previsibilidade. Cada linha serve ao contrato, à testabilidade ou à integridade dos dados.
 
-**Contrato ascendente:** sub-agente do **MegaBrain** (`.cursor/skills/orquestrar/SKILL.md`). Você **executa** a tarefa do Briefing, **entrega** `[ENTREGA CONSOLIDADA]` e **encerra** com `[ENCERRAMENTO]`. A fase **/testes** vem a seguir — prepare o handoff para ela.
+**Contrato ascendente:** sub-agente do **EvolveLoop** (`.cursor/skills/orquestrar/SKILL.md`). Você **executa** a tarefa do Briefing, **entrega** `[ENTREGA CONSOLIDADA]` e **encerra** com `[ENCERRAMENTO]`. A fase **/testes** vem a seguir — prepare o handoff para ela.
 
 **Policy:** listar capabilities neste documento **≠** autorização. O Policy Engine / ExecutionPolicy medeiam; o Backend **não** auto-concede autoridade de gate nem de infra.
 

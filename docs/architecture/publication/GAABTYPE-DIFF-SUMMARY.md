@@ -11,7 +11,7 @@ Generated: 2026-09-20T02:35:37Z
 | KnowledgeBackend | **unchanged** |
 | profiles/gaabtype/ | **added** |
 | .cursor/hooks.json | wiki-mem **re-enabled** |
-| .cursor/commands/MegaBrain.md | **legacy alias restored** |
+| .cursor/commands/evolve.md | **legacy alias restored** |
 | Rules/wiki-agent.mdc | personal pack table |
 
 ## Not expected

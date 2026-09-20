@@ -1,5 +1,5 @@
 edges:
-  - from: MegaBrain Policy
+  - from: EvolveLoop Policy
     to: knowledge-grounding
     type: REQUIRE
   - from: knowledge-grounding

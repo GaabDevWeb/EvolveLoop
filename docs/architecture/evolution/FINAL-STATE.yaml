@@ -5,8 +5,8 @@ architecture:
   runtime_modified_by_pipeline: false
 
   agents:
-    megabrain_orchestrator_root: PRESENT_AS_TOOLING
-    note: "CursorSKILLS MegaBrain tooling ≠ WhatsApp KernelBot runtime"
+    evolveloop_orchestrator_root: PRESENT_AS_TOOLING
+    note: "CursorSKILLS EvolveLoop tooling ≠ WhatsApp KernelBot runtime"
     new_agents_this_pipeline: 0
 
   capabilities:
@@ -32,7 +32,7 @@ architecture:
 
   evidence:
     engine_evidence_array: PRESENT
-    megabrain_evidence_bus: DISTINCT_NOT_ENGINE
+    evolveloop_evidence_bus: DISTINCT_NOT_ENGINE
 
   knowledge:
     filesystem_knowledge_store: PRESENT

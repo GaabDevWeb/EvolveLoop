@@ -1,6 +1,6 @@
 # Policy Engine — risco, budget, topologia
 
-**Âmbito:** `/MegaBrain` (skill `orquestrar`).  
+**Âmbito:** `/evolve` (skill `orquestrar`).  
 **Dono:** orquestrador raiz. Filhos **não** reclassificam a missão; podem **sinalizar** risco maior no handoff — o raiz reavalia e **reescreve** a policy no SSOT **antes** do próximo spawn.
 
 **Quando corre:** **antes** de qualquer spawn PDA e **antes** da Fase 1 material (`/planejar` ou IR). Corre na entrada da missão e **de novo** se o âmbito mudar (ex.: hotfix a tocar ACL → reclassificar `sensitive`).
@@ -41,7 +41,7 @@ Classificar pelo **maior** risco material do âmbito (não pelo tamanho do diff)
 policy hard gate (image-to-code, grill-me)  ≠  TS Execution Engine enforcement
 ```
 
-Helpers testáveis (evals): `orchestrator/src/policy/megabrain-skill-gates.ts`.
+Helpers testáveis (evals): `orchestrator/src/policy/evolveloop-skill-gates.ts`.
 
 ---
 
@@ -56,7 +56,7 @@ O `risk_tier` **não** é só um rótulo — implica um fluxo **diferente**. Ali
 | **SENSITIVE** | `ground → plan → exec → critic → test → security → document` | Critic + security + PO obrigatórios |
 | **AUDIT** | `ground → explore → critic → security → evidence → report` | **Proibido** `exec` de produto |
 
-**Regra:** classificar pelo risco **real**. Não usar workflow pesado só porque o MegaBrain existe. Tipografia/CSS/docs isoladas → FAST. Auth/ACL/DB/APIs públicas → SENSITIVE.
+**Regra:** classificar pelo risco **real**. Não usar workflow pesado só porque o EvolveLoop existe. Tipografia/CSS/docs isoladas → FAST. Auth/ACL/DB/APIs públicas → SENSITIVE.
 
 Campo SSOT opcional (espelho do tier): `workflow_mode: fast | hotfix | standard | sensitive | audit`.
 

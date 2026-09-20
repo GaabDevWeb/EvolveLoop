@@ -19,8 +19,8 @@ summary:
 pathnames:
   - {'path': 'docs/internal/historical/MegaBrain-Ecosystem.md', 'basename': 'MegaBrain-Ecosystem.md', 'type': 'file', 'active': False, 'historical': True, 'public_surface': False, 'rename_required': False, 'rename_candidate': 'EvolveLoop-Ecosystem.md'}
   - {'path': 'docs/internal/historical/cursor-megabrain-rag-stack.md', 'basename': 'cursor-megabrain-rag-stack.md', 'type': 'file', 'active': False, 'historical': True, 'public_surface': False, 'rename_required': False, 'rename_candidate': 'cursor-evolveloop-rag-stack.md'}
-  - {'path': 'orchestrator/src/policy/megabrain-skill-gates.ts', 'basename': 'megabrain-skill-gates.ts', 'type': 'file', 'active': True, 'historical': False, 'public_surface': False, 'rename_required': True, 'rename_candidate': 'evolveloop-skill-gates.ts'}
-  - {'path': 'orchestrator/tests/unit/megabrain-skill-gates.test.ts', 'basename': 'megabrain-skill-gates.test.ts', 'type': 'file', 'active': True, 'historical': False, 'public_surface': False, 'rename_required': True, 'rename_candidate': 'evolveloop-skill-gates.test.ts'}
+  - {'path': 'orchestrator/src/policy/skill-gates.ts', 'basename': 'skill-gates.ts', 'type': 'file', 'active': True, 'historical': False, 'public_surface': False, 'rename_required': True, 'rename_candidate': 'evolveloop-skill-gates.ts'}
+  - {'path': 'orchestrator/tests/unit/skill-gates.test.ts', 'basename': 'skill-gates.test.ts', 'type': 'file', 'active': True, 'historical': False, 'public_surface': False, 'rename_required': True, 'rename_candidate': 'evolveloop-skill-gates.test.ts'}
 
 host_pathnames:
   - /home/gaab/.cursor/commands/MegaBrain.md

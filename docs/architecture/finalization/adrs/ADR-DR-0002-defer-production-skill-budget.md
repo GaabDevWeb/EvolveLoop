@@ -43,7 +43,7 @@ Whether offline E-001 associations justify a production runtime skill-budget fea
 | Dimension | Value |
 |-----------|--------|
 | System | CursorSKILLS `.cursor/skills` catalog + offline harness |
-| Runtime | **Not** live Cursor/MegaBrain injection; harness only |
+| Runtime | **Not** live Cursor/evolve injection; harness only |
 | Workload | 176 eval/trigger prompts |
 | Experiment | E-001 offline battery |
 | Sample | 4 conditions × 5 reps (deterministic scorer) |
@@ -109,7 +109,7 @@ IMPLEMENTATION_STATUS: NOT_IMPLEMENTED
 ## Open Questions
 
 - Live host effect size?  
-- Interaction of host skill discovery vs MegaBrain packages?  
+- Interaction of host skill discovery vs EvolveLoop packages?  
 
 ## Related Experiments
 

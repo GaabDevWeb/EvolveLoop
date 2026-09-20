@@ -12,7 +12,7 @@ policy hard gate ≠ TS Execution Engine enforcement (current architecture)
 
 Evidence lives under `memory/<feature_id>/evidence/`.
 
-Helpers (evals only): `orchestrator/src/policy/megabrain-skill-gates.ts`
+Helpers (evals only): `orchestrator/src/policy/skill-gates.ts`
 
 ---
 

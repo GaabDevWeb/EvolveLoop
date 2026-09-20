@@ -29,4 +29,4 @@ Invocação **`/evolve`**.
 
 **HARD-GATE — Grill-me (design/planning):** após `/prd` aprovado, antes de `/planejar` quando Policy exige → `~/.agents/skills/grill-me/SKILL.md` + `grill-me-gate.md` (fail-closed)
 
-**Legacy:** o nome interno histórico *EvolveLoop* e o comando `/EvolveLoop` são aliases legados — não são a marca pública. O nome interno histórico *MegaBrain* e `/MegaBrain` são aliases legados. Use `/evolve`.
+**Legacy:** o nome histórico *MegaBrain* e o comando `/MegaBrain` são aliases legados (GaabType only) — não são a marca pública. Use `/evolve`.

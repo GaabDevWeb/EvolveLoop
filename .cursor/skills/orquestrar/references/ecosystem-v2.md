@@ -651,7 +651,7 @@ brainstorming (opcional, global) → prd (pacote docs/, HARD-GATE aprovação)
 **HARD-GATE:**  
 `brainstorming` proíbe código até design aprovado. **`prd`** proíbe planner/implementação até pacote docs aprovado.  
 **`grill-me`** proíbe planner quando `require[]` o inclui e evidência ≠ `satisfied|exempt` (fail-closed).  
-**`knowledge-grounding`** proíbe planner/implementação MegaBrain até retrieve wiki+RAG (`applied` ou `skipped_trivial`).  
+**`knowledge-grounding`** proíbe planner/implementação EvolveLoop até retrieve wiki+RAG (`applied` ou `skipped_trivial`).  
 **`GATE_BUNDLE`** é obrigatório em todo spawn PDA (herança de hard-gates); ver [gate-bundle.md](gate-bundle.md) + [pda-roles.md](pda-roles.md).
 
 **Regra:** grill-me/brainstorming **nunca** correm em loop autónomo silencioso — pausar orquestrador, registar `aguarda humano` em `.agent_history.md`.
@@ -701,7 +701,7 @@ Resolvidos via Registry com `implementation: skill` e path global. Activados pel
 | `context-grounding` | `wiki` | HARD-GATE Fase 0 |
 | `browser-automation` | `agent-browser` | FE fallback / dossier HARD |
 | `visual-generation` | `image-to-code` | **HARD-GATE:** qualquer imagem anexada pelo utilizador; frontend-pro Vision |
-| `knowledge-grounding` | `wiki` / CLI `wiki-ingest` / vault | **HARD-GATE MegaBrain:** wiki + RAG (BM25/híbrido/LanceDB/packs) antes de planear/implementar; ver [knowledge-grounding-gate.md](knowledge-grounding-gate.md) |
+| `knowledge-grounding` | `wiki` / CLI `wiki-ingest` / vault | **HARD-GATE EvolveLoop:** wiki + RAG (BM25/híbrido/LanceDB/packs) antes de planear/implementar; ver [knowledge-grounding-gate.md](knowledge-grounding-gate.md) |
 | `browser-automation` | `agent-browser` | Fluxos browser complexos |
 
 ### Modos de Provider (evitar novas capabilities)
@@ -719,7 +719,7 @@ Comandos são **atalhos de invocação** — não definem arquitectura.
 
 | Comando | Capability | Provider |
 |---------|------------|----------|
-| `/MegaBrain` | `orchestration` | `orquestrar` |
+| `/evolve` | `orchestration` | `orquestrar` |
 | `/planejar` | `planning` | `planner` |
 | `/backend` | `backend-implementation` | `backend` |
 | `/frontend` | `frontend-ui` | `frontend-pro` |
@@ -741,7 +741,7 @@ Comandos são **atalhos de invocação** — não definem arquitectura.
 |------------|-------------------|--------|-------|
 | `frontend-ui` | `frontend` (legado no SKILL.md) | ✗ path incorrecto | Registry → `frontend-pro` |
 | `testing` | `testing` | ✗ não existe | Criar provider local |
-| Comandos `/` | — | Parcial | Criar `/MegaBrain`, `/planejar`, etc. |
+| Comandos `/` | — | Parcial | Criar `/evolve`, `/planejar`, etc. |
 
 ---
 
@@ -943,7 +943,7 @@ Testing falha por bug em `be-auth`:
 | Ignorar telemetria | Evolução às cegas |
 | UI com imagem anexada sem `image-to-code` | Viola [image-attachment-gate.md](image-attachment-gate.md) — qualquer agente |
 | Build genérico com mockup no chat | Usar Vision + `~/.agents/skills/image-to-code/SKILL.md` |
-| `/MegaBrain` planear/codar sem retrieve wiki/RAG | Viola [knowledge-grounding-gate.md](knowledge-grounding-gate.md) |
+| `/evolve` planear/codar sem retrieve wiki/RAG | Viola [knowledge-grounding-gate.md](knowledge-grounding-gate.md) |
 | Inventar contratos Gaab ou omitir `log.md` pós-edit | Viola HARD-GATE Wiki + rule `wiki-agent` |
 | Erro de gate → reboot cego Fase 0 sempre | Viola [outer-loop.md](outer-loop.md) — usar partial/plan_reset/full_ground |
 | Outer loop sem teto / sem SSOT cycle_id | Viola outer-loop — max_outer_cycles + handoff |

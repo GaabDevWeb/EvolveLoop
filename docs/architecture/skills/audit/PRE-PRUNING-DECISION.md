@@ -13,7 +13,7 @@
 | grill-me flow verifiable | YES — gate.grill-me.json + tests |
 | grilling wrapper no longer broken | YES — Case C self-authority |
 | Telemetry installed | YES — skill-telemetry + EventBus SkillLifecycle |
-| Activation tests exist | YES — megabrain-skill-gates + skill-telemetry |
+| Activation tests exist | YES — skill-gates + skill-telemetry |
 | Hard gates documented | YES — HARD-GATES-V2 + CONTRACT |
 | Matrix V2 updated | YES |
 | Pruning candidates documented | YES — REMOVAL-CANDIDATES-V2 |

@@ -39,7 +39,7 @@ Se equivalente → **`ALREADY_PRESENT`** (+ diferença residual se houver). **N�
 
 | Código | Significado |
 |--------|-------------|
-| `ALREADY_PRESENT` | Mecanismo equivalente no MegaBrain |
+| `ALREADY_PRESENT` | Mecanismo equivalente no EvolveLoop |
 | `ADOPT` | Adoptar tal-qual (raro; evidência forte + fit) |
 | `ADAPT` | Adoptar ideia adaptada aos contratos existentes |
 | `PROTOTYPE` | Experimento mínimo antes de adoptar |

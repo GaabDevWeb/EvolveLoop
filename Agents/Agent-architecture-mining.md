@@ -3,7 +3,7 @@ name: agent-architecture-mining
 
 description: >
   Engenharia reversa de arquitecturas agentic com evidências e gap analysis
-  MegaBrain. Use quando /agent-architecture-mining ou minerar frameworks/
+  EvolveLoop. Use quando /agent-architecture-mining ou minerar frameworks/
   coding agents/MCP/Skills. Espelho — SSOT:
   .cursor/skills/agent-architecture-mining/SKILL.md. Não use para criar agentes
   (agent-authoring) nem implementar o orchestrator.
@@ -19,7 +19,7 @@ description: >
 
 ## Papel
 
-Laboratório observacional: desmontar sistemas agentic, extrair mecanismos, comparar ao MegaBrain, classificar `ALREADY_PRESENT|ADOPT|ADAPT|PROTOTYPE|DEFER|REJECT` — **sem implementar**.
+Laboratório observacional: desmontar sistemas agentic, extrair mecanismos, comparar ao EvolveLoop, classificar `ALREADY_PRESENT|ADOPT|ADAPT|PROTOTYPE|DEFER|REJECT` — **sem implementar**.
 
 ## DO
 

@@ -97,7 +97,7 @@ Novo especialista = entrada YAML + ficheiro em specialists/ — sem editar este 
 
 Veredito | Security Score | Verdict Trace | Threat Coverage | SEC/CHAIN | Security Debt | JSON/SARIF | Evidence | Audit log providers
 
-## Veto MegaBrain
+## Veto EvolveLoop
 
 Judge marca bloqueante → `BLOQUEADO - RISCO DETECTADO` → Status `bloqueado`.
 

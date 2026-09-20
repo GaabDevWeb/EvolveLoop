@@ -22,4 +22,4 @@ handoff:
   warnings: []
 ```
 
-Se o destino for pipeline MegaBrain, preferir o bloco textual `[ENTREGA CONSOLIDADA]` + `[ENCERRAMENTO]` da skill de origem.
+Se o destino for pipeline EvolveLoop, preferir o bloco textual `[ENTREGA CONSOLIDADA]` + `[ENCERRAMENTO]` da skill de origem.

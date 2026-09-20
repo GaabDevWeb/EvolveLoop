@@ -30,7 +30,7 @@ benefits:
   - Shared client UX for auth/consent
 costs:
   - Tools are arbitrary code execution
-  - Protocol does not replace orchestration/evidence/policy of MegaBrain
+  - Protocol does not replace orchestration/evidence/policy of EvolveLoop
 failure_modes:
   - Untrusted tool descriptions
   - Over-permissioned servers

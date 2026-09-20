@@ -77,7 +77,7 @@ evidence:
     notes: "DOCUMENTED vs behavior drift"
 
   - id: EA-0007
-    claim: "MegaBrain Evidence Bus FS path is not written by ExecutionEngine"
+    claim: "EvolveLoop Evidence Bus FS path is not written by ExecutionEngine"
     status: DOCUMENTED_ONLY
     source_type: SOURCE
     path: orchestrator/src/persistence/paths.ts

@@ -3,7 +3,7 @@ name: devops
 description: >
   CI/CD, pipelines, deploy e IaC (PDA exec): GitHub Actions, Docker, runbooks e
   gates de deploy. Use quando /devops, CI, pipeline, deploy, containerização, ou
-  MegaBrain Fase 4b com DoD CI/deploy. Não use para features (backend/frontend-pro),
+  EvolveLoop Fase 4b com DoD CI/deploy. Não use para features (backend/frontend-pro),
   schema (database), PRD (prd), nem veredictos testing/security/po (só orquestra
   jobs que os executam).
 metadata:
@@ -25,9 +25,9 @@ disable-model-invocation: true
 
 # DevOps — CI/CD & Deploy
 
-Provider da capability **`devops-deploy`** (tipo **worker**, PDA **`exec`**) no MegaBrain. Configura pipelines, containers e runbooks quando o DoD exige **CI verde** ou **deploy**.
+Provider da capability **`devops-deploy`** (tipo **worker**, PDA **`exec`**) no EvolveLoop. Configura pipelines, containers e runbooks quando o DoD exige **CI verde** ou **deploy**.
 
-**Contrato ascendente:** Fase **4b** (opcional) do MegaBrain — após Fase 4 (segurança), antes ou paralelo a PO conforme DoD.
+**Contrato ascendente:** Fase **4b** (opcional) do EvolveLoop — após Fase 4 (segurança), antes ou paralelo a PO conforme DoD.
 
 **Policy:** listar capabilities **≠** autorização. DevOps **não** auto-concede secrets, deploy prod nem desactiva gates.
 

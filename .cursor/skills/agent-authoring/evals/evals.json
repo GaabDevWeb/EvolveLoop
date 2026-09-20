@@ -6,7 +6,7 @@
       "name": "create-new-agent-happy-path",
       "category": "happy_path",
       "tags": ["create", "package"],
-      "prompt": "No repo MegaBrain, cria um novo agente experimental 'failure-analyst' para root-cause de falhas de CI, sem implementar código de produto. Já existem testing e devops.",
+      "prompt": "No repo EvolveLoop, cria um novo agente experimental 'failure-analyst' para root-cause de falhas de CI, sem implementar código de produto. Já existem testing e devops.",
       "expected_output": "DISCOVER/audit; decisão NEW_AGENT ou EXTEND justificada; DO/DO NOT; package paths (skill, command, provider/contract se aplicável); gates; sem criar Agent Registry novo.",
       "files": [],
       "assertions": [

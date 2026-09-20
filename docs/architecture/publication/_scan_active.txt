@@ -1,0 +1,14 @@
+docs/architecture/evolution/FINAL-STATE.yaml
+docs/architecture/evolution/STATE-AT-START.yaml
+docs/architecture/knowledge/KNOWLEDGE-ARCHITECTURE.md
+docs/architecture/knowledge/KNOWLEDGE-BACKEND-CONTRACT.md
+docs/architecture/knowledge/KNOWLEDGE-BACKEND-MANIFEST.yaml
+docs/architecture/knowledge/KNOWLEDGE-DEPENDENCY-GRAPH.yaml
+docs/architecture/knowledge/KNOWLEDGE-PROFILE-BOUNDARY.md
+docs/architecture/publication/ALIAS-MIGRATION.yaml
+docs/architecture/publication/PROJECT-NAMING-CANDIDATES.yaml
+docs/architecture/publication/PUBLIC-EXTRACTION-PLAN.md
+docs/architecture/publication/STRUCTURAL-PRECHECK-GAABTYPE.yaml
+docs/architecture/publication/STRUCTURAL-PRECHECK-MAIN.yaml
+global-skills/grill-me/SKILL.md
+orchestrator/tests/unit/knowledge-backend.test.ts

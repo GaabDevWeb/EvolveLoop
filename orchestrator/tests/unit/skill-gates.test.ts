@@ -4,9 +4,9 @@ import {
   evaluateGrillMeTransition,
   evaluateImageToCodeGate,
   skillGatesToRequireFlags,
-} from "../../src/policy/megabrain-skill-gates.js";
+} from "../../src/policy/skill-gates.js";
 
-describe("megabrain-skill-gates — grill-me", () => {
+describe("skill-gates — grill-me", () => {
   it("task simples / trivial → gate não requerido", () => {
     const d = evaluateGrillMeTransition({
       risk_tier: "hotfix",
@@ -99,7 +99,7 @@ describe("megabrain-skill-gates — grill-me", () => {
   });
 });
 
-describe("megabrain-skill-gates — image-to-code", () => {
+describe("skill-gates — image-to-code", () => {
   it("imagem anexada → required", () => {
     const d = evaluateImageToCodeGate({ image_attachment: true });
     expect(d.required).toBe(true);

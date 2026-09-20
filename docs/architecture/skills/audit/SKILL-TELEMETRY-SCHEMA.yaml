@@ -46,7 +46,7 @@ storage:
 implementation:
   module: orchestrator/src/telemetry/skill-telemetry.ts
   provider_hook: CursorSkillProvider LOADED/EXECUTED/FAILED
-  policy_helpers: orchestrator/src/policy/megabrain-skill-gates.ts
+  policy_helpers: orchestrator/src/policy/skill-gates.ts
 
 metrics_per_skill:
   - activation_count

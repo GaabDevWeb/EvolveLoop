@@ -13,12 +13,12 @@ experiments:
     status_detail: BLOCKED_BY_IMPLEMENTATION_GAP
     prerequisites:
       - Ability to configure host skill catalog injection (Cursor / skill loader)
-      - MegaBrain does not currently expose max_skills / max_description_tokens API
+      - EvolveLoop does not currently expose max_skills / max_description_tokens API
     existing_components:
       - `.cursor/skills/**/SKILL.md` packages
       - skill eval JSON under some skills (optional fixtures)
     missing_components:
-      - Catalog budget controller in MegaBrain/orchestrator
+      - Catalog budget controller in EvolveLoop/orchestrator
       - Observable prefix_tokens metric hook
     observable_outputs:
       - activation_precision/recall on fixed task set
@@ -99,4 +99,4 @@ experiments:
 
 ## Ordering implication (factual)
 
-Before any HITL/sandbox experiment authorization: restore or sync `src/jobs/` and re-run full test suite; decide Evidence Bus vocabulary (engine vs MegaBrain FS).
+Before any HITL/sandbox experiment authorization: restore or sync `src/jobs/` and re-run full test suite; decide Evidence Bus vocabulary (engine vs EvolveLoop FS).

@@ -1,11 +1,11 @@
-# Image Attachment Gate — HARD-GATE MegaBrain
+# Image Attachment Gate — HARD-GATE EvolveLoop
 
-**Âmbito:** todo o ecossistema MegaBrain (`/MegaBrain`) — orquestrador, workers, gates e meta-skills.
+**Âmbito:** todo o ecossistema EvolveLoop (`/evolve`) — orquestrador, workers, gates e meta-skills.
 
 **Skill obrigatória:** `~/.agents/skills/image-to-code/SKILL.md`  
 **Provider global:** `image-to-code` · capability `visual-generation`
 
-**Enforcement actual:** **policy / agente** (instruções + GATE_BUNDLE + Briefing) — **≠** machine-check no Execution Engine TypeScript. Remoção da skill quebraria o contrato MegaBrain mesmo sem enforcement TS.
+**Enforcement actual:** **policy / agente** (instruções + GATE_BUNDLE + Briefing) — **≠** machine-check no Execution Engine TypeScript. Remoção da skill quebraria o contrato EvolveLoop mesmo sem enforcement TS.
 
 ---
 
@@ -26,7 +26,7 @@ Aplica-se **sempre** que existir **qualquer imagem anexada** na mensagem do util
 ## Regra absoluta
 
 > **Imagem anexada → `image-to-code` é obrigatório.**  
-> Nenhum agente do MegaBrain pode implementar, redesenhar ou “recriar de memória” UI a partir de anexo sem seguir essa skill.
+> Nenhum agente do EvolveLoop pode implementar, redesenhar ou “recriar de memória” UI a partir de anexo sem seguir essa skill.
 
 Ordem mínima quando a imagem **já vem do utilizador**:
 
@@ -38,11 +38,11 @@ Quando a skill exigir geração adicional de imagens (landing premium, secções
 
 ---
 
-## Por papel no MegaBrain
+## Por papel no EvolveLoop
 
 | Papel | O que fazer |
 |-------|-------------|
-| **MegaBrain (raiz)** | Detetar anexo na entrada; registar `image_attachment: true` no SSOT; no Task Graph, marcar nós `frontend-ui` com `requires: image-to-code`; no Briefing PDA, **obrigar** leitura da skill |
+| **EvolveLoop (raiz)** | Detetar anexo na entrada; registar `image_attachment: true` no SSOT; no Task Graph, marcar nós `frontend-ui` com `requires: image-to-code`; no Briefing PDA, **obrigar** leitura da skill |
 | **planner** | Se houver anexo: incluir nó `frontend-ui` com nota `image-to-code obrigatório`; proibir tarefas “implementar UI sem image-to-code” |
 | **frontend-pro** | **Modo Vision** automático; executar workflow `image-to-code` (não substituir por Build genérico) |
 | **backend** | **Não** implementar UI a partir da imagem; delegar ou handoff para `frontend-pro` + `image-to-code` |

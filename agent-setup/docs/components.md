@@ -4,9 +4,9 @@ Managed components are listed explicitly in `manifest/components.yaml`.
 
 ## Core (minimal)
 
-- Rules: `wiki-agent`, `megabrain`
+- Rules: `wiki-agent`, `evolveloop`
 - Skills: `wiki` (bundled)
-- Commands: `wiki`, `MegaBrain`
+- Commands: `wiki`, `EvolveLoop`
 
 ## Standard
 

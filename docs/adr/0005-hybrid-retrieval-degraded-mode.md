@@ -4,7 +4,7 @@
 |-------|-------|
 | Data | 2026-09-17 |
 | Status | accepted |
-| Deciders | MegaBrain / platform evolution / wiki |
+| Deciders | EvolveLoop / platform evolution / wiki |
 
 ## Contexto
 

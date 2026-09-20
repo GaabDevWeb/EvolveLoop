@@ -35,7 +35,7 @@ spec:
     subagent_type: generalPurpose
 
   constraints:
-    stack: [cursor, megabrain]
+    stack: [cursor, evolveloop]
     platforms: [cursor]
     mutates_agent_system: false
 

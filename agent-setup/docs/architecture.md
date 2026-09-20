@@ -4,7 +4,7 @@
 
 ```
 Agent Setup     → install, configure, verify, update, project init
-MegaBrain       → orchestrate execution (orquestrar)
+EvolveLoop       → orchestrate execution (orquestrar)
 Wiki        → knowledge (vault + RAG)
 RAG             → retrieval (rag/ package)
 ```

@@ -63,7 +63,7 @@
       "name": "edge-hard-gate-docs-unapproved",
       "category": "edge_case",
       "tags": ["hard-gate", "fase-0.5"],
-      "prompt": "MegaBrain Fase 0.5 activa: docs/prd existem mas utilizador ainda não aprovou. Planeia a feature de checkout.",
+      "prompt": "EvolveLoop Fase 0.5 activa: docs/prd existem mas utilizador ainda não aprovou. Planeia a feature de checkout.",
       "expected_output": "Recusa planear; redirecciona aprovação /prd.",
       "files": [],
       "assertions": [

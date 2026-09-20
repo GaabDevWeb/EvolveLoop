@@ -4,13 +4,13 @@
 |-------|-------|
 | Data | 2026-09-17 |
 | Status | accepted |
-| Deciders | MegaBrain / platform evolution |
+| Deciders | EvolveLoop / platform evolution |
 
 ## Contexto
 
 O `PolicyEngine` existente responde a perguntas de **execução**: retries, gates, strategy de provider, timeouts (`high-reliability`, `rapid-prototype`, `cost-optimized`). A missão e a auditoria exigiam allow/deny/confirm por capability (filesystem/shell/confirmação), o que **não** é a mesma pergunta. Fundir as duas num único objecto misturaria risk de permissões com scheduling.
 
-Existe ainda a spec MegaBrain (`policy-engine.md`) de risk_tier / budget / topology para o orquestrador LLM raiz — terceira camada documental.
+Existe ainda a spec EvolveLoop (`policy-engine.md`) de risk_tier / budget / topology para o orquestrador LLM raiz — terceira camada documental.
 
 ## Decisão
 
@@ -20,7 +20,7 @@ Manter **três** limites distintos:
 |--------|----------|---------------|
 | **ExecutionPolicy** | Quantos retries? Quais gates? Que strategy? | `PolicyEngine` (existente) |
 | **CapabilityAuthority** | Esta capability pode correr neste contexto? Precisa confirmação? | `authorize()` / `CapabilityAuthority` (novo) |
-| **MegaBrain policy** | risk_tier / budget / topology | Spec docs — fora do TS engine nesta fase |
+| **EvolveLoop policy** | risk_tier / budget / topology | Spec docs — fora do TS engine nesta fase |
 
 Authority corre **antes** do handler deterministic; deny/confirm emitem `buildAuthorityEvidence`; allow anexa decisão ao worker evidence.
 

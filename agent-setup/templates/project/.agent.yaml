@@ -15,5 +15,5 @@ rag:
 memory:
   enabled: true
 
-megabrain:
+evolveloop:
   enabled: true

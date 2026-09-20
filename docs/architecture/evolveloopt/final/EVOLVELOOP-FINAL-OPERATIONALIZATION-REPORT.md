@@ -1,6 +1,6 @@
 # EvolveLoop — Final Operationalization Report
 
-**Audience:** engineers and reviewers outside the day-to-day CursorSKILLS/MegaBrain workstream.  
+**Audience:** engineers and reviewers outside the day-to-day CursorSKILLS/evolve workstream.  
 **Date:** 2026-09-19  
 **Starting baseline:** `baseline-v5-2026-09-19`  
 **Final baseline:** `baseline-v6-2026-09-19`  
@@ -204,7 +204,7 @@ Prior LIVE-001..008 and longitudinal L-001..008 remain green.
 
 ## 20. Adversarial Validation
 
-Independent critic (MegaBrain `role: critic`) confirmed the outcome path is real, caps prevent infinite recursion, observer does not break runtime, and production claims must not be overstated. Findings captured in `FINDINGS.yaml`.
+Independent critic (EvolveLoop `role: critic`) confirmed the outcome path is real, caps prevent infinite recursion, observer does not break runtime, and production claims must not be overstated. Findings captured in `FINDINGS.yaml`.
 
 ---
 

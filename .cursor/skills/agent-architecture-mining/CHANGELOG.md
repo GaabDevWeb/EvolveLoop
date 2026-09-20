@@ -9,7 +9,7 @@
 
 ## Motivo
 
-Responsabilidade única: engenharia reversa arquitetural de sistemas agentic + gap analysis MegaBrain. Distinta de `architect`, `researcher`, `technical-library-dossier`, `agent-authoring`.
+Responsabilidade única: engenharia reversa arquitetural de sistemas agentic + gap analysis EvolveLoop. Distinta de `architect`, `researcher`, `technical-library-dossier`, `agent-authoring`.
 
 ## Artefactos
 

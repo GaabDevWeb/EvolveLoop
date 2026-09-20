@@ -1,8 +1,8 @@
 # Agent Setup
 
-Infraestrutura **declarativa e reproduzível** para o ambiente de desenvolvimento assistido por IA (Cursor + Wiki + MegaBrain).
+Infraestrutura **declarativa e reproduzível** para o ambiente de desenvolvimento assistido por IA (Cursor + Wiki + EvolveLoop).
 
-Não substitui MegaBrain, Wiki ou RAG — **instala, configura, verifica e inicializa projetos**.
+Não substitui EvolveLoop, Wiki ou RAG — **instala, configura, verifica e inicializa projetos**.
 
 ## Quick start
 
@@ -19,8 +19,8 @@ agent diff
 
 | Profile | Inclui |
 |---------|--------|
-| `minimal` | Rules, wiki skill, wiki/MegaBrain commands |
-| `standard` | + memory hooks, MegaBrain skills (symlink CursorSKILLS) |
+| `minimal` | Rules, wiki skill, wiki/evolve commands |
+| `standard` | + memory hooks, EvolveLoop skills (symlink CursorSKILLS) |
 | `full` | + RAG PATH, systemd wiki stack |
 
 ## CLI

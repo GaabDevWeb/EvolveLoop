@@ -1,6 +1,6 @@
 # Agent Package — contrato composto (formato existente)
 
-**Não** existe `kind: Agent` no runtime. O contrato formal de um agente MegaBrain é a composição versionada destes artefactos.
+**Não** existe `kind: Agent` no runtime. O contrato formal de um agente EvolveLoop é a composição versionada destes artefactos.
 
 ## Composição obrigatória mínima
 

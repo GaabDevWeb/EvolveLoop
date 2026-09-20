@@ -174,8 +174,8 @@ mechanisms:
     gaps: ["Validator/test drift"]
     notes: ""
 
-  - id: M-EVIDENCE-BUS-MEGABRAIN
-    name: MegaBrain memory/*/evidence JSON gates
+  - id: M-EVIDENCE-BUS-EVOLVELOOP
+    name: EvolveLoop memory/*/evidence JSON gates
     category: evidence
     research_decision:
       previous: ALREADY_PRESENT
@@ -415,7 +415,7 @@ mechanisms:
     implementation:
       files: [".cursor/skills/**/SKILL.md"]
       symbols: []
-      entrypoints: ["Cursor / MegaBrain host"]
+      entrypoints: ["Cursor / EvolveLoop host"]
     runtime_path: "Host skill loading; JobFileExecutor for cursor-skill providers"
     tests: "skill-level evals uneven"
     execution_evidence: "directory listing OBSERVED"

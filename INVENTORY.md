@@ -6,7 +6,7 @@ Gerado para clonar e usar noutro PC. Pacote **lean** (sem workspaces/evals pesad
 
 | Skill | Comando | Tipo |
 |-------|---------|------|
-| orquestrar | `/MegaBrain` | raiz |
+| orquestrar | `/evolve` | raiz |
 | wiki | `/wiki` | grounding vault+RAG |
 | wiki-mem | `/mem` | memória episódica |
 | prd | `/prd` | upstream |
@@ -34,11 +34,11 @@ Orquestrador-v2.md, Prd.md, Planner.md, backend.md, Security.md, Po-review.md, D
 
 ## Commands (`.cursor/commands/`)
 
-MegaBrain, wiki, mem, prd, adr, planejar, database, devops, frontend-pro, testes, seguranca, validar, skill-authoring, library-dossier (+ gerados no install: backend, documentar)
+EvolveLoop, wiki, mem, prd, adr, planejar, database, devops, frontend-pro, testes, seguranca, validar, skill-authoring, library-dossier (+ gerados no install: backend, documentar)
 
 ## Rules
 
-- `Rules/Rules.md` → `~/.cursor/rules/megabrain.mdc`
+- `Rules/Rules.md` → `~/.cursor/rules/evolveloop.mdc`
 - `Rules/wiki-agent.mdc` → `~/.cursor/rules/wiki-agent.mdc`
 
 ## MCPs (`mcp/mcp.json`)

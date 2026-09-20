@@ -36,7 +36,7 @@ excluded:
   personal:
     - profiles/gaabtype (GaabType branch only)
     - personal project pack tables in wiki-agent
-    - MegaBrain public command
+    - EvolveLoop public command
   host:
     - /home/gaab defaults
     - Documentos locale defaults

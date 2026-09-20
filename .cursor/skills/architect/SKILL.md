@@ -19,7 +19,7 @@ disable-model-invocation: true
 
 # Architect — análise e desenho de sistema
 
-Provider da capability **`architecture-analysis`** (tipo **upstream**) no MegaBrain.
+Provider da capability **`architecture-analysis`** (tipo **upstream**) no EvolveLoop.
 Raciocina sobre **estrutura do sistema** — não formaliza ADR isolado, não escreve PRD, não planeja tarefas.
 
 **Template comportamental:** reasoning (opções + evidência; pouco patch).

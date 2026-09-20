@@ -1,7 +1,7 @@
 ---
 name: agent-authoring
 description: >
-  Fábrica e manutenção de agentes do ecossistema MegaBrain: cria, audita, revisa,
+  Fábrica e manutenção de agentes do ecossistema EvolveLoop: cria, audita, revisa,
   actualiza, migra, valida, versiona e integra Agent Packages (Skill + Command +
   Provider/Contract + Agents espelho + install/orquestrar). Use quando o utilizador
   invocar /agent-authoring, pedir criar/revisar/actualizar agente, adicionar
@@ -23,7 +23,7 @@ metadata:
 disable-model-invocation: true
 ---
 
-# Agent Authoring — fábrica de agentes MegaBrain
+# Agent Authoring — fábrica de agentes EvolveLoop
 
 Camada de **engenharia de Agent Packages** sobre a arquitectura existente.
 Não é gerador genérico de prompts. Não inventa registry, runtime, Evidence Bus,

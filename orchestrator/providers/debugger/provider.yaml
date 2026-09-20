@@ -57,7 +57,7 @@ spec:
     executor_types: [cursor-skill]
 
   constraints:
-    stack: [cursor, megabrain]
+    stack: [cursor, evolveloop]
     platforms: [cursor]
     signals:
       - role: explore

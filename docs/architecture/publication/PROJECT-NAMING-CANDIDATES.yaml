@@ -3,7 +3,7 @@
 # No numeric scores. Collision checks are superficial web search (2026-09-20).
 
 meta:
-  current_name: MegaBrain
+  current_name: EvolveLoop
   personal_profile_name: GaabType
   options_for_MegaBrain: [KEEP, RENAME, CODENAME_ONLY]
   direction_preferred_in_audit: RENAME_or_CODENAME_ONLY

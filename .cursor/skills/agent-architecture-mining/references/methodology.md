@@ -7,7 +7,7 @@
 | `TARGET_RESEARCH` | nome/URL do sistema | Level 1 Target Report |
 | `PATTERN_MINING` | 1+ reports/findings | Level 2 Finding(s) |
 | `CROSS_SYSTEM_ANALYSIS` | mesmo mecanismo em N sistemas | Level 3 Cross-System Pattern |
-| `ARCHITECTURE_GAP_ANALYSIS` | finding/pattern + audit MegaBrain | Level 4 Architecture Gap |
+| `ARCHITECTURE_GAP_ANALYSIS` | finding/pattern + audit EvolveLoop | Level 4 Architecture Gap |
 | `PRINCIPLE_EXTRACTION` | findings com evidência forte | entrada em `docs/AGENT_ARCHITECTURE_PRINCIPLES.md` |
 
 ## Categorias de alvo (extensível)

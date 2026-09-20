@@ -11,7 +11,7 @@ drift:
 
   - mechanism: Evidence Bus
     documented_as: "memory/<feature>/evidence/ JSON gates required to continuar (orquestrar evidence-bus.md)"
-    actually: "ExecutionEngine accumulates Evidence[] in memory; optional JSONL events under data-dir; does not implement MegaBrain gate file bus"
+    actually: "ExecutionEngine accumulates Evidence[] in memory; optional JSONL events under data-dir; does not implement EvolveLoop gate file bus"
     severity: HIGH
 
   - mechanism: Policy Engine enforcement

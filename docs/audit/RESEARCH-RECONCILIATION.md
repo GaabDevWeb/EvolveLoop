@@ -31,7 +31,7 @@ reconciliation:
     previous_decision: ALREADY_PRESENT
     audit_status: PARTIALLY_IMPLEMENTED
     reconciliation: WEAKENS
-    explanation: MegaBrain FS bus ≠ engine Evidence[]; do not equate
+    explanation: EvolveLoop FS bus ≠ engine Evidence[]; do not equate
     evidence_ids: [EA-0006, EA-0007]
 
   - mechanism: Skills SKILL.md packages

@@ -1,6 +1,6 @@
 # PDA Roles — plan / exec / gate / explore / critic / librarian
 
-**Âmbito:** papéis tipados no spawn MegaBrain. O **raiz** não é um destes papéis — é o orquestrador (SSOT, Matriz, outer loop, spawns).
+**Âmbito:** papéis tipados no spawn EvolveLoop. O **raiz** não é um destes papéis — é o orquestrador (SSOT, Matriz, outer loop, spawns).
 
 Todo filho declara `role` no `GATE_BUNDLE`. Mudar de papel = **novo spawn** (ou voltar ao raiz).
 
@@ -111,7 +111,7 @@ recommended_action: continuar | corrigir | replanejar
 
 ## Mapeamento fase → role sugerido
 
-| Fase MegaBrain | Role a spawnar |
+| Fase EvolveLoop | Role a spawnar |
 |----------------|----------------|
 | Fase 1 Planeamento | `plan` |
 | Fase 2 Execução | `exec` (+ `explore` aninhado se precisar mapa); depois **`critic`** **antes** do gate testing (obrigatório se `risk_tier=sensitive`) |

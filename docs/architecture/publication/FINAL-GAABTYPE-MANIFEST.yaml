@@ -20,7 +20,7 @@ overlay:
   hooks:
     - .cursor/hooks.json with wiki-mem sessionStart/afterFileEdit/stop/sessionEnd
   commands:
-    - .cursor/commands/MegaBrain.md legacy alias → /evolve
+    - .cursor/commands/evolve.md legacy alias → /evolve
   projects:
     - profiles/gaabtype/projects.yaml
     - Rules/wiki-agent.mdc personal pack table

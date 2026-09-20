@@ -2,7 +2,7 @@
 
 **Status:** naming study only — **no rename performed**  
 **Generated:** 2026-09-20T02:26:30Z  
-**Current product label:** MegaBrain (also CursorSKILLS repo folder)  
+**Current product label:** EvolveLoop (also CursorSKILLS repo folder)  
 **Personal profile label to preserve:** GaabType  
 
 ---
@@ -17,15 +17,15 @@ orchestration · capabilities · providers · policy · knowledge · evidence ·
 
 ---
 
-## 2. MegaBrain options
+## 2. EvolveLoop options
 
 | Option | Meaning | Factual fit |
 |--------|---------|-------------|
-| **KEEP** | Public brand = MegaBrain | Weak for serious open-source; meme/personified; "Brain" in avoid-list |
+| **KEEP** | Public brand = EvolveLoop | Weak for serious open-source; meme/personified; "Brain" in avoid-list |
 | **RENAME** | Public brand = new technical name | Strong when publishing a reusable architecture |
-| **CODENAME_ONLY** | MegaBrain remains internal/codename; public = new name | Strong transition path; least disruption to author muscle memory |
+| **CODENAME_ONLY** | EvolveLoop remains internal/codename; public = new name | Strong transition path; least disruption to author muscle memory |
 
-**Audit recommendation (not a final pick):** prefer **RENAME** or **CODENAME_ONLY** for public surface; do **not** treat MegaBrain as obligatory public brand. GaabType stays **profile**, never product.
+**Audit recommendation (not a final pick):** prefer **RENAME** or **CODENAME_ONLY** for public surface; do **not** treat EvolveLoop as obligatory public brand. GaabType stays **profile**, never product.
 
 ---
 
@@ -34,7 +34,7 @@ orchestration · capabilities · providers · policy · knowledge · evidence ·
 ```text
 PUBLIC PROJECT     → serious technical name (TBD)
 REPOSITORY SLUG    → github.com/<org>/<slug>
-INTERNAL CODENAME  → MegaBrain (optional keep)
+INTERNAL CODENAME  → EvolveLoop (optional keep)
 PERSONAL PROFILE   → GaabType
 ```
 
@@ -62,7 +62,7 @@ Values: LOW | MEDIUM | HIGH | UNKNOWN — **no numeric scores, no single winner 
 
 ## 6. Conclusion
 
-- MegaBrain is **provisional / personal-toned** relative to current architecture maturity.
+- EvolveLoop is **provisional / personal-toned** relative to current architecture maturity.
 - Public identity should be **technical, short, pronounceable**, without Brain/Bot/AI-prefix cringe.
 - GaabType **must not** become the public product name.
 - Next execution phase should pick from shortlist after trademark/domain diligence (out of scope here).

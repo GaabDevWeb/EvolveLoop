@@ -1,6 +1,6 @@
-# Knowledge Grounding Gate — HARD-GATE MegaBrain
+# Knowledge Grounding Gate — HARD-GATE EvolveLoop
 
-**Âmbito:** todo o ecossistema MegaBrain (`/MegaBrain`) — orquestrador, workers, gates e meta-skills.
+**Âmbito:** todo o ecossistema EvolveLoop (`/evolve`) — orquestrador, workers, gates e meta-skills.
 
 **Objecto do gate:** **Knowledge grounding** via o `KnowledgeBackend` activo (default = **Wiki** vault + pipeline RAG: ingest, BM25, híbrido, LanceDB/vectores, packs, retrieve). A skill Cursor `wiki` é a implementação Context Engineer preferida — **não** o único meio.
 
@@ -19,7 +19,7 @@
 
 ## Trigger (quando aplica)
 
-Aplica-se em **toda** invocação `/MegaBrain` (skill `orquestrar`) **antes** de Fase 1 (`/planejar`) e **antes** de qualquer worker editar código, quando a missão envolve:
+Aplica-se em **toda** invocação `/evolve` (skill `orquestrar`) **antes** de Fase 1 (`/planejar`) e **antes** de qualquer worker editar código, quando a missão envolve:
 
 - implementação, refactor, bugfix, arquitectura, contratos API
 - features no ecossistema Gaab (KernelBot, OrbitBot, ISS, Portifolio, Xray-Spec, karpathyWiki/rag)
@@ -33,7 +33,7 @@ Aplica-se em **toda** invocação `/MegaBrain` (skill `orquestrar`) **antes** de
 
 ## Regra absoluta
 
-> **MegaBrain → grounding Wiki (wiki + RAG) é obrigatório antes de planear/implementar.**  
+> **EvolveLoop → grounding Wiki (wiki + RAG) é obrigatório antes de planear/implementar.**  
 > Nenhum agente da cadeia pode inventar contratos, paths ou arquitectura Gaab “de memória” sem evidência do vault/RAG.  
 > Após editar código: **registar** na wiki (`log.md` ± páginas `wiki/`).
 
@@ -41,7 +41,7 @@ A skill `wiki` é **implementação preferida**, não o único meio — o que im
 
 ---
 
-## Ordem mínima (raiz MegaBrain)
+## Ordem mínima (raiz EvolveLoop)
 
 1. **Registar** no SSOT: `knowledge_grounding: pending`
 2. **Identificar** projeto/silo (`kernelbot` | `orbitbot` | `iss` | …)
@@ -58,11 +58,11 @@ Se o índice LanceDB/JSON estiver inconsistente: tentar rebuild (`wiki-ingest �
 
 ---
 
-## Por papel no MegaBrain
+## Por papel no EvolveLoop
 
 | Papel | O que fazer |
 |-------|-------------|
-| **MegaBrain (raiz)** | Disparar gate na entrada; SSOT `knowledge_grounding`; Briefing PDA com Fontes/Contratos/GAPs dentro do **GATE_BUNDLE**; bloquear Fase 2 sem `applied` (salvo skipped_trivial) |
+| **EvolveLoop (raiz)** | Disparar gate na entrada; SSOT `knowledge_grounding`; Briefing PDA com Fontes/Contratos/GAPs dentro do **GATE_BUNDLE**; bloquear Fase 2 sem `applied` (salvo skipped_trivial) |
 | **plan / exec / gate / explore / critic / librarian** | Herdar GATE_BUNDLE; retrieve se `pending` e missão exigir; respeitar role ([pda-roles.md](pda-roles.md)). **librarian** executa `wiki_register` se spawnado (senão exec/raiz); NUNCA `raw/` |
 | **planner** | Incluir nó/nota `requires: knowledge-grounding`; plano alinhado a Contratos; marcar GAPs como riscos |
 | **backend / frontend-pro / database / devops** | Consumir Contratos do briefing; não inventar endpoints; após código → pedir/confirmar registo wiki ao raiz |
@@ -87,9 +87,9 @@ Se o índice LanceDB/JSON estiver inconsistente: tentar rebuild (`wiki-ingest �
 
 ## Proibições
 
-- `/MegaBrain` → código sem retrieve wiki/RAG (excepto `skipped_trivial` documentado)
+- `/evolve` → código sem retrieve wiki/RAG (excepto `skipped_trivial` documentado)
 - Inventar API/arquitectura Gaab com índice ou notas disponíveis
-- Usar `wiki vibe` / Composer CLI como substituto do MegaBrain/Agent
+- Usar `wiki vibe` / Composer CLI como substituto do EvolveLoop/Agent
 - Reescrever `raw/` da wiki
 - Declarar `knowledge_grounding: applied` sem listar pelo menos uma Fonte ou GAP explícito
 - Fechar ciclo com edits de código **sem** entrada em `log.md` do projeto no vault

@@ -3,7 +3,7 @@ expected:
   cursor_skill_root: "/home/gaab/.cursor/skills"
   total_skills: 25
   skill_ids:
-    - MegaBrain
+    - EvolveLoop
     - adr
     - agent-architecture-mining
     - agent-authoring

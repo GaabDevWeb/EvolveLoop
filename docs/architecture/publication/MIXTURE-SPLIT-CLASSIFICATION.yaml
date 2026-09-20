@@ -1,10 +1,10 @@
 # Files mixing generic logic + Gaab-specific config — plan classification only
 mixtures:
-  - path: .cursor/commands/MegaBrain.md
+  - path: .cursor/commands/evolve.md
     mix: brand entry + architecture orchestration contract
     class: PROFILE_EXTRACTION  # brand rename; architecture stays
-  - path: .cursor/rules/megabrain.mdc
-    mix: discipline rules + MegaBrain name
+  - path: .cursor/rules/evolveloop.mdc
+    mix: discipline rules + EvolveLoop name
     class: CONFIG_EXTRACTION  # rename file/brand; keep rules
   - path: profiles/default.yaml
     mix: already mostly clean defaults

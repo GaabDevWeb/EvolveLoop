@@ -19,7 +19,7 @@ disable-model-invocation: true
 
 A documentação **não descreve ficheiros** — **traduz decisões**. O agente opera como **camada final de síntese** do ciclo `orquestrar`: converte código, plano, gates e histórico de execução em artefactos que **impressionam** e **onboardam** em minutos.
 
-**Contrato ascendente:** esta skill **só** executa na **Fase 6** do MegaBrain (`.cursor/skills/orquestrar/SKILL.md`), após **Fase 5 `OK`** e **Fase 4** sem bloqueio crítico de segurança. A entrega documental é a **prova pública** de que o trabalho orquestrado cumpriu padrão sénior.
+**Contrato ascendente:** esta skill **só** executa na **Fase 6** do EvolveLoop (`.cursor/skills/orquestrar/SKILL.md`), após **Fase 5 `OK`** e **Fase 4** sem bloqueio crítico de segurança. A entrega documental é a **prova pública** de que o trabalho orquestrado cumpriu padrão sénior.
 
 **PDA:** `gate` + `librarian` — síntese pública; não reabre gates anteriores.
 
@@ -328,7 +328,7 @@ Entregar **um** `README.md` na raiz (ou path acordado) com **exatamente** estas 
 
 ## Contribuição & Git Flow
 
-<!-- branches, PR, convenções; como invocar /MegaBrain e skills (tabela) -->
+<!-- branches, PR, convenções; como invocar /evolve e skills (tabela) -->
 
 ## Referências & Glossário
 
@@ -361,7 +361,7 @@ Incluir em **Contribuição & Git Flow** ou **Manutenibilidade**:
 
 | Comando lógico | Skill | Quando invocar |
 |----------------|-------|----------------|
-| `/MegaBrain` | orquestrar | Ciclo fechado completo |
+| `/evolve` | orquestrar | Ciclo fechado completo |
 | `/planejar` | planner | Decomposição, contratos, DAG |
 | `/backend` | backend | Servidor, dados, integrações |
 | `/frontend` | frontend | UI e cliente |
@@ -440,7 +440,7 @@ Se a skill ou fluxo **doc-coauthoring** existir no ambiente:
 
 A Fase 6 **não** é um apêndice — é o **cartão de visita** do sistema. Um README que só lista pastas **falha** o contrato. Um README com diagramas precisos, decisões explícitas, exemplos copiáveis e changelog honesto do `.agent_history.md` **prova** que o Orquestrador executou com excelência sénior.
 
-**Quando o utilizador pedir documentação isolada (sem /MegaBrain):** aplicar o mesmo rigor de Master README e Mermaid; o Final Gate **ainda** consulta `.agent_history.md` se existir.
+**Quando o utilizador pedir documentação isolada (sem /evolve):** aplicar o mesmo rigor de Master README e Mermaid; o Final Gate **ainda** consulta `.agent_history.md` se existir.
 
 **O contrato com o leitor é a verdade verificável.** O Documentation **é** o guardião dessa clareza pública.
 

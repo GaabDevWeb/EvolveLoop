@@ -1,6 +1,6 @@
-# Outer Loop MegaBrain — ciclo fechado com reentrada
+# Outer Loop EvolveLoop — ciclo fechado com reentrada
 
-**Âmbito:** `/MegaBrain` (skill `orquestrar`). Complementa a Matriz `continuar | corrigir | replanejar` e a Fase 3 (auto-correção).
+**Âmbito:** `/evolve` (skill `orquestrar`). Complementa a Matriz `continuar | corrigir | replanejar` e a Fase 3 (auto-correção).
 
 ## Ideia
 

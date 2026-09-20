@@ -54,7 +54,7 @@ claims:
     claim: "live host catalog injection was not measured"
     evidence_ids: [E001-BAT-01]
     source: docs/evals/experiments/E-001/ENABLEMENT-REPORT.md
-    scope: Cursor/MegaBrain host
+    scope: Cursor/evolve host
     confidence: HIGH
     classification: NOT_MEASURED
     allowed_interpretation:

@@ -5,11 +5,11 @@ hard_gates:
   grill-me:
     type: CONDITIONAL_FAIL_CLOSED
     blocks: [planner_transition]
-    evidence: megabrain-skill-gates.ts
+    evidence: skill-gates.ts
   image-to-code:
     type: HARD_GATE
     triggers_on: image_attachment
-    evidence: megabrain-skill-gates.ts + frontend-pro SKILL
+    evidence: skill-gates.ts + frontend-pro SKILL
 
 core_edges:
   - from: library-dossier

@@ -43,9 +43,9 @@ symbols:
     exported: False
     risk: MEDIUM
     note: 
-  - old_symbol: megabrain-skill-gates module
+  - old_symbol: skill-gates module
     new_symbol: evolveloop-skill-gates or skill-gates
-    location: orchestrator/src/policy/megabrain-skill-gates.ts
+    location: orchestrator/src/policy/skill-gates.ts
     callers: []
     exported: True
     risk: HIGH

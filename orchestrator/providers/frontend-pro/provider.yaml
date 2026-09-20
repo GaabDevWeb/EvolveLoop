@@ -63,7 +63,7 @@ spec:
     executor_types: [cursor-skill, mcp]
 
   constraints:
-    stack: [cursor, megabrain]
+    stack: [cursor, evolveloop]
     platforms: [cursor]
     signals:
       - phase: "2"

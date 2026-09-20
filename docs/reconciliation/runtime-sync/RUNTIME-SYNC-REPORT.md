@@ -95,7 +95,7 @@ Targeted: authority, registry, policy-engine, deterministic-capabilities, eviden
 1. Gate artefact path validation — deferred (not implemented).
 2. `npm run build` (`tsc`) fails identically on AGENTS and CS — pre-existing; Vitest runtime load OK.
 3. Sandbox / model routing / stuck detector — still NOT_IMPLEMENTED (untouched).
-4. MegaBrain Evidence Bus ≠ engine Evidence[] — boundary preserved.
+4. EvolveLoop Evidence Bus ≠ engine Evidence[] — boundary preserved.
 5. Workspace SUPERSET (Agents/contracts) unrelated to this sync.
 
 ## Final State

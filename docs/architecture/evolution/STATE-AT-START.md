@@ -21,7 +21,7 @@
 ## Runtime (observed)
 
 Present: jobs/, resume/pickup, Evidence[], Authority (DeterministicProvider), Policy engine, Registry, Scheduler.  
-Absent: OS sandbox, semantic stuck detector, model routing, gate.testing.json MegaBrain bus as engine feature.
+Absent: OS sandbox, semantic stuck detector, model routing, gate.testing.json EvolveLoop bus as engine feature.
 
 ## Prototype gate (already completed prior to this pipeline stage)
 

@@ -6,7 +6,7 @@ import {
   WikiKnowledgeBackend,
   resolveKnowledgeBackend,
   resetKnowledgeBackendCache,
-  loadMegaBrainProfile,
+  loadEvolveLoopProfile,
   resolveKnowledgeBackendId,
   DEFAULT_PROFILE,
   resolveWikiRoot,
@@ -18,7 +18,7 @@ describe("KnowledgeBackend seam", () => {
   const prev: Record<string, string | undefined> = {};
 
   beforeEach(() => {
-    for (const k of ["KNOWLEDGE_BACKEND", "WIKI_ROOT", "RAG_REPO_ROOT", "AGENTS_ROOT", "MEGABRAIN_PROFILE_PATH"]) {
+    for (const k of ["KNOWLEDGE_BACKEND", "WIKI_ROOT", "RAG_REPO_ROOT", "AGENTS_ROOT", "EVOLVELOOP_PROFILE_PATH", "MEGABRAIN_PROFILE_PATH"]) {
       prev[k] = process.env[k];
     }
     resetKnowledgeBackendCache();
@@ -91,14 +91,14 @@ describe("EvolveLoop profile boundary", () => {
   afterEach(() => {
     delete process.env.AGENTS_ROOT;
     delete process.env.KNOWLEDGE_BACKEND;
-    delete process.env.MEGABRAIN_PROFILE_PATH;
+    delete process.env.EVOLVELOOP_PROFILE_PATH;
     delete process.env.EVOLVELOOP_PROFILE_PATH;
   });
 
   it("loads profiles/default.yaml when AGENTS_ROOT set", () => {
     process.env.AGENTS_ROOT = ROOT;
     delete process.env.KNOWLEDGE_BACKEND;
-    const p = loadMegaBrainProfile();
+    const p = loadEvolveLoopProfile();
     expect(p.id).toBe("default");
     expect(p.knowledge.backend).toBe("wiki");
     expect(p.memory.enabled).toBe(false);
@@ -106,8 +106,8 @@ describe("EvolveLoop profile boundary", () => {
 
   it("DEFAULT_PROFILE is wiki without file", () => {
     delete process.env.AGENTS_ROOT;
-    delete process.env.MEGABRAIN_PROFILE_PATH;
-    expect(loadMegaBrainProfile().knowledge.backend).toBe(DEFAULT_PROFILE.knowledge.backend);
+    delete process.env.EVOLVELOOP_PROFILE_PATH;
+    expect(loadEvolveLoopProfile().knowledge.backend).toBe(DEFAULT_PROFILE.knowledge.backend);
   });
 
   it("KNOWLEDGE_BACKEND env overrides profile", () => {

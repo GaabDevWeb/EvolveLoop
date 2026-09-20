@@ -1,6 +1,6 @@
 rules:
   architecture_rules:
-    - megabrain.mdc discipline (evidence, no invent)
+    - evolveloop.mdc discipline (evidence, no invent)
     - knowledge-grounding / hard gates references
   workflow_rules:
     - orquestrar PDA / gate-bundle references in commands

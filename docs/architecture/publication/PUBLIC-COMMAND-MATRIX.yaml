@@ -1,6 +1,6 @@
 commands:
   PUBLIC_CORE:
-    - MegaBrain.md   # brand rename later; entry remains
+    - EvolveLoop.md   # brand rename later; entry remains
     - wiki.md
     - prd.md
     - planejar.md

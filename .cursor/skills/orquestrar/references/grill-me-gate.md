@@ -1,6 +1,6 @@
-# Grill-Me Gate — HARD-GATE MegaBrain (condicional)
+# Grill-Me Gate — HARD-GATE EvolveLoop (condicional)
 
-**Âmbito:** ecossistema MegaBrain (`/MegaBrain`) — orquestrador, planner, upstream.  
+**Âmbito:** ecossistema EvolveLoop (`/evolve`) — orquestrador, planner, upstream.  
 **Skill obrigatória quando o gate aplica:** `~/.agents/skills/grill-me/SKILL.md`  
 **Capability:** `design-stress-test` · provider/skill id `grill-me`  
 **Paridade conceptual:** mesmo *nível* de política que [image-attachment-gate.md](image-attachment-gate.md) (HARD condicional).  
@@ -63,7 +63,7 @@ grill-me indisponível | inválido | não executado | resultado incompleto
 
 | Papel | O que fazer |
 |-------|-------------|
-| **MegaBrain (raiz)** | Classificar se `grill-me` entra em `require[]`; bloquear Fase 1 sem evidência; propagar no GATE_BUNDLE |
+| **EvolveLoop (raiz)** | Classificar se `grill-me` entra em `require[]`; bloquear Fase 1 sem evidência; propagar no GATE_BUNDLE |
 | **prd** | Handoff: após aprovação docs, **não** sugerir `/planejar` directo se gate aplicável — apontar `/grill-me` |
 | **grill-me** | Executar stress-test; emitir resultado + evidência |
 | **planner** | **Recusar** se `require` inclui `grill-me` e ficheiro ausente/`failed`/`blocked` |
@@ -142,4 +142,4 @@ Independente: um ciclo pode exigir **ambos**.
 policy hard gate  ≠  TS engine enforcement
 ```
 
-Helpers de decisão testáveis podem existir em `orchestrator/src/policy/megabrain-skill-gates.ts` para evals — **não** substituem o contrato agente/Evidence Bus.
+Helpers de decisão testáveis podem existir em `orchestrator/src/policy/evolveloop-skill-gates.ts` para evals — **não** substituem o contrato agente/Evidence Bus.

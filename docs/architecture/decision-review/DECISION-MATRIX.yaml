@@ -149,7 +149,7 @@ decisions:
 
   - id: DR-009
     topic: Evidence Bus dual meaning
-    current_state: Engine Evidence[] ≠ MegaBrain FS evidence bus
+    current_state: Engine Evidence[] ≠ EvolveLoop FS evidence bus
     evidence:
       research: ALREADY_PRESENT (fragile)
       audit: WEAKENS equation

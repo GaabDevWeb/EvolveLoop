@@ -1,4 +1,4 @@
-# Contratos — MegaBrain Runtime v2.1
+# Contratos — EvolveLoop Runtime v2.1
 
 **Versão:** `contracts-v2.1.0` · **Congelado:** 2026-07-02  
 **Governança:** [ARCHITECTURAL-PRINCIPLES.md](../ARCHITECTURAL-PRINCIPLES.md)

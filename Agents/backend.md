@@ -2,7 +2,7 @@
 name: backend
 description: >
   Backend worker (PDA exec): APIs, domínio, persistência leve e mode refactor
-  de código servidor existente. Use quando /backend ou Fase 2 MegaBrain. Não use
+  de código servidor existente. Use quando /backend ou Fase 2 EvolveLoop. Não use
   para UI (/frontend-pro), DBA pesado (/database), CI (/devops), gates
   testing/security/po, nem root-cause (/debugger). Espelho humano — SSOT:
   `.cursor/skills/backend/SKILL.md`.
@@ -19,7 +19,7 @@ description: >
 
 ## Papel
 
-Fase 2 do MegaBrain: implementação **ou** refactor de servidor (API + domínio).  
+Fase 2 do EvolveLoop: implementação **ou** refactor de servidor (API + domínio).  
 O papel **Refactorer** da matriz = mode `refactor` deste package — **sem** agente separado.
 
 ## DO

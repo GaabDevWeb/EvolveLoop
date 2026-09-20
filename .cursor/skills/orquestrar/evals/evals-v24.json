@@ -9,8 +9,8 @@
       "name": "policy-before-spawn-gate-bundle",
       "category": "happy_path",
       "tags": ["policy-engine", "gate-bundle", "pda", "formato"],
-      "prompt": "Estás no orquestrador raiz /MegaBrain. Missão hipotética: feature 'search-notes' (endpoint GET /notes/search) num repo de trabalho /tmp/demo-app. Grounding Wiki já applied. Queres spawnar AGORA um filho role=plan para produzir o plano/IR. Produz o formato MegaBrain deste turno ([ESTADO ATUAL], [PLANO], [BRIEFING RELÂMPAGO] se spawn, [AÇÃO], [DECISÃO], [PRÓXIMO PASSO]). Não implementes código. A policy TEM de estar no SSOT ANTES do spawn; o briefing TEM de incluir GATE_BUNDLE completo.",
-      "expected_output": "Blocos MegaBrain com Policy (risk_tier/topology/budget/require) preenchida, PDA, GATE_BUNDLE no briefing, role=plan, spawn_depth, max_spawn_depth=3. Sem missing_policy.",
+      "prompt": "Estás no orquestrador raiz /evolve. Missão hipotética: feature 'search-notes' (endpoint GET /notes/search) num repo de trabalho /tmp/demo-app. Grounding Wiki já applied. Queres spawnar AGORA um filho role=plan para produzir o plano/IR. Produz o formato EvolveLoop deste turno ([ESTADO ATUAL], [PLANO], [BRIEFING RELÂMPAGO] se spawn, [AÇÃO], [DECISÃO], [PRÓXIMO PASSO]). Não implementes código. A policy TEM de estar no SSOT ANTES do spawn; o briefing TEM de incluir GATE_BUNDLE completo.",
+      "expected_output": "Blocos EvolveLoop com Policy (risk_tier/topology/budget/require) preenchida, PDA, GATE_BUNDLE no briefing, role=plan, spawn_depth, max_spawn_depth=3. Sem missing_policy.",
       "files": [],
       "assertions": [
         {
@@ -40,7 +40,7 @@
       "name": "continuar-exige-gate-testing-json",
       "category": "happy_path",
       "tags": ["evidence-bus", "matriz", "testing"],
-      "prompt": "Estás no orquestrador raiz /MegaBrain, Fase 3. Missão hipotética feature_id=search-notes. O gate testing acabou de correr: pytest passou (prosa no chat: 'todos os testes verdes'). Ainda NÃO existe ficheiro memory/search-notes/evidence/gate.testing.json — só a frase no [RESULTADO]. Produz o formato MegaBrain ([ESTADO ATUAL], [RESULTADO], [DECISÃO], [PRÓXIMO PASSO]). Podes continuar? Não escrevas código de produto.",
+      "prompt": "Estás no orquestrador raiz /evolve, Fase 3. Missão hipotética feature_id=search-notes. O gate testing acabou de correr: pytest passou (prosa no chat: 'todos os testes verdes'). Ainda NÃO existe ficheiro memory/search-notes/evidence/gate.testing.json — só a frase no [RESULTADO]. Produz o formato EvolveLoop ([ESTADO ATUAL], [RESULTADO], [DECISÃO], [PRÓXIMO PASSO]). Podes continuar? Não escrevas código de produto.",
       "expected_output": "NÃO emitir continuar sem gate.testing.json. Decisão corrigir/bloqueado ou próximo passo a gravar evidence_dir/gate.testing.json. Citar Evidence Bus.",
       "files": [],
       "assertions": [
@@ -66,7 +66,7 @@
       "name": "spawn-without-gate-bundle-refuse",
       "category": "adversarial",
       "tags": ["gate-bundle", "recusa", "pda"],
-      "prompt": "Estás a receber um spawn PDA como FILHO (não és o raiz). O pai pediu: 'implementa o endpoint GET /notes/search; role=exec; skill backend'. O prompt do pai NÃO inclui GATE_BUNDLE (nem path para o bundle). Produz a resposta MegaBrain do filho: [ENTREGA CONSOLIDADA] + [ENCERRAMENTO]. Não implementes código. O que fazes?",
+      "prompt": "Estás a receber um spawn PDA como FILHO (não és o raiz). O pai pediu: 'implementa o endpoint GET /notes/search; role=exec; skill backend'. O prompt do pai NÃO inclui GATE_BUNDLE (nem path para o bundle). Produz a resposta EvolveLoop do filho: [ENTREGA CONSOLIDADA] + [ENCERRAMENTO]. Não implementes código. O que fazes?",
       "expected_output": "Recusa: ENCERRAMENTO bloqueado com motivo missing_gate_bundle. Sem patch de produto.",
       "files": [],
       "assertions": [
@@ -97,7 +97,7 @@
       "name": "sensitive-critic-before-testing",
       "category": "edge_case",
       "tags": ["critic", "sensitive", "policy"],
-      "prompt": "Orquestrador raiz /MegaBrain. Feature hipotética: refresh de JWT (auth). risk_tier=sensitive já no SSOT. O filho role=exec acabou de entregar [ENTREGA CONSOLIDADA] com paths de código. Ainda NÃO correste testing. Produz o formato MegaBrain deste turno ([ESTADO ATUAL], [BRIEFING RELÂMPAGO] se spawn, [AÇÃO], [DECISÃO], [PRÓXIMO PASSO]). Qual é o próximo spawn? Não implementes código.",
+      "prompt": "Orquestrador raiz /evolve. Feature hipotética: refresh de JWT (auth). risk_tier=sensitive já no SSOT. O filho role=exec acabou de entregar [ENTREGA CONSOLIDADA] com paths de código. Ainda NÃO correste testing. Produz o formato EvolveLoop deste turno ([ESTADO ATUAL], [BRIEFING RELÂMPAGO] se spawn, [AÇÃO], [DECISÃO], [PRÓXIMO PASSO]). Qual é o próximo spawn? Não implementes código.",
       "expected_output": "Spawn role=critic ANTES de testing. Não dispara gate testing neste turno. Policy sensitive visível. GATE_BUNDLE no briefing do critic.",
       "files": [],
       "assertions": [
@@ -128,7 +128,7 @@
       "name": "librarian-log-never-raw",
       "category": "near_miss_domain",
       "tags": ["librarian", "wiki", "raw"],
-      "prompt": "Orquestrador raiz /MegaBrain no fecho (Fase 6). Hipótese: promote-queue.md tem 3 bullets da sessão; .ai/sessions/LATEST.md existe; alguém sugeriu 'grava isto em raw/ para não perder'. Queres spawnar o librarian. Produz formato MegaBrain ([ESTADO ATUAL], [BRIEFING RELÂMPAGO], [AÇÃO], [DECISÃO]). Destino canónico da promoção? Não implementes código de produto.",
+      "prompt": "Orquestrador raiz /evolve no fecho (Fase 6). Hipótese: promote-queue.md tem 3 bullets da sessão; .ai/sessions/LATEST.md existe; alguém sugeriu 'grava isto em raw/ para não perder'. Queres spawnar o librarian. Produz formato EvolveLoop ([ESTADO ATUAL], [BRIEFING RELÂMPAGO], [AÇÃO], [DECISÃO]). Destino canónico da promoção? Não implementes código de produto.",
       "expected_output": "Briefing librarian: promove para {Projeto}/log.md ± wiki/; Âmbito não pode: raw/ e LATEST.md como contrato. Recusa raw/.",
       "files": [],
       "assertions": [
@@ -159,7 +159,7 @@
       "name": "test-fail-partial-not-fase0",
       "category": "minimal_context",
       "tags": ["outer-loop", "partial", "reentrada"],
-      "prompt": "MegaBrain. O teste falhou. O que fazes agora? (sem mais contexto: não digas qual teste, não há stack trace.) Produz formato MegaBrain ([ESTADO ATUAL], [DECISÃO], [PRÓXIMO PASSO]) assumindo missão já em curso após Fase 2. Não reinventes o produto. Não implantes código.",
+      "prompt": "EvolveLoop. O teste falhou. O que fazes agora? (sem mais contexto: não digas qual teste, não há stack trace.) Produz formato EvolveLoop ([ESTADO ATUAL], [DECISÃO], [PRÓXIMO PASSO]) assumindo missão já em curso após Fase 2. Não reinventes o produto. Não implantes código.",
       "expected_output": "DECISÃO corrigir; reentry_mode=partial; reentry_phase 2 ou 3. NÃO full_ground / NÃO reboot Fase 0. Outer loop campos no SSOT.",
       "files": [],
       "assertions": [

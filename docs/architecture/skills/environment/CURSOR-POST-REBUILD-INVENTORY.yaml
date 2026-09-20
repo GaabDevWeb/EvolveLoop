@@ -58,7 +58,7 @@ skills:
     type: symlink
     target: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/wiki-mem
     skill_md: true
-  - id: MegaBrain
+  - id: EvolveLoop
     type: symlink
     target: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/orquestrar
     skill_md: true

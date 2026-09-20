@@ -1,4 +1,4 @@
-# {{COMMAND}} — Agent Package / MegaBrain
+# {{COMMAND}} — Agent Package / EvolveLoop
 
 Invocação **`/{{COMMAND}}`**.
 

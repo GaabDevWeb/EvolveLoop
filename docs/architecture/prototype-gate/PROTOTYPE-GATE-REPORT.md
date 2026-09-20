@@ -64,7 +64,7 @@ Offline PT-001 was considered and rejected under gate §39 (constrained scope mu
 
 ## Environment Limitations
 
-- Live Cursor/MegaBrain catalog control not available here  
+- Live Cursor/evolve catalog control not available here  
 - No live task oracle / gold labels for PT-001  
 - `prototypes/workspaces/` absent (mitigated by `/tmp`)  
 - OS sandbox NOT_IMPLEMENTED (not required by either prototype; not pretended)  

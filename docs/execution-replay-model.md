@@ -34,7 +34,7 @@ RunResult / disco
 
 - Temporal / Cadence / Kafka event streaming
 - Replay que re-dispara providers ou LLM
-- Segundo “Evidence Bus” paralelo ao EventBus + evidence_dir MegaBrain
+- Segundo “Evidence Bus” paralelo ao EventBus + evidence_dir EvolveLoop
 
 ## Uso rápido
 

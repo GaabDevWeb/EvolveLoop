@@ -2,7 +2,7 @@
 
 **id:** `knowledge-backend`  
 **version:** `1.0.0`  
-**purpose:** Minimal typed seam between MegaBrain core and retrieval backends.
+**purpose:** Minimal typed seam between EvolveLoop core and retrieval backends.
 
 ## Operations
 

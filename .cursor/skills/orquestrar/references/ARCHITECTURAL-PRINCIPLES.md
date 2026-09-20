@@ -1,4 +1,4 @@
-# Princípios Arquitecturais — MegaBrain Runtime
+# Princípios Arquitecturais — EvolveLoop Runtime
 
 **Versão:** 1.0.0 · **Pacote:** `contracts-v2.1.0`  
 **Leitura:** ~3 minutos  
@@ -10,7 +10,7 @@ Este documento define **regras que nunca devem ser quebradas**. Não descreve im
 
 ## O que somos
 
-O MegaBrain é uma **plataforma de execução** — não um framework de prompts. Plataformas definem contratos, ciclo de vida, extensibilidade e governança. Frameworks organizam componentes.
+O EvolveLoop é uma **plataforma de execução** — não um framework de prompts. Plataformas definem contratos, ciclo de vida, extensibilidade e governança. Frameworks organizam componentes.
 
 ---
 

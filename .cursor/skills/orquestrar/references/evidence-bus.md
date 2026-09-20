@@ -1,6 +1,6 @@
 # Evidence Bus — artefactos verificáveis
 
-**Âmbito:** `/MegaBrain` (skill `orquestrar`). Pasta canónica de prova por feature.
+**Âmbito:** `/evolve` (skill `orquestrar`). Pasta canónica de prova por feature.
 
 **Não duplica** o schema de nó: [specs/evidence.md](specs/evidence.md) · [contracts/evidence.md](contracts/evidence.md). Este ficheiro define **onde** os artefactos vivem, **quais** ficheiros o raiz e os gates lêem, e **quando** a Matriz pode `continuar`.
 
@@ -14,7 +14,7 @@ Gates **consomem JSON no disco**, não prosa («o agente disse que passou»). Se
 Provider / gate executa → grava JSON em evidence_dir → raiz lê o ficheiro → Matriz
 ```
 
-Validação de campos (`status`, `verdict`, `checks`, `artifacts` existem) permanece nas specs. O bus é o **sítio canónico** e o contrato operacional do MegaBrain.
+Validação de campos (`status`, `verdict`, `checks`, `artifacts` existem) permanece nas specs. O bus é o **sítio canónico** e o contrato operacional do EvolveLoop.
 
 ---
 
@@ -99,7 +99,7 @@ Cada `gate.*.json` **deve** ter:
 | `confidence` | `spec.confidence` | número `0.0`–`1.0` (obrigatório no contrato v2.1) |
 | `command` e/ou `artifacts[].path` | `checks[].command`, `test_summary.command`, `artifacts` | path(s) no repo; o comando que gerou a prova |
 | `submitted_at` | `metadata.submitted_at` | ISO-8601 |
-| `cycle_id` | `metadata.cycle_id` (extensão MegaBrain) | mesmo `cycle_id` do SSOT (ex.: `C1`) |
+| `cycle_id` | `metadata.cycle_id` (extensão EvolveLoop) | mesmo `cycle_id` do SSOT (ex.: `C1`) |
 
 Também exigidos pelas specs quando o nó fecha: `kind: Evidence`, `spec.status` (`complete` \| `partial` \| `failed`). Gate sem `verdict` → `gate_verdict_missing`. Artefacto referenciado que não existe no disco → `artifact_missing`.
 
@@ -160,7 +160,7 @@ Actualizar a cada spawn e a cada `[ENCERRAMENTO]`. Depth máx. 3 ([pda-roles.md]
 
 ## 9. Relação com o runtime
 
-`NodeCompleted.evidence_ref` nas specs pode apontar `telemetry/evidence/<node_id>.json`. O MegaBrain **adicionalmente** exige o ficheiro de gate em `evidence_dir` para a Matriz e o outer loop (`last_gate` ↔ nome do ficheiro).
+`NodeCompleted.evidence_ref` nas specs pode apontar `telemetry/evidence/<node_id>.json`. O EvolveLoop **adicionalmente** exige o ficheiro de gate em `evidence_dir` para a Matriz e o outer loop (`last_gate` ↔ nome do ficheiro).
 
 Se o Execution Engine estiver activo (`ORCHESTRATOR_ROOT`), ingerir `RunResult.evidence[]` **para** `evidence_dir` (não só para o SSOT volátil). Gate evidence no engine **exige** `artifacts[].path` (`artifact_path_missing` se vazio) — `src/evidence/builders.ts`. `run-jobs complete --success` exige `--evidence` com path existente.
 

@@ -158,7 +158,7 @@ Explicit non-changes justified by current evidence:
 - second Capability/Provider/Agent registry
 - second orchestrator
 - second Evidence SSOT
-- merging MegaBrain Evidence Bus into engine Evidence[]
+- merging EvolveLoop Evidence Bus into engine Evidence[]
 - upgrading HITL status beyond PARTIALLY_OBSERVED
 - runtime/src changes from this review
 - baseline V1 contents

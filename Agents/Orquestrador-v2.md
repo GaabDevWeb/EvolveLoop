@@ -1,6 +1,6 @@
 # Orquestrador-v2 — Ecossistema e ciclo
 
-Documentação consolidada do agente `/MegaBrain`: skills, fases, subagentes, Superpowers (`brainstorming`, `grill-me`, `executing-plans`), `frontend-pro`, Tier 2 (`prd`, `database`, `adr`, `devops`), `find-skills` e catálogo skills.sh.
+Documentação consolidada do agente `/evolve`: skills, fases, subagentes, Superpowers (`brainstorming`, `grill-me`, `executing-plans`), `frontend-pro`, Tier 2 (`prd`, `database`, `adr`, `devops`), `find-skills` e catálogo skills.sh.
 
 ## Documento principal
 
@@ -10,7 +10,7 @@ Documentação consolidada do agente `/MegaBrain`: skills, fases, subagentes, Su
 
 | Área | Decisão |
 |------|---------|
-| **Raiz** | `/MegaBrain` (`orquestrar` skill) mantém SSOT + PDA + matriz `continuar \| corrigir \| replanejar` |
+| **Raiz** | `/evolve` (`orquestrar` skill) mantém SSOT + PDA + matriz `continuar \| corrigir \| replanejar` |
 | **Frontend** | `frontend` → **`frontend-pro`** + **Fase 2.5** (Review/Audit visual) |
 | **Testing** | Skill local **`testing`** |
 | **Pré-ciclo** | `brainstorming` (opcional) → **`prd`** (HARD-GATE docs) → `grill-me` (opcional) → Fase 1 `planner` |
@@ -38,7 +38,7 @@ brainstorming (opcional, diálogo) → prd (pacote docs/) → grill-me? → plan
 
 | Comando | Provider |
 |---------|----------|
-| `/MegaBrain` | orquestrar |
+| `/evolve` | orquestrar |
 | `/prd` | prd |
 | `/adr` | adr |
 | `/planejar` | planner |
@@ -54,7 +54,7 @@ brainstorming (opcional, diálogo) → prd (pacote docs/) → grill-me? → plan
 ## Comando
 
 ```
-/MegaBrain
+/evolve
 ```
 
 Skill interna: `.cursor/skills/orquestrar/SKILL.md`

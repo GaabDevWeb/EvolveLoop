@@ -24,7 +24,7 @@ Complementa a built-in `create-skill` com **validação rigorosa**: comportament
 
 **Wave C3 — Evaluator:** `EXTEND_EXISTING_AGENT` nesta meta (e em `agent-authoring` para packages). **Não** criar agente `evaluator` separado — factories já autoram/correm o ciclo de evals.
 
-**MegaBrain:** skills de UI ou que toquem implementação visual devem referenciar [orquestrar/references/image-attachment-gate.md](../orquestrar/references/image-attachment-gate.md) e `~/.agents/skills/image-to-code/SKILL.md` quando o utilizador puder anexar imagens.
+**EvolveLoop:** skills de UI ou que toquem implementação visual devem referenciar [orquestrar/references/image-attachment-gate.md](../orquestrar/references/image-attachment-gate.md) e `~/.agents/skills/image-to-code/SKILL.md` quando o utilizador puder anexar imagens.
 
 ## Quando usar
 

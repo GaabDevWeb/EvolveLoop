@@ -36,7 +36,7 @@ spec:
       - epistemic_labels_present
       - no_agent_system_mutation
       - decision_in_allowed_set
-      - comparison_with_megabrain_when_applicable
+      - comparison_with_evolveloop_when_applicable
       - unknown_marked_when_insufficient_evidence
 
   evidence:

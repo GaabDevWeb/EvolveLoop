@@ -1,7 +1,7 @@
 ---
 name: grill-me
 description: >
-  HARD-GATE MegaBrain de stress-test de requisitos/design antes do planner:
+  HARD-GATE EvolveLoop de stress-test de requisitos/design antes do planner:
   entrevista relâmpago (design tree) até entendimento partilhado. Use quando
   /grill-me, Fase 0.5 pós-/prd, PRD/arquitectura/refactor/escopo significativo,
   ou policy require[] inclui grill-me / design-stress-test. Não use para perguntas
@@ -14,11 +14,11 @@ metadata:
   type: upstream
   hard_gate: true
   command: grill-me
-  megabrain_gate: grill-me-gate
+  evolveloop_gate: grill-me-gate
 disable-model-invocation: true
 ---
 
-# grill-me — Design stress-test (HARD-GATE MegaBrain)
+# grill-me — Design stress-test (HARD-GATE EvolveLoop)
 
 **Autoridade operacional:** esta skill **é** o gate. Não existe skill `grilling` separada no catálogo CursorSKILLS — a metodologia de entrevista (design tree / rounds) vive **aqui**.
 
@@ -141,7 +141,7 @@ Exemption **sem** ficheiro de evidência = **inválida** → BLOCKED.
 
 ---
 
-## Integração MegaBrain
+## Integração EvolveLoop
 
 ```text
 brainstorming? → /prd → /grill-me [HARD quando aplicável] → /planejar → …

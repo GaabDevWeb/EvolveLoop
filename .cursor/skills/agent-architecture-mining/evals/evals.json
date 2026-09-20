@@ -7,7 +7,7 @@
       "category": "happy_path",
       "tags": ["TARGET_RESEARCH", "mcp"],
       "prompt": "Modo TARGET_RESEARCH: investiga o Model Context Protocol (MCP) como protocolo de tools/skills. Produz Target Report estruturado. Não implementes nada no nosso Agent System.",
-      "expected_output": "Report com what/problem/mechanism; labels epistémicos; comparação MegaBrain; decisões ALREADY_PRESENT/ADAPT/etc; sem patches no orchestrator.",
+      "expected_output": "Report com what/problem/mechanism; labels epistémicos; comparação EvolveLoop; decisões ALREADY_PRESENT/ADAPT/etc; sem patches no orchestrator.",
       "assertions": [
         {"id": "epistemic-labels", "description": "Usa OBSERVED/DOCUMENTED/INFERRED/UNKNOWN", "type": "structural"},
         {"id": "no-implement", "description": "Não altera orchestrator/skills de pipeline", "type": "behavioral"},
@@ -19,7 +19,7 @@
       "name": "already-present-evidence-bus",
       "category": "near_miss_domain",
       "tags": ["ALREADY_PRESENT", "duplication"],
-      "prompt": "Finding: sistema externo tem um 'Evidence Bus' de artefactos JSON por gate. Compara com MegaBrain e decide o que fazer. Não cries um segundo Evidence Bus.",
+      "prompt": "Finding: sistema externo tem um 'Evidence Bus' de artefactos JSON por gate. Compara com EvolveLoop e decide o que fazer. Não cries um segundo Evidence Bus.",
       "expected_output": "ALREADY_PRESENT (Evidence Bus / memory/<id>/evidence/); explica diferença residual se houver; REJECT de registry paralelo.",
       "assertions": [
         {"id": "already-present", "description": "Emite ALREADY_PRESENT", "type": "structural"},

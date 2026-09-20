@@ -18,7 +18,7 @@ description: >
 
 ## Papel
 
-Fase 1 do MegaBrain: pensamento sistémico antes da execução — grafo, contratos, critérios e briefings. Não implementa produto nem actua como gate.
+Fase 1 do EvolveLoop: pensamento sistémico antes da execução — grafo, contratos, critérios e briefings. Não implementa produto nem actua como gate.
 
 ## DO
 

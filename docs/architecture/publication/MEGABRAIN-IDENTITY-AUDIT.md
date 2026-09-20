@@ -34,7 +34,7 @@ Observed residual:
   Skills/docs still say "MegaBrain" as system name
   agent-setup still ships MegaBrain components
   Host Cursor still has MegaBrain command/rule/skill links
-  TS keeps MegaBrain* aliases + megabrain-skill-gates.ts filename
+  TS keeps MegaBrain* aliases + skill-gates.ts filename
 ```
 
 ## 3. Search Methodology
@@ -51,8 +51,8 @@ Project pathnames containing MegaBrain:
 
 - `docs/internal/historical/MegaBrain-Ecosystem.md` (file) — rename_required=False
 - `docs/internal/historical/cursor-megabrain-rag-stack.md` (file) — rename_required=False
-- `orchestrator/src/policy/megabrain-skill-gates.ts` (file) — rename_required=True
-- `orchestrator/tests/unit/megabrain-skill-gates.test.ts` (file) — rename_required=True
+- `orchestrator/src/policy/skill-gates.ts` (file) — rename_required=True
+- `orchestrator/tests/unit/skill-gates.test.ts` (file) — rename_required=True
 
 Host pathnames:
 
@@ -67,11 +67,11 @@ Host pathnames:
 Critical TS:
 - `orchestrator/src/config/profile.ts` — `MegaBrainProfile*` types + `loadMegaBrainProfile` + `MEGABRAIN_*` env
 - `orchestrator/src/knowledge/backend/resolve.ts` — imports `loadMegaBrainProfile`
-- `orchestrator/src/index.ts` — re-exports MegaBrain symbols + megabrain-skill-gates
-- `orchestrator/src/policy/megabrain-skill-gates.ts` — module filename + gate helpers
+- `orchestrator/src/index.ts` — re-exports MegaBrain symbols + skill-gates
+- `orchestrator/src/policy/skill-gates.ts` — module filename + gate helpers
 - Tests import the above modules by MegaBrain names
 
-Provider metadata: `stack: [cursor, megabrain]` in multiple `provider.yaml` files.
+Provider metadata: `stack: [cursor, evolveloop]` in multiple `provider.yaml` files.
 
 ## 6. Commands/Aliases
 
@@ -97,7 +97,7 @@ Widespread in `.cursor/skills/**` especially `orquestrar` (SKILL.md + all HARD-G
 
 ## 10. Policies/Gates
 
-Gate docs titled “HARD-GATE MegaBrain”; decision helpers live in `megabrain-skill-gates.ts`.
+Gate docs titled “HARD-GATE MegaBrain”; decision helpers live in `skill-gates.ts`.
 
 ## 11. Config
 
@@ -110,7 +110,7 @@ No distinct `MEGABRAIN_*` error-code enum found as primary; stack tag `megabrain
 
 ## 13. Tests
 
-`megabrain-skill-gates.test.ts`, `knowledge-backend.test.ts` (legacy loaders/env), post-prune imports.
+`skill-gates.test.ts`, `knowledge-backend.test.ts` (legacy loaders/env), post-prune imports.
 
 ## 14. Evals
 
@@ -135,7 +135,7 @@ Public README/AGENT mostly EvolveLoop with legacy notes (OK). Skill/agent/setup 
 1. agent-setup manifests/components/profiles → EvolveLoop/`evolve`
 2. orquestrar skill + gate references MegaBrain → EvolveLoop/`/evolve`
 3. Host reinstall from updated installer (HOST)
-4. `megabrain-skill-gates.ts` (+ tests/imports)
+4. `skill-gates.ts` (+ tests/imports)
 5. Provider `stack: megabrain` → `evolveloop`
 6. Agents mirrors documenting `/MegaBrain` as primary
 7. Deprecate public use of `loadMegaBrainProfile` / `MEGABRAIN_*` (keep compat window)
@@ -162,7 +162,7 @@ See `MEGABRAIN-RENAME-RISK.yaml`. Top: **installer + orquestrar docs + host drif
 ```text
 1. agent-setup manifests (stop reinstalling MegaBrain identity)
 2. orquestrar SKILL + gate references (canonical narrative)
-3. filesystem: megabrain-skill-gates.ts + test + imports
+3. filesystem: skill-gates.ts + test + imports
 4. symbols/env dual-read → EvolveLoop-primary
 5. provider stack ids
 6. Agents/* + other skills wording

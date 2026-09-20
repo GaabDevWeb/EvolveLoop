@@ -1,7 +1,7 @@
 ---
 name: failure-analyst
 description: >
-  Classificação de falhas do Agent System MegaBrain (agent/capability/policy/
+  Classificação de falhas do Agent System EvolveLoop (agent/capability/policy/
   context/knowledge/integration/…). Use quando /failure-analyst, /analisar-falha,
   post-mortem de spawn, gate vermelho sem root cause, ou decompor “porque falhou”.
   Não use para implementar fix, debug de código de produto (Debugger), research
@@ -43,7 +43,7 @@ disable-model-invocation: true
 - Substituir gates `testing` / `security-review` / `po-acceptance`
 - Research web externo (`researcher`) salvo citar evidência já anexada
 - Auto-bypass Policy Engine / isolation de gates
-- Declarar `continuar` global no outer loop MegaBrain
+- Declarar `continuar` global no outer loop EvolveLoop
 
 ---
 
@@ -191,7 +191,7 @@ handoff:
   warnings: []
 ```
 
-Pipeline MegaBrain: `[ENTREGA CONSOLIDADA]` + `[ENCERRAMENTO]`.
+Pipeline EvolveLoop: `[ENTREGA CONSOLIDADA]` + `[ENCERRAMENTO]`.
 
 ---
 

@@ -78,7 +78,7 @@ Gap real: testing executa runners; po-review julga valor; code-reviewer julga di
 |-------|----------|-------|
 | DoD / checklist | sim | do plano ou brief |
 | evidence_dir / artefact paths | sim | o que verificar |
-| feature_id | recomendado | ciclo MegaBrain |
+| feature_id | recomendado | ciclo EvolveLoop |
 | gate phase hint | não | ex. pré-PO |
 
 ---
@@ -155,7 +155,7 @@ handoff:
   warnings: []
 ```
 
-Pipeline MegaBrain: `[ENTREGA CONSOLIDADA]` + `[ENCERRAMENTO]`.
+Pipeline EvolveLoop: `[ENTREGA CONSOLIDADA]` + `[ENCERRAMENTO]`.
 
 ---
 

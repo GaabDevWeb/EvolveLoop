@@ -1,6 +1,6 @@
 # Architecture Evolution
 
-Pipeline outputs for **Architecture Evolution Conductor** (MegaBrain).
+Pipeline outputs for **Architecture Evolution Conductor** (EvolveLoop).
 
 **Final status:** `SUCCESS_WITH_LIMITATIONS`  
 **Baseline V1:** immutable `baseline-v1-2026-09-18`  

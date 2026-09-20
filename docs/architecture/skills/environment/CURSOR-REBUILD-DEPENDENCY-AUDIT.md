@@ -8,7 +8,7 @@
 
 | Layer | Path | Role after rebuild |
 |-------|------|--------------------|
-| Cursor skill pack | `~/.cursor/skills` | Essential MegaBrain local skills (symlinks) |
+| Cursor skill pack | `~/.cursor/skills` | Essential EvolveLoop local skills (symlinks) |
 | Agents host | `~/.agents/skills` | Hard gates + review-tier globals + host-only |
 | Repo local | `CursorSKILLS/.cursor/skills` | Source of truth for local skills |
 | Repo global | `CursorSKILLS/global-skills` | Source for grill-me, image-to-code, dossier, etc. |
@@ -17,7 +17,7 @@
 ## Critical dependency chain (verified)
 
 ```text
-/MegaBrain → ~/.cursor/skills/orquestrar → repo .cursor/skills/orquestrar
+/evolve → ~/.cursor/skills/orquestrar → repo .cursor/skills/orquestrar
 /prd → ~/.cursor/skills/prd
 /planejar → ~/.cursor/skills/planner  (requires grill-me gate when Policy require[])
 /grill-me → ~/.agents/skills/grill-me → global-skills/grill-me
@@ -35,7 +35,7 @@ None found among installed Cursor skills (`SKILL.md` present for all 25).
 
 ## Providers
 
-No `provider.yaml` under `~/.cursor/skills` entries (MegaBrain skills use SKILL.md + orchestrator registry manifests). Orchestrator vitest **225/225** green including registry/provider tests.
+No `provider.yaml` under `~/.cursor/skills` entries (EvolveLoop skills use SKILL.md + orchestrator registry manifests). Orchestrator vitest **225/225** green including registry/provider tests.
 
 ## Agents
 

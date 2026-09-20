@@ -1,6 +1,6 @@
 # GATE_BUNDLE — secção zero portátil (herança PDA)
 
-**Âmbito:** todo spawn de sub-agente / sub-sub-agente no `/MegaBrain`.  
+**Âmbito:** todo spawn de sub-agente / sub-sub-agente no `/evolve`.  
 **Regra:** spawn **sem** `GATE_BUNDLE` completo = **inválido** — o filho deve recusar e devolver `[ENCERRAMENTO] bloqueado` com motivo `missing_gate_bundle`.
 
 Isto **não** substitui a Fase 0 no tempo do raiz: é o **mesmo contrato de hard-gates** a viajar na árvore PDA.

@@ -3,7 +3,7 @@ name: database
 description: >
   Engenharia de schema e persistência (PDA exec): modelagem, migrações versionadas,
   índices, constraints e optimização de queries. Use quando /database, schema,
-  migrações SQL/ORM, ER, índices, normalização, ou MegaBrain nó database-schema /
+  migrações SQL/ORM, ER, índices, normalização, ou EvolveLoop nó database-schema /
   DBA pesado delegado de backend. Não use para API/endpoints (backend), UI
   (frontend-pro), CI/deploy (devops), PRD (prd), planeamento (planner), gates
   testing/security/po.
@@ -26,9 +26,9 @@ disable-model-invocation: true
 
 # Database — Schema & Migrações
 
-Provider da capability **`database-schema`** (tipo **worker**, PDA **`exec`**) no MegaBrain. Produz schema, migrações e índices alinhados a `docs/DATA-MODEL.md` e `docs/API_SPEC.md`.
+Provider da capability **`database-schema`** (tipo **worker**, PDA **`exec`**) no EvolveLoop. Produz schema, migrações e índices alinhados a `docs/DATA-MODEL.md` e `docs/API_SPEC.md`.
 
-**Contrato ascendente:** Fase 2 do MegaBrain — nó Worker `database-schema` ou delegação do `backend`.
+**Contrato ascendente:** Fase 2 do EvolveLoop — nó Worker `database-schema` ou delegação do `backend`.
 
 **Policy:** listar capabilities **≠** autorização. Policy Engine medeia; Database **não** auto-concede write em prod nem authority de gate.
 

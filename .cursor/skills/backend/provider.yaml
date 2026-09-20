@@ -62,7 +62,7 @@ spec:
     pda_role: exec
 
   constraints:
-    stack: [cursor, megabrain]
+    stack: [cursor, evolveloop]
     platforms: [cursor]
     signals:
       - phase: "2"

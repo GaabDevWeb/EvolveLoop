@@ -8,6 +8,6 @@ Generated: 2026-09-20T02:34:44Z
 | Public entrypoint | `/evolve` |
 | Knowledge | Wiki (default KnowledgeBackend) |
 | Personal profile | GaabType |
-| Legacy alias | MegaBrain / `/MegaBrain` (non-public; GaabType optional) |
+| Legacy alias | EvolveLoop / `/evolve` (non-public; GaabType optional) |
 
-MegaBrain is **not** the public brand.
+EvolveLoop is **not** the public brand.

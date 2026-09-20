@@ -16,10 +16,10 @@ CursorSKILLS/
 │   ├── schemas/
 │   ├── tests/
 │   └── package.json
-├── .cursor/skills/        # SKILL.md packages (MegaBrain / domain skills)
+├── .cursor/skills/        # SKILL.md packages (EvolveLoop / domain skills)
 ├── .cursor/hooks/         # Cursor hooks → run-jobs pickup (outside package)
 ├── Agents/                # Markdown agent prompts (not engine Agent class)
-├── memory/                # MegaBrain feature memory (episodic/context; not jobs/)
+├── memory/                # EvolveLoop feature memory (episodic/context; not jobs/)
 ├── docs/research/         # Prior reverse-engineering (claims)
 └── docs/audit/            # This audit
 ```
@@ -55,7 +55,7 @@ RunResult { success, evidence, blocked_reason, … }
 
 **Optional persistence (`--data-dir`):** JSONL events + `memory/{feature}/*.yaml` + knowledge md store.
 
-**Not observed in engine:** Agent instance selection; MegaBrain `gate.testing.json` writer; OS sandbox; model router.
+**Not observed in engine:** Agent instance selection; EvolveLoop `gate.testing.json` writer; OS sandbox; model router.
 
 ## Agent / Capability / Provider (observed semantics)
 
@@ -75,7 +75,7 @@ Executor (SmartMock | JobFile | Callback | Deterministic ops)
 |-------|----------|--------|
 | Engine Evidence | `RunResult.evidence[]` (+ builders) | ExecutionEngine / providers |
 | Event telemetry | `{data-dir}/telemetry/events/*.jsonl` | JsonlEventPersister |
-| MegaBrain Evidence Bus | `memory/<feature>/evidence/*.json` (skill convention) | orquestrar PDA / humans — **not** ExecutionEngine |
+| EvolveLoop Evidence Bus | `memory/<feature>/evidence/*.json` (skill convention) | orquestrar PDA / humans — **not** ExecutionEngine |
 
 ## Sibling note
 

@@ -4,7 +4,7 @@
 |-------|-------|
 | Data | 2026-09-17 |
 | Status | accepted |
-| Deciders | MegaBrain / agent-authoring |
+| Deciders | EvolveLoop / agent-authoring |
 
 ## Contexto
 
@@ -14,7 +14,7 @@ Criar `kind: Agent` + Agent Registry duplicaria discovery já feita pelo Capabil
 
 ## Decisão
 
-1. **Agent** no MegaBrain = **Agent Package**: composição versionada de `SKILL.md` (+ metadata), command `/`, opcionalmente `provider.yaml`, Contract YAML, evals, Agents espelho, install wiring.
+1. **Agent** no EvolveLoop = **Agent Package**: composição versionada de `SKILL.md` (+ metadata), command `/`, opcionalmente `provider.yaml`, Contract YAML, evals, Agents espelho, install wiring.
 2. **Não** introduzir `kind: Agent` nem Agent Registry nesta fase.
 3. **Routing** futuro continua Capability IR → Registry → Provider; hints só em `provider.yaml` (`constraints` / signals), sem Agent Router paralelo.
 4. A skill **`agent-authoring`** é a fábrica/manutenção deste package; **`skill-authoring`** permanece dona do ciclo de evals/description do corpo da skill.
@@ -41,7 +41,7 @@ Criar `kind: Agent` + Agent Registry duplicaria discovery já feita pelo Capabil
 
 ### Positivas
 
-- Authoring alinhado ao Execution Engine e ao MegaBrain
+- Authoring alinhado ao Execution Engine e ao EvolveLoop
 - Fronteira clara skill-authoring vs agent-authoring
 - Débito (Agent Registry missing) fica explícito, não escondido atrás de fachada
 
@@ -54,6 +54,6 @@ Criar `kind: Agent` + Agent Registry duplicaria discovery já feita pelo Capabil
 
 - `docs/architecture-audit-2026-09-17.md`
 - `docs/architecture-plan-platform-evolution.md`
-- `docs/MegaBrain-Ecosystem.md` §6–7
+- `docs/evolve-Ecosystem.md` §6–7
 - `.cursor/skills/agent-authoring/`
 - `.cursor/skills/orquestrar/references/specs/provider-manifest.md`

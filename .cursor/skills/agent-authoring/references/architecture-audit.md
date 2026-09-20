@@ -44,7 +44,7 @@
 
 ## Como o sistema representa «agente»
 
-Documento canónico: `docs/MegaBrain-Ecosystem.md` §6.
+Documento canónico: `docs/evolve-Ecosystem.md` §6.
 
 ```text
 Capability  →  Provider (provider.yaml)  →  Skill (SKILL.md)

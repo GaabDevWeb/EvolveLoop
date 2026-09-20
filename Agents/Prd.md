@@ -12,7 +12,7 @@ description: >
 **Capability:** `business-requirements`  
 **PDA roles:** `plan`  
 **Status:** stable (versão 1.1.0)  
-**Tipo:** upstream · Fase 0.5 MegaBrain
+**Tipo:** upstream · Fase 0.5 EvolveLoop
 
 ## Papel
 

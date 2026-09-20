@@ -17,7 +17,7 @@ components:
   commands: true
   hooks: true
   skills: true
-  megabrain: true
+  evolveloop: true
   wiki: true
   memory: true
   rag: false

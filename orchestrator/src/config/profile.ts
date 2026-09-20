@@ -2,7 +2,7 @@
  * EvolveLoop profile — configuration / personalization boundary (not a runtime).
  * Profile configures core; core must not import personal paths.
  *
- * Legacy aliases: MegaBrain* names remain exported for compatibility.
+ * Legacy aliases: EvolveLoop* names remain exported for compatibility.
  */
 
 import { existsSync, readFileSync } from "node:fs";

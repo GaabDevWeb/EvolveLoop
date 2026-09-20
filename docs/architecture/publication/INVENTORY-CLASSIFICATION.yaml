@@ -8,7 +8,7 @@ inventory:
   .cursor/skills/wiki: PUBLIC_CORE
   .cursor/skills/wiki-mem: PUBLIC_PROFILE  # optional public; Gaab on
   .cursor/commands/*: PUBLIC_CORE  # brand exceptions
-  .cursor/rules/megabrain.mdc: PUBLIC_CORE  # rename later
+  .cursor/rules/evolveloop.mdc: PUBLIC_CORE  # rename later
   .cursor/hooks/* wiki-mem: GAAB_PROFILE_or_PUBLIC_OPTIONAL
   Agents/: PUBLIC_CORE
   global-skills/: PUBLIC_CORE

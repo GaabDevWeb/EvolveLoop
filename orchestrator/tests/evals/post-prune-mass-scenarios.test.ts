@@ -9,7 +9,7 @@ import {
   evaluateGrillMeTransition,
   evaluateImageToCodeGate,
   type RiskTier,
-} from "../../src/policy/megabrain-skill-gates.js";
+} from "../../src/policy/skill-gates.js";
 
 const ROOT = join(import.meta.dirname, "../../..");
 const GLOBAL = join(ROOT, "global-skills");

@@ -28,4 +28,4 @@ reused_abstractions:
   - knowledge.search / knowledge.inspect contracts
   - KnowledgeStore (run-scoped)
   - Capability Provider registry
-  - agent-setup profiles.yaml (install profiles; separate from megabrain profile file)
+  - agent-setup profiles.yaml (install profiles; separate from evolveloop profile file)

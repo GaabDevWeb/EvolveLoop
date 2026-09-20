@@ -145,7 +145,7 @@ export {
   type SkillGateDecision,
   type GateStatus,
   type RiskTier,
-} from "./policy/megabrain-skill-gates.js";
+} from "./policy/skill-gates.js";
 export { Orchestrator } from "./orchestrator/orchestrator.js";
 export { Scheduler } from "./scheduler/scheduler.js";
 export { MockProvider, ProviderRouter, createMockProvider } from "./providers/mock-provider.js";

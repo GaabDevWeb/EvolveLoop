@@ -35,7 +35,7 @@ Input → … → Final Output
 | Timing | | |
 | Community / DX | | |
 
-## 6. Comparison with MegaBrain (per mechanism)
+## 6. Comparison with EvolveLoop (per mechanism)
 
 Ver template gap / analysis-framework.
 

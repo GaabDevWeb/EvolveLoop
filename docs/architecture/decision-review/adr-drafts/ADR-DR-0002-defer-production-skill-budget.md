@@ -52,7 +52,7 @@ Decision about **whether to change Agent System architecture now**. Offline harn
 ## Open Questions
 
 - Live host effect size?  
-- Interaction with Cursor skill discovery vs MegaBrain packages?  
+- Interaction with Cursor skill discovery vs EvolveLoop packages?  
 
 ## Validation Requirements
 

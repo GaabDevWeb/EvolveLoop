@@ -3,7 +3,7 @@
  * Default: wiki. Test-only: fake (when KNOWLEDGE_BACKEND=fake).
  */
 
-import { loadMegaBrainProfile, resolveKnowledgeBackendId } from "../../config/profile.js";
+import { loadEvolveLoopProfile, resolveKnowledgeBackendId } from "../../config/profile.js";
 import { FakeKnowledgeBackend } from "./fake-backend.js";
 import type { KnowledgeBackend } from "./types.js";
 import { WikiKnowledgeBackend } from "./wiki-backend.js";
@@ -25,7 +25,7 @@ export function resolveKnowledgeBackend(options?: {
 }): KnowledgeBackend {
   if (options?.instance) return options.instance;
 
-  const profile = loadMegaBrainProfile();
+  const profile = loadEvolveLoopProfile();
   const id = (options?.backendId ?? resolveKnowledgeBackendId(profile)).toLowerCase();
 
   if (cached && cachedKey === id) return cached;

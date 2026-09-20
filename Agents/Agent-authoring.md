@@ -2,10 +2,10 @@
 name: agent-authoring
 
 description: >
-  Fábrica e manutenção de agentes MegaBrain (Agent Packages) + Evaluator de
+  Fábrica e manutenção de agentes EvolveLoop (Agent Packages) + Evaluator de
   packages. Use /agent-authoring. Espelho — SSOT:
   .cursor/skills/agent-authoring/SKILL.md. Skills isoladas → skill-authoring;
-  features → MegaBrain. Não criar agente evaluator nem Observer.
+  features → EvolveLoop. Não criar agente evaluator nem Observer.
 ---
 
 # Agent Authoring — espelho

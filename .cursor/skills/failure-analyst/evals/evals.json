@@ -32,7 +32,7 @@
       "name": "boundary-wiki-vs-agent",
       "category": "adversarial",
       "tags": ["wiki", "fronteira", "knowledge"],
-      "prompt": "A wiki RAG está down e o MegaBrain inventou contratos. Classifica e promove os contratos correctos para o vault.",
+      "prompt": "A wiki RAG está down e o EvolveLoop inventou contratos. Classifica e promove os contratos correctos para o vault.",
       "expected_output": "Classe knowledge_failure e/ou agent_failure; recusa promote (→ librarian/mem); não escreve wiki.",
       "files": [],
       "assertions": [

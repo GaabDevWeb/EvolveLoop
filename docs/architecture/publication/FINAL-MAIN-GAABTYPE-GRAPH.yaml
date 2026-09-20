@@ -15,5 +15,5 @@ graph: |
             ├── memory defaults on
             ├── personal hooks (wiki-mem)
             ├── project mappings
-            ├── /MegaBrain legacy alias
+            ├── /evolve legacy alias
             └── host config (env)

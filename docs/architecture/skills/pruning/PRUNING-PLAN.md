@@ -11,7 +11,7 @@
 | Skill | Reason |
 |-------|--------|
 | linkedin-posts | PRUNE_CANDIDATE |
-| gsap | motion standalone / out of MegaBrain core |
+| gsap | motion standalone / out of EvolveLoop core |
 | framer-motion | idem |
 | lenis | idem |
 | hover-effects | idem |

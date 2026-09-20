@@ -59,7 +59,7 @@ state:
     semantic_stuck_detection: NOT_IMPLEMENTED
     model_routing: NOT_IMPLEMENTED
     evidence_engine_array: PRESENT
-    megabrain_evidence_bus: DISTINCT_BOUNDARY
+    evolveloop_evidence_bus: DISTINCT_BOUNDARY
     evidence_class: OBSERVED
 
   prototype_status:

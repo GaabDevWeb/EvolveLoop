@@ -1,6 +1,6 @@
 # Routing de modelo (qualitativo + config)
 
-**Âmbito:** `/MegaBrain` (skill `orquestrar`).  
+**Âmbito:** `/evolve` (skill `orquestrar`).  
 **Isto não é** uma API Cursor inventada. O raiz escolhe **qualidade relativa** por papel. O spawn usa o parâmetro `model` do Task **só se o ambiente o expuser**. Default: `inherit`.
 
 **Config regenerável (opcional):** `karpathyWiki/rag/config/model-routing.yaml` — preferências por função (`reasoning` | `fast` | `cheap` | `strongest` | `inherit`). O Agent mapeia preference → melhor slug **listado** no Task tool desta conversa. Slug em falta → `inherit`.

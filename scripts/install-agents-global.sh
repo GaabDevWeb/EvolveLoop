@@ -93,12 +93,12 @@ EOF
   echo "  command: ${name}.md (generated)"
 }
 
-rm -f "$GLOBAL_COMMANDS/orquestrar.md" "$GLOBAL_COMMANDS/MegaBrain.md"
+rm -f "$GLOBAL_COMMANDS/orquestrar.md" "$GLOBAL_COMMANDS/evolve.md"
 write_global_cmd "evolve" "orquestrar" "$(cat <<'EVOLVE_EXTRA'
 3. Runtime: `$ORCHESTRATOR_ROOT` — `agents-orch engine`
 
 **HARD-GATE:** imagem anexada → `~/.agents/skills/image-to-code/SKILL.md`
-**Canonical command:** `/evolve` (public). Legacy `/MegaBrain` is not installed on public main.
+**Canonical command:** `/evolve` (public). Legacy `/evolve` is not installed on public main.
 EVOLVE_EXTRA
 )"
 write_global_cmd "planejar" "planner"
@@ -145,7 +145,7 @@ fi
 
 # --- Rules ---
 if [[ -f "$RULES_SRC/Rules.md" ]]; then
-  rm -f "$GLOBAL_RULES/megabrain.mdc" 2>/dev/null || true
+  rm -f "$GLOBAL_RULES/evolveloop.mdc" 2>/dev/null || true
   cat > "$GLOBAL_RULES/evolveloop.mdc" << EOF
 ---
 description: EvolveLoop rules — max priority in every workspace

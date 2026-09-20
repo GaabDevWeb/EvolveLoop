@@ -1,6 +1,6 @@
 old:
-  - /MegaBrain
-  - MegaBrain
+  - /evolve
+  - EvolveLoop
   - CursorSKILLS (folder/historical identity)
 
 new:
@@ -9,7 +9,7 @@ new:
 
 status:
   canonical: /evolve
-  legacy: /MegaBrain
+  legacy: /evolve
   conflict_check: "/evolve command file did not exist; no technical conflict; chose /evolve"
 
 scope:

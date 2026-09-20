@@ -7,7 +7,7 @@ publication_gap:
       item: AGENT.md missing (onboarding contract)
       impact: fresh-clone path undefined
     - id: G-003
-      item: README still personal / MegaBrain-first without public architecture framing
+      item: README still personal / EvolveLoop-first without public architecture framing
       impact: first impression / clarity
     - id: G-004
       item: fresh-clone + clean-env install never executed
@@ -21,7 +21,7 @@ publication_gap:
     - id: G-011
       item: Cursor command text may still cite wiki-grounding-gate.md (drift vs knowledge-grounding)
     - id: G-012
-      item: brand MegaBrain meme/personal for serious public surface
+      item: brand EvolveLoop meme/personal for serious public surface
     - id: G-013
       item: GaabDevWeb / Documentos references in remaining docs/setup
     - id: G-014

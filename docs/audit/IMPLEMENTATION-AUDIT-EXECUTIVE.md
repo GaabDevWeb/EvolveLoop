@@ -2,7 +2,7 @@
 
 **Date:** 2026-09-18  
 **Auditor:** Implementation Auditor  
-**System under audit:** CursorSKILLS Agent System (`@agents/orchestrator` + `.cursor/skills` + MegaBrain skill contracts)  
+**System under audit:** CursorSKILLS Agent System (`@agents/orchestrator` + `.cursor/skills` + EvolveLoop skill contracts)  
 **Code root:** `/home/gaab/Downloads/CursorSKILLS`  
 **Research input:** `docs/research/*` (decisions treated as claims, not proof)  
 **Constraint:** no Agent System source changes; audit docs only; `npm ci` used solely to run existing tests
@@ -14,7 +14,7 @@
 The **Capability IR → Scheduler → Registry → Provider → Evidence accumulation** pipeline is **real code** with **unit/contract test evidence**. Several research-era `ALREADY_PRESENT` claims are **fragile**:
 
 1. **This workspace’s orchestrator tree is incomplete:** `src/jobs/` is **missing**, while `ExecutionEngine`, CLIs, and tests import it. Sibling tree `AGENTS/Cursor/orchestrator/src/jobs/` has the four modules. **Full-cycle integration tests cannot load** here.
-2. **MegaBrain “Evidence Bus” (`memory/<feature>/evidence/*.json`)** is primarily a **skill/orchestrator-process convention**, not the same primitive as in-engine `Evidence[]` + `telemetry/events/*.jsonl`.
+2. **EvolveLoop “Evidence Bus” (`memory/<feature>/evidence/*.json`)** is primarily a **skill/orchestrator-process convention**, not the same primitive as in-engine `Evidence[]` + `telemetry/events/*.jsonl`.
 3. **CapabilityAuthority deny/confirm enforcement** is proven on **DeterministicProvider only**; Mock/CursorSkill/JobFile paths do **not** call it.
 4. **OS sandbox** is **not** implemented; path confinement + authority flags ≠ sandbox.
 5. **Model routing** and **stuck detector** (semantic) are **NOT_IMPLEMENTED** / bound-only.
@@ -47,7 +47,7 @@ Measured test slice (2026-09-18): **43 passed / 2 failed** (evidence validator d
 
 | Claim | Where documented | Code reality |
 |-------|------------------|--------------|
-| MegaBrain Evidence Bus as engine FS bus | `orquestrar` references/evidence-bus.md | Engine does **not** write `memory/*/evidence/gate.*.json` |
+| EvolveLoop Evidence Bus as engine FS bus | `orquestrar` references/evidence-bus.md | Engine does **not** write `memory/*/evidence/gate.*.json` |
 | Full pause/resume product UX | IMPLEMENTATION-STATUS / research HITL | `pause()`/`resume()` flags exist; no CLI/tests; job resume module **missing here** |
 | 103 tests green / jobs resume | IMPLEMENTATION-STATUS.md | Not reproducible on this tree without `src/jobs/` |
 | Agent Registry as executable Agent objects | architecture docs / Agents/*.md | Agents are Markdown prompts; engine schedules **capabilities**, not Agent instances |
@@ -74,7 +74,7 @@ Measured test slice (2026-09-18): **43 passed / 2 failed** (evidence validator d
 - OS-level sandbox  
 - Model/LLM routing  
 - Semantic stuck detection  
-- Skill catalog token budgets inside MegaBrain (host concern)
+- Skill catalog token budgets inside EvolveLoop (host concern)
 
 ---
 
@@ -124,7 +124,7 @@ See `EXPERIMENT-READINESS.md`. E-001 mostly host-blocked; E-002/E-003 blocked by
 ## Architectural Implications (factual)
 
 1. Research `ALREADY_PRESENT` for **Capability/Provider/Orchestrator core loop** is **largely confirmed** in source + unit tests — **CONFIRMS** DO-NOT-CHANGE on registries/runtime *conceptually*.
-2. Research assumptions about **Evidence Bus = MegaBrain JSON gates** and **HITL = durable RunState** are **WEAKened** by split implementations and missing jobs module.
+2. Research assumptions about **Evidence Bus = EvolveLoop JSON gates** and **HITL = durable RunState** are **WEAKened** by split implementations and missing jobs module.
 3. Syncing or restoring `src/jobs/` is a **prerequisite** before claiming PROVEN resume/HITL experiments on this package copy.
 4. Next phase must treat **Authority coverage** and **sandbox** as implementation workstreams, not documentation polish.
 
@@ -135,5 +135,5 @@ See `EXPERIMENT-READINESS.md`. E-001 mostly host-blocked; E-002/E-003 blocked by
 1. Diff/sync `src/jobs/` from `AGENTS/Cursor/orchestrator` (or document intentional split).  
 2. Re-run full `npm test` after sync.  
 3. Trace one real `run-engine` with `--jobs-dir` + DeterministicProvider authority.  
-4. Map MegaBrain skill Evidence Bus writers (orquestrar PDA) vs engine evidence types.  
+4. Map EvolveLoop skill Evidence Bus writers (orquestrar PDA) vs engine evidence types.  
 5. Only then authorize E-005 / sandbox prototypes.

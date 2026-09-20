@@ -1,12 +1,12 @@
 ---
 name: wiki-mem
 description: >
-  Knowledge / librarian MegaBrain: memória episódica de sessões Cursor (.ai/sessions,
+  Knowledge / librarian EvolveLoop: memória episódica de sessões Cursor (.ai/sessions,
   LATEST.md) e promoção controlada (promote-queue → log.md ± wiki/). Use quando
   /mem, Knowledge Agent, librarian, continuidade entre chats, mem search, promote
   para canónico, ou estilo claude-mem. Não use para grounding/contratos canónicos
   (wiki Context Engineer + RAG), pesquisa web externa (/pesquisar),
-  nem como substituto do HARD-GATE MegaBrain. Não duplica knowledge.search
+  nem como substituto do HARD-GATE EvolveLoop. Não duplica knowledge.search
   (DeterministicProvider).
 metadata:
   version: 1.0.0
@@ -102,7 +102,7 @@ python3 ~/.cursor/hooks/wiki-mem/mem.py digest
 ## Ritual
 
 1. Pedido de continuidade → `search` + ler `LATEST.md`
-2. Contratos/arquitectura → skill **wiki** / RAG (HARD-GATE MegaBrain)
+2. Contratos/arquitectura → skill **wiki** / RAG (HARD-GATE EvolveLoop)
 3. Após trabalho estável → `promote` **ou** o hook de fecho já enfileirou → **librarian** (este papel) append em `{Projeto}/log.md` (± `wiki/` se contratos)
 4. Output estruturado (abaixo)
 
@@ -140,6 +140,6 @@ python3 ~/.cursor/hooks/wiki-mem/mem.py digest
 
 `sessionStart` · `afterFileEdit` · `stop` · `sessionEnd` em `~/.cursor/hooks.json`.
 
-**Fecho (`stop` / `sessionEnd`):** se houver `promote_candidates` ou file_edits de código, **append/refresh** `promote-queue.md`. **Nunca** escreve `{Projeto}/wiki/` nem `raw/`. `followup_message` vazio (sem loops MegaBrain). Promoção canónica = librarian / Agent (este skill).
+**Fecho (`stop` / `sessionEnd`):** se houver `promote_candidates` ou file_edits de código, **append/refresh** `promote-queue.md`. **Nunca** escreve `{Projeto}/wiki/` nem `raw/`. `followup_message` vazio (sem loops EvolveLoop). Promoção canónica = librarian / Agent (este skill).
 
 Se `sessionStart.additional_context` falhar (bug Cursor conhecido), o Agent **deve** ler `LATEST.md` quando precisar de continuidade.

@@ -49,7 +49,7 @@ Wave C2 Lead matrix: Debugger → EXTEND systematic-debugging → skill id `debu
 
 ## Migration notes
 
-Tier3 `systematic-debugging` permanece como fonte DO + técnicas. Runtime/pipeline usa `debugger` + capability `debug`. Docs que citam `systematic-debug` → preferir `debug` / `/debugger` (DEFERRED refresh MegaBrain-Ecosystem se Lead pedir).
+Tier3 `systematic-debugging` permanece como fonte DO + técnicas. Runtime/pipeline usa `debugger` + capability `debug`. Docs que citam `systematic-debug` → preferir `debug` / `/debugger` (DEFERRED refresh EvolveLoop-Ecosystem se Lead pedir).
 
 ## Validação
 

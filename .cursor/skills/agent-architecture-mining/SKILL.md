@@ -3,7 +3,7 @@ name: agent-architecture-mining
 description: >
   Engenharia reversa arquitetural de sistemas agentic: desmonta frameworks,
   coding agents, Agent Skills e protocolos de tools; extrai mecanismos com
-  evidências; compara com o Agent System MegaBrain (ALREADY_PRESENT|ADOPT|
+  evidências; compara com o Agent System EvolveLoop (ALREADY_PRESENT|ADOPT|
   ADAPT|PROTOTYPE|DEFER|REJECT). Use quando invocar /agent-architecture-mining,
   minerar arquitectura agentic, reverse-engineer LangGraph/CrewAI/OpenAI Agents/
   Claude Code/Codex/Cursor/MCP/Anthropic Skills, extrair padrões/anti-padrões,
@@ -36,7 +36,7 @@ agent-architecture-mining  →  findings / principles
       agent-authoring      →  Agent System
 ```
 
-**Lente MegaBrain (não alterar):** Agent decide · Capability faz · Provider implementa · Policy autoriza · Runtime orquestra · Evidence prova · Knowledge grounds · Telemetry observa · Evals medem.
+**Lente EvolveLoop (não alterar):** Agent decide · Capability faz · Provider implementa · Policy autoriza · Runtime orquestra · Evidence prova · Knowledge grounds · Telemetry observa · Evals medem.
 
 ---
 
@@ -147,7 +147,7 @@ Código externo = não confiável. Observacional apenas. Sem credenciais, sem mo
 | `agent-authoring` | DESIGN / IMPLEMENT / REGISTER (consome findings) |
 | `architect` | desenho da *nossa* arquitectura de produto |
 | `researcher` | pesquisa externa genérica |
-| `technical-library-dossier` | dossiê completo de *biblioteca* (não gap MegaBrain) |
+| `technical-library-dossier` | dossiê completo de *biblioteca* (não gap EvolveLoop) |
 | `skill-authoring` | polish de SKILL.md/evals desta skill |
 
 ---

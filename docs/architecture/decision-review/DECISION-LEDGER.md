@@ -10,7 +10,7 @@
 |----|-------|----------|------------|
 | DR-001 | Job-path resume/checkpoint | **KEEP** current mechanism for tested failure class | HIGH |
 | DR-008 | Single Capability/Provider registries + orchestrator | **KEEP** (DO-NOT-CHANGE) | HIGH |
-| DR-009 | Evidence ≠ Telemetry; MegaBrain bus ≠ engine Evidence[] | **KEEP** boundary | HIGH |
+| DR-009 | Evidence ≠ Telemetry; EvolveLoop bus ≠ engine Evidence[] | **KEEP** boundary | HIGH |
 
 ## Decisions Refined By Experiments
 

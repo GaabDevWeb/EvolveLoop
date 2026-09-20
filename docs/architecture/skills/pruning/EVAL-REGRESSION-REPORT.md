@@ -16,7 +16,7 @@ Inclui evals existentes (`engine-scenarios`, `evolveloop-live-evals` se no suite
 | engine-scenarios | PASS |
 | post-prune-catalog | PASS |
 | post-prune-mass-scenarios | PASS |
-| policy / megabrain gates | PASS |
+| policy / evolveloop gates | PASS |
 | full-cycle / integration | PASS |
 | contracts / registry | PASS |
 

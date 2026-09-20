@@ -1,7 +1,7 @@
 ---
 name: wiki
 description: >
-  Context Engineer MegaBrain: grounding / context pack da Wiki (vault
+  Context Engineer EvolveLoop: grounding / context pack da Wiki (vault
   karpathyWiki) via ritual ground.sh (scout/search) + pack do projeto, template
   Fontes/Contratos/GAPs/Método/Handoff, Relevant Context > Maximum Context, e
   recusa de coding via wiki vibe. Use quando /wiki, Context Engineer,

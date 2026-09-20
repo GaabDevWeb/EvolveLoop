@@ -20,7 +20,7 @@ disable-model-invocation: true
 
 # ADR — Architecture Decision Record
 
-Provider da capability **`architecture-decision`** (tipo **upstream**) no MegaBrain. Produz **um ADR numerado** por decisão em `docs/adr/NNNN-<titulo-slug>.md`.
+Provider da capability **`architecture-decision`** (tipo **upstream**) no EvolveLoop. Produz **um ADR numerado** por decisão em `docs/adr/NNNN-<titulo-slug>.md`.
 
 **Fronteira com prd:** o pacote `/prd` inclui ADR(s) inicial(is). Use **`/adr`** para decisões **durante** ou **após** implementação, ou quando só falta documentar a decisão.
 

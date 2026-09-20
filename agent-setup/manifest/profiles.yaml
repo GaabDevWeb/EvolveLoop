@@ -4,23 +4,23 @@ profiles:
   minimal:
     description: Cursor core rules, wiki skill, basic commands, doctor
     components:
-      rules: [wiki-agent, megabrain]
-      commands: [wiki, MegaBrain]
+      rules: [wiki-agent, evolveloop]
+      commands: [wiki, evolve]
       skills: [wiki]
       hooks: false
-      megabrain: false
+      evolveloop: false
       memory: false
       rag: false
       systemd_user: false
 
   standard:
-    description: minimal + MegaBrain, Wiki memory, hooks
+    description: minimal + EvolveLoop, Wiki memory, hooks
     extends: minimal
     components:
       skills: [wiki, wiki-mem, orquestrar, skill-authoring]
       commands: [mem, planejar, testes, validar, seguranca, documentar]
       hooks: true
-      megabrain: true
+      evolveloop: true
       memory: true
       worker_skills: true
 

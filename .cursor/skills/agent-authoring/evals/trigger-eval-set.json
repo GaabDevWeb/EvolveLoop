@@ -44,7 +44,7 @@
     },
     {
       "id": 9,
-      "query": "Detect duplicated agents in MegaBrain",
+      "query": "Detect duplicated agents in EvolveLoop",
       "should_trigger": true
     },
     {
@@ -66,7 +66,7 @@
     },
     {
       "id": 13,
-      "query": "/MegaBrain implementa endpoint de login",
+      "query": "/evolve implementa endpoint de login",
       "should_trigger": false,
       "near_miss": "orquestrar"
     },

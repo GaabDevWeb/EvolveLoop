@@ -3,7 +3,7 @@ name: find-skills
 description: >
   User-facing discovery/install of agent skills via Skills CLI (npx skills).
   Use for /descobrir, "find a skill for X", or extending capabilities from
-  skills.sh. NOT the MegaBrain Execution Engine Registry fallback — that is
+  skills.sh. NOT the EvolveLoop Execution Engine Registry fallback — that is
   orchestrator provider-discovery.ts (scan provider.yaml).
 ---
 
@@ -11,7 +11,7 @@ description: >
 
 This skill helps you discover and install skills from the open agent skills ecosystem.
 
-## MegaBrain architecture (canonical)
+## EvolveLoop architecture (canonical)
 
 | Role | Mechanism |
 |------|-----------|
@@ -67,10 +67,10 @@ npx skills find [query]
 npx skills add <owner/repo@skill> -g -y
 ```
 
-Never install silently in MegaBrain cycles without human approval.
+Never install silently in EvolveLoop cycles without human approval.
 
 ## Non-responsibilities
 
-- Not MegaBrain Registry / Execution Engine provider selection
+- Not EvolveLoop Registry / Execution Engine provider selection
 - Not a substitute for `/library-dossier` or `/pesquisar`
 - Not automatic capability wiring into `provider.yaml`

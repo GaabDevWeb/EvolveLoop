@@ -12,13 +12,13 @@ CRITICAL:
     impact: user environment diverges from published main
 HIGH:
   - id: R-010
-    item: rename megabrain-skill-gates.ts + imports/tests
+    item: rename skill-gates.ts + imports/tests
     impact: break builds if incomplete
   - id: R-011
     item: loadMegaBrainProfile / MEGABRAIN_* env callers
     impact: runtime profile resolution; need dual-read window
   - id: R-012
-    item: provider.yaml stack: [cursor, megabrain]
+    item: provider.yaml stack: [cursor, evolveloop]
     impact: catalog/telemetry semantics if consumers filter by stack id
 MEDIUM:
   - id: R-020

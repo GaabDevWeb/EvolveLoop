@@ -1,4 +1,4 @@
-# Public Extraction Plan — CursorSKILLS / MegaBrain
+# Public Extraction Plan — CursorSKILLS / EvolveLoop
 
 **Status:** `PUBLIC_EXTRACTION_PLAN_COMPLETE`  
 **Generated:** 2026-09-20T02:24:13Z  
@@ -9,7 +9,7 @@
 
 ## 1. Executive Summary
 
-O repositório já possui **arquitectura publicável** (orchestrator, KnowledgeBackend, EvolveLoop, skills podadas, hard gates). O que falta para uma `main` séria não é redesenhar o runtime — é **extrair overlay pessoal**, limpar artefactos de desenvolvimento, fechar gaps de onboarding (LICENSE, AGENT.md, README), e decidir **branding público** (MegaBrain = provisório).
+O repositório já possui **arquitectura publicável** (orchestrator, KnowledgeBackend, EvolveLoop, skills podadas, hard gates). O que falta para uma `main` séria não é redesenhar o runtime — é **extrair overlay pessoal**, limpar artefactos de desenvolvimento, fechar gaps de onboarding (LICENSE, AGENT.md, README), e decidir **branding público** (EvolveLoop = provisório).
 
 **Recomendação estrutural:** `GaabType` = **profile overlay** (`profiles/gaabtype/` + env), **não** segundo core / não branch com código duplicado.
 
@@ -31,7 +31,7 @@ CURRENT REPO
 | Skill pack | pruned/validated | pruning reports; 13 global + local pipeline |
 | Profile boundary | present (minimal) | `profiles/default.yaml`, `config/profile.ts` |
 | Personal corpus | EXTERNAL host | `WIKI_ROOT` → karpathyWiki |
-| Branding | provisional | MegaBrain / CursorSKILLS / GaabDevWeb |
+| Branding | provisional | EvolveLoop / CursorSKILLS / GaabDevWeb |
 
 ## 3. Main Boundary
 
@@ -59,7 +59,7 @@ rules/ wiki-agent with author project table
 
 ## 5. Public Core
 
-Engine, Policy, PDA, Capability/Provider, Evidence, Knowledge abstraction, Wiki *implementation as default backend*, EvolveLoop, hard gates grill-me/image-to-code/knowledge-grounding, worker/gate skills, megabrain.mdc *discipline* (rename brand later).
+Engine, Policy, PDA, Capability/Provider, Evidence, Knowledge abstraction, Wiki *implementation as default backend*, EvolveLoop, hard gates grill-me/image-to-code/knowledge-grounding, worker/gate skills, evolveloop.mdc *discipline* (rename brand later).
 
 ## 6. Personal Layer
 
@@ -101,7 +101,7 @@ No personal config required for V1 freeze. Telemetry dirs gitignored. Do not for
 
 ## 11. Command Boundary
 
-See `PUBLIC-COMMAND-MATRIX.yaml`. `/MegaBrain` = public entry (rename with brand). `/wiki` public. `/mem` = public-optional or profile-default-on for GaabType.
+See `PUBLIC-COMMAND-MATRIX.yaml`. `/evolve` = public entry (rename with brand). `/wiki` public. `/mem` = public-optional or profile-default-on for GaabType.
 
 ## 12. Agent Boundary
 
@@ -121,7 +121,7 @@ USER + ARCHITECTURE curated → main. RESEARCH HISTORY + INTERNAL AUDITS → kee
 
 ## 16. Publication Blockers
 
-See `PUBLICATION-GAP-REGISTER.yaml`. Top: no LICENSE; README still personal-flavored; AGENT.md missing; Cursor command drift (`wiki-grounding` vs `knowledge-grounding`); wiki-mem always-on; host rebuild YAMLs; brand MegaBrain; GaabDevWeb; fresh-clone never proven.
+See `PUBLICATION-GAP-REGISTER.yaml`. Top: no LICENSE; README still personal-flavored; AGENT.md missing; Cursor command drift (`wiki-grounding` vs `knowledge-grounding`); wiki-mem always-on; host rebuild YAMLs; brand EvolveLoop; GaabDevWeb; fresh-clone never proven.
 
 ## 17. Extraction Sequence
 
@@ -139,7 +139,7 @@ GaabType = main + profile overlay (NO duplicated source)
 
 ## 20. Naming Strategy
 
-See `PROJECT-NAMING-AUDIT.md`. Direction: **RENAME or CODENAME_ONLY** for public product; keep MegaBrain as internal/codename optionally; GaabType stays personal profile name.
+See `PROJECT-NAMING-AUDIT.md`. Direction: **RENAME or CODENAME_ONLY** for public product; keep EvolveLoop as internal/codename optionally; GaabType stays personal profile name.
 
 
 ---
@@ -168,13 +168,13 @@ This plan **does not contradict** those results: remaining work is **extraction/
 | wiki-mem | mixed always-on | optional | default-on | extract hooks |
 | Paths | env-normalized | ENV | profile+ENV | scrub docs |
 | Skills pack | pruned | ✓ curated | +prefs | no re-prune |
-| Commands | PT+MegaBrain | ✓ (+brand) | same | rename brand |
+| Commands | PT+EvolveLoop | ✓ (+brand) | same | rename brand |
 | Agents | mirrors | ✓ | optional mem | none |
 | Hooks | mixed | split | split | extract |
 | agent-setup | mechanism | ✓ | personal units | scrub |
 | memory/ workspaces | local | ✗ | local | gitignore |
 | LICENSE/AGENT.md | missing | required | n/a | create later |
-| MegaBrain name | provisional | TBD | n/a | naming decision |
+| EvolveLoop name | provisional | TBD | n/a | naming decision |
 
 ## Appendix C — Fresh-clone validation plan (NOT executed now)
 
@@ -241,7 +241,7 @@ README
 
 ## Appendix G — High-risk extraction points
 
-1. Brand rename surface (`MegaBrain.md`, `megabrain.mdc`, env `MEGABRAIN_PROFILE_PATH`)
+1. Brand rename surface (`EvolveLoop.md`, `evolveloop.mdc`, env `MEGABRAIN_PROFILE_PATH`)
 2. wiki-mem hook default-on → public opt-in
 3. Cursor command drift (`wiki-grounding` vs `knowledge-grounding`)
 4. Remaining docs with Documentos/GaabDevWeb

@@ -3,7 +3,7 @@ kind: Provider
 metadata:
   name: agent-authoring
   version: "1.0.0"
-  description: "Factory and maintenance of MegaBrain Agent Packages"
+  description: "Factory and maintenance of EvolveLoop Agent Packages"
   owner: agents-team
 
 spec:
@@ -33,7 +33,7 @@ spec:
     subagent_type: generalPurpose
 
   constraints:
-    stack: [cursor, megabrain]
+    stack: [cursor, evolveloop]
     platforms: [cursor]
 
   telemetry:

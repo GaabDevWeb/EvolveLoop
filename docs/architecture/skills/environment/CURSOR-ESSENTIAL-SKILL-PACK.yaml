@@ -1,5 +1,5 @@
 pack:
-  name: megabrain-essential
+  name: evolveloop-essential
   version: "1.0.0-post-prune"
   generated_at: "20260920T005842Z"
   authority:
@@ -8,13 +8,13 @@ pack:
     - docs/architecture/skills/pruning/PRUNING-MANIFEST.yaml
   cursor_skill_target: "/home/gaab/.cursor/skills"
   note: >
-    Cursor target installs local MegaBrain skills as symlinks into ~/.cursor/skills.
+    Cursor target installs local EvolveLoop skills as symlinks into ~/.cursor/skills.
     Hard gates grill-me/image-to-code live under ~/.agents/skills → global-skills (untouched).
 
 skills:
   # --- CORE / FLOW (repo .cursor/skills) ---
   - { id: orquestrar, source: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/orquestrar, target: /home/gaab/.cursor/skills/orquestrar, role: orchestration, hard_gate: false, critical: true }
-  - { id: MegaBrain, source: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/orquestrar, target: /home/gaab/.cursor/skills/MegaBrain, role: orchestration-alias, hard_gate: false, critical: true }
+  - { id: EvolveLoop, source: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/orquestrar, target: /home/gaab/.cursor/skills/evolve, role: orchestration-alias, hard_gate: false, critical: true }
   - { id: wiki, source: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/wiki, target: /home/gaab/.cursor/skills/wiki, role: knowledge-rag, hard_gate: true, critical: true }
   - { id: wiki-mem, source: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/wiki-mem, target: /home/gaab/.cursor/skills/wiki-mem, role: knowledge-episodic, hard_gate: false, critical: true }
   - { id: prd, source: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/prd, target: /home/gaab/.cursor/skills/prd, role: upstream, hard_gate: false, critical: true }

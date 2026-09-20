@@ -14,7 +14,7 @@ Chain: `DOCUMENTED → IMPLEMENTED → TESTED → OBSERVABLE → PROVEN`
 | ExecutionPolicy | Y | Y | Y | Y | Y |
 | CapabilityAuthority | Y | Y† | Y† | Y† | PARTIAL† |
 | Evidence (in-run) | Y | Y | PARTIAL‡ | PARTIAL | N‡ |
-| Evidence Bus (MegaBrain FS) | Y | N (engine) | N | UNKNOWN | N |
+| Evidence Bus (EvolveLoop FS) | Y | N (engine) | N | UNKNOWN | N |
 | Knowledge | Y | Y | Y | PARTIAL | PARTIAL |
 | Memory (FS store) | Y | Y | Y | Y | Y |
 | Persistence / jobs checkpoint | Y | N§ | N§ | N | N |

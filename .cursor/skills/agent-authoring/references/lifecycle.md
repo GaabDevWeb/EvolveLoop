@@ -13,7 +13,7 @@ Checklist:
 - [ ] Ler [architecture-audit.md](architecture-audit.md) e actualizar deltas do repo actual
 - [ ] Listar `.cursor/skills/`, `Agents/`, `.cursor/commands/`, `provider.yaml`, `orchestrator/contracts/`
 - [ ] Confirmar `AGENTS_ROOT` vs workspace
-- [ ] Mapear skills irmãs e fases MegaBrain relevantes
+- [ ] Mapear skills irmãs e fases EvolveLoop relevantes
 
 ## DESIGN
 

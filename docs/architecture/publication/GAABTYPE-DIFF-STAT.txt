@@ -1,7 +1,7 @@
- .cursor/commands/MegaBrain.md                      | 14 +++++
+ .cursor/commands/evolve.md                      | 14 +++++
  .cursor/hooks.json                                 | 22 +++++++
  Rules/wiki-agent.mdc                               | 71 +++++-----------------
- agent-setup/cursor/commands/MegaBrain.md           | 14 +++++
+ agent-setup/cursor/commands/evolve.md           | 14 +++++
  agent-setup/cursor/rules/wiki-agent.mdc            | 71 +++++-----------------
  .../publication/FINAL-GAABTYPE-MANIFEST.yaml       | 29 +++++++++
  .../publication/FINAL-MAIN-GAABTYPE-GRAPH.yaml     | 19 ++++++

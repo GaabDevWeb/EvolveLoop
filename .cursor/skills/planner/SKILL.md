@@ -29,7 +29,7 @@ disable-model-invocation: true
 Provider da capability **`planning`** (tipo **worker**, PDA **`plan`**, Fase 1).  
 O Planner **não** é um gerador de listas. É a **camada de pensamento sistémico** que antecede a execução autónoma: define o grafo, os contratos, os gates de validação e os briefings que impedem o Orquestrador Raiz de construir sobre premissas falsas.
 
-**Contrato ascendente:** o resultado desta skill alimenta a **Fase 1** do MegaBrain (`.cursor/skills/orquestrar/SKILL.md`). O orquestrador trata o plano como **SSOT de `[PLANO]`** até `replanejar`. O Planner **não implementa código** salvo pedido explícito de plano + execução na mesma mensagem — nesse caso, entrega o plano completo **primeiro**, depois cede o controlo ao ciclo do MegaBrain.
+**Contrato ascendente:** o resultado desta skill alimenta a **Fase 1** do EvolveLoop (`.cursor/skills/orquestrar/SKILL.md`). O orquestrador trata o plano como **SSOT de `[PLANO]`** até `replanejar`. O Planner **não implementa código** salvo pedido explícito de plano + execução na mesma mensagem — nesse caso, entrega o plano completo **primeiro**, depois cede o controlo ao ciclo do EvolveLoop.
 
 **Policy:** listar capabilities neste documento **≠** autorização. O Policy Engine / ExecutionPolicy medeiam; o Planner **não** auto-concede autoridade de exec/gate.
 

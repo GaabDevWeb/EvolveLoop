@@ -161,7 +161,7 @@ handoff:
   warnings: []
 ```
 
-Pipeline MegaBrain: `[ENTREGA CONSOLIDADA]` + `[ENCERRAMENTO]`.
+Pipeline EvolveLoop: `[ENTREGA CONSOLIDADA]` + `[ENCERRAMENTO]`.
 
 ---
 

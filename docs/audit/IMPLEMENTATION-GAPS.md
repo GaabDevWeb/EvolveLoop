@@ -12,13 +12,13 @@
 | Semantic stuck detector | MEDIUM | Only maxIterations / deadlock reasons |
 | Authority on Mock + CursorSkillProvider | HIGH | Deny can be bypassed on those providers |
 | Context compaction / skill reinject | MEDIUM | No engine primitive |
-| Skill catalog budget in MegaBrain | MEDIUM | Host catalog; no orchestrator control |
+| Skill catalog budget in EvolveLoop | MEDIUM | Host catalog; no orchestrator control |
 
 ## B. PARTIAL GAP
 
 | Gap | Severity |
 |-----|----------|
-| Evidence: in-run OK; MegaBrain FS bus separate; 2 validator tests failing | HIGH |
+| Evidence: in-run OK; EvolveLoop FS bus separate; 2 validator tests failing | HIGH |
 | Knowledge: filesystem store + external wiki | MEDIUM |
 | HITL: confirm=fail; waiting=external job (when jobs present) | HIGH |
 | Telemetry: events JSONL OK; summarizeExecutionTrace not in run() | MEDIUM |
@@ -41,7 +41,7 @@
 | Topic | Issue |
 |-------|-------|
 | IMPLEMENTATION-STATUS “103 tests / jobs resume” | Not true for this incomplete tree |
-| Evidence Bus docs | Describe MegaBrain `memory/*/evidence/` not engine accumulation |
+| Evidence Bus docs | Describe EvolveLoop `memory/*/evidence/` not engine accumulation |
 | “Agent System has Agents” | Markdown agents + capabilities; no Agent instance registry in engine |
 
 ## E. TEST GAP

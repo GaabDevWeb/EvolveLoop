@@ -4,7 +4,7 @@ description: >
   Product/Requirements upstream: produz pacote documental (PRD, API_SPEC,
   ARCHITECTURE, DATA-MODEL, CONTRIBUTING + ADR draft quando aplicável) em docs/
   antes de qualquer código. Use quando invocar /prd, criar PRD, especificação de
-  produto, requisitos de negócio, documentação formal de feature, ou o MegaBrain
+  produto, requisitos de negócio, documentação formal de feature, ou o EvolveLoop
   precisar de artefactos upstream aprovados. HARD-GATE: sem pacote aprovado não
   avança para planner. Complementa brainstorming (diálogo) com docs estruturados.
   Não use para implementar código (backend/frontend), planear tarefas (planner),
@@ -27,7 +27,7 @@ disable-model-invocation: true
 
 # PRD — Product / Requirements (upstream)
 
-Provider da capability **`business-requirements`** (tipo **upstream**) no MegaBrain.
+Provider da capability **`business-requirements`** (tipo **upstream**) no EvolveLoop.
 Papel: **Product/Requirements** — define *o quê* e *para quem*, não *como implementar*.
 
 **Contrato ascendente:** Fase 0.5 (`.cursor/skills/orquestrar/SKILL.md`). Saída alimenta o **planner**.

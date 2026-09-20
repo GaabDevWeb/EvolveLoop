@@ -1,6 +1,6 @@
 # Development Intelligence + graceful degradation
 
-**Âmbito:** stack Cursor + MegaBrain + Wiki RAG.  
+**Âmbito:** stack Cursor + EvolveLoop + Wiki RAG.  
 **Código:** `karpathyWiki/rag/src/wiki_rag/devintel/`, `sanitize.py`, `scope.py`, `ranking.py`.  
 **CLI:** `wiki-ingest metrics|feedback|observe|compare|eval-rag|pack-build`.
 

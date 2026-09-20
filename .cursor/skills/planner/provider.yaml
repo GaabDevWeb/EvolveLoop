@@ -56,7 +56,7 @@ spec:
     pda_role: plan
 
   constraints:
-    stack: [cursor, megabrain]
+    stack: [cursor, evolveloop]
     platforms: [cursor]
     signals:
       - phase: "1"

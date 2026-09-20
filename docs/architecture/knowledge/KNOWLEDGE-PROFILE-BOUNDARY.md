@@ -21,7 +21,7 @@ grill-me / image-to-code      personal project pack maps (skill docs)
 
 `orchestrator/src/config/profile.ts`
 
-- Path: `$AGENTS_ROOT/profiles/default.yaml` or `MEGABRAIN_PROFILE_PATH`
+- Path: `$AGENTS_ROOT/profiles/default.yaml` or `EVOLVELOOP_PROFILE_PATH` (legacy: `MEGABRAIN_PROFILE_PATH`)
 - Missing file → in-code `DEFAULT_PROFILE` (`knowledge.backend: wiki`)
 
 ## Direction of dependency

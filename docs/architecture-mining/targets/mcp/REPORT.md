@@ -76,7 +76,7 @@ Etapas Evidence/Validation no protocolo: **UNKNOWN** (não definidas como bus de
 
 **Não** concluir: popular = superioridade técnica.
 
-## 6. Comparison with MegaBrain
+## 6. Comparison with EvolveLoop
 
 ### MCP-01 Standard tool/context protocol
 
@@ -99,7 +99,7 @@ EXTERNAL_MECHANISM: explicit user consent before tool invoke; untrusted tool ann
 PROBLEM_SOLVED: authority e trust em tools arbitrários
 OUR_CURRENT_MECHANISM: Policy Engine (missão + ExecutionPolicy); CapabilityAuthority planeada; Cursor approval UI
 EQUIVALENCE: PARTIAL
-GAP: consent MCP é UX host; Policy MegaBrain é spawn/gates/budget
+GAP: consent MCP é UX host; Policy EvolveLoop é spawn/gates/budget
 TRADE_OFF: camadas diferentes — não fundir num único «policy»
 EVIDENCE: spec Security section; orquestrar policy-engine.md
 APPLICABILITY: complementar

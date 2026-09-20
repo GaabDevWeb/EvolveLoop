@@ -1,7 +1,7 @@
 ---
 name: researcher
 description: >
-  Pesquisa externa MegaBrain: fontes citáveis, source_policy, anti-alucinação.
+  Pesquisa externa EvolveLoop: fontes citáveis, source_policy, anti-alucinação.
   Use quando /pesquisar, /research, papers, docs oficiais externas, scrape/web,
   comparar vendors, ou fact-check com URL. Não use para grounding canónico
   (wiki /wiki), promote episódico (wiki-mem /mem), coding de produto,
@@ -139,7 +139,7 @@ Clarify scope → Gather sources → Rank (source_policy) → Extract claims
 - artefacto sugerido: …
 ```
 
-Evidence (pipeline): `memory/<feature_id>/evidence/research-*.md` quando ciclo MegaBrain activo.
+Evidence (pipeline): `memory/<feature_id>/evidence/research-*.md` quando ciclo EvolveLoop activo.
 
 ---
 
@@ -180,7 +180,7 @@ handoff:
   warnings: []
 ```
 
-Pipeline MegaBrain: preferir `[ENTREGA CONSOLIDADA]` + `[ENCERRAMENTO]`.
+Pipeline EvolveLoop: preferir `[ENTREGA CONSOLIDADA]` + `[ENCERRAMENTO]`.
 
 ---
 

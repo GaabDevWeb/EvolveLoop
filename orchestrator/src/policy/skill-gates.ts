@@ -1,5 +1,5 @@
 /**
- * EvolveLoop skill-gate decision helpers (policy parity).
+ * Skill gate decision helpers (policy parity).
  * Observe/eval harness — NOT Execution Engine enforcement.
  * Canonical contracts: grill-me-gate.md, image-attachment-gate.md
  */

@@ -12,7 +12,7 @@
 - version: 1.0.0
 - capability: agent-authoring
 - type: meta
-- responsibilities: fábrica/manutenção de Agent Packages MegaBrain
+- responsibilities: fábrica/manutenção de Agent Packages EvolveLoop
 
 ## Artefactos tocados
 
