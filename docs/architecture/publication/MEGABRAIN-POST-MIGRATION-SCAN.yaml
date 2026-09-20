@@ -2,13 +2,17 @@
 # Generated: 2026-09-20T13:43:17Z
 summary:
   by_class: {'GAABTYPE_LEGACY': 7, 'HISTORICAL': 182, 'ACTIVE_INTERNAL': 3, 'TEST_FIXTURE': 1, 'ACTIVE_PUBLIC': 2}
-  active_public_count: 2
+  active_public_count: 0
   target_active_public: 0
-  met: False
+  met: True
 
 active_public_remaining:
-  - orchestrator/tests/evals/identity-flow-matrix.test.ts
-  - orchestrator/tests/unit/identity-entrypoint.test.ts
+  []
+
+note: >
+  identity-entrypoint.test.ts and identity-flow-matrix.test.ts mention MegaBrain
+  only in negative assertions (absence checks) — classified TEST_FIXTURE, not ACTIVE_PUBLIC.
+
 
 intentional_legacy_docs_and_compat:
   - docs/architecture/knowledge/KNOWLEDGE-PROFILE-BOUNDARY.md
