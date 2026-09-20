@@ -1,0 +1,272 @@
+# MegaBrain identity map
+# Generated: 2026-09-20T13:35:32Z
+identity:
+  current_residual: MegaBrain (widespread in skills/docs/compat)
+  public_target: EvolveLoop
+  public_alias: /evolve
+  legacy_alias: /MegaBrain
+
+summary:
+  total_content_matches: 1186
+  files_with_matches: 360
+  pathname_matches: 4
+  active_non_historical_files: 177
+  public_surface_files: 4
+  historical_files: 165
+  by_area: {'other': 77, 'agent_setup': 29, 'scripts': 3, 'agents': 12, 'docs': 897, 'global_skills': 9, 'commands': 2, 'skills': 128, 'hooks': 1, 'orchestrator_other': 4, 'orchestrator_src': 13, 'tests': 11}
+  by_file_action: {'RENAME_RECOMMENDED': 159, 'RENAME_REQUIRED': 18, 'PRESERVE_HISTORICAL': 165, 'PRESERVE_TECHNICAL': 18}
+
+pathnames:
+  - {'path': 'docs/internal/historical/MegaBrain-Ecosystem.md', 'basename': 'MegaBrain-Ecosystem.md', 'type': 'file', 'active': False, 'historical': True, 'public_surface': False, 'rename_required': False, 'rename_candidate': 'EvolveLoop-Ecosystem.md'}
+  - {'path': 'docs/internal/historical/cursor-megabrain-rag-stack.md', 'basename': 'cursor-megabrain-rag-stack.md', 'type': 'file', 'active': False, 'historical': True, 'public_surface': False, 'rename_required': False, 'rename_candidate': 'cursor-evolveloop-rag-stack.md'}
+  - {'path': 'orchestrator/src/policy/megabrain-skill-gates.ts', 'basename': 'megabrain-skill-gates.ts', 'type': 'file', 'active': True, 'historical': False, 'public_surface': False, 'rename_required': True, 'rename_candidate': 'evolveloop-skill-gates.ts'}
+  - {'path': 'orchestrator/tests/unit/megabrain-skill-gates.test.ts', 'basename': 'megabrain-skill-gates.test.ts', 'type': 'file', 'active': True, 'historical': False, 'public_surface': False, 'rename_required': True, 'rename_candidate': 'evolveloop-skill-gates.test.ts'}
+
+host_pathnames:
+  - /home/gaab/.cursor/commands/MegaBrain.md
+  - /home/gaab/.cursor/plans/megabrain_runtime_v2.1_6633b7ff.plan.md
+  - /home/gaab/.cursor/skills/MegaBrain
+  - /home/gaab/.cursor/rules/megabrain.mdc
+  - /home/gaab/.agents/skills/MegaBrain
+
+top_files_by_match_count:
+  - path: docs/internal/historical/MegaBrain-Ecosystem.md
+    matches: 53
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/architecture/skills/audit/SKILL-USAGE-MATRIX.yaml
+    matches: 45
+    area: docs
+    action: RENAME_RECOMMENDED
+  - path: docs/internal/historical/cursor-megabrain-rag-stack.md
+    matches: 36
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/research/targets/external/openai-agents-sdk/REPORT.md
+    matches: 19
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/architecture/skills/audit/SKILL-USAGE-FINAL-REPORT.md
+    matches: 19
+    area: docs
+    action: RENAME_RECOMMENDED
+  - path: docs/research/CROSS-INVESTIGATION-REVIEW.md
+    matches: 18
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/research/targets/external/cursor/REPORT.md
+    matches: 14
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/architecture/portability/PORTABILITY-FORENSIC-AUDIT.md
+    matches: 14
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/architecture/skills/audit/OPTIONAL-SKILLS.yaml
+    matches: 13
+    area: docs
+    action: RENAME_RECOMMENDED
+  - path: docs/research/AGENT-ARCHITECTURE-PRINCIPLES.md
+    matches: 12
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/research/CROSS-SYSTEM-ANALYSIS.md
+    matches: 12
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/internal/historical/evals/docs-evals/experiments/E-001/raw/enablement/catalog-inventory.json
+    matches: 12
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/research/targets/external/mcp/REPORT.md
+    matches: 12
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/architecture/publication/PUBLIC-EXTRACTION-PLAN.md
+    matches: 12
+    area: docs
+    action: RENAME_RECOMMENDED
+  - path: docs/architecture/skills/audit/REMOVAL-CANDIDATES.yaml
+    matches: 12
+    area: docs
+    action: RENAME_RECOMMENDED
+  - path: .cursor/skills/orquestrar/evals/evals-v24.json
+    matches: 12
+    area: skills
+    action: RENAME_RECOMMENDED
+  - path: docs/research/targets/local/agency-agents/REPORT.md
+    matches: 10
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/research/targets/external/openhands/REPORT.md
+    matches: 10
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/research/targets/external/anthropic-agent-skills/REPORT.md
+    matches: 10
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/research/targets/external/roo-code/REPORT.md
+    matches: 10
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: agent-architecture-mining-workspace/iteration-1/adv-copy/with_skill/outputs/report.md
+    matches: 10
+    area: other
+    action: RENAME_RECOMMENDED
+  - path: agent-architecture-mining-workspace/iteration-1/adv-registry/with_skill/outputs/report.md
+    matches: 10
+    area: other
+    action: RENAME_RECOMMENDED
+  - path: .cursor/skills/orquestrar/references/knowledge-grounding-gate.md
+    matches: 10
+    area: skills
+    action: RENAME_RECOMMENDED
+  - path: docs/internal/historical/audits/.agent_history.md
+    matches: 9
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/research/targets/local/superpowers/REPORT.md
+    matches: 9
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/research/targets/external/aider/REPORT.md
+    matches: 9
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/research/targets/external/aider/ADVERSARIAL-REVIEW.md
+    matches: 9
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/research/targets/external/swe-agent/REPORT.md
+    matches: 9
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: agent-setup/manifest/components.yaml
+    matches: 9
+    area: agent_setup
+    action: RENAME_REQUIRED
+  - path: docs/research/EXECUTIVE-FINDINGS.md
+    matches: 8
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/research/targets/local/security-audit-skill/REPORT.md
+    matches: 8
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/architecture/skills/audit/HARD-GATES.md
+    matches: 8
+    area: docs
+    action: RENAME_RECOMMENDED
+  - path: agent-authoring-workspace/iteration-1/eval-4-overload/with_skill/outputs/report.md
+    matches: 8
+    area: other
+    action: RENAME_RECOMMENDED
+  - path: orchestrator/src/config/profile.ts
+    matches: 8
+    area: orchestrator_src
+    action: RENAME_REQUIRED
+  - path: docs/research/targets/local/mattpocock-skills/REPORT.md
+    matches: 7
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/research/targets/external/cline/REPORT.md
+    matches: 7
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/research/targets/external/langgraph/REPORT.md
+    matches: 7
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/architecture/publication/PROJECT-NAMING-AUDIT.md
+    matches: 7
+    area: docs
+    action: RENAME_RECOMMENDED
+  - path: agent-authoring-workspace/iteration-1/eval-7-audit/without_skill/outputs/report.md
+    matches: 7
+    area: other
+    action: RENAME_RECOMMENDED
+  - path: .cursor/skills/orquestrar/references/image-attachment-gate.md
+    matches: 7
+    area: skills
+    action: RENAME_RECOMMENDED
+  - path: docs/audit/IMPLEMENTATION-AUDIT-EXECUTIVE.md
+    matches: 6
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/research/targets/local/agency-agents/ADVERSARIAL-REVIEW.md
+    matches: 6
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/research/targets/external/microsoft-agent-framework/REPORT.md
+    matches: 6
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/research/targets/external/llamaindex/REPORT.md
+    matches: 6
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/research/targets/external/anthropic-agent-skills/ADVERSARIAL-REVIEW.md
+    matches: 6
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/research/targets/external/pydanticai/REPORT.md
+    matches: 6
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/research/targets/external/cursor/ADVERSARIAL-REVIEW.md
+    matches: 6
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/architecture/portability/PORTABILITY-INVENTORY.yaml
+    matches: 6
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/architecture/skills/audit/SKILL-DEPENDENCY-GRAPH.md
+    matches: 6
+    area: docs
+    action: RENAME_RECOMMENDED
+  - path: docs/architecture/skills/audit/SKILL-USAGE-AUDIT.md
+    matches: 6
+    area: docs
+    action: RENAME_RECOMMENDED
+  - path: agent-architecture-mining-workspace/iteration-1/adv-ranking/with_skill/outputs/report.md
+    matches: 6
+    area: other
+    action: RENAME_RECOMMENDED
+  - path: orchestrator/tests/unit/knowledge-backend.test.ts
+    matches: 6
+    area: tests
+    action: RENAME_RECOMMENDED
+  - path: docs/research/targets/external/codex/REPORT.md
+    matches: 5
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/research/targets/external/crewai/REPORT.md
+    matches: 5
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/research/targets/external/crewai/ADVERSARIAL-REVIEW.md
+    matches: 5
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/research/targets/external/mcp/ADVERSARIAL-REVIEW.md
+    matches: 5
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/research/targets/external/anthropic-agent-skills/UNKNOWNS.md
+    matches: 5
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/research/targets/external/langgraph/ADVERSARIAL-REVIEW.md
+    matches: 5
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/research/targets/external/roo-code/ADVERSARIAL-REVIEW.md
+    matches: 5
+    area: docs
+    action: PRESERVE_HISTORICAL
+  - path: docs/research/targets/external/cursor/MECHANISMS.yaml
+    matches: 5
+    area: docs
+    action: PRESERVE_HISTORICAL

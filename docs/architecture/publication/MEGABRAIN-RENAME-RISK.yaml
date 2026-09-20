@@ -1,0 +1,33 @@
+# Rename risk register
+# Generated: 2026-09-20T13:35:32Z
+CRITICAL:
+  - id: R-001
+    item: agent-setup still installs MegaBrain command/skill/rules names to host
+    impact: fresh install reintroduces MegaBrain as live Cursor identity
+  - id: R-002
+    item: orquestrar SKILL.md + gate docs still brand MegaBrain as system
+    impact: agents continue self-identifying as MegaBrain despite /evolve
+  - id: R-003
+    item: host ~/.cursor still has MegaBrain.md, megabrain.mdc, skills/MegaBrain
+    impact: user environment diverges from published main
+HIGH:
+  - id: R-010
+    item: rename megabrain-skill-gates.ts + imports/tests
+    impact: break builds if incomplete
+  - id: R-011
+    item: loadMegaBrainProfile / MEGABRAIN_* env callers
+    impact: runtime profile resolution; need dual-read window
+  - id: R-012
+    item: provider.yaml stack: [cursor, megabrain]
+    impact: catalog/telemetry semantics if consumers filter by stack id
+MEDIUM:
+  - id: R-020
+    item: Agents/* and skill evals mentioning MegaBrain
+    impact: docs/eval prompt drift
+  - id: R-021
+    item: GaabType legacy /MegaBrain vs public goal zero
+    impact: intentional retain vs scrub confusion
+LOW:
+  - id: R-030
+    item: historical docs under docs/internal/historical
+    impact: none if preserved

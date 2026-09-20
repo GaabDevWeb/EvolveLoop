@@ -1,0 +1,19 @@
+# Docs migration
+# Generated: 2026-09-20T13:35:32Z
+must_rename:
+  - document: .cursor/skills/orquestrar/SKILL.md + references/*
+    reason: ACTIVE_PUBLIC_IDENTITY / HARD-GATE text still says MegaBrain
+  - document: Agents/Orquestrador-v2.md
+    reason: documents /MegaBrain as root
+  - document: agent-setup/README.md + manifest/*
+    reason: installs MegaBrain as component name
+  - document: most .cursor/skills/*/SKILL.md frontmatter and body
+    reason: "Provider ... no MegaBrain" / Fase MegaBrain
+should_rename:
+  - docs/architecture/** (non-historical)
+  - CHANGELOG.md legacy mentions (keep brief legacy note)
+can_retain:
+  - README.md / AGENT.md / evolve.md legacy explanation paragraphs (mark as LEGACY only)
+historical_valid:
+  - docs/internal/historical/**
+  - prior publication audits mentioning MegaBrain as source identity

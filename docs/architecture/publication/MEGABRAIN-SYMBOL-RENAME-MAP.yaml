@@ -1,0 +1,59 @@
+# Symbol rename map
+# Generated: 2026-09-20T13:35:32Z
+symbols:
+  - old_symbol: MegaBrainProfile
+    new_symbol: EvolveLoopProfile
+    location: orchestrator/src/config/profile.ts
+    callers: []
+    exported: True
+    risk: MEDIUM
+    note: already alias of EvolveLoopProfile
+  - old_symbol: MegaBrainProfileKnowledge
+    new_symbol: EvolveLoopProfileKnowledge
+    location: orchestrator/src/config/profile.ts
+    callers: []
+    exported: True
+    risk: LOW
+    note: 
+  - old_symbol: MegaBrainProfileMemory
+    new_symbol: EvolveLoopProfileMemory
+    location: orchestrator/src/config/profile.ts
+    callers: []
+    exported: True
+    risk: LOW
+    note: 
+  - old_symbol: loadMegaBrainProfile
+    new_symbol: loadEvolveLoopProfile
+    location: orchestrator/src/config/profile.ts
+    callers: ['orchestrator/src/knowledge/backend/resolve.ts', 'orchestrator/src/index.ts', 'orchestrator/tests/unit/knowledge-backend.test.ts']
+    exported: True
+    risk: HIGH
+    note: 
+  - old_symbol: MEGABRAIN_PROFILE_PATH
+    new_symbol: EVOLVELOOP_PROFILE_PATH
+    location: env
+    callers: []
+    exported: False
+    risk: HIGH
+    note: legacy env still read
+  - old_symbol: MEGABRAIN_ROOT
+    new_symbol: EVOLVELOOP_ROOT
+    location: env
+    callers: []
+    exported: False
+    risk: MEDIUM
+    note: 
+  - old_symbol: megabrain-skill-gates module
+    new_symbol: evolveloop-skill-gates or skill-gates
+    location: orchestrator/src/policy/megabrain-skill-gates.ts
+    callers: []
+    exported: True
+    risk: HIGH
+    note: 
+  - old_symbol: stack: megabrain
+    new_symbol: stack: evolveloop
+    location: provider.yaml files
+    callers: []
+    exported: False
+    risk: MEDIUM
+    note: 

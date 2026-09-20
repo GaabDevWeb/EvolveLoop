@@ -1,0 +1,32 @@
+# MegaBrain file/directory rename map — plan only
+# Generated: 2026-09-20T13:35:32Z
+files:
+  - old: orchestrator/src/policy/megabrain-skill-gates.ts
+    new: orchestrator/src/policy/evolveloop-skill-gates.ts  # or skill-gates.ts
+    reason: ACTIVE_MODULE_IDENTITY
+    risk: HIGH
+    dependencies: [index.ts exports, post-prune tests, megabrain-skill-gates.test.ts, policy-engine.md]
+  - old: orchestrator/tests/unit/megabrain-skill-gates.test.ts
+    new: orchestrator/tests/unit/evolveloop-skill-gates.test.ts
+    reason: mirrors module
+    risk: MEDIUM
+    dependencies: [megabrain-skill-gates.ts]
+  - old: .cursor/commands/MegaBrain.md
+    new: KEEP on GaabType only as legacy OR rename to megaBrain.md alias
+    reason: LEGACY alias; absent on main already
+    risk: LOW
+    dependencies: [GaabType branch, host ~/.cursor/commands]
+  - old: docs/internal/historical/MegaBrain-Ecosystem.md
+    new: KEEP
+    reason: HISTORICAL
+    risk: NONE
+  - old: docs/internal/historical/cursor-megabrain-rag-stack.md
+    new: KEEP
+    reason: HISTORICAL
+    risk: NONE
+  - old: agent-setup/cursor/rules — megabrain.mdc already renamed to evolveloop.mdc on main
+    new: n/a
+    reason: DONE_ON_MAIN
+    risk: NONE
+  - note: host still has ~/.cursor/rules/megabrain.mdc and ~/.cursor/commands/MegaBrain.md and skill symlink MegaBrain
+    scope: HOST

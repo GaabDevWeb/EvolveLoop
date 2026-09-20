@@ -1,0 +1,35 @@
+# Command migration map
+# Generated: 2026-09-20T13:35:32Z
+canonical:
+  old: /MegaBrain
+  new: /evolve
+  skill: orquestrar
+  status_on_main: MegaBrain.md ABSENT; evolve.md PRESENT
+  status_on_gaabtype: MegaBrain.md PRESENT as thin legacy redirect
+
+legacy:
+  allowed_in:
+    - GaabType
+  host_still_active:
+    - ~/.cursor/commands/MegaBrain.md
+    - ~/.cursor/skills/MegaBrain -> orquestrar symlink
+    - ~/.agents/skills/MegaBrain
+  agent_setup_manifest_still_installs:
+    - components.yaml name MegaBrain command/skill
+    - profiles.yaml commands: [wiki, MegaBrain]
+
+flow_trace:
+  command: /MegaBrain
+  command_file: .cursor/commands/MegaBrain.md (GaabType) | host
+  skill: orquestrar (.cursor/skills/orquestrar/SKILL.md)
+  agent: Orquestrador (Agents/Orquestrador-v2.md still documents /MegaBrain)
+  router: Cursor slash command → skill contract (no separate TS router ID)
+  orchestrator: Execution Engine via ORCHESTRATOR_ROOT; not keyed by MegaBrain string in runtime IR
+  roles_proven:
+    - ONLY_ALIAS: true for GaabType command file content (redirect)
+    - ENTRYPOINT: false on main (replaced by /evolve)
+    - ROUTING_IDENTIFIER: false in TS engine
+    - SKILL_ID: false (skill id is orquestrar)
+    - AGENT_ID: false
+    - ARCHITECTURAL_IDENTIFIER: TRUE in docs/skills text (system still called MegaBrain)
+    - DISPLAY_NAME: TRUE widely
