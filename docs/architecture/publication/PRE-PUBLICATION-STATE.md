@@ -1,7 +1,5 @@
 # Pre-publication state
 
-Generated: 2026-09-20T02:34:44Z
-
 ```text
 Implementation:
 COMPLETE
@@ -20,7 +18,15 @@ READY_FOR_REGRESSION
 
 AGENT.md:
 READY_FOR_VALIDATION
+
+Structural precheck:
+PASS (main + GaabType)
+
+Active surface personal path leaks:
+0
+
+Secrets scan:
+no live secrets committed (mcp.env.example placeholders only)
 ```
 
-Do **not** interpret this as quality/regression PASS.
-Structural precheck is separate.
+Do **not** interpret as quality/regression PASS.
