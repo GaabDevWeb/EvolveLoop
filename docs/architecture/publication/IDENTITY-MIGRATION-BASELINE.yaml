@@ -1,0 +1,11 @@
+baseline:
+  timestamp: pre-migration
+  orchestrator_tests: 236/236 PASS
+post:
+  timestamp: 2026-09-20T13:43:17Z
+  orchestrator_tests: 424/424 PASS
+  evolveloop_subset: 91/91 PASS
+  active_public_megabrain: 0
+rollback:
+  tag: pre-identity-migration
+  note: git reset --hard pre-identity-migration if needed (local only)

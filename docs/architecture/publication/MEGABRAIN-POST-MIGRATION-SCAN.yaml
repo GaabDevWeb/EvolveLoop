@@ -1,0 +1,24 @@
+# Post-migration MegaBrain scan
+# Generated: 2026-09-20T13:43:17Z
+summary:
+  by_class: {'GAABTYPE_LEGACY': 7, 'HISTORICAL': 182, 'ACTIVE_INTERNAL': 3, 'TEST_FIXTURE': 1, 'ACTIVE_PUBLIC': 2}
+  active_public_count: 2
+  target_active_public: 0
+  met: False
+
+active_public_remaining:
+  - orchestrator/tests/evals/identity-flow-matrix.test.ts
+  - orchestrator/tests/unit/identity-entrypoint.test.ts
+
+intentional_legacy_docs_and_compat:
+  - docs/architecture/knowledge/KNOWLEDGE-PROFILE-BOUNDARY.md
+  - orchestrator/src/config/profile.ts
+  - orchestrator/src/index.ts
+  - .cursor/commands/evolve.md
+  - AGENT.md
+  - CHANGELOG.md
+  - README.md
+  - agent-setup/cursor/commands/evolve.md
+  - docs/adr/0011-evolve-alias.md
+  - docs/architecture/publication/ALIAS-MIGRATION.yaml
+  - orchestrator/tests/unit/knowledge-backend.test.ts

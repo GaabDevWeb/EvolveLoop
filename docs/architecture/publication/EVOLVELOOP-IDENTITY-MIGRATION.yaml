@@ -1,0 +1,41 @@
+migration:
+  from: MegaBrain
+  to: EvolveLoop
+  timestamp: 2026-09-20T13:43:17Z
+  public_entrypoint:
+    from: /MegaBrain
+    to: /evolve
+  legacy:
+    /MegaBrain:
+      allowed: true
+      scope: GaabType
+  internal_skill: orquestrar
+  module_rename:
+    - from: orchestrator/src/policy/megabrain-skill-gates.ts
+      to: orchestrator/src/policy/skill-gates.ts
+  stack_id:
+    from: megabrain
+    to: evolveloop
+
+results:
+  active_public_references_remaining: 0
+  historical_references_remaining: preserved
+  broken_references: 0
+  files_renamed:
+    - megabrain-skill-gates.ts → skill-gates.ts
+    - megabrain-skill-gates.test.ts → skill-gates.test.ts
+  symbols_renamed:
+    - callers switched to loadEvolveLoopProfile
+    - MegaBrain* kept as deprecated aliases
+    - MEGABRAIN_* env dual-read retained
+  commands_renamed:
+    - main: /evolve only
+    - GaabType: /MegaBrain legacy + /evolve
+  providers_migrated: stack evolveloop
+  agent_setup_migrated: true
+  tests:
+    orchestrator: 424 passed
+    evolveloop_subset: 91 passed
+    identity_matrix: 183 scenarios
+  push: NOT_EXECUTED
+  publication: NOT_EXECUTED
