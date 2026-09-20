@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "description": "Copy over .cursor/hooks.json when applying GaabType overlay",
+  "note": "Same content as GaabType branch .cursor/hooks.json — wiki-mem always-on + orchestrator pickup"
+}

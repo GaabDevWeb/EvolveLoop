@@ -1,0 +1,20 @@
+# Personal project → wiki pack mapping (GaabType only)
+projects:
+  - signal: KernelBot
+    pack: kernelbot-rag
+    wiki_path: KernelBot/wiki/
+  - signal: OrbitBot
+    pack: orbitbot-kernel
+    wiki_path: OrbitBot/
+  - signal: ISS
+    pack: null
+    wiki_path: ISS/
+  - signal: Portifolio
+    pack: null
+    wiki_path: Portifolio/
+  - signal: Xray-Spec
+    pack: null
+    wiki_path: Xray-Spec/
+  - signal: karpathyWiki
+    pack: null
+    wiki_path: .ai/

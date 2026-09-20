@@ -1,0 +1,5 @@
+# Copy to paths.local.yaml (gitignored) on the author machine
+WIKI_ROOT: /path/to/personal/wiki-vault
+# Example historical location (DO NOT commit as default):
+# WIKI_ROOT: /home/USER/Documentos/gitHub/karpathyWiki
+RAG_REPO_ROOT: ${WIKI_ROOT}

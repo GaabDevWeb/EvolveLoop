@@ -1,0 +1,19 @@
+# GaabType — personal profile overlay (same EvolveLoop core)
+id: gaabtype
+version: "1.0.0"
+
+knowledge:
+  backend: wiki
+
+memory:
+  enabled: true
+  provider: wiki-mem
+
+environment:
+  notes: >
+    Set WIKI_ROOT to the personal wiki vault (author corpus).
+    Do not commit absolute host paths here — use env / paths.local.yaml (gitignored).
+
+preferences:
+  locale: pt
+  legacy_command_alias: MegaBrain

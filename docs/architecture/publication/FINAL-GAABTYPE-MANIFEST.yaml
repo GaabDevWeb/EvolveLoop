@@ -1,0 +1,29 @@
+profile:
+  name: GaabType
+
+inherits:
+  branch: main
+  project: EvolveLoop
+  no_duplicated_core: true
+
+overlay:
+  configuration:
+    - profiles/gaabtype/profile.yaml
+    - profiles/gaabtype/preferences.yaml
+    - profiles/gaabtype/paths.example.yaml
+  knowledge:
+    - WIKI_ROOT via env / paths.local.yaml
+    - personal corpus (karpathyWiki) outside git
+  memory:
+    - enabled: true
+    - provider: wiki-mem
+  hooks:
+    - .cursor/hooks.json with wiki-mem sessionStart/afterFileEdit/stop/sessionEnd
+  commands:
+    - .cursor/commands/MegaBrain.md legacy alias → /evolve
+  projects:
+    - profiles/gaabtype/projects.yaml
+    - Rules/wiki-agent.mdc personal pack table
+  host:
+    - agents.env WIKI_ROOT on author machine
+    - optional local systemd wiki CLI (not in repo)
