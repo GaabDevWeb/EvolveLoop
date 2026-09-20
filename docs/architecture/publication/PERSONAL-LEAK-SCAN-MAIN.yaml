@@ -1,0 +1,6 @@
+personal_leak_scan_main:
+  active_surface_count: 0
+  target: PERSONAL_LEAK = 0 on active public surfaces
+  historical_docs: moved under docs/internal/historical/
+  samples:
+
