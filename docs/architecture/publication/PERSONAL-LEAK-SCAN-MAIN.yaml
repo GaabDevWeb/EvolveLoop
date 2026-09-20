@@ -1,0 +1,44 @@
+personal_leak_scan_main:
+  count: 90
+  note: historical/publication allowlisted; AGENT.md forbid-example excluded
+  samples:
+    - .agent_history.md:/home/gaab
+    - .agent_history.md:karpathyWiki
+    - orchestrator/IMPLEMENTATION-STATUS.md:karpathyWiki
+    - docs/architecture-audit-2026-09-17.md:/home/gaab
+    - docs/architecture-audit-2026-09-17.md:karpathyWiki
+    - docs/architecture-plan-platform-evolution.md:karpathyWiki
+    - docs/architecture-current.md:karpathyWiki
+    - docs/agent-system-lead-matrix-2026-09-17.md:/home/gaab
+    - docs/agent-system-final-audit-2026-09-17.md:/home/gaab
+    - docs/adr/0004-project-knowledge-contract.md:karpathyWiki
+    - docs/adr/0005-hybrid-retrieval-degraded-mode.md:karpathyWiki
+    - docs/evals/baseline/REPRODUCE-BASELINE.md:/home/gaab
+    - docs/evals/baseline/SOURCE-MANIFEST.yaml:/home/gaab
+    - docs/evals/baseline/ARCHITECTURE-BASELINE.md:/home/gaab
+    - docs/evals/baseline/RUNTIME-BASELINE.md:/home/gaab
+    - docs/evals/baseline/BASELINE-MANIFEST.yaml:/home/gaab
+    - docs/evals/experiments/E-001/REPRODUCE.md:/home/gaab
+    - docs/evals/experiments/E-001/conditions.yaml:/home/gaab
+    - docs/evals/experiments/E-001/conditions.json:/home/gaab
+    - docs/evals/experiments/E-005/REPRODUCE.md:/home/gaab
+    - docs/evals/experiments/E-001/raw/enablement/catalog-inventory.json:karpathyWiki
+    - docs/evals/experiments/E-001/raw/battery/all-runs.json:/home/gaab
+    - docs/evals/experiments/E-001/raw/battery/environment.json:/home/gaab
+    - docs/evals/experiments/E-001/raw/battery/battery-summary.json:/home/gaab
+    - docs/evals/experiments/E-001/raw/battery/CONTROL/run-02.json:/home/gaab
+    - docs/evals/experiments/E-001/raw/battery/CONTROL/run-04.json:/home/gaab
+    - docs/evals/experiments/E-001/raw/battery/CONTROL/run-03.json:/home/gaab
+    - docs/evals/experiments/E-001/raw/battery/CONTROL/run-01.json:/home/gaab
+    - docs/evals/experiments/E-001/raw/battery/CONTROL/run-05.json:/home/gaab
+    - docs/evals/experiments/E-001/raw/battery/T_SKILLS_5/run-02.json:/home/gaab
+    - docs/evals/experiments/E-001/raw/battery/T_SKILLS_5/run-04.json:/home/gaab
+    - docs/evals/experiments/E-001/raw/battery/T_SKILLS_5/run-03.json:/home/gaab
+    - docs/evals/experiments/E-001/raw/battery/T_SKILLS_5/run-01.json:/home/gaab
+    - docs/evals/experiments/E-001/raw/battery/T_SKILLS_5/run-05.json:/home/gaab
+    - docs/evals/experiments/E-001/raw/battery/T_TOKENS_40/run-02.json:/home/gaab
+    - docs/evals/experiments/E-001/raw/battery/T_TOKENS_40/run-04.json:/home/gaab
+    - docs/evals/experiments/E-001/raw/battery/T_TOKENS_40/run-03.json:/home/gaab
+    - docs/evals/experiments/E-001/raw/battery/T_TOKENS_40/run-01.json:/home/gaab
+    - docs/evals/experiments/E-001/raw/battery/T_TOKENS_40/run-05.json:/home/gaab
+    - docs/evals/experiments/E-001/raw/battery/T_SKILLS_10/run-02.json:/home/gaab
