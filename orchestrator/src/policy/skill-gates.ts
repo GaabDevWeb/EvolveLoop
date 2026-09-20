@@ -1,6 +1,6 @@
 /**
  * Skill gate decision helpers (policy parity).
- * Observe/eval harness — NOT Execution Engine enforcement.
+ * Eval helpers — Runtime enforcement is via gates/runtime-gates.ts → ExecutionEngine PRE_EXECUTE.
  * Canonical contracts: grill-me-gate.md, image-attachment-gate.md
  */
 

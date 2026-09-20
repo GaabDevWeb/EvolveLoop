@@ -1,17 +1,18 @@
 #!/usr/bin/env node
 /**
- * Job pickup CLI — list pending SkillJobs and mark completion from external executor.
+ * Job pickup / worker CLI.
  *
  * Usage:
- *   run-jobs list --jobs-dir ./jobs
- *   run-jobs pickup --jobs-dir ./jobs [--run-id <uuid>]
- *   run-jobs invoke --jobs-dir ./jobs [--prompt-dir .cursor/pickup] [--run-id <uuid>]
- *   run-jobs complete --jobs-dir ./jobs --run-id <uuid> --success --evidence path/to/evidence.json
+ *   run-jobs list|show|pickup|invoke|complete|worker|status --jobs-dir ./jobs ...
+ *
+ * worker:
+ *   run-jobs worker --jobs-dir ./jobs --workspace <root> [--max-jobs N] [--idle-exit-polls N]
  */
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 import { JobStore } from "../jobs/job-store.js";
 import { invokePickup } from "../jobs/job-pickup.js";
+import { SkillWorker } from "../jobs/skill-worker.js";
 
 function parseArgs(argv: string[]) {
   const args: Record<string, string> = { command: argv[2] ?? "list" };
@@ -30,14 +31,41 @@ function parseArgs(argv: string[]) {
   return args;
 }
 
-function main() {
+async function main() {
   const args = parseArgs(process.argv);
   const jobsDir = resolve(args["jobs-dir"] ?? "./jobs");
   const store = new JobStore(jobsDir);
 
   if (args.command === "list") {
     const pending = store.listPending();
-    console.log(JSON.stringify({ jobs_dir: jobsDir, pending: pending.length, jobs: pending }, null, 2));
+    const claimable = store.listClaimable();
+    console.log(
+      JSON.stringify(
+        { jobs_dir: jobsDir, pending: pending.length, claimable: claimable.length, jobs: pending },
+        null,
+        2,
+      ),
+    );
+    return;
+  }
+
+  if (args.command === "status") {
+    const claimable = store.listClaimable();
+    console.log(
+      JSON.stringify(
+        {
+          jobs_dir: jobsDir,
+          pending: store.listPending().length,
+          claimable: claimable.length,
+          claimed: store.listByStatus("claimed").length,
+          running: store.listByStatus("running").length,
+          completed: store.listByStatus("completed").length,
+          failed: store.listByStatus("failed").length,
+        },
+        null,
+        2,
+      ),
+    );
     return;
   }
 
@@ -52,7 +80,7 @@ function main() {
       console.error(`Job not found: ${runId}`);
       process.exit(1);
     }
-    console.log(JSON.stringify({ jobs_dir: jobsDir, job }, null, 2));
+    console.log(JSON.stringify({ jobs_dir: jobsDir, job, result: store.readResult(runId) }, null, 2));
     return;
   }
 
@@ -76,6 +104,7 @@ function main() {
       provider_id: job.provider_id,
       briefing: job.briefing,
       definition_of_done: job.definition_of_done,
+      executor_mode: "external",
       agent_instructions: [
         `1. Read skill: ${job.skill_path}`,
         `2. Execute briefing below; produce evidence per DoD`,
@@ -131,8 +160,46 @@ function main() {
     return;
   }
 
-  console.error("Usage: run-jobs list|show|pickup|invoke|complete --jobs-dir <path> [--prompt-dir path] [--run-id <id>] [--success] [--evidence <path>]");
+  if (args.command === "worker") {
+    const workspace = resolve(args.workspace ?? process.cwd());
+    const ac = new AbortController();
+    const onSig = () => {
+      console.error("[worker] shutdown signal — releasing in-flight claims");
+      ac.abort();
+    };
+    process.on("SIGTERM", onSig);
+    process.on("SIGINT", onSig);
+
+    const worker = new SkillWorker({
+      jobsDir,
+      workspaceRoot: workspace,
+      workerId: args["worker-id"],
+      pollIntervalMs: args["poll-ms"] ? parseInt(args["poll-ms"], 10) : 200,
+      concurrency: args.concurrency ? parseInt(args.concurrency, 10) : 1,
+      maxJobs: args["max-jobs"] ? parseInt(args["max-jobs"], 10) : undefined,
+      leaseMs: args["lease-ms"] ? parseInt(args["lease-ms"], 10) : 60_000,
+      idleExitPolls: args["idle-exit-polls"]
+        ? parseInt(args["idle-exit-polls"], 10)
+        : undefined,
+      signal: ac.signal,
+    });
+
+    ac.signal.addEventListener("abort", () => worker.requestStop());
+
+    const stats = await worker.run();
+    console.log(JSON.stringify({ status: "stopped", stats }, null, 2));
+    process.off("SIGTERM", onSig);
+    process.off("SIGINT", onSig);
+    return;
+  }
+
+  console.error(
+    "Usage: run-jobs list|show|pickup|invoke|complete|worker|status --jobs-dir <path> [--workspace path] [--run-id <id>] [--success] [--evidence <path>]",
+  );
   process.exit(1);
 }
 
-main();
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});

@@ -51,6 +51,10 @@ export class RegistryClient {
     return this.registry.capabilities[capability]?.providers ?? [];
   }
 
+  listCapabilityIds(): string[] {
+    return Object.keys(this.registry.capabilities);
+  }
+
   select(
     capability: string,
     strategy: ProviderStrategy,
@@ -90,7 +94,7 @@ export class RegistryClient {
       throw new Error(`No provider for capability: ${capability}`);
     }
 
-    const ranked = this.rank(candidates, strategy);
+    const ranked = this.rank(candidates, strategy, constraints);
     const selected = this.withUpdatedStats(ranked[0]);
     const runId = newRunId();
     const payload = buildSelectionPayload(
@@ -109,14 +113,30 @@ export class RegistryClient {
   }
 
   private matchesConstraints(provider: ProviderEntry, constraints?: Record<string, unknown>): boolean {
-    if (!constraints?.stack || !provider.constraints?.stack) return true;
+    if (!constraints) return true;
+
+    const excluded = constraints.exclude_providers;
+    if (Array.isArray(excluded) && excluded.includes(provider.id)) {
+      return false;
+    }
+
+    if (!constraints.stack || !provider.constraints?.stack) {
+      // prefer_provider is advisory for ranking, not a hard filter here
+      return true;
+    }
     const required = constraints.stack as string[];
     const available = provider.constraints.stack as string[];
     return required.every((s) => available.includes(s));
   }
 
-  private rank(candidates: ProviderEntry[], strategy: ProviderStrategy): ProviderEntry[] {
-    const enriched = candidates.map((p) => this.withUpdatedStats(p));
+  private rank(candidates: ProviderEntry[], strategy: ProviderStrategy, constraints?: Record<string, unknown>): ProviderEntry[] {
+    let enriched = candidates.map((p) => this.withUpdatedStats(p));
+
+    const prefer = constraints?.prefer_provider;
+    if (typeof prefer === "string") {
+      const preferred = enriched.filter((p) => p.id === prefer);
+      if (preferred.length > 0) enriched = preferred;
+    }
 
     switch (strategy) {
       case "highest_quality":

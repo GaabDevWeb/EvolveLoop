@@ -3,15 +3,16 @@ import { buildSuccessEvidence } from "../evidence/validator.js";
 import { newRunId } from "../ir/validator.js";
 
 export type MockBehavior =
-  | { type: "success" }
-  | { type: "fail"; attemptsBeforeSuccess?: number; error?: string }
-  | { type: "gate_reject"; findings?: ExecuteResult["evidence"] extends infer E ? E : never };
+  | { type: "success"; tokens?: number; delay_ms?: number }
+  | { type: "fail"; attemptsBeforeSuccess?: number; error?: string; tokens?: number; delay_ms?: number }
+  | { type: "gate_reject"; findings?: ExecuteResult["evidence"] extends infer E ? E : never; delay_ms?: number };
 
 export class MockProvider implements ProviderRuntime {
   readonly id: string;
   private behaviors: Map<string, MockBehavior> = new Map();
   private attemptCounts = new Map<string, number>();
   private defaultBehavior: MockBehavior = { type: "success" };
+  private executeCount = 0;
 
   constructor(id: string) {
     this.id = id;
@@ -25,6 +26,11 @@ export class MockProvider implements ProviderRuntime {
     this.defaultBehavior = behavior;
   }
 
+  /** A03 adversarial — how many times execute() was entered. */
+  getExecuteCount(): number {
+    return this.executeCount;
+  }
+
   supports(): boolean {
     return true;
   }
@@ -34,10 +40,28 @@ export class MockProvider implements ProviderRuntime {
   }
 
   async execute(request: ExecuteRequest): Promise<ExecuteResult> {
+    this.executeCount += 1;
     const start = Date.now();
     const behavior = this.behaviors.get(request.node_id) ?? this.defaultBehavior;
     const attempts = (this.attemptCounts.get(request.node_id) ?? 0) + 1;
     this.attemptCounts.set(request.node_id, attempts);
+
+    const delayMs = "delay_ms" in behavior ? behavior.delay_ms : undefined;
+    if (delayMs && delayMs > 0) {
+      await new Promise((r) => setTimeout(r, delayMs));
+    }
+
+    // Soft step-timeout observation: if request.policy.timeout_ms elapsed during delay
+    if (request.policy.timeout_ms != null && Date.now() - start >= request.policy.timeout_ms) {
+      return {
+        run_id: request.run_id,
+        success: false,
+        error: { code: "TIMEOUT", message: "Step timeout exceeded" },
+        duration_ms: Date.now() - start,
+        provider_id: this.id,
+        execution_meta: { retry_count: attempts - 1, timeout_hit: true, cancelled: false },
+      };
+    }
 
     if (behavior.type === "fail") {
       const threshold = behavior.attemptsBeforeSuccess ?? Infinity;
@@ -48,6 +72,7 @@ export class MockProvider implements ProviderRuntime {
           error: { code: "MOCK_FAILURE", message: behavior.error ?? "Simulated failure" },
           duration_ms: Date.now() - start,
           provider_id: this.id,
+          usage: behavior.tokens != null ? { tokens: behavior.tokens } : { cost_unknown: true },
         };
       }
     }
@@ -77,6 +102,7 @@ export class MockProvider implements ProviderRuntime {
     }
 
     const evidence = buildSuccessEvidence(request.node, request.run_id, this.id, Date.now() - start);
+    const tokens = behavior.type === "success" ? behavior.tokens : undefined;
 
     return {
       run_id: request.run_id,
@@ -84,6 +110,7 @@ export class MockProvider implements ProviderRuntime {
       evidence,
       duration_ms: Date.now() - start,
       provider_id: this.id,
+      usage: tokens != null ? { tokens } : { cost_unknown: true },
       contextual_learnings: [
         {
           timestamp: new Date().toISOString(),

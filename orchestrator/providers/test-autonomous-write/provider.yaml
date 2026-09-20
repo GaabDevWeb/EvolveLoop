@@ -1,0 +1,23 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Provider
+metadata:
+  name: test-autonomous-write
+  version: "1.0.0"
+  description: "A02 proof — autonomous cursor-skill with real Node handler (not LLM)"
+  owner: agents-team
+spec:
+  plugin:
+    type: cursor-skill
+    entrypoint: "orchestrator/providers/test-autonomous-write/SKILL.md"
+    autonomous:
+      type: node-module
+      module: "./handler.mjs"
+      export: execute
+  capabilities:
+    - id: test.autonomous-write
+      contract: contracts/test.autonomous-write@1.0.0
+      type: worker
+  runtime:
+    cost: low
+  availability: active
+  priority: 10

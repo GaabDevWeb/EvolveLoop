@@ -66,6 +66,32 @@ const DEFAULT_HANDLERS: Record<string, DeterministicHandler> = {
     if (!pattern) throw Object.assign(new Error("missing pattern"), { code: "MALFORMED_INPUT" });
     return fsHandlers.filesystemSearch(ctx.workspaceRoot, pattern, inputs.path ?? ".");
   },
+  /**
+   * SE-05: test execution via allowlisted command only (not arbitrary shell).
+   * Agent cannot invoke this — Worker/Runtime only.
+   */
+  "test.run": async (req, ctx) => {
+    const inputs = requestInputs(req);
+    const command = inputs.command ?? inputs.cmd ?? "npm test";
+    const allowed = (inputs.allowed_commands ?? "")
+      .split("|")
+      .map((s) => s.trim())
+      .filter(Boolean);
+    const allowlist = allowed.length
+      ? allowed
+      : ["npm test", "npm run test", "npx vitest run", "node --test"];
+    if (!allowlist.includes(command) && !allowlist.some((a) => command.startsWith(a + " "))) {
+      throw Object.assign(new Error(`test command not allowlisted: ${command}`), {
+        code: "TEST_COMMAND_DENIED",
+      });
+    }
+    return shellExecute({
+      command,
+      cwd: inputs.cwd,
+      timeoutMs: req.policy.timeout_ms ?? parseTimeoutMs(inputs.timeout) ?? 60_000,
+      workspaceRoot: ctx.workspaceRoot,
+    });
+  },
   "shell.execute": async (req, ctx) => {
     const inputs = requestInputs(req);
     const command = inputs.command ?? inputs.cmd;
@@ -112,7 +138,10 @@ function capabilityPermissions(capability: string): {
   network?: boolean;
   shell?: boolean;
 } {
-  if (capability === "filesystem.write") return { filesystem: "write", shell: false, network: false };
+  if (capability === "filesystem.write") {
+    return { filesystem: "write", shell: false, network: false };
+  }
+  if (capability === "test.run") return { filesystem: "read", shell: true, network: false };
   if (capability.startsWith("filesystem.")) return { filesystem: "read", shell: false, network: false };
   if (capability === "shell.execute") return { filesystem: "write", shell: true, network: false };
   if (capability.startsWith("knowledge.")) return { filesystem: "none", shell: false, network: false };
@@ -185,10 +214,14 @@ export class DeterministicProvider implements ProviderRuntime {
       capability: request.capability,
       permissions: capabilityPermissions(request.capability),
       side_effects:
-        request.capability === "filesystem.write" || request.capability === "shell.execute",
+        request.capability === "filesystem.write" ||
+        request.capability === "shell.execute" ||
+        request.capability === "test.run",
       deterministic: true,
       requires_confirmation:
-        request.capability === "shell.execute" || request.capability === "filesystem.write",
+        request.capability === "shell.execute" ||
+        request.capability === "filesystem.write" ||
+        request.capability === "test.run",
       targetPath: inputs.path ?? inputs.file ?? inputs.cwd,
       context: authCtx,
     });

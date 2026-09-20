@@ -5,13 +5,16 @@ import { buildSuccessEvidence } from "../evidence/validator.js";
 import { recordSkillLifecycle } from "../telemetry/skill-telemetry.js";
 import type { EventBus } from "../events/event-bus.js";
 
-/** Executes a capability — pluggable bridge (shell, subagent, job file). */
+/** Executes a capability — pluggable bridge (shell, subagent, job file, autonomous handler). */
 export interface SkillExecutor {
+  readonly kind?: "external" | "autonomous" | "callback";
   execute(request: ExecuteRequest, skillPath: string, manifest: ProviderManifest): Promise<ExecuteResult>;
+  cancel?(runId: string): Promise<void>;
 }
 
-/** Writes job JSON for external Cursor agent pickup — Phase C handoff. */
+/** Writes job JSON for external Cursor agent pickup — EXTERNAL_EXECUTOR mode. */
 export class JobFileExecutor implements SkillExecutor {
+  readonly kind = "external" as const;
   constructor(private jobsDir: string) {}
 
   async execute(request: ExecuteRequest, skillPath: string, manifest: ProviderManifest): Promise<ExecuteResult> {
@@ -29,7 +32,9 @@ export class JobFileExecutor implements SkillExecutor {
       briefing: request.briefing,
       definition_of_done: request.definition_of_done,
       inputs: request.inputs,
+      constraints: request.node?.constraints,
       status: "pending",
+      execution_id: request.run_id,
     };
 
     writeFileSync(jobPath, JSON.stringify(job, null, 2));
@@ -39,16 +44,18 @@ export class JobFileExecutor implements SkillExecutor {
       success: false,
       error: {
         code: "JOB_PENDING",
-        message: `Skill job written to ${jobPath} — awaiting external executor`,
+        message: `Skill job written to ${jobPath} — awaiting EXTERNAL executor`,
       },
       duration_ms: 0,
       provider_id: manifest.metadata.name,
+      executor_id: "external",
     };
   }
 }
 
 /** In-process executor for tests — returns success with evidence. */
 export class CallbackSkillExecutor implements SkillExecutor {
+  readonly kind = "callback" as const;
   constructor(
     private fn: (request: ExecuteRequest, skillPath: string) => Promise<ExecuteResult>,
   ) {}
@@ -90,8 +97,8 @@ export class CursorSkillProvider implements ProviderRuntime {
     return true;
   }
 
-  async cancel(_runId: string): Promise<void> {
-    /* noop — external executor handles cancellation */
+  async cancel(runId: string): Promise<void> {
+    await this.executor.cancel?.(runId);
   }
 
   async execute(request: ExecuteRequest): Promise<ExecuteResult> {

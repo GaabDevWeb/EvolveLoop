@@ -4,29 +4,33 @@
  *
  * Usage:
  *   node dist/cli/run-engine.js --ir path/to/ir.yaml [--policy high-reliability] [--feature-id feat-1]
- *   node dist/cli/run-engine.js --ir ir.yaml --jobs-dir ./jobs   # cursor-skill via JobFileExecutor
- *   node dist/cli/run-engine.js --ir ir.yaml --discovery --jobs-dir ./jobs  # runtime provider discovery
+ *   node dist/cli/run-engine.js --ir ir.yaml --provider-mode real   # default — real providers, no silent mock
+ *   node dist/cli/run-engine.js --ir ir.yaml --provider-mode mock   # explicit mock (tests/fixtures)
+ *   node dist/cli/run-engine.js --ir ir.yaml --jobs-dir ./jobs      # cursor-skill via JobFileExecutor
+ *   node dist/cli/run-engine.js --ir ir.yaml --discovery --jobs-dir ./jobs
  */
-import { mkdtempSync, readdirSync } from "node:fs";
+import { mkdtempSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { tmpdir } from "node:os";
 import {
   ExecutionEngine,
-  ProviderRouter,
-  createMockProvider,
   loadYamlFile,
   buildRegistryFromManifestFiles,
-  PluginLoader,
-  JobFileExecutor,
   FilesystemKnowledgeStore,
   FilesystemMemoryStore,
   resolveDataPaths,
   LongitudinalEvolveLoop,
   LiveAnalysisCoordinator,
+  PolicyEngine,
+  assertExecutableIR,
+  RejectedBeforeExecutionError,
+  bootstrapProviders,
+  loadProviderManifests,
+  type ProviderMode,
 } from "../index.js";
 import type { AnalysisScope } from "../evolveloop/longitudinal-types.js";
-import type { CapabilityIR, ProviderManifest } from "../types/index.js";
+import type { CapabilityIR } from "../types/index.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -47,103 +51,18 @@ function parseArgs(argv: string[]) {
   return args;
 }
 
-function loadProviderManifests(providersDir: string): ProviderManifest[] {
-  const manifests: ProviderManifest[] = [];
-  for (const name of readdirSync(providersDir, { withFileTypes: true })) {
-    if (!name.isDirectory()) continue;
-    const path = join(providersDir, name.name, "provider.yaml");
-    try {
-      manifests.push(loadYamlFile<ProviderManifest>(path));
-    } catch {
-      // skip dirs without provider.yaml
-    }
-  }
-  return manifests;
+function parseProviderMode(raw: string | undefined): ProviderMode {
+  if (!raw || raw === "real") return "real";
+  if (raw === "mock") return "mock";
+  console.error(`Invalid --provider-mode '${raw}'. Expected real|mock.`);
+  process.exit(1);
 }
 
-function supplementRegistry(
-  registry: ReturnType<typeof buildRegistryFromManifestFiles>,
-  ir: CapabilityIR,
-): ReturnType<typeof buildRegistryFromManifestFiles> {
-  const caps = new Set(ir.spec.nodes.map((n) => n.capability));
-  const capabilities = { ...registry.capabilities };
-
-  for (const cap of caps) {
-    if (!capabilities[cap]) {
-      capabilities[cap] = {
-        providers: [
-          {
-            id: cap,
-            priority: 100,
-            cost: "medium",
-            quality_score: 0.85,
-            availability: "active",
-            version: "1.0.0",
-          },
-        ],
-      };
-    }
-  }
-
-  return { ...registry, capabilities };
-}
-
-function registryForMockRun(
-  registry: ReturnType<typeof buildRegistryFromManifestFiles>,
-  ir: CapabilityIR,
-): ReturnType<typeof buildRegistryFromManifestFiles> {
-  let result = supplementRegistry(registry, ir);
-  const capabilities = { ...result.capabilities };
-
-  for (const [capId, cap] of Object.entries(capabilities)) {
-    const hasActive = cap.providers.some((p) => p.availability !== "experimental" && p.availability !== "deprecated");
-    if (!hasActive) {
-      capabilities[capId] = {
-        providers: [
-          {
-            id: capId,
-            priority: 100,
-            cost: "medium",
-            quality_score: 0.85,
-            availability: "active",
-            version: "1.0.0",
-          },
-        ],
-      };
-    }
-  }
-
-  return { ...result, capabilities };
-}
-
-function setupProviders(
-  registry: ReturnType<typeof buildRegistryFromManifestFiles>,
-  agentsRoot: string,
-  jobsDir?: string,
-): ProviderRouter {
-  const router = new ProviderRouter();
-  const loader = new PluginLoader(agentsRoot);
-  const executor = jobsDir ? new JobFileExecutor(resolve(jobsDir)) : undefined;
-
-  const ids = new Set<string>();
-  for (const cap of Object.values(registry.capabilities)) {
-    for (const p of cap.providers) ids.add(p.id);
-  }
-
-  const manifestsDir = resolve(__dirname, "../../providers");
-  const manifests = loadProviderManifests(manifestsDir);
-  const manifestByName = new Map(manifests.map((m) => [m.metadata.name, m]));
-
-  for (const id of ids) {
-    const manifest = manifestByName.get(id);
-    if (manifest?.spec.plugin?.type === "cursor-skill" && executor) {
-      router.register(loader.load(manifest, executor));
-    } else {
-      router.register(createMockProvider(id));
-    }
-  }
-
-  return router;
+function parseSkillExecutor(raw: string | undefined): "external" | "autonomous" {
+  if (!raw || raw === "external") return "external";
+  if (raw === "autonomous") return "autonomous";
+  console.error(`Invalid --skill-executor '${raw}'. Expected external|autonomous.`);
+  process.exit(1);
 }
 
 function parseEvolveScope(args: Record<string, string>): AnalysisScope | null {
@@ -174,12 +93,14 @@ async function main() {
 
   if (!args.ir) {
     console.error(
-      `Usage: run-engine --ir <path.yaml> [--policy id] [--feature-id id] [--jobs-dir path] [--data-dir path] [--discovery] [--resume] [--wait-for-jobs ms] [--evolve] [--evolve-scope-type USER|PROJECT|WORKSPACE|SYSTEM] [--evolve-scope-id id] [--evolve-authorize-system]`,
+      `Usage: run-engine --ir <path.yaml> [--policy id] [--feature-id id] [--provider-mode real|mock] [--skill-executor external|autonomous] [--jobs-dir path] [--data-dir path] [--discovery] [--resume] [--wait-for-jobs ms] [--evolve] ...`,
     );
     process.exit(1);
   }
 
   const enableDiscovery = args.discovery === "true";
+  const providerMode = parseProviderMode(args["provider-mode"]);
+  const skillExecutor = parseSkillExecutor(args["skill-executor"]);
   const irPath = resolve(args.ir);
   const ir = loadYamlFile<CapabilityIR>(irPath);
   const policyId = args.policy ?? ir.metadata.policy_ref ?? "high-reliability";
@@ -191,20 +112,77 @@ async function main() {
   const contractsDir = join(orchestratorRoot, "contracts");
   const policiesDir = join(orchestratorRoot, "policies");
   const jobsDir = args["jobs-dir"] ?? (enableDiscovery ? "./jobs" : undefined);
-  const resume = args.resume === "true";
+  const resume = args.resume === "true" || args["auto-recover"] === "true";
+  const autoRecover = args["auto-recover"] === "true";
   const waitForJobsMs = args["wait-for-jobs"] ? parseInt(args["wait-for-jobs"], 10) : 0;
-  const manifests = loadProviderManifests(providersDir);
 
+  const manifests = loadProviderManifests(providersDir);
   let registry = enableDiscovery
     ? buildRegistryFromManifestFiles([])
     : buildRegistryFromManifestFiles(manifests);
-  registry = jobsDir ? supplementRegistry(registry, ir) : registryForMockRun(registry, ir);
-  const providers = setupProviders(registry, agentsRoot, jobsDir);
+
+  const boot = bootstrapProviders({
+    mode: providerMode,
+    manifests,
+    registry,
+    workspaceRoot: agentsRoot,
+    jobsDir: jobsDir ? resolve(jobsDir) : undefined,
+    ir,
+    skillExecutor,
+    providersDir,
+    // Read-only default authority — writes/shell still need confirm (GAP-B02 later)
+    authority: { allowWrite: false, allowShell: false, allowNetwork: false },
+  });
+  registry = boot.registry;
+
+  // Unavailable providers (e.g. cursor-skill without --jobs-dir) are OK if the IR
+  // does not need them. Fatal only when preflight finds IR capabilities uncovered.
+  if (boot.unavailable.length > 0) {
+    console.error(
+      `[providers] unavailable (not fatal unless required by IR): ${boot.unavailable.map((u) => u.id).join(", ")}`,
+    );
+  }
+
+  const policyEngine = new PolicyEngine({ policiesDir });
+
+  try {
+    assertExecutableIR(ir, {
+      registry,
+      router: boot.router,
+      requireProviders: providerMode === "real" && !enableDiscovery,
+      policyEngine,
+      requireKnownPolicy: false,
+      providerFallbackHook: "reserved_for_gap_b01",
+    });
+  } catch (err) {
+    if (err instanceof RejectedBeforeExecutionError) {
+      const needed = new Set(ir.spec.nodes.map((n) => n.capability));
+      const relevantUnavailable = boot.unavailable.filter((u) => {
+        const caps = manifests
+          .find((m) => m.metadata.name === u.id)
+          ?.spec.capabilities.map((c) => c.id);
+        return caps?.some((c) => needed.has(c));
+      });
+      console.error(
+        JSON.stringify(
+          {
+            code: err.code,
+            provider_mode: providerMode,
+            errors: err.errors,
+            unavailable: relevantUnavailable.length ? relevantUnavailable : boot.unavailable,
+          },
+          null,
+          2,
+        ),
+      );
+      process.exit(1);
+    }
+    throw err;
+  }
 
   const dataDir = args["data-dir"] ? resolve(args["data-dir"]) : undefined;
   const dataPaths = dataDir ? resolveDataPaths(dataDir) : undefined;
 
-  // EvolveLoop is default OFF — opt-in via --evolve only.
   const evolveScope = parseEvolveScope(args);
   let evolveLoop: LongitudinalEvolveLoop | undefined;
   let evolveCoordinator: LiveAnalysisCoordinator | undefined;
@@ -233,9 +211,13 @@ async function main() {
     );
   }
 
+  console.error(
+    `[providers] mode=${providerMode} skill_executor=${skillExecutor} registered=${boot.registered.length} unavailable=${boot.unavailable.length}`,
+  );
+
   const engine = new ExecutionEngine({
     registry,
-    providers,
+    providers: boot.router,
     dataPaths,
     contractsDir,
     policiesDir,
@@ -255,6 +237,8 @@ async function main() {
     policy_id: policyId,
     feature_id: featureId,
     resume,
+    auto_recover: autoRecover,
+    worker_id: `cli-${process.pid}`,
     wait_for_jobs_ms: waitForJobsMs,
   });
 
@@ -263,8 +247,17 @@ async function main() {
     finished: result.finished,
     state: result.state,
     blocked_reason: result.blocked_reason,
+    provider_mode: providerMode,
+    skill_executor: skillExecutor,
+    providers_registered: boot.registered,
     evidence_count: result.evidence.length,
-    nodes: result.graph.nodes.map((n) => ({ id: n.id, status: n.status, capability: n.capability })),
+    execution_id: ir.metadata.execution_id,
+    nodes: result.graph.nodes.map((n) => ({
+      id: n.id,
+      status: n.status,
+      capability: n.capability,
+      provider_id: n.provider_id,
+    })),
     metrics: result.metrics,
     event_count: result.events.length,
   };

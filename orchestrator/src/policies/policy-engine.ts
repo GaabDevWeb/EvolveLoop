@@ -1,5 +1,23 @@
 import type { ExecutionPolicy, ExecutionPolicySpec, GraphNode } from "../types/index.js";
 import { loadPoliciesFromDir } from "../registry/manifest-loader.js";
+import { POLICY_DEFAULTS } from "./defaults.js";
+import {
+  resolveExecutionBudget,
+  type ExecutionBudget,
+} from "./execution-budget.js";
+
+export { POLICY_DEFAULTS } from "./defaults.js";
+export { parseTimeoutMs } from "./timeout.js";
+export {
+  resolveExecutionBudget,
+  createAccounting,
+  remainingFeatureMs,
+  featureTimedOut,
+  recordProviderTried,
+  type ExecutionBudget,
+  type ResourceAccounting,
+  type BudgetExhaustionCode,
+} from "./execution-budget.js";
 
 const BUILTIN_POLICIES: Record<string, ExecutionPolicy> = {
   "high-reliability": {
@@ -19,6 +37,10 @@ const BUILTIN_POLICIES: Record<string, ExecutionPolicy> = {
       on_gate_reject: "orchestrator",
       on_evidence_missing: "fail",
       fail_fast: false,
+      max_iterations: POLICY_DEFAULTS.MAX_ITERATIONS,
+      max_replans: POLICY_DEFAULTS.MAX_REPLANS,
+      max_provider_fallbacks: POLICY_DEFAULTS.MAX_PROVIDER_FALLBACKS,
+      reset_retries_on_replan: true,
       execution_order: "topological",
       knowledge: { consult_before_schedule: true, consult_before_provider_select: true },
       memory: { scope: "feature", persist_contextual: true },
@@ -48,7 +70,12 @@ const BUILTIN_POLICIES: Record<string, ExecutionPolicy> = {
       timeouts: {},
       on_gate_reject: "auto_retry",
       on_evidence_missing: "fail",
-      fail_fast: true,
+      // Was orphan true — activating fail_fast would forbid retries/replan used by V2 tests.
+      fail_fast: false,
+      max_iterations: POLICY_DEFAULTS.MAX_ITERATIONS,
+      max_replans: POLICY_DEFAULTS.MAX_REPLANS,
+      max_provider_fallbacks: POLICY_DEFAULTS.MAX_PROVIDER_FALLBACKS,
+      reset_retries_on_replan: true,
       execution_order: "topological",
       gate_depth: "fast",
       knowledge: { consult_before_schedule: false },
@@ -72,6 +99,10 @@ const BUILTIN_POLICIES: Record<string, ExecutionPolicy> = {
       on_gate_reject: "orchestrator",
       on_evidence_missing: "retry",
       fail_fast: false,
+      max_iterations: POLICY_DEFAULTS.MAX_ITERATIONS,
+      max_replans: POLICY_DEFAULTS.MAX_REPLANS,
+      max_provider_fallbacks: POLICY_DEFAULTS.MAX_PROVIDER_FALLBACKS,
+      reset_retries_on_replan: true,
       execution_order: "topological",
       gate_depth: "fast",
       min_confidence: 0.6,
@@ -96,6 +127,10 @@ export class PolicyEngine {
     }
   }
 
+  has(policyId: string): boolean {
+    return this.policies.has(policyId);
+  }
+
   resolve(policyId: string, overrides?: Partial<ExecutionPolicySpec>): ExecutionPolicy {
     const base = this.policies.get(policyId) ?? BUILTIN_POLICIES["high-reliability"];
     if (!overrides) return structuredClone(base);
@@ -108,8 +143,27 @@ export class PolicyEngine {
         retries: { ...base.spec.retries, ...overrides.retries },
         gates: { ...base.spec.gates, ...overrides.gates },
         parallelism: { ...base.spec.parallelism, ...overrides.parallelism },
+        timeouts: { ...base.spec.timeouts, ...overrides.timeouts },
+        cost_budget: overrides.cost_budget
+          ? { ...base.spec.cost_budget, ...overrides.cost_budget }
+          : base.spec.cost_budget,
       },
     };
+  }
+
+  budget(
+    policy: ExecutionPolicy,
+    opts?: { maxReplansOverride?: number; maxIterationsOverride?: number },
+  ): ExecutionBudget {
+    return resolveExecutionBudget(policy, opts);
+  }
+
+  failFast(policy: ExecutionPolicy): boolean {
+    return !!policy.spec.fail_fast;
+  }
+
+  fallbackEnabled(policy: ExecutionPolicy): boolean {
+    return policy.spec.provider_strategy_fallback !== undefined;
   }
 
   gateEnabled(policy: ExecutionPolicy, capability: string): boolean {

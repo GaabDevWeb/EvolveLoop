@@ -14,6 +14,7 @@ import type { KnowledgeStore } from "../knowledge/knowledge-store.js";
 import type { ProviderRouter } from "../providers/mock-provider.js";
 import { newRunId } from "../ir/validator.js";
 import { buildSchedulingEvidence } from "../evidence/builders.js";
+import { parseTimeoutMs } from "../policies/timeout.js";
 
 export class Scheduler {
   private running = new Map<string, RunHandle>();
@@ -96,6 +97,11 @@ export class Scheduler {
     graph: GraphStore,
     rejected: Array<{ id: string; reason: string }> = [],
     readyBatch: string[] = [node.id],
+    opts?: {
+      authority_context?: ExecuteRequest["authority_context"];
+      /** Override step timeout (e.g. remaining feature budget). */
+      timeout_ms?: number;
+    },
   ): RunHandle {
     const runId = newRunId();
     const maxRetries = this.policyEngine.retriesFor(policy, node);
@@ -128,6 +134,12 @@ export class Scheduler {
       }
     }
 
+    const stepTimeout = parseTimeoutMs(policy.spec.timeouts?.step_timeout);
+    const timeout_ms =
+      opts?.timeout_ms != null
+        ? opts.timeout_ms
+        : stepTimeout;
+
     const request: ExecuteRequest = {
       run_id: runId,
       node_id: node.id,
@@ -136,7 +148,7 @@ export class Scheduler {
       definition_of_done: node.definition_of_done,
       policy: {
         retries_remaining: maxRetries - node.retry_count,
-        timeout_ms: parseTimeoutMs(policy.spec.timeouts?.step_timeout),
+        timeout_ms,
       },
       provider_id: provider.id,
       executor_type: provider.plugin,
@@ -144,6 +156,7 @@ export class Scheduler {
       knowledge_hits: knowledgeHits,
       briefing: `Execute ${node.capability} for node ${node.id}`,
       node,
+      ...(opts?.authority_context ? { authority_context: opts.authority_context } : {}),
     };
 
     const providerRuntime = this.providerRouter.get(provider.id);
@@ -199,12 +212,3 @@ export class Scheduler {
   }
 }
 
-function parseTimeoutMs(timeout?: string): number | undefined {
-  if (!timeout) return undefined;
-  const m = timeout.match(/^(\d+)(m|h|s)$/);
-  if (!m) return undefined;
-  const n = parseInt(m[1], 10);
-  if (m[2] === "h") return n * 3600_000;
-  if (m[2] === "m") return n * 60_000;
-  return n * 1000;
-}

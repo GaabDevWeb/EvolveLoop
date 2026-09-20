@@ -43,7 +43,8 @@ export type EventSource =
   | "orchestrator"
   | "provider"
   | "planner"
-  | "engine";
+  | "engine"
+  | "agent";
 
 export type EventType =
   | "FeatureStarted"
@@ -59,18 +60,100 @@ export type EventType =
   | "GatePassed"
   | "GateRejected"
   | "GateSkipped"
+  | "GateEvaluated"
+  | "GateAllowed"
+  | "GateDenied"
+  | "GateConfirmationRequired"
+  | "PolicyDenied"
+  | "AuthorizationDenied"
   | "SubgraphInvalidated"
   | "PhaseGateReached"
   | "PlannerReplan"
+  | "ReplanRequested"
+  | "ReplanProposed"
+  | "ReplanRejected"
+  | "ReplanApplied"
+  | "ReplanExhausted"
   | "ProviderSelected"
   | "ProviderFallbackUsed"
+  | "ProviderFallbackExhausted"
+  | "RetryBudgetExceeded"
+  | "ReplanBudgetExceeded"
+  | "ExecutionTimeout"
+  | "BudgetExceeded"
+  | "CostBudgetExceeded"
+  | "FailFastTriggered"
+  | "ConcurrencyLimited"
   | "ProviderDiscoveryStarted"
   | "ProviderDiscoveryCompleted"
   | "SkillLifecycle"
   | "KnowledgeHit"
   | "KnowledgeProposed"
   | "MemoryWritten"
-  | "OrchestratorDecision";
+  | "OrchestratorDecision"
+  | "RecoveryStarted"
+  | "CheckpointLoaded"
+  | "CheckpointRejected"
+  | "CheckpointSaved"
+  | "ExecutionReconciled"
+  | "NodeRecovered"
+  | "JobLeaseExpired"
+  | "ExecutionResumed"
+  | "RecoveryFailed"
+  | "RecoveryClaimed"
+  | "AgentInvocationStarted"
+  | "AgentDecisionProduced"
+  | "AgentInvocationFailed"
+  | "RequirementsExtractionStarted"
+  | "RequirementsProposalProduced"
+  | "RequirementsValidationFailed"
+  | "RequirementsBaselineCreated"
+  | "RequirementsVersionCreated"
+  | "ArchitectureGenerationStarted"
+  | "ArchitectureProposalProduced"
+  | "ArchitectureValidationFailed"
+  | "ArchitectureBaselineCreated"
+  | "ArchitectureVersionCreated"
+  | "TaskGraphGenerationStarted"
+  | "TaskGraphProposalProduced"
+  | "TaskGraphValidationFailed"
+  | "TaskGraphBaselineCreated"
+  | "TaskGraphVersionCreated"
+  | "DelegationCreated"
+  | "DelegationClaimed"
+  | "AgentStarted"
+  | "AgentDecisionReceived"
+  | "DecisionValidated"
+  | "RuntimeExecutionStarted"
+  | "RuntimeExecutionCompleted"
+  | "DelegationSucceeded"
+  | "DelegationFailed"
+  | "DelegationBlocked"
+  | "DelegationReplanRequested"
+  | "DelegationRecovered"
+  | "ImplementationProposed"
+  | "ImplementationValidated"
+  | "WorkspaceChangeStarted"
+  | "WorkspaceChangeCompleted"
+  | "TestExecutionStarted"
+  | "TestExecutionCompleted"
+  | "ValidationStarted"
+  | "ValidationCompleted"
+  | "RepairStarted"
+  | "RepairCompleted"
+  | "EngineeringTaskCompleted"
+  | "EngineeringTaskFailed"
+  | "EngineeringTaskBlocked"
+  | "EngineeringTaskRecovered"
+  | "ReviewCreated"
+  | "ReviewStarted"
+  | "ReviewFindingCreated"
+  | "ReviewCompleted"
+  | "ReviewBlocked"
+  | "ReviewRepairRequested"
+  | "ReviewReplanRequested"
+  | "ReviewRecovered"
+  | "ReviewInvalidated";
 
 export interface DoDCheck {
   id: string;
@@ -121,6 +204,19 @@ export interface CapabilityIR {
     replan_reason?: string;
     created_at?: string;
     planner_version?: string;
+    /** V2 correlation — StructuredIntent.id */
+    intent_id?: string;
+    /** V2 correlation — shared across planning evidence + run */
+    execution_id?: string;
+    /** V2 A04 plan lineage */
+    plan_version?: number;
+    parent_plan_id?: string;
+    replan_id?: string;
+    plan_hash?: string;
+    /** V2 AgentExecutor lineage — decision_id → plan_id → execution_id */
+    decision_id?: string;
+    agent_id?: string;
+    agent_version?: string;
   };
   spec: {
     nodes: IRNode[];
@@ -294,11 +390,28 @@ export interface ExecutionPolicySpec {
   };
   on_gate_reject: "orchestrator" | "auto_retry" | "fail_fast";
   on_evidence_missing: "fail" | "retry";
+  /**
+   * When true: first node failure is terminal — no retry, no provider fallback, no replan.
+   * Does not bypass A03 gates / authority / evidence requirements.
+   */
   fail_fast: boolean;
   execution_order: "topological" | "priority_field";
   gate_depth?: "fast" | "standard" | "deep";
   min_confidence?: number;
   cost_budget?: { max_nodes?: number; max_gate_depth?: "fast" | "standard" | "deep" };
+  /** Engine loop ceiling (default POLICY_DEFAULTS.MAX_ITERATIONS). */
+  max_iterations?: number;
+  /** Automatic replan ceiling (default POLICY_DEFAULTS.MAX_REPLANS). */
+  max_replans?: number;
+  /** Same-capability provider fallback switches after retries exhausted. */
+  max_provider_fallbacks?: number;
+  /** Observed token usage ceiling; unknown provider usage is not invented. */
+  token_budget?: number;
+  /**
+   * When true (default), replan resets failed node retry_count.
+   * Set false to keep retry budget across plan versions.
+   */
+  reset_retries_on_replan?: boolean;
   knowledge?: {
     consult_before_schedule?: boolean;
     consult_before_provider_select?: boolean;
@@ -366,7 +479,16 @@ export interface ProviderManifest {
     homepage?: string;
   };
   spec: {
-    plugin: { type: string; entrypoint: string };
+    plugin: {
+      type: string;
+      entrypoint: string;
+      /** V2 A02 — programmatic handler; absence ⇒ EXECUTOR_UNAVAILABLE in autonomous mode */
+      autonomous?: {
+        type: "node-module";
+        module: string;
+        export?: string;
+      };
+    };
     capabilities: Array<{
       id: string;
       contract?: string;
@@ -437,6 +559,11 @@ export interface ExecuteResult {
   duration_ms: number;
   provider_id: string;
   executor_id?: string;
+  /** Optional observed usage — never invent when absent. */
+  usage?: {
+    tokens?: number;
+    cost_unknown?: boolean;
+  };
   execution_meta?: {
     retry_count: number;
     timeout_hit: boolean;
@@ -508,6 +635,9 @@ export interface RunInput {
   feature_id: string;
   orchestrator_overrides?: Partial<ExecutionPolicySpec>;
   resume?: boolean;
+  /** When true with jobsDir: discover+claim+resume without manual feature targeting (CLI). */
+  auto_recover?: boolean;
+  worker_id?: string;
   wait_for_jobs_ms?: number;
 }
 

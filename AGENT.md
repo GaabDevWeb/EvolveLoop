@@ -8,6 +8,50 @@ Attach this file to your coding agent (e.g. Cursor). Follow it **exactly**. You 
 
 ---
 
+## Backend-agnostic architecture (canonical)
+
+```text
+EvolveLoop is backend-agnostic.
+
+Cursor is the primary/reference backend.
+
+Vendor agents are adapters.
+
+The EvolveLoop core must not contain vendor-specific execution logic.
+
+Adapters must integrate through canonical EvolveLoop contracts
+(`ReasoningProvider` for cognition; `AgentBackend` for coding-agent runtimes).
+
+Backend-specific capabilities and limitations must remain isolated inside adapter boundaries.
+```
+
+### Terminology
+
+| Term | Meaning |
+|------|---------|
+| ReasoningProvider | Cognitive turn → structured decision |
+| AgentBackend | Coding-agent runtime capabilities (sessions/tools/stream/…) |
+| CapabilityProvider | Side-effect execution under A03 |
+| Vendor session | Non-canonical; never EvolveLoop recovery SSOT |
+
+### Adapter rules
+
+- Fail closed on auth; never hardcode secrets; never put secrets in Evidence/checkpoints/logs.
+- Do not fake unsupported capabilities.
+- Do not call mock success live success.
+- Do not add vendor logic to core (`orchestrator/src/backends/<vendor>/` only).
+- Default tool mode: `reasoning_only` (Model C). `agent_runtime` ⇒ A03 **LIMITED**.
+- No automatic cross-backend fallback.
+- EvolveLoop Sandbox ≠ vendor sandbox. EvolveLoop sandbox is **NOT_IMPLEMENTED** until proven.
+
+### Test / documentation rules
+
+- Deterministic proof ≠ LLM quality.
+- Live runs require real credentials and observable output.
+- Status vocabulary: PASS / LIMITED / BLOCKED / NOT_MEASURED / UNAVAILABLE — never inflate.
+
+---
+
 ## Contract pipeline
 
 ```text
@@ -38,6 +82,7 @@ Record (do not invent):
 | Local model | Optional tooling present? |
 | Browser tooling | Optional (Playwright/Puppeteer MCP, etc.) |
 | MCP | `mcp/mcp.json` vs user MCP config |
+| Agent backends | Cursor SDK / Codex SDK / Claude Agent SDK / `agy` / Ollama — record presence only |
 
 ---
 
