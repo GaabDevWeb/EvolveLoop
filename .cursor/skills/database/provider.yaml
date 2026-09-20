@@ -1,0 +1,60 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Provider
+metadata:
+  name: database
+  version: "1.1.0"
+  description: "Schema, migrações e índices (Fase 2 worker)"
+  owner: agents-team
+
+spec:
+  plugin:
+    type: cursor-skill
+    entrypoint: ".cursor/skills/database/SKILL.md"
+
+  capabilities:
+    - id: database-schema
+      contract: contracts/database-schema@1.0.0
+      type: worker
+
+  interfaces:
+    inputs:
+      - name: data-model
+        path: docs/DATA-MODEL.md
+        required: false
+      - name: api-spec
+        path: docs/API_SPEC.md
+        required: false
+    outputs:
+      - name: migrations
+        schema: evidence/migrations@1.0.0
+      - name: handoff
+        schema: artifacts/entrega-consolidada@1.0.0
+
+  dependencies:
+    optional:
+      - filesystem.read
+      - filesystem.list
+      - filesystem.search
+      - filesystem.write
+      - project.inspect
+      - git.inspect
+      - shell.execute
+
+  runtime:
+    cost: medium
+    subagent_type: generalPurpose
+    pda_role: exec
+
+  constraints:
+    stack: [cursor, megabrain]
+    platforms: [cursor]
+    signals:
+      - phase: "2"
+      - role: exec
+      - forbids: [backend-implementation, frontend-ui, devops-deploy]
+
+  telemetry:
+    key: provider.database
+
+  availability: active
+  priority: 70

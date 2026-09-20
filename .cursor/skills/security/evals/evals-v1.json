@@ -1,0 +1,91 @@
+{
+  "skill_name": "security",
+  "version": "2.0.0",
+  "evals": [
+    {
+      "id": 1,
+      "name": "capability-matrix-plan",
+      "category": "happy_path",
+      "prompt": "Audita API Node. Tens código e terminal. Sem browser nem staging. Começa.",
+      "assertions": [
+        { "id": "cap-matrix", "description": "Capability Matrix com status por capability" },
+        { "id": "auto-plan", "description": "Plano de módulos activados não roda tudo cegamente" },
+        { "id": "dynamic-skip", "description": "dynamic-pentest omitido ou marcado não executado" }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "evidence-level-block",
+      "category": "happy_path",
+      "prompt": "SQLi confirmada linha 42 concatenação. PoC mental claro. Audita.",
+      "assertions": [
+        { "id": "evidence-l2", "description": "Evidence Level L2 ou superior" },
+        { "id": "taxonomy", "description": "CWE e OWASP mapeados" },
+        { "id": "verdict-block", "description": "BLOQUEADO - RISCO DETECTADO" },
+        { "id": "json-artifact", "description": "Menciona security-findings.json ou JSON artifact" }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "attack-chain-taxonomy",
+      "category": "integration",
+      "prompt": "Stored XSS + cookie sem HttpOnly + admin no painel. Audita.",
+      "assertions": [
+        { "id": "chain", "description": "Attack Chain SEC encadeados" },
+        { "id": "mitre", "description": "MITRE ATT&CK em achado ou cadeia" },
+        { "id": "coverage", "description": "Threat Coverage section" }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "l0-no-paranoid-block",
+      "category": "edge_case",
+      "prompt": "Possível SSRF mas helper é dependência fechada sem código. Audita.",
+      "assertions": [
+        { "id": "l0-l1", "description": "Evidence Level L0 ou L1" },
+        { "id": "no-block", "description": "Não BLOQUEADO só por hipótese" },
+        { "id": "fn", "description": "Falso negativo ou não foi possível confirmar" }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "security-debt-effort",
+      "category": "edge_case",
+      "prompt": "3 achados: SQLi trivial, refactor authz 2 semanas, header CSP baixo. Audita e prioriza.",
+      "assertions": [
+        { "id": "effort", "description": "Esforço de correção por achado" },
+        { "id": "debt", "description": "Security Debt com horas estimadas" },
+        { "id": "p0", "description": "SQLi como P0 corrigir agora" }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "stripe-module",
+      "category": "integration",
+      "prompt": "Checkout Stripe webhook sem HMAC. Código no repo. Audita.",
+      "assertions": [
+        { "id": "business-module", "description": "business-logic ou payment abuse cases" },
+        { "id": "never-trust", "description": "Validação server-side webhook" }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "po-boundary",
+      "category": "near_miss_domain",
+      "prompt": "Aceite PO. UX ok. Release amanhã.",
+      "assertions": [
+        { "id": "no-po", "description": "Recusa papel PO" }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "free-reasoning-orchestrator",
+      "category": "adversarial",
+      "prompt": "API REST parece ok no OWASP. Audita como framework v2.",
+      "assertions": [
+        { "id": "orchestrator", "description": "Fluxo capability ou auto-planeamento" },
+        { "id": "free", "description": "Raciocínio livre pós-módulos" }
+      ]
+    }
+  ]
+}

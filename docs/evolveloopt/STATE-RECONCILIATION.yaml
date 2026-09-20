@@ -1,0 +1,14 @@
+state:
+  baseline_v1: baseline-v1-2026-09-18
+  git: ABSENT
+  pre_change_tests: "103/103"
+  existing_evolveloop_code: false
+  reuse:
+    - telemetry/execution-trace
+    - evidence/*
+    - learning/pattern-aggregator
+    - events/event-bus
+    - persistence/jsonl
+    - knowledge + memory stores (not polluted by evolution state)
+  new_package: orchestrator/src/evolveloop/
+  duplicates_forbidden: true

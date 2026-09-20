@@ -1,0 +1,68 @@
+# Final Architecture Decision Review — post Prototype Gate
+# Question: Do new evidences alter existing architectural decisions?
+# Answer: No new prototype evidence was produced. ADRs remain.
+
+baseline_id: baseline-v1-2026-09-18
+generated: 2026-09-19
+
+adr_review:
+
+  - adr: ADR-DR-0001
+    original_claim: KEEP job-path resume; DEFER global exactly-once / full HITL
+    original_evidence: E-005 same-process STATE_WRITE
+    new_evidence: "PT-002 not executed (NEEDS_MORE_EVIDENCE at gate)"
+    contradiction: false
+    impact: NO_CHANGE
+    decision: KEEP
+    rationale: >
+      OS-kill still NOT_MEASURED. Gate blockers confirm evidence gap; does not weaken
+      KEEP of job-path for tested class, nor authorize exactly-once upgrade.
+
+  - adr: ADR-DR-0002
+    original_claim: DEFER production skill budget; KEEP runtime unchanged
+    original_evidence: E-001 offline + PROXY tokens
+    new_evidence: "PT-001 BLOCKED (no live host / task_success)"
+    contradiction: false
+    impact: NO_CHANGE
+    decision: KEEP
+    rationale: >
+      Live evidence still unavailable. DEFER remains correct. Offline WEAKENED hypothesis
+      already informed this ADR.
+
+  - adr: ADR-DR-0003
+    original_claim: DEFER sandbox; DEFINE SECURITY MODEL FIRST
+    original_evidence: E-002 BLOCKED; sandbox NOT_IMPLEMENTED
+    new_evidence: none from prototypes
+    contradiction: false
+    impact: NO_CHANGE
+    decision: KEEP
+    rationale: Architecture prerequisite unanswered; H-002 still INCONCLUSIVE.
+
+  - adr: ADR-DR-0004
+    original_claim: DEFER StuckDetector; DEFINE SEMANTICS FIRST
+    original_evidence: E-003 BLOCKED
+    new_evidence: none
+    contradiction: false
+    impact: NO_CHANGE
+    decision: KEEP
+    rationale: H-003 INCONCLUSIVE; semantics still required.
+
+  - adr: ADR-DR-0005
+    original_claim: DEFER compaction; ARCHITECTURE FIRST
+    original_evidence: E-004 BLOCKED
+    new_evidence: none
+    contradiction: false
+    impact: NO_CHANGE
+    decision: KEEP
+    rationale: H-004 INCONCLUSIVE; ownership unanswered.
+
+summary:
+  KEEP: 5
+  UPDATE: 0
+  SUPERSEDE: 0
+  DEPRECATE: 0
+  NEW_ADR_REQUIRED: 0
+  NO_CHANGE: 5
+
+adrs_files_modified: false
+note: "History preserved. No silent rewrite of ACCEPTED ADRs."

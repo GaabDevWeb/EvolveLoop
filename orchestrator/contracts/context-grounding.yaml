@@ -1,0 +1,44 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Contract
+metadata:
+  id: context-grounding
+  version: "1.0.0"
+  status: active
+
+spec:
+  capability: context-grounding
+  type: upstream
+  semver:
+    major: 1
+    minor: 0
+    patch: 0
+
+  inputs:
+    - name: project
+      required: false
+      note: "kernelbot | orbitbot | … — clarificar se ausente com tópico"
+    - name: topic_or_query
+      required: false
+    - name: pack_hint
+      required: false
+
+  outputs:
+    - name: grounding-report
+      schema: artifacts/context-grounding@1.0.0
+      required: true
+    - name: context-pack
+      required: false
+
+  evidence:
+    schema: evidence/upstream-default@1.0.0
+
+  compatible_with:
+    - knowledge.search@1.x
+    - knowledge.inspect@1.x
+    - knowledge-promote@1.x
+    - planning@1.x
+    - architecture-analysis@1.x
+
+  notes:
+    - "Deterministic knowledge.search/inspect remain the RAG bridge; this contract is the reasoning ritual / Context Engineer."
+    - "Orquestrar HARD-GATE node id remains knowledge-grounding."

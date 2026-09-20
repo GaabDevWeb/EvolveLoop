@@ -1,0 +1,21 @@
+exists:
+  episodic_evolveloop: true
+  tests: "120/120"
+  baseline_v1: intact
+  baseline_v2: intact
+missing:
+  - persistent_append_store
+  - cross_run_unique_executions
+  - need_lifecycle
+  - evolution_outcome
+  - live_adapters
+reuse:
+  - src/evolveloop/*
+  - persistence/paths + jsonl events
+  - no second registry
+add:
+  - persistent signal store
+  - longitudinal controller
+  - outcome tracker
+  - jsonl adapter
+  - lifecycle

@@ -1,0 +1,47 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Contract
+metadata:
+  id: validation
+  version: "1.0.0"
+  status: active
+
+spec:
+  capability: validation
+  type: gate
+  semver:
+    major: 1
+    minor: 0
+    patch: 0
+
+  inputs:
+    - name: dod-checklist
+      required: true
+    - name: evidence-paths
+      required: true
+
+  outputs:
+    - name: validation-report
+      schema: artifacts/validation-report@1.0.0
+      required: true
+    - name: handoff
+      required: false
+
+  definition_of_done:
+    minimum_checks:
+      - checklist_rows_emitted
+      - verdict_emitted
+      - boundaries_declared
+
+  evidence:
+    schema: evidence/gate-default@1.0.0
+
+  compatible_with:
+    - testing@1.x
+    - po-acceptance@1.x
+    - code-review@1.x
+    - security-review@1.x
+    - planning@1.x
+
+  notes:
+    - "Thin formal DoD/evidence gate — does not run test suites or grant PO acceptance."
+    - "Distinct from testing, po-acceptance, and code-review."

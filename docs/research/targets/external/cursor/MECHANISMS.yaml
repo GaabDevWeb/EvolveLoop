@@ -1,0 +1,300 @@
+# MECHANISMS.yaml — Cursor (product)
+# TARGET_RESEARCH | 2026-09-18
+# Epistemic: DOCUMENTED | OBSERVED | INFERRED | HYPOTHESIS | UNKNOWN
+# Decisions: ALREADY_PRESENT | ADOPT | ADAPT | PROTOTYPE | DEFER | REJECT
+
+target:
+  slug: cursor
+  name: Cursor
+  vendor: Anysphere
+  category: coding-agent
+  openness: partially-closed
+  baseline: research/OUR-SYSTEM-BASELINE.md
+
+identity_warning: |
+  MegaBrain/CursorSKILLS runs INSIDE Cursor. Product Cursor ≠ our Agent System.
+  Do not treat host tools/rules as MegaBrain Capability/Policy equivalents without mapping.
+
+mechanisms:
+  - id: CUR-HARNESS
+    name: Per-model agent harness
+    lens: [Agent, Tools, Model routing, DX]
+    problem: Different frontier models need different prompts/tool affordances
+    mechanism: Orchestrate instructions + tools + model; tune per model via product evals
+    evidence: DOCUMENTED
+    sources:
+      - https://cursor.com/docs/agent/overview
+      - https://cursor.com/blog/agent-best-practices
+    our_equivalence: PARTIAL
+    our_composite: IMPLEMENTED_TESTED  # our orchestrator — not Cursor harness
+    decision: DEFER
+    decision_note: Do not clone proprietary harness; keep MegaBrain contracts
+    confidence: HIGH
+    failure_modes:
+      - Opacity — cannot audit system prompt
+      - Behavior changes with model releases without our control
+    costs:
+      - Lock-in to product harness behavior
+      - Debugging requires product docs/support
+
+  - id: CUR-RULES
+    name: Rules / AGENTS.md context injection
+    lens: [Rules, Context, Policy, DX]
+    problem: LLMs lack cross-completion memory; teams need persistent guidance
+    mechanism: >
+      Project .mdc rules (alwaysApply|globs|description|manual), User rules,
+      Team rules (precedence Team→Project→User), nested AGENTS.md
+    evidence: DOCUMENTED + OBSERVED
+    sources:
+      - https://cursor.com/docs/context/rules
+    our_equivalence: SUBSTANTIAL  # as channel; PARTIAL as Policy Engine
+    decision: ALREADY_PRESENT
+    adapt_note: Clarify Rules (prompt) vs Policy Engine (authority)
+    confidence: HIGH
+    failure_modes:
+      - Context bloat from alwaysApply
+      - Conflicting rules across layers
+      - Stale copied code in rules
+
+  - id: CUR-SKILLS
+    name: Agent Skills packages
+    lens: [Skills, Context, Extensibility]
+    problem: Specialized workflows without always-on context cost
+    mechanism: >
+      Discover SKILL.md from .cursor/skills, ~/.cursor/skills, .agents/skills,
+      Claude/Codex compat paths; progressive refs/scripts; / invoke;
+      disable-model-invocation; paths scoping; Custom Modes
+    evidence: DOCUMENTED + OBSERVED
+    sources:
+      - https://cursor.com/docs/skills
+    our_equivalence: EQUIVALENT  # instruction packages only
+    decision: ALREADY_PRESENT
+    confidence: HIGH
+    failure_modes:
+      - Skill explosion / overlapping descriptions
+      - Model auto-invokes wrong skill
+      - Confusing Skills with Capabilities
+
+  - id: CUR-TOOLS
+    name: Built-in tool loop
+    lens: [Tools, Code editing, Terminal, Execution]
+    problem: Agent must read/edit/run/search to complete coding tasks
+    mechanism: >
+      File read/edit, glob/ls, Instant Grep, shell, web, browser, image gen,
+      ask questions, fetch rules, Task; unlimited tool calls per task (docs)
+    evidence: DOCUMENTED + OBSERVED
+    sources:
+      - https://cursor.com/docs/agent/overview
+    our_equivalence: NONE  # host-provided; we consume
+    decision: ALREADY_PRESENT
+    decision_note: Present as host providers, not MegaBrain registry entries we own
+    confidence: HIGH
+    failure_modes:
+      - Tool explosion in context (MCP + builtins)
+      - Destructive shell without gates
+      - Long tool loops without evidence gates
+
+  - id: CUR-SEARCH
+    name: Codebase search (Instant Grep + semantic claims)
+    lens: [Codebase indexing, Context selection]
+    problem: Locate relevant code without loading entire repo
+    mechanism: Instant Grep (custom engine); Explore subagent; SDK lists semSearch
+    evidence: DOCUMENTED
+    sources:
+      - https://cursor.com/docs/agent/tools/search
+      - https://cursor.com/docs/sdk/typescript
+      - https://cursor.com/blog/agent-best-practices
+    our_equivalence: NONE
+    decision: DEFER
+    decision_note: Do not reinvent; UNKNOWN internals of semantic index
+    confidence: MEDIUM
+    unknowns:
+      - Embedding model / chunking / index storage / refresh
+      - When grep vs semSearch is selected
+    failure_modes:
+      - Missed hits if relying on wrong search mode
+      - Privacy misunderstandings about what is uploaded
+
+  - id: CUR-CTX
+    name: Context assembly + compaction
+    lens: [Context, Context selection]
+    problem: Fixed context window fills with tools/rules/history
+    mechanism: >
+      Context ring categories (system, tools, rules, skills, MCP, subagents,
+      summarized conversation, conversation); compress older turns near full
+    evidence: DOCUMENTED
+    sources:
+      - https://prod.cursor.com/docs/agent/prompting
+    our_equivalence: PARTIAL  # we manage knowledge/evidence; compaction is host
+    decision: ADAPT
+    decision_note: Discipline on always-on rules/skills; do not fight host compaction
+    confidence: HIGH
+    unknowns:
+      - Compaction algorithm / what is preserved vs lost
+    failure_modes:
+      - Summarization drift / lost constraints
+      - Long chats degrade focus (product guidance)
+
+  - id: CUR-SUBAGENT
+    name: Subagents / Task delegation
+    lens: [Agent, Multi-Agent Coordination, Context]
+    problem: Intermediate search/shell/browser noise bloating main context
+    mechanism: >
+      Built-in Explore, Bash, Browser; custom .cursor/agents; foreground/background;
+      model inherit or pin; readonly; resume
+    evidence: DOCUMENTED + OBSERVED
+    sources:
+      - https://cursor.com/docs/subagents
+    our_equivalence: SUBSTANTIAL
+    decision: ALREADY_PRESENT
+    adapt_note: Keep PDA Evidence/Policy roles; adopt isolation discipline
+    confidence: HIGH
+    failure_modes:
+      - Over-agentization / excess handoffs
+      - Parent under-specifies prompt (subagents start clean)
+
+  - id: CUR-PLAN
+    name: Plan Mode
+    lens: [Planning, Human-in-the-Loop]
+    problem: Large/ambiguous tasks need review before edits
+    mechanism: Clarify → research → editable plan markdown → approve → build
+    evidence: DOCUMENTED
+    sources:
+      - https://cursor.com/docs/agent/modes
+    our_equivalence: PARTIAL
+    decision: ALREADY_PRESENT
+    decision_note: Host UX vs plan.ir.yaml IR — keep both unless ADR merges
+    confidence: MEDIUM
+
+  - id: CUR-MCP
+    name: MCP integration
+    lens: [MCP, Tools, Extensibility, Permissions]
+    problem: Connect external data/actions without bespoke IDE plugins only
+    mechanism: mcp.json stdio/SSE/HTTP; tools/resources/prompts; OAuth; allowlists; Run Modes
+    evidence: DOCUMENTED + OBSERVED
+    sources:
+      - https://cursor.com/docs/mcp
+    our_equivalence: SUBSTANTIAL
+    decision: ALREADY_PRESENT
+    confidence: HIGH
+    failure_modes:
+      - Untrusted servers / secret exfil
+      - Tool catalog bloat
+
+  - id: CUR-HOOKS
+    name: Agent lifecycle hooks
+    lens: [Policy, Guardrails, Observability, Extensibility]
+    problem: Observe/block/modify agent loop events
+    mechanism: hooks.json command hooks over stdio JSON; many lifecycle events
+    evidence: DOCUMENTED
+    sources:
+      - https://cursor.com/docs/agent/hooks
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    decision_note: Use as Policy enforcement adapters on host, not Policy replacement
+    confidence: HIGH
+    failure_modes:
+      - Hook failures blocking agent
+      - Cloud vs local hook source differences (~/.cursor hooks absent in cloud)
+
+  - id: CUR-CLOUD
+    name: Cloud Agents (ex-Background Agents)
+    lens: [Background execution, Sandboxing, Persistence]
+    problem: Parallel long-running work without local machine
+    mechanism: Isolated VMs; env.json/Dockerfile; MCP; hooks subset; PRs/artifacts
+    evidence: DOCUMENTED
+    sources:
+      - https://cursor.com/docs/cloud-agent
+    our_equivalence: NONE
+    decision: DEFER
+    confidence: HIGH
+    failure_modes:
+      - Env setup quality dominates outcomes
+      - Multi-repo long-running limits
+      - Spend limits / API pricing
+
+  - id: CUR-ROUTER
+    name: Cursor Router / Auto modes
+    lens: [Model routing, Economics]
+    problem: Not every turn needs frontier model
+    mechanism: >
+      Auto Cost|Balance|Intelligence; Teams/Enterprise classifier routes per request;
+      SDK auto-smart + optimize_for
+    evidence: DOCUMENTED
+    sources:
+      - https://cursor.com/docs/cursor-router
+    our_equivalence: NONE
+    decision: REJECT
+    decision_note: Reject reimplementation; DEFER studying classifier idea only if we own multi-model runtime
+    confidence: HIGH
+    unknowns:
+      - Classifier features / model pool membership at any date
+    failure_modes:
+      - Allowlist too tight disables router
+      - Quality variance when routed model hidden
+
+  - id: CUR-COMPOSER
+    name: Composer 2.5 first-party model
+    lens: [Model routing, Agent]
+    problem: Provide Cursor-optimized agent model in Cursor Models pool
+    mechanism: Composer 2.5 / Fast; billed in Cursor Models pool
+    evidence: DOCUMENTED
+    sources:
+      - https://cursor.com/docs/models
+    our_equivalence: NONE
+    decision: REJECT
+    decision_note: Product model — consume optionally; never treat as MegaBrain component
+    confidence: HIGH
+
+  - id: CUR-CKPT
+    name: File checkpoints
+    lens: [Recovery, Persistence]
+    problem: Undo agent file changes without Git
+    mechanism: Local snapshots before significant edits; restore files only
+    evidence: DOCUMENTED
+    sources:
+      - https://cursor.com/docs/agent/overview
+    our_equivalence: PARTIAL
+    decision: DEFER
+    confidence: MEDIUM
+
+  - id: CUR-STEER
+    name: Queue / steer mid-run
+    lens: [Human-in-the-Loop, DX]
+    problem: Redirect agent without losing in-flight work
+    mechanism: Queue after turn; immediate steer at next tool boundary
+    evidence: DOCUMENTED
+    sources:
+      - https://cursor.com/docs/agent/overview
+    our_equivalence: NONE
+    decision: DEFER
+    confidence: HIGH
+
+  - id: CUR-AUTOREVIEW
+    name: Run Mode / Auto-review classifier
+    lens: [Permissions, Guardrails, Terminal]
+    problem: Allow/block shell MCP fetch by safety + intent match
+    mechanism: IDE Run Modes; SDK local.autoReview; permissions.json autoRun
+    evidence: DOCUMENTED
+    sources:
+      - https://cursor.com/docs/sdk/typescript
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    decision_note: Align with Policy Engine; docs say classifier is not a security boundary
+    confidence: MEDIUM
+
+  - id: CUR-SDK
+    name: Cursor Agent SDK
+    lens: [Extensibility, Persistence]
+    problem: Embed same agent in apps/CI
+    mechanism: Agent/Run API; local+cloud; stores/checkpoints; tool stream events
+    evidence: DOCUMENTED
+    sources:
+      - https://cursor.com/docs/sdk/typescript
+    our_equivalence: NONE
+    decision: DEFER
+    confidence: HIGH
+
+comparison_rules_applied: true
+no_ranking: true
+no_implementation: true

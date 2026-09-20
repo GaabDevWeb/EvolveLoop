@@ -1,0 +1,28 @@
+--- /home/gaab/Downloads/CursorSKILLS/docs/reconciliation/runtime-sync/backup/run-jobs.ts.AG.reference	2026-07-19 10:17:59.203345264 -0300
++++ /home/gaab/Downloads/CursorSKILLS/docs/reconciliation/runtime-sync/backup/run-jobs.ts.CS.before	2026-09-17 20:37:33.000000000 -0300
+@@ -8,6 +8,7 @@
+  *   run-jobs invoke --jobs-dir ./jobs [--prompt-dir .cursor/pickup] [--run-id <uuid>]
+  *   run-jobs complete --jobs-dir ./jobs --run-id <uuid> --success --evidence path/to/evidence.json
+  */
++import { existsSync } from "node:fs";
+ import { resolve } from "node:path";
+ import { JobStore } from "../jobs/job-store.js";
+ import { invokePickup } from "../jobs/job-pickup.js";
+@@ -102,6 +103,17 @@
+       console.error("Required: --run-id");
+       process.exit(1);
+     }
++    if (args.success === "true") {
++      if (!args.evidence) {
++        console.error("Required: --evidence <path-to-evidence.json> when --success");
++        process.exit(1);
++      }
++      const evidencePath = resolve(args.evidence);
++      if (!existsSync(evidencePath)) {
++        console.error(`artifact_missing: ${evidencePath}`);
++        process.exit(1);
++      }
++    }
+     store.completeJob(runId, {
+       success: args.success === "true",
+       evidence_path: args.evidence,

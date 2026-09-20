@@ -1,0 +1,17 @@
+# Identity map
+old_identity: GaabWiki
+new_identity: Wiki
+mappings:
+  GaabWiki: Wiki
+  gaabwiki: wiki
+  GAABWIKI: WIKI
+  gaabwiki-mem: wiki-mem
+  GaabWiki-Mem: Wiki-Mem
+  gaabwiki-grounding: wiki-grounding
+  gaabwiki-agent: wiki-agent
+  provider.gaabwiki: provider.wiki
+  provider.gaabwiki-mem: provider.wiki-mem
+external_unchanged:
+  - python package module: gaabwiki
+  - vault directory name: karpathyWiki (corpus, not CursorSKILLS identity)
+  - vault page filenames gaabwiki-*.md (corpus content — VALID_EXTERNAL)

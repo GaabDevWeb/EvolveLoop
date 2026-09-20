@@ -1,0 +1,322 @@
+# LangGraph — MECHANISMS (machine-readable inventory)
+# Mode: TARGET_RESEARCH | Category: OFFICIAL_EXTERNAL
+# Date: 2026-09-18
+# Epistemic: claims carry evidence_label; closed/unverified = UNKNOWN
+# Decision vocab ONLY: ALREADY_PRESENT | ADOPT | ADAPT | PROTOTYPE | DEFER | REJECT
+
+target:
+  slug: langgraph
+  name: LangGraph
+  org: LangChain Inc.
+  license: MIT
+  category: SDK
+  classification: OFFICIAL_EXTERNAL
+  versions:
+    package_main_pyproject: "1.2.11"
+    docs_snapshot: "2026-09-18 docs.langchain.com/oss/python/langgraph/*"
+  primary_urls:
+    - https://docs.langchain.com/langgraph
+    - https://docs.langchain.com/oss/python/langgraph/graph-api
+    - https://github.com/langchain-ai/langgraph
+  access:
+    installed: false
+    executed: false
+    source_read: public_github_api_and_raw
+    closed_parts: [agent_server_internals, langsmith_deployment_internals]
+
+lens_focus:
+  - graph_execution
+  - state
+  - nodes
+  - edges
+  - persistence
+  - checkpoints
+  - interrupts
+  - HITL
+  - durable_execution
+  - subgraphs
+  - streaming
+  - recovery
+  - replay
+  - state_transitions
+
+mechanisms:
+  - id: LG-GRAPH-EXEC
+    name: Pregel super-step graph execution
+    problem: Orchestrate looping/branching workflows mixing code and LLM steps
+    how: >
+      StateGraph compiles to runtime that advances in discrete super-steps;
+      nodes with incoming channel messages activate; parallel nodes share a step;
+      halt when all inactive and no messages in transit.
+    costs:
+      - Mental model complexity (channels, super-steps, namespaces)
+      - Debugging requires understanding checkpoint boundaries
+    failure_modes:
+      - Orphaned nodes caught at compile (partial)
+      - Mixing static edges + Command(goto) schedules both successors
+    alternatives:
+      - Linear capability pipelines
+      - Actor frameworks / Beam-like runners
+    evidence_label: DOCUMENTED
+    sources:
+      - https://docs.langchain.com/oss/python/langgraph/graph-api
+      - https://github.com/langchain-ai/langgraph/tree/main/libs/langgraph/langgraph/pregel
+    our_equivalence: PARTIAL
+    our_mechanism: Task Graph / plan.ir.yaml + Orchestrator Runtime
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: LG-STATE-REDUCER
+    name: Shared state channels with reducers
+    problem: Apply partial updates from many nodes without lost writes
+    how: >
+      State schema keys are channels; each has a reducer (default overwrite).
+      Annotated reducers (e.g. operator.add) merge left=current, right=update.
+      Optional input_schema / output_schema / private channels.
+    costs:
+      - Wrong reducer → silent data loss or explosion of lists
+      - Private channels visible in values streaming unless filtered
+    failure_modes:
+      - Parallel nodes writing same key without reducer → InvalidUpdateError (DOCUMENTED pattern)
+      - Streaming leaks private channels (DOCUMENTED)
+    evidence_label: DOCUMENTED
+    sources:
+      - https://docs.langchain.com/oss/python/langgraph/graph-api
+    our_equivalence: NONE  # pending deeper engine audit → may be PARTIAL
+    our_mechanism: plan IR fields + evidence artifacts; merge rules UNKNOWN
+    decision: PROTOTYPE
+    confidence: MEDIUM
+
+  - id: LG-NODES
+    name: Node functions as units of work
+    problem: Encapsulate computation/side effects as graph steps
+    how: >
+      Nodes receive state (and optionally config/runtime context), return partial updates
+      or Command. On checkpointed resume, node restarts from function start.
+      Optional tasks inside nodes cache results for resume.
+    costs:
+      - Side effects before interrupt must be idempotent
+      - Large nodes reduce time-travel granularity
+    failure_modes:
+      - Duplicate side effects on resume
+      - Task/interrupt order changes break cached resume (Functional API)
+    evidence_label: DOCUMENTED
+    sources:
+      - https://docs.langchain.com/oss/python/langgraph/graph-api
+      - https://docs.langchain.com/oss/python/langgraph/functional-api
+    our_equivalence: PARTIAL
+    our_mechanism: Capabilities / Providers execute units of work
+    decision: ALREADY_PRESENT  # unit-of-work abstraction; not Pregel nodes
+    residual_gap: resume-from-node-start + task cache semantics
+    confidence: MEDIUM
+
+  - id: LG-EDGES-ROUTING
+    name: Static edges, conditional edges, Send, Command
+    problem: Decide next node(s) including fan-out and dynamic control
+    how: >
+      add_edge / add_conditional_edges; Send for map-reduce fan-out with per-item state;
+      Command(update, goto, graph, resume) for combined update+route or HITL resume.
+    costs:
+      - Multiple routing styles can confuse authors
+      - Type annotations required for Command targets (rendering)
+    failure_modes:
+      - Static+dynamic mix double-fires
+      - Command(update) as invoke input resumes wrong checkpoint (DOCUMENTED footgun)
+    evidence_label: DOCUMENTED
+    sources:
+      - https://docs.langchain.com/oss/python/langgraph/graph-api
+    our_equivalence: PARTIAL
+    our_mechanism: IR edges / policy routing / PDA handoffs
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: LG-CHECKPOINT
+    name: Thread-scoped checkpoints
+    problem: Persist graph progress for memory, HITL, recovery, time travel
+    how: >
+      BaseCheckpointSaver stores StateSnapshot per super-step keyed by thread_id;
+      get_state / get_state_history; checkpoint_ns for subgraphs.
+      Implementations: InMemorySaver, Sqlite, Postgres, Cosmos (separate packages).
+    costs:
+      - Unbounded checkpoint growth
+      - thread_id length limits (Postgres <255)
+      - InMemory lost on process restart
+    failure_modes:
+      - Missing thread_id → cannot resume
+      - Using MemorySaver in production
+    evidence_label: DOCUMENTED
+    sources:
+      - https://docs.langchain.com/oss/python/langgraph/checkpointers
+      - https://docs.langchain.com/oss/python/langgraph/persistence
+    our_equivalence: PARTIAL
+    our_mechanism: jobs/checkpoints + --resume
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: LG-PENDING-WRITES
+    name: Task-level pending writes recovery
+    problem: One node fails in a parallel super-step; others succeeded
+    how: >
+      put_writes stores per-task outputs before full checkpoint commit;
+      resume skips successful nodes, re-runs failed.
+    costs:
+      - More storage I/O per node completion
+    failure_modes:
+      - UNKNOWN exact consistency under durability=async process kill mid-write
+    evidence_label: DOCUMENTED
+    sources:
+      - https://docs.langchain.com/oss/python/langgraph/checkpointers
+    our_equivalence: UNKNOWN  # need orchestrator audit
+    our_mechanism: UNKNOWN / likely ABSENT at super-step granularity
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: LG-DURABILITY
+    name: Durability modes exit | async | sync
+    problem: Trade performance vs crash durability
+    how: >
+      exit — persist only on graph exit/error/interrupt (fast; no mid-run crash recovery).
+      async — persist concurrently with next step (small crash window).
+      sync — persist before next step (strongest).
+    costs:
+      - sync latency overhead
+      - exit loses mid-run progress on crash
+    failure_modes:
+      - Wrong mode for SLA → silent data loss on crash
+    evidence_label: DOCUMENTED
+    sources:
+      - https://docs.langchain.com/oss/python/langgraph/checkpointers
+    our_equivalence: ABSENT
+    our_mechanism: no documented durability policy knob
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: LG-INTERRUPT-HITL
+    name: Dynamic interrupt + Command resume
+    problem: Pause for human/external input mid-graph
+    how: >
+      interrupt(payload) suspends; checkpointer saves; caller sees stream.interrupts
+      or __interrupt__; resume with Command(resume=value) or resume map by interrupt id;
+      static interrupt_before/after at compile.
+    costs:
+      - Requires durable checkpointer in production
+      - Node restart semantics surprise authors
+    failure_modes:
+      - Non-idempotent pre-interrupt code
+      - Wrong thread_id on resume
+      - Parallel multi-interrupt without id map
+    evidence_label: DOCUMENTED
+    sources:
+      - https://docs.langchain.com/oss/python/langgraph/interrupts
+    our_equivalence: PARTIAL
+    our_mechanism: SkillJobs pickup/complete + wait-for-jobs
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: LG-STORE
+    name: Cross-thread Store
+    problem: Persist facts/preferences outside a single thread
+    how: Compile with store=BaseStore; read/write from nodes/app code
+    costs:
+      - Second persistence subsystem to operate
+    failure_modes:
+      - Confusion between store vs checkpoint as source of truth
+    evidence_label: DOCUMENTED
+    sources:
+      - https://docs.langchain.com/oss/python/langgraph/persistence
+    our_equivalence: PARTIAL
+    our_mechanism: Knowledge / GaabWiki / gaabwiki-mem
+    decision: DEFER
+    confidence: MEDIUM
+
+  - id: LG-SUBGRAPH
+    name: Nested subgraphs + checkpoint namespaces
+    problem: Modular multi-agent / team-owned graph parts
+    how: >
+      Compiled graph as node; shared keys or wrapper transform;
+      default inherit checkpointer (whole subgraph one parent super-step);
+      checkpointer=True for inner history / finer time travel;
+      Command.PARENT to jump out.
+    costs:
+      - Namespace complexity
+      - Parent may not see subgraph internals immediately
+    failure_modes:
+      - Expecting mid-subgraph time travel without own checkpointer
+    evidence_label: DOCUMENTED
+    sources:
+      - https://docs.langchain.com/oss/python/langgraph/use-subgraphs
+      - https://docs.langchain.com/oss/python/langgraph/use-time-travel
+    our_equivalence: PARTIAL
+    our_mechanism: PDA multi-agent + nested skills
+    decision: DEFER
+    confidence: MEDIUM
+
+  - id: LG-STREAM
+    name: Multi-mode streaming / stream_events
+    problem: Observe tokens, state deltas, checkpoints, interrupts live
+    how: >
+      stream_mode values|updates|messages|custom|checkpoints|tasks|debug;
+      v2 StreamPart {type,ns,data}; stream_events projections (messages/values/interrupts).
+    costs:
+      - API version fragmentation (v1/v2/v3)
+    failure_modes:
+      - Consumers assuming invoke-shaped privacy on streams
+    evidence_label: DOCUMENTED
+    sources:
+      - https://docs.langchain.com/oss/python/langgraph/streaming
+      - https://docs.langchain.com/oss/python/langgraph/interrupts
+    our_equivalence: PARTIAL
+    our_mechanism: telemetry / execution traces
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: LG-REPLAY-FORK
+    name: Time travel replay and fork
+    problem: Re-run from past checkpoint; explore alternate state
+    how: >
+      get_state_history → invoke(None, checkpoint.config) replays forward;
+      update_state creates new branch checkpoint (does not rewrite history);
+      interrupts re-trigger on replay.
+    costs:
+      - Non-deterministic LLM/API on replay
+      - Storage of full history
+    failure_modes:
+      - Treating replay as read-only cache playback
+      - Replaying final checkpoint = no-op
+    evidence_label: DOCUMENTED
+    sources:
+      - https://docs.langchain.com/oss/python/langgraph/use-time-travel
+      - https://docs.langchain.com/oss/python/langgraph/checkpointers
+    our_equivalence: NONE
+    our_mechanism: ABSENT / UNKNOWN as product feature
+    decision: DEFER
+    confidence: MEDIUM
+
+  - id: LG-RUNTIME-EMBED
+    name: Embed LangGraph as MegaBrain runtime
+    problem: Buy orchestration features by depending on LangGraph
+    how: Replace or wrap orchestrator with StateGraph
+    costs:
+      - Framework lock-in; dual contract systems; Policy/Evidence impedance
+    failure_modes:
+      - Duplicated registries; bypassed Evidence Bus
+    evidence_label: INFERRED
+    sources:
+      - skill anti-duplication + baseline contracts
+    our_equivalence: N/A
+    our_mechanism: CursorSKILLS orchestrator
+    decision: REJECT
+    confidence: HIGH
+
+state_transitions:
+  description: >
+    DOCUMENTED: state evolves by applying reducer(left=channel, right=node_update)
+    after each node completes within a super-step; checkpoint captures values + next + tasks.
+  labels: DOCUMENTED
+  open_questions:
+    - Exact channel versioning / DeltaChannel storage layout (beta) — partial docs only
+    - Agent Server automatic persistence schema — UNKNOWN (closed)
+
+comparison_rules_applied: true
+no_ranking: true
+no_implementation: true

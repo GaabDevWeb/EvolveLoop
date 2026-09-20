@@ -1,0 +1,72 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Provider
+metadata:
+  name: debugger
+  version: "1.0.0"
+  description: "Systematic debugging — root cause before fix (absorbs Tier3 systematic-debugging DO)"
+  owner: agents-team
+
+spec:
+  plugin:
+    type: cursor-skill
+    entrypoint: ".cursor/skills/debugger/SKILL.md"
+
+  capabilities:
+    - id: debug
+      contract: contracts/debug@1.0.0
+      type: worker
+
+  interfaces:
+    inputs:
+      - name: briefing
+        required: false
+      - name: error-evidence
+        required: false
+        note: "logs, stack, failing test output"
+      - name: reproduction
+        required: false
+    outputs:
+      - name: debug-report
+        schema: artifacts/debug-report@1.0.0
+      - name: handoff
+        schema: artifacts/entrega-consolidada@1.0.0
+
+  dependencies:
+    optional:
+      - filesystem.read
+      - filesystem.list
+      - filesystem.search
+      - filesystem.write
+      - project.inspect
+      - git.inspect
+      - git.status
+      - git.diff
+      - git.log
+      - repository.inspect
+      - shell.execute
+
+  runtime:
+    cost: medium
+    subagent_type: explore
+    pda_role: explore
+
+  runtime_compatibility:
+    engine: ">=2.0.0 <3.0.0"
+    evidence: ">=2.1.0 <3.0.0"
+    execution: ">=2.1.0"
+    executor_types: [cursor-skill]
+
+  constraints:
+    stack: [cursor, megabrain]
+    platforms: [cursor]
+    signals:
+      - role: explore
+      - after_testing_retries: "3"
+      - forbids: [testing-gate, security-gate, greenfield-feature]
+      - source_tier3: systematic-debugging
+
+  telemetry:
+    key: provider.debugger
+
+  availability: active
+  priority: 85

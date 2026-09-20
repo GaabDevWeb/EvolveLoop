@@ -1,0 +1,67 @@
+findings:
+  - id: S-OK-SCOPE
+    severity: INFO
+    category: FIXED
+    claim: "default analyze unsafe"
+    status: RESOLVED
+    evidence: "REQUIRES_SCOPE without AnalysisScope; SYSTEM needs authorize_system"
+
+  - id: S-OK-OUTCOME-REINGEST
+    severity: INFO
+    category: FIXED
+    claim: "outcomes not in next analyze"
+    status: RESOLVED
+    evidence: "loadOutcomes + post_evolution_* + lifecycle preserve"
+
+  - id: S-OK-REGISTRY
+    severity: INFO
+    category: FIXED
+    claim: "registry injected only"
+    status: RESOLVED_WITH_LIMITATIONS
+    evidence: "snapshotInventoryFromRegistry(CapabilityRegistry); skills via agentsRoot/hint"
+    residual: "no remote/network registry refresh"
+
+  - id: S-OK-RUNTIME
+    severity: INFO
+    category: FIXED
+    claim: "not runtime wired"
+    status: RESOLVED_WITH_LIMITATIONS
+    evidence: "attachEvolveLoopObserver + ExecutionEngine opt-in"
+    residual: "CLI run-engine does not enable evolveLoop by default"
+
+  - id: S-GAP-EVIDENCE
+    severity: MEDIUM
+    category: NOT_CONNECTED
+    claim: "Evidence adapter live"
+    status: OPEN
+    evidence: "ADAPTER_REGISTRY evidence-bus NOT_CONNECTED"
+
+  - id: S-GAP-EVAL-ADAPTER
+    severity: MEDIUM
+    category: NOT_CONNECTED
+    claim: "Eval results adapter"
+    status: OPEN
+
+  - id: S-GAP-FEEDBACK
+    severity: MEDIUM
+    category: NOT_CONNECTED
+    claim: "User feedback adapter"
+    status: OPEN
+
+  - id: S-GAP-GATE-FULL
+    severity: LOW
+    category: HANDOFF_ONLY
+    claim: "full Prototype Gate → implementation → auto outcome window"
+    status: OPEN
+    evidence: "submitEvolutionRequest writes JSON; no auto post-deploy observation window scheduler"
+
+  - id: S-GAP-CLI-DEFAULT
+    severity: LOW
+    category: INTEGRATION
+    claim: "every run-engine invocation observes"
+    status: OPEN
+    evidence: "opt-in only — intentional non-blocking default"
+
+counts:
+  resolved: 4
+  open: 5

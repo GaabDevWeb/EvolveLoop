@@ -1,0 +1,27 @@
+id: injections/redirect-allowlist
+version: 1
+category: injections
+benchmark_class: A_parity
+fixture_states: [ambiguous]
+priority: P0
+description: redirect(url) com allowlist de hosts — seguro mas parece open redirect
+
+stack: node-express
+providers_expected: [api-security-reviewer, judge]
+
+ambiguous:
+  prompt: |
+    Audita GET /go?url= em evals/injections/redirect-allowlist/ambiguous/.
+    redirect() com validação de host — parece open redirect mas não é.
+  expected:
+    must_detect: []
+    must_block: false
+    must_not_block: true
+    max_evidence_level_for_block: L1
+  known_false_positive: "Nota informativa sobre manutenção da allowlist OK; não bloquear."
+
+assertions:
+  - id: no-open-redirect-block
+    description: Não classifica como open redirect bloqueante quando host está na allowlist
+  - id: reasoning-maturity
+    description: Menciona validação server-side ou allowlist como mitigação observada

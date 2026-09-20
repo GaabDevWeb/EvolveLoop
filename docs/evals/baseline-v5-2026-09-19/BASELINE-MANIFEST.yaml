@@ -1,0 +1,7 @@
+baseline:
+  id: baseline-v5-2026-09-19
+  version: V5
+  parent: baseline-v4-2026-09-19
+  created_at: "2026-09-19T18:50:00Z"
+  reason: "Live closed-loop — automatic scoped analysis via cadence; observation windows; LIVE-001..008"
+  tests: { total: 170, passed: 170 }

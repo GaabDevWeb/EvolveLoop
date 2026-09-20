@@ -1,0 +1,72 @@
+{
+  "row": {
+    "experiment_id": "E-005",
+    "condition": "TREATMENT_SAME_ENGINE",
+    "sequence": 3,
+    "job_run_id": "7294a05c-d4a7-442f-8168-2ef362e838b9",
+    "feature_id": "e005-dup-mutate",
+    "mutation": {
+      "expected": 1,
+      "observed": 1,
+      "after_interrupt": 1
+    },
+    "interruption": {
+      "requested": true,
+      "observed": true,
+      "mode": "wait_for_jobs_ms=0"
+    },
+    "persistence": {
+      "state_saved": true,
+      "state_restored": true,
+      "checkpoint_feature_id": "e005-dup-mutate",
+      "checkpoint_node_statuses": [
+        {
+          "id": "test-only",
+          "status": "waiting"
+        }
+      ]
+    },
+    "resume": {
+      "attempted": true,
+      "succeeded": true,
+      "same_engine_instance": true
+    },
+    "completion": {
+      "status": "success",
+      "blocked_reason": null
+    },
+    "duplicate_mutate": {
+      "value": false,
+      "observed_mutations": 1
+    },
+    "continuation": {
+      "same_engine": true,
+      "same_process": true,
+      "mutation_run_ids": [
+        "7294a05c-d4a7-442f-8168-2ef362e838b9"
+      ],
+      "node_final_status": "satisfied",
+      "original_waiting_node": "test-only"
+    },
+    "side_effect": {
+      "scope": "STATE_WRITE",
+      "operation_id": "test-only:job_file_write",
+      "expected_count": 1,
+      "observed_count": 1,
+      "note": "mutation = JobFileExecutor.execute → pending job JSON write"
+    }
+  },
+  "mutations": [
+    {
+      "experiment_id": "E-005",
+      "condition": "TREATMENT_SAME_ENGINE",
+      "sequence": 1,
+      "run_id": "7294a05c-d4a7-442f-8168-2ef362e838b9",
+      "operation_id": "test-only:job_file_write",
+      "mutation_id": "7294a05c-d4a7-442f-8168-2ef362e838b9:1",
+      "node_id": "test-only",
+      "capability": "testing",
+      "timestamp": "2026-09-19T00:00:02.635Z"
+    }
+  ]
+}

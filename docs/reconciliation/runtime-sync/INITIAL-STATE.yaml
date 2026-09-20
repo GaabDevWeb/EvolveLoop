@@ -1,0 +1,38 @@
+initial_state:
+  timestamp: "2026-09-18T23:23:09Z"
+  cursor_skills:
+    path: /home/gaab/Downloads/CursorSKILLS/orchestrator
+    package_version: "2.0.0"
+    package_name: "@agents/orchestrator"
+    test_command: "npm test"
+    build_command: "npm run build"
+    jobs_dir_exists: false
+    files_of_interest:
+      - src/cli/run-jobs.ts
+      - tests/unit/evidence.test.ts
+      - src/engine/execution-engine.ts
+      - src/index.ts
+  agents_cursor:
+    path: /home/gaab/Documentos/gitHub/AGENTS/Cursor/orchestrator
+    package_version: "2.0.0"
+    package_name: "@agents/orchestrator"
+    test_command: "npm test"
+    build_command: "npm run build"
+    jobs_dir_exists: true
+    jobs_files:
+      - src/jobs/checkpoint.ts
+      - src/jobs/job-pickup.ts
+      - src/jobs/job-resume.ts
+      - src/jobs/job-store.ts
+  jobs_present_in_cursor_skills: false
+  jobs_present_in_agents_cursor: true
+  premises:
+    jobs_exist_agents: PASS
+    four_modules_match_audit_sha256: PASS
+    execution_engine_references_jobs: PASS
+    same_package_runtime: PASS
+    jobs_deps_compatible_with_cs: PASS
+    no_hidden_equivalent_in_cs: PASS
+  baseline_tests_pre_sync_cs: "89 passed / 3 failed / 92 collected (prior reconciliation)"
+  baseline_tests_agents: "103 passed / 103"
+  backup_dir: docs/reconciliation/runtime-sync/backup/

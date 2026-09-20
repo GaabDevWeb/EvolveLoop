@@ -1,0 +1,141 @@
+# Capability Registry — plugins de revisão
+# O orquestrador NÃO lista especialistas em código — consulta este registo.
+# Adicionar provider: novo bloco em providers + ficheiro em specialists/
+
+version: "2.1.0"
+
+# Modos de auditoria (orquestrador filtra por mode)
+modes:
+  fast:
+    description: Essenciais — threat model, auth, API, consolidator, judge
+    max_providers: 6
+    skip: [dynamic-pentest, red-team, dependency-reviewer]
+  standard:
+    description: Plano auto + debate red/blue em achados críticos
+    max_providers: 12
+  deep:
+    description: Todos os providers aplicáveis + red team + dynamic
+    max_providers: null
+
+providers:
+  - id: threat-modeler
+    capabilities: [threat-modeling, stride-lite, abuse-cases]
+    always: true
+    modes: [fast, standard, deep]
+    entrypoint: specialists/threat-modeler.md
+    cost: { tier: low, tools: [] }
+    signals: []  # sempre
+
+  - id: auth-reviewer
+    capabilities: [auth-review, session-review, oauth-review, idor-bola]
+    modes: [fast, standard, deep]
+    entrypoint: specialists/auth-reviewer.md
+    cost: { tier: medium, tools: [grep] }
+    signals:
+      - jwt|passport|nextauth|oauth|oidc|session|login|sanctum
+      - bcrypt|argon2|cookie
+
+  - id: api-security-reviewer
+    capabilities: [api-review, rest-review, mass-assignment, ssrf]
+    modes: [fast, standard, deep]
+    entrypoint: specialists/api-security-reviewer.md
+    cost: { tier: medium, tools: [grep] }
+    signals:
+      - express|fastapi|router\.|@app\.|openapi|swagger
+      - rest|api/
+
+  - id: business-logic-reviewer
+    capabilities: [business-logic, payment-review, race-toctou]
+    modes: [standard, deep]
+    entrypoint: specialists/business-logic-reviewer.md
+    cost: { tier: high, tools: [grep] }
+    signals:
+      - stripe|paypal|checkout|payment|webhook
+      - coupon|discount|wallet|balance|stock|inventory
+      - order|cart|refund
+
+  - id: graphql-reviewer
+    capabilities: [graphql-review]
+    modes: [standard, deep]
+    entrypoint: specialists/graphql-reviewer.md
+    cost: { tier: medium, tools: [grep] }
+    signals:
+      - graphql|apollo|hasura|gql
+
+  - id: llm-security-reviewer
+    capabilities: [llm-review, prompt-injection, mcp-review]
+    modes: [standard, deep]
+    entrypoint: specialists/llm-security-reviewer.md
+    cost: { tier: medium, tools: [grep] }
+    signals:
+      - openai|anthropic|langchain|rag|embedding
+      - mcp|tool_call|agent
+
+  - id: cloud-security-reviewer
+    capabilities: [cloud-review, iac-review, k8s-review]
+    modes: [standard, deep]
+    entrypoint: specialists/cloud-security-reviewer.md
+    cost: { tier: medium, tools: [grep] }
+    signals:
+      - terraform|cloudformation|\.tf$
+      - kubernetes|k8s|deployment\.yaml
+      - aws_|google_|azure_
+
+  - id: dependency-reviewer
+    capabilities: [dependency-review, supply-chain]
+    modes: [standard, deep]
+    entrypoint: specialists/dependency-reviewer.md
+    cost: { tier: low, tools: [npm-audit, osv-scanner] }
+    signals:
+      - package-lock|yarn\.lock|pnpm-lock|Cargo\.lock|go\.sum
+
+  - id: dynamic-pentest
+    capabilities: [dynamic-test, evidence-l3, evidence-l4]
+    modes: [deep]
+    requires_capabilities: [terminal]
+    optional_capabilities: [browser, staging_url]
+    entrypoint: specialists/dynamic-pentest.md
+    cost: { tier: high, tools: [curl, playwright, semgrep, gitleaks] }
+    signals: []  # activado por capability matrix + mode deep
+
+  - id: red-team
+    capabilities: [offensive-creative, attack-path-discovery]
+    modes: [standard, deep]
+    entrypoint: specialists/red-team.md
+    cost: { tier: medium, tools: [] }
+    signals: []  # após threat model; mode standard+
+
+  - id: blue-team
+    capabilities: [mitigation-review, defense-validation]
+    modes: [standard, deep]
+    entrypoint: specialists/blue-team.md
+    cost: { tier: medium, tools: [] }
+    signals: []  # após red-team ou achados críticos
+
+  - id: judge
+    capabilities: [verdict-adjudication, confidence-merge]
+    always: true
+    modes: [fast, standard, deep]
+    entrypoint: specialists/judge.md
+    cost: { tier: low, tools: [] }
+    signals: []
+
+  - id: report-consolidator
+    capabilities: [report-merge, sarif-export, coverage-report]
+    always: true
+    modes: [fast, standard, deep]
+    entrypoint: specialists/report-consolidator.md
+    cost: { tier: medium, tools: [] }
+    signals: []
+
+# Stack hints → priorizar signals (knowledge base)
+stack_profiles:
+  laravel:
+    signals: [Policy|Gate::|Sanctum|MassAssignment|Storage::]
+    suggested_capabilities: [auth-review, business-logic, api-review]
+  nextjs:
+    signals: [use server|middleware|route\.ts|cookies\(\)]
+    suggested_capabilities: [auth-review, api-review, never-trust-client]
+  sap:
+    signals: [SAP|ABAP|OData]
+    suggested_capabilities: []  # futuro: sap-reviewer quando registado

@@ -1,0 +1,21 @@
+traceability:
+  cycle_id: evolveloop-v1-final-2026-09-19
+  parent_baseline: baseline-v6-2026-09-19
+  freeze_baseline: baseline-v7-2026-09-19
+  lineage:
+    - Signal
+    - Pattern
+    - Need
+    - RootCause (suspected)
+    - Candidate
+    - EvolutionRequest
+    - Gate (fixture|external|untrusted)
+    - ObservationWindow
+    - Outcome
+    - Feedback (afterOutcome)
+    - Analysis
+  corrections: docs/architecture/evolveloopt/v1-final/CORRECTIONS.yaml
+  adversarial_evals: orchestrator/tests/evals/evolveloop-v1-adversarial-audit.test.ts
+  code_touch:
+    - orchestrator/src/evolveloop/adapters/runtime-observer.ts
+    - orchestrator/src/evolveloop/handoff/gate-result.ts

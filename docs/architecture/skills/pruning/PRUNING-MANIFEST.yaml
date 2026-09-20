@@ -1,0 +1,37 @@
+# Pruning Manifest
+timestamp: 2026-09-19T21:35:50Z
+status: PRUNING_VALIDATED
+completed_at: 2026-09-19T21:40:00Z
+skills_removed_count: 7
+skills_restored_count: 0
+post_vitest: "225/225 PASS"
+mass_structural_scenarios: 147
+
+remove:
+  - id: linkedin-posts
+    path: global-skills/linkedin-posts
+    disposition: PRUNE_CANDIDATE
+  - id: gsap
+    path: global-skills/gsap
+    disposition: PACK_REMOVAL_MOTION
+  - id: framer-motion
+    path: global-skills/framer-motion
+    disposition: PACK_REMOVAL_MOTION
+  - id: lenis
+    path: global-skills/lenis
+    disposition: PACK_REMOVAL_MOTION
+  - id: hover-effects
+    path: global-skills/hover-effects
+    disposition: PACK_REMOVAL_MOTION
+  - id: particles
+    path: global-skills/particles
+    disposition: PACK_REMOVAL_MOTION
+  - id: r3f-shaders
+    path: global-skills/r3f-shaders
+    disposition: PACK_REMOVAL_MOTION
+
+preserve_all_of: docs/architecture/skills/audit/DO-NOT-REMOVE-V2.yaml
+
+host_actions:
+  - remove_symlink_if_points_to_project_global_skills: true
+  - do_not_delete_unrelated_host_skills: true

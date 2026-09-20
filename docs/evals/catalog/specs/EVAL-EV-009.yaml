@@ -1,0 +1,64 @@
+eval:
+  id: EV-009
+  name: Regression Stability against Baseline V1
+  category: REGRESSION
+  version: 1
+  question: "Do baseline V1 invariants remain green (103/103 tests, 7/7 contracts, 5/5 full-cycle) and baseline checksums intact?"
+  property: baseline_regression_stability
+  baseline_id: baseline-v1-2026-09-18
+  source:
+    experiments: [E-001, E-005]
+    claims: []
+    evidence: [BASELINE_ONLY]
+  readiness: READY
+  scope:
+    invariants: [tests_103, contracts_7, full_cycle_5, baseline_checksums]
+  setup: { cwd: orchestrator/ }
+  control:
+    description: baseline-v1-2026-09-18 recorded invariants
+  treatment:
+    description: current tree
+  fixtures: []
+  metrics:
+    - id: EV009-M_tests
+      name: tests_passed
+      type: DIRECT
+      unit: count
+      oracle: { operator: eq, threshold: 103 }
+    - id: EV009-M_contracts
+      name: contracts_passed
+      type: DIRECT
+      unit: count
+      oracle: { operator: eq, threshold: 7 }
+    - id: EV009-M_full_cycle
+      name: full_cycle_passed
+      type: DIRECT
+      unit: count
+      oracle: { operator: eq, threshold: 5 }
+    - id: EV009-M_checksum
+      name: baseline_checksum_ok
+      type: DIRECT
+      unit: bool
+  success_criteria: ["103/103", "7/7", "5/5", "sha256sum -c OK"]
+  failure_criteria: [baseline_regression, checksum_mismatch, suite_FAIL]
+  repetitions: { minimum: 1, recommended: 1, reason: deterministic_invariants }
+  isolation: none_beyond_test_process
+  cleanup: none
+  reproducibility:
+    commands:
+      - "npm test"
+      - "npx vitest run tests/contracts/contract-prototype.test.ts"
+      - "npx vitest run tests/integration/full-cycle.test.ts"
+      - "cd docs/evals/baseline && sha256sum -c BASELINE-CHECKSUMS.sha256"
+  limitations: [invariants_≠_product_quality]
+  regression_reference: baseline-v1-2026-09-18
+  safety_constraints: [never_write_baseline]
+  eval_contract:
+    inputs: [repo]
+    preconditions: []
+    action: run_invariant_commands
+    observations: [counts, checksum]
+    metrics: [EV009-M_tests, EV009-M_contracts, EV009-M_full_cycle, EV009-M_checksum]
+    oracle: { type: invariant_equality }
+    cleanup: []
+    artifacts: [logs]

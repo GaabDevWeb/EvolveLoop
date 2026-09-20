@@ -1,0 +1,83 @@
+findings:
+  - id: F-OUTCOME-CLOSED
+    severity: INFO
+    status: RESOLVED
+    summary: "Outcome→afterOutcome→analyze wired on LiveAnalysisCoordinator"
+    evidence:
+      - orchestrator/src/evolveloop/live/live-coordinator.ts
+      - tests/evals/evolveloop-final-evals.test.ts
+      - tests/unit/evolveloop/outcome-auto-analyze.test.ts
+
+  - id: F-START-STATE-STALE
+    severity: HIGH
+    status: RESOLVED
+    summary: "FINAL-START-STATE reconciled after impl (OUTCOME CLOSED, CLI present)"
+
+  - id: F-PROD-GATE-EXTERNAL
+    severity: HIGH
+    status: OPEN
+    summary: "Production Prototype Gate runner not in this package"
+    residual: GATE_ADAPTER_PARTIAL
+
+  - id: F-ADAPTERS-NOT-CONNECTED
+    severity: HIGH
+    status: OPEN
+    summary: "evidence-bus / eval-results / user-feedback NOT_CONNECTED"
+
+  - id: F-AUTO-NOT-PROD-DAEMON
+    severity: MED
+    status: OPEN
+    summary: "Automatic analysis is EventBus+cadence opt-in, not always-on production service"
+
+  - id: F-SCOPE-FALLBACK-LEAK
+    severity: MED
+    status: OPEN
+    summary: "Events missing user_id may inherit attach fallback scope"
+
+  - id: F-LOGICAL-TENANCY-ONLY
+    severity: MED
+    status: OPEN
+    summary: "User isolation is query-scoped; shared PersistentSignalStore"
+
+  - id: F-GATE-PROVENANCE-DEFAULT
+    severity: MED
+    status: OPEN
+    summary: "Unlabeled gate.json defaults to external_adapter kind"
+
+  - id: F-DUAL-CADENCE-DEAD
+    severity: LOW
+    status: OPEN
+    summary: "Legacy AnalysisCadence still exported; live uses ScopedAnalysisCadence"
+
+  - id: F-BARE-RECORDOUTCOME
+    severity: LOW
+    status: OPEN
+    summary: "recordOutcome without coordinator does not schedule analyze (API footgun)"
+
+  - id: F-HARNESS-WINDOW-CRUTCH
+    severity: LOW
+    status: OPEN
+    summary: "Some evals may manually open window if auto-approve path empty"
+
+counts:
+  critical: 0
+  high_open: 2
+  med_open: 4
+  low_open: 3
+  resolved: 2
+
+duplication_audit:
+  second_runtime: false
+  second_scheduler: false
+  second_registry: false
+  second_evidence_bus: false
+  second_policy_engine: false
+  second_gate_runner: false
+  dual_cadence_export: true
+  dual_controller_stack: true  # episodic EvolveLoop + LongitudinalEvolveLoop
+
+security_ceiling:
+  autonomy: PROPOSE
+  core_mutation_automatic: false
+  policy_self_weaken: false
+  observer_breaks_runtime: false

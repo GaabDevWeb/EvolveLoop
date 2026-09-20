@@ -1,0 +1,63 @@
+# Quality comparison V2 (machine-readable)
+generated: 2026-09-19T21:40:00Z
+
+baseline:
+  vitest: "212/212 PASS"
+  skill_count_global: 20
+  skill_count_local: 23
+  gates: [grill-me, image-to-code]
+
+post:
+  vitest: "225/225 PASS"
+  skill_count_global: 13
+  skill_count_local: 23
+  mass_structural_scenarios: 147
+  post_prune_catalog_tests: 12
+
+tasks:
+  - id: grill-me-matrix
+    pre: PASS
+    post: PASS
+    routing: UNCHANGED
+    gate_behavior: UNCHANGED
+    regression: false
+  - id: image-to-code-gate
+    pre: PASS
+    post: PASS
+    gate_behavior: UNCHANGED
+    regression: false
+  - id: library-dossier-chain
+    pre: structural_ok
+    post: structural_ok
+    skill_selection: UNCHANGED
+    regression: false
+  - id: frontend-pro-core
+    pre: structural_ok
+    post: structural_ok
+    note: motion specialists removed; frontend-pro retained
+    regression: false
+  - id: find-skills-discovery
+    pre: not_registry_fallback
+    post: not_registry_fallback
+    regression: false
+  - id: removed-skill-request-gsap
+    pre: resolvable_in_pack
+    post: absent_from_pack
+    result_quality: IMPROVED_SCOPE
+    regression: false
+  - id: removed-skill-request-linkedin
+    pre: resolvable_in_pack
+    post: absent_from_pack
+    regression: false
+  - id: llm-live-quality
+    pre: NOT_MEASURED
+    post: NOT_MEASURED
+    regression: INCONCLUSIVE
+
+aggregate:
+  improved: [catalog_scope, test_coverage]
+  unchanged: [hard_gates, core_flow, providers, commands, agents]
+  regressed: []
+  inconclusive: [live_llm_task_quality, production_token_latency]
+
+material_regressions: []

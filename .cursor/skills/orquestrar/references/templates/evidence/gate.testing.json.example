@@ -1,0 +1,28 @@
+{
+  "apiVersion": "capability-orchestrator.io/v2",
+  "kind": "Evidence",
+  "metadata": {
+    "node_id": "gate-testing",
+    "cycle_id": "C1",
+    "emitter": "gate",
+    "capability": "testing",
+    "submitted_at": "2026-08-25T00:40:00Z"
+  },
+  "spec": {
+    "status": "complete",
+    "verdict": "passed",
+    "confidence": 0.92,
+    "payload": {
+      "type": "gate",
+      "verdict": "passed",
+      "findings": [],
+      "artifacts": [
+        {"path": "telemetry/evidence/test-report.json", "type": "file"}
+      ]
+    },
+    "command": "pytest rag/tests/test_session.py -q",
+    "artifacts": [
+      {"path": "telemetry/evidence/test-report.json", "type": "file"}
+    ]
+  }
+}

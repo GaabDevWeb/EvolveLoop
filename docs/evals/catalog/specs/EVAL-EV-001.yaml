@@ -1,0 +1,67 @@
+eval:
+  id: EV-001
+  name: Runtime Execution Integrity
+  category: RUNTIME
+  version: 1
+  question: "Does the Capability IR → Scheduler → Registry → Provider → Execution path complete expected full-cycle scenarios without unexpected failure?"
+  property: runtime_execution_integrity
+  baseline_id: baseline-v1-2026-09-18
+  source:
+    experiments: []
+    claims: []
+    evidence: [BASELINE_ONLY]
+  readiness: READY
+  scope:
+    runtime: "@agents/orchestrator ExecutionEngine"
+    workload: full-cycle + contract-prototype
+    excludes: [live_HITL, task_success]
+  setup:
+    cwd: orchestrator/
+    preconditions: ["deps installed", "jobs/ present"]
+  control: null
+  treatment: null
+  fixtures:
+    - tests/fixtures/login-dashboard.ts
+  metrics:
+    - id: EV001-M-pass_rate
+      name: suite_pass
+      definition: fraction of full-cycle and contract tests passing
+      unit: ratio
+      collection_method: vitest exit codes + counts
+      source: npm/vitest
+      type: DIRECT
+      interpretation: runtime path integrity under fixtures
+      limitations: [not_product_HITL]
+  success_criteria:
+    - full_cycle: "5/5 PASS"
+    - contracts: "7/7 PASS"
+  failure_criteria:
+    - incorrect_output
+    - unexpected_failure
+    - metric_collection_failure
+  repetitions:
+    minimum: 1
+    recommended: 1
+    reason: deterministic suites
+  isolation: local_test_process
+  cleanup: none
+  reproducibility:
+    commands:
+      - "npx vitest run tests/integration/full-cycle.test.ts"
+      - "npx vitest run tests/contracts/contract-prototype.test.ts"
+  limitations:
+    - REUSE_EXISTING_TEST_COVERAGE
+    - does_not_measure_skill_host_behavior
+  regression_reference: baseline-v1-2026-09-18
+  safety_constraints: [no_baseline_write, no_production_state]
+  eval_contract:
+    inputs: [repo_tree]
+    preconditions: [orchestrator_buildable_for_tests]
+    action: run_vitest_suites
+    observations: [pass_fail_counts]
+    metrics: [EV001-M-pass_rate]
+    oracle: { type: count_equality, expected: { full_cycle: 5, contracts: 7 } }
+    cleanup: []
+    artifacts: [vitest_stdout]
+  eval_result_schema:
+    status: [PASS, FAIL, INCONCLUSIVE, BLOCKED]

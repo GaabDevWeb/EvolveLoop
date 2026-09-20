@@ -1,0 +1,32 @@
+experiment:
+  id: E-003
+  title: Stuck detector heuristic
+  baseline_id: baseline-v1-2026-09-18
+  status: BLOCKED
+hypothesis:
+  statement: Signature-window + zero-delta heuristic lowers thrash cost vs max-turns-only
+method:
+  control: null
+  treatment: not_executed
+  repetitions: 0
+results:
+  metrics: {}
+  observations:
+    - "maxIterations=500 is operational stop only"
+    - "No StuckDetector / thrash heuristic in src"
+evidence:
+  - id: E003-EV-01
+    source: rg
+    path: raw/stuck-search.txt
+    command: "rg StuckDetector|maxIterations"
+    output: "maxIterations=500 only"
+    interpretation: semantic detector absent
+conclusion:
+  result: BLOCKED
+  confidence: HIGH
+blocked_reason: "Semantic stuck detector not implemented; cannot prototype without new primitive"
+traceability:
+  experiment: E-003
+  research_source: docs/research/experiments/E-003-stuck-detector-heuristic.md
+  baseline: stuck_detection NOT_IMPLEMENTED
+  result: BLOCKED

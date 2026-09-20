@@ -1,0 +1,299 @@
+# Repository Reconciliation — CursorSKILLS ↔ AGENTS/Cursor
+# Auditor: Repository Reconciliation Auditor
+# Date: 2026-09-18
+# Constraint: read-only investigation; no sync/copy/merge/fix
+
+reconciliation:
+
+  repositories:
+
+    - id: CursorSKILLS
+      path: /home/gaab/Downloads/CursorSKILLS
+      identity:
+        package_name: "@agents/orchestrator"
+        package_version: "2.0.0"
+        workspace_role: "active development workspace (docs/research/audit + expanded Agents/contracts)"
+        git: ABSENT
+      branch: null
+      head: null
+      confidence: HIGH
+      notes:
+        - "No .git at workspace root; no commit lineage available."
+        - "orchestrator/IMPLEMENTATION-STATUS.md (2026-09-17) declares SSOT testes = AGENTS/Cursor/orchestrator."
+
+    - id: AGENTS-Cursor
+      path: /home/gaab/Documentos/gitHub/AGENTS/Cursor
+      identity:
+        package_name: "@agents/orchestrator"
+        package_version: "2.0.0"
+        workspace_role: "sibling tree under AGENTS/ with complete orchestrator/src/jobs"
+        git_parent: /home/gaab/Documentos/gitHub/AGENTS
+      branch: main
+      head: null
+      confidence: HIGH
+      notes:
+        - "Parent AGENTS/.git exists but has ZERO commits (initialized ~2026-06-30; all content untracked)."
+        - "No remotes with history; no tags; jobs/ cannot be git-blamed to a commit."
+        - "jobs/ directory mtime ~2026-07-02; job module files ~2026-07-19."
+
+  relationship:
+    classification: SAME_SYSTEM_DIFFERENT_VERSION
+    aliases_considered:
+      - PARTIAL_COPY
+      - SAME_SYSTEM
+    confidence: HIGH
+    evidence:
+      - "Identical package identity: @agents/orchestrator@2.0.0, identical package.json scripts/deps/devDeps."
+      - "orchestrator/src: 48 TS files common; 47 byte-identical; only cli/run-jobs.ts content differs; only jobs/ (4 files) exclusive to AGENTS-Cursor."
+      - "execution-engine.ts, index.ts (including jobs re-exports), validator.ts, builders.ts identical across trees."
+      - "CursorSKILLS tree is SUPERSET for Agents/*.md, contracts/*.yaml, some providers; AGENTS-Cursor is SUPERSET only for src/jobs/."
+      - "IMPLEMENTATION-STATUS on CursorSKILLS explicitly names AGENTS/Cursor/orchestrator as test SSOT and claims 103 passed there."
+      - "Not UNRELATED: shared module graph, types, CLI names, contracts-v2.1.0 branding."
+      - "Not clean SAME_SYSTEM_DIFFERENT_BRANCH: no shared git history to prove branch relationship."
+
+  canonical_source:
+    candidate: BOTH_WITH_ROLE_SPLIT
+    confidence: MEDIUM
+    evidence:
+      - "Runtime completeness (jobs/HITL/checkpoint/full-cycle/103 tests): AGENTS-Cursor is the only tree that currently executes."
+      - "Workspace evolution (ADRs, research, audit, expanded Agents/contracts, newer run-jobs evidence guard, newer evidence tests): CursorSKILLS is ahead."
+      - "CursorSKILLS docs self-declare AGENTS as test SSOT — strong intentional pointer, not accidental naming."
+    contradicting:
+      - "No git lineage; cannot prove which tree was originally authored."
+      - "AGENTS git empty → neither tree is a published canonical remote."
+
+  jobs:
+    CursorSKILLS:
+      status: MISSING_DIRECTORY
+      files: []
+      references:
+        - orchestrator/src/engine/execution-engine.ts  # imports JobStore, job-resume, checkpoint
+        - orchestrator/src/index.ts                   # re-exports jobs modules
+        - orchestrator/src/cli/run-jobs.ts            # imports JobStore, invokePickup
+        - orchestrator/src/cli/run-engine.ts           # jobs-dir / JobFileExecutor path
+        - orchestrator/tests/unit/discovery.test.ts
+        - orchestrator/tests/unit/job-pickup.test.ts
+        - orchestrator/tests/integration/job-resume.test.ts
+        - orchestrator/tests/integration/full-cycle.test.ts
+      tests: "Present but unloadable / failing load for jobs-dependent suites"
+      equivalent_elsewhere: NONE_FOUND
+
+    AGENTS-Cursor:
+      status: PRESENT_AND_REACHABLE
+      files:
+        - path: orchestrator/src/jobs/job-store.ts
+          loc: 74
+          sha256: a404577141f8fd6ced7cf8a339119f3cac493139da6f3d89eff142671407f1d3
+          purpose: "Filesystem SkillJob + SkillJobResult store (pending/complete)"
+        - path: orchestrator/src/jobs/job-pickup.ts
+          loc: 118
+          sha256: 797a69c42df07d81fd08632f05aa92ed4a2704a1dc913858d96f3f822c7c073b
+          purpose: "HITL pickup prompt + invokePickup artifacts"
+        - path: orchestrator/src/jobs/job-resume.ts
+          loc: 48
+          sha256: 4f98e83e036eb2632eb783448344e08f5895698d39131c9d2c7bbd3e427dace0
+          purpose: "Map completed job result → ExecuteResult + loadEvidenceFile"
+        - path: orchestrator/src/jobs/checkpoint.ts
+          loc: 44
+          sha256: 80ab2e9240c9de759f1a94b97df9a671d647804d0c5dce55e610874126df8739
+          purpose: "EngineCheckpoint persist/load/clear under jobsDir/checkpoints/"
+      references:
+        - execution-engine.ts (runtime path)
+        - run-jobs.ts / run-engine.ts (CLI)
+        - index.ts (public API)
+      tests:
+        - tests/unit/job-pickup.test.ts
+        - tests/unit/discovery.test.ts (JobStore)
+        - tests/integration/job-resume.test.ts
+        - tests/integration/full-cycle.test.ts
+      npm_test_2026_09_18: "103 passed / 27 files"
+
+  critical_differences:
+    - path: orchestrator/src/jobs/
+      classification: RUNTIME_CRITICAL
+      only_in: AGENTS-Cursor
+      impact: "CursorSKILLS ExecutionEngine/index/CLI/tests import missing modules; full-cycle cannot load."
+
+    - path: orchestrator/src/cli/run-jobs.ts
+      classification: IMPLEMENTATION
+      both: true
+      delta: "CursorSKILLS adds existsSync + requires --evidence file when --success (artifact_missing guard). AGENTS lacks that guard."
+      note: "CS change is NEWER (mtime 2026-09-17) than AG (2026-07-19) — forward drift on CS while jobs/ absent."
+
+    - path: orchestrator/tests/unit/evidence.test.ts
+      classification: TEST
+      both: true
+      delta: "CursorSKILLS adds 2 tests for gate artefact path / artifact_path_missing; AGENTS has 3 tests total, all pass."
+      paired_with: "validator.ts IDENTICAL → CS tests ahead of shared validator (TEST_DRIFT)."
+
+    - path: orchestrator/IMPLEMENTATION-STATUS.md
+      classification: DOCUMENTATION
+      delta: "CS updated 2026-09-17 with platform evolution + 103-test claim scoped to AGENTS; AG still dated 2026-07-02 with 79+ tests."
+
+    - path: Agents/ , orchestrator/contracts/ , orchestrator/providers/
+      classification: CONFIGURATION
+      note: "CursorSKILLS SUPERSET (more agent prompts/contracts/providers). Not runtime-critical for engine load."
+
+  broken_references:
+    - source: CursorSKILLS/orchestrator/src/engine/execution-engine.ts
+      target: ../jobs/{job-store,job-resume,checkpoint}.js
+      expected_path: CursorSKILLS/orchestrator/src/jobs/
+      exists_in: AGENTS-Cursor
+      does_not_exist_in: CursorSKILLS
+      impact: CRITICAL_LOAD_FAILURE
+
+    - source: CursorSKILLS/orchestrator/src/index.ts
+      target: ./jobs/*.js
+      expected_path: CursorSKILLS/orchestrator/src/jobs/
+      exists_in: AGENTS-Cursor
+      does_not_exist_in: CursorSKILLS
+      impact: CRITICAL_EXPORT_FAILURE
+
+    - source: CursorSKILLS/orchestrator/src/cli/run-jobs.ts
+      target: ../jobs/{job-store,job-pickup}.js
+      expected_path: CursorSKILLS/orchestrator/src/jobs/
+      exists_in: AGENTS-Cursor
+      does_not_exist_in: CursorSKILLS
+      impact: CRITICAL_CLI_FAILURE
+
+  test_reconciliation:
+    package_script: "vitest run"
+    AGENTS-Cursor:
+      command: "npm test"
+      cwd: /home/gaab/Documentos/gitHub/AGENTS/Cursor/orchestrator
+      head_commit: null
+      result: "103 passed / 27 files / 0 failed"
+      claim_103: REPRODUCED
+    CursorSKILLS:
+      command: "npm test"
+      cwd: /home/gaab/Downloads/CursorSKILLS/orchestrator
+      result: "89 passed / 3 failed assertions / 92 collected; 7 files failed (5 load-fail + evidence/discovery)"
+      prior_claim_43_pass_2_fail: "Selected unit slice in docs/audit (not full suite); full suite now measured as above"
+    contracts_7_of_7: "contract-prototype present in both trees; AGENTS full suite green includes 7 contract tests"
+    evidence_drift:
+      classification: TEST_DRIFT
+      detail: "CS evidence.test.ts expects artifact_path_missing; validator.ts identical and does not enforce → 2 fails"
+
+  documentation_reconciliation:
+    - claim: "103 tests passed"
+      describes: AGENTS-Cursor/orchestrator npm test
+      scope_label_in_doc: "AGENTS `npm test`"
+      ambiguous_if_read_as_CursorSKILLS: true
+      status: AMBIGUOUS_SCOPE_UNLESS_SSOT_LINE_READ
+    - claim: "JOB_PENDING → waiting / checkpoint / resume"
+      describes: engine code present in BOTH; jobs modules only AGENTS
+      CursorSKILLS_status: CODE_REFERENCES_WITHOUT_MODULES
+    - claim: "SSOT testes AGENTS/Cursor/orchestrator"
+      source: CursorSKILLS/orchestrator/IMPLEMENTATION-STATUS.md
+      status: EXPLICIT
+
+  hypotheses:
+    - id: H1
+      statement: "jobs never was ported into CursorSKILLS"
+      supporting_evidence:
+        - "No jobs/ directory; no renamed equivalent; only_ag = 4 job files."
+        - "Bulk src mtimes on CS ~2026-09-17 while AG jobs exist since ~2026-07-02/19."
+      contradicting_evidence: []
+      status: SUPPORTED
+
+    - id: H2
+      statement: "jobs was intentionally removed from CursorSKILLS"
+      supporting_evidence: []
+      contradicting_evidence:
+        - "index.ts and execution-engine.ts still import/export jobs APIs identically to AGENTS."
+        - "tests for jobs remain in CS tree."
+        - "IMPLEMENTATION-STATUS still claims jobs/resume via AGENTS SSOT, not 'removed'."
+      status: REJECTED
+
+    - id: H3
+      statement: "jobs is on another branch"
+      supporting_evidence: []
+      contradicting_evidence:
+        - "CursorSKILLS has no git; AGENTS has empty git (no commits/branches with content)."
+      status: REJECTED
+
+    - id: H4
+      statement: "jobs belongs to another unrelated project"
+      supporting_evidence: []
+      contradicting_evidence:
+        - "Same package name/version; identical engine imports; tests pass only with these modules."
+      status: REJECTED
+
+    - id: H5
+      statement: "CursorSKILLS is an incomplete copy of AGENTS/Cursor orchestrator"
+      supporting_evidence:
+        - "47/48 shared src files identical; missing only jobs/."
+        - "CS later edited run-jobs + evidence tests without restoring jobs/."
+      contradicting_evidence:
+        - "CS is SUPERSET outside src (Agents/contracts/docs) — not a pure subset copy of the whole Cursor tree."
+      status: SUPPORTED
+      nuance: "Incomplete for orchestrator/src; expanded for workspace packaging."
+
+    - id: H6
+      statement: "AGENTS/Cursor is a later version"
+      supporting_evidence:
+        - "Only AGENTS has jobs runtime completeness."
+      contradicting_evidence:
+        - "File mtimes: AG core ~Jul 2026; CS edits Sep 2026; CS IMPLEMENTATION-STATUS newer."
+        - "CS run-jobs has newer guard not in AG."
+      status: WEAK
+      refinement: "AGENTS is more complete for jobs; CursorSKILLS is chronologically newer for several files."
+
+    - id: H7
+      statement: "AGENTS/Cursor is experimental"
+      supporting_evidence: []
+      contradicting_evidence:
+        - "103/103 tests pass; CS docs call it SSOT."
+      status: REJECTED
+
+    - id: H8
+      statement: "Trees diverged architecturally"
+      supporting_evidence:
+        - "CS expanded Agents/contracts/providers; evidence tests diverge."
+      contradicting_evidence:
+        - "Core engine architecture identical; jobs absence is missing module not alternate design."
+      status: PLAUSIBLE
+      scope: "Peripheral packaging divergence YES; jobs = incomplete port NOT alternate architecture."
+
+    - id: H9
+      statement: "Dual-tree workflow: develop docs/agents in CursorSKILLS; keep runnable orchestrator SSOT in AGENTS"
+      supporting_evidence:
+        - "Explicit SSOT line in CS IMPLEMENTATION-STATUS."
+        - "103 claim scoped to AGENTS."
+      contradicting_evidence:
+        - "CS still contains full orchestrator sources + broken jobs imports — dual SSOT is undocumented/fragile."
+      status: PLAUSIBLE
+
+  full_cycle:
+    CursorSKILLS:
+      status: FAIL
+      failure: "Vitest cannot load suites importing ../jobs/*; ExecutionEngine cannot resolve jobs modules"
+      missing_component: orchestrator/src/jobs/
+    AGENTS-Cursor:
+      status: PASS
+      failure: null
+      missing_component: null
+      evidence: "tests/integration/full-cycle.test.ts 5/5; suite 103/103"
+
+  recommendation:
+    - "Treat relationship as SAME_SYSTEM with incomplete CursorSKILLS orchestrator/src (H1+H5)."
+    - "Do NOT blind-copy jobs/ without a reconciliation plan for run-jobs.ts (CS guard) and evidence.test.ts (CS-only assertions)."
+    - "Decide dual-SSOT policy in writing: either promote one tree or formalize AGENTS as runtime SSOT and CS as docs/agents workspace."
+    - "Next investigation agent: produce a sync decision record (copy jobs vs submodule vs declare CS non-runnable) — still no automatic merge."
+    - "Re-measure CursorSKILLS npm test after any future sync; re-validate evidence gate tests separately (TEST_DRIFT)."
+    - "Optional: initialize real git history before further archaeology; current AGENTS git is empty and cannot answer commit-level questions."
+
+  decision_gate:
+    Q1_same_system: YES
+    Q2_jobs_same_runtime: YES
+    Q3_CS_functional_equivalent: NO
+    Q4_full_cycle_broken_by_real_divergence: YES
+    Q5_sufficient_evidence_to_sync_jobs: YES
+    Q5_caveat: "Sync is warranted for runtime integrity; apply with awareness of CS-forward run-jobs/evidence test drift (merge, not naive overwrite)."
+    Q6_canonical_source: BOTH
+    Q6_detail: "AGENTS-Cursor = runtime/test SSOT for orchestrator jobs; CursorSKILLS = workspace/docs/agents evolution hub"
+    Q7_other_runtime_critical: YES
+    Q7_examples:
+      - "Missing jobs/ (primary)"
+      - "evidence.test.ts vs validator drift on CS"
+      - "run-jobs.ts behavioral delta"

@@ -1,0 +1,130 @@
+{
+  "type": "TREATMENT",
+  "sample_count": 5,
+  "sample_note": "INITIAL EXPERIMENTAL SAMPLE",
+  "catalog": {
+    "condition_id": "T_SKILLS_10",
+    "type": "TREATMENT",
+    "requested_catalog_size": 10,
+    "actual_catalog_size": 10,
+    "skill_ids": [
+      "adr",
+      "backend",
+      "researcher",
+      "frontend-pro",
+      "architect",
+      "agent-architecture-mining",
+      "agent-authoring",
+      "gaabwiki",
+      "code-reviewer",
+      "planner"
+    ],
+    "selection_strategy": "seeded_order_prefix",
+    "seed": "e001-v1-2026-09-18",
+    "catalog_fingerprint": "d7d55ac8898df448fa2f23a13f1847651378c835095bc89819250d93a5347933",
+    "max_description_tokens": null,
+    "prefix_token_estimate": 789,
+    "prefix_bytes": 6582
+  },
+  "activation_precision": {
+    "mean": 0.4204545454545455,
+    "median": 0.42045454545454547,
+    "min": 0.42045454545454547,
+    "max": 0.42045454545454547,
+    "values": [
+      0.42045454545454547,
+      0.42045454545454547,
+      0.42045454545454547,
+      0.42045454545454547,
+      0.42045454545454547
+    ]
+  },
+  "activation_recall": {
+    "mean": 0.4204545454545455,
+    "median": 0.42045454545454547,
+    "min": 0.42045454545454547,
+    "max": 0.42045454545454547,
+    "values": [
+      0.42045454545454547,
+      0.42045454545454547,
+      0.42045454545454547,
+      0.42045454545454547,
+      0.42045454545454547
+    ]
+  },
+  "token_estimate": {
+    "mean": 789.0,
+    "median": 789,
+    "min": 789,
+    "max": 789,
+    "values": [
+      789,
+      789,
+      789,
+      789,
+      789
+    ],
+    "classification": "PROXY"
+  },
+  "wall_clock_duration": {
+    "mean": 0.033839466399922455,
+    "median": 0.03355312500002583,
+    "min": 0.03287894699997196,
+    "max": 0.03487388999997165,
+    "values": [
+      0.03287894699997196,
+      0.03333007999981419,
+      0.03456128999982866,
+      0.03355312500002583,
+      0.03487388999997165
+    ]
+  },
+  "variance_note": "offline scorer deterministic \u2192 precision/recall/token identical across reps; wall_clock may vary",
+  "runs": [
+    {
+      "run_id": "E001-T_SKILLS_10-r01-9fec7016",
+      "sequence": 1,
+      "activation_precision": 0.42045454545454547,
+      "activation_recall": 0.42045454545454547,
+      "token_estimate": 789,
+      "wall_clock_duration": 0.03287894699997196,
+      "catalog_fingerprint": "d7d55ac8898df448fa2f23a13f1847651378c835095bc89819250d93a5347933"
+    },
+    {
+      "run_id": "E001-T_SKILLS_10-r02-530943ce",
+      "sequence": 2,
+      "activation_precision": 0.42045454545454547,
+      "activation_recall": 0.42045454545454547,
+      "token_estimate": 789,
+      "wall_clock_duration": 0.03333007999981419,
+      "catalog_fingerprint": "d7d55ac8898df448fa2f23a13f1847651378c835095bc89819250d93a5347933"
+    },
+    {
+      "run_id": "E001-T_SKILLS_10-r03-32256f04",
+      "sequence": 3,
+      "activation_precision": 0.42045454545454547,
+      "activation_recall": 0.42045454545454547,
+      "token_estimate": 789,
+      "wall_clock_duration": 0.03456128999982866,
+      "catalog_fingerprint": "d7d55ac8898df448fa2f23a13f1847651378c835095bc89819250d93a5347933"
+    },
+    {
+      "run_id": "E001-T_SKILLS_10-r04-b06ce4cd",
+      "sequence": 4,
+      "activation_precision": 0.42045454545454547,
+      "activation_recall": 0.42045454545454547,
+      "token_estimate": 789,
+      "wall_clock_duration": 0.03355312500002583,
+      "catalog_fingerprint": "d7d55ac8898df448fa2f23a13f1847651378c835095bc89819250d93a5347933"
+    },
+    {
+      "run_id": "E001-T_SKILLS_10-r05-4d2deb7f",
+      "sequence": 5,
+      "activation_precision": 0.42045454545454547,
+      "activation_recall": 0.42045454545454547,
+      "token_estimate": 789,
+      "wall_clock_duration": 0.03487388999997165,
+      "catalog_fingerprint": "d7d55ac8898df448fa2f23a13f1847651378c835095bc89819250d93a5347933"
+    }
+  ]
+}

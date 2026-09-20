@@ -1,0 +1,81 @@
+changes:
+
+  - file: docs/evals/experiments/E-001/HYPOTHESIS.md
+    operation: ADD
+    purpose: Freeze experimental definition for E-001
+    scope: experiments/E-001
+    runtime_semantics_changed: false
+    baseline_changed: false
+    evidence: null
+
+  - file: docs/evals/experiments/E-001/FIXTURE.md
+    operation: ADD
+    purpose: Fixture documentation
+    scope: experiments/E-001
+    runtime_semantics_changed: false
+    baseline_changed: false
+    evidence: null
+
+  - file: docs/evals/experiments/E-001/ENABLEMENT-REPORT.md
+    operation: ADD
+    purpose: Enablement report
+    scope: experiments/E-001
+    runtime_semantics_changed: false
+    baseline_changed: false
+    evidence: null
+
+  - file: docs/evals/experiments/E-001/REPRODUCE.md
+    operation: ADD
+    purpose: Reproduction commands
+    scope: experiments/E-001
+    runtime_semantics_changed: false
+    baseline_changed: false
+    evidence: null
+
+  - file: docs/evals/experiments/E-001/conditions.yaml
+    operation: ADD
+    purpose: Machine-readable CONTROL/TREATMENT catalog conditions
+    scope: experiments/E-001
+    runtime_semantics_changed: false
+    baseline_changed: false
+    evidence: harness/integrity_test.py
+
+  - file: docs/evals/experiments/E-001/conditions.json
+    operation: ADD
+    purpose: JSON twin of conditions for tooling
+    scope: experiments/E-001
+    runtime_semantics_changed: false
+    baseline_changed: false
+    evidence: null
+
+  - file: docs/evals/experiments/E-001/harness/catalog_harness.py
+    operation: ADD
+    purpose: Offline catalog subset/truncation + metric collectors
+    scope: experiments/E-001/harness
+    runtime_semantics_changed: false
+    baseline_changed: false
+    evidence: "no orchestrator/src imports/edits"
+
+  - file: docs/evals/experiments/E-001/harness/integrity_test.py
+    operation: ADD
+    purpose: Determinism, condition diff, source isolation proofs
+    scope: experiments/E-001/harness
+    runtime_semantics_changed: false
+    baseline_changed: false
+    evidence: raw/enablement/integrity-stdout.log
+
+  - file: docs/evals/experiments/E-001/raw/enablement/**
+    operation: ADD
+    purpose: Enablement outputs and invariant logs
+    scope: experiments/E-001/raw
+    runtime_semantics_changed: false
+    baseline_changed: false
+    evidence: null
+
+  - file: docs/evals/experiments/E-001/EXPERIMENT.md
+    operation: MODIFY
+    purpose: Reflect harness enablement status
+    scope: experiments/E-001
+    runtime_semantics_changed: false
+    baseline_changed: false
+    evidence: ENABLEMENT-REPORT.md

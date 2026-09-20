@@ -1,0 +1,38 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Provider
+metadata:
+  name: security
+  version: "2.1.1"
+  description: "Security review gate (registry + judge + veto)"
+  owner: agents-team
+
+spec:
+  plugin:
+    type: cursor-skill
+    entrypoint: ".cursor/skills/security/SKILL.md"
+
+  capabilities:
+    - id: security-review
+      contract: contracts/security-review@1.0.0
+      type: gate
+
+  interfaces:
+    outputs:
+      - name: security-report
+        schema: evidence/security-review@1.0.0
+
+  runtime:
+    cost: medium
+    subagent_type: generalPurpose
+
+  runtime_compatibility:
+    engine: ">=2.0.0 <3.0.0"
+    evidence: ">=2.1.0 <3.0.0"
+    execution: ">=2.1.0"
+    executor_types: [cursor-skill]
+
+  telemetry:
+    key: provider.security
+
+  availability: active
+  priority: 90

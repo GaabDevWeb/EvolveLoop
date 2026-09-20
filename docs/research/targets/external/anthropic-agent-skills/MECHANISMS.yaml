@@ -1,0 +1,414 @@
+# Anthropic Agent Skills — mechanism inventory
+# Target: OFFICIAL_EXTERNAL (protocol/spec + Anthropic docs)
+# Date: 2026-09-18
+# Mode: TARGET_RESEARCH
+# Exclusion: local corpus libraries (superpowers, mattpocock, …) not analyzed here
+
+target:
+  slug: anthropic-agent-skills
+  category: skills-protocol
+  primary_sources:
+    - https://agentskills.io/specification
+    - https://github.com/agentskills/agentskills/blob/main/docs/client-implementation/adding-skills-support.mdx
+    - https://docs.anthropic.com/en/docs/agents-and-tools/agent-skills/overview
+    - https://docs.anthropic.com/en/docs/agents-and-tools/agent-skills/best-practices
+    - https://docs.anthropic.com/en/docs/agents-and-tools/agent-skills/quickstart
+    - https://code.claude.com/docs/en/skills
+    - https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills
+
+mechanisms:
+
+  - id: AAS-01
+    name: skill_directory_package
+    lens: Skill structure
+    problem: Package domain expertise as a reusable unit without building a new agent per use case.
+    mechanism: >
+      A skill is a directory containing required SKILL.md (YAML frontmatter + Markdown body)
+      and optional scripts/, references/, assets/, plus arbitrary extra files.
+    costs:
+      - Authoring/maintenance overhead per skill
+      - Directory sprawl; name collisions across scopes
+    failure_modes:
+      - Missing or empty description → skill skipped (client guide) or undiscoverable
+      - Malformed YAML → skill skipped
+      - Unexpected frontmatter keys → hard fail on API/claude.ai packaging
+    alternatives:
+      - Monolithic system prompt / CLAUDE.md always-on rules
+      - Single-shot prompts pasted per chat
+    our_equivalence: SUBSTANTIAL
+    decision: ALREADY_PRESENT
+    confidence: HIGH
+    evidence: DOCUMENTED
+    sources:
+      - agentskills.io/specification
+      - docs.anthropic.com agent-skills/overview
+
+  - id: AAS-02
+    name: progressive_disclosure_three_tier
+    lens: Progressive disclosure / On-demand loading / Context management
+    problem: Installing many skills would otherwise fill the context window.
+    mechanism: >
+      Tier1 catalog name+description (~50–100 tok/skill) at startup;
+      Tier2 full SKILL.md body on activation (<5000 tok recommended; <500 lines guidance);
+      Tier3 scripts/references/assets loaded or executed only when needed.
+    costs:
+      - Extra activation turns (file-read / tool call)
+      - Author must structure content for tiers or benefits collapse
+    failure_modes:
+      - Fat SKILL.md defeats tier2 budget
+      - Eager loading of all references in harness
+      - Description too vague → wrong or no activation
+    alternatives:
+      - Always-on large prompts
+      - RAG over skill corpus (different retrieval model)
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+    evidence: DOCUMENTED
+    sources:
+      - agentskills.io/specification
+      - client-implementation adding-skills-support.mdx
+      - docs.anthropic.com agent-skills/overview
+
+  - id: AAS-03
+    name: metadata_frontmatter_contract
+    lens: Metadata / Discovery
+    problem: Agent must discover skills without reading bodies.
+    mechanism: >
+      Required (open standard): name (1–64, [a-z0-9-], no leading/trailing/consecutive hyphens,
+      must match parent directory), description (1–1024, what+when+keywords).
+      Optional: license, compatibility (≤500), metadata (string→string map),
+      allowed-tools (experimental space-separated string).
+    costs:
+      - Strict naming friction
+      - Description quality becomes critical path
+    failure_modes:
+      - Poor descriptions → false positives/negatives in model activation
+      - Spec vs Claude Code optionality mismatch (portability bugs)
+    alternatives:
+      - Explicit user-only menus without model discovery
+      - Hard-coded skill lists in orchestrator
+    our_equivalence: SUBSTANTIAL
+    decision: ALREADY_PRESENT
+    confidence: HIGH
+    evidence: DOCUMENTED
+    notes: >
+      Claude Code adds many non-portable fields (disable-model-invocation, when_to_use,
+      context, hooks, paths, …). Treat those as product extensions, not core standard.
+    sources:
+      - agentskills.io/specification
+      - code.claude.com/docs/en/skills (extensions table)
+
+  - id: AAS-04
+    name: filesystem_model
+    lens: Filesystem model
+    problem: Skill content volume can exceed what should sit in the prompt.
+    mechanism: >
+      Skills live as directories on a filesystem/VM; the agent uses normal file tools
+      (or bash) to navigate and read; bundled volume is “effectively unbounded”
+      until accessed (Anthropic engineering + overview).
+    costs:
+      - Requires FS + tool access (API path requires code_execution container)
+      - Security surface of arbitrary files/scripts
+    failure_modes:
+      - No FS → must use dedicated activation tool + API packaging instead
+      - Sandbox limits (API: no network, no runtime package install)
+    alternatives:
+      - Pure in-prompt skills
+      - Remote skill server (out of core spec)
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+    evidence: DOCUMENTED
+    sources:
+      - docs.anthropic.com agent-skills/overview
+      - anthropic.com/engineering equpping-agents…agent-skills
+
+  - id: AAS-05
+    name: on_demand_resources
+    lens: Resources / On-demand loading
+    problem: Domain detail is needed only for subsets of tasks.
+    mechanism: >
+      Relative links from SKILL.md to references/assets; keep references one level deep;
+      focused smaller files; model loads individually when instructions say so.
+    costs:
+      - Navigation errors; broken links
+      - Deep trees discouraged by spec guidance
+    failure_modes:
+      - Nested reference chains confuse models
+      - Missing “when to read X” cues → underuse
+    alternatives:
+      - Single giant SKILL.md
+      - External wiki/RAG without skill packaging
+    our_equivalence: SUBSTANTIAL
+    decision: ALREADY_PRESENT
+    confidence: HIGH
+    evidence: DOCUMENTED
+    sources:
+      - agentskills.io/specification
+      - code.claude.com/docs/en/skills supporting files
+
+  - id: AAS-06
+    name: scripts_as_deterministic_tools
+    lens: Scripts
+    problem: Some ops are costly/fragile if done via token generation.
+    mechanism: >
+      Bundle executable scripts; agent runs them; script source need not enter context;
+      only stdout/errors consume tokens; code provides determinism.
+    costs:
+      - Language/runtime dependency matrix per surface
+      - Supply-chain risk in script contents
+    failure_modes:
+      - Model reads script into context instead of executing
+      - API sandbox missing packages / no network
+      - Ambiguous authoring (“run vs read as docs”)
+    alternatives:
+      - Model-written one-off code each time
+      - Host tools / MCP servers for the same ops
+    our_equivalence: PARTIAL
+    decision: PROTOTYPE
+    confidence: MEDIUM
+    evidence: DOCUMENTED
+    sources:
+      - docs.anthropic.com agent-skills/overview
+      - anthropic.com/engineering post (PDF form extraction example)
+
+  - id: AAS-07
+    name: model_driven_activation
+    lens: Discovery / Skill lifecycle
+    problem: Select relevant skill without custom keyword engines.
+    mechanism: >
+      Catalog disclosed to model; model judges relevance from description + task;
+      activates via file-read of SKILL.md or dedicated activate_skill tool
+      (enum-constrained names recommended).
+    costs:
+      - Non-deterministic activation
+      - Tokens for activation tool turns
+    failure_modes:
+      - Hallucinated skill names (mitigate with enum tool)
+      - Over/under triggering
+    alternatives:
+      - Harness-side classifiers
+      - Orchestrator hard routing only
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+    evidence: DOCUMENTED
+    sources:
+      - client-implementation adding-skills-support.mdx Step 4
+
+  - id: AAS-08
+    name: user_explicit_activation
+    lens: Discovery / Skill lifecycle
+    problem: Side-effectful workflows must not auto-fire.
+    mechanism: >
+      Slash/mention commands intercepted by harness inject skill body;
+      Claude Code disable-model-invocation / user-invocable flags partition agency.
+    costs:
+      - UX surface to maintain
+      - Product-specific (not fully in open standard)
+    failure_modes:
+      - Model reproduces forbidden workflow steps (CC documents blocking behavior)
+    alternatives:
+      - Policy engine gates without skill packaging
+    our_equivalence: SUBSTANTIAL
+    decision: ALREADY_PRESENT
+    confidence: HIGH
+    evidence: DOCUMENTED
+    notes: MegaBrain commonly uses disable-model-invocation on phase skills (OBSERVED).
+    sources:
+      - code.claude.com/docs/en/skills
+      - client-implementation Step 4 user-explicit
+
+  - id: AAS-09
+    name: skill_context_hygiene
+    lens: Context management
+    problem: Compaction/summarization can strip skill instructions silently.
+    mechanism: >
+      Protect skill tool outputs from pruning; wrap in structured tags;
+      deduplicate re-activations in-session.
+    costs:
+      - Harness complexity; protected content grows context
+    failure_modes:
+      - Silent skill amnesia → degraded behavior without error
+      - Duplicate skill bodies bloating context
+    alternatives:
+      - Re-inject skill every turn (token heavy)
+      - Stateless one-shot skill runs only
+    our_equivalence: UNKNOWN
+    decision: DEFER
+    confidence: LOW
+    evidence: DOCUMENTED
+    sources:
+      - client-implementation Step 5
+
+  - id: AAS-10
+    name: optional_skill_subagent
+    lens: Composition / Context management
+    problem: Heavy skill workflows pollute main conversation.
+    mechanism: >
+      Run skill in separate subagent session; return summary to parent
+      (client guide optional; Claude Code context:fork + agent type).
+    costs:
+      - Handoff loss; multi-agent overhead
+    failure_modes:
+      - Over-agentization; lost shared context
+    alternatives:
+      - Inline skill + compaction protection
+      - Existing PDA/task graph (MegaBrain)
+    our_equivalence: PARTIAL
+    decision: REJECT
+    confidence: HIGH
+    evidence: DOCUMENTED
+    notes: >
+      REJECT as a second multi-agent abstraction. Map needs to MegaBrain PDA roles
+      (ALREADY_PRESENT), not Claude Code frontmatter fork.
+    sources:
+      - client-implementation Step 5 Subagent delegation
+      - code.claude.com/docs/en/skills context:fork
+
+  - id: AAS-11
+    name: skills_mcp_complementarity
+    lens: Composition
+    problem: External tools and procedural expertise are different concerns.
+    mechanism: >
+      Skills teach workflows/context; MCP exposes tools/data; plugins may bundle both.
+      Composition of multiple skills claimed as product benefit (“combine Skills”).
+    costs:
+      - Boundary confusion if MCP prompts vs skills collide on names
+    failure_modes:
+      - Putting live API integration only in skill scripts under sandbox with no network
+      - Duplicating MCP tool docs inside skills poorly
+    alternatives:
+      - Tools-only agents
+      - Skills-only without external systems
+    our_equivalence: SUBSTANTIAL
+    decision: ALREADY_PRESENT
+    confidence: HIGH
+    evidence: DOCUMENTED
+    sources:
+      - anthropic.com/engineering post (MCP complement)
+      - docs.anthropic.com Agent SDK / Claude Code plugins
+
+  - id: AAS-12
+    name: instruction_architecture_authoring
+    lens: Instruction architecture
+    problem: Skill text quality dominates activation and execution success.
+    mechanism: >
+      Concise instructions; default “model is smart”; match degrees of freedom
+      (high text / medium templates / low exact scripts) to fragility;
+      test across models; iterate from observed trajectories;
+      keep SKILL.md under ~500 lines.
+    costs:
+      - Authoring discipline; eval effort
+    failure_modes:
+      - Verbose skills waste post-activation tokens (content stays in context across turns — CC docs)
+      - Wrong freedom level → brittle or vague behavior
+    alternatives:
+      - Fine-tuned models per domain
+    our_equivalence: SUBSTANTIAL
+    decision: ADAPT
+    confidence: HIGH
+    evidence: DOCUMENTED
+    sources:
+      - docs.anthropic.com agent-skills/best-practices
+      - code.claude.com/docs/en/skills (conciseness; stays in context)
+
+  - id: AAS-13
+    name: multi_scope_discovery
+    lens: Discovery / Skill lifecycle
+    problem: Skills need personal, project, org, and bundled scopes.
+    mechanism: >
+      Scan client-specific dirs and recommended .agents/skills/ for cross-client
+      interoperability; resolve collisions with deterministic precedence;
+      cloud agents provision skills via API/upload/repo clone.
+    costs:
+      - Precedence rules differ by product (see CONFLICTS)
+      - Live reload / sync complexity (Claude Code)
+    failure_modes:
+      - Shadowed skills without warning
+      - Untrusted project skills auto-injected
+    alternatives:
+      - Single global skill store only
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+    evidence: DOCUMENTED
+    sources:
+      - client-implementation Step 1
+      - code.claude.com/docs/en/skills locations
+
+  - id: AAS-14
+    name: trust_and_audit_security
+    lens: Skill lifecycle / Security
+    problem: Skills can instruct tool misuse, exfil, or run hostile code.
+    mechanism: >
+      Install from trusted sources; audit files/scripts/deps/network instructions;
+      gate project-level skills on workspace trust; treat like installing software.
+    costs:
+      - Friction; review burden
+    failure_modes:
+      - Supply chain via fetched external content
+      - allowed-tools over-grants (experimental / product-specific)
+    alternatives:
+      - Disable third-party skills entirely
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+    evidence: DOCUMENTED
+    sources:
+      - docs.anthropic.com agent-skills/overview Security
+      - client-implementation Trust considerations
+      - engineering post Security considerations
+
+  - id: AAS-15
+    name: surface_specific_lifecycle
+    lens: Skill lifecycle
+    problem: Create/edit/share/use differs by product surface.
+    mechanism: >
+      API Skills API (/v1/skills) + container.skills; claude.ai zip upload (per-user);
+      Claude Code FS + plugins + sync; custom skills do not auto-sync across surfaces.
+    costs:
+      - Operational fragmentation
+      - Duplicate uploads
+    failure_modes:
+      - “Skill missing” across surfaces; expectation mismatch
+    alternatives:
+      - Single distribution channel (not offered)
+    our_equivalence: UNKNOWN
+    decision: DEFER
+    confidence: MEDIUM
+    evidence: DOCUMENTED
+    notes: MegaBrain distribution model is Cursor-skills-centric; cross-surface sync not a near-term need.
+    sources:
+      - docs.anthropic.com agent-skills/overview Limitations
+
+  - id: AAS-16
+    name: validation_skills_ref
+    lens: Skill structure / Metadata
+    problem: Invalid frontmatter breaks discovery.
+    mechanism: skills-ref validate checks frontmatter and naming conventions.
+    costs: Tooling dependency
+    failure_modes: Clients may be lenient while packaging is strict → false confidence
+    alternatives: Manual review only
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+    evidence: DOCUMENTED
+    sources:
+      - agentskills.io/specification Validation
+
+composition_notes:
+  open_standard_claim: >
+    Overview states Skills can be combined for complex multistep tasks (DOCUMENTED benefit).
+  detailed_composition_protocol: UNKNOWN
+  inference: >
+    Composition appears to be emergent (multiple catalog entries activated over a task)
+    rather than a formal skill-graph IR. Do not invent a composition engine from marketing language.
+
+decision_vocabulary_used:
+  - ALREADY_PRESENT
+  - ADAPT
+  - PROTOTYPE
+  - DEFER
+  - REJECT

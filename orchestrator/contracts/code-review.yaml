@@ -1,0 +1,48 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Contract
+metadata:
+  id: code-review
+  version: "1.0.0"
+  status: active
+
+spec:
+  capability: code-review
+  type: gate
+  semver:
+    major: 1
+    minor: 0
+    patch: 0
+
+  inputs:
+    - name: diff-or-paths
+      required: true
+    - name: brief-snippet
+      required: false
+
+  outputs:
+    - name: code-review-report
+      schema: artifacts/code-review-report@1.0.0
+      required: true
+    - name: handoff
+      required: false
+
+  definition_of_done:
+    minimum_checks:
+      - verdict_emitted
+      - findings_structured_or_empty_with_lgtm
+      - boundaries_declared
+
+  evidence:
+    schema: evidence/gate-default@1.0.0
+
+  compatible_with:
+    - testing@1.x
+    - security-review@1.x
+    - po-acceptance@1.x
+    - validation@1.x
+    - backend-implementation@1.x
+    - frontend-ui@1.x
+
+  notes:
+    - "Judges implementation quality on a diff — not PO UAT, not test suite, not formal DoD checklist."
+    - "Distinct from po-acceptance, testing, validation, and security-review."

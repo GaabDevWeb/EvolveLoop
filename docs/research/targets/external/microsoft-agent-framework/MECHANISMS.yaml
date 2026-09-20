@@ -1,0 +1,371 @@
+# MECHANISMS.yaml — Microsoft Agent Framework / AutoGen
+# Mode: TARGET_RESEARCH | Provenance: OFFICIAL_EXTERNAL
+# Date: 2026-09-18
+# Labels: OBSERVED | DOCUMENTED | MEASURED | INFERRED | HYPOTHESIS | OPINION | UNKNOWN
+# Decisions: ALREADY_PRESENT | ADOPT | ADAPT | PROTOTYPE | DEFER | REJECT
+# Equivalence vs MegaBrain: NONE | PARTIAL | SUBSTANTIAL | EQUIVALENT | UNKNOWN
+
+target:
+  slug: microsoft-agent-framework
+  display_name: Microsoft Agent Framework (MAF)
+  related:
+    - name: AutoGen
+      role: predecessor_maintenance
+      repo: https://github.com/microsoft/autogen
+    - name: Semantic Kernel
+      role: co_predecessor_enterprise_features
+  primary_repo: https://github.com/microsoft/agent-framework
+  docs: https://learn.microsoft.com/en-us/agent-framework/
+  category: SDK
+  languages_documented: [Python, ".NET/C#", "Go (preview, separate repo)"]
+
+naming:
+  claim: >
+    MAF is the official successor to AutoGen and Semantic Kernel for new multi-agent work;
+    AutoGen is in maintenance mode and is not the same product as MAF.
+  evidence_label: DOCUMENTED
+  sources:
+    - https://learn.microsoft.com/en-us/agent-framework/overview/
+    - https://github.com/microsoft/autogen
+    - https://learn.microsoft.com/en-us/agent-framework/migration-guide/from-autogen/
+
+mechanisms:
+  - id: MAF-AGENT
+    lens: Agent model
+    problem: Encapsulate LLM + instructions + tools as a runnable unit
+    mechanism: Agent / AIAgent with run/stream and multi-turn tool loop by default
+    evidence_label: DOCUMENTED
+    sources:
+      - https://learn.microsoft.com/en-us/agent-framework/overview/
+      - https://learn.microsoft.com/en-us/agent-framework/migration-guide/from-autogen/
+    costs:
+      - Token/latency growth from multi-turn tool loops
+      - Provider coupling via chat clients
+    failure_modes:
+      - Unbounded tool loops if no max/termination configured (app responsibility)
+    alternatives:
+      - AutoGen AssistantAgent (single-turn default via max_tool_iterations)
+      - Plain function without agent
+    our_mechanism: Cursor Agent + Capability/Provider split + skills
+    our_equivalence: PARTIAL
+    our_composite_status: IMPLEMENTED_TESTED
+    decision: REJECT  # do not adopt MAF Agent SDK into MegaBrain host
+    decision_note: Pattern of multi-turn defaults → ADAPT bounds separately (MAF-TERM)
+    confidence: HIGH
+
+  - id: MAF-SESSION
+    lens: State
+    problem: Preserve conversation and resumable agent state across runs
+    mechanism: AgentSession (session_id, service_session_id, mutable state); serialize/restore
+    evidence_label: DOCUMENTED
+    sources:
+      - https://learn.microsoft.com/en-us/agent-framework/agents/conversations/session
+    costs:
+      - Session/provider mismatch invalidates context
+      - Multi-tenant risk if service_session_id treated as auth
+    failure_modes:
+      - Cross-user session ID echo without ownership checks (documented anti-pattern)
+    our_mechanism: gaabwiki-mem / .ai/sessions (episodic continuity)
+    our_equivalence: PARTIAL
+    our_composite_status: PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: MAF-CTX
+    lens: Memory
+    problem: Inject history, memories, retrieved docs, dynamic tools/instructions
+    mechanism: ChatHistoryProvider + AIContextProvider list; FileMemoryProvider; per-invocation middleware/tools
+    evidence_label: DOCUMENTED
+    sources:
+      - https://learn.microsoft.com/en-us/agent-framework/agents/conversations/context-providers
+      - https://learn.microsoft.com/en-us/agent-framework/agents/agent-pipeline
+    costs:
+      - Context explosion; multiple history providers need load_messages discipline
+    failure_modes:
+      - Memory pollution; overlapping providers
+    our_mechanism: Knowledge/RAG gate + Evidence Bus + episodic mem
+    our_equivalence: PARTIAL
+    our_composite_status: DOCUMENTED + PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: MAF-TOOL
+    lens: Tool use
+    problem: Call external systems / code / search / other agents
+    mechanism: "@tool schema inference; hosted tools; MCP local/hosted; agent-as-tool; tool approval HITL"
+    evidence_label: DOCUMENTED
+    sources:
+      - https://learn.microsoft.com/en-us/agent-framework/agents/tools/
+      - https://learn.microsoft.com/en-us/agent-framework/migration-guide/from-autogen/
+    costs:
+      - Tool explosion; hosted tool preview maturity varies
+    failure_modes:
+      - Untrusted MCP execution; approval bypass if misconfigured
+    our_mechanism: Capability Registry + Providers + MCP (ecosystem)
+    our_equivalence: SUBSTANTIAL
+    our_composite_status: IMPLEMENTED_TESTED
+    decision: ALREADY_PRESENT
+    decision_note: Avoid second tool registry; ADAPT approval gating if gap confirmed
+    confidence: MEDIUM
+
+  - id: MAF-MW
+    lens: Extensibility / Policy-like interception
+    problem: Cross-cutting inspect/modify of agent runs, tool calls, chat calls
+    mechanism: Agent middleware, function middleware, chat middleware + telemetry layers
+    evidence_label: DOCUMENTED
+    sources:
+      - https://learn.microsoft.com/en-us/agent-framework/concepts/agents/middleware/
+      - https://learn.microsoft.com/en-us/agent-framework/agents/agent-pipeline
+    costs:
+      - Middleware ordering complexity; hidden control flow
+    failure_modes:
+      - Unauditable side effects in opaque middleware
+    our_mechanism: Policy Engine + Cursor hooks
+    our_equivalence: SUBSTANTIAL
+    our_composite_status: DOCUMENTED + IMPLEMENTED
+    decision: ALREADY_PRESENT
+    confidence: MEDIUM
+
+  - id: MAF-WF
+    lens: Workflow / Runtime
+    problem: Explicit multi-step orchestration beyond a single agent turn
+    mechanism: >
+      WorkflowBuilder (typed edges, executors, supersteps) and Functional @workflow/@step
+      (Python experimental); workflows-as-agents; agents-in-workflows
+    evidence_label: DOCUMENTED
+    sources:
+      - https://learn.microsoft.com/en-us/agent-framework/workflows/
+      - https://learn.microsoft.com/en-us/agent-framework/migration-guide/from-autogen/
+    costs:
+      - Graph complexity; dual API surface (functional vs graph)
+    failure_modes:
+      - Incorrect join semantics; stuck waiting for messages
+    our_mechanism: Orchestrator + Capability IR plan.ir.yaml
+    our_equivalence: PARTIAL
+    our_composite_status: IMPLEMENTED_TESTED
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: MAF-MSG
+    lens: Message passing
+    problem: Route data between executors without uncontrolled broadcast
+    mechanism: Typed messages on edges; target_id selective routing; activation by ready inputs
+    evidence_label: DOCUMENTED
+    sources:
+      - https://learn.microsoft.com/en-us/agent-framework/migration-guide/from-autogen/
+    contrast_autogen:
+      GraphFlow: control-flow transitions + broadcast
+      Core: async actor messaging
+    costs:
+      - Requires explicit topology design
+    failure_modes:
+      - Deadlocks / missing edges
+    our_mechanism: Task tool handoffs + Evidence artifacts (not typed edge bus)
+    our_equivalence: PARTIAL
+    our_composite_status: IMPLEMENTED
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: MAF-TEAM
+    lens: Teams / Multi-agent architecture
+    problem: Coordinate specialized agents on shared or routed tasks
+    mechanism: >
+      Orchestration builders — SequentialBuilder, ConcurrentBuilder, HandoffBuilder,
+      GroupChatBuilder, MagenticBuilder
+    evidence_label: DOCUMENTED
+    sources:
+      - https://learn.microsoft.com/en-us/agent-framework/workflows/
+      - https://github.com/microsoft/agent-framework/blob/main/python/samples/autogen-migration/README.md
+    migration_map_documented:
+      RoundRobinGroupChat: SequentialBuilder or WorkflowBuilder
+      SelectorGroupChat: GroupChatBuilder
+      Swarm: HandoffBuilder
+      MagenticOneGroupChat: MagenticBuilder
+    our_mechanism: Multi-agent PDA roles via Task tool
+    our_equivalence: PARTIAL
+    our_composite_status: IMPLEMENTED
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: MAF-DEL
+    lens: Delegation
+    problem: Route work to the right specialist with clear ownership
+    mechanism: >
+      Handoff mesh (full ownership transfer, interactive user return) vs agent-as-tools
+      (primary retains ownership; subtask returns)
+    evidence_label: DOCUMENTED
+    sources:
+      - https://learn.microsoft.com/en-us/agent-framework/workflows/orchestrations/handoff
+    costs:
+      - Context size on full handoff; weaker central accountability
+    failure_modes:
+      - Handoff loops; wrong specialist; tool-only agents unsupported for handoff
+    our_mechanism: PDA role handoffs / Capability delegation
+    our_equivalence: PARTIAL
+    our_composite_status: IMPLEMENTED
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: MAF-TERM
+    lens: Termination
+    problem: Bound multi-agent or group-chat loops
+    mechanism: >
+      termination_condition callbacks; with_max_rounds; Magentic max_round_count,
+      max_stall_count, max_reset_count; docs warn unlimited group chat can run indefinitely
+    evidence_label: DOCUMENTED
+    sources:
+      - https://learn.microsoft.com/en-us/agent-framework/workflows/orchestrations/group-chat
+      - https://learn.microsoft.com/en-us/agent-framework/workflows/orchestrations/magentic
+      - https://learn.microsoft.com/en-us/python/api/agent-framework-core/agent_framework.groupchatbuilder
+    our_mechanism: Policy / orchestrator limits — depth UNKNOWN without audit
+    our_equivalence: UNKNOWN
+    our_composite_status: UNKNOWN
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: MAF-HITL
+    lens: HITL
+    problem: Pause for human/external decisions then resume
+    mechanism: >
+      ctx.request_info / RequestPort; tool approval contents; Magentic plan review /
+      stall intervention; checkpoints preserve pending requests
+    evidence_label: DOCUMENTED
+    sources:
+      - https://learn.microsoft.com/en-us/agent-framework/workflows/human-in-the-loop
+      - https://learn.microsoft.com/en-us/agent-framework/workflows/orchestrations/magentic
+    our_mechanism: Evidence gates; human approval paths PARTIAL/UNKNOWN
+    our_equivalence: PARTIAL
+    our_composite_status: PARTIAL
+    decision: PROTOTYPE
+    confidence: LOW
+
+  - id: MAF-CKPT
+    lens: Persistence / Runtime
+    problem: Survive long-running and restart workflows
+    mechanism: Workflow checkpoints at superstep/@step boundaries; resume with responses
+    evidence_label: DOCUMENTED
+    sources:
+      - https://learn.microsoft.com/en-us/agent-framework/workflows/
+      - https://learn.microsoft.com/en-us/agent-framework/workflows/human-in-the-loop
+    our_mechanism: jobs/checkpoints PARTIAL
+    our_equivalence: PARTIAL
+    our_composite_status: PARTIAL
+    decision: PROTOTYPE
+    confidence: LOW
+
+  - id: MAF-OBS
+    lens: Telemetry
+    problem: Observe agent and workflow execution
+    mechanism: Built-in OpenTelemetry integration
+    evidence_label: DOCUMENTED
+    sources:
+      - https://github.com/microsoft/agent-framework/blob/main/README.md
+      - https://learn.microsoft.com/en-us/agent-framework/overview/
+    our_mechanism: summarizeExecutionTrace + docs PARTIAL
+    our_equivalence: PARTIAL
+    our_composite_status: PARTIAL
+    decision: DEFER
+    confidence: MEDIUM
+
+  - id: MAF-HARNESS
+    lens: Agent model / Evolution
+    problem: Batteries-included long multi-step agent behavior
+    mechanism: Harness Agent (todos, compaction, file memory, don't-ask-again approval, observability)
+    evidence_label: DOCUMENTED
+    sources:
+      - https://learn.microsoft.com/en-us/agent-framework/overview/
+      - https://learn.microsoft.com/en-us/agent-framework/agents/conversations/session
+    our_mechanism: Skills + orquestrar + Evidence — not a single harness package
+    our_equivalence: PARTIAL
+    our_composite_status: IMPLEMENTED
+    decision: DEFER
+    confidence: LOW
+
+  - id: MAF-EXT
+    lens: Extensibility
+    problem: Plug providers, protocols, declarative defs, skills
+    mechanism: Provider packages; MCP; A2A; declarative agents YAML; Agent Skills design ADR
+    evidence_label: DOCUMENTED
+    sources:
+      - https://github.com/microsoft/agent-framework/blob/main/README.md
+    our_mechanism: Provider Registry + Skills + MCP ecosystem
+    our_equivalence: SUBSTANTIAL
+    our_composite_status: IMPLEMENTED
+    decision: ALREADY_PRESENT
+    confidence: MEDIUM
+
+  - id: AG-CORE
+    lens: Runtime / Message passing (AutoGen)
+    problem: Event-driven distributed agent systems
+    mechanism: Actor-model Core — async messaging; local and distributed runtimes
+    evidence_label: DOCUMENTED
+    sources:
+      - https://microsoft.github.io/autogen/stable/user-guide/core-user-guide/index.html
+      - https://github.com/microsoft/autogen
+      - https://learn.microsoft.com/en-us/agent-framework/migration-guide/from-autogen/
+    note: MAF focuses single-process composition today; distributed execution planned (migration guide)
+    our_mechanism: Local Cursor multi-agent only
+    our_equivalence: NONE
+    our_composite_status: N/A
+    decision: REJECT
+    confidence: HIGH
+
+  - id: AG-TEAM
+    lens: Teams (AutoGen AgentChat)
+    problem: Rapid multi-agent prototyping with shared chat
+    mechanism: Team abstractions + termination_condition (e.g. StopAfterNMessages); nesting broadcasts
+    evidence_label: DOCUMENTED
+    sources:
+      - https://learn.microsoft.com/en-us/agent-framework/migration-guide/from-autogen/
+      - https://github.com/microsoft/autogen
+    our_mechanism: PDA Task roles
+    our_equivalence: PARTIAL
+    our_composite_status: IMPLEMENTED
+    decision: REJECT  # dependency; patterns covered under MAF-TEAM ADAPT
+    confidence: HIGH
+
+  - id: AG-MAGENTIC-ONE
+    lens: Evolution from AutoGen
+    problem: Open-ended multi-agent research/coding collaboration
+    mechanism: Magentic-One team (AutoGen) → MagenticBuilder orchestration (MAF)
+    evidence_label: DOCUMENTED
+    sources:
+      - https://learn.microsoft.com/en-us/agent-framework/workflows/orchestrations/magentic
+      - https://github.com/microsoft/autogen
+    caveat: >
+      MAF docs state Magentic orchestration is untested how well it performs outside
+      original Magentic-One specialized agent design.
+    our_mechanism: No Magentic-One equivalent product feature
+    our_equivalence: NONE
+    our_composite_status: ABSENT
+    decision: DEFER
+    confidence: HIGH
+
+anti_patterns_observed_or_warned:
+  - id: AP-UNBOUNDED-GROUPCHAT
+    description: Group chat without max rounds / termination_condition can continue indefinitely
+    evidence_label: DOCUMENTED
+  - id: AP-SERVICE-SESSION-AS-AUTH
+    description: Echoing service_session_id to clients as authorization boundary
+    evidence_label: DOCUMENTED
+  - id: AP-NESTED-TEAM-BROADCAST
+    description: AutoGen nested teams share broadcast context (isolation harder than MAF WorkflowExecutor)
+    evidence_label: DOCUMENTED
+  - id: AP-MAGENTIC-OUTSIDE-DESIGN
+    description: Magentic pattern extrapolated beyond Magentic-One agent set without evidence
+    evidence_label: DOCUMENTED
+
+decisions_rollup:
+  reject_sdk_adoption: true
+  adapt_patterns:
+    - typed data-flow edges / joins
+    - handoff vs agent-as-tool ownership
+    - termination / stall budgets
+    - session vs context-provider separation
+  prototype_candidates:
+    - workflow-style request/response HITL
+    - checkpoint resume with pending requests
+  defer:
+    - Magentic productization
+    - Harness Agent clone
+    - OTel parity push

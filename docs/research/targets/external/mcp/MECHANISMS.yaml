@@ -1,0 +1,381 @@
+# MCP — MECHANISMS inventory
+# TARGET_RESEARCH | OFFICIAL_EXTERNAL | 2026-09-18
+# Spec primary: 2025-11-25 | Forward watch: 2026-07-28 draft
+
+target: mcp
+slug: mcp
+category: skills-protocol
+mode: TARGET_RESEARCH
+provenance: OFFICIAL_EXTERNAL
+examined_versions:
+  - "2025-11-25"
+  - "2026-07-28-draft"
+baseline: research/OUR-SYSTEM-BASELINE.md
+
+mechanisms:
+  - id: M-HOST-CLIENT-SERVER
+    name: Host / Client / Server architecture
+    problem: Integrate many context sources into many LLM apps without N×M custom adapters, with isolation.
+    how: >
+      Host creates one Client per Server (1:1). Host aggregates context, owns LLM and consent.
+      Servers expose focused primitives; must not see full conversation or other servers.
+    costs:
+      - Host complexity (orchestration, consent UX, aggregation)
+      - Operational surface of many server processes
+    failure_modes:
+      - Host skips consent → arbitrary code/data exfil via tools
+      - Cross-server leakage if host mishandles context aggregation
+    alternatives:
+      - Proprietary plugin APIs per host
+      - OpenAPI-only tool calling without resources/prompts/lifecycle
+    our_equivalence: PARTIAL
+    our_mechanism: Cursor host + Orchestrator Agent/Capability/Provider (no portable MCP Host role)
+    decision: ADAPT
+    confidence: HIGH
+    evidence: DOCUMENTED
+    sources:
+      - https://modelcontextprotocol.io/specification/2025-11-25/architecture/index
+
+  - id: M-CAPABILITY-NEGOTIATION
+    name: Capability negotiation (lifecycle)
+    problem: Optional features without assuming full protocol support.
+    how: >
+      initialize exchanges protocolVersion + capability objects; only negotiated features used;
+      notifications/initialized gates operation phase (2025-11-25).
+    costs:
+      - Handshake latency
+      - Version matrix testing
+    failure_modes:
+      - Version mismatch → disconnect
+      - Using undeclared capability → undefined behaviour / errors
+    alternatives:
+      - Fixed feature set per major version only
+      - 2026 draft: per-request _meta + server/discover (stateless)
+    our_equivalence: PARTIAL
+    our_mechanism: Provider manifests + Capability Registry (config-time, not session wire negotiate)
+    decision: ADAPT
+    confidence: HIGH
+    evidence: DOCUMENTED
+    sources:
+      - https://modelcontextprotocol.io/specification/2025-11-25/basic/lifecycle.md
+    note: >
+      CONFLICT with 2026-07-28 draft removing initialize; any ADOPT of session model must re-check draft.
+
+  - id: M-TOOLS-SCHEMA
+    name: Tools (model-controlled primitives)
+    problem: Let models invoke side effects with typed arguments and discoverable metadata.
+    how: >
+      tools/list (paginated) returns name/description/inputSchema[/outputSchema/annotations/execution];
+      tools/call returns content[] + optional structuredContent; isError for execution errors;
+      annotations MUST be treated untrusted unless server trusted.
+    costs:
+      - Tool explosion in LLM context
+      - Schema drift; prompt injection via malicious descriptions
+    failure_modes:
+      - Protocol vs execution error confusion
+      - Trusting annotations → unsafe auto-approve
+      - Unvalidated outputs passed to LLM
+    alternatives:
+      - Provider-native function calling only
+      - OpenAPI / gRPC without MCP lifecycle
+    our_equivalence: SUBSTANTIAL  # semantic typed callables
+    our_mechanism: Capability Registry + Providers + Policy + Cursor/MCP tools
+    decision: ALREADY_PRESENT  # semantic
+    decision_secondary: ADAPT  # wire/integration
+    confidence: MEDIUM_HIGH
+    evidence: DOCUMENTED
+    sources:
+      - https://modelcontextprotocol.io/specification/2025-11-25/server/tools.md
+
+  - id: M-RESOURCES-URI
+    name: Resources (application-driven context)
+    problem: Share readable context distinct from executable tools.
+    how: >
+      URI-identified resources; resources/list + read; templates/list; optional subscribe + updated;
+      annotations audience/priority/lastModified.
+    costs:
+      - Large binary blobs in context
+      - Subscription statefulness (2025-11-25; rewritten in 2026 draft)
+    failure_modes:
+      - Path/URI traversal if server weak
+      - Host auto-includes high-priority malicious resources
+    alternatives:
+      - Only tools that return text
+      - Host-local RAG without protocol
+    our_equivalence: PARTIAL
+    our_mechanism: Knowledge/GaabWiki/RAG + Evidence artefacts (different contracts)
+    decision: PROTOTYPE
+    confidence: MEDIUM
+    evidence: DOCUMENTED
+    sources:
+      - https://modelcontextprotocol.io/specification/2025-11-25/server/resources.md
+
+  - id: M-PROMPTS-TEMPLATES
+    name: Prompts (user-controlled templates)
+    problem: Expose reusable multi-message workflows selectable by users.
+    how: prompts/list + prompts/get with arguments → PromptMessage[].
+    costs:
+      - Prompt injection if server content untrusted
+      - Overlap with Agent Skills packaging
+    failure_modes:
+      - Treating prompts as model-auto tools → wrong control model
+    alternatives:
+      - SKILL.md / slash commands owned by host
+      - Anthropic Agent Skills (separate target)
+    our_equivalence: PARTIAL
+    our_mechanism: Agent Skills (.cursor/skills)
+    decision: DEFER
+    confidence: MEDIUM
+    evidence: DOCUMENTED
+    sources:
+      - https://modelcontextprotocol.io/specification/2025-11-25/server/prompts.md
+
+  - id: M-DISCOVERY-DYNAMIC
+    name: Dynamic discovery + list_changed
+    problem: Capabilities change without restart.
+    how: "*/list + notifications/*/list_changed when capability.listChanged declared."
+    costs:
+      - Refresh storms; cache invalidation
+    failure_modes:
+      - Stale tool list after missed notification
+      - Pagination cursor bugs
+    alternatives:
+      - Static manifests only
+      - 2026: CacheableResult ttlMs/cacheScope + subscriptions/listen
+    our_equivalence: PARTIAL
+    our_mechanism: Mostly static registries; Cursor MCP refresh UNKNOWN
+    decision: ADAPT
+    confidence: MEDIUM
+    evidence: DOCUMENTED
+
+  - id: M-TRANSPORT-STDIO
+    name: stdio transport
+    problem: Efficient local server processes.
+    how: Client spawns subprocess; newline-delimited JSON-RPC on stdin/stdout; stderr logging.
+    costs:
+      - Process lifecycle; credential via env
+      - No network auth model (by design)
+    failure_modes:
+      - Server writes non-JSON to stdout → protocol break
+      - Orphan processes on unclean shutdown
+    alternatives:
+      - Unix sockets; gRPC local
+    our_equivalence: NONE  # in orchestrator; Cursor owns
+    our_mechanism: Cursor host
+    decision: ADOPT  # via host
+    decision_reject_reimplement: REJECT
+    confidence: HIGH
+    evidence: DOCUMENTED
+    sources:
+      - https://modelcontextprotocol.io/specification/2025-11-25/basic/transports.md
+
+  - id: M-TRANSPORT-HTTP
+    name: Streamable HTTP transport
+    problem: Remote / multi-client MCP servers.
+    how: >
+      Single MCP endpoint POST (+ GET SSE listen); Origin validation; optional MCP-Session-Id (2025-11-25);
+      MCP-Protocol-Version header.
+    costs:
+      - Auth, session hijack mitigations, SSE complexity
+      - DNS rebinding if Origin not validated
+    failure_modes:
+      - Session fixation/hijack
+      - Broken SSE → lost messages (2026 removes resumability)
+    alternatives:
+      - Deprecated HTTP+SSE (2024)
+      - Custom transports
+    our_equivalence: NONE
+    our_mechanism: Cursor host
+    decision: ADOPT  # via host when needed
+    decision_reject_reimplement: REJECT
+    confidence: HIGH
+    evidence: DOCUMENTED
+
+  - id: M-AUTH-OAUTH
+    name: HTTP Authorization (OAuth 2.1)
+    problem: Restrict remote MCP servers to authorized resource owners.
+    how: >
+      MCP server as OAuth RS; PRM RFC9728; AS metadata RFC8414/OIDC; bearer tokens;
+      stdio SHOULD NOT use this — use environment credentials.
+    costs:
+      - Discovery/registration complexity (CIMD vs DCR)
+      - Token storage, issuer binding
+    failure_modes:
+      - Confused deputy; token leak; wrong AS selection
+      - Over-scoped tokens
+    alternatives:
+      - API keys / custom headers only (weaker standardization)
+    our_equivalence: NONE  # OAuth client
+    our_mechanism: Policy Engine (different layer — capability authority)
+    decision: ADOPT  # host-level
+    decision_reject_duplicate_policy: REJECT
+    confidence: HIGH
+    evidence: DOCUMENTED
+    sources:
+      - https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization.md
+
+  - id: M-SECURITY-HOST-ENFORCED
+    name: Host-enforced trust & safety
+    problem: Protocol enables arbitrary data access and code execution paths without enforcement.
+    how: >
+      Spec principles: user consent, data privacy, tool safety (untrusted annotations),
+      LLM sampling controls; implementors SHOULD build consent UIs — protocol cannot enforce.
+    costs:
+      - UX friction; inconsistent host quality
+    failure_modes:
+      - Hostile MCP server + permissive host = compromise
+      - Description-based social engineering of auto-approve
+    alternatives:
+      - Capability-based OS sandboxing (orthogonal)
+      - Allowlist of signed servers only
+    our_equivalence: PARTIAL
+    our_mechanism: Policy Engine + gates; Sandbox UNKNOWN–PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+    evidence: DOCUMENTED
+
+  - id: M-SAMPLING
+    name: Sampling (server→client LLM)
+    problem: Servers need model completions without embedding provider SDKs/keys.
+    how: sampling/createMessage; optional tools-in-sampling multi-turn; modelPreferences; HITL SHOULD.
+    costs:
+      - Nested agent loops; cost; prompt injection
+      - Host must expose LLM to servers
+    failure_modes:
+      - Unbounded tool loops
+      - User rejects → error -1
+    alternatives:
+      - Server calls provider APIs directly (draft 2026 migration guidance)
+    our_equivalence: NONE
+    our_mechanism: Host LLM owned by Cursor/Agent
+    decision: DEFER
+    confidence: MEDIUM
+    evidence: DOCUMENTED
+    note: Deprecated as core feature in 2026-07-28 draft (SEP-2577).
+
+  - id: M-ELICITATION
+    name: Elicitation (server→user input)
+    problem: Mid-operation confirmation or structured user input.
+    how: Client declares elicitation capability; server requests form/URL modes (2025-11-25).
+    costs:
+      - UX complexity; out-of-band URL flows
+    failure_modes:
+      - Phishing via URL elicitation if host weak
+    alternatives:
+      - Always require pre-declared params
+      - 2026 MRTR InputRequiredResult pattern
+    our_equivalence: PARTIAL  # HITL product patterns
+    our_mechanism: Human gates / policy (not MCP elicitation RPC)
+    decision: PROTOTYPE
+    confidence: MEDIUM
+    evidence: DOCUMENTED
+
+  - id: M-ROOTS
+    name: Roots (filesystem boundaries)
+    problem: Tell servers which directories they may operate in.
+    how: Client roots capability; server roots/list; list_changed notifications.
+    costs:
+      - Roots are advisory unless server/host enforce
+    failure_modes:
+      - Server ignores roots → FS escape
+      - Path traversal in client exposure
+    alternatives:
+      - Pass paths as tool args / config (2026 draft guidance)
+    our_equivalence: PARTIAL
+    our_mechanism: Workspace paths / sandbox UNKNOWN
+    decision: DEFER
+    confidence: MEDIUM
+    evidence: DOCUMENTED
+    note: Deprecated in 2026-07-28 draft.
+
+  - id: M-UTILITIES
+    name: Progress, cancellation, pagination, logging, tasks
+    problem: Long-running ops, abort, large lists, observability, durable work.
+    how: notifications/progress; CancelledNotification; cursor pagination; logging; tasks experimental (2025-11-25).
+    costs:
+      - Implementation surface
+    failure_modes:
+      - Timeout vs progress reset abuse
+      - Tasks complexity (moved to extension in 2026 draft)
+    alternatives:
+      - Host-only timeouts
+    our_equivalence: PARTIAL  # jobs/checkpoints PARTIAL
+    our_mechanism: Persistence PARTIAL; Telemetry PARTIAL
+    decision: ADAPT
+    confidence: LOW_MEDIUM
+    evidence: DOCUMENTED
+
+  - id: M-EXTENSIBILITY
+    name: Progressive capabilities + experimental/extensions
+    problem: Evolve protocol without breaking all peers.
+    how: Capability flags; experimental; 2026 extensions field + feature lifecycle (Active/Deprecated/Removed).
+    costs:
+      - Fragmentation if hosts ignore lifecycle
+    failure_modes:
+      - Relying on soon-deprecated features (Sampling/Roots)
+    alternatives:
+      - Hard major versions only
+    our_equivalence: PARTIAL  # Skills/providers evolve independently
+    our_mechanism: Skill versioning / provider manifests
+    decision: ADAPT
+    confidence: HIGH
+    evidence: DOCUMENTED
+
+  - id: M-CONTENT-MODEL
+    name: Multimodal content blocks + structuredContent
+    problem: Return richer than plain strings from tools/resources/prompts.
+    how: text/image/audio/resource/resource_link blocks; structuredContent + outputSchema validation.
+    costs:
+      - Token/size; encoding bugs
+    failure_modes:
+      - Schema non-conformance; ignoring isError
+    alternatives:
+      - String-only tool results
+    our_equivalence: PARTIAL
+    our_mechanism: Evidence JSON artefacts; tool results via Cursor
+    decision: ADAPT
+    confidence: MEDIUM
+    evidence: DOCUMENTED
+
+anti_patterns_observed_or_risk:
+  - id: AP-TOOL-EVERYTHING
+    description: Collapsing resources/prompts into tools loses control-model semantics.
+    evidence: DOCUMENTED distinct user interaction models
+  - id: AP-TRUST-ANNOTATIONS
+    description: Auto-approving based on tool annotations from untrusted servers.
+    evidence: DOCUMENTED MUST consider annotations untrusted
+  - id: AP-DUPLICATE-REGISTRY
+    description: Creating a MegaBrain "MCP Registry" beside Capability/Provider registries.
+    evidence: analysis-framework anti-duplication; decision REJECT
+  - id: AP-IGNORE-VERSION-CHURN
+    description: Hard-coding 2025-11-25 session/sampling assumptions against 2026 draft.
+    evidence: DOCUMENTED changelog CONFLICT
+
+summary_decisions:
+  ADOPT:
+    - transports_via_host
+    - oauth_at_host_when_remote
+  ADAPT:
+    - host_client_server_as_integration_pattern
+    - capability_map_to_provider
+    - discovery
+    - security_untrusted_annotations_in_policy
+    - content_model
+    - utilities_when_native_client
+    - extensibility_tracking
+  ALREADY_PRESENT:
+    - tools_as_typed_callables_semantic
+  PROTOTYPE:
+    - resources_to_knowledge_evidence_mapping
+    - elicitation_to_hitl_if_gap
+  DEFER:
+    - prompts_as_core
+    - sampling
+    - roots
+    - full_resource_subscribe
+  REJECT:
+    - second_capability_registry
+    - replace_evidence_bus_with_resources
+    - replace_skills_ssot_with_mcp_prompts
+    - reimplement_transports_in_orchestrator
+    - oauth_as_new_policy_engine

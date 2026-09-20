@@ -1,0 +1,16 @@
+pre_public_snapshot:
+  timestamp: "2026-09-20T02:30:04Z"
+  working_tree: "/home/gaab/Downloads/CursorSKILLS"
+  git_available: false
+  current_branch: ""
+  current_commit: ""
+  remotes: |
+    
+  file_count: 1548
+  skill_count: 36
+  agent_count: 23
+  command_count: 31
+  provider_count: 10
+  profile_count: 1
+  test_baseline_known: "orchestrator 236/236; EvolveLoop 93/93 (prior phase; not re-run)"
+  backup: "/home/gaab/Downloads/CursorSKILLS-pre-public-snapshot-20260919-233004"

@@ -1,0 +1,115 @@
+claims:
+  - id: CL-001
+    text: "Persistent observation IMPLEMENTED"
+    status: VERIFIED
+    evidence: "PersistentSignalStore JSONL + EV-EVOLVE-002 + F5"
+    limitation: "Library-level; not OS crash-proof"
+
+  - id: CL-002
+    text: "Cross-run aggregation IMPLEMENTED"
+    status: VERIFIED
+    evidence: "unique_executions≥3; same-run false positive; multi-ingest analyze"
+    limitation: "Fixture-validated"
+
+  - id: CL-003
+    text: "Longitudinal need detection IMPLEMENTED"
+    status: VERIFIED
+    evidence: "LongitudinalNeedDetector + analyze path"
+    limitation: "needs not user-partitioned"
+
+  - id: CL-004
+    text: "Root cause IMPLEMENTED (causal)"
+    status: PARTIALLY_VERIFIED
+    evidence: "Deterministic pattern→cause table + alternatives"
+    limitation: "Suspected heuristic; not causal proof; not LLM"
+
+  - id: CL-005
+    text: "registry_aware: true"
+    status: PARTIALLY_VERIFIED
+    evidence: "diagnoseWithInventory works with injected inventory"
+    limitation: "No live registry read"
+
+  - id: CL-006
+    text: "Evolution candidates IMPLEMENTED"
+    status: VERIFIED
+    evidence: "Generator + validator + storm bound"
+    limitation: null
+
+  - id: CL-007
+    text: "User-local evolution IMPLEMENTED"
+    status: PARTIALLY_VERIFIED
+    evidence: "query + analyze(user_id) after fix"
+    limitation: "Default analyze unscoped; shared needs.json"
+
+  - id: CL-008
+    text: "Core candidate IMPLEMENTED_HOLD"
+    status: VERIFIED
+    evidence: "EV-EVOLVE-005 HOLD; mutates_core false"
+    limitation: "Downstream gate not verified in this audit"
+
+  - id: CL-009
+    text: "Post-evolution outcome IMPLEMENTED_WITH_LIMITATIONS"
+    status: PARTIALLY_VERIFIED
+    evidence: "OutcomeTracker; empty-after fixed; caller windows"
+    limitation: "Attribution caller-trusted; outcomes not re-read by analyze"
+
+  - id: CL-010
+    text: "Closed-loop IMPLEMENTED_WITH_LIMITATIONS"
+    status: PARTIALLY_VERIFIED
+    evidence: "ingest→analyze→recordOutcome→lifecycle; history feeds next analyze"
+    limitation: "Not full outcome re-ingestion; not engine-wired"
+
+  - id: CL-011
+    text: "Tests 135/135"
+    status: CONTRADICTED
+    evidence: "Pre-audit MEASURED 135/135; post-correction 138/138"
+    limitation: "Claim stale after audit"
+
+  - id: CL-012
+    text: "Contracts 7/7 and full-cycle 5/5"
+    status: VERIFIED
+    evidence: "vitest contract-prototype 7; full-cycle 5 in suite run"
+    limitation: null
+
+  - id: CL-013
+    text: "jsonl_adapter CONNECTED"
+    status: PARTIALLY_VERIFIED
+    evidence: "adaptJsonlEventsFile works on files"
+    limitation: "Not auto-wired to LongitudinalEvolveLoop"
+
+  - id: CL-014
+    text: "Evidence/Eval/Feedback adapters NOT_CONNECTED"
+    status: VERIFIED
+    evidence: "ADAPTER_REGISTRY"
+    limitation: null
+
+  - id: CL-015
+    text: "Security PASS_WITH_LIMITATIONS / independent audit PASS"
+    status: PARTIALLY_VERIFIED
+    evidence: "No silent core mutation in package; HOLD"
+    limitation: "Prior self-audit; isolation residual; flags declarative"
+
+  - id: CL-016
+    text: "Baseline V1+V2 intact; V3 created"
+    status: PARTIALLY_VERIFIED
+    evidence: "Checksum self-PASS; V3 matched pre-fix longitudinal cores"
+    limitation: "Post-fix BASELINE_DRIFT on corrected files; V1/V2 index drift expected"
+
+  - id: CL-017
+    text: "Final SUCCESS_WITH_LIMITATIONS"
+    status: PARTIALLY_VERIFIED
+    evidence: "Core longitudinal works; limitations real"
+    limitation: "Replaced by independent VALIDATED_WITH_LIMITATIONS"
+
+  - id: CL-018
+    text: "Production longitudinal effectiveness"
+    status: CONTRADICTED
+    evidence: "Unsupported; fixture-only"
+    limitation: "Prior UNSUPPORTED-CLAIMS already listed"
+
+unsupported_remaining:
+  - "fully self-improving system"
+  - "production longitudinal proven"
+  - "live telemetry closed loop"
+  - "analyze default multi-tenant safe"
+  - "outcomes drive next analyze automatically"

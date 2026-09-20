@@ -1,0 +1,33 @@
+id: auth/mass-assignment
+version: 1
+category: auth
+priority: P0
+description: Registo aceita req.body completo incluindo isAdmin
+
+stack: node-express
+providers_expected: [auth-reviewer, api-security-reviewer]
+
+vulnerable:
+  prompt: |
+    Audita POST /register em evals/auth/mass-assignment/vulnerable/.
+    Atacante envia { name, email, isAdmin: true }.
+  expected:
+    must_detect: [MASS_ASSIGNMENT, PRIVILEGE_ESCALATION]
+    must_block: true
+    min_evidence_level: L2
+    must_include_cwe: [CWE-915, CWE-269]
+    must_include_owasp: ["A01:2021", "A04:2021"]
+
+fixed:
+  prompt: |
+    Audita POST /register em evals/auth/mass-assignment/fixed/ (allowlist DTO).
+  expected:
+    must_detect: []
+    must_block: false
+    must_not_block: true
+
+assertions:
+  - id: mass-assignment
+    description: Detecta User.create(req.body) ou equivalente
+  - id: never-trust
+    description: Menciona campo isAdmin/role do cliente

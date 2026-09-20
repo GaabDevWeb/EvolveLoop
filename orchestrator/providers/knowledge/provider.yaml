@@ -1,0 +1,22 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Provider
+metadata:
+  name: knowledge
+  version: "1.0.0"
+  description: "Wiki RAG bridge (BM25/hybrid)"
+  owner: agents-team
+spec:
+  plugin:
+    type: deterministic
+    entrypoint: "src/providers/deterministic/index.ts"
+  capabilities:
+    - id: knowledge.search
+      contract: contracts/knowledge.search@1.0.0
+      type: worker
+    - id: knowledge.inspect
+      contract: contracts/knowledge.inspect@1.0.0
+      type: worker
+  runtime:
+    cost: medium
+  availability: active
+  priority: 60

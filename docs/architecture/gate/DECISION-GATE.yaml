@@ -1,0 +1,126 @@
+decisions:
+
+  - id: DR-G-0001
+    title: Keep current job-path resume/checkpoint (scoped)
+    source_adr: ADR-DR-0001
+    evidence_quality: HIGH
+    scope_valid: true
+    overclaiming:
+      status: NONE_DETECTED
+      notes: "Explicitly DEFERs exactly-once / full HITL; Risks warn against product guarantees"
+    architecture_consistency: PASS
+    implementation_leakage: NONE
+    duplicate_architecture: NONE
+    final_gate: VALID_WITH_LIMITATIONS
+    rationale: >
+      Evidence chain E-005 → KEEP is sound. Scope JOB_PATH / STATE_WRITE / same-process
+      is explicit. Does not upgrade HITL beyond PARTIALLY_OBSERVED. Limitation: missing
+      formal reversible/migration/rollback section (N/A for KEEP but should be stated).
+    blocking_issues: []
+    limitations:
+      - missing_explicit_reversibility_block
+      - KEEP_does_not_close_Authority_wiring_gap
+
+  - id: DR-G-0002
+    title: Defer production skill catalog budget; keep runtime unchanged
+    source_adr: ADR-DR-0002
+    evidence_quality: MEDIUM
+    scope_valid: true
+    overclaiming:
+      status: NONE_DETECTED
+      notes: "Token axes separated; PROXY preserved; does not prescribe max_skills"
+    architecture_consistency: PASS
+    implementation_leakage: NONE
+    duplicate_architecture: NONE
+    final_gate: VALID_WITH_LIMITATIONS
+    rationale: >
+      Coherent with E-001 offline SUPPORTED + live gaps. Correctly answers "no production
+      runtime change now." Token reconciliation (~40% = T_TOKENS_40 only) preserved.
+      Limitation: optional docs ADAPT is LOW confidence and not mandated; reversibility
+      block missing.
+    blocking_issues: []
+    limitations:
+      - missing_explicit_reversibility_block
+      - optional_docs_ADAPT_not_evidence_bound
+
+  - id: DR-G-0003
+    title: Define security model before sandbox or posture labels
+    source_adr: ADR-DR-0003
+    evidence_quality: HIGH
+    scope_valid: true
+    overclaiming:
+      status: NONE_DETECTED
+      notes: "No technology choice; refuses fake posture labels"
+    architecture_consistency: PASS
+    implementation_leakage: NONE
+    duplicate_architecture: NONE
+    final_gate: VALID_WITH_LIMITATIONS
+    rationale: >
+      Correct DEFER prerequisite. Distinguishes Policy vs Authority vs Sandbox vs Posture.
+      Limitation vs gate §16: trust boundary, secret exposure, escape/bypass not enumerated
+      as named open decisions (only partially covered by open questions).
+    blocking_issues: []
+    limitations:
+      - security_model_checklist_incomplete
+      - ARCHITECTURAL_DECISION_REQUIRED_before_any_sandbox_impl
+    notes: "implementation_allowed: false — confirmed"
+
+  - id: DR-G-0004
+    title: Define stuck semantics before StuckDetector
+    source_adr: ADR-DR-0004
+    evidence_quality: HIGH
+    scope_valid: true
+    overclaiming:
+      status: NONE_DETECTED
+    architecture_consistency: PASS
+    implementation_leakage: NONE
+    duplicate_architecture: NONE
+    final_gate: VALID_WITH_LIMITATIONS
+    rationale: >
+      Correct DEFER. Lists major stuck dimensions. Limitation vs gate §17: recovery boundary,
+      false positives/negatives, and explicit "progress" definition not fully spelled out
+      (false_stuck acceptance mentioned; FP/FN not).
+    blocking_issues: []
+    limitations:
+      - stuck_semantics_checklist_incomplete
+
+  - id: DR-G-0005
+    title: Resolve context ownership before compaction/reinject
+    source_adr: ADR-DR-0005
+    evidence_quality: HIGH
+    scope_valid: true
+    overclaiming:
+      status: NONE_DETECTED
+    architecture_consistency: PASS
+    implementation_leakage: NONE
+    duplicate_architecture: NONE
+    final_gate: VALID_WITH_LIMITATIONS
+    rationale: >
+      Correct DEFER / ARCHITECTURE FIRST. Ownership questions are listed as prerequisites,
+      not answered — appropriate for this ADR type. Must not be read as resolved ownership.
+      Future ownership ADR required before any compaction prototype.
+    blocking_issues: []
+    limitations:
+      - ownership_questions_unanswered_by_design
+      - future_ownership_ADR_required
+
+conflicts: []
+
+evidence_ledger_audit:
+  status: PASS_WITH_NOTES
+  notes:
+    - "Referenced paths for E-001/E-005/baseline exist"
+    - "CL-E005-04 classification MEASURED for HITL PARTIALLY_OBSERVED is baseline status; acceptable"
+    - "forbidden_interpretation present on experimental claims"
+
+traceability_audit:
+  status: PASS
+  notes:
+    - "E-001 and E-005 chains present in TRACEABILITY.md"
+    - "E-002/3/4 correctly lack experiment→result leaves"
+
+do_not_change_audit:
+  status: PASS
+  notes:
+    - "No ADR proposes second registry/orchestrator/evidence SSOT"
+    - "Skills packages and Policy role preserved"

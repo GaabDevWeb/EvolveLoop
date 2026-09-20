@@ -1,0 +1,357 @@
+# Codex mechanisms — structured extract
+# Target: openai Codex (OFFICIAL_EXTERNAL / partially closed)
+# Date: 2026-09-18
+# Epistemic: DOCUMENTED | OBSERVED | INFERRED | UNKNOWN | HYPOTHESIS | OPINION
+# Decisions: ALREADY_PRESENT | ADOPT | ADAPT | PROTOTYPE | DEFER | REJECT
+# Our equivalence: ABSENT | PARTIAL | SUBSTANTIAL | EQUIVALENT | UNKNOWN
+
+target:
+  slug: codex
+  name: OpenAI Codex
+  category: coding-agent
+  access: partially_closed
+  oss_repo: https://github.com/openai/codex
+  oss_commit_examined: 7498521d288b9b3b96ffba4eedf089d8d6e06a84
+  closed_components:
+    - ide_extension
+    - codex_cloud_product_runtime
+  docs_base: https://developers.openai.com/codex
+
+mechanisms:
+  - id: M01_agent_loop
+    name: Responses-API agent loop / turn
+    problem: Orchestrate user ↔ model ↔ tools until turn completes
+    how: >
+      Build instructions+tools+input; POST Responses; consume SSE; execute tool calls;
+      append outputs preserving exact prompt prefix; end turn on assistant message.
+    evidence: DOCUMENTED
+    sources:
+      - https://openai.com/index/unrolling-the-codex-agent-loop/
+    costs:
+      - Quadratic JSON growth without cache hits
+      - Harness complexity around cache-safe mutations
+    failure_modes:
+      - Mid-turn tool list reorder → cache miss (historical MCP bug documented)
+      - Context exhaustion without compaction
+    alternatives:
+      - Chat Completions tool loop
+      - previous_response_id stateful chaining (explicitly avoided for ZDR)
+    our_mechanism: Orchestrator + orquestrar / PDA Task
+    our_equivalence: SUBSTANTIAL
+    our_composite: IMPLEMENTED_TESTED
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: M02_os_sandbox
+    name: OS-enforced command sandbox
+    problem: Bound what spawned commands can read/write/network
+    how: >
+      macOS Seatbelt; Linux/WSL bubblewrap+seccomp (+ Landlock fallback paths);
+      Windows elevated/unelevated sandbox users/firewall. Refuse if policy unenforceable.
+    evidence: DOCUMENTED
+    observed_paths:
+      - codex-rs/sandboxing/src/seatbelt*.sbpl
+      - codex-rs/linux-sandbox/
+      - codex-rs/bwrap/
+    sources:
+      - https://developers.openai.com/codex/sandboxing
+      - https://developers.openai.com/codex/permissions
+    costs:
+      - Platform matrix / kernel feature dependencies
+      - Compatibility fallbacks weaker than primary path
+    failure_modes:
+      - Missing bwrap / userns restrictions → warning or fallback
+      - Silent unsandboxed run avoided by refuse-unenforceable policy
+    our_mechanism: Sandbox UNKNOWN–PARTIAL (baseline)
+    our_equivalence: ABSENT_TO_PARTIAL
+    our_composite: UNKNOWN
+    decision: PROTOTYPE
+    confidence: MEDIUM
+
+  - id: M03_approval_policy
+    name: Approval policy orthogonal to sandbox
+    problem: Decide when to pause for human (or auto_review) before crossing bounds
+    how: >
+      approval_policy on-request|never|granular categories; approvals_reviewer user|auto_review;
+      MCP/app tools with side-effect/destructive annotations also elicit approval.
+    evidence: DOCUMENTED
+    sources:
+      - https://developers.openai.com/codex/agent-approvals-security
+      - https://developers.openai.com/codex/sandboxing
+      - https://developers.openai.com/codex/config-reference
+    costs:
+      - Approval fatigue if too strict; risk if never+full-access
+    failure_modes:
+      - Misconfigured full access (danger-full-access + never)
+      - Legacy untrusted policy confusion (retired in newer docs)
+    our_mechanism: Policy Engine
+    our_equivalence: PARTIAL
+    our_composite: DOCUMENTED_PLUS_IMPLEMENTED
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: M04_permission_profiles
+    name: Named permission profiles (beta)
+    problem: One reusable FS+network posture instead of ad-hoc sandbox knobs
+    how: >
+      default_permissions + [permissions.*] with filesystem read|write|deny, network domains,
+      extends :read-only|:workspace; mutually exclusive with legacy sandbox_mode.
+    evidence: DOCUMENTED
+    sources:
+      - https://developers.openai.com/codex/permissions
+    costs:
+      - Migration / dual config systems during transition
+      - Glob deny pre-expansion cost on some platforms
+    failure_modes:
+      - Combining permissions + sandbox_mode → legacy wins (documented)
+      - Unsupported carveouts refused rather than silently weakened
+    our_mechanism: Policy configs (partial)
+    our_equivalence: PARTIAL
+    decision: PROTOTYPE
+    confidence: MEDIUM
+
+  - id: M05_tool_router_registry
+    name: ToolRouter / ToolRegistry dispatch
+    problem: Route model function calls to built-in, MCP, collaboration handlers
+    how: >
+      Core tools registry + router maps ToolCall payloads; collaboration namespace tools
+      (spawn_agent / send_message / followup_task) observed in router.rs.
+    evidence: OBSERVED
+    observed_paths:
+      - codex-rs/core/src/tools/router.rs
+      - codex-rs/core/src/tools/registry (inferred module from imports)
+    sources:
+      - github openai/codex@7498521d288b
+    note: Full handler catalog not exhaustively audited in this pass
+    our_mechanism: Capability Registry + Provider Registry
+    our_equivalence: SUBSTANTIAL
+    decision: ALREADY_PRESENT
+    confidence: HIGH
+    residual: Do not create a parallel Agent Registry
+
+  - id: M06_builtin_shell_and_file_ops
+    name: Built-in shell + file/patch tools under sandbox
+    problem: Local coding actions with host-enforced bounds
+    how: >
+      shell tool sandboxed per permissions developer message; apply_patch / file change
+      paths exist in core; approvals for escalations.
+    evidence: DOCUMENTED
+    observed_paths:
+      - codex-rs/core/src/apply_patch.rs
+      - codex-rs/core/src/exec.rs
+    sources:
+      - https://openai.com/index/unrolling-the-codex-agent-loop/
+    critical_claim: >
+      Sandbox developer instructions apply to Codex-provided shell tool;
+      MCP tools are NOT sandboxed by Codex and must self-guard.
+    our_mechanism: Cursor tools / shell
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: M07_prompt_cache_discipline
+    name: Exact-prefix prompt caching discipline
+    problem: Avoid quadratic inference cost as conversation grows
+    how: >
+      Keep prior prompt as exact prefix; append permission/cwd changes as new messages
+      instead of rewriting early items; stable MCP tool enumeration order.
+    evidence: DOCUMENTED
+    sources:
+      - https://openai.com/index/unrolling-the-codex-agent-loop/
+    our_mechanism: UNKNOWN provider-specific cache behavior under Cursor
+    our_equivalence: UNKNOWN
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: M08_context_compaction
+    name: Auto + API compaction
+    problem: Context window exhaustion during long tool-heavy turns
+    how: >
+      Threshold model_auto_compact_token_limit / auto_compact_limit; /responses/compact
+      returns shorter item list including opaque encrypted compaction item.
+    evidence: DOCUMENTED
+    observed_paths:
+      - codex-rs/core/src/compact.rs
+      - codex-rs/core/src/compact_remote_v2.rs
+    sources:
+      - https://openai.com/index/unrolling-the-codex-agent-loop/
+      - https://developers.openai.com/codex/config-reference
+    our_mechanism: episodic memory PARTIAL; no compact API
+    our_equivalence: PARTIAL
+    decision: DEFER
+    confidence: MEDIUM
+
+  - id: M09_agents_md
+    name: Hierarchical AGENTS.md / project docs
+    problem: Inject project-specific standing instructions
+    how: >
+      CODEX_HOME AGENTS.override.md/AGENTS.md; walk git root→cwd for AGENTS*;
+      project_doc_max_bytes; fallback filenames; more specific later.
+    evidence: DOCUMENTED
+    observed_paths:
+      - codex-rs/core/src/agents_md.rs
+    sources:
+      - https://openai.com/index/unrolling-the-codex-agent-loop/
+      - https://developers.openai.com/codex/config-reference
+    our_mechanism: rules / AGENTS-like project docs / wiki grounding
+    our_equivalence: SUBSTANTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: M10_skills_progressive_disclosure
+    name: Agent Skills progressive loading
+    problem: Many workflows without stuffing full SKILL.md into every prompt
+    how: >
+      Initial list name+description+path capped (~2% context or 8k chars);
+      shorten descriptions then omit with warning; load full SKILL.md on select;
+      scopes REPO/USER/ADMIN/SYSTEM; plugins distribute.
+    evidence: DOCUMENTED
+    sources:
+      - https://developers.openai.com/codex/skills
+    our_mechanism: .cursor/skills SKILL.md
+    our_equivalence: SUBSTANTIAL
+    decision: ADAPT  # progressive disclosure
+    decision_budget_numbers: PROTOTYPE  # 2% / 8k — measure on our skill set first
+    confidence: HIGH
+    confidence_budget: MEDIUM
+
+  - id: M11_mcp_host
+    name: MCP host (stdio + streamable HTTP)
+    problem: Third-party tools/context
+    how: >
+      config.toml mcp_servers; OAuth/CIMD/DCR; tool allow/deny; per-server approval modes;
+      server instructions field; optional startup grace; plugin-bundled MCP.
+    evidence: DOCUMENTED
+    observed_paths:
+      - codex-rs/core/src/mcp.rs
+      - codex-rs/codex-mcp/
+    sources:
+      - https://developers.openai.com/codex/mcp
+    our_mechanism: Cursor MCP
+    our_equivalence: EQUIVALENT_TO_SUBSTANTIAL
+    decision: ALREADY_PRESENT
+    confidence: HIGH
+
+  - id: M12_multi_agent
+    name: Multi-agent collaboration tools
+    problem: Parallel specialized subagents
+    how: >
+      features.multi_agent enables spawn_agent, send_input, resume_agent, wait_agent, close_agent
+      (config-reference). Router observes collaboration tools including spawn_agent/followup_task.
+    evidence: DOCUMENTED
+    observed_supplement: OBSERVED tool names in router.rs
+    tertiary_note: >
+      Superpowers codex-tools.md describes V1/V2 mailbox/wait semantics — treat as
+      INFERRED/community until verified against OSS or official multi-agent docs.
+    sources:
+      - https://developers.openai.com/codex/config-reference
+    our_mechanism: Cursor Task PDA roles
+    our_equivalence: SUBSTANTIAL
+    decision: ALREADY_PRESENT
+    confidence: MEDIUM
+
+  - id: M13_hooks
+    name: Lifecycle hooks
+    problem: Automate policy/telemetry around tool use and session events
+    how: >
+      features.hooks; events PreToolUse, PermissionRequest, PostToolUse, Pre/PostCompact,
+      SessionStart, SubagentStart/Stop, UserPromptSubmit, Stop; command hooks supported;
+      prompt/agent handlers parsed but skipped; managed enterprise hooks.
+    evidence: DOCUMENTED
+    observed_paths:
+      - codex-rs/core/src/hook_runtime.rs
+    sources:
+      - https://developers.openai.com/codex/config-reference
+    our_mechanism: Cursor hooks + MegaBrain promote-queue PARTIAL
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: M14_app_server
+    name: App-server JSON-RPC protocol
+    problem: Embed harness in rich clients with approvals and streaming items
+    how: >
+      initialize/initialized; thread/turn/item APIs; steer/interrupt; approval request methods;
+      experimental permissions profiles; transports stdio/ws/unix.
+    evidence: DOCUMENTED
+    observed_paths:
+      - codex-rs/app-server/
+      - codex-rs/app-server-protocol/
+    sources:
+      - https://developers.openai.com/codex/app-server
+    our_mechanism: Cursor host (not Codex app-server)
+    our_equivalence: NONE
+    decision: DEFER
+    confidence: HIGH
+
+  - id: M15_cloud_runtime
+    name: Codex cloud isolated runtime
+    problem: Agent work without host filesystem exposure
+    how: >
+      Managed containers; setup networked then agent offline by default; secrets only in setup.
+    evidence: DOCUMENTED
+    closed: true
+    sources:
+      - https://developers.openai.com/codex/agent-approvals-security
+    our_mechanism: ABSENT
+    our_equivalence: ABSENT
+    decision: DEFER
+    confidence: LOW
+
+  - id: M16_exec_rules_managed_requirements
+    name: Exec rules + managed requirements.toml
+    problem: Org-level constraints users cannot broaden
+    how: >
+      Command prefix rules allow/prompt/forbid; managed allowed_permission_profiles;
+      trust_level skips project .codex for untrusted projects.
+    evidence: DOCUMENTED
+    observed_paths:
+      - codex-rs/core/src/exec_policy.rs
+      - codex-rs/config/src/requirements_exec_policy.rs
+    sources:
+      - https://developers.openai.com/codex/agent-approvals-security
+      - https://developers.openai.com/codex/config-reference
+    our_mechanism: Policy Engine + managed rules UNKNOWN completeness
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: M17_plan_tool
+    name: update_plan built-in tool
+    problem: Keep task plan visible/updated during coding
+    how: Function tool update_plan with plan + explanation fields (example in agent-loop post)
+    evidence: DOCUMENTED
+    our_mechanism: Task IR / plan.ir.yaml PARTIAL–IMPLEMENTED
+    our_equivalence: PARTIAL
+    decision: ALREADY_PRESENT
+    confidence: MEDIUM
+
+  - id: M18_zdr_stateless_requests
+    name: Stateless Responses requests for ZDR
+    problem: Support Zero Data Retention while keeping multi-turn reasoning continuity
+    how: >
+      Avoid previous_response_id; carry encrypted_content for proprietary reasoning;
+      server holds decryption key not customer data (as stated by OpenAI).
+    evidence: DOCUMENTED
+    sources:
+      - https://openai.com/index/unrolling-the-codex-agent-loop/
+    our_mechanism: UNKNOWN
+    our_equivalence: UNKNOWN
+    decision: DEFER
+    confidence: MEDIUM
+
+anti_patterns_observed:
+  - id: AP01_mcp_outside_host_sandbox
+    description: MCP tools not covered by Codex shell sandbox — easy to misread as “everything is sandboxed”
+    evidence: DOCUMENTED
+  - id: AP02_cache_break_mid_conversation
+    description: Changing tools/model/sandbox mid-thread causes expensive cache misses
+    evidence: DOCUMENTED
+  - id: AP03_dual_permission_systems
+    description: Legacy sandbox_mode vs permission profiles can surprise operators if both configured
+    evidence: DOCUMENTED
+  - id: AP04_full_access_never
+    description: danger-full-access + never removes both technical and social brakes
+    evidence: DOCUMENTED
+
+comparison_baseline: research/OUR-SYSTEM-BASELINE.md

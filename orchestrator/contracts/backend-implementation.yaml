@@ -1,0 +1,68 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Contract
+metadata:
+  id: backend-implementation
+  version: "1.2.0"
+  status: active
+
+spec:
+  capability: backend-implementation
+  type: worker
+
+  semver:
+    major: 1
+    minor: 2
+    patch: 0
+
+  compatible_with:
+    - "contracts/backend-implementation@1.0.x"
+    - "contracts/backend-implementation@1.1.x"
+    - "contracts/backend-implementation@1.2.x"
+
+  inputs:
+    - name: briefing
+      required: false
+    - name: mode
+      required: false
+      note: "implement | refactor"
+    - name: api-contract
+      schema: contracts/api@1.x
+      required: false
+    - name: upstream-docs
+      required: false
+    - name: memory-scope
+      required: false
+
+  outputs:
+    - name: backend-artifacts
+      schema: artifacts/backend-module@1.0.0
+    - name: handoff
+      schema: artifacts/entrega-consolidada@1.0.0
+
+  definition_of_done:
+    minimum_checks:
+      - mode_declared_in_handoff
+      - edge_validation_present
+      - domain_isolated_from_transport
+      - contracts_documented_in_handoff
+      - env_vars_listed_without_secrets
+      - verification_commands_for_testing
+      - entrega_consolidada_emitted
+      - refactor_preserves_behavior_or_contract_delta_explicit
+    forbidden:
+      - frontend_ui_implementation
+      - security_gate_verdict
+      - testing_gate_suite_as_verdict
+      - devops_pipeline_ownership
+      - greenfield_as_refactor
+      - policy_bypass
+
+  evidence:
+    schema: evidence/worker-default@1.0.0
+    emitter: backend
+    payload_type: worker
+
+  runtime_compatibility:
+    pda_roles: [exec]
+    phase: 2
+    modes: [implement, refactor]

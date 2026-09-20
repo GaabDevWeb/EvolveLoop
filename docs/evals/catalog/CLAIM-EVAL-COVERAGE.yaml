@@ -1,0 +1,46 @@
+coverage:
+
+  - claim_id: CLM-E001-001
+    eval_ids: [EV-007]
+    validation_status: COVERED
+
+  - claim_id: CLM-E001-002
+    eval_ids: [EV-008]
+    validation_status: COVERED
+
+  - claim_id: CLM-E001-003
+    eval_ids: []
+    validation_status: NOT_EVALUABLE
+    note: "NOT_MEASURED boundary — gap EV-F-001 / MG-001"
+
+  - claim_id: CLM-E001-004
+    eval_ids: []
+    validation_status: NOT_EVALUABLE
+    note: "live host injection unavailable"
+
+  - claim_id: CLM-E001-005
+    eval_ids: [EV-007, EV-008]
+    validation_status: PARTIALLY_COVERED
+    note: "scope reminder enforced in Eval limitations"
+
+  - claim_id: CLM-E005-001
+    eval_ids: [EV-006]
+    validation_status: COVERED
+
+  - claim_id: CLM-E005-002
+    eval_ids: [EV-006]
+    validation_status: COVERED
+
+  - claim_id: CLM-E005-003
+    eval_ids: [EV-006]
+    validation_status: COVERED
+
+  - claim_id: CLM-E005-004
+    eval_ids: [EV-006]
+    validation_status: PARTIALLY_COVERED
+    note: "Eval keeps OS kill out of scope; boundary claim"
+
+  - claim_id: CLM-E005-005
+    eval_ids: []
+    validation_status: NOT_COVERED
+    note: "HITL product scope — not an Eval pass/fail; documentation boundary"

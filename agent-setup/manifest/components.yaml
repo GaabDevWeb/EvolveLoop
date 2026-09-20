@@ -1,0 +1,135 @@
+version: 1
+
+rules:
+  - name: wiki-agent
+    source: bundled:cursor/rules/wiki-agent.mdc
+    destination: "~/.cursor/rules/wiki-agent.mdc"
+    scope: global
+    managed_by: agent-setup
+    profiles: [minimal, standard, full]
+
+  - name: megabrain
+    source: bundled:cursor/rules/megabrain.mdc
+    destination: "~/.cursor/rules/megabrain.mdc"
+    scope: global
+    managed_by: agent-setup
+    profiles: [minimal, standard, full]
+
+commands:
+  - name: wiki
+    source: bundled:cursor/commands/wiki.md
+    destination: "~/.cursor/commands/wiki.md"
+    profiles: [minimal, standard, full]
+
+  - name: MegaBrain
+    source: bundled:cursor/commands/MegaBrain.md
+    destination: "~/.cursor/commands/MegaBrain.md"
+    profiles: [minimal, standard, full]
+
+  - name: mem
+    source: bundled:cursor/commands/mem.md
+    destination: "~/.cursor/commands/mem.md"
+    profiles: [standard, full]
+
+skills:
+  - name: wiki
+    source: bundled:skills/wiki
+    destination: "~/.cursor/skills/wiki"
+    scope: global
+    profiles: [minimal, standard, full]
+    also_link: "~/.agents/skills/wiki"
+
+  - name: wiki-mem
+    source: bundled:skills/wiki-mem
+    destination: "~/.cursor/skills/wiki-mem"
+    scope: global
+    profiles: [standard, full]
+    also_link: "~/.agents/skills/wiki-mem"
+
+  - name: orquestrar
+    source: repo:${AGENTS_ROOT}/.cursor/skills/orquestrar
+    destination: "~/.cursor/skills/orquestrar"
+    install: symlink
+    profiles: [standard, full]
+    also_link: "~/.agents/skills/orquestrar"
+    dependencies: [cursor_skills_repo]
+
+  - name: MegaBrain
+    source: repo:${AGENTS_ROOT}/.cursor/skills/orquestrar
+    destination: "~/.cursor/skills/MegaBrain"
+    install: symlink
+    profiles: [standard, full]
+    also_link: "~/.agents/skills/MegaBrain"
+
+  - name: skill-authoring
+    source: repo:${AGENTS_ROOT}/.cursor/skills/skill-authoring
+    destination: "~/.cursor/skills/skill-authoring"
+    install: symlink
+    profiles: [standard, full]
+
+worker_skills:
+  repo_base: "${AGENTS_ROOT}/.cursor/skills"
+  names:
+    - adr
+    - backend
+    - database
+    - devops
+    - documentation
+    - frontend-pro
+    - planner
+    - po-review
+    - prd
+    - security
+    - testing
+  global_skills_base: "${AGENTS_ROOT}/global-skills"
+  global_names:
+    - brainstorming
+    - executing-plans
+    - find-skills
+    - image-to-code
+    - systematic-debugging
+    - writing-plans
+  profiles: [standard, full]
+
+hooks:
+  managed_keys:
+    sessionStart:
+      - ./hooks/wiki-mem/session-start.sh
+    afterFileEdit:
+      - ./hooks/wiki-mem/after-edit.sh
+    stop:
+      - ./hooks/wiki-mem/stop.sh
+    sessionEnd:
+      - ./hooks/wiki-mem/session-end.sh
+  optional_keys:
+    stop:
+      - ./hooks/orchestrator-job-pickup.sh
+    afterShellExecution:
+      - matcher: run-engine
+        command: ./hooks/orchestrator-after-engine.sh
+  scripts_source: bundled:cursor/hooks
+  destination: "~/.cursor/hooks"
+  hooks_json: "~/.cursor/hooks.json"
+  profiles: [standard, full]
+
+env_templates:
+  - name: agents.env
+    source: bundled:config/templates/agents.env.template
+    destination: "~/.cursor/agents.env"
+    profiles: [standard, full]
+    on_conflict: preserve
+
+rag:
+  venv: "${VAULT_ROOT}/rag/.venv"
+  install_cmd: "pip install -e ${VAULT_ROOT}/rag[dev,vector,cursor,tui]"
+  path_shim: "${VAULT_ROOT}/rag/scripts/install-path.sh"
+  profiles: [full]
+
+systemd:
+  units:
+    - wiki-watch.service
+    - wiki-health.service
+    - wiki-health.timer
+    - wiki-stack.target
+  install_script: "${VAULT_ROOT}/rag/scripts/install-systemd-user.sh"
+  profiles: [full]

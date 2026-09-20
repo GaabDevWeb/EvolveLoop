@@ -1,0 +1,23 @@
+# Rollback reasons (empty = no restore needed)
+generated: 2026-09-19T21:40:00Z
+
+restorations: []
+
+rollback_available: true
+rollback_method: >
+  tar -xzf .prune-snapshots/global-skills-pre-prune-20260919T213550Z.tar.gz -C .
+  # optionally re-link ~/.agents/skills/<id> → project global-skills/<id>
+
+git:
+  baseline_commit: null
+  prune_commit: null
+  git_absent: true
+  filesystem_checkpoint: .prune-snapshots/pre-prune-20260919T213550Z
+
+would_restore_if:
+  - core_runtime_dependency_discovered
+  - hard_gate_dependency_broken
+  - agent_or_command_required_missing
+  - material_quality_regression_with_evidence
+
+observed_triggers: []

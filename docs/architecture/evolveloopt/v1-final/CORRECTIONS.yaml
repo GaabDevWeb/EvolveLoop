@@ -1,0 +1,28 @@
+corrections:
+  - id: V1-C-001
+    finding: "Scope fallback LEAK — EventBus events without user_id/project_id stamped with attach-scope identity"
+    root_cause: "eventToRawObservation coalesced payload ids with defaultsFromScope(attachScope)"
+    change: >
+      Require identity fields matching attach scope type; return null / defer on missing identity;
+      never stamp tenant ids from attach scope; notify uses deriveScopeFromObservation(obs) only
+    files:
+      - orchestrator/src/evolveloop/adapters/runtime-observer.ts
+      - orchestrator/tests/unit/evolveloop/live-registry-observer.test.ts
+      - orchestrator/tests/evals/evolveloop-v1-adversarial-audit.test.ts
+    tests:
+      - "ATTACK-01 / ATTACK-01b FIXED"
+      - "observer rejects NodeFailed without user_id"
+    regression: "196/196 pass"
+
+  - id: V1-C-002
+    finding: "Unlabeled gate.json classified as external_adapter and could open observation windows"
+    root_cause: "classifyGateSource defaulted unlabeled artifacts to external_adapter"
+    change: >
+      Unlabeled → gate_source_kind=untrusted + trust=untrusted;
+      ingestGateResult refuses to open windows for untrusted decisions
+    files:
+      - orchestrator/src/evolveloop/handoff/gate-result.ts
+      - orchestrator/tests/evals/evolveloop-v1-adversarial-audit.test.ts
+    tests:
+      - "ATTACK-10 FIXED"
+    regression: "196/196 pass"

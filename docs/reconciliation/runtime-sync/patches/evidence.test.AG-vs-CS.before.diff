@@ -1,0 +1,27 @@
+--- /home/gaab/Downloads/CursorSKILLS/docs/reconciliation/runtime-sync/backup/evidence.test.ts.AG.reference	2026-07-19 10:17:56.031243463 -0300
++++ /home/gaab/Downloads/CursorSKILLS/docs/reconciliation/runtime-sync/backup/evidence.test.ts.CS.before	2026-09-17 20:37:33.000000000 -0300
+@@ -28,4 +28,24 @@
+     evidence.spec.verdict = null;
+     expect(validateEvidence(evidence, gateNode.definition_of_done, gateNode).valid).toBe(false);
+   });
++
++  it("requires gate artefact path", () => {
++    const gateNode: GraphNode = { ...workerNode, type: "gate", capability: "testing" };
++    const evidence = buildSuccessEvidence(gateNode, "run-1", "testing", 100);
++    evidence.spec.artifacts = [];
++    if (evidence.spec.payload && evidence.spec.payload.type === "gate") {
++      evidence.spec.payload.artifacts = [];
++    }
++    const result = validateEvidence(evidence, gateNode.definition_of_done, gateNode);
++    expect(result.valid).toBe(false);
++    expect(result.reason).toBe("artifact_path_missing");
++  });
++
++  it("accepts gate evidence with artefact path", () => {
++    const gateNode: GraphNode = { ...workerNode, type: "gate", capability: "testing" };
++    const evidence = buildSuccessEvidence(gateNode, "run-1", "testing", 100);
++    const result = validateEvidence(evidence, gateNode.definition_of_done, gateNode);
++    expect(result.valid).toBe(true);
++    expect(evidence.spec.artifacts?.[0]?.path).toBeTruthy();
++  });
+ });

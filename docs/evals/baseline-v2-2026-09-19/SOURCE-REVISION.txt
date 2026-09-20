@@ -1,0 +1,4 @@
+tree_content_sha256=3823d66aa66decae8390bf79fa78d76726405f3c6b1a3984dc654650ab19978e
+method=sha256 of sorted sha256 list of src+tests+policies+contracts+schemas+package manifests+vitest/tsconfig
+git=ABSENT
+parent_baseline=baseline-v1-2026-09-18

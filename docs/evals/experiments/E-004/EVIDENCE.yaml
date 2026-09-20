@@ -1,0 +1,32 @@
+experiment:
+  id: E-004
+  title: Post-compaction constraint re-inject
+  baseline_id: baseline-v1-2026-09-18
+  status: BLOCKED
+hypothesis:
+  statement: Re-inject policy/skill pin after compact improves constraint_survival_rate
+method:
+  control: null
+  treatment: not_executed
+  repetitions: 0
+results:
+  metrics: {}
+  observations:
+    - "No compaction/reinject pipeline in orchestrator"
+    - "execution-trace 'compact' summary ≠ compaction event hook"
+evidence:
+  - id: E004-EV-01
+    source: rg
+    path: raw/compaction-search.txt
+    command: "rg compact|compaction|reinject orchestrator/src"
+    output: "only observability summary wording"
+    interpretation: no compact hook to instrument
+conclusion:
+  result: BLOCKED
+  confidence: HIGH
+blocked_reason: "No compaction/reinject mechanism to execute against"
+traceability:
+  experiment: E-004
+  research_source: docs/research/experiments/E-004-compaction-reinject.md
+  baseline: compaction absent
+  result: BLOCKED

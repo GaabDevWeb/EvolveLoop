@@ -1,0 +1,292 @@
+# MECHANISMS.yaml — LlamaIndex (OFFICIAL_EXTERNAL)
+# Mode: TARGET_RESEARCH | Date: 2026-09-18
+# Epistemic: OBSERVED = GitHub raw main; DOCUMENTED = official docs; MEASURED = PyPI
+
+target:
+  slug: llamaindex
+  name: LlamaIndex
+  category: sdk-agent-data-framework
+  provenance: OFFICIAL_EXTERNAL
+  focus: [agents, workflows, rag, retrieval, knowledge, memory, tools, state, observability, evaluation]
+  versions:
+    llama-index: "0.14.24"          # MEASURED PyPI
+    llama-index-core: "0.14.24"     # MEASURED PyPI
+    llama-index-workflows: "2.24.0" # MEASURED PyPI
+  source_code_ref: "run-llama/llama_index main (raw files, not pinned commit SHA — UNKNOWN exact SHA)"
+
+mechanisms:
+  - id: LI-WF-EVENT
+    name: Event-driven Workflow runtime
+    lens: [Workflows, State, Event-driven execution]
+    problem: Control flow for branching/looping GenAI apps without opaque DAG edges
+    mechanism: >
+      Workflow subclass; @step methods typed by Event in/out; StartEvent/StopEvent;
+      Context.store for per-run state; ctx.send_event/collect_events for concurrency;
+      pre-run graph validation; timeout on Workflow
+    evidence_label: DOCUMENTED
+    evidence_refs:
+      - https://developers.llamaindex.ai/python/framework/module_guides/workflow
+    costs:
+      - Learning typed-event mental model
+      - Dynamic send_event bypasses static graph checks (needs skip_graph_checks)
+    failure_modes:
+      - Unreachable steps / orphan events fail validation
+      - Timeout aborts long runs
+    alternatives: [LangGraph StateGraph, custom asyncio orchestrator, MegaBrain Task IR]
+    our_equivalence: PARTIAL
+    our_mechanism: Orchestrator + Capability IR plan.ir.yaml + Runtime
+    decision: ADAPT
+    decision_note: Adopt ideas (typed edges, validate graph, fan-out); REJECT dependency on llama-index-workflows
+    confidence: HIGH
+
+  - id: LI-AGENT-WF
+    name: AgentWorkflow multi-agent orchestrator
+    lens: [Agents, Agent workflows, Tools]
+    problem: Run one or more tool-using agents with shared orchestration
+    mechanism: >
+      AgentWorkflow(Workflow) with agents dict, root_agent, initial_state, handoff prompts;
+      steps: init_run → setup_agent → run_agent_step → parse_agent_output → call_tool →
+      aggregate_tool_results; streams AgentOutput/ToolCall events
+    evidence_label: OBSERVED
+    evidence_refs:
+      - llama_index/core/agent/workflow/multi_agent_workflow.py
+      - https://developers.llamaindex.ai/python/examples/agent/agent_workflow_basic/
+    costs:
+      - LLM-chosen handoffs can thrash
+      - Shared memory across agents can pollute context
+    failure_modes:
+      - Max iterations exceeded (default 20)
+      - Missing user_msg and chat_history raises ValueError
+      - Multi-agent requires unique name+description
+    alternatives: [OpenAI Agents SDK handoffs, CrewAI crews, PDA Task roles]
+    our_equivalence: SUBSTANTIAL
+    our_mechanism: Multi-agent PDA (plan/exec/gate/explore/critic/librarian)
+    decision: ALREADY_PRESENT
+    decision_note: Concept of multi-role orchestration already present; do not add AgentWorkflow clone
+    confidence: HIGH
+
+  - id: LI-HANDOFF
+    name: Handoff-as-tool with can_handoff_to ACL
+    lens: [Handoffs, Multi-Agent Coordination, Policy]
+    problem: Restrict which agent may transfer control to whom
+    mechanism: >
+      Synthetic FunctionTool handoff(ctx, to_agent, reason) sets next_agent in store;
+      validates membership in agents and can_handoff_to map; return_direct=True;
+      aggregate_tool_results switches current_agent_name without StopEvent
+    evidence_label: OBSERVED
+    evidence_refs:
+      - multi_agent_workflow.py handoff() / _get_handoff_tool / aggregate_tool_results
+    costs:
+      - Prompt/heuristic dependent; not hard policy engine
+      - Error strings returned to LLM (soft fail)
+    failure_modes:
+      - Invalid to_agent returns advisory string (agent may retry poorly)
+      - Unrestricted can_handoff_to=None allows broad transfers
+    alternatives: [Orchestrator-as-tools pattern, Policy Engine routing]
+    our_equivalence: PARTIAL
+    our_mechanism: PDA role routing via orchestrator/policy (not LLM handoff tool)
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: LI-FN-vs-REACT
+    name: FunctionAgent vs ReActAgent selection
+    lens: [Agents, Model Routing]
+    problem: Support LLMs with and without native tool calling
+    mechanism: >
+      from_tools_or_functions picks FunctionAgent if llm.metadata.is_function_calling_model
+      else ReActAgent
+    evidence_label: DOCUMENTED
+    evidence_refs:
+      - framework-api-reference/agent AgentWorkflow.from_tools_or_functions
+    costs: Two agent implementations to maintain
+    failure_modes: Mis-tagged LLM metadata → wrong agent class
+    our_equivalence: PARTIAL
+    our_mechanism: Provider Registry / model capabilities
+    decision: ALREADY_PRESENT
+    decision_note: Capability of providers already abstracted; no need to port dual agent classes
+    confidence: MEDIUM
+
+  - id: LI-TOOL-CTX
+    name: Context-injected tools + FunctionTool/QueryEngineTool
+    lens: [Tools, Capabilities, State]
+    problem: Tools need shared run state and typed actions
+    mechanism: >
+      FunctionTool.from_defaults; tools may take Context as first arg;
+      ctx.store.edit_state for shared state dict; QueryEngineTool wraps RAG engines
+    evidence_label: DOCUMENTED
+    evidence_refs:
+      - agent state docs; QueryEngineTool examples (Context7 / docs)
+    costs: Implicit Context coupling; tool explosion if many QueryEngines
+    failure_modes: Wrong tool descriptions → bad selection; missing Context param order
+    our_equivalence: SUBSTANTIAL
+    our_mechanism: Capability Registry + Provider Registry
+    decision: ALREADY_PRESENT
+    decision_note: REJECT parallel Agent/Tool registry; ADAPT retrieval-as-capability naming only via LI-RAG-TOOL
+    confidence: HIGH
+
+  - id: LI-MEMORY
+    name: Chat memory + serializable Workflow Context
+    lens: [Memory, State, Persistence]
+    problem: Continuity within/between runs; pause/resume
+    mechanism: >
+      BaseMemory (default ChatMemoryBuffer) in ctx.store; Context(workflow) passed to run;
+      to_dict/from_dict with JsonSerializer or JsonPickleSerializer
+    evidence_label: DOCUMENTED
+    evidence_refs:
+      - https://developers.llamaindex.ai/python/framework/understanding/agent/state/
+    costs: Pickle security/compat; context size growth; restored in-progress steps restart
+    failure_modes: Stateless default between runs if Context forgotten; memory pollution
+    our_equivalence: PARTIAL
+    our_mechanism: gaabwiki-mem episodic PARTIAL; jobs/checkpoints PARTIAL
+    decision: PROTOTYPE
+    decision_note: Prototype run-state serialization for HITL/checkpoints; DEFER Mem0-style long memory
+    confidence: MEDIUM
+
+  - id: LI-HITL
+    name: Human-in-the-loop via wait_for_event
+    lens: [Human-in-the-Loop, State]
+    problem: Confirm dangerous actions mid-execution
+    mechanism: >
+      ctx.wait_for_event(HumanResponseEvent, waiter_event=InputRequiredEvent, requirements=...);
+      consumer streams InputRequiredEvent and send_event(HumanResponseEvent);
+      Context serializable mid-run
+    evidence_label: DOCUMENTED
+    evidence_refs:
+      - agent_workflow_basic Human in the Loop section
+    costs: Distributed resume complexity; UX must own event loop
+    failure_modes: Lost waiter; mismatched requirements; restart of in-progress functions on restore
+    our_equivalence: PARTIAL
+    our_mechanism: Policy/Evidence gates; interactive pause formalization UNKNOWN
+    decision: PROTOTYPE
+    confidence: MEDIUM
+
+  - id: LI-RAG-CORE
+    name: Classic RAG pipeline (Index → Retriever → QueryEngine)
+    lens: [RAG, Retrieval, Knowledge, Indexes, Data connectors]
+    problem: Answer questions grounded in private corpora
+    mechanism: >
+      Readers load Documents; parse to Nodes; VectorStoreIndex (etc.);
+      as_query_engine = retrieve top-k + LLM synthesize; optional IngestionPipeline
+    evidence_label: DOCUMENTED
+    evidence_refs:
+      - LlamaIndex framework index quickstart / module guides
+    costs: Embedding/index ops; chunking quality; vendor vector stores
+    failure_modes: Hallucination despite retrieval; poor chunking; stale indexes
+    our_equivalence: PARTIAL
+    our_mechanism: GaabWiki + RAG gate (BM25 degraded per baseline)
+    decision: REJECT
+    decision_note: Do not replace MegaBrain Knowledge with LlamaIndex stack; strengthen own RAG
+    confidence: HIGH
+
+  - id: LI-RAG-TOOL
+    name: Retrieval-as-tool (QueryEngineTool)
+    lens: [RAG, Tools, Agents]
+    problem: Let agent decide when/which corpus to query
+    mechanism: QueryEngineTool.from_defaults(query_engine, name, description) attached to FunctionAgent
+    evidence_label: DOCUMENTED
+    evidence_refs:
+      - examples with FunctionAgent + QueryEngineTool (Context7)
+    costs: Extra LLM hop; tool description quality critical
+    failure_modes: Agent skips retrieval; wrong engine selected among many
+    our_equivalence: PARTIAL
+    our_mechanism: Knowledge grounds capability (partial)
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: LI-ORCH-PATTERNS
+    name: Three multi-agent composition patterns
+    lens: [Agent workflows, Routing]
+    problem: Trade convenience vs control in multi-agent systems
+    mechanism: >
+      (1) AgentWorkflow swarm handoffs (2) Orchestrator agent with subagents-as-tools
+      (3) Custom planner Workflow with XML/JSON plan parse + imperative execute
+    evidence_label: DOCUMENTED
+    evidence_refs:
+      - https://developers.llamaindex.ai/python/framework/understanding/agent/multi_agent/index.md
+    costs: Pattern 1 opaque heuristics; Pattern 3 more code
+    failure_modes: Infinite plan-execute loops in Pattern 3 without stop criteria
+    our_equivalence: SUBSTANTIAL
+    our_mechanism: PDA + Capability IR (closer to Pattern 2/3 than swarm)
+    decision: DEFER
+    decision_note: Useful for PATTERN_MINING cross-system; no immediate product change
+    confidence: MEDIUM
+
+  - id: LI-MAXITER
+    name: Max iterations + early stopping
+    lens: [Reliability, Policy]
+    problem: Bound agent tool loops
+    mechanism: >
+      DEFAULT_MAX_ITERATIONS=20; on exceed force WorkflowRuntimeError or
+      early_stopping_method='generate' final LLM response
+    evidence_label: OBSERVED
+    evidence_refs:
+      - base_agent.py DEFAULT_MAX_ITERATIONS=20
+      - multi_agent_workflow.py parse_agent_output
+    costs: Premature stop; generate may still be wrong
+    failure_modes: Infinite tool chatter until cap
+    our_equivalence: SUBSTANTIAL
+    our_mechanism: Policy / runtime limits (verify exact defaults — UNKNOWN detail)
+    decision: ADAPT
+    decision_note: Explicit early_stopping generate option may be worth Policy consideration
+    confidence: MEDIUM
+
+  - id: LI-STREAM
+    name: Workflow/agent event streaming
+    lens: [Observability, UX]
+    problem: Surface progress (tokens, tool calls, agent switches)
+    mechanism: >
+      handler.stream_events(); ctx.write_event_to_stream; typed events AgentStream,
+      AgentInput, AgentOutput, ToolCall, ToolCallResult
+    evidence_label: DOCUMENTED
+    evidence_refs:
+      - agent_workflow_basic Streaming section; OBSERVED write_event_to_stream
+    costs: Event flood; clients must filter
+    failure_modes: Consumers block on stream; missed InputRequiredEvent
+    our_equivalence: PARTIAL
+    our_mechanism: summarizeExecutionTrace PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: LI-INSTR
+    name: Instrumentation dispatcher (events/spans)
+    lens: [Observability, Telemetry, Tracing]
+    problem: Trace LLM/RAG/workflow spans for debugging and partners
+    mechanism: >
+      llama_index.core.instrumentation get_dispatcher; EventHandler/SpanHandler;
+      hierarchical propagation; OTel integrations; legacy CallbackManager coexists
+    evidence_label: DOCUMENTED
+    evidence_refs:
+      - https://developers.llamaindex.ai/python/framework/module_guides/observability/
+    costs: Dual APIs during migration; partner lock-in
+    failure_modes: Missing handler → blind runs; noisy traces
+    our_equivalence: PARTIAL
+    our_mechanism: Telemetry PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: LI-EVAL
+    name: Response + retrieval evaluation modules
+    lens: [Evaluation, Evals, RAG]
+    problem: Measure answer quality and retrieval ranking without always needing labels
+    mechanism: >
+      Faithfulness, Context/Answer Relevancy, Correctness, Guideline Adherence;
+      retrieval MRR/hit-rate; synthetic question generation; integrations (Ragas, DeepEval, …)
+    evidence_label: DOCUMENTED
+    evidence_refs:
+      - https://developers.llamaindex.ai/python/framework/module_guides/evaluating/index.md
+    costs: LLM-as-judge cost/bias; synthetic Q drift
+    failure_modes: Eval LLM agrees with hallucinations; metric gaming
+    our_equivalence: PARTIAL
+    our_mechanism: Skill evals JSON + gaabwiki pytest PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+
+framework_decision:
+  id: LI-FRAMEWORK
+  name: Adopt LlamaIndex as MegaBrain runtime dependency
+  decision: REJECT
+  confidence: HIGH
+  rationale: >
+    MegaBrain already has Capability/Provider/Policy/Evidence/Runtime. Importing
+    llama-index-core would duplicate orchestration and couple to a data-app SDK.
+    Mine mechanisms; do not install framework into Agent System.

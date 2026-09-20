@@ -1,0 +1,13 @@
+baseline_id: baseline-v3-2026-09-19
+tests: { total: 135, passed: 135, failed: 0 }
+contracts: { total: 7, passed: 7 }
+full_cycle: { total: 5, passed: 5 }
+evolveloop:
+  episodic_tests: 17
+  longitudinal_tests: 15
+  persistent: true
+  cross_run: true
+  outcome_tracking: true
+mechanisms:
+  evolveloop_longitudinal: IMPLEMENTED_GATED
+  sandbox: NOT_IMPLEMENTED

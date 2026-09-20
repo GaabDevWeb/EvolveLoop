@@ -1,0 +1,43 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Contract
+metadata:
+  id: architecture-analysis
+  version: "1.0.0"
+  status: active
+
+spec:
+  capability: architecture-analysis
+  type: upstream
+  semver:
+    major: 1
+    minor: 0
+    patch: 0
+
+  inputs:
+    - name: architecture-baseline
+      schema: artifacts/architecture-doc@1.x
+      required: false
+    - name: existing-adrs
+      schema: artifacts/adr-set@1.x
+      required: false
+    - name: product-specs
+      schema: artifacts/prd-package@1.x
+      required: false
+
+  outputs:
+    - name: architecture-analysis
+      schema: artifacts/architecture-analysis@1.0.0
+    - name: architecture-document
+      schema: artifacts/architecture-doc@1.0.0
+      required: false
+    - name: adr-candidates
+      schema: artifacts/adr-candidate-list@1.0.0
+      required: false
+
+  evidence:
+    schema: evidence/upstream-default@1.0.0
+
+  compatible_with:
+    - architecture-decision@1.x
+    - business-requirements@1.x
+    - planning@1.x

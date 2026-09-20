@@ -1,0 +1,323 @@
+# MECHANISMS.yaml — SWE-agent (OFFICIAL_EXTERNAL)
+# Epistemic: OBSERVED | DOCUMENTED | MEASURED | INFERRED | HYPOTHESIS | UNKNOWN
+# Decision: ALREADY_PRESENT | ADOPT | ADAPT | PROTOTYPE | DEFER | REJECT
+# Our equivalence: ABSENT | PARTIAL | SUBSTANTIAL | EQUIVALENT | UNKNOWN
+
+target: swe-agent
+slug: swe-agent
+category: coding-agent
+provenance: OFFICIAL_EXTERNAL
+mode: TARGET_RESEARCH
+date: "2026-09-18"
+versions:
+  package_init_observed: "1.1.0"
+  architecture_docs: "SWE-agent 1.0+"
+  paper: "arXiv:2405.15793 NeurIPS 2024"
+  lifecycle: "maintenance-only; superseded by mini-swe-agent (DOCUMENTED)"
+
+baseline_ref: research/OUR-SYSTEM-BASELINE.md
+
+mechanisms:
+  - id: M01_aci
+    name: Agent-Computer Interface (ACI)
+    problem: Default shell/IDE UIs are human-centric; LMs fail on verbose/silent/interactive feedback.
+    how: Custom commands + observation formats for search, view, edit, execute; principles in paper §3.
+    evidence_label: DOCUMENTED
+    sources:
+      - https://swe-agent.com/latest/background/aci/
+      - arXiv:2405.15793
+    costs: Tool engineering; env install of bundles; possible overfitting to scaffold (mini FAQ notes FT/RL concern).
+    failure_modes: Bad ACI can be worse than no ACI (iterative search ablation).
+    our_equivalence: PARTIAL
+    our_status_composite: UNKNOWN  # host IDE tools exist; no ACI contract audited
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: M02_agent_loop
+    name: Thought-action ReAct loop (Agent.forward/step/run)
+    problem: Need multi-step autonomous repair with parse → execute → observe.
+    how: "model.query → parse_actions → handle_action → SWEEnv.communicate; requery on Format/Block/BashSyntax; exits on cost/context/timeout."
+    evidence_label: OBSERVED
+    sources:
+      - sweagent/agent/agents.py (forward, forward_with_handling, step, run)
+    costs: Token/API cost; long trajectories; non-determinism.
+    failure_modes: Format loops → exit_format; cascading bad edits; context overflow.
+    our_equivalence: PARTIAL
+    our_status_composite: IMPLEMENTED_TESTED  # orchestrator exists, different shape
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: M03_swe_rex_env
+    name: SWEEnv + SWE-ReX sandboxed shell runtime
+    problem: Isolate execution; support Docker/Modal/AWS; parallel agents; stateful interactive sessions.
+    how: "SWEEnv thin wrapper; deployment.start; CreateBashSession; run_in_session(BashAction)."
+    evidence_label: DOCUMENTED
+    sources:
+      - https://swe-agent.com/latest/background/architecture/
+      - https://swe-rex.com/
+      - sweagent/environment/swe_env.py
+    costs: Container startup; CPU contention at high parallelism; image management.
+    failure_modes: Session death; command timeout; flaky shell termination heuristics (motivation for mini subprocess model — DOCUMENTED mini FAQ).
+    our_equivalence: ABSENT
+    our_status_composite: UNKNOWN
+    decision: PROTOTYPE
+    confidence: MEDIUM
+
+  - id: M04_tool_bundles
+    name: Tool bundles (bin + config.yaml + install.sh)
+    problem: Extend ACI without rewriting agent core.
+    how: Bundles uploaded/installed into container PATH; ToolHandler; optional state_command JSON for templates.
+    evidence_label: OBSERVED
+    sources:
+      - https://swe-agent.com/latest/config/tools/
+      - sweagent/tools/tools.py
+      - tools/*/config.yaml
+    costs: Install scripts; PATH hygiene; security surface of arbitrary binaries in sandbox.
+    failure_modes: Missing commands; broken install; state desync.
+    our_equivalence: PARTIAL  # Capability/Provider manifests
+    our_status_composite: IMPLEMENTED
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: M05_history_processors
+    name: HistoryProcessor pipeline
+    problem: Context window pressure; prompt caching; multimodal image parsing.
+    how: "Composable processors: Default, LastNObservations, ClosedWindow, CacheControl, RemoveRegex, ImageParsing, TagToolCallObservations."
+    evidence_label: OBSERVED
+    sources:
+      - sweagent/agent/history_processors.py
+      - config/default.yaml (cache_control last_n_messages: 2)
+    costs: Risk of eliding critical observations; processor bugs.
+    failure_modes: Over-aggressive omission; incorrect cache breakpoints.
+    our_equivalence: PARTIAL
+    our_status_composite: UNKNOWN
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: M06_lint_gated_edit
+    name: Lint-/syntax-gated file edits
+    problem: Syntax errors from edits cause repeated failed edit loops.
+    how: "Edit applies only if linter/check passes; else discard + show errors/snippets (flake8 helper in windowed tools)."
+    evidence_label: MEASURED
+    sources:
+      - paper Table 3 / §5 (w/ linting 18.0% vs edit w/o linting 15.0% on Lite)
+      - tools/windowed/lib/flake8_utils.py
+      - docs ACI page
+    costs: Linter false positives; language-specific tooling.
+    failure_modes: Blocks valid edits; only catches syntax-class errors not semantic bugs.
+    our_equivalence: PARTIAL
+    our_status_composite: UNKNOWN
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: M07_summarized_search
+    name: Summarized repository search
+    problem: Verbose grep / iterative next-result UIs exhaust budget and confuse models.
+    how: "search_dir etc. list files with matches succinctly; avoid dumping all match contexts."
+    evidence_label: MEASURED
+    sources:
+      - paper Table 3 (Summarized 18.0 vs Iterative 12.0 vs No search 15.7 Lite)
+      - docs ACI
+    costs: Less context per hit → may miss nuance.
+    failure_modes: Too little info; wrong file chosen.
+    our_equivalence: PARTIAL
+    our_status_composite: UNKNOWN
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: M08_windowed_viewer
+    name: Windowed file viewer (~100 lines)
+    problem: Full-file dump floods context; tiny windows under-inform.
+    how: "open/scroll/goto; ~100 lines sweet spot in paper."
+    evidence_label: MEASURED
+    sources:
+      - paper Table 3 (100 lines 18.0; 30 lines 14.3; full file 12.7)
+    costs: Extra navigation actions.
+    failure_modes: Wrong window position; missing distant context.
+    our_equivalence: PARTIAL  # IDE tools differ
+    our_status_composite: UNKNOWN
+    decision: DEFER
+    confidence: MEDIUM
+    note: "Defer reimplementation if host editor already windows; keep sizing principle."
+
+  - id: M09_empty_output_message
+    name: Explicit empty-command observation
+    problem: Empty stdout leaves LM uncertain whether command ran.
+    how: "next_step_no_output_template: command ran successfully and did not produce any output."
+    evidence_label: OBSERVED
+    sources:
+      - config/default.yaml
+      - docs ACI
+    costs: Negligible.
+    failure_modes: Masks real failures if exit code ignored (check mode dependent).
+    our_equivalence: ABSENT
+    our_status_composite: UNKNOWN
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: M10_patch_submit
+    name: Patch generation via submit → model.patch
+    problem: Need machine-checkable artifact for SWE-bench / apply locally.
+    how: "submit tool writes /root/model.patch; Agent reads file; batch preds.json; optional git apply / open_pr."
+    evidence_label: OBSERVED
+    sources:
+      - agents.py handle_submission / attempt_autosubmission_after_error
+      - batch_mode docs
+    costs: Dirty git state; accidental test-file edits (mitigated by review_on_submit messages).
+    failure_modes: Empty patch; env dead before write; test pollution.
+    our_equivalence: PARTIAL  # Evidence artifacts different shape
+    our_status_composite: DOCUMENTED
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: M11_autosubmit_on_exit
+    name: Autosubmit salvage on hard exits
+    problem: Cost/context/timeout exits discard partial progress.
+    how: "On many exceptions, force git diff cached → model.patch or recover diff from trajectory state."
+    evidence_label: OBSERVED
+    sources:
+      - agents.py attempt_autosubmission_after_error
+    costs: May submit incomplete/wrong patches (false hope for eval).
+    failure_modes: Autosubmitted broken diffs inflate “attempted” not “resolved”.
+    our_equivalence: ABSENT
+    our_status_composite: UNKNOWN
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: M12_cost_call_limits
+    name: Per-instance cost and call limits
+    problem: Unbounded agent loops burn budget.
+    how: "per_instance_cost_limit / total_cost_limit / per_instance_call_limit via model stats; CostLimitExceededError → exit_cost (+autosubmit)."
+    evidence_label: OBSERVED
+    sources:
+      - sweagent/agent/models.py fields
+      - agents.py CostLimitExceededError handling
+    costs: Early stop before solve.
+    failure_modes: exit_cost dominant failure class (paper behavior analysis).
+    our_equivalence: PARTIAL  # Policy engine exists
+    our_status_composite: DOCUMENTED
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: M13_demonstrations
+    name: Demonstration trajectories in context
+    problem: Teach ACI usage and workflow without weight updates.
+    how: "templates.demonstrations; FAQ says demos substantially improve novel issues; paper ablates w/o demo."
+    evidence_label: DOCUMENTED
+    sources:
+      - FAQ demos
+      - paper Table 1 / ablations (w/o Demonstration Shell-only 7.33 Lite; context w/o demo 16.3)
+    costs: Tokens; stale demos vs new tools.
+    failure_modes: Overfit to demo strategy.
+    our_equivalence: PARTIAL  # skills/examples
+    our_status_composite: IMPLEMENTED
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: M14_blocklist
+    name: Interactive / dangerous command blocklist
+    problem: vim/pagers/bare REPLs hang or break session.
+    how: "ToolFilterConfig.blocklist / blocklist_standalone / block_unless_regex; requery with error template."
+    evidence_label: OBSERVED
+    sources:
+      - sweagent/tools/tools.py ToolFilterConfig
+    costs: Blocks legitimate advanced workflows (gdb blocked by default — EnIGMA needed IATs).
+    failure_modes: Agent tries workarounds; false blocks.
+    our_equivalence: PARTIAL  # Policy
+    our_status_composite: IMPLEMENTED
+    decision: ALREADY_PRESENT
+    confidence: MEDIUM
+    residual_gap: "Ensure coding-path blocklists cover pagers/interactive editors specifically."
+
+  - id: M15_retry_reviewer
+    name: RetryAgent + Reviewer/Chooser loops
+    problem: Single trajectory variance; competitive multi-sample selection.
+    how: "RetryAgentConfig; ScoreRetryLoop / ChooserRetryLoop; ReviewSubmission scoring."
+    evidence_label: OBSERVED
+    sources:
+      - sweagent/agent/reviewer.py
+      - agents.py RetryAgentConfig
+    costs: Multiply cost; selection bias.
+    failure_modes: Reviewer wrong; unknown measured gain in this audit.
+    our_equivalence: PARTIAL  # PDA critic/gate
+    our_status_composite: IMPLEMENTED
+    decision: DEFER
+    confidence: LOW
+
+  - id: M16_swebench_batch
+    name: SWE-bench batch evaluation integration
+    problem: Standardize coding-agent measurement (% Resolved).
+    how: "sweagent run-batch --instances.type swe_bench; preds.json; sb-cli --evaluate."
+    evidence_label: DOCUMENTED
+    sources:
+      - https://swe-agent.com/latest/usage/batch_mode/
+    costs: Heavy infra; dataset contamination concerns (paper discusses age correlation).
+    failure_modes: Misconfigured splits; unreproduced SoTA claims.
+    our_equivalence: PARTIAL
+    our_status_composite: PARTIAL
+    decision: DEFER
+    confidence: MEDIUM
+
+  - id: M17_prompt_planning
+    name: In-prompt procedural plan (no separate planner)
+    problem: Structure early steps without multi-agent planner.
+    how: "instance_template steps 1–5 (localize, reproduce, edit, rerun, edge cases); free thought."
+    evidence_label: OBSERVED
+    sources:
+      - config/default.yaml
+    costs: Rigid for non-issue tasks; may conflict with real test-edit needs.
+    failure_modes: Agent ignores plan; forbids test edits while bugs need tests.
+    our_equivalence: PARTIAL  # Task IR / plan.ir.yaml
+    our_status_composite: IMPLEMENTED
+    decision: ALREADY_PRESENT
+    confidence: MEDIUM
+    residual_gap: "Reproduce-then-fix pattern as optional coding capability template."
+
+  - id: M18_function_calling_parse
+    name: Pluggable action parsers (function_calling vs thought_action)
+    problem: Models differ in tool-calling support.
+    how: "parse_function type in yaml; FAQ documents fallback."
+    evidence_label: DOCUMENTED
+    sources:
+      - FAQ models section
+      - sweagent/tools/parsing.py (referenced)
+    costs: Parser mismatch → FormatError storms.
+    failure_modes: exit_format after max_requeries.
+    our_equivalence: PARTIAL
+    our_status_composite: UNKNOWN
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: M19_enigma_offensive
+    name: EnIGMA / Interactive Agent Tools (CTF)
+    problem: Long-running interactive tools (debugger) + summarizers for CTF.
+    how: Separate mode/paper; docs say v0.7 for EnIGMA compatibility.
+    evidence_label: DOCUMENTED
+    sources:
+      - docs/background/index.md EnIGMA section
+      - arXiv:2409.16165
+    costs: Security/policy risk if enabled in product agents.
+    failure_modes: Out of scope for MegaBrain product coding path.
+    our_equivalence: ABSENT
+    our_status_composite: ABSENT
+    decision: REJECT
+    confidence: HIGH
+
+benchmarks:
+  paper_gpt4turbo_swebench_full_resolve_pct: {value: 12.47, n: "286/2294", label: MEASURED, source: arXiv:2405.15793}
+  paper_gpt4turbo_swebench_lite_resolve_pct: {value: 18.00, n: "54/300", label: MEASURED, source: arXiv:2405.15793}
+  paper_humanevalfix_python_pass1: {value: 87.7, label: MEASURED, source: arXiv:2405.15793 Table 2}
+  docs_background_full_resolve_pct: {value: 12.29, label: DOCUMENTED, source: swe-agent.com/background, conflict_with: paper_12.47}
+  readme_claude37_sota_verified_full: {label: DOCUMENTED, measured_pct: UNKNOWN}
+  mini_swe_agent_verified_65: {label: DOCUMENTED, note: "successor system, not SWE-agent 1.x"}
+
+handoff:
+  agent_authoring:
+    - adapt_observation_empty_output
+    - adapt_edit_validation_gate
+    - adapt_cost_exit_with_artifact_salvage
+    - adapt_traj_as_evidence
+  architect:
+    - prototype_sandbox_provider
+    - defer_swebench_harness
+  do_not_implement_in_mining: true

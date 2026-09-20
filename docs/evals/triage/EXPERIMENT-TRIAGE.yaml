@@ -1,0 +1,258 @@
+triage:
+  baseline_id: baseline-v1-2026-09-18
+  created_at: "2026-09-18T23:45:00Z"
+  rule: read-only; no harness/primitive/ADR implementation
+
+experiments:
+
+  - id: E-001
+    current_status: BLOCKED
+    hypothesis: >
+      Configurable max_skills / max_description_tokens on catalog prefix improves
+      activation_precision/recall and lowers prefix_tokens at similar task_success.
+    blockers:
+      - type: HARNESS_GAP
+        description: No CONTROL/TREATMENT harness that varies catalog size and scores activation
+        evidence:
+          - id: T-E001-01
+            claim: No budget API symbols in orchestrator src
+            path: orchestrator/src
+            symbol: max_skills|max_description_tokens
+            lines: null
+            observed: "rg NO_MATCHES (experiment E-001 raw + triage recheck)"
+            implication: Treatment cannot be applied via orchestrator config today
+      - type: OBSERVABILITY_GAP
+        description: No prefix_tokens / activation_precision collectors wired to a catalog injection point
+        evidence:
+          - id: T-E001-02
+            claim: Skill packages and evals exist but are not orchestrator catalog injection
+            path: .cursor/skills/*/evals/evals.json
+            symbol: evals
+            observed: "multiple skill eval JSON present (e.g. testing/evals/evals.json)"
+            implication: Offline scoring possible; live host injection unmeasured
+      - type: ENVIRONMENT_GAP
+        description: Live Cursor/MegaBrain catalog injection control not available to experiment runner
+        evidence:
+          - id: T-E001-03
+            claim: Research failure criteria abort if host cannot control catalog
+            path: docs/research/experiments/E-001-skill-catalog-budget.md
+            lines: "23-24"
+            observed: "failure_criteria: Host cannot control catalog → abort"
+            implication: Live agent experiment needs host control; offline harness can still test shaping hypothesis
+    enablement:
+      type: MINIMAL_HARNESS
+      minimum_change: >
+        Isolated harness: build CONTROL=all skill description texts vs TREATMENT=subsets;
+        measure char/token estimate; score which skill eval prompts would select under subset
+        (offline). Do not add MegaBrain max_skills API unless productizing later.
+      requires_runtime_change: false
+      requires_architecture_decision: false
+    decision_gate:
+      state: READY_AFTER_HARNESS
+    recommendation: ENABLE_WITH_HARNESS
+    cost: MINIMAL
+    confidence: HIGH
+    note: "Research already says 'no new runtime' — prior BLOCKED over-attributed to primitive"
+
+  - id: E-002
+    current_status: BLOCKED
+    hypothesis: >
+      Posture enum {enforced_sandbox, host_unknown, refused} + refuse-unenforceable
+      drives false_safe_label_rate → 0 on escape fixtures.
+    blockers:
+      - type: RUNTIME_PRIMITIVE_GAP
+        description: No OS sandbox / enforceability attestation signal
+        evidence:
+          - id: T-E002-01
+            claim: Baseline sandbox NOT_IMPLEMENTED; smart-mock sandbox false
+            path: docs/evals/baseline/BASELINE-METRICS.yaml
+            symbol: sandbox
+            observed: "mechanisms.sandbox: NOT_IMPLEMENTED"
+            implication: Cannot measure real isolation
+          - id: T-E002-02
+            claim: Path confinement ≠ sandbox
+            path: orchestrator/src/providers/deterministic/paths.ts
+            symbol: assertWithinWorkspace
+            lines: "16-22"
+            observed: "resolve + pathEscapesWorkspace throw PathEscapeError"
+            implication: Authorization/path bound only; no process/network isolation
+      - type: ARCHITECTURAL_DECISION_GAP
+        description: Must define what 'enforced' means and refuse-unenforceable policy across providers
+        evidence:
+          - id: T-E002-03
+            claim: Research forbids faking labels when enforcement undetectable
+            path: docs/research/experiments/E-002-sandbox-posture-labels.md
+            lines: "20-21"
+            observed: "Cannot detect enforcement → keep UNKNOWN; do not fake labels"
+            implication: Label-only harness = DOES_NOT_PROVE_SANDBOX
+      - type: NOT_WORTH_ENABLING
+        description: Metadata-only posture labeling without isolation has negative epistemic value
+        evidence:
+          - id: T-E002-04
+            claim: Authority flags exist but are not posture enum
+            path: orchestrator/src/authority/capability-authority.ts
+            symbol: allowShell|allowWrite|allowNetwork
+            lines: "12-14,118-141"
+            observed: "flags gate DeterministicProvider only"
+            implication: Reusing flags as 'sandbox posture' would mislabel security
+    enablement:
+      type: ARCHITECTURAL_DECISION
+      minimum_change: "Decide security model / enforcement attestation before any posture enum"
+      requires_runtime_change: true
+      requires_architecture_decision: true
+    decision_gate:
+      state: BLOCKED_BY_ARCHITECTURE
+    recommendation: DEFER
+    cost: ARCHITECTURAL
+    confidence: HIGH
+    does_not_prove_sandbox: true
+
+  - id: E-003
+    current_status: BLOCKED
+    hypothesis: >
+      Repeated tool-signature window + zero file/test delta detects thrash and lowers
+      mean_cost_thrash with acceptable false_stuck_rate.
+    blockers:
+      - type: RUNTIME_PRIMITIVE_GAP
+        description: No StuckDetector / thrash heuristic implementation
+        evidence:
+          - id: T-E003-01
+            claim: Only maxIterations operational stop
+            path: orchestrator/src/engine/execution-engine.ts
+            symbol: maxIterations
+            lines: "171-174,292"
+            observed: "const maxIterations = 500; loop until iterations >= maxIterations"
+            implication: Operational stop ≠ semantic stuck detection
+      - type: ARCHITECTURAL_DECISION_GAP
+        description: Definition of stuck vs legitimate explore needed before detector
+        evidence:
+          - id: T-E003-02
+            claim: Research failure if heuristic inseparable from explore
+            path: docs/research/experiments/E-003-stuck-detector-heuristic.md
+            lines: "20-21"
+            observed: "Heuristic inseparable from normal explore → DEFER"
+            implication: Architecture must define stuck criteria
+      - type: HARNESS_GAP
+        description: Optional — no thrash transcript fixture to characterize CURRENT stop behavior
+        evidence:
+          - id: T-E003-03
+            claim: No synthetic thrash fixtures in tests
+            path: orchestrator/tests
+            observed: "no thrash/stuck fixtures found"
+            implication: Characterization harness possible without detector
+    enablement:
+      type: NEW_RUNTIME_PRIMITIVE
+      minimum_change: >
+        Full E-003 requires StuckDetector after architecture defines stuck.
+        Optional separate characterization harness (MINIMAL_HARNESS) must not claim detector results.
+      requires_runtime_change: true
+      requires_architecture_decision: true
+    decision_gate:
+      state: BLOCKED_BY_RUNTIME
+    recommendation: DEFER
+    cost: ARCHITECTURAL
+    confidence: HIGH
+    optional_characterization:
+      enablement: MINIMAL_HARNESS
+      decision_gate: READY_AFTER_HARNESS
+      note: "Different experiment; do not rename as E-003 success"
+
+  - id: E-004
+    current_status: BLOCKED
+    hypothesis: >
+      On compact/clear, reinject Policy+active skill pin improves constraint_survival_rate.
+    blockers:
+      - type: RUNTIME_PRIMITIVE_GAP
+        description: No context compaction / reinject pipeline
+        evidence:
+          - id: T-E004-01
+            claim: No compaction/reinject symbols as pipeline
+            path: orchestrator/src
+            symbol: compaction|reinject
+            observed: "no reinject; only summarizeExecutionTrace 'compact' wording"
+            implication: No compact event to hook
+          - id: T-E004-02
+            claim: Checkpoint/Memory/Knowledge are not compaction
+            path: docs/evals/baseline/ARCHITECTURE-BASELINE.md
+            observed: "Knowledge ≠ Memory ≠ Checkpoint boundary documented"
+            implication: Existing stores insufficient for E-004
+      - type: ARCHITECTURAL_DECISION_GAP
+        description: Ownership of compaction (host chat vs orchestrator) undecided
+        evidence:
+          - id: T-E004-03
+            claim: Research baseline relies on host compaction alone
+            path: docs/research/experiments/E-004-compaction-reinject.md
+            lines: "6"
+            observed: "baseline: Rely on host compaction alone"
+            implication: Need decision before building reinject in engine
+    enablement:
+      type: NEW_RUNTIME_PRIMITIVE
+      minimum_change: "Requires real compact hook first — no minimal experiment without it"
+      requires_runtime_change: true
+      requires_architecture_decision: true
+    decision_gate:
+      state: BLOCKED_BY_RUNTIME
+    recommendation: NOT_WORTH_ENABLING
+    cost: ARCHITECTURAL
+    confidence: HIGH
+    note: "NOT_WORTH_ENABLING = defer until compact surface exists; not 'bad hypothesis'"
+
+  - id: E-005
+    current_status: PARTIALLY_READY
+    prior_result: SUPPORTED
+    prior_confidence: MEDIUM
+    hypothesis: >
+      run → wait_approval → kill → restore → resume; resume_success=1; duplicate_mutate=0;
+      secrets in state = 0.
+    blockers:
+      - type: FIXTURE_GAP
+        description: No mutating write + interrupt fixture to measure duplicate_mutate_count
+        evidence:
+          - id: T-E005-01
+            claim: Prior run left duplicate_mutate NOT_MEASURED
+            path: docs/evals/experiments/EXPERIMENT-RESULTS.yaml
+            observed: "duplicate_mutate_count: null"
+            implication: Need write-counting fixture
+          - id: T-E005-02
+            claim: Deterministic filesystem.write exists and can be observed
+            path: orchestrator/src/providers/deterministic/filesystem.ts
+            symbol: writeFileSync
+            observed: "write capability present"
+            implication: Fixture can use existing write without new primitive
+      - type: OBSERVABILITY_GAP
+        description: No automated write-count / continuation-identity metrics in harness
+        evidence:
+          - id: T-E005-03
+            claim: Prior harness simulated process boundary only
+            path: docs/evals/experiments/E-005/raw/last-run-metrics.json
+            observed: "process_kill: SIMULATED_NEW_ENGINE_INSTANCE"
+            implication: OS kill optional for higher confidence
+      - type: ARCHITECTURAL_DECISION_GAP
+        description: Optional — confirm fails fast; research 'wait_approval' may mean jobs wait OR confirm-wait
+        evidence:
+          - id: T-E005-04
+            claim: confirm decision returns fail CONFIRMATION_REQUIRED
+            path: orchestrator/src/providers/deterministic/index.ts
+            symbol: CONFIRMATION_REQUIRED
+            lines: "199-200"
+            observed: "if auth.decision === confirm → fail(...)"
+            implication: Jobs waiting path already covers interrupt/resume; confirm-wait would be new semantics
+    enablement:
+      type: TEST_FIXTURE
+      minimum_change: >
+        Extend E-005 harness: target file write once via job or flagged allowWrite path;
+        interrupt; resume; assert mtime/write count == 1. Prefer jobs wait path already proven.
+        Do not implement confirm-wait loop unless architecture chooses it.
+      requires_runtime_change: false
+      requires_architecture_decision: false
+    decision_gate:
+      state: READY_AFTER_FIXTURE
+    recommendation: READY_AFTER_FIXTURE
+    cost: MINIMAL
+    confidence: HIGH
+
+recommended_future_sequence:
+  - E-005_READY_AFTER_FIXTURE
+  - E-001_READY_AFTER_HARNESS
+  - optional_E-003_characterization_only
+  - architecture_reviews_E-002_E-003_full_E-004

@@ -1,0 +1,66 @@
+{
+  "skill_name": "po-review",
+  "version": "1.0.0",
+  "iteration": 1,
+  "focus": "PO acceptance gate + evidence v2",
+  "evals": [
+    {
+      "id": 1,
+      "name": "approve-when-dod-met",
+      "category": "happy_path",
+      "prompt": "Fase 5 /validar. Plano: login retorna 201 + token. Implementação verificada: POST /login → 201 + JWT. Testes VERDE. Audita aceite PO.",
+      "assertions": [
+        { "id": "executive-approved", "description": "Veredito Executivo [APROVADO]" },
+        { "id": "requirements-table", "description": "Tabela Auditoria de Requisitos completa" },
+        { "id": "orchestrator-ok", "description": "Status para Orquestrador: OK" },
+        { "id": "evidence-json", "description": "Menciona telemetry/evidence ou evidence JSON" }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "reject-dod-mismatch",
+      "category": "edge_case",
+      "prompt": "DoD planner: POST /users retorna 201 Created. Implementação retorna 200 OK sem body. Testes passam. Aceite?",
+      "assertions": [
+        { "id": "executive-rejected", "description": "Veredito Executivo [REJEITADO]" },
+        { "id": "deficient-dod", "description": "Classifica 201 vs 200 como Deficiente" },
+        { "id": "blocking-list", "description": "Pendências Bloqueantes com O quê/Por quê" },
+        { "id": "no-how", "description": "Não inclui Como corrigir nas pendências" }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "refuse-run-tests",
+      "category": "near_miss_domain",
+      "prompt": "Corre pytest e dá OK de release. Sou o PO gate.",
+      "assertions": [
+        { "id": "no-pytest", "description": "Recusa executar suite de testes" },
+        { "id": "role-po", "description": "Mantém papel auditor aceite, não testing" },
+        { "id": "redirect-testing", "description": "Menciona testing como gate técnico prévio" }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "reject-happy-path-only",
+      "category": "adversarial",
+      "prompt": "UI login funciona no happy path. Erro 500 mostra stack trace ao utilizador. Testes verdes. Aprova release.",
+      "assertions": [
+        { "id": "reject", "description": "Ajustes necessários ou REJEITADO" },
+        { "id": "edge-case", "description": "Analisa edge case de erro (≥2 cenários)" },
+        { "id": "ux-friction", "description": "Fricção inaceitável ou bloqueante documentada" }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "orquestrador-handoff",
+      "category": "integration",
+      "prompt": "Gate po-acceptance concluído com OK. Handoff ao orquestrador raiz.",
+      "assertions": [
+        { "id": "gate-phase-6", "description": "Gate Fase 6: LIBERADO" },
+        { "id": "decision-continuar", "description": "DECISÃO sugerida: continuar" },
+        { "id": "entrega-block", "description": "ENTREGA CONSOLIDADA ou handoff estruturado" },
+        { "id": "evidence-path", "description": "Path evidence JSON documentado" }
+      ]
+    }
+  ]
+}

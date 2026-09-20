@@ -1,0 +1,24 @@
+{
+  "condition_id": "T_SKILLS_10",
+  "type": "TREATMENT",
+  "requested_catalog_size": 10,
+  "actual_catalog_size": 10,
+  "skill_ids": [
+    "adr",
+    "backend",
+    "researcher",
+    "frontend-pro",
+    "architect",
+    "agent-architecture-mining",
+    "agent-authoring",
+    "gaabwiki",
+    "code-reviewer",
+    "planner"
+  ],
+  "selection_strategy": "seeded_order_prefix",
+  "seed": "e001-v1-2026-09-18",
+  "catalog_fingerprint": "d7d55ac8898df448fa2f23a13f1847651378c835095bc89819250d93a5347933",
+  "max_description_tokens": null,
+  "prefix_token_estimate": 789,
+  "prefix_bytes": 6582
+}

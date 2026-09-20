@@ -1,0 +1,9 @@
+generated: 2026-09-20T02:20:12Z
+status: KNOWLEDGE_PROFILE_SEAM_VALIDATED
+tests:
+  orchestrator: 236/236
+  evolveloop_subset: 93/93
+  knowledge_backend_unit: 11/11
+  ground_sh_scout: PASS
+core_leaks: 0
+behavioral_equivalence: PASS

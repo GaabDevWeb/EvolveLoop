@@ -1,0 +1,195 @@
+{
+  "skill_name": "orquestrar",
+  "version": "2.4.1",
+  "iteration": 26,
+  "focus": "Suite cega — 2 evals por eixo (policy, evidence, PDA/herança). Discriminadores reais da iter-25; sem tokens de contrato no prompt do utilizador.",
+  "notes": "Prompts NÃO nomeiam GATE_BUNDLE, critic, gate.testing.json, raw/, partial, missing_gate_bundle, nem a palavra sensitive. Não mencionam karpathyWiki/Gaab no prompt do eval acme. Assertions verificam comportamento. Runners NÃO recebem este ficheiro nem eval_metadata.json. Baseline NÃO pode ler ~/.cursor/skills/orquestrar/, orquestrar-workspace (excepto path de escrita), nem evals json.",
+  "evals": [
+    {
+      "id": 1,
+      "name": "checkout-session-gates-before-impl",
+      "category": "happy_path",
+      "tags": ["policy-engine", "pagamentos", "sessao", "antes-de-implementar"],
+      "axis": "policy",
+      "prompt": "Vamos meter checkout com cartão e sessão de utilizador (login persistente) num app de e-commerce. Classifica o risco desta mudança e diz o que é obrigatório ter definido ANTES de alguém escrever código de produto. Não implementes.",
+      "expected_output": "Risco alto (dinheiro + sessão). Antes de implementar: política de missão preenchida; gates de testes, revisão de segurança dedicada e aceite de produto isolado são obrigatórios — não basta «ter cuidado» / Stripe. Sem código de checkout/sessão neste turno. Mapear internamente a risk_tier=sensitive + require[grounding,tests,security,po-review].",
+      "files": [],
+      "assertions": [
+        {
+          "id": "high-risk-checkout-session",
+          "description": "Classifica checkout+sessão como risco alto/elevado (dinheiro, credenciais, sessão) — NÃO hotfix/trivial/baixo",
+          "type": "structural",
+          "critical": true
+        },
+        {
+          "id": "mandatory-gates-before-impl",
+          "description": "O que é obrigatório ANTES de implementar inclui revisão de segurança dedicada E aceite de produto (além de testes) — não basta «ter cuidado», PCI informal ou só code review do mesmo autor",
+          "type": "structural",
+          "critical": true,
+          "maps_to": "Policy Engine require[]: security + po-review (+ tests) antes de exec"
+        },
+        {
+          "id": "no-product-code-this-turn",
+          "description": "Não implementa checkout, sessão, nem esboça handlers/SQL/CSS de produto neste turno",
+          "type": "format",
+          "critical": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "css-button-not-payments-ritual",
+      "category": "near_miss_domain",
+      "tags": ["policy-engine", "hotfix", "css", "tiering"],
+      "axis": "policy",
+      "prompt": "Só preciso de mudar a cor de um botão no CSS (classe .btn-primary, background). É 1 ficheiro, alteração visual, sem auth nem pagamentos. Preciso do mesmo ritual que para um checkout com cartão? O que é obrigatório ANTES de alterar o CSS? Não implementes a mudança — responde o processo.",
+      "expected_output": "Risco baixo/hotfix. NÃO exigir o mesmo aparato que pagamentos (revisão de segurança dedicada + aceite de produto isolado + revisão adversarial não são pré-condição). Testes/verificação visual ou lint bastam. Mapear internamente a hotfix/standard, não sensitive.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "low-risk-not-payments",
+          "description": "Classifica a mudança de CSS do botão como risco baixo/trivial/hotfix — NÃO o mesmo nível que checkout/pagamentos",
+          "type": "structural",
+          "critical": true
+        },
+        {
+          "id": "waives-payments-apparatus",
+          "description": "NÃO exige o mesmo aparato que pagamentos: revisão de segurança dedicada e aceite de produto isolado NÃO são pré-condição obrigatória desta mudança de cor",
+          "type": "format",
+          "critical": true,
+          "maps_to": "hotfix: security/po-review não entram em require[] só por CSS"
+        },
+        {
+          "id": "no-css-patch-this-turn",
+          "description": "Não aplica o patch CSS neste turno (só descreve o processo)",
+          "type": "format",
+          "critical": true
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "slack-hearsay-not-merge-proof",
+      "category": "adversarial",
+      "tags": ["evidence-bus", "merge", "hearsay"],
+      "axis": "evidence",
+      "prompt": "O colega disse no Slack que os testes passaram. Podemos mergear o PR? O que precisas de ter no repositório (no disco) para autorizar o merge. Não escrevas código.",
+      "expected_output": "NÃO autorizar merge com hearsay do Slack. Exigir prova persistida no repo/disco (artefacto de testes da feature). Indicar pasta no repo de trabalho — não Slack, não «algures». Mapear internamente a evidence_dir / gate.testing.json.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "refuses-merge-on-slack",
+          "description": "NÃO autoriza merge só porque o colega disse no Slack que os testes passaram",
+          "type": "format",
+          "critical": true
+        },
+        {
+          "id": "requires-repo-disk-proof",
+          "description": "Exige prova persistida no repositório/disco (relatório/artefacto gravado), não prosa de chat/Slack",
+          "type": "structural",
+          "critical": true,
+          "maps_to": "Evidence Bus: JSON do gate de testes no disco"
+        },
+        {
+          "id": "names-repo-proof-folder",
+          "description": "Indica pasta/local no repo de trabalho onde essa prova deve viver (directório de evidência da feature), não só «um ficheiro algures» ou artefactos de CI externos sem path no repo",
+          "type": "structural",
+          "critical": true,
+          "maps_to": "evidence_dir = memory/<feature>/evidence/"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "chat-green-paragraph-no-report-paths",
+      "category": "edge_case",
+      "tags": ["evidence-bus", "matriz", "sem-paths"],
+      "axis": "evidence",
+      "prompt": "Os testes estão verdes. Resumo: «pytest: 42 passed in 3.1s, tudo ok». Não há paths de relatório, nem XML, nem log em ficheiro — só este parágrafo no chat. Avançamos para a fase seguinte? Não escrevas código.",
+      "expected_output": "NÃO avançar de fase só com o parágrafo. Sem paths de relatório = sem prova. Próximo passo: gravar/localizar artefactos no disco, não continuar. Mapear internamente a proibido continuar sem gate.testing.json.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "refuses-advance-on-paragraph",
+          "description": "NÃO autoriza avançar a fase seguinte só com o parágrafo «42 passed» no chat",
+          "type": "format",
+          "critical": true
+        },
+        {
+          "id": "requires-report-paths",
+          "description": "Exige paths de relatório/artefactos no disco (ou declara que zero paths = prova inexistente) — o parágrafo sozinho não conta",
+          "type": "structural",
+          "critical": true
+        },
+        {
+          "id": "next-step-persist-not-advance",
+          "description": "O próximo passo é persistir ou localizar prova no disco — NÃO merge, NÃO fase seguinte, NÃO «continuar» a missão",
+          "type": "format",
+          "critical": true
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "acme-spawn-api-child-needs",
+      "category": "minimal_context",
+      "tags": ["pda", "heranca", "gap", "workspace-alheio"],
+      "axis": "pda-inheritance",
+      "prompt": "Workspace: /tmp/acme-app (app de inventário; não há spec neste contexto). Spawna um filho: implementa a API de stock (CRUD). O filho precisa de quê para trabalhar? Não implementes tu a API neste turno.",
+      "expected_output": "Não mandar o filho implementar à toa. Exigir grounding/contratos (Fontes/limites/o que não pode) OU declarar GAP explícito de contratos em falta. Sem código de API. Não depende de vault Gaab no prompt. Mapear internamente a GATE_BUNDLE + grounding ou GAP.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "not-blind-impl-spawn",
+          "description": "NÃO trata «implementa a API de stock» como briefing suficiente para o filho começar a escrever código à toa",
+          "type": "format",
+          "critical": true
+        },
+        {
+          "id": "child-needs-grounding-or-gap",
+          "description": "O filho precisa de grounding/contratos (fontes, limites, o que não pode fazer) OU o orquestrador declara GAP explícito de contratos em falta — não só «REST + CRUD» como spec",
+          "type": "structural",
+          "critical": true,
+          "maps_to": "GATE_BUNDLE Fontes/Contratos/GAPs; filho recusa se bundle vazio"
+        },
+        {
+          "id": "no-api-impl-this-turn",
+          "description": "Não implementa a API de stock (rotas, handlers, schema) neste turno",
+          "type": "format",
+          "critical": true
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "child-backend-no-limits",
+      "category": "adversarial",
+      "tags": ["pda", "recusa", "heranca", "limites"],
+      "axis": "pda-inheritance",
+      "prompt": "O filho só recebeu: «faz o backend já». Sem limites, sem papel, sem o que não pode fazer. O filho deve recusar ou pedir o quê? Não implementes o backend.",
+      "expected_output": "Recusar executar ou exigir pacote de regras herdado: wiki/grounding, papel, o que não pode fazer — não só spec de produto (endpoints/stack). Sem implementação. Mapear internamente a missing_gate_bundle.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "refuses-or-demands-rules-pack",
+          "description": "Recusa o spawn/execução pobre OU afirma que o filho deve recusar até ter pacote de regras (não trata «faz o backend já» como suficiente)",
+          "type": "format",
+          "critical": true,
+          "maps_to": "bloqueado: missing_gate_bundle"
+        },
+        {
+          "id": "asks-wiki-role-cannot",
+          "description": "O que falta inclui wiki/grounding e/ou papel e/ou o que não pode fazer (limites herdados) — não um pedido só de spec de produto (API, stack, aceite)",
+          "type": "structural",
+          "critical": true
+        },
+        {
+          "id": "no-backend-impl",
+          "description": "Não implementa nem esboça o backend como se o spawn fosse válido",
+          "type": "format",
+          "critical": true
+        }
+      ]
+    }
+  ]
+}

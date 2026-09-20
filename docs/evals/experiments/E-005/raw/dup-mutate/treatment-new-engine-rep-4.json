@@ -1,0 +1,57 @@
+{
+  "row": {
+    "experiment_id": "E-005",
+    "condition": "TREATMENT_NEW_ENGINE",
+    "sequence": 4,
+    "job_run_id": "c96846f7-806d-4a22-9430-2e1bccd4694b",
+    "mutation": {
+      "expected": 1,
+      "observed": 1
+    },
+    "interruption": {
+      "requested": true,
+      "observed": true,
+      "mode": "wait_for_jobs_ms=0"
+    },
+    "persistence": {
+      "state_saved": true,
+      "state_restored": true
+    },
+    "resume": {
+      "attempted": true,
+      "succeeded": true,
+      "same_engine_instance": false
+    },
+    "completion": {
+      "status": "success"
+    },
+    "duplicate_mutate": {
+      "value": false,
+      "observed_mutations": 1
+    },
+    "continuation": {
+      "same_engine": false,
+      "same_process": true,
+      "note": "new ExecutionEngine in same Node process — not OS kill",
+      "node_final_status": "satisfied"
+    },
+    "side_effect": {
+      "scope": "STATE_WRITE",
+      "expected_count": 1,
+      "observed_count": 1
+    }
+  },
+  "mutations": [
+    {
+      "experiment_id": "E-005",
+      "condition": "TREATMENT_NEW_ENGINE",
+      "sequence": 1,
+      "run_id": "c96846f7-806d-4a22-9430-2e1bccd4694b",
+      "operation_id": "test-only:job_file_write",
+      "mutation_id": "c96846f7-806d-4a22-9430-2e1bccd4694b:1",
+      "node_id": "test-only",
+      "capability": "testing",
+      "timestamp": "2026-09-19T00:00:02.649Z"
+    }
+  ]
+}

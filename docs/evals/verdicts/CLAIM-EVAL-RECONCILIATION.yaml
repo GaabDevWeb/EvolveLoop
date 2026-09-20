@@ -1,0 +1,127 @@
+# Claim ↔ Eval Reconciliation
+# Does not modify docs/evals/results/CLAIMS.yaml
+
+baseline_id: baseline-v1-2026-09-18
+eval_battery: eval-battery-v1-2026-09-19
+
+claims:
+
+  - claim_id: CLM-E001-001
+    experiment: E-001
+    evidence_ids: [E001-EV-001, E001-EV-003]
+    eval_ids: [EV-007]
+    experimental_status: SUPPORTED
+    eval_status: SUPPORTED_BY_EVAL
+    reconciled_status: REINFORCED
+    confidence: MEDIUM
+    explanation: >
+      Offline activation_precision association observed in E-001 and reproduced by EV-007
+      on the same harness basis (CORROBORATED, not independent replication).
+
+  - claim_id: CLM-E001-002
+    experiment: E-001
+    evidence_ids: [E001-EV-001, E001-EV-003, E001-EV-004]
+    eval_ids: [EV-008]
+    experimental_status: SUPPORTED
+    eval_status: SUPPORTED_BY_EVAL
+    reconciled_status: REINFORCED
+    confidence: MEDIUM
+    explanation: >
+      PROXY token_estimate inequalities and T_TOKENS_40 ~−39.6% corroborated by EV-008.
+      PROXY status preserved.
+
+  - claim_id: CLM-E001-003
+    experiment: E-001
+    evidence_ids: [E001-EV-002, E001-EV-003]
+    eval_ids: []
+    experimental_status: NOT_MEASURED
+    eval_status: NOT_EVALUATED
+    reconciled_status: NOT_EVALUATED
+    confidence: HIGH
+    explanation: "Live task_success boundary correctly left unevaluated; not a FAIL."
+
+  - claim_id: CLM-E001-004
+    experiment: E-001
+    evidence_ids: [E001-EV-003]
+    eval_ids: []
+    experimental_status: NOT_MEASURED
+    eval_status: NOT_EVALUATED
+    reconciled_status: NOT_EVALUATED
+    confidence: HIGH
+    explanation: "Live host catalog injection still unavailable."
+
+  - claim_id: CLM-E001-005
+    experiment: E-001
+    evidence_ids: [E001-EV-003]
+    eval_ids: [EV-007, EV-008]
+    experimental_status: SUPPORTED_SCOPED
+    eval_status: PARTIALLY_SUPPORTED
+    reconciled_status: PARTIALLY_REINFORCED
+    confidence: MEDIUM
+    explanation: >
+      Scope reminder (offline-only SUPPORTED) remains; evals reinforce scoped observables
+      without expanding to production.
+
+  - claim_id: CLM-E005-001
+    experiment: E-005
+    evidence_ids: [E005-EV-001, E005-EV-002]
+    eval_ids: [EV-006]
+    experimental_status: SUPPORTED
+    eval_status: SUPPORTED_BY_EVAL
+    reconciled_status: REINFORCED
+    confidence: HIGH
+    explanation: "No duplicate STATE_WRITE; EV-006 same-fixture corroboration."
+
+  - claim_id: CLM-E005-002
+    experiment: E-005
+    evidence_ids: [E005-EV-001, E005-EV-003]
+    eval_ids: [EV-006]
+    experimental_status: SUPPORTED
+    eval_status: SUPPORTED_BY_EVAL
+    reconciled_status: REINFORCED
+    confidence: HIGH
+    explanation: "resume_success=1.0 corroborated by EV-006."
+
+  - claim_id: CLM-E005-003
+    experiment: E-005
+    evidence_ids: [E005-EV-001, E005-EV-003]
+    eval_ids: [EV-006]
+    experimental_status: SUPPORTED
+    eval_status: SUPPORTED_BY_EVAL
+    reconciled_status: REINFORCED
+    confidence: HIGH
+    explanation: "State integrity under fixture corroborated."
+
+  - claim_id: CLM-E005-004
+    experiment: E-005
+    evidence_ids: [E005-EV-001, E005-EV-002]
+    eval_ids: [EV-006]
+    experimental_status: PARTIAL
+    eval_status: PARTIALLY_SUPPORTED
+    reconciled_status: PARTIALLY_REINFORCED
+    confidence: HIGH
+    explanation: "Same-process MEASURED; OS kill remains NOT_MEASURED — unchanged by EV-006."
+
+  - claim_id: CLM-E005-005
+    experiment: E-005
+    evidence_ids: [E005-EV-003]
+    eval_ids: []
+    experimental_status: NOT_MEASURED
+    eval_status: NOT_EVALUATED
+    reconciled_status: NOT_EVALUATED
+    confidence: HIGH
+    explanation: "Full product HITL boundary preserved."
+
+summary:
+  REINFORCED: 5
+  PARTIALLY_REINFORCED: 2
+  WEAKENED: 0
+  CONTRADICTED: 0
+  NOT_EVALUATED: 3
+
+mapping_to_claim_validation:
+  reinforced: 5
+  partially_supported: 2
+  contradicted: 0
+  not_evaluated: 3
+  note: Counts align with docs/evals/runs/CLAIM-VALIDATION.yaml summary.

@@ -1,0 +1,58 @@
+apiVersion: capability-orchestrator.io/v2
+kind: ExecutionPolicy
+metadata:
+  id: high-reliability
+  version: "1.0.0"
+  description: "Produção — gates completos, retries generosos, qualidade"
+
+spec:
+  retries:
+    default: 3
+    by_capability:
+      testing: 2
+      frontend-ui: 2
+    by_type:
+      gate: 1
+      worker: 3
+
+  gates:
+    required:
+      - testing
+      - security-review
+      - po-acceptance
+      - documentation
+    optional:
+      - frontend-visual-review
+    skipped: []
+
+  provider_strategy: highest_quality
+
+  parallelism:
+    max_parallel: 3
+    mode: async
+
+  timeouts:
+    step_timeout: 30m
+    wait_timeout: 60m
+    feature_timeout: 8h
+
+  on_gate_reject: orchestrator
+  on_evidence_missing: fail
+  fail_fast: false
+  execution_order: topological
+
+  knowledge:
+    consult_before_schedule: true
+    consult_before_provider_select: true
+
+  memory:
+    scope: feature
+    persist_contextual: true
+
+  phase_gates:
+    enabled: true
+    mapping:
+      testing: 3
+      security-review: 4
+      po-acceptance: 5
+      documentation: 6

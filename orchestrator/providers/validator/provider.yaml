@@ -1,0 +1,53 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Provider
+metadata:
+  name: validator
+  version: "1.0.0"
+  description: "Thin formal DoD/evidence gate — NOT testing, NOT po-review, NOT code-reviewer"
+  owner: agents-team
+
+spec:
+  plugin:
+    type: cursor-skill
+    entrypoint: ".cursor/skills/validator/SKILL.md"
+
+  capabilities:
+    - id: validation
+      contract: contracts/validation@1.0.0
+      type: gate
+
+  interfaces:
+    inputs:
+      - name: dod-checklist
+        required: true
+      - name: evidence-paths
+        required: true
+    outputs:
+      - name: validation-report
+        note: "PASS|FAIL|INCOMPLETE + checklist rows"
+      - name: handoff
+        note: "Typed next gate/owner"
+
+  runtime:
+    cost: low
+    subagent_type: explore
+    pda_role: gate
+    isolation_required: true
+
+  telemetry:
+    key: provider.validator
+
+  availability: active
+  priority: 90
+
+  constraints:
+    - signal: not_testing
+      note: "Suite runners → testing"
+    - signal: not_po_acceptance
+      note: "UAT/release OK → po-review"
+    - signal: not_code_review
+      note: "Diff smells/LGTM → code-reviewer"
+    - signal: no_patches
+      note: "Never mutate product code"
+    - signal: evidence_required
+      note: "Must inspect artefacts; no invented PASS"

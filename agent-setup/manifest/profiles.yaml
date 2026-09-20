@@ -1,0 +1,34 @@
+version: 1
+
+profiles:
+  minimal:
+    description: Cursor core rules, wiki skill, basic commands, doctor
+    components:
+      rules: [wiki-agent, megabrain]
+      commands: [wiki, MegaBrain]
+      skills: [wiki]
+      hooks: false
+      megabrain: false
+      memory: false
+      rag: false
+      systemd_user: false
+
+  standard:
+    description: minimal + MegaBrain, Wiki memory, hooks
+    extends: minimal
+    components:
+      skills: [wiki, wiki-mem, orquestrar, skill-authoring]
+      commands: [mem, planejar, testes, validar, seguranca, documentar]
+      hooks: true
+      megabrain: true
+      memory: true
+      worker_skills: true
+
+  full:
+    description: standard + RAG, systemd, provider detection
+    extends: standard
+    components:
+      rag: true
+      systemd_user: true
+      all_pda_skills: true
+      providers: [cursor_api, ollama]

@@ -1,0 +1,117 @@
+generated_at: "20260920T005842Z"
+cursor_skill_root: "/home/gaab/.cursor/skills"
+total_skills: 25
+skills:
+  - id: adr
+    type: symlink
+    target: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/adr
+    skill_md: true
+  - id: agent-architecture-mining
+    type: symlink
+    target: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/agent-architecture-mining
+    skill_md: true
+  - id: agent-authoring
+    type: symlink
+    target: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/agent-authoring
+    skill_md: true
+  - id: architect
+    type: symlink
+    target: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/architect
+    skill_md: true
+  - id: backend
+    type: symlink
+    target: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/backend
+    skill_md: true
+  - id: code-reviewer
+    type: symlink
+    target: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/code-reviewer
+    skill_md: true
+  - id: database
+    type: symlink
+    target: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/database
+    skill_md: true
+  - id: debugger
+    type: symlink
+    target: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/debugger
+    skill_md: true
+  - id: devops
+    type: symlink
+    target: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/devops
+    skill_md: true
+  - id: documentation
+    type: symlink
+    target: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/documentation
+    skill_md: true
+  - id: failure-analyst
+    type: symlink
+    target: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/failure-analyst
+    skill_md: true
+  - id: frontend-pro
+    type: symlink
+    target: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/frontend-pro
+    skill_md: true
+  - id: wiki
+    type: symlink
+    target: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/wiki
+    skill_md: true
+  - id: wiki-mem
+    type: symlink
+    target: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/wiki-mem
+    skill_md: true
+  - id: MegaBrain
+    type: symlink
+    target: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/orquestrar
+    skill_md: true
+  - id: orquestrar
+    type: symlink
+    target: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/orquestrar
+    skill_md: true
+  - id: planner
+    type: symlink
+    target: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/planner
+    skill_md: true
+  - id: po-review
+    type: symlink
+    target: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/po-review
+    skill_md: true
+  - id: prd
+    type: symlink
+    target: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/prd
+    skill_md: true
+  - id: researcher
+    type: symlink
+    target: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/researcher
+    skill_md: true
+  - id: security
+    type: symlink
+    target: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/security
+    skill_md: true
+  - id: skill-authoring
+    type: symlink
+    target: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/skill-authoring
+    skill_md: true
+  - id: testing
+    type: symlink
+    target: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/testing
+    skill_md: true
+  - id: validator
+    type: symlink
+    target: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/validator
+    skill_md: true
+  - id: wiki-carpaccio
+    type: symlink
+    target: /home/gaab/.agents/skills/wiki-carpaccio
+    skill_md: true
+removed_absent:
+  - { id: gsap, in_cursor_skills: false, in_global_skills: false }
+  - { id: framer-motion, in_cursor_skills: false, in_global_skills: false }
+  - { id: lenis, in_cursor_skills: false, in_global_skills: false }
+  - { id: hover-effects, in_cursor_skills: false, in_global_skills: false }
+  - { id: particles, in_cursor_skills: false, in_global_skills: false }
+  - { id: r3f-shaders, in_cursor_skills: false, in_global_skills: false }
+  - { id: linkedin-posts, in_cursor_skills: false, in_global_skills: false }
+hard_gates:
+  grill-me: { path: /home/gaab/.agents/skills/grill-me, present: true, fail_closed: true }
+  image-to-code: { path: /home/gaab/.agents/skills/image-to-code, present: true, critical: true }
+agents_skills_count: 39
+skills_cursor_untouched: true

@@ -1,0 +1,69 @@
+apiVersion: capability-orchestrator.io/v2
+kind: CapabilityGraph
+metadata:
+  id: "2026-06-30-login-dashboard"
+  feature: "Login + Dashboard"
+  ir_version: "2.0.0"
+  policy_ref: rapid-prototype
+spec:
+  nodes:
+    - id: contract-1
+      capability: api-contract
+      type: worker
+      inputs:
+        - ref: global.feature-request
+      outputs:
+        - id: api-contract
+          path: docs/contracts/login-api.md
+      dependencies: []
+      definition_of_done:
+        - id: dod-1
+          check: OpenAPI documentado
+          verification: evidence
+    - id: be-auth
+      capability: backend-implementation
+      type: worker
+      inputs:
+        - ref: contract-1.outputs
+      outputs:
+        - id: auth-module
+          path: src/auth/
+      dependencies:
+        - contract-1
+      definition_of_done:
+        - id: dod-be-1
+          check: Endpoints implementados
+          verification: automated
+    - id: fe-login
+      capability: frontend-ui
+      type: worker
+      inputs:
+        - ref: contract-1.outputs
+      outputs:
+        - id: ui-login
+          path: src/pages/login/
+      dependencies:
+        - contract-1
+      definition_of_done:
+        - id: dod-fe-1
+          check: UI conforme spec
+          verification: evidence
+    - id: test-suite
+      capability: testing
+      type: gate
+      dependencies:
+        - be-auth
+        - fe-login
+      inputs:
+        - ref: be-auth.outputs
+        - ref: fe-login.outputs
+      outputs:
+        - id: test-report
+          path: telemetry/evidence/test-report.json
+      definition_of_done:
+        - id: dod-t-1
+          check: Suite verde
+          verification: automated
+      gate:
+        on_reject: invalidate_downstream
+        verdict_required: true

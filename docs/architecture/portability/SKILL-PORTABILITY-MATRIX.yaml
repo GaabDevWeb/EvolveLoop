@@ -1,0 +1,165 @@
+# Skill portability (reuse prior skill audits; question = public vs personal)
+source_audits:
+  - docs/architecture/skills/audit/
+  - docs/architecture/skills/pruning/
+hard_gates_preserved: [grill-me, image-to-code]
+skills:
+  - id: orquestrar
+    portability_class: PUBLIC_CORE_SKILL
+    final_class: CORE_BUT_CONFIGURABLE
+    confidence: HIGH
+    note: "hard-gate text couples GaabWiki"
+  - id: gaabwiki
+    portability_class: PERSONAL_SKILL
+    final_class: PERSONAL_PROFILE
+    confidence: HIGH
+    note: "implements context-grounding"
+  - id: gaabwiki-mem
+    portability_class: PERSONAL_SKILL
+    final_class: PERSONAL_PROFILE
+    confidence: HIGH
+    note: "hooks + sessions"
+  - id: prd
+    portability_class: PUBLIC_CORE_SKILL
+    final_class: CORE
+    confidence: HIGH
+  - id: planner
+    portability_class: PUBLIC_CORE_SKILL
+    final_class: CORE
+    confidence: HIGH
+  - id: backend
+    portability_class: PUBLIC_CORE_SKILL
+    final_class: CORE
+    confidence: HIGH
+  - id: frontend-pro
+    portability_class: PUBLIC_CORE_SKILL
+    final_class: CORE
+    confidence: HIGH
+  - id: database
+    portability_class: PUBLIC_CORE_SKILL
+    final_class: CORE
+    confidence: HIGH
+  - id: testing
+    portability_class: PUBLIC_CORE_SKILL
+    final_class: CORE
+    confidence: HIGH
+  - id: security
+    portability_class: PUBLIC_CORE_SKILL
+    final_class: CORE
+    confidence: HIGH
+  - id: devops
+    portability_class: PUBLIC_SPECIALIZED_SKILL
+    final_class: PUBLIC_OPTIONAL
+    confidence: HIGH
+  - id: po-review
+    portability_class: PUBLIC_CORE_SKILL
+    final_class: CORE
+    confidence: HIGH
+  - id: documentation
+    portability_class: PUBLIC_CORE_SKILL
+    final_class: CORE
+    confidence: HIGH
+  - id: adr
+    portability_class: PUBLIC_SPECIALIZED_SKILL
+    final_class: PUBLIC_OPTIONAL
+    confidence: HIGH
+  - id: architect
+    portability_class: PUBLIC_SPECIALIZED_SKILL
+    final_class: PUBLIC_OPTIONAL
+    confidence: HIGH
+  - id: debugger
+    portability_class: PUBLIC_CORE_SKILL
+    final_class: CORE
+    confidence: HIGH
+  - id: researcher
+    portability_class: PUBLIC_SPECIALIZED_SKILL
+    final_class: PUBLIC_OPTIONAL
+    confidence: MEDIUM
+  - id: failure-analyst
+    portability_class: PUBLIC_SPECIALIZED_SKILL
+    final_class: PUBLIC_OPTIONAL
+    confidence: MEDIUM
+  - id: code-reviewer
+    portability_class: PUBLIC_SPECIALIZED_SKILL
+    final_class: PUBLIC_OPTIONAL
+    confidence: MEDIUM
+  - id: validator
+    portability_class: PUBLIC_SPECIALIZED_SKILL
+    final_class: PUBLIC_OPTIONAL
+    confidence: MEDIUM
+  - id: skill-authoring
+    portability_class: PUBLIC_SPECIALIZED_SKILL
+    final_class: PUBLIC_OPTIONAL
+    confidence: HIGH
+  - id: agent-authoring
+    portability_class: PUBLIC_SPECIALIZED_SKILL
+    final_class: PUBLIC_OPTIONAL
+    confidence: HIGH
+  - id: agent-architecture-mining
+    portability_class: PUBLIC_SPECIALIZED_SKILL
+    final_class: PUBLIC_OPTIONAL
+    confidence: MEDIUM
+  - id: grill-me
+    portability_class: PUBLIC_CORE_SKILL
+    final_class: CORE
+    confidence: HIGH
+    note: "hard gate — do not remove"
+  - id: image-to-code
+    portability_class: PUBLIC_CORE_SKILL
+    final_class: CORE
+    confidence: HIGH
+    note: "hard gate — do not remove"
+  - id: brainstorming
+    portability_class: PUBLIC_SPECIALIZED_SKILL
+    final_class: PUBLIC_OPTIONAL
+    confidence: HIGH
+  - id: systematic-debugging
+    portability_class: PUBLIC_CORE_SKILL
+    final_class: CORE
+    confidence: HIGH
+  - id: subagent-driven-development
+    portability_class: PUBLIC_SPECIALIZED_SKILL
+    final_class: PUBLIC_OPTIONAL
+    confidence: HIGH
+  - id: writing-plans
+    portability_class: PUBLIC_SPECIALIZED_SKILL
+    final_class: PUBLIC_OPTIONAL
+    confidence: HIGH
+  - id: executing-plans
+    portability_class: PUBLIC_SPECIALIZED_SKILL
+    final_class: PUBLIC_OPTIONAL
+    confidence: HIGH
+  - id: finishing-a-development-branch
+    portability_class: PUBLIC_SPECIALIZED_SKILL
+    final_class: PUBLIC_OPTIONAL
+    confidence: MEDIUM
+  - id: find-skills
+    portability_class: PUBLIC_SPECIALIZED_SKILL
+    final_class: PUBLIC_OPTIONAL
+    confidence: MEDIUM
+  - id: frontend-design
+    portability_class: PUBLIC_OPTIONAL_SKILL
+    final_class: PUBLIC_OPTIONAL
+    confidence: MEDIUM
+  - id: ui-ux-pro-max
+    portability_class: PUBLIC_OPTIONAL_SKILL
+    final_class: PUBLIC_OPTIONAL
+    confidence: MEDIUM
+  - id: agent-browser
+    portability_class: PUBLIC_SPECIALIZED_SKILL
+    final_class: PUBLIC_OPTIONAL
+    confidence: HIGH
+  - id: technical-library-dossier
+    portability_class: PUBLIC_SPECIALIZED_SKILL
+    final_class: PUBLIC_OPTIONAL
+    confidence: HIGH
+  - id: wiki-carpaccio
+    portability_class: EXTERNAL
+    final_class: HOST_SPECIFIC
+    confidence: MEDIUM
+    note: "host-only; not in pack"
+  - id: ip-as-logo
+    portability_class: PERSONAL_SKILL
+    final_class: PERSONAL
+    confidence: MEDIUM
+    note: "host-only; not in pack"

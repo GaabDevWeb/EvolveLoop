@@ -1,0 +1,77 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Provider
+metadata:
+  name: frontend-pro
+  version: "1.2.0"
+  description: "UI implementation (worker) and visual QA (gate) — KEEP specialized"
+  owner: agents-team
+
+spec:
+  plugin:
+    type: cursor-skill
+    entrypoint: ".cursor/skills/frontend-pro/SKILL.md"
+
+  capabilities:
+    - id: frontend-ui
+      contract: contracts/frontend-ui@2.0.0
+      type: worker
+      modes:
+        - name: build
+          default: true
+        - name: vision
+        - name: fix
+    - id: frontend-visual-review
+      contract: contracts/frontend-visual-review@1.0.0
+      type: gate
+      modes:
+        - name: review
+        - name: audit
+
+  interfaces:
+    inputs:
+      - name: design-spec
+        required: false
+      - name: api-contract
+        required: false
+      - name: page-url
+        required: false
+    outputs:
+      - name: ui-artifacts
+        schema: artifacts/frontend-pages@1.0.0
+      - name: visual-review
+        schema: artifacts/visual-review-report@1.0.0
+
+  dependencies:
+    optional:
+      - filesystem.read
+      - filesystem.list
+      - filesystem.search
+      - filesystem.write
+      - project.inspect
+      - git.inspect
+      - shell.execute
+
+  runtime:
+    cost: medium
+    subagent_type: generalPurpose
+    pda_role: exec
+
+  runtime_compatibility:
+    engine: ">=2.0.0 <3.0.0"
+    evidence: ">=2.1.0 <3.0.0"
+    execution: ">=2.1.0"
+    executor_types: [cursor-skill, mcp]
+
+  constraints:
+    stack: [cursor, megabrain]
+    platforms: [cursor]
+    signals:
+      - phase: "2"
+      - role: exec
+      - forbids: [backend-implementation, database-schema, devops-deploy, security-gate]
+
+  telemetry:
+    key: provider.frontend-pro
+
+  availability: active
+  priority: 100

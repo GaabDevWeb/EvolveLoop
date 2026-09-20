@@ -1,0 +1,87 @@
+# Wiki rename manifest
+generated: 2026-09-20T02:08:07Z
+status: WIKI_RENAME_VALIDATED
+baseline_tests: 225/225
+post_tests: 225/225
+snapshot: .prune-snapshots/wiki-rename-pre-20260920T020310Z/
+
+changes:
+  - old: .cursor/skills/gaabwiki
+    new: .cursor/skills/wiki
+    type: skill_directory
+    reason: subsystem identity
+    risk: HIGH
+    validated: true
+  - old: .cursor/skills/gaabwiki-mem
+    new: .cursor/skills/wiki-mem
+    type: skill_directory
+    reason: subsystem memory identity
+    risk: HIGH
+    validated: true
+  - old: .cursor/hooks/gaabwiki-mem
+    new: .cursor/hooks/wiki-mem
+    type: hook_directory
+    reason: same semantics, new name
+    risk: HIGH
+    validated: true
+  - old: Rules/gaabwiki-agent.mdc
+    new: Rules/wiki-agent.mdc
+    type: rule
+    reason: alwaysApply wiki loop
+    risk: HIGH
+    validated: true
+  - old: Agents/Gaabwiki.md
+    new: Agents/Wiki.md
+    type: agent_mirror
+    reason: mirror skill rename
+    risk: LOW
+    validated: true
+  - old: Agents/Gaabwiki-mem.md
+    new: Agents/Wiki-mem.md
+    type: agent_mirror
+    reason: mirror skill rename
+    risk: LOW
+    validated: true
+  - old: orquestrar/references/gaabwiki-grounding-gate.md
+    new: orquestrar/references/wiki-grounding-gate.md
+    type: hard_gate_doc
+    reason: Wiki grounding identity (semantics unchanged)
+    risk: CRITICAL
+    validated: true
+  - old: gaabwiki-grounding (node id)
+    new: wiki-grounding
+    type: hard_gate_id
+    reason: identity only
+    risk: HIGH
+    validated: true
+  - old: DEFAULT_RAG_ROOT=/home/gaab/...
+    new: WIKI_ROOT / RAG_REPO_ROOT required (no absolute default)
+    type: path
+    reason: remove personal path coupling
+    risk: CRITICAL
+    validated: true
+  - old: dual vault defaults
+    new: single env WIKI_ROOT (canonical host value set in agents.env)
+    type: path_unification
+    reason: eliminate divergent defaults
+    risk: CRITICAL
+    validated: true
+  - old: error codes GAABWIKI_*
+    new: WIKI_*
+    type: identifier
+    reason: subsystem identity
+    risk: MEDIUM
+    validated: true
+  - old: retrieval_method gaabwiki
+    new: wiki
+    type: identifier
+    reason: subsystem identity
+    risk: LOW
+    validated: true
+  - old: python -m gaabwiki
+    new: python -m gaabwiki (unchanged EXTERNAL) via WIKI_CLI_MODULE
+    type: external_cli
+    reason: vault package name not renamed this phase
+    risk: MEDIUM
+    validated: true
+    note: LEGACY_ALIAS_REQUIRED / VALID_EXTERNAL

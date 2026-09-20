@@ -1,0 +1,96 @@
+{
+  "skill_name": "architect",
+  "evals": [
+    {
+      "id": 1,
+      "name": "architect-layer-redesign",
+      "category": "happy_path",
+      "tags": ["analysis", "tradeoffs"],
+      "prompt": "Rever a arquitectura do monólito actual e propor opções para extrair um serviço de pagamentos. Existem docs/ARCHITECTURE.md e docs/adr/0001.",
+      "expected_output": "Análise com ≥2 opções, trade-offs, proposta, ADR candidates; sem ficheiro docs/adr/NNNN novo.",
+      "files": [],
+      "assertions": [
+        {"id": "options", "description": "≥2 opções com prós/contras", "type": "structural"},
+        {"id": "no-adr-file", "description": "Não cria docs/adr/NNNN-*.md", "type": "behavioral"},
+        {"id": "adr-candidates", "description": "Lista candidatos a /adr", "type": "structural"}
+      ]
+    },
+    {
+      "id": 2,
+      "name": "architect-update-architecture-doc",
+      "category": "happy_path",
+      "tags": ["architecture-doc"],
+      "prompt": "Actualiza docs/ARCHITECTURE.md com camadas claras para API + workers + fila, após análise.",
+      "expected_output": "Proposta/actualização ARCHITECTURE + handoff estruturado.",
+      "files": [],
+      "assertions": [
+        {"id": "arch-touch", "description": "Menciona ou actualiza ARCHITECTURE.md", "type": "behavioral"},
+        {"id": "handoff", "description": "Handoff explícito (adr|planner|humano)", "type": "structural"}
+      ]
+    },
+    {
+      "id": 3,
+      "name": "boundary-adr-only",
+      "category": "adversarial",
+      "tags": ["fronteira", "adr"],
+      "prompt": "Documenta num ADR que escolhemos Redis como cache.",
+      "expected_output": "Redirecciona para /adr; não faz análise completa nem escreve ADR.",
+      "files": [],
+      "assertions": [
+        {"id": "redirect-adr", "description": "Aponta para skill/comando adr", "type": "behavioral"},
+        {"id": "no-full-analysis", "description": "Não produz pacote de análise completo desnecessário", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 4,
+      "name": "boundary-full-prd",
+      "category": "adversarial",
+      "tags": ["fronteira", "prd"],
+      "prompt": "Feature nova de billing — cria PRD, API_SPEC, DATA-MODEL, ARCHITECTURE e ADRs.",
+      "expected_output": "Redirecciona para /prd (pacote completo).",
+      "files": [],
+      "assertions": [
+        {"id": "redirect-prd", "description": "Referencia /prd", "type": "behavioral"},
+        {"id": "no-prd-package", "description": "Não produz os 6 artefactos prd sozinho", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 5,
+      "name": "boundary-planner",
+      "category": "adversarial",
+      "tags": ["fronteira", "planner"],
+      "prompt": "Faz o plano de implementação com IDs, DAG e Briefing Relâmpago para a migração.",
+      "expected_output": "Redirecciona para /planejar; pode oferecer análise arquitectural se faltar.",
+      "files": [],
+      "assertions": [
+        {"id": "redirect-planner", "description": "Aponta para planner/planejar", "type": "behavioral"},
+        {"id": "no-execution-graph", "description": "Não entrega grafo de IDs de execução", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 6,
+      "name": "edge-universal",
+      "category": "adversarial",
+      "tags": ["overload"],
+      "prompt": "Sê o Universal Architect: desenha, escreve ADRs, PRD, plano e implementa o backend.",
+      "expected_output": "Recusa overload; decompõe handoffs prd→architect→adr→planner→backend.",
+      "files": [],
+      "assertions": [
+        {"id": "refuse-universal", "description": "Não aceita papel Universal", "type": "behavioral"},
+        {"id": "decompose", "description": "Propõe decomposição por agentes", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 7,
+      "name": "minimal-context",
+      "category": "edge_case",
+      "tags": ["clarificacao"],
+      "prompt": "Analisa a arquitectura.",
+      "expected_output": "Pede scope (sistema/módulo/migração) ou analisa com SUPOSIÇÕES explícitas.",
+      "files": [],
+      "assertions": [
+        {"id": "scope-or-assumptions", "description": "Pergunta scope ou declara SUPOSIÇÕES", "type": "behavioral"}
+      ]
+    }
+  ]
+}

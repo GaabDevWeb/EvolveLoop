@@ -1,0 +1,3 @@
+171:    const maxIterations = 500;
+174:    while (!graph.isFinished() && iterations++ < maxIterations && !this.aborted) {
+292:      } else if (iterations >= maxIterations) {

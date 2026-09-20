@@ -1,0 +1,129 @@
+# Architecture Evolution — STATE AT START
+# Generated: 2026-09-19
+# Evidence classes: OBSERVED unless noted
+
+state:
+  timestamp: "2026-09-19T14:30:00Z"
+  repository: /home/gaab/Downloads/CursorSKILLS
+  orchestrator: /home/gaab/Downloads/CursorSKILLS/orchestrator
+  package: "@agents/orchestrator@2.0.0"
+  git: ABSENT
+
+  baseline:
+    id: baseline-v1-2026-09-18
+    version: V1
+    integrity:
+      BASELINE-CHECKSUMS.sha256: OK
+      CRITICAL-FINGERPRINTS.sha256: OK
+      verified_from: [docs/evals/baseline, orchestrator]
+    immutable: true
+    modified_this_pipeline: false
+
+  source_integrity:
+    tree_content_sha256: "5600f9df2c99dde25771567faeaaa25d39c55575c046e36b55fb965149813795"
+    method: sha256 of sorted per-file hashes (src+tests+policies+contracts+schemas+manifests)
+    git: ABSENT
+
+  tests:
+    source: docs/evals/baseline/BASELINE-METRICS.yaml + measurement-npm-test.log
+    total: 103
+    passed: 103
+    failed: 0
+    evidence_class: OBSERVED
+    live_rerun: PENDING
+
+  contracts:
+    source: BASELINE-METRICS.yaml + measurement-contracts.log
+    total: 7
+    passed: 7
+    failed: 0
+    evidence_class: OBSERVED
+
+  full_cycle:
+    source: BASELINE-METRICS.yaml + measurement-full-cycle.log
+    total: 5
+    passed: 5
+    failed: 0
+    evidence_class: OBSERVED
+
+  build:
+    status: FAIL
+    preexisting: true
+    evidence_class: OBSERVED
+    note: measurement-build.log tsc errors — known at baseline freeze
+
+  runtime_status:
+    jobs: PRESENT
+    resume_pickup: OBSERVED
+    sandbox: NOT_IMPLEMENTED
+    semantic_stuck_detection: NOT_IMPLEMENTED
+    model_routing: NOT_IMPLEMENTED
+    evidence_engine_array: PRESENT
+    megabrain_evidence_bus: DISTINCT_BOUNDARY
+    evidence_class: OBSERVED
+
+  prototype_status:
+    PT-001:
+      hardening: READY_FOR_GATE
+      gate: BLOCKED
+      execution_authorized: false
+    PT-002:
+      hardening: READY_FOR_GATE
+      gate: NEEDS_MORE_EVIDENCE
+      execution_authorized: false
+    gate_batch: COMPLETE_WITH_BLOCKERS
+    evidence_class: OBSERVED
+    source: docs/architecture/prototype-gate/GATE-STATUS.yaml
+
+  adr_status:
+    ADR-DR-0001: ACCEPTED
+    ADR-DR-0002: ACCEPTED
+    ADR-DR-0003: ACCEPTED
+    ADR-DR-0004: ACCEPTED
+    ADR-DR-0005: ACCEPTED
+    implementation: NOT_IMPLEMENTED
+    evidence_class: OBSERVED
+
+  hypothesis_verdicts:
+    SUPPORTED: 0
+    WEAKENED: 2  # H-001, H-005
+    REFUTED: 0
+    INCONCLUSIVE: 3  # H-002, H-003, H-004
+    evidence_class: OBSERVED
+    source: docs/evals/verdicts/
+
+  known_gaps:
+    - os_sandbox
+    - semantic_stuck_detection
+    - model_routing
+    - live_task_success
+    - live_host_catalog_injection
+    - os_kill_resume
+    - global_exactly_once
+    - evidence_bus_vs_engine_evidence_array
+    - build_tsc_fail_preexisting
+
+  known_drift:
+    - id: finalization_READY_FOR_GATE_vs_gate_BLOCKED
+      type: TEMPORAL_CONFLICT
+      resolution: intentional — READY_FOR_GATE ≠ APPROVED
+      status: DOCUMENTED
+    - id: audit_pre_sync_jobs_absent_vs_baseline_jobs_present
+      type: TEMPORAL_CONFLICT
+      resolution: superseded by runtime sync + baseline V1
+      status: DOCUMENTED
+    - id: experiment_SUPPORTED_scoped_vs_hypothesis_WEAKENED
+      type: SCOPE_CONFLICT
+      resolution: different scopes — not contradiction
+      status: DOCUMENTED
+
+  wiki_grounding:
+    status: applied
+    pack: NONE
+    confidence: high_cli_low_topic_coverage
+    gap: "No CursorSKILLS pack/PT/ADR contracts in vault — repo docs are SoT"
+    vault_note: "/home/gaab/Documentos/gitHub/karpathyWiki (legacy path fails)"
+
+  pipeline:
+    current_stage: STATE_RECONCILIATION
+    next_stage: PROTOTYPE_GATE  # already complete — will record and transition

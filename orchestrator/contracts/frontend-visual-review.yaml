@@ -1,0 +1,25 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Contract
+metadata:
+  id: frontend-visual-review
+  version: "1.0.0"
+  status: active
+
+spec:
+  capability: frontend-visual-review
+  type: gate
+  semver:
+    major: 1
+    minor: 0
+    patch: 0
+
+  inputs:
+    - name: ui-artifacts
+      required: true
+
+  outputs:
+    - name: visual-review-report
+      schema: evidence/visual-review@1.0.0
+
+  evidence:
+    schema: evidence/gate-default@1.0.0

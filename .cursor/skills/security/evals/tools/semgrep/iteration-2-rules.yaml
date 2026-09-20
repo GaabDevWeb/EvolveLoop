@@ -1,0 +1,61 @@
+rules:
+  - id: ag.iter2.js.sqli.concat
+    languages: [javascript]
+    message: "SQL injection potencial: query SQL construída por concatenação com input."
+    severity: ERROR
+    metadata:
+      category: security
+      cwe: "CWE-89"
+      owasp: "A03:2021"
+    patterns:
+      - pattern-either:
+          - pattern: |
+              $Q = $S + $X;
+          - pattern: |
+              $Q = $S.concat($X);
+      - metavariable-regex:
+          metavariable: $S
+          regex: (?i).*select.*from.*
+
+  - id: ag.iter2.js.mass-assignment.spread
+    languages: [javascript]
+    message: "Mass assignment potencial: propagação de req.body para criação de objeto."
+    severity: ERROR
+    metadata:
+      category: security
+      cwe: "CWE-915"
+      owasp: "A04:2021"
+    patterns:
+      - pattern: |
+          { ..., ...req.body }
+
+  - id: ag.iter2.js.open-redirect.param
+    languages: [javascript]
+    message: "Possível open redirect: redirecionamento controlado por parâmetro."
+    severity: WARNING
+    metadata:
+      category: security
+      cwe: "CWE-601"
+      owasp: "A01:2021"
+    patterns:
+      - pattern-inside: |
+          app.get($PATH, ($REQ, $RES) => { ... })
+      - pattern: |
+          $RES.redirect($CODE, $TARGET)
+      - metavariable-pattern:
+          metavariable: $TARGET
+          pattern: String($REQ.query.$P || '')
+
+  - id: ag.iter2.js.trust-client-price
+    languages: [javascript]
+    message: "Lógica de negócio potencialmente insegura: confiar em preço vindo do cliente."
+    severity: WARNING
+    metadata:
+      category: security
+      cwe: "CWE-1284"
+      owasp: "A04:2021"
+    patterns:
+      - pattern-inside: |
+          app.post($PATH, ($REQ, $RES) => { ... })
+      - pattern: |
+          const { $SKU, price, $QTY } = $REQ.body;

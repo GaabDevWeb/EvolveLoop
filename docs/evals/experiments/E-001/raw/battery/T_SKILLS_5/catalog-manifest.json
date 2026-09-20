@@ -1,0 +1,19 @@
+{
+  "condition_id": "T_SKILLS_5",
+  "type": "TREATMENT",
+  "requested_catalog_size": 5,
+  "actual_catalog_size": 5,
+  "skill_ids": [
+    "adr",
+    "backend",
+    "researcher",
+    "frontend-pro",
+    "architect"
+  ],
+  "selection_strategy": "seeded_order_prefix",
+  "seed": "e001-v1-2026-09-18",
+  "catalog_fingerprint": "8e3c06fdda3dfdb9a14c9f4b7bf2f722d718563cfdc549be849123c599521ebb",
+  "max_description_tokens": null,
+  "prefix_token_estimate": 382,
+  "prefix_bytes": 3106
+}

@@ -1,0 +1,65 @@
+experiments:
+
+  - id: E-001
+    original_status: EXECUTED
+    consolidated_status: COMPLETE_OFFLINE
+    evidence:
+      count: 4
+    metrics:
+      direct: 7
+      proxy: 1
+      not_measured: 5
+    claims:
+      supported: 2
+      bounded: 3
+      unsupported: 2
+    confidence: MEDIUM
+    contradictions: 1
+    next_eval: E-001-LIVE / live_task_success
+
+  - id: E-005
+    original_status: COMPLETED_FIXTURE
+    consolidated_status: COMPLETE_FIXTURE_SCOPED
+    evidence:
+      count: 3
+    metrics:
+      direct: 6
+      proxy: 0
+      not_measured: 1
+    claims:
+      supported: 3
+      bounded: 2
+      unsupported: 2
+    confidence: HIGH
+    contradictions: 0
+    next_eval: E-005-OS-KILL / confirm-path side effects
+
+  - id: E-002
+    original_status: BLOCKED
+    consolidated_status: BLOCKED
+    evidence: { count: 0 }
+    metrics: { direct: 0, proxy: 0, not_measured: 0 }
+    claims: { supported: 0, bounded: 0, unsupported: 0 }
+    confidence: HIGH
+    contradictions: 0
+    next_eval: security_model_first
+
+  - id: E-003
+    original_status: BLOCKED
+    consolidated_status: BLOCKED
+    evidence: { count: 0 }
+    metrics: { direct: 0, proxy: 0, not_measured: 0 }
+    claims: { supported: 0, bounded: 0, unsupported: 0 }
+    confidence: HIGH
+    contradictions: 0
+    next_eval: stuck_semantics_first
+
+  - id: E-004
+    original_status: BLOCKED
+    consolidated_status: BLOCKED
+    evidence: { count: 0 }
+    metrics: { direct: 0, proxy: 0, not_measured: 0 }
+    claims: { supported: 0, bounded: 0, unsupported: 0 }
+    confidence: HIGH
+    contradictions: 0
+    next_eval: ownership_architecture_first

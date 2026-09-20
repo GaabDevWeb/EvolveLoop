@@ -1,0 +1,136 @@
+# Command portability
+commands:
+  - command: /MegaBrain
+    portability_class: PUBLIC_CORE
+    final_class: CORE_BUT_CONFIGURABLE
+    confidence: HIGH
+    note: "GaabWiki gate text"
+  - command: /wiki
+    portability_class: PERSONAL_WORKFLOW
+    final_class: PERSONAL_PROFILE
+    confidence: HIGH
+    note: "GaabWiki ritual"
+  - command: /mem
+    portability_class: PERSONAL_WORKFLOW
+    final_class: PERSONAL_PROFILE
+    confidence: HIGH
+    note: "episodic vault"
+  - command: /prd
+    portability_class: PUBLIC_CORE
+    final_class: CORE
+    confidence: HIGH
+  - command: /planejar
+    portability_class: PUBLIC_CORE
+    final_class: CORE
+    confidence: HIGH
+    note: "PT naming"
+  - command: /backend
+    portability_class: PUBLIC_CORE
+    final_class: CORE
+    confidence: HIGH
+  - command: /frontend-pro
+    portability_class: PUBLIC_CORE
+    final_class: CORE
+    confidence: HIGH
+  - command: /database
+    portability_class: PUBLIC_CORE
+    final_class: CORE
+    confidence: HIGH
+  - command: /devops
+    portability_class: PUBLIC_OPTIONAL
+    final_class: PUBLIC_OPTIONAL
+    confidence: HIGH
+  - command: /testes
+    portability_class: PUBLIC_CORE
+    final_class: CORE
+    confidence: HIGH
+    note: "PT naming"
+  - command: /seguranca
+    portability_class: PUBLIC_CORE
+    final_class: CORE
+    confidence: HIGH
+    note: "PT naming"
+  - command: /validar
+    portability_class: PUBLIC_CORE
+    final_class: CORE
+    confidence: HIGH
+    note: "PT naming"
+  - command: /documentar
+    portability_class: PUBLIC_CORE
+    final_class: CORE
+    confidence: HIGH
+    note: "PT naming"
+  - command: /grill-me
+    portability_class: PUBLIC_CORE
+    final_class: CORE
+    confidence: HIGH
+  - command: /adr
+    portability_class: PUBLIC_OPTIONAL
+    final_class: PUBLIC_OPTIONAL
+    confidence: HIGH
+  - command: /architect
+    portability_class: PUBLIC_OPTIONAL
+    final_class: PUBLIC_OPTIONAL
+    confidence: HIGH
+  - command: /debugger
+    portability_class: PUBLIC_CORE
+    final_class: CORE
+    confidence: HIGH
+  - command: /debug
+    portability_class: PUBLIC_OPTIONAL
+    final_class: PUBLIC_OPTIONAL
+    confidence: HIGH
+    note: "alias?"
+  - command: /pesquisar
+    portability_class: PUBLIC_OPTIONAL
+    final_class: PUBLIC_OPTIONAL
+    confidence: HIGH
+  - command: /research
+    portability_class: PUBLIC_OPTIONAL
+    final_class: PUBLIC_OPTIONAL
+    confidence: HIGH
+  - command: /skill-authoring
+    portability_class: PUBLIC_OPTIONAL
+    final_class: PUBLIC_OPTIONAL
+    confidence: HIGH
+  - command: /library-dossier
+    portability_class: PUBLIC_OPTIONAL
+    final_class: PUBLIC_OPTIONAL
+    confidence: HIGH
+  - command: /agent-authoring
+    portability_class: PUBLIC_OPTIONAL
+    final_class: PUBLIC_OPTIONAL
+    confidence: HIGH
+  - command: /agent-architecture-mining
+    portability_class: PUBLIC_OPTIONAL
+    final_class: PUBLIC_OPTIONAL
+    confidence: HIGH
+  - command: /code-reviewer
+    portability_class: PUBLIC_OPTIONAL
+    final_class: PUBLIC_OPTIONAL
+    confidence: HIGH
+  - command: /revisar-codigo
+    portability_class: PUBLIC_OPTIONAL
+    final_class: PUBLIC_OPTIONAL
+    confidence: HIGH
+    note: "PT alias"
+  - command: /analisar-falha
+    portability_class: PUBLIC_OPTIONAL
+    final_class: PUBLIC_OPTIONAL
+    confidence: HIGH
+  - command: /failure-analyst
+    portability_class: PUBLIC_OPTIONAL
+    final_class: PUBLIC_OPTIONAL
+    confidence: HIGH
+  - command: /descobrir
+    portability_class: PUBLIC_OPTIONAL
+    final_class: PUBLIC_OPTIONAL
+    confidence: HIGH
+  - command: /validar-artefacto
+    portability_class: PUBLIC_OPTIONAL
+    final_class: PUBLIC_OPTIONAL
+    confidence: HIGH
+  - command: /validator
+    portability_class: PUBLIC_OPTIONAL
+    final_class: PUBLIC_OPTIONAL
+    confidence: HIGH

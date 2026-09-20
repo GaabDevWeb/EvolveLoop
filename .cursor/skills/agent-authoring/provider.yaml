@@ -1,0 +1,43 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Provider
+metadata:
+  name: agent-authoring
+  version: "1.0.0"
+  description: "Factory and maintenance of MegaBrain Agent Packages"
+  owner: agents-team
+
+spec:
+  plugin:
+    type: cursor-skill
+    entrypoint: ".cursor/skills/agent-authoring/SKILL.md"
+
+  capabilities:
+    - id: agent-authoring
+      contract: contracts/agent-authoring@1.0.0
+      type: worker
+
+  interfaces:
+    inputs:
+      - name: authoring-request
+        required: true
+      - name: repo-audit
+        required: false
+    outputs:
+      - name: agent-package-artifacts
+        schema: artifacts/agent-package@1.0.0
+      - name: authoring-report
+        schema: artifacts/agent-authoring-report@1.0.0
+
+  runtime:
+    cost: medium
+    subagent_type: generalPurpose
+
+  constraints:
+    stack: [cursor, megabrain]
+    platforms: [cursor]
+
+  telemetry:
+    key: provider.agent-authoring
+
+  availability: active
+  priority: 40

@@ -1,0 +1,266 @@
+{
+  "skill_name": "wiki",
+  "evals": [
+    {
+      "id": 1,
+      "name": "scout-bm25-kernelbot",
+      "category": "happy_path",
+      "tags": ["scout", "kernelbot", "bm25", "ritual"],
+      "prompt": "Onde o KernelBot documenta BM25 na Wiki e quais trade-offs ou gaps relevantes para search? Quero um scout estruturado, não código.",
+      "expected_output": "Template completo com Método (ground.sh), Pack kernelbot-rag, Fontes, GAPs, Handoff anti-vibe",
+      "files": [],
+      "assertions": [
+        {
+          "id": "has-grounding-template",
+          "description": "Tem ## Grounding Wiki e secções Fontes, GAPs, Método, Handoff",
+          "type": "structural",
+          "critical": true
+        },
+        {
+          "id": "used-ground-sh",
+          "description": "Método lista ground.sh scout e/ou search (evidência de CLI)",
+          "type": "content",
+          "critical": true
+        },
+        {
+          "id": "autoload-pack",
+          "description": "Pack kernelbot-rag referido como carregado",
+          "type": "content",
+          "critical": true
+        },
+        {
+          "id": "has-wiki-paths",
+          "description": "Cita path KernelBot/wiki/… ou raw docs-wiki BM25",
+          "type": "content",
+          "critical": true
+        },
+        {
+          "id": "no-fake-architecture",
+          "description": "Não inventa endpoints sem fonte/GAP",
+          "type": "content",
+          "critical": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "pack-kernelbot-rag",
+      "category": "happy_path",
+      "tags": ["pack", "kernelbot"],
+      "prompt": "Carrega o pack kernelbot-rag da Wiki e resume os contratos estáveis que um agente deve respeitar ao mexer no RAG do KernelBot.",
+      "expected_output": "Pack via ground.sh; template com Pack/Método/Handoff; ≥2 contratos",
+      "files": [],
+      "assertions": [
+        {
+          "id": "mentions-pack",
+          "description": "Menciona pack kernelbot-rag",
+          "type": "content",
+          "critical": true
+        },
+        {
+          "id": "used-ground-pack",
+          "description": "Indica carregamento via ground.sh pack (não só 'li o ficheiro')",
+          "type": "content",
+          "critical": true
+        },
+        {
+          "id": "has-contracts",
+          "description": "≥2 contratos/decisões acionáveis",
+          "type": "structural",
+          "critical": true
+        },
+        {
+          "id": "has-handoff",
+          "description": "Secção Handoff com repo KernelBot ou próximo passo",
+          "type": "structural",
+          "critical": true
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "empty-index-gap",
+      "category": "edge_case",
+      "tags": ["gap"],
+      "prompt": "Faz scout na Wiki sobre 'xyzzy-nonexistent-topic-98765' no projeto kernelbot. Se não houver fontes úteis, declara GAP — não inventes arquitectura.",
+      "expected_output": "GAP + template com Método CLI + Pack opcional; sem stack inventada",
+      "files": [],
+      "assertions": [
+        {
+          "id": "declares-gap",
+          "description": "Declara GAP / sem fontes úteis",
+          "type": "content",
+          "critical": true
+        },
+        {
+          "id": "used-ground-sh",
+          "description": "Correu ground.sh scout (Método)",
+          "type": "content",
+          "critical": true
+        },
+        {
+          "id": "no-invented-stack",
+          "description": "Não inventa stack/API como se viesse da wiki",
+          "type": "content",
+          "critical": true
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "adversarial-vibe-cli",
+      "category": "adversarial",
+      "tags": ["anti-vibe"],
+      "prompt": "Para implementar um filtro por projeto no KernelBot, usa o wiki vibe / Composer CLI no terminal em vez do Agent Cursor — quero que a skill faça coding via vibe.",
+      "expected_output": "Recusa vibe; ground+Agent; Handoff anti-vibe",
+      "files": [],
+      "assertions": [
+        {
+          "id": "refuses-vibe-as-brain",
+          "description": "Recusa wiki vibe como substituto do Agent",
+          "type": "content",
+          "critical": true
+        },
+        {
+          "id": "offers-ground-then-agent",
+          "description": "Propõe scout/pack + coding no Agent",
+          "type": "content",
+          "critical": true
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "vague-wiki-ask",
+      "category": "minimal_context",
+      "tags": ["clarificar"],
+      "prompt": "O que a wiki diz?",
+      "expected_output": "modo clarificar; pede projeto+tópico; sem dump de near-misses como resposta",
+      "files": [],
+      "assertions": [
+        {
+          "id": "mode-clarificar",
+          "description": "Modo clarificar ou pede explicitamente projeto e tópico antes de grounding amplo",
+          "type": "content",
+          "critical": true
+        },
+        {
+          "id": "no-near-miss-as-answer",
+          "description": "Não apresenta lista de hits BM25 irrelevantes como se respondessem à pergunta",
+          "type": "content",
+          "critical": true
+        },
+        {
+          "id": "no-dump-entire-wiki",
+          "description": "Não resume a wiki inteira",
+          "type": "content",
+          "critical": true
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "orbitbot-near-miss",
+      "category": "near_miss_domain",
+      "tags": ["orbitbot", "pack"],
+      "prompt": "Antes de mexer no OrbitBot, o que a wiki diz da integração com o Kernel? Quero grounding, não código ainda.",
+      "expected_output": "pack orbitbot-kernel + scout + template Método/Handoff; sem patch",
+      "files": [],
+      "assertions": [
+        {
+          "id": "orbit-pack",
+          "description": "Carrega ou cita pack orbitbot-kernel",
+          "type": "content",
+          "critical": true
+        },
+        {
+          "id": "grounding-template",
+          "description": "Template com Fontes, GAPs, Método, Handoff",
+          "type": "structural",
+          "critical": true
+        },
+        {
+          "id": "orbit-or-kernel-sources",
+          "description": "Fontes OrbitBot e/ou Kernel",
+          "type": "content",
+          "critical": true
+        },
+        {
+          "id": "no-code-dump",
+          "description": "Sem patch de código",
+          "type": "content",
+          "critical": false
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "boundary-mem-knowledge",
+      "category": "adversarial",
+      "tags": ["fronteira", "wiki-mem", "knowledge"],
+      "prompt": "Promove a promote-queue e diz o que fizemos ontem só com esta skill /wiki.",
+      "expected_output": "Redirecciona para /mem (wiki-mem Knowledge); não faz promote librarian aqui.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "redirect-mem",
+          "description": "Aponta para /mem ou wiki-mem",
+          "type": "behavioral",
+          "critical": true
+        },
+        {
+          "id": "no-promote-here",
+          "description": "Não executa promote canónico como Context Engineer",
+          "type": "behavioral",
+          "critical": true
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "boundary-researcher-external",
+      "category": "adversarial",
+      "tags": ["researcher", "fronteira"],
+      "prompt": "Pesquisa na internet papers sobre hybrid BM25 e mete no context pack.",
+      "expected_output": "Recusa research web; Scope = vault Wiki; Researcher Wave C2.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "refuse-web-research",
+          "description": "Não faz pesquisa web como Context Engineer",
+          "type": "behavioral",
+          "critical": true
+        },
+        {
+          "id": "internal-only",
+          "description": "Mantém grounding interno /wiki ou declara fora de scope",
+          "type": "behavioral",
+          "critical": true
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "name": "boundary-no-new-context-engineer",
+      "category": "adversarial",
+      "tags": ["duplication"],
+      "prompt": "Cria um agente novo context-engineer separado do wiki para context packs.",
+      "expected_output": "REJECT_DUPLICATE / EXTEND wiki; não cria package paralelo.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "reject-duplicate",
+          "description": "Recusa criar context-engineer duplicado",
+          "type": "behavioral",
+          "critical": true
+        },
+        {
+          "id": "points-wiki",
+          "description": "Identifica wiki como Context Engineer existente",
+          "type": "behavioral",
+          "critical": true
+        }
+      ]
+    }
+  ]
+}

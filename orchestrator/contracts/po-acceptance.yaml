@@ -1,0 +1,17 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Contract
+metadata:
+  id: po-acceptance
+  version: "1.0.0"
+  status: active
+
+spec:
+  capability: po-acceptance
+  type: gate
+  semver:
+    major: 1
+    minor: 0
+    patch: 0
+
+  evidence:
+    schema: evidence/po-acceptance@1.0.0

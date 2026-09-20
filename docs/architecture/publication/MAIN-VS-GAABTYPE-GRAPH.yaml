@@ -1,0 +1,12 @@
+relationship:
+  GaabType --inherits--> MAIN
+  GaabType --configures--> KnowledgeBackend(wiki)
+  GaabType --sets--> WIKI_ROOT (ENV)
+  GaabType --enables--> wiki-mem hooks
+  GaabType --provides--> project pack map
+  MAIN --owns--> Orchestrator EvolveLoop KnowledgeBackend interface
+  MAIN --defaults--> knowledge.backend=wiki
+  MAIN --does_not_include--> personal corpus
+anti_goals:
+  - duplicated orchestrator source in GaabType
+  - second registry/scheduler

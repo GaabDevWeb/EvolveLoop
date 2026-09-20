@@ -1,0 +1,83 @@
+{
+  "skill_name": "adr",
+  "evals": [
+    {
+      "id": 1,
+      "name": "adr-choose-database",
+      "category": "happy_path",
+      "tags": ["sgbd", "decisao"],
+      "prompt": "Documentar decisão: escolhemos PostgreSQL em vez de MongoDB para o projecto de inventário. Já existem docs/adr/0001 e docs/adr/0002.",
+      "expected_output": "docs/adr/0003-*.md com contexto, decisão, alternativas, consequências.",
+      "files": [],
+      "assertions": [
+        {"id": "correct-number", "description": "ADR numerado 0003", "type": "structural"},
+        {"id": "alternatives", "description": "≥2 alternativas consideradas", "type": "structural"},
+        {"id": "consequences", "description": "Secção consequências positivas e negativas", "type": "structural"}
+      ]
+    },
+    {
+      "id": 2,
+      "name": "adr-auth-strategy",
+      "category": "happy_path",
+      "tags": ["auth", "jwt"],
+      "prompt": "Registar ADR: autenticação via JWT stateless em vez de sessions server-side.",
+      "expected_output": "ADR completo, status proposed ou accepted.",
+      "files": [],
+      "assertions": [
+        {"id": "decision-clear", "description": "Decisão em voz activa clara", "type": "structural"},
+        {"id": "session-alternative", "description": "Menciona sessions como alternativa rejeitada", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 3,
+      "name": "edge-trivial-decision",
+      "category": "edge_case",
+      "tags": ["criterio"],
+      "prompt": "Criar ADR para usar prettier com singleQuote: true.",
+      "expected_output": "Recusa ou redirecciona — não merece ADR; sugere CONTRIBUTING.",
+      "files": [],
+      "assertions": [
+        {"id": "reject-trivial", "description": "Não cria ADR para preferência trivial", "type": "behavioral"},
+        {"id": "redirect", "description": "Sugere CONTRIBUTING ou nota no PR", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 4,
+      "name": "adversarial-full-prd",
+      "category": "adversarial",
+      "tags": ["fronteira", "prd"],
+      "prompt": "Feature nova de pagamentos — cria ADR, PRD, API spec e arquitectura completa.",
+      "expected_output": "Redirecciona para /prd para pacote completo; ou ADR + indica prd para resto.",
+      "files": [],
+      "assertions": [
+        {"id": "scope-limit", "description": "Não produz pacote PRD completo sozinho", "type": "behavioral"},
+        {"id": "suggests-prd", "description": "Referencia skill prd para pacote", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 5,
+      "name": "integration-update-architecture",
+      "category": "integration",
+      "tags": ["architecture"],
+      "prompt": "ADR para adoptar Redis como cache. docs/ARCHITECTURE.md existe.",
+      "expected_output": "ADR + referência actualizada em ARCHITECTURE.",
+      "files": [],
+      "assertions": [
+        {"id": "adr-created", "description": "Cria ficheiro ADR", "type": "structural"},
+        {"id": "arch-updated", "description": "Menciona actualizar ARCHITECTURE.md", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 6,
+      "name": "minimal-adr-request",
+      "category": "minimal_context",
+      "tags": ["clarificacao"],
+      "prompt": "Faz um ADR.",
+      "expected_output": "Pede qual decisão documentar.",
+      "files": [],
+      "assertions": [
+        {"id": "asks-decision", "description": "Pergunta qual decisão arquitectural", "type": "behavioral"}
+      ]
+    }
+  ]
+}

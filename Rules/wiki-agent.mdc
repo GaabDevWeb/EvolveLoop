@@ -1,0 +1,98 @@
+---
+description: Wiki obrigatória — grounding em toda interação de agente + registo na wiki após editar código (global)
+alwaysApply: true
+---
+
+# Wiki — loop global do Agent
+
+Vault: `$WIKI_ROOT` (alias: `$RAG_REPO_ROOT`) — required; no hardcoded user path  
+Skill: `wiki` (`~/.cursor/skills/wiki/`) · comando `/wiki`  
+Script: `bash ~/.cursor/skills/wiki/scripts/ground.sh …`
+
+Isto aplica-se a **todos** os workspaces neste Cursor (não só ao vault).
+
+---
+
+## 1. Toda interação — usar a wiki como contexto
+
+Antes de planear ou implementar (código, arquitectura, contratos, debug de domínio Gaab):
+
+1. Identificar o **projeto** (kernelbot | orbitbot | iss | portifolio | xray-spec | rag/meta-wiki | outro).
+2. Correr grounding via skill **wiki** (pack se conhecido + scout/search), ou `/wiki`.
+3. Respeitar o template da skill (Fontes / Contratos / GAPs / Método / Handoff).
+4. **Não** inventar contratos: se a wiki não disser, declarar GAP.
+
+### Excepções (podem saltar scout amplo)
+
+- Pedidos triviais sem domínio (cálculo, formatação, “o que é X?” genérico fora do ecossistema).
+- Pedido **só** de clarificação / conversa sem acção técnica.
+
+Nesses casos: uma linha `Wiki: n/a (pedido trivial)` basta.
+
+### Projectos mapeados (grounding obrigatório se houver código/arquitectura)
+
+| Sinal no workspace | Pack / pasta wiki |
+|--------------------|-------------------|
+| KernelBot | `kernelbot-rag` → `KernelBot/wiki/` |
+| OrbitBot | `orbitbot-kernel` → `OrbitBot/` |
+| ISS / Portifolio / Xray-Spec | pastas homónimas no vault |
+| karpathyWiki / wiki-rag | `.ai/` + `rag/` |
+
+Anti-padrão: **não** usar `wiki vibe` / Composer CLI como cérebro — coding fica neste Agent.
+
+### Memória episódica (complemento)
+
+Continuidade entre chats: `~/.cursor/skills/wiki-mem/` + `.ai/sessions/LATEST.md`.  
+**Não** substitui grounding wiki/RAG. Search: `python3 ~/.cursor/hooks/wiki-mem/mem.py search "…"`.  
+Promoção a canónico: `mem.py promote` → append `{Projeto}/log.md` (nunca `raw/`).
+
+---
+
+## 2. Toda edição de código — registar na wiki
+
+Se o Agent **criar, editar ou apagar** ficheiros de código (ou configs de runtime) num repo:
+
+**No mesmo turno** (ou no fecho da tarefa), actualizar a Wiki:
+
+### Obrigatório (append)
+
+1. **`{Projeto}/log.md`** no vault (ex.: `KernelBot/log.md`, `OrbitBot/log.md`) — evento append-only.
+2. Se a mudança for decisão / auditoria relevante: também **`.agent_history.md`** na raiz do vault (ou do repo, se já existir e for o sítio canónico do projecto).
+
+### Se a mudança alterar contratos / arquitectura / estado
+
+Actualizar a página sintetizada correspondente em `{Projeto}/wiki/` (ex.: `current-state`, `decisions`, `known-issues`, `rag`) — **não** reescrever `raw/` (imutável).
+
+### Formato mínimo em `log.md`
+
+```markdown
+## [YYYY-MM-DD] agent | <repo> | <resumo-curto>
+
+- **Repos:** <path do código tocado>
+- **Mudança:** <1–3 bullets do que mudou e porquê>
+- **Branch:** <se conhecida>
+- **Wiki:** <páginas actualizadas ou "só log">
+- **GAP:** <se código e wiki divergirem>
+```
+
+### Excepções ao registo
+
+- Edits **só** dentro do vault que já são o próprio registo.
+- Reverts/experimentos descartados **sem** commit e sem pedido para documentar — opcional; se o utilizador pediu persistir, registar.
+- Pedidos explícitos do utilizador: “não actualizes a wiki”.
+
+---
+
+## 3. Ordem canónica
+
+```
+pedido → grounding wiki (skill) → editar código → registar wiki (log ± páginas) → responder
+```
+
+Nunca: código mergeado na resposta sem linha de log quando houve edição real.
+
+---
+
+## 4. Precedência
+
+Código verificado > wiki. Se contradisserem: corrigir a wiki ou marcar `GAP`/`status` — não silenciar.

@@ -1,0 +1,288 @@
+catalog:
+  version: 1
+  created_at: "2026-09-19"
+  baseline_id: baseline-v1-2026-09-18
+  status: SPECIFIED
+  rule: "Design only — do not execute; do not strengthen evidence; PROXY/NOT_MEASURED preserved"
+
+  principles:
+    - Eval ≠ Experiment ≠ Unit test ≠ ADR ≠ Benchmark
+    - Evidence-first: measure only what is observable
+    - Eval PASS ≠ ADOPT; Eval FAIL ≠ REJECT architecture
+    - Do not duplicate unit suites without system-property gap
+    - Fixture isolation required; no baseline/runtime mutation
+
+  evals:
+
+    - id: EV-001
+      name: Runtime Execution Integrity
+      category: RUNTIME
+      version: 1
+      priority: CORE
+      question: "Does the Capability IR → Scheduler → Registry → Provider → Execution path complete expected full-cycle scenarios without unexpected failure?"
+      property: runtime_execution_integrity
+      source_experiments: []
+      source_claims: []
+      source_evidence: [BASELINE_ONLY]
+      scope: orchestrator full-cycle + contract smoke
+      readiness: READY
+      measurement: reuse_existing_integration_contracts
+      metrics: [EV001-M-pass_rate]
+      fixture: tests/fixtures/login-dashboard.ts + full-cycle suite
+      control: null
+      treatment: null
+      success_criteria: "full-cycle 5/5 PASS; contracts 7/7 PASS"
+      failure_criteria: "any full-cycle or contract failure; collection failure"
+      limitations: ["does_not_measure_task_success_or_HITL_product"]
+      reproducibility: "npm commands in EVAL-RUNNER-HANDOFF.md"
+      regression_baseline: baseline-v1-2026-09-18
+      safety_constraints: ["no_production_state", "no_baseline_write"]
+
+    - id: EV-002
+      name: Capability and Provider Resolution
+      category: CAPABILITY
+      version: 1
+      priority: CORE
+      question: "Does Capability resolution select an expected Provider and emit selection evidence for known IR nodes?"
+      property: capability_provider_resolution
+      source_experiments: []
+      source_claims: []
+      source_evidence: [BASELINE_ONLY]
+      scope: RegistryClient.selectWithEvidence + ProviderRouter path in tests
+      readiness: READY
+      measurement: reuse_existing_unit_contract_tests
+      metrics: [EV002-M-selection_correct, EV002-M-selection_evidence_present]
+      fixture: existing registry/contract fixtures
+      control: null
+      treatment: null
+      success_criteria: "registry + related contract cases PASS"
+      failure_criteria: "wrong provider selected; missing selection evidence; test FAIL"
+      limitations: ["correct_provider_≠_task_success"]
+      reproducibility: "vitest registry/contract suites"
+      regression_baseline: baseline-v1-2026-09-18
+      safety_constraints: ["read_only_eval"]
+
+    - id: EV-003
+      name: Registry Correctness
+      category: REGISTRY
+      version: 1
+      priority: CORE
+      question: "Does the Capability/Provider registry satisfy contract and deterministic selection invariants covered by existing registry tests?"
+      property: registry_correctness
+      source_experiments: []
+      source_claims: []
+      source_evidence: [BASELINE_ONLY]
+      scope: registry unit/contract tests — REUSE_EXISTING_TEST_COVERAGE
+      readiness: READY
+      measurement: reuse_existing_tests
+      metrics: [EV003-M-registry_suite_pass]
+      fixture: existing
+      control: null
+      treatment: null
+      success_criteria: "registry-related tests PASS"
+      failure_criteria: "registry suite FAIL"
+      limitations: ["not_a_duplicate_unit_catalog_rewrite"]
+      reproducibility: "vitest registry*.test.ts"
+      regression_baseline: baseline-v1-2026-09-18
+      safety_constraints: ["read_only_eval"]
+
+    - id: EV-004
+      name: Policy Decision and Authority Enforcement
+      category: AUTHORITY
+      version: 1
+      priority: CORE
+      question: "On the DeterministicProvider path, does CapabilityAuthority deny/confirm enforcement match policy decisions (execution blocked when denied)?"
+      property: authority_enforcement_deterministic_path
+      source_experiments: []
+      source_claims: []
+      source_evidence: [BASELINE_ONLY]
+      scope: DeterministicProvider + CapabilityAuthority only
+      readiness: READY
+      measurement: reuse authority + policy-engine unit tests
+      metrics: [EV004-M_authority_deny_blocks, EV004-M_policy_engine_pass]
+      fixture: existing authority fixtures
+      control: null
+      treatment: null
+      success_criteria: "authority deny → AUTHORITY_DENIED / blocked execution on deterministic path; policy-engine tests PASS"
+      failure_criteria: "deny without enforcement; suite FAIL"
+      limitations:
+        - "Mock/CursorSkill/JobFile Authority wiring NOT in this Eval scope"
+        - "policy_decision ≠ enforcement on unwired providers"
+      reproducibility: "vitest authority.test.ts policy-engine.test.ts"
+      regression_baseline: baseline-v1-2026-09-18
+      safety_constraints: ["read_only_eval"]
+
+    - id: EV-005
+      name: Evidence Integrity (Engine Evidence[])
+      category: EVIDENCE
+      version: 1
+      priority: CORE
+      question: "Do engine Evidence builders/validators accept well-formed Evidence[] and reject invalid shapes under existing tests?"
+      property: engine_evidence_integrity
+      source_experiments: []
+      source_claims: []
+      source_evidence: [BASELINE_ONLY]
+      scope: orchestrator Evidence[] + validators — NOT MegaBrain Evidence Bus
+      readiness: READY
+      measurement: reuse evidence unit tests
+      metrics: [EV005-M_evidence_suite_pass]
+      fixture: existing
+      control: null
+      treatment: null
+      success_criteria: "evidence unit tests PASS"
+      failure_criteria: "validator false accept/reject; suite FAIL"
+      limitations:
+        - "Evidence[] ≠ MegaBrain FS Evidence Bus"
+        - "does_not_prove_gate_artifact_path_enforcement"
+      reproducibility: "vitest evidence.test.ts"
+      regression_baseline: baseline-v1-2026-09-18
+      safety_constraints: ["read_only_eval"]
+
+    - id: EV-006
+      name: Job Resume and STATE_WRITE Non-Duplication
+      category: RECOVERY
+      version: 1
+      priority: CORE
+      question: "Under the E-005 job-path fixture, does interrupt→resume complete with resume_success and observed_mutations=1 (no duplicate STATE_WRITE)?"
+      property: job_path_resume_state_write_integrity
+      source_experiments: [E-005]
+      source_claims: [CLM-E005-001, CLM-E005-002, CLM-E005-003]
+      source_evidence: [E005-EV-001, E005-EV-002, E005-EV-003]
+      scope: "job-path; STATE_WRITE JobFileExecutor; same Node process; NOT global exactly-once; NOT OS kill; NOT full HITL"
+      readiness: READY_AFTER_FIXTURE
+      measurement: formalize E-005 fixture as repeatable Eval procedure
+      metrics: [E005-M-001, E005-M-002, E005-M-003, E005-M-004]
+      fixture: docs/evals/experiments/E-005/FIXTURE.md + harness pattern
+      control: uninterrupted wait-for-jobs
+      treatment: SAME_ENGINE and/or NEW_ENGINE resume
+      success_criteria: "resume_success=1.0 on treatment sample; duplicate_mutate=false; mutations=1; isolation intact"
+      failure_criteria: "mutations>1; resume fail; isolation/baseline contamination; oracle collection fail"
+      limitations:
+        - "STATE_WRITE_only"
+        - "OS_kill_NOT_IN_SCOPE"
+        - "exactly_once_global_NOT_EVALUABLE"
+      reproducibility: "E-005 REPRODUCE.md adapted as Eval runbook"
+      regression_baseline: baseline-v1-2026-09-18
+      safety_constraints: ["disposable_jobsDir", "no_baseline_write", "no_global_exactly_once_claim"]
+
+    - id: EV-007
+      name: Offline Skill Activation under Catalog Conditions
+      category: SKILLS
+      version: 1
+      priority: CORE
+      question: "Under the offline E-001 harness and fixed seed, do CONTROL vs catalog treatments produce the recorded activation_precision/recall associations without modifying source Skills?"
+      property: offline_skill_activation
+      source_experiments: [E-001]
+      source_claims: [CLM-E001-001, CLM-E001-005]
+      source_evidence: [E001-EV-001, E001-EV-003]
+      scope: offline overlap ranker; NOT live host; NOT task_success
+      readiness: READY
+      measurement: existing catalog_harness.py dry/battery procedure
+      metrics: [E001-M-001, E001-M-004, E001-M-005, E001-M-006]
+      fixture: docs/evals/experiments/E-001/conditions.yaml + harness
+      control: CONTROL catalog_size=23
+      treatment: T_SKILLS_5 / T_SKILLS_10 / T_TOKENS_40
+      success_criteria: "deterministic fingerprints match conditions; precision ordering vs CONTROL consistent with recorded associations OR documented delta within declared tolerance for harness version; source Skills hashes unchanged"
+      failure_criteria: "fingerprint drift; Skills modified; harness integrity fail; claiming task_success"
+      limitations:
+        - "offline_ranker_≠_host_LLM"
+        - "task_success_NOT_MEASURED"
+      reproducibility: "E-001 REPRODUCE.md + integrity_test.py"
+      regression_baseline: baseline-v1-2026-09-18
+      safety_constraints: ["read_only_skills", "no_max_skills_feature"]
+
+    - id: EV-008
+      name: Catalog Context Overhead (Proxy)
+      category: CONTEXT
+      version: 1
+      priority: SECONDARY
+      question: "Under offline catalog conditions, does token_estimate (whitespace PROXY) decrease for treatments vs CONTROL as recorded, without claiming vendor token accuracy?"
+      property: catalog_context_overhead_proxy
+      source_experiments: [E-001]
+      source_claims: [CLM-E001-002]
+      source_evidence: [E001-EV-001, E001-EV-004]
+      scope: whitespace PROXY; ~40% language only for T_TOKENS_40
+      readiness: READY
+      measurement: same E-001 harness prefix token estimate
+      metrics: [E001-M-007, E001-M-008]
+      fixture: E-001 conditions + harness
+      control: CONTROL token_estimate=1673 reference
+      treatment: T_SKILLS_5/10, T_TOKENS_40
+      success_criteria: "treatments token_estimate < CONTROL; T_TOKENS_40 relative ≈−39.6% vs CONTROL; PROXY labeled in output"
+      failure_criteria: "PROXY reported as vendor exact; axes conflated; Skills modified"
+      limitations:
+        - "token_estimate_PROXY"
+        - "vendor_tokenizer_NOT_MEASURED"
+        - "wall_clock_is_harness_latency_only"
+      reproducibility: "E-001 harness"
+      regression_baseline: baseline-v1-2026-09-18
+      safety_constraints: ["never_upgrade_PROXY_to_DIRECT"]
+
+    - id: EV-009
+      name: Regression Stability against Baseline V1
+      category: REGRESSION
+      version: 1
+      priority: CORE
+      question: "Do baseline V1 invariants remain green (103/103 tests, 7/7 contracts, 5/5 full-cycle) and baseline checksums intact?"
+      property: baseline_regression_stability
+      source_experiments: [E-001, E-005]
+      source_claims: []
+      source_evidence: [BASELINE_ONLY]
+      scope: orchestrator test invariants + baseline checksums
+      readiness: READY
+      measurement: npm test + vitest contracts + full-cycle + sha256sum -c
+      metrics: [EV009-M_tests, EV009-M_contracts, EV009-M_full_cycle, EV009-M_checksum]
+      fixture: none beyond repo state
+      control: baseline-v1-2026-09-18 recorded invariants
+      treatment: current tree
+      success_criteria: "103/103; 7/7; 5/5; BASELINE-CHECKSUMS OK"
+      failure_criteria: "any invariant fail; checksum mismatch; baseline files modified"
+      limitations: ["invariants_≠_product_quality"]
+      reproducibility: "EVAL-RUNNER-HANDOFF.md commands"
+      regression_baseline: baseline-v1-2026-09-18
+      safety_constraints: ["never_write_baseline"]
+
+  blocked_or_deferred_evals:
+
+    - id: EV-F-001
+      name: Live Task Success under Catalog Budget
+      category: SKILLS
+      readiness: BLOCKED_BY_ENVIRONMENT
+      reason: "task_success NOT_MEASURED; live host injection unavailable"
+
+    - id: EV-F-002
+      name: Global Exactly-Once
+      category: RECOVERY
+      readiness: BLOCKED_BY_RUNTIME
+      reason: "NOT_EVALUABLE — only STATE_WRITE fixture measured"
+
+    - id: EV-F-003
+      name: OS-Kill Job Resume
+      category: RECOVERY
+      readiness: READY_AFTER_FIXTURE
+      reason: "PT-002 hardened but not Prototype-Gate approved/executed"
+
+    - id: EV-F-004
+      name: Sandbox Posture
+      category: POLICY
+      readiness: BLOCKED_BY_ARCHITECTURE
+      reason: "sandbox NOT_IMPLEMENTED; security model first"
+
+    - id: EV-F-005
+      name: Semantic Stuck Detection
+      category: RUNTIME
+      readiness: BLOCKED_BY_ARCHITECTURE
+      reason: "stuck semantics undefined"
+
+    - id: EV-F-006
+      name: Compaction Reinject
+      category: STATE
+      readiness: BLOCKED_BY_ARCHITECTURE
+      reason: "ownership unresolved"
+
+  initial_set_summary:
+    READY: [EV-001, EV-002, EV-003, EV-004, EV-005, EV-007, EV-008, EV-009]
+    READY_AFTER_FIXTURE: [EV-006, EV-F-003]
+    BLOCKED_BY_ENVIRONMENT: [EV-F-001]
+    BLOCKED_BY_RUNTIME: [EV-F-002]
+    BLOCKED_BY_ARCHITECTURE: [EV-F-004, EV-F-005, EV-F-006]

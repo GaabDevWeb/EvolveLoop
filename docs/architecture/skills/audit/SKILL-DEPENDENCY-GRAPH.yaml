@@ -1,0 +1,259 @@
+# Skill Dependency Graph — machine readable
+# Generated: 2026-09-19T20:53:30Z
+# AUDIT ONLY — no pruning
+
+graph:
+  nodes:
+    - id: orquestrar
+      type: skill
+      location: .cursor/skills/orquestrar
+    - id: MegaBrain
+      type: command_alias
+      location: .cursor/commands/MegaBrain.md
+    - id: gaabwiki
+      type: skill
+      location: .cursor/skills/gaabwiki
+    - id: prd
+      type: skill
+      location: .cursor/skills/prd
+    - id: planner
+      type: skill
+      location: .cursor/skills/planner
+    - id: frontend-pro
+      type: skill
+      location: .cursor/skills/frontend-pro
+    - id: backend
+      type: skill
+      location: .cursor/skills/backend
+    - id: testing
+      type: skill
+      location: .cursor/skills/testing
+    - id: debugger
+      type: skill
+      location: .cursor/skills/debugger
+    - id: po-review
+      type: skill
+      location: .cursor/skills/po-review
+    - id: documentation
+      type: skill
+      location: .cursor/skills/documentation
+    - id: researcher
+      type: skill
+      location: .cursor/skills/researcher
+    - id: image-to-code
+      type: skill
+      location: global-skills/image-to-code
+    - id: brainstorming
+      type: skill
+      location: global-skills/brainstorming
+    - id: writing-plans
+      type: skill
+      location: global-skills/writing-plans
+    - id: executing-plans
+      type: skill
+      location: global-skills/executing-plans
+    - id: subagent-driven-development
+      type: skill
+      location: global-skills/subagent-driven-development
+    - id: finishing-a-development-branch
+      type: skill
+      location: global-skills/finishing-a-development-branch
+    - id: systematic-debugging
+      type: skill
+      location: global-skills/systematic-debugging
+    - id: grill-me
+      type: skill
+      location: global-skills/grill-me
+    - id: grilling
+      type: skill_missing
+      location: ABSENT
+    - id: find-skills
+      type: skill
+      location: global-skills/find-skills
+    - id: technical-library-dossier
+      type: skill
+      location: global-skills/technical-library-dossier
+    - id: agent-browser
+      type: skill
+      location: global-skills/agent-browser
+    - id: library-dossier-cmd
+      type: command
+      location: .cursor/commands/library-dossier.md
+    - id: descobrir-cmd
+      type: command_missing
+      location: ABSENT
+    - id: orchestrator-discovery
+      type: runtime_module
+      location: orchestrator/src/discovery/provider-discovery.ts
+    - id: CursorSkillProvider
+      type: runtime_module
+      location: orchestrator/src/plugins/cursor-skill-provider.ts
+
+  edges:
+    - source: MegaBrain
+      target: orquestrar
+      relationship: COMMAND_ENTRYPOINT
+      strength: HARD
+      evidence: .cursor/commands/MegaBrain.md
+
+    - source: orquestrar
+      target: gaabwiki
+      relationship: HARD_GATE
+      strength: HARD
+      evidence: .cursor/skills/orquestrar/references/gaabwiki-grounding-gate.md
+
+    - source: orquestrar
+      target: prd
+      relationship: HARD_GATE
+      strength: HARD
+      evidence: .cursor/skills/orquestrar/SKILL.md Fase 0.5
+
+    - source: orquestrar
+      target: brainstorming
+      relationship: UPSTREAM_OPTIONAL
+      strength: SOFT
+      evidence: .cursor/skills/orquestrar/SKILL.md:335
+
+    - source: orquestrar
+      target: grill-me
+      relationship: UPSTREAM_OPTIONAL
+      strength: SOFT
+      evidence: .cursor/skills/orquestrar/SKILL.md:341
+
+    - source: orquestrar
+      target: image-to-code
+      relationship: HARD_GATE
+      strength: HARD
+      evidence: .cursor/skills/orquestrar/references/image-attachment-gate.md
+
+    - source: orquestrar
+      target: planner
+      relationship: PHASE
+      strength: HARD
+      evidence: .cursor/skills/orquestrar/SKILL.md Fase 1
+
+    - source: orquestrar
+      target: frontend-pro
+      relationship: WORKER_DELEGATION
+      strength: HARD
+      evidence: .cursor/skills/orquestrar/SKILL.md capability table
+
+    - source: orquestrar
+      target: testing
+      relationship: HARD_GATE
+      strength: HARD
+      evidence: .cursor/skills/orquestrar/SKILL.md Fase 3
+
+    - source: orquestrar
+      target: debugger
+      relationship: HARD_GATE
+      strength: HARD
+      evidence: .cursor/skills/orquestrar/SKILL.md after 3 test failures
+
+    - source: orquestrar
+      target: po-review
+      relationship: HARD_GATE
+      strength: HARD
+      evidence: .cursor/skills/orquestrar/SKILL.md Fase 5
+
+    - source: orquestrar
+      target: find-skills
+      relationship: DOC_CLAIM
+      strength: DOCUMENTED
+      evidence: .cursor/skills/orquestrar/SKILL.md:/descobrir (command missing)
+
+    - source: frontend-pro
+      target: image-to-code
+      relationship: HARD_GATE
+      strength: HARD
+      evidence: .cursor/skills/frontend-pro/SKILL.md Vision
+
+    - source: frontend-pro
+      target: agent-browser
+      relationship: FALLBACK
+      strength: FALLBACK
+      evidence: .cursor/skills/frontend-pro/references/browser-tools.md
+
+    - source: po-review
+      target: image-to-code
+      relationship: REENTRY_REQUIREMENT
+      strength: CONDITIONAL
+      evidence: .cursor/skills/po-review/SKILL.md
+
+    - source: planner
+      target: image-to-code
+      relationship: PLAN_REQUIREMENT
+      strength: CONDITIONAL
+      evidence: .cursor/skills/planner/SKILL.md
+
+    - source: debugger
+      target: systematic-debugging
+      relationship: ABSORBED_FROM
+      strength: HARD
+      evidence: global-skills/systematic-debugging/PACKAGE-NOTE.md
+
+    - source: grill-me
+      target: grilling
+      relationship: WRAPPER
+      strength: HARD
+      evidence: global-skills/grill-me/SKILL.md (target ABSENT)
+
+    - source: brainstorming
+      target: writing-plans
+      relationship: SUPERPOWERS_TERMINAL
+      strength: HARD
+      evidence: global-skills/brainstorming/SKILL.md
+
+    - source: writing-plans
+      target: subagent-driven-development
+      relationship: REQUIRED_SUB_SKILL
+      strength: SOFT
+      evidence: global-skills/writing-plans/SKILL.md
+
+    - source: writing-plans
+      target: executing-plans
+      relationship: REQUIRED_SUB_SKILL
+      strength: SOFT
+      evidence: global-skills/writing-plans/SKILL.md
+
+    - source: executing-plans
+      target: finishing-a-development-branch
+      relationship: REQUIRED_SUB_SKILL
+      strength: SOFT
+      evidence: global-skills/executing-plans/SKILL.md
+
+    - source: subagent-driven-development
+      target: finishing-a-development-branch
+      relationship: REQUIRED_SUB_SKILL
+      strength: SOFT
+      evidence: global-skills/subagent-driven-development/SKILL.md
+
+    - source: library-dossier-cmd
+      target: technical-library-dossier
+      relationship: COMMAND_ENTRYPOINT
+      strength: HARD
+      evidence: .cursor/commands/library-dossier.md
+
+    - source: technical-library-dossier
+      target: agent-browser
+      relationship: HARD_GATE
+      strength: HARD
+      evidence: global-skills/technical-library-dossier/SKILL.md
+
+    - source: descobrir-cmd
+      target: find-skills
+      relationship: DOC_CLAIM
+      strength: DOCUMENTED
+      evidence: ecosystem-v2.md (command ABSENT)
+
+    - source: CursorSkillProvider
+      target: orchestrator-discovery
+      relationship: RUNTIME_FALLBACK
+      strength: HARD
+      evidence: orchestrator/src/engine/execution-engine.ts
+
+    - source: orchestrator-discovery
+      target: find-skills
+      relationship: NONE
+      strength: UNKNOWN
+      evidence: "provider-discovery.ts scans provider.yaml only; never invokes find-skills"

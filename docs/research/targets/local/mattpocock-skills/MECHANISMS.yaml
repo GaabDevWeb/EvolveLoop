@@ -1,0 +1,426 @@
+# MECHANISMS.yaml — mattpocock-skills
+# Epistemic: OBSERVED from LOCAL_CORPUS unless noted.
+# Decisions: ALREADY_PRESENT | ADOPT | ADAPT | PROTOTYPE | DEFER | REJECT
+
+target: mattpocock-skills
+source_type: LOCAL_CORPUS
+corpus_path: /home/gaab/Documentos/reverseEnginering/skills
+package_name: mattpocock-skills
+version_examined: "1.2.3"
+date: "2026-09-18"
+mode: TARGET_RESEARCH
+
+inventory:
+  skill_md_count: 38
+  openai_yaml_count: 38
+  plugin_promoted_count: 25
+  human_docs_count: 25
+  tests: []
+  evals: []
+
+mechanisms:
+  - id: M-BUCKETS
+    name: Bucket promotion lifecycle
+    problem: Ship only stable skills while keeping drafts/retired visible in-repo
+    how: >
+      Folders engineering|productivity (promoted), in-progress (beta public),
+      misc (kept, not promoted), deprecated (sink). CLAUDE.md invariants force
+      README + plugin.json sync for promoted only.
+    evidence:
+      - path: skills/CLAUDE.md
+        label: OBSERVED
+      - path: .claude-plugin/plugin.json
+        label: OBSERVED
+      - path: skills/skills/in-progress/README.md
+        label: OBSERVED
+    costs:
+      - Contributor process multiplies (README, plugin, docs, ask-matt)
+    failure_modes:
+      - Drift between plugin.json and README (invariant relies on humans/agents)
+      - Marketplace pin lag behind plugin.json (DOCUMENTED in ADR 0002)
+    alternatives:
+      - Flat skills/ with tags
+      - Generated flat copy for single-path manifests
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+    utility: USEFUL
+
+  - id: M-INVOKE-AXIS
+    name: User-invoked vs model-invoked dual harness
+    problem: Orchestration skills must not auto-fire; reusable disciplines must be discoverable
+    how: >
+      User-invoked: disable-model-invocation: true + policy.allow_implicit_invocation: false;
+      human-facing short description. Model-invoked: rich trigger description; Skill-tool callable.
+      Documented in .agents/invocation.md.
+    evidence:
+      - path: .agents/invocation.md
+        label: OBSERVED
+      - path: skills/skills/productivity/grill-me/agents/openai.yaml
+        label: OBSERVED
+      - path: skills/skills/engineering/tdd/agents/openai.yaml
+        label: OBSERVED
+    costs:
+      - Context load of every model-invoked description
+      - Cognitive load for user-invoked catalog
+    failure_modes:
+      - Desync Claude flag vs Codex policy (explicitly warned)
+      - Model-invoked skill wrongly gated (CHANGELOG 1.2.2 writing-for-agents)
+    alternatives:
+      - All model-invoked (context pollution)
+      - All user-invoked (no composition)
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+    utility: USEFUL
+
+  - id: M-SKILL-TOOL-COMPOSE
+    name: Explicit Skill-tool composition
+    problem: Cross-skill reuse with high invocation hit rate across harnesses
+    how: >
+      Operative steps say Call the Skill tool with "name" (or twice for two skills).
+      No deep relative SKILL.md imports; no bare /name as operative command.
+      User-invoked skills cannot be Skill-tool targets.
+    evidence:
+      - path: .agents/invocation.md
+        label: OBSERVED
+      - path: skills/skills/engineering/grill-with-docs/SKILL.md
+        label: OBSERVED
+      - path: skills/skills/productivity/grill-me/SKILL.md
+        label: OBSERVED
+    costs:
+      - Requires harness Skill tool
+      - Opaque wrappers if tool fails
+    failure_modes:
+      - Attempting to Skill-tool a user-invoked skill (forbidden by design)
+      - Ambiguous "call with X and Y" parsed as one call
+    alternatives:
+      - Inline duplicated instructions
+      - Relative markdown includes
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+    utility: USEFUL
+
+  - id: M-THIN-WRAPPER
+    name: Thin user-invoked wrappers over primitives
+    problem: Provide slash entrypoints without paying description load of primitives twice
+    how: grill-me and grill-with-docs are ~1 operative line that Call Skill tool(s)
+    evidence:
+      - path: skills/skills/productivity/grill-me/SKILL.md
+        label: OBSERVED
+      - path: skills/skills/engineering/grill-with-docs/SKILL.md
+        label: OBSERVED
+    costs:
+      - Hard to understand wrapper without reading primitive
+    failure_modes:
+      - Wrapper drifts from primitive behaviour (bodies are empty of logic)
+    alternatives:
+      - Monolithic grill-with-docs containing full grilling text
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+    utility: USEFUL
+
+  - id: M-ROUTER
+    name: Human router skill (ask-matt)
+    problem: Too many user-invoked skills to remember
+    how: >
+      Single user-invoked map of main flow, on-ramps, vocabulary layer, phase boundaries,
+      standalone skills. Must be re-synced when catalog changes (CLAUDE.md rule).
+    evidence:
+      - path: skills/skills/engineering/ask-matt/SKILL.md
+        label: OBSERVED
+      - path: skills/CLAUDE.md
+        label: OBSERVED
+    costs:
+      - Large router file; drift = "router that lies"
+    failure_modes:
+      - Stale routes after graduate/rename
+    alternatives:
+      - Only README index
+      - Model-invoked router (defeats zero-load of user-invoked set)
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+    utility: USEFUL
+
+  - id: M-WRITE-AGENTS
+    name: writing-for-agents methodology
+    problem: Agent-consumed docs cause variance, sprawl, premature completion, sediment
+    how: >
+      Context pointers; context load vs cognitive load; information hierarchy /
+      progressive disclosure / co-location; completion criteria; leading words;
+      positive prompting; pruning; SKILL-MECHANICS for invocation/routers.
+    evidence:
+      - path: skills/skills/productivity/writing-for-agents/SKILL.md
+        label: OBSERVED
+      - path: skills/skills/productivity/writing-for-agents/SKILL-MECHANICS.md
+        label: OBSERVED
+    costs:
+      - Meta-document length (~81 lines + mechanics)
+      - Authoring discipline overhead
+    failure_modes:
+      - Methodology without evals (unmeasured)
+      - Over-splitting documents
+    alternatives:
+      - Ad-hoc skill writing
+      - Only token-minimization rules
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+    utility: USEFUL
+    notes: Optional PROTOTYPE — turn levers into skill-authoring checklist/evals
+
+  - id: M-SETUP-HARD-SOFT
+    name: Per-repo setup with hard vs soft dependencies
+    problem: Engineering skills need tracker/labels/docs layout unevenly
+    how: >
+      setup-matt-pocock-skills writes CLAUDE/AGENTS ## Agent skills + docs/agents/*.
+      ADR 0001: hard deps (to-tickets, to-spec, triage) get explicit setup pointer;
+      soft deps use vague glossary/ADR prose.
+    evidence:
+      - path: skills/skills/engineering/setup-matt-pocock-skills/SKILL.md
+        label: OBSERVED
+      - path: .agents/adr/0001-explicit-setup-pointer-only-for-hard-dependencies.md
+        label: OBSERVED
+    costs:
+      - One mandatory setup session for hard-dep flows
+    failure_modes:
+      - Soft-dep skills still weak without CONTEXT.md
+      - Wrong tracker writes if setup skipped on hard deps
+    alternatives:
+      - Always require setup in every skill
+      - Auto-detect without setup
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+    utility: USEFUL
+
+  - id: M-CONTEXT-ADR
+    name: Domain glossary + minimal ADRs
+    problem: Jargon misalignment and lost hard-to-reverse decisions
+    how: >
+      CONTEXT.md as glossary-only; optional CONTEXT-MAP for multi-context;
+      ADRs often 1 paragraph; offer ADR only if hard-to-reverse + surprising + trade-off.
+    evidence:
+      - path: skills/skills/engineering/domain-modeling/SKILL.md
+        label: OBSERVED
+      - path: skills/skills/engineering/domain-modeling/ADR-FORMAT.md
+        label: OBSERVED
+      - path: skills/CONTEXT.md
+        label: OBSERVED
+    costs:
+      - Parallel knowledge system vs richer wikis
+    failure_modes:
+      - CONTEXT.md polluted with implementation (explicitly forbidden)
+      - ADR spam if criteria ignored
+    alternatives:
+      - Full ADR templates
+      - Wiki-only grounding
+    our_equivalence: SUBSTANTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+    utility: USEFUL
+    notes: DEFER adopting CONTEXT.md as second SSOT beside GaabWiki
+
+  - id: M-MAIN-FLOW
+    name: Documented idea-to-ship skill flow
+    problem: Multi-session delivery without owning the whole process framework
+    how: >
+      ask-matt main flow grill-with-docs → to-spec → to-tickets → implement(tdd, code-review);
+      on-ramps triage/diagnose/wayfinder; phase boundaries continue|clear|handoff|subagent|compact;
+      smart-zone awareness.
+    evidence:
+      - path: skills/skills/engineering/ask-matt/SKILL.md
+        label: OBSERVED
+      - path: skills/README.md
+        label: DOCUMENTED
+    costs:
+      - Prompt-only; no evidence bus / IR
+      - Relies on issue tracker config
+    failure_modes:
+      - Skipping to-spec after wayfinder (warned)
+      - Context degradation past smart zone
+    alternatives:
+      - Heavy frameworks (GSD/BMAD/Spec-Kit) — product claim in README
+      - MegaBrain orchestrator + Evidence Bus
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+    utility: CONDITIONALLY_USEFUL
+    notes: REJECT as replacement for MegaBrain runtime
+
+  - id: M-DUAL-DISTRO
+    name: Dual distribution (plugin subscribe vs skills.sh edit)
+    problem: Users want either managed updates or forkable files
+    how: >
+      Claude plugin curated path array; skills.sh copies editable files;
+      Codex native plugin deferred (single-path + symlink drop) per ADR 0002.
+    evidence:
+      - path: README.md
+        label: DOCUMENTED
+      - path: .agents/adr/0002-ship-as-a-claude-code-plugin.md
+        label: OBSERVED
+    costs:
+      - Two philosophies; dual install duplicates skills
+    failure_modes:
+      - Marketplace sha pin behind main
+    alternatives:
+      - Restructure to promoted-only flat tree
+      - Commit duplicate flat copies
+    our_equivalence: NONE
+    decision: DEFER
+    confidence: HIGH
+    utility: USEFUL
+
+  - id: M-HUMAN-DOCS
+    name: Human-facing docs pages for promoted skills
+    problem: Cognitive load of remembering when to invoke user-invoked skills
+    how: >
+      docs/<bucket>/<skill>.md with What/When/Common questions/It's working if;
+      absolute URLs; install widget owned by site not page.
+    evidence:
+      - path: .agents/writing-docs.md
+        label: OBSERVED
+      - path: skills/docs/
+        label: OBSERVED
+    costs:
+      - Sync on every behavioural change
+    failure_modes:
+      - Invented FAQ padding (writing-docs forbids)
+    alternatives:
+      - README-only
+    our_equivalence: PARTIAL
+    decision: DEFER
+    confidence: MEDIUM
+    utility: CONDITIONALLY_USEFUL
+
+  - id: M-RELEASE
+    name: Changesets + plugin version sync
+    problem: package.json and plugin.json version must move together
+    how: npm scripts changeset/version + sync-plugin-version.mjs --check
+    evidence:
+      - path: package.json
+        label: OBSERVED
+      - path: CHANGELOG.md
+        label: OBSERVED
+    costs:
+      - Release ceremony
+    failure_modes:
+      - Manual version edit without sync
+    alternatives:
+      - Single version file
+    our_equivalence: PARTIAL
+    decision: DEFER
+    confidence: MEDIUM
+    utility: USEFUL
+
+  - id: M-AXIS-ISOLATE
+    name: Dual-axis parallel review isolation
+    problem: Standards and Spec criteria pollute each other in one context
+    how: >
+      code-review spawns parallel subagents; paste smell baseline into Standards agent;
+      aggregate without cross-rerank.
+    evidence:
+      - path: skills/skills/engineering/code-review/SKILL.md
+        label: OBSERVED
+    costs:
+      - Two subagent passes
+    failure_modes:
+      - Empty diff not gated early
+      - Missing spec → Spec axis skipped (handled)
+    alternatives:
+      - Single merged review
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+    utility: USEFUL
+
+  - id: M-GRILL-TREE
+    name: Design-tree frontier grilling
+    problem: Misalignment / silent assumptions before build
+    how: >
+      Rounds of frontier questions with recommended answers; facts via subagents;
+      decisions wait for user; done when frontier empty.
+    evidence:
+      - path: skills/skills/productivity/grilling/SKILL.md
+        label: OBSERVED
+    costs:
+      - Session latency
+    failure_modes:
+      - Scope too large → endless grilling (human docs acknowledge)
+    alternatives:
+      - Single questionnaire dump
+      - Spec without interview
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+    utility: USEFUL
+
+  - id: M-HARNESS-NEUTRAL
+    name: Harness-neutral operative wording
+    problem: Claude-specific tool/agent names break other harnesses
+    how: CHANGELOG 1.2.3 removes Claude tool names from subagent dispatch instructions
+    evidence:
+      - path: CHANGELOG.md
+        label: DOCUMENTED
+    costs:
+      - Slightly less precise Cursor/Claude tips
+    failure_modes:
+      - Reintroduction of harness jargon
+    alternatives:
+      - Per-harness skill forks
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+    utility: USEFUL
+
+  - id: M-WAIT-WHAT
+    name: Minimal corrective leading-word skill
+    problem: Verbose/jargon messages that already failed to land
+    how: >
+      Extremely short user-invoked skill; name encodes listener state; STE + CONTEXT.md.
+      CHANGELOG argues names-about-output fail differently.
+    evidence:
+      - path: skills/skills/productivity/wait-what/SKILL.md
+        label: OBSERVED
+      - path: CHANGELOG.md
+        label: DOCUMENTED
+    costs:
+      - Does not prevent next jargon message
+    failure_modes:
+      - Without CONTEXT.md, weaker re-pitch
+    alternatives:
+      - Long concision skill
+    our_equivalence: ABSENT
+    decision: PROTOTYPE
+    confidence: MEDIUM
+    utility: CONDITIONALLY_USEFUL
+
+  - id: M-SKILL-PACKAGE-BASE
+    name: SKILL.md instruction packages
+    problem: Package reusable agent behaviours
+    how: Frontmatter name/description + markdown body (+ optional references/scripts)
+    evidence:
+      - path: skills/skills/**/SKILL.md
+        label: OBSERVED
+    our_equivalence: EQUIVALENT
+    decision: ALREADY_PRESENT
+    confidence: HIGH
+    utility: USEFUL
+
+  - id: M-NO-EVALS
+    name: Absence of automated evals/tests
+    problem: n/a (gap)
+    how: Corpus has zero tests/evals for skills themselves
+    evidence:
+      - path: _corpus-audit/EVALUATION-INVENTORY.yaml
+        label: DOCUMENTED
+      - path: _corpus-audit/TARGET-INVENTORY.yaml
+        label: DOCUMENTED
+    our_equivalence: NONE
+    decision: REJECT
+    confidence: HIGH
+    utility: HARMFUL
+    notes: Do not imitate absence; MegaBrain should keep/expand evals

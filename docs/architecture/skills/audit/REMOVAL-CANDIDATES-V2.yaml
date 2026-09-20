@@ -1,0 +1,73 @@
+# Removal Candidates V2 — candidates only; zero deletions this phase
+generated: 2026-09-19
+observation:
+  sample_size: 0_production_activations
+  observation_window: instrumentation_just_installed
+  confidence: low
+  note: Frequency cannot justify prune yet; structural criteria only
+
+candidates:
+  - id: linkedin-posts
+    recommended_disposition: PRUNE_CANDIDATE
+    checks:
+      hard_gate: false
+      structural_dependency: false
+      fallback: false
+      necessary_caller: false
+      agent_contract_impact: false
+      command_contract_impact: false
+      policy_impact: false
+      relevant_usage_evidence: false
+      recovery_needed: false
+      removal_risk: low
+    blockers: [await_telemetry_window]
+
+  - id: writing-plans
+    recommended_disposition: REVIEW
+    reason: Superpowers parallel; brainstorming still DOCUMENTS terminal → writing-plans
+    blockers: [superpowers_path_decision, brainstorming_terminal]
+
+  - id: subagent-driven-development
+    recommended_disposition: REVIEW
+    reason: Parallel to PDA; scripts may be used manually
+    blockers: [superpowers_path_decision]
+
+  - id: executing-plans
+    recommended_disposition: REVIEW
+    reason: Docs repaired toward PDA; skill still installed
+    blockers: [superpowers_path_decision]
+
+  - id: finishing-a-development-branch
+    recommended_disposition: REVIEW
+    reason: MegaBrain close is po-review/documentar
+    blockers: [superpowers_peer_chain]
+
+  - id: gsap
+    recommended_disposition: KEEP_DISCOVERABLE
+    reason: Standalone specialist; no MegaBrain caller; await telemetry
+  - id: framer-motion
+    recommended_disposition: KEEP_DISCOVERABLE
+  - id: lenis
+    recommended_disposition: KEEP_DISCOVERABLE
+  - id: hover-effects
+    recommended_disposition: KEEP_DISCOVERABLE
+  - id: particles
+    recommended_disposition: KEEP_DISCOVERABLE
+  - id: r3f-shaders
+    recommended_disposition: KEEP_DISCOVERABLE
+  - id: frontend-design
+    recommended_disposition: KEEP_OPTIONAL
+    reason: Soft absorbed into frontend-pro anti-slop
+  - id: ui-ux-pro-max
+    recommended_disposition: KEEP_OPTIONAL
+    reason: Fork/data source for frontend-pro
+
+explicitly_not_candidates:
+  - grill-me
+  - image-to-code
+  - agent-browser
+  - technical-library-dossier
+  - find-skills
+  - systematic-debugging
+  - brainstorming
+  - all_local_megabrain_core

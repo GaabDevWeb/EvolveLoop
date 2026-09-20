@@ -1,0 +1,33 @@
+# Validation results
+generated: 2026-09-20T02:08:07Z
+status: WIKI_RENAME_VALIDATED
+
+baseline:
+  orchestrator_npm_test: 225/225
+  snapshot: .prune-snapshots/wiki-rename-pre-20260920T020310Z/
+
+post_rename:
+  orchestrator_npm_test: 225/225
+  evolveloop_subset: 93/93
+  ground_sh_scout: PASS (EXIT 0, status=ok)
+  wiki_skill_dir_exists: true
+  gaabwiki_skill_dir_absent: true
+  wiki_grounding_gate_file: true
+  hooks_json_points_to_wiki_mem: true
+  grill_me_unchanged: true
+  image_to_code_unchanged: true
+  skill_pack_structurally_unchanged: true  # only wiki skill ids renamed
+  evolveloop_architecture_unchanged: true
+
+behavioral_equivalence: PASS
+unexpected_findings:
+  - CLI placeholder briefly corrupted during bulk replace; repaired to EXTERNAL gaabwiki module
+  - ground.sh briefly attempted python -m wiki; repaired to WIKI_CLI_MODULE=gaabwiki
+  - test failure when WIKI_ROOT in env overrode RAG_REPO_ROOT; test updated to clear both
+
+deferred:
+  - KnowledgeBackend extraction
+  - GaabType / profiles
+  - AGENT.md
+  - renaming vault Python package gaabwiki
+  - public installer / main branch publication

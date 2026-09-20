@@ -1,0 +1,1 @@
+/home/gaab/Downloads/CursorSKILLS/orchestrator/src/telemetry/execution-trace.ts:55: * Produce a compact JSON-friendly summary for observability / offline replay review.

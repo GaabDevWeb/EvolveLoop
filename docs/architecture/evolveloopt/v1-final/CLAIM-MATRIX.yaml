@@ -1,0 +1,24 @@
+# Same matrix for ops consumers — mirrors CLAIM-VERIFICATION with V1 freeze tags
+v1_claim_matrix:
+  architecture_frozen: true
+  autonomy_ceiling: PROPOSE
+  decision: V1_READY_WITH_LIMITATIONS
+  claims: !include CLAIM-VERIFICATION.yaml
+# Explicit list for machines that do not expand includes:
+entries:
+  - { id: CL-V1-01, claim: persistent, status: VERIFIED }
+  - { id: CL-V1-02, claim: longitudinal, status: VERIFIED }
+  - { id: CL-V1-03, claim: event-driven, status: VERIFIED }
+  - { id: CL-V1-04, claim: scope-aware, status: VERIFIED }
+  - { id: CL-V1-05, claim: gated, status: PARTIALLY_VERIFIED }
+  - { id: CL-V1-06, claim: observable, status: VERIFIED }
+  - { id: CL-V1-07, claim: bounded, status: VERIFIED }
+  - { id: CL-V1-08, claim: testable, status: VERIFIED }
+  - { id: CL-V1-09, claim: traceable, status: VERIFIED }
+  - { id: CL-V1-10, claim: automatic_analysis, status: VERIFIED }
+  - { id: CL-V1-11, claim: outcome_feedback_loop, status: VERIFIED }
+  - { id: CL-V1-12, claim: fully_autonomous, status: CONTRADICTED }
+  - { id: CL-V1-13, claim: production_proven, status: CONTRADICTED }
+  - { id: CL-V1-14, claim: full_runtime_observability, status: CONTRADICTED }
+  - { id: CL-V1-15, claim: fixture_is_production_gate, status: CONTRADICTED }
+  - { id: CL-V1-16, claim: physical_tenancy, status: UNVERIFIED }

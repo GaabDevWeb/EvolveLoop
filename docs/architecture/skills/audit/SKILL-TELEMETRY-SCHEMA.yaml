@@ -1,0 +1,72 @@
+# Skill Telemetry Schema
+# Observe-only. Failures must not break execution (except when gate evidence is separately required).
+
+event_name: SkillLifecycle
+event_bus_type: SkillLifecycle
+
+event_types:
+  - DISCOVERED
+  - REFERENCED
+  - LOADED
+  - ACTIVATED
+  - EXECUTED
+  - GATE_REQUIRED
+  - GATE_SATISFIED
+  - FALLBACK_USED
+  - SKIPPED
+  - FAILED
+  - BLOCKED
+
+record_fields:
+  event: SkillLifecycle
+  event_type: SkillTelemetryEventType
+  skill_id: string
+  skill_version: string?
+  execution_id: string?
+  task_id: string?
+  feature_id: string?
+  agent_id: string?
+  source: string?
+  context: string?
+  policy_state: string?
+  gate_state: string?
+  timestamp: ISO-8601
+  duration_ms: number?
+  success: boolean?
+  failure_reason: string?
+  provider: string?
+  command: string?
+  flow: string?
+
+storage:
+  event_bus: orchestrator EventBus
+  jsonl: <dataRoot>/telemetry/events/skill-lifecycle-YYYY-MM-DD.jsonl
+  agent_evidence_optional: memory/<feature_id>/evidence/skill-activations.jsonl
+
+implementation:
+  module: orchestrator/src/telemetry/skill-telemetry.ts
+  provider_hook: CursorSkillProvider LOADED/EXECUTED/FAILED
+  policy_helpers: orchestrator/src/policy/megabrain-skill-gates.ts
+
+metrics_per_skill:
+  - activation_count
+  - execution_count
+  - gate_required_count
+  - gate_satisfied_count
+  - fallback_count
+  - failure_count
+  - blocked_count
+  - last_activation
+  - first_observed_activation
+  - distinct_flows
+  - distinct_commands
+  - distinct_agents
+
+observation_window:
+  required_fields: [started_at, ended_at, executions_observed, records]
+  reporting_rule: "Never claim rare/frequent without sample_size + window + confidence"
+
+non_goals:
+  - Do not store full prompts for frequency
+  - Do not block routing on telemetry failure
+  - Do not equate documentation mention with ACTIVATED

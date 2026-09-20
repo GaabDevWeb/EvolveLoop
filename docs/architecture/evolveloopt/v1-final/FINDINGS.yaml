@@ -1,0 +1,58 @@
+findings:
+  - id: F-V1-SCOPE-LEAK
+    severity: HIGH
+    status: CORRECTED
+    summary: "Attach-scope identity stamp on unlabeled events"
+  - id: F-V1-GATE-UNTRUSTED
+    severity: MED
+    status: CORRECTED
+    summary: "Unlabeled gate.json over-trusted"
+  - id: F-V1-PROD-GATE-EXTERNAL
+    severity: HIGH
+    status: OPEN_ACCEPTED_LIMITATION
+    summary: "Production Prototype Gate runner not in package"
+  - id: F-V1-ADAPTERS
+    severity: HIGH
+    status: OPEN_ACCEPTED_LIMITATION
+    summary: "Evidence/Eval/User-feedback adapters NOT_CONNECTED"
+  - id: F-V1-LOGICAL-TENANCY
+    severity: MED
+    status: OPEN_ACCEPTED_LIMITATION
+    summary: "Shared evolutionDir; logical query isolation only"
+  - id: F-V1-EVENT-VOCAB
+    severity: MED
+    status: OPEN_ACCEPTED_LIMITATION
+    summary: "Limited EventBus vocabulary (TRIGGER/BATCH subset)"
+  - id: F-V1-DEFAULT-OFF
+    severity: LOW
+    status: INTENTIONAL
+    summary: "CLI --evolve default OFF"
+  - id: F-V1-DUAL-CADENCE
+    severity: LOW
+    status: LEGACY
+    summary: "AnalysisCadence export coexists with ScopedAnalysisCadence (live owner)"
+  - id: F-V1-BARE-RECORDOUTCOME
+    severity: LOW
+    status: OPEN_ACCEPTED_LIMITATION
+    summary: "recordOutcome without coordinator does not schedule analyze"
+  - id: F-V1-STORAGE-TTL
+    severity: MED
+    status: OPEN_ACCEPTED_LIMITATION
+    summary: "No compaction/TTL for JSONL signal growth"
+
+duplication_audit:
+  second_registry: false
+  second_runtime: false
+  second_scheduler: false
+  second_evidence_bus: false
+  second_policy_engine: false
+  second_gate_runner: false
+  dual_cadence_export: LEGACY
+  dual_controller_stack: INTENTIONAL  # episodic + longitudinal
+
+counts:
+  critical: 0
+  high_open_accepted: 2
+  med_open_accepted: 3
+  low: 3
+  corrected: 2

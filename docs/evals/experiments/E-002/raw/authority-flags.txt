@@ -1,0 +1,15 @@
+/home/gaab/Downloads/CursorSKILLS/orchestrator/src/authority/capability-authority.ts:12:  allowShell?: boolean;
+/home/gaab/Downloads/CursorSKILLS/orchestrator/src/authority/capability-authority.ts:13:  allowWrite?: boolean;
+/home/gaab/Downloads/CursorSKILLS/orchestrator/src/authority/capability-authority.ts:14:  allowNetwork?: boolean;
+/home/gaab/Downloads/CursorSKILLS/orchestrator/src/authority/capability-authority.ts:44:      allowShell: boolean;
+/home/gaab/Downloads/CursorSKILLS/orchestrator/src/authority/capability-authority.ts:45:      allowWrite: boolean;
+/home/gaab/Downloads/CursorSKILLS/orchestrator/src/authority/capability-authority.ts:46:      allowNetwork: boolean;
+/home/gaab/Downloads/CursorSKILLS/orchestrator/src/authority/capability-authority.ts:89:    allowShell: !!ctx.allowShell,
+/home/gaab/Downloads/CursorSKILLS/orchestrator/src/authority/capability-authority.ts:90:    allowWrite: !!ctx.allowWrite,
+/home/gaab/Downloads/CursorSKILLS/orchestrator/src/authority/capability-authority.ts:91:    allowNetwork: !!ctx.allowNetwork,
+/home/gaab/Downloads/CursorSKILLS/orchestrator/src/authority/capability-authority.ts:118:    if (ctx.allowShell === false && !flags.confirmed) {
+/home/gaab/Downloads/CursorSKILLS/orchestrator/src/authority/capability-authority.ts:121:    if (flags.allowShell || flags.confirmed) {
+/home/gaab/Downloads/CursorSKILLS/orchestrator/src/authority/capability-authority.ts:128:    if (ctx.allowWrite === false && !flags.confirmed) {
+/home/gaab/Downloads/CursorSKILLS/orchestrator/src/authority/capability-authority.ts:131:    if (flags.allowWrite || flags.confirmed) {
+/home/gaab/Downloads/CursorSKILLS/orchestrator/src/authority/capability-authority.ts:138:    if (ctx.allowNetwork === false && !flags.confirmed) {
+/home/gaab/Downloads/CursorSKILLS/orchestrator/src/authority/capability-authority.ts:141:    if (flags.allowNetwork || flags.confirmed) {

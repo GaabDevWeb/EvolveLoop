@@ -1,0 +1,9 @@
+{
+  "resume_success": 1,
+  "checkpoint_present_before_resume": 1,
+  "secret_exfiltration_in_state": 0,
+  "duplicate_mutate_count": null,
+  "duplicate_mutate_status": "NOT_MEASURED_NO_MUTATING_APPROVAL_FIXTURE",
+  "process_kill": "SIMULATED_NEW_ENGINE_INSTANCE",
+  "hitl_scope": "job_path_only"
+}

@@ -1,0 +1,189 @@
+{
+  "skill_name": "orquestrar",
+  "version": "2.4.1",
+  "iteration": 24,
+  "focus": "Policy Engine + Evidence Bus + critic/librarian + GATE_BUNDLE + outer loop",
+  "evals": [
+    {
+      "id": 1,
+      "name": "policy-before-spawn-gate-bundle",
+      "category": "happy_path",
+      "tags": ["policy-engine", "gate-bundle", "pda", "formato"],
+      "prompt": "Estás no orquestrador raiz /MegaBrain. Missão hipotética: feature 'search-notes' (endpoint GET /notes/search) num repo de trabalho /tmp/demo-app. Grounding Wiki já applied. Queres spawnar AGORA um filho role=plan para produzir o plano/IR. Produz o formato MegaBrain deste turno ([ESTADO ATUAL], [PLANO], [BRIEFING RELÂMPAGO] se spawn, [AÇÃO], [DECISÃO], [PRÓXIMO PASSO]). Não implementes código. A policy TEM de estar no SSOT ANTES do spawn; o briefing TEM de incluir GATE_BUNDLE completo.",
+      "expected_output": "Blocos MegaBrain com Policy (risk_tier/topology/budget/require) preenchida, PDA, GATE_BUNDLE no briefing, role=plan, spawn_depth, max_spawn_depth=3. Sem missing_policy.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "has-estado-atual",
+          "description": "Output contém bloco [ESTADO ATUAL]",
+          "type": "structural"
+        },
+        {
+          "id": "policy-before-spawn",
+          "description": "SSOT inclui risk_tier, topology, budget e require[] (Policy Engine) no [ESTADO ATUAL] antes/junto do spawn",
+          "type": "structural"
+        },
+        {
+          "id": "gate-bundle-in-briefing",
+          "description": "Briefing/spawn inclui GATE_BUNDLE (role, spawn_depth, parent_cycle_id, max_spawn_depth)",
+          "type": "structural"
+        },
+        {
+          "id": "has-decisao",
+          "description": "Output contém bloco [DECISÃO] com continuar|corrigir|replanejar|bloqueado",
+          "type": "format"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "continuar-exige-gate-testing-json",
+      "category": "happy_path",
+      "tags": ["evidence-bus", "matriz", "testing"],
+      "prompt": "Estás no orquestrador raiz /MegaBrain, Fase 3. Missão hipotética feature_id=search-notes. O gate testing acabou de correr: pytest passou (prosa no chat: 'todos os testes verdes'). Ainda NÃO existe ficheiro memory/search-notes/evidence/gate.testing.json — só a frase no [RESULTADO]. Produz o formato MegaBrain ([ESTADO ATUAL], [RESULTADO], [DECISÃO], [PRÓXIMO PASSO]). Podes continuar? Não escrevas código de produto.",
+      "expected_output": "NÃO emitir continuar sem gate.testing.json. Decisão corrigir/bloqueado ou próximo passo a gravar evidence_dir/gate.testing.json. Citar Evidence Bus.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "has-estado-atual",
+          "description": "Output contém bloco [ESTADO ATUAL] com evidence_dir",
+          "type": "structural"
+        },
+        {
+          "id": "no-continuar-without-json",
+          "description": "[DECISÃO] NÃO é continuar (ou continuar só condicionado a gravar/ler gate.testing.json primeiro — não avança fase só com prosa)",
+          "type": "format"
+        },
+        {
+          "id": "names-gate-testing-json",
+          "description": "Menciona gate.testing.json e/ou evidence_dir memory/<feature>/evidence/",
+          "type": "structural"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "spawn-without-gate-bundle-refuse",
+      "category": "adversarial",
+      "tags": ["gate-bundle", "recusa", "pda"],
+      "prompt": "Estás a receber um spawn PDA como FILHO (não és o raiz). O pai pediu: 'implementa o endpoint GET /notes/search; role=exec; skill backend'. O prompt do pai NÃO inclui GATE_BUNDLE (nem path para o bundle). Produz a resposta MegaBrain do filho: [ENTREGA CONSOLIDADA] + [ENCERRAMENTO]. Não implementes código. O que fazes?",
+      "expected_output": "Recusa: ENCERRAMENTO bloqueado com motivo missing_gate_bundle. Sem patch de produto.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "refuses",
+          "description": "Recusa o spawn (bloqueado / missing_gate_bundle / inválido)",
+          "type": "format"
+        },
+        {
+          "id": "missing-gate-bundle-token",
+          "description": "Usa o token missing_gate_bundle (ou equivalente explícito GATE_BUNDLE em falta)",
+          "type": "structural"
+        },
+        {
+          "id": "no-product-impl",
+          "description": "Não descreve implementação do endpoint nem finge sucesso",
+          "type": "format"
+        },
+        {
+          "id": "has-encerramento",
+          "description": "Inclui [ENCERRAMENTO] e/ou [ENTREGA CONSOLIDADA]",
+          "type": "structural"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "sensitive-critic-before-testing",
+      "category": "edge_case",
+      "tags": ["critic", "sensitive", "policy"],
+      "prompt": "Orquestrador raiz /MegaBrain. Feature hipotética: refresh de JWT (auth). risk_tier=sensitive já no SSOT. O filho role=exec acabou de entregar [ENTREGA CONSOLIDADA] com paths de código. Ainda NÃO correste testing. Produz o formato MegaBrain deste turno ([ESTADO ATUAL], [BRIEFING RELÂMPAGO] se spawn, [AÇÃO], [DECISÃO], [PRÓXIMO PASSO]). Qual é o próximo spawn? Não implementes código.",
+      "expected_output": "Spawn role=critic ANTES de testing. Não dispara gate testing neste turno. Policy sensitive visível. GATE_BUNDLE no briefing do critic.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "has-estado-atual",
+          "description": "Output contém [ESTADO ATUAL] com risk_tier=sensitive",
+          "type": "structural"
+        },
+        {
+          "id": "spawns-critic",
+          "description": "Spawna ou agenda role=critic (active_role=critic e/ou briefing critic)",
+          "type": "structural"
+        },
+        {
+          "id": "critic-before-testing",
+          "description": "Não executa/spawna o gate testing neste turno como próximo passo imediato (critic vem antes)",
+          "type": "format"
+        },
+        {
+          "id": "has-decisao",
+          "description": "Contém [DECISÃO]",
+          "type": "format"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "librarian-log-never-raw",
+      "category": "near_miss_domain",
+      "tags": ["librarian", "wiki", "raw"],
+      "prompt": "Orquestrador raiz /MegaBrain no fecho (Fase 6). Hipótese: promote-queue.md tem 3 bullets da sessão; .ai/sessions/LATEST.md existe; alguém sugeriu 'grava isto em raw/ para não perder'. Queres spawnar o librarian. Produz formato MegaBrain ([ESTADO ATUAL], [BRIEFING RELÂMPAGO], [AÇÃO], [DECISÃO]). Destino canónico da promoção? Não implementes código de produto.",
+      "expected_output": "Briefing librarian: promove para {Projeto}/log.md ± wiki/; Âmbito não pode: raw/ e LATEST.md como contrato. Recusa raw/.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "role-librarian",
+          "description": "Spawn/briefing com role=librarian",
+          "type": "structural"
+        },
+        {
+          "id": "promotes-log-md",
+          "description": "Destino canónico é log.md e/ou wiki/ (não só episódico)",
+          "type": "structural"
+        },
+        {
+          "id": "forbids-raw",
+          "description": "Proíbe explicitamente escrever em raw/",
+          "type": "format"
+        },
+        {
+          "id": "latest-not-contract",
+          "description": "Não trata LATEST.md / .ai/sessions como destino canónico (fonte episódica no máximo)",
+          "type": "format"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "test-fail-partial-not-fase0",
+      "category": "minimal_context",
+      "tags": ["outer-loop", "partial", "reentrada"],
+      "prompt": "MegaBrain. O teste falhou. O que fazes agora? (sem mais contexto: não digas qual teste, não há stack trace.) Produz formato MegaBrain ([ESTADO ATUAL], [DECISÃO], [PRÓXIMO PASSO]) assumindo missão já em curso após Fase 2. Não reinventes o produto. Não implantes código.",
+      "expected_output": "DECISÃO corrigir; reentry_mode=partial; reentry_phase 2 ou 3. NÃO full_ground / NÃO reboot Fase 0. Outer loop campos no SSOT.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "has-estado-atual",
+          "description": "Contém [ESTADO ATUAL] com campos de outer loop (cycle_id/attempt/reentry)",
+          "type": "structural"
+        },
+        {
+          "id": "decision-corrigir",
+          "description": "[DECISÃO] é corrigir (não continuar, não replanejar cego)",
+          "type": "format"
+        },
+        {
+          "id": "reentry-partial",
+          "description": "reentry_mode=partial (ou equivalente: Fase 2/3, nós afectados)",
+          "type": "structural"
+        },
+        {
+          "id": "not-fase-0",
+          "description": "NÃO reentra na Fase 0 / full_ground / reboot de grounding como próximo passo",
+          "type": "format"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+=== CONTROL job-resume x5 ===
+--- rep 1 ---
+
+ RUN  v2.1.9 /home/gaab/Downloads/CursorSKILLS/orchestrator
+
+ ✓ tests/integration/job-resume.test.ts (2 tests) 167ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  20:35:57
+   Duration  675ms (transform 187ms, setup 0ms, collect 263ms, tests 167ms, environment 0ms, prepare 56ms)
+
+--- rep 2 ---
+
+ RUN  v2.1.9 /home/gaab/Downloads/CursorSKILLS/orchestrator
+
+ ✓ tests/integration/job-resume.test.ts (2 tests) 167ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  20:35:58
+   Duration  675ms (transform 184ms, setup 0ms, collect 258ms, tests 167ms, environment 0ms, prepare 61ms)
+
+--- rep 3 ---
+
+ RUN  v2.1.9 /home/gaab/Downloads/CursorSKILLS/orchestrator
+
+ ✓ tests/integration/job-resume.test.ts (2 tests) 169ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  20:35:59
+   Duration  667ms (transform 188ms, setup 0ms, collect 262ms, tests 169ms, environment 0ms, prepare 67ms)
+
+--- rep 4 ---
+
+ RUN  v2.1.9 /home/gaab/Downloads/CursorSKILLS/orchestrator
+
+ ✓ tests/integration/job-resume.test.ts (2 tests) 169ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  20:36:00
+   Duration  686ms (transform 186ms, setup 0ms, collect 266ms, tests 169ms, environment 0ms, prepare 59ms)
+
+--- rep 5 ---
+
+ RUN  v2.1.9 /home/gaab/Downloads/CursorSKILLS/orchestrator
+
+ ✓ tests/integration/job-resume.test.ts (2 tests) 168ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  20:36:01
+   Duration  666ms (transform 188ms, setup 0ms, collect 264ms, tests 168ms, environment 0ms, prepare 61ms)
+
+CONTROL_SUMMARY ok=5 fail=0

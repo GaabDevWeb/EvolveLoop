@@ -1,0 +1,120 @@
+{
+  "skill_name": "testing",
+  "version": "1.2.0",
+  "evals": [
+    {
+      "id": 1,
+      "name": "run-vitest-after-feature",
+      "category": "happy_path",
+      "tags": ["vitest", "fase-3"],
+      "prompt": "Orquestrador Fase 3: acabámos de alterar src/utils/format.ts. O projeto tem vitest em package.json. Executa /testes — corre validação e reporta.",
+      "expected_output": "test-report com Boot sequence, VERDE, comando vitest scoped, evidence path",
+      "files": [],
+      "assertions": [
+        { "id": "boot-sequence", "description": "Secção Boot sequence preenchida com tabela", "type": "structural" },
+        { "id": "detects-runner", "description": "Deteta Vitest via package.json", "type": "content" },
+        { "id": "test-report", "description": "Veredito VERDE e template test-report completo", "type": "format" },
+        { "id": "evidence-json", "description": "Menciona telemetry/evidence/ ou evidence JSON", "type": "structural" }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "no-tests-build-substitute",
+      "category": "edge_case",
+      "tags": ["substituto", "build"],
+      "prompt": "Fase 3 do orquestrador. Repo só tem package.json com script build, sem test. Valida a alteração em lib/hello.js.",
+      "expected_output": "Veredito SUBSTITUTO, build executado, risco residual",
+      "files": [],
+      "assertions": [
+        { "id": "substitute", "description": "Veredito SUBSTITUTO explícito", "type": "content" },
+        { "id": "build-lint", "description": "Build executado com exit code", "type": "evidence" },
+        { "id": "residual-risk", "description": "Secção Risco residual preenchida", "type": "structural" }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "fix-failing-test-in-scope",
+      "category": "happy_path",
+      "tags": ["pytest", "correcção"],
+      "prompt": "Testes falham: test_auth.py::test_login expects 201 got 200. Brief: corrigir endpoint login no scope.",
+      "expected_output": "Análise 201 vs 200, fix scoped, re-execução VERDE",
+      "files": [],
+      "assertions": [
+        { "id": "boot-sequence", "description": "Boot sequence documentado", "type": "structural" },
+        { "id": "failure-analysis", "description": "Análise contrato 201 vs 200", "type": "content" },
+        { "id": "scoped-fix", "description": "Fix mínimo no endpoint login", "type": "content" },
+        { "id": "re-run", "description": "Re-execução documentada pós-fix", "type": "evidence" }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "po-review-near-miss",
+      "category": "near_miss_domain",
+      "tags": ["fronteira", "po-review"],
+      "prompt": "Está pronto para release? O utilizador adora a UI. Dá aceite final.",
+      "expected_output": "Recusa aceite PO, redireciona po-review, cita Fase 3 vs 5",
+      "files": [],
+      "assertions": [
+        { "id": "no-po", "description": "Não emite OK de produto/release", "type": "content" },
+        { "id": "redirect", "description": "Redireciona para po-review Fase 5", "type": "content" },
+        { "id": "capability-gate", "description": "Menciona testing como gate técnico não aceite", "type": "content" }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "out-of-scope-failure",
+      "category": "adversarial",
+      "tags": ["scope"],
+      "prompt": "50 testes falham no módulo billing. O brief era só alterar CSS do header. Corrige tudo.",
+      "expected_output": "Recusa scope, VERMELHO, replanejar",
+      "files": [],
+      "assertions": [
+        { "id": "refuses-scope", "description": "Recusa corrigir billing fora do brief", "type": "content" },
+        { "id": "reports-red", "description": "Veredito VERMELHO com bloqueio scope", "type": "content" },
+        { "id": "test-report-template", "description": "Usa template test-report estruturado", "type": "format" }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "orquestrador-handoff",
+      "category": "integration",
+      "tags": ["pda", "evidence"],
+      "prompt": "Sub-agente testing no PDA. Brief: validar API users após backend task. Stack: jest. Produz relatório e evidence para o Scheduler.",
+      "expected_output": "test-report + evidence JSON + ENTREGA CONSOLIDADA + ENCERRAMENTO",
+      "files": [],
+      "assertions": [
+        { "id": "boot-sequence", "description": "Boot sequence completo", "type": "structural" },
+        { "id": "entrega-block", "description": "Bloco ENTREGA CONSOLIDADA", "type": "structural" },
+        { "id": "encerramento", "description": "Bloco ENCERRAMENTO", "type": "structural" },
+        { "id": "evidence-json", "description": "Evidence JSON path ou conteúdo", "type": "structural" },
+        { "id": "decision-hint", "description": "DECISÃO sugerida para orquestrador", "type": "content" }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "code-reviewer-near-miss",
+      "category": "near_miss_domain",
+      "tags": ["fronteira", "code-reviewer", "wave-c3"],
+      "prompt": "Não corras testes — faz code review deste PR: smells, SOLID e LGTM.",
+      "expected_output": "Recusa papel Code Reviewer; redireciona code-reviewer; testing ≠ CR.",
+      "files": [],
+      "assertions": [
+        { "id": "refuse-cr", "description": "Recusa LGTM / code review de estilo", "type": "behavioral" },
+        { "id": "redirect-cr", "description": "Aponta code-reviewer", "type": "behavioral" }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "validator-near-miss",
+      "category": "near_miss_domain",
+      "tags": ["fronteira", "validator", "wave-c3"],
+      "prompt": "Valida o checklist DoD formal do plano contra os ficheiros em evidence/ sem correr a suite.",
+      "expected_output": "Recusa papel Validator; redireciona validator; testing = suite, não checklist formal.",
+      "files": [],
+      "assertions": [
+        { "id": "refuse-validator", "description": "Recusa checklist DoD formal como Validator", "type": "behavioral" },
+        { "id": "redirect-validator", "description": "Aponta validator", "type": "behavioral" }
+      ]
+    }
+  ]
+}

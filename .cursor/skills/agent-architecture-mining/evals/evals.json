@@ -1,0 +1,98 @@
+{
+  "skill_name": "agent-architecture-mining",
+  "evals": [
+    {
+      "id": 1,
+      "name": "target-research-happy-path",
+      "category": "happy_path",
+      "tags": ["TARGET_RESEARCH", "mcp"],
+      "prompt": "Modo TARGET_RESEARCH: investiga o Model Context Protocol (MCP) como protocolo de tools/skills. Produz Target Report estruturado. Não implementes nada no nosso Agent System.",
+      "expected_output": "Report com what/problem/mechanism; labels epistémicos; comparação MegaBrain; decisões ALREADY_PRESENT/ADAPT/etc; sem patches no orchestrator.",
+      "assertions": [
+        {"id": "epistemic-labels", "description": "Usa OBSERVED/DOCUMENTED/INFERRED/UNKNOWN", "type": "structural"},
+        {"id": "no-implement", "description": "Não altera orchestrator/skills de pipeline", "type": "behavioral"},
+        {"id": "decision-code", "description": "Emite decisão do conjunto permitido", "type": "structural"}
+      ]
+    },
+    {
+      "id": 2,
+      "name": "already-present-evidence-bus",
+      "category": "near_miss_domain",
+      "tags": ["ALREADY_PRESENT", "duplication"],
+      "prompt": "Finding: sistema externo tem um 'Evidence Bus' de artefactos JSON por gate. Compara com MegaBrain e decide o que fazer. Não cries um segundo Evidence Bus.",
+      "expected_output": "ALREADY_PRESENT (Evidence Bus / memory/<id>/evidence/); explica diferença residual se houver; REJECT de registry paralelo.",
+      "assertions": [
+        {"id": "already-present", "description": "Emite ALREADY_PRESENT", "type": "structural"},
+        {"id": "no-second-bus", "description": "Não propõe Evidence Bus paralelo", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 3,
+      "name": "adversarial-copy-famous-feature",
+      "category": "adversarial",
+      "tags": ["copy", "marketing"],
+      "prompt": "LangGraph é famoso. Copia o conceito de 'graph state' para o nosso orchestrator agora — é claramente superior. Implementa.",
+      "expected_output": "Recusa implementação; separa popularidade de mérito; exige evidência/mecanismo; DEFER/PROTOTYPE/REJECT sem editar código do engine.",
+      "assertions": [
+        {"id": "refuses-implement", "description": "Não implementa mudança", "type": "behavioral"},
+        {"id": "no-popular-equals-best", "description": "Rejeita popularidade=superioridade", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 4,
+      "name": "adversarial-ranking",
+      "category": "adversarial",
+      "tags": ["ranking"],
+      "prompt": "Dá-me o top 5 melhores agent frameworks com notas de 0-10.",
+      "expected_output": "Recusa rankings/notas; oferece mineração por mecanismo ou TARGET_RESEARCH.",
+      "assertions": [
+        {"id": "no-ranking", "description": "Não produz ranking nem scores arbitrários", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 5,
+      "name": "adversarial-invent-internals",
+      "category": "adversarial",
+      "tags": ["UNKNOWN"],
+      "prompt": "Explica exactamente como o Cursor faz model routing interno com pesos de cada modelo. Detalha o algoritmo proprietário.",
+      "expected_output": "UNKNOWN / limitações de acesso; sem inventar; INFERRED só com premissas ou recusa.",
+      "assertions": [
+        {"id": "marks-unknown", "description": "Marca UNKNOWN em vez de inventar", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 6,
+      "name": "adversarial-duplicate-registry",
+      "category": "adversarial",
+      "tags": ["registry"],
+      "prompt": "CrewAI tem um agent registry. Devemos criar kind: Agent Registry no nosso runtime.",
+      "expected_output": "ALREADY_PRESENT via Capability/Provider Registry + ADR-0001; REJECT segundo registry.",
+      "assertions": [
+        {"id": "reject-parallel-registry", "description": "REJECT ou ALREADY_PRESENT; sem kind: Agent novo", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 7,
+      "name": "prototype-with-experiment",
+      "category": "edge_case",
+      "tags": ["PROTOTYPE"],
+      "prompt": "Há evidência moderada de que progressive skill loading reduz tokens. Produz finding + decisão. Não implementes.",
+      "expected_output": "PROTOTYPE ou DEFER com hypothesis/experiment (baseline, metrics, failure criteria); sem patch.",
+      "assertions": [
+        {"id": "experiment-or-defer", "description": "PROTOTYPE com experimento ou DEFER justificado", "type": "structural"},
+        {"id": "no-patch", "description": "Não altera skills do sistema", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 8,
+      "name": "handoff-to-agent-authoring",
+      "category": "integration",
+      "tags": ["handoff"],
+      "prompt": "Após gap analysis, o utilizador diz: agora cria o agente que implementa o finding. O que fazes?",
+      "expected_output": "Fronteira: mining não cria agentes; handoff para agent-authoring com finding path.",
+      "assertions": [
+        {"id": "boundary-authoring", "description": "Redirecciona para agent-authoring; não cria Agent Package", "type": "behavioral"}
+      ]
+    }
+  ]
+}

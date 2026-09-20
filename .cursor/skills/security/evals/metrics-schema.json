@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SecurityFrameworkRunMetrics",
+  "type": "object",
+  "required": ["run_id", "scenario_id", "runner", "timestamp", "metrics"],
+  "properties": {
+    "run_id": { "type": "string" },
+    "scenario_id": { "type": "string" },
+    "fixture_state": { "enum": ["vulnerable", "fixed", "ambiguous"] },
+    "runner": {
+      "enum": [
+        "with_skill",
+        "baseline",
+        "tool-only",
+        "semgrep",
+        "codeql",
+        "gitleaks",
+        "with_skill+semgrep",
+        "with_skill+codeql",
+        "with_skill-ablation"
+      ]
+    },
+    "ablation_provider": {
+      "type": "string",
+      "description": "Provider desactivado em run with_skill-ablation (marginal utility)"
+    },
+    "framework_version": { "type": "string" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "metrics": {
+      "type": "object",
+      "properties": {
+        "recall": { "type": "number", "minimum": 0, "maximum": 1 },
+        "precision": { "type": "number", "minimum": 0, "maximum": 1 },
+        "precision_by_severity": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "critical": { "type": "number", "minimum": 0, "maximum": 1 },
+            "high": { "type": "number", "minimum": 0, "maximum": 1 },
+            "medium": { "type": "number", "minimum": 0, "maximum": 1 },
+            "low": { "type": "number", "minimum": 0, "maximum": 1 },
+            "informational": { "type": "number", "minimum": 0, "maximum": 1 }
+          }
+        },
+        "false_positive": { "type": "boolean" },
+        "false_negative": { "type": "boolean" },
+        "blocked_release": { "type": "boolean" },
+        "expected_block": { "type": "boolean" },
+        "coverage_domains": { "type": "object", "additionalProperties": { "type": "number" } },
+        "duration_ms": { "type": "integer" },
+        "time_to_first_critical_ms": { "type": "integer" },
+        "tokens_estimate": { "type": "integer" },
+        "providers_activated": { "type": "array", "items": { "type": "string" } },
+        "provider_metrics": {
+          "type": "object",
+          "description": "Métricas por especialista activado nesta run",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "recall": { "type": "number", "minimum": 0, "maximum": 1 },
+              "precision": { "type": "number", "minimum": 0, "maximum": 1 },
+              "fp_rate": { "type": "number", "minimum": 0, "maximum": 1 },
+              "fn_rate": { "type": "number", "minimum": 0, "maximum": 1 },
+              "duration_ms": { "type": "integer" },
+              "findings_count": { "type": "integer" },
+              "exclusive_findings": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        },
+        "marginal_utility": {
+          "type": "array",
+          "description": "Contribuição marginal por provider (ablation vs run completo)",
+          "items": {
+            "type": "object",
+            "required": ["provider_id", "findings_with", "findings_without", "marginal_findings"],
+            "properties": {
+              "provider_id": { "type": "string" },
+              "findings_with": { "type": "integer" },
+              "findings_without": { "type": "integer" },
+              "marginal_findings": { "type": "integer" },
+              "exclusive_findings_lost": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        },
+        "tools_used": { "type": "array", "items": { "type": "string" } },
+        "evidence_levels": { "type": "object", "additionalProperties": { "type": "string" } },
+        "findings_count": { "type": "integer" },
+        "unique_findings": {
+          "type": "object",
+          "properties": {
+            "tool_a_count": { "type": "integer" },
+            "tool_b_count": { "type": "integer" },
+            "overlap_count": { "type": "integer" },
+            "tool_a_unique": { "type": "integer" },
+            "tool_b_unique": { "type": "integer" }
+          }
+        },
+        "exclusive_findings": { "type": "array", "items": { "type": "string" } },
+        "missed_findings": { "type": "array", "items": { "type": "string" } },
+        "actionability_rate": { "type": "number", "minimum": 0, "maximum": 1 },
+        "explainability_score": { "type": "number", "minimum": 0, "maximum": 10 }
+      }
+    },
+    "release_comparison": {
+      "type": "object",
+      "description": "Preenchido no agregador — regressão vs release anterior",
+      "properties": {
+        "previous_version": { "type": "string" },
+        "recall_delta": { "type": "number" },
+        "precision_delta": { "type": "number" },
+        "fp_fixed_delta": { "type": "number" },
+        "fp_ambiguous_delta": { "type": "number" },
+        "regression_detected": { "type": "boolean" }
+      }
+    },
+    "assertions_passed": { "type": "array", "items": { "type": "string" } },
+    "assertions_failed": { "type": "array", "items": { "type": "string" } }
+  }
+}

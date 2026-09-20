@@ -1,0 +1,63 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Provider
+metadata:
+  name: devops
+  version: "1.1.0"
+  description: "CI/CD, deploy e runbooks (Fase 4b)"
+  owner: agents-team
+
+spec:
+  plugin:
+    type: cursor-skill
+    entrypoint: ".cursor/skills/devops/SKILL.md"
+
+  capabilities:
+    - id: devops-deploy
+      contract: contracts/devops-deploy@1.0.0
+      type: worker
+
+  interfaces:
+    inputs:
+      - name: architecture
+        path: docs/ARCHITECTURE.md
+        required: false
+      - name: contributing
+        path: docs/CONTRIBUTING.md
+        required: false
+    outputs:
+      - name: pipeline
+        paths:
+          - .github/workflows/
+          - docs/runbooks/
+      - name: handoff
+        schema: artifacts/entrega-consolidada@1.0.0
+
+  dependencies:
+    optional:
+      - filesystem.read
+      - filesystem.list
+      - filesystem.search
+      - filesystem.write
+      - project.inspect
+      - git.inspect
+      - git.status
+      - shell.execute
+
+  runtime:
+    cost: medium
+    subagent_type: shell
+    pda_role: exec
+
+  constraints:
+    stack: [cursor, megabrain]
+    platforms: [cursor]
+    signals:
+      - phase: "4b"
+      - role: exec
+      - forbids: [product-implementation, disable-tests, plaintext-secrets]
+
+  telemetry:
+    key: provider.devops
+
+  availability: active
+  priority: 60

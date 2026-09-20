@@ -1,0 +1,40 @@
+commands:
+  PUBLIC_CORE:
+    - MegaBrain.md   # brand rename later; entry remains
+    - wiki.md
+    - prd.md
+    - planejar.md
+    - backend.md
+    - frontend-pro.md
+    - testes.md
+    - seguranca.md
+    - validar.md
+    - documentar.md
+    - debugger.md
+    - grill-me.md
+    - architect.md
+    - adr.md
+    - devops.md
+    - database.md
+    - code-reviewer.md
+    - validator.md
+    - debug.md
+  PUBLIC_OPTIONAL:
+    - mem.md
+    - pesquisar.md
+    - research.md
+    - library-dossier.md
+    - agent-authoring.md
+    - skill-authoring.md
+    - agent-architecture-mining.md
+    - failure-analyst.md
+    - analisar-falha.md
+    - descobrir.md
+    - revisar-codigo.md
+    - validar-artefacto.md
+  GAAB_PROFILE:
+    - mem.md as default_on for GaabType
+  DEVELOPMENT_ONLY: []
+  LEGACY: []
+  REMOVE_FROM_PUBLIC: []
+  locale_note: PT filenames are PUBLIC_CONFIG (locale), not inherently personal

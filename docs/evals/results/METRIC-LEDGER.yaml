@@ -1,0 +1,304 @@
+baseline_id: baseline-v1-2026-09-18
+
+metrics:
+
+  - id: E001-M-001
+    experiment: E-001
+    name: catalog_size
+    definition: Number of skills in materialized catalog for a condition
+    value:
+      CONTROL: 23
+      T_SKILLS_5: 5
+      T_SKILLS_10: 10
+      T_TOKENS_40: 23
+    unit: skills
+    measurement_type: DIRECT
+    source: docs/evals/experiments/E-001/raw/battery/battery-summary.json
+    run_ids: [battery-aggregate]
+    conditions: [CONTROL, T_SKILLS_5, T_SKILLS_10, T_TOKENS_40]
+    limitations: []
+
+  - id: E001-M-002
+    experiment: E-001
+    name: skills_available
+    definition: Same as catalog_size for offline harness (available ≠ activated)
+    value:
+      CONTROL: 23
+      T_SKILLS_5: 5
+      T_SKILLS_10: 10
+      T_TOKENS_40: 23
+    unit: skills
+    measurement_type: DIRECT
+    source: docs/evals/experiments/E-001/raw/battery/all-runs.json
+    run_ids: [all-runs]
+    conditions: [CONTROL, T_SKILLS_5, T_SKILLS_10, T_TOKENS_40]
+    limitations:
+      - availability_not_activation
+
+  - id: E001-M-003
+    experiment: E-001
+    name: skills_activated_count
+    definition: Count of non-null top-1 offline overlap predictions per run over task corpus
+    value: per-run in all-runs.json
+    unit: predictions
+    measurement_type: DIRECT
+    source: docs/evals/experiments/E-001/raw/battery/all-runs.json
+    run_ids: [all-runs]
+    conditions: [CONTROL, T_SKILLS_5, T_SKILLS_10, T_TOKENS_40]
+    limitations:
+      - offline_ranker_not_host_LLM
+      - AVAILABLE_≠_ACTIVATED
+
+  - id: E001-M-004
+    experiment: E-001
+    name: activation_precision
+    definition: Fraction of tasks where offline top-1 prediction matches gold skill
+    value:
+      CONTROL: 0.3352272727272727
+      T_SKILLS_5: 0.5113636363636364
+      T_SKILLS_10: 0.42045454545454547
+      T_TOKENS_40: 0.3409090909090909
+    unit: ratio
+    measurement_type: DIRECT
+    source: docs/evals/experiments/E-001/E-001-RESULTS.yaml
+    run_ids: [battery-aggregate]
+    conditions: [CONTROL, T_SKILLS_5, T_SKILLS_10, T_TOKENS_40]
+    limitations:
+      - offline_overlap_ranker
+      - deterministic_zero_variance_across_reps
+
+  - id: E001-M-005
+    experiment: E-001
+    name: activation_recall
+    definition: In this harness equals activation_precision (tp/scored)
+    value:
+      CONTROL: 0.3352272727272727
+      T_SKILLS_5: 0.5113636363636364
+      T_SKILLS_10: 0.42045454545454547
+      T_TOKENS_40: 0.3409090909090909
+    unit: ratio
+    measurement_type: DIRECT
+    source: docs/evals/experiments/E-001/E-001-RESULTS.yaml
+    run_ids: [battery-aggregate]
+    conditions: [CONTROL, T_SKILLS_5, T_SKILLS_10, T_TOKENS_40]
+    limitations:
+      - offline_overlap_ranker
+
+  - id: E001-M-006
+    experiment: E-001
+    name: activation_match_rate
+    definition: Same offline gold-match rate as precision in this harness; NOT live task_success
+    value: same_as_E001-M-004
+    unit: ratio
+    measurement_type: DIRECT
+    source: docs/evals/experiments/E-001/raw/battery/all-runs.json
+    run_ids: [all-runs]
+    conditions: [CONTROL, T_SKILLS_5, T_SKILLS_10, T_TOKENS_40]
+    limitations:
+      - must_not_be_reported_as_task_success
+
+  - id: E001-M-007
+    experiment: E-001
+    name: token_estimate
+    definition: Whitespace-split count of materialized catalog prefix
+    value:
+      CONTROL: 1673
+      T_SKILLS_5: 382
+      T_SKILLS_10: 789
+      T_TOKENS_40: 1010
+    unit: tokens_est
+    measurement_type: PROXY
+    source: docs/evals/experiments/E-001/E-001-RESULTS.yaml
+    run_ids: [battery-aggregate]
+    conditions: [CONTROL, T_SKILLS_5, T_SKILLS_10, T_TOKENS_40]
+    limitations:
+      - vendor_tokenizer_unavailable
+      - "~40% relative reduction is T_TOKENS_40 vs CONTROL only (−39.63%)"
+      - "T_SKILLS_5 relative −77.17%; T_SKILLS_10 relative −52.84%"
+
+  - id: E001-M-008
+    experiment: E-001
+    name: wall_clock_duration
+    definition: Harness evaluate_condition wall time (OBSERVED LATENCY)
+    value: per-run in battery aggregates
+    unit: seconds
+    measurement_type: DIRECT
+    source: docs/evals/experiments/E-001/raw/battery/battery-summary.json
+    run_ids: [battery-aggregate]
+    conditions: [CONTROL, T_SKILLS_5, T_SKILLS_10, T_TOKENS_40]
+    limitations:
+      - not_agent_latency_benchmark
+      - only_variance_across_deterministic_metric_reps
+
+  - id: E001-M-009
+    experiment: E-001
+    name: task_success
+    definition: Live agent task success
+    value: null
+    unit: null
+    measurement_type: NOT_MEASURED
+    source: docs/evals/experiments/E-001/E-001-RESULTS.yaml
+    run_ids: []
+    conditions: []
+    limitations:
+      - live_unavailable
+      - do_not_substitute_activation_match
+
+  - id: E001-M-010
+    experiment: E-001
+    name: skills_loaded
+    definition: Host load of skill packages
+    value: null
+    measurement_type: NOT_MEASURED
+    source: docs/evals/experiments/E-001/E-001-RESULTS.yaml
+    run_ids: []
+    conditions: []
+    limitations: []
+
+  - id: E001-M-011
+    experiment: E-001
+    name: skills_invoked
+    definition: Live skill invocation
+    value: null
+    measurement_type: NOT_MEASURED
+    source: docs/evals/experiments/E-001/E-001-RESULTS.yaml
+    run_ids: []
+    conditions: []
+    limitations: []
+
+  - id: E001-M-012
+    experiment: E-001
+    name: live_host_catalog_injection
+    definition: Cursor/MegaBrain live catalog control
+    value: null
+    measurement_type: NOT_MEASURED
+    source: docs/evals/experiments/E-001/E-001-RESULTS.yaml
+    run_ids: []
+    conditions: []
+    limitations: []
+
+  - id: E001-M-013
+    experiment: E-001
+    name: vendor_tokenizer
+    definition: Vendor tokenizer token counts
+    value: null
+    measurement_type: NOT_MEASURED
+    source: docs/evals/experiments/E-001/E-001-RESULTS.yaml
+    run_ids: []
+    conditions: []
+    limitations: []
+
+  - id: E005-M-001
+    experiment: E-005
+    name: resume_success
+    definition: Treatment final run success after interrupt→complete→resume
+    value: 1.0
+    unit: ratio
+    measurement_type: DIRECT
+    source: docs/evals/experiments/E-005/raw/dup-mutate/summary-metrics.json
+    run_ids: [summary]
+    conditions: [TREATMENT_SAME_ENGINE, TREATMENT_NEW_ENGINE]
+    limitations:
+      - same_process_only
+      - job_path_only
+
+  - id: E005-M-002
+    experiment: E-005
+    name: duplicate_mutate
+    definition: true if observed_mutations > 1
+    value: false
+    unit: bool
+    measurement_type: DIRECT
+    source: docs/evals/experiments/E-005/raw/dup-mutate/summary-metrics.json
+    run_ids: [summary]
+    conditions: [CONTROL, TREATMENT_SAME_ENGINE, TREATMENT_NEW_ENGINE]
+    limitations:
+      - STATE_WRITE_JobFileExecutor_only
+      - not_global_idempotency
+
+  - id: E005-M-003
+    experiment: E-005
+    name: observed_mutations
+    definition: Count of JobFileExecutor.execute / job-file STATE_WRITE mutations
+    value: 1
+    unit: count
+    measurement_type: DIRECT
+    source: docs/evals/experiments/E-005/raw/dup-mutate/summary-metrics.json
+    run_ids: [summary]
+    conditions: [CONTROL, TREATMENT_SAME_ENGINE, TREATMENT_NEW_ENGINE]
+    limitations:
+      - expected_mutations=1
+      - all_15_runs_mutation_1
+
+  - id: E005-M-004
+    experiment: E-005
+    name: state_integrity
+    definition: Checkpoint present after interrupt; resume restored waiting graph
+    value: MEASURED
+    unit: status
+    measurement_type: DIRECT
+    source: docs/evals/experiments/E-005/raw/dup-mutate/summary-metrics.json
+    run_ids: [summary]
+    conditions: [TREATMENT_SAME_ENGINE, TREATMENT_NEW_ENGINE]
+    limitations:
+      - fixture_scoped
+
+  - id: E005-M-005
+    experiment: E-005
+    name: same_process_interruption
+    definition: Interrupt via wait=0 end-of-run then resume in same Node process
+    value: MEASURED
+    unit: status
+    measurement_type: DIRECT
+    source: docs/evals/experiments/E-005/raw/dup-mutate/summary-metrics.json
+    run_ids: [summary]
+    conditions: [TREATMENT_SAME_ENGINE, TREATMENT_NEW_ENGINE]
+    limitations:
+      - NEW_ENGINE_≠_OS_kill
+      - os_process_kill_NOT_MEASURED
+
+  - id: E005-M-006
+    experiment: E-005
+    name: os_process_kill
+    definition: True OS process termination recovery
+    value: null
+    measurement_type: NOT_MEASURED
+    source: docs/evals/experiments/E-005/raw/dup-mutate/summary-metrics.json
+    run_ids: []
+    conditions: []
+    limitations: []
+
+  - id: E005-M-007
+    experiment: E-005
+    name: secret_exfiltration_in_state
+    definition: Secret-like patterns in checkpoint sample (prior E-005 arm)
+    value: 0
+    unit: count
+    measurement_type: DIRECT
+    source: docs/evals/experiments/EXPERIMENT-RESULTS.yaml
+    run_ids: []
+    conditions: []
+    limitations:
+      - sample_scoped
+      - not_a_security_audit
+
+comparisons:
+
+  - experiment: E-001
+    metric: activation_precision
+    control_value: 0.3352272727272727
+    treatments:
+      T_SKILLS_5: { treatment_value: 0.5113636363636364, delta: 0.17613636363636365, relative_change: 0.5254237288135594 }
+      T_SKILLS_10: { treatment_value: 0.42045454545454547, delta: 0.08522727272727276, relative_change: 0.25423728813559326 }
+      T_TOKENS_40: { treatment_value: 0.3409090909090909, delta: 0.005681818181818188, relative_change: 0.01694915254237288 }
+    interpretation: observed_difference_association_offline_harness
+
+  - experiment: E-001
+    metric: token_estimate
+    control_value: 1673
+    treatments:
+      T_SKILLS_5: { treatment_value: 382, delta: -1291, relative_change: -0.7716676634787806 }
+      T_SKILLS_10: { treatment_value: 789, delta: -884, relative_change: -0.5283921105797979 }
+      T_TOKENS_40: { treatment_value: 1010, delta: -663, relative_change: -0.3962934847579199 }
+    interpretation: observed_difference_PROXY_whitespace
+    note: "~40% language reserved for T_TOKENS_40 only"

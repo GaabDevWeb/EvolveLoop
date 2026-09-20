@@ -1,0 +1,51 @@
+verdict:
+  status: VALIDATED_WITH_LIMITATIONS
+  date: "2026-09-19"
+  auditor: EvolveLoop Independent Validation & Architecture Audit Agent
+  question: >
+    O EvolveLoop longitudinal realmente funciona como sistema persistente,
+    temporal, isolado, rastreável e governado?
+  answer_short: >
+    O núcleo persistente + cross-run + consumo histórico + proposta governada
+    (HOLD/PROPOSE) foi experimentalmente validado em harness. Isolamento
+    multi-user completo, adapters live, e fecho por outcomes no analyze
+    permanecem limitados. Não validado em produção.
+
+differentiation:
+  code_exists: true
+  behavior_works_in_harness: true
+  experimentally_validated: true
+  works_in_production: false
+
+critical_properties:
+  persistent_observation: VERIFIED
+  historical_consumption: VERIFIED
+  cross_run_aggregation: VERIFIED
+  longitudinal_need_detection: VERIFIED
+  need_lifecycle_after_fix: VERIFIED
+  empty_after_outcome_after_fix: VERIFIED
+  user_isolation: PARTIALLY_VERIFIED
+  core_hold: VERIFIED
+  closed_loop: PARTIALLY_VERIFIED
+  live_adapters: PARTIALLY_VERIFIED
+  security_autonomy_bound: PARTIALLY_VERIFIED
+
+why_not_validated:
+  - "Default analyze() still unscoped"
+  - "needs.json / outcomes not multi-tenant"
+  - "Adapters not auto-wired; not in engine CLI"
+  - "Outcome attribution caller-supplied"
+  - "Fixture-only; not production telemetry"
+
+why_not_failed:
+  - "Core longitudinal path MEASURED working"
+  - "Confirmed CRITICAL/HIGH defects corrected and revalidated"
+  - "No silent core/runtime mutation path in package"
+
+why_not_partial_only:
+  - "Central longitudinal memory→pattern→need chain is verified end-to-end in harness"
+  - "Limitations do not negate that chain"
+
+corrections_applied: 3
+baselines_mutated: false
+baseline_note: "V3 drifted after corrections; V1/V2 not mutated; v4 not auto-created"

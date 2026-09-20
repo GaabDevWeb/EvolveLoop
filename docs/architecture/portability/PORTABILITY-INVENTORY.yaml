@@ -1,0 +1,334 @@
+# Portability forensic inventory — READ-ONLY audit
+# generated: 2026-09-20T01:52:54Z
+# status: PORTABILITY_AUDIT_COMPLETE
+# note: classification is diagnostic only; no renames/moves performed
+
+audit_meta:
+  repo: /home/gaab/Downloads/CursorSKILLS
+  risk_tier: audit
+  gaabwiki_grounding: applied
+  grounding_notes:
+    - "scout MegaBrain/GaabWiki: hits on meta-wiki architecture (high)"
+    - "search CursorSKILLS pack: no_hits (GAP — silo fraco no índice)"
+    - "vault canónico disco: /home/gaab/Documentos/gitHub/karpathyWiki"
+    - "path legado também presente: /home/gaab/Documentos/karpathyWiki (divergência documentada)"
+
+scope_counts:
+  directories_scanned: 424
+  files_scanned_approx: 1488
+  commands_scanned: 31
+  agents_scanned: 23
+  local_skills_scanned: 23
+  global_skills_scanned: 13
+  contracts_scanned: 40
+  providers_modules_ts: 10
+  configs_notable: 25
+  personal_path_files_excl_eval_battery: 97
+  gaabwiki_named_files_approx: 180
+
+items:
+  - path: orchestrator/
+    type: module
+    owner_domain: project-local
+    referenced_by: [MegaBrain, agents.env, install scripts, evals]
+    references: [contracts, providers, policies, evolveloop, evidence]
+    runtime_loaded: true
+    build_loaded: true
+    user_visible: false
+    portable: yes
+    classification: CORE_ARCHITECTURE
+    confidence: HIGH
+
+  - path: orchestrator/src/engine/
+    type: module
+    owner_domain: project-local
+    referenced_by: [cli/run-engine]
+    references: [scheduler, providers, knowledge store]
+    runtime_loaded: true
+    build_loaded: true
+    user_visible: false
+    portable: yes
+    classification: CORE_ARCHITECTURE
+    confidence: HIGH
+
+  - path: orchestrator/src/providers/deterministic/
+    type: provider
+    owner_domain: project-local
+    referenced_by: [registry, discovery]
+    references: [filesystem, shell, git, system, project, knowledge]
+    runtime_loaded: true
+    build_loaded: true
+    user_visible: false
+    portable: partial
+    classification: CORE_ARCHITECTURE
+    confidence: HIGH
+    notes: "knowledge.ts embeds PERSONAL_PATH default"
+
+  - path: orchestrator/src/providers/deterministic/knowledge.ts
+    type: provider
+    owner_domain: project-local
+    referenced_by: [deterministic/index.ts]
+    references: ["python -m gaabwiki", RAG_REPO_ROOT]
+    runtime_loaded: true
+    build_loaded: true
+    user_visible: false
+    portable: no
+    classification: PERSONAL_PATH
+    confidence: HIGH
+
+  - path: orchestrator/src/knowledge/
+    type: module
+    owner_domain: project-local
+    referenced_by: [execution-engine, scheduler]
+    references: []
+    runtime_loaded: true
+    build_loaded: true
+    user_visible: false
+    portable: yes
+    classification: CORE_ARCHITECTURE
+    confidence: HIGH
+    notes: "In-memory/filesystem KnowledgeStore — NOT GaabWiki RAG"
+
+  - path: orchestrator/src/evolveloop/
+    type: module
+    owner_domain: project-local
+    referenced_by: [tests, docs/architecture/evolveloopt]
+    references: [telemetry, evidence, outcomes]
+    runtime_loaded: true
+    build_loaded: true
+    user_visible: false
+    portable: yes
+    classification: CORE_ARCHITECTURE
+    confidence: HIGH
+
+  - path: orchestrator/src/evidence/
+    type: module
+    owner_domain: project-local
+    referenced_by: [engine, gates, memory/*/evidence]
+    references: []
+    runtime_loaded: true
+    build_loaded: true
+    user_visible: false
+    portable: yes
+    classification: CORE_ARCHITECTURE
+    confidence: HIGH
+
+  - path: orchestrator/contracts/
+    type: config
+    owner_domain: project-local
+    referenced_by: [registry-builder, providers]
+    references: []
+    runtime_loaded: true
+    build_loaded: true
+    user_visible: false
+    portable: yes
+    classification: CORE_ARCHITECTURE
+    confidence: HIGH
+
+  - path: .cursor/skills/orquestrar/
+    type: skill
+    owner_domain: project-local
+    referenced_by: [/MegaBrain, Agents/Orquestrador-v2.md]
+    references: [gaabwiki gate, image-to-code, grill-me, policy-engine]
+    runtime_loaded: true
+    build_loaded: false
+    user_visible: true
+    portable: partial
+    classification: CORE_ARCHITECTURE
+    confidence: HIGH
+    notes: "Architecture portable; HARD-GATE text couples to GaabWiki by name"
+
+  - path: .cursor/skills/gaabwiki/
+    type: skill
+    owner_domain: project-local
+    referenced_by: [/wiki, orquestrar gate, Rules/gaabwiki-agent.mdc]
+    references: [ground.sh, karpathyWiki, KernelBot/OrbitBot packs]
+    runtime_loaded: true
+    build_loaded: false
+    user_visible: true
+    portable: no
+    classification: PERSONAL_KNOWLEDGE
+    confidence: HIGH
+
+  - path: .cursor/skills/gaabwiki-mem/
+    type: skill
+    owner_domain: project-local
+    referenced_by: [/mem, hooks, librarian]
+    references: [RAG_REPO_ROOT/.ai/sessions]
+    runtime_loaded: true
+    build_loaded: false
+    user_visible: true
+    portable: no
+    classification: PERSONAL_KNOWLEDGE
+    confidence: HIGH
+
+  - path: .cursor/commands/
+    type: command
+    owner_domain: project-local
+    referenced_by: [Cursor UI, install-agents-global.sh]
+    references: [skills]
+    runtime_loaded: true
+    build_loaded: false
+    user_visible: true
+    portable: partial
+    classification: PERSONAL_WORKFLOW
+    confidence: MEDIUM
+    notes: "Phase commands are core workflow; PT names + wiki/mem are personal surface"
+
+  - path: .cursor/hooks.json
+    type: config
+    owner_domain: project-local
+    referenced_by: [Cursor hooks runtime]
+    references: [gaabwiki-mem hooks, orchestrator pickup]
+    runtime_loaded: true
+    build_loaded: false
+    user_visible: false
+    portable: partial
+    classification: PERSONAL_WORKFLOW
+    confidence: HIGH
+
+  - path: .cursor/rules/megabrain.mdc
+    type: config
+    owner_domain: project-local
+    referenced_by: [Cursor alwaysApply]
+    references: []
+    runtime_loaded: true
+    build_loaded: false
+    user_visible: false
+    portable: yes
+    classification: CORE_ARCHITECTURE
+    confidence: HIGH
+    notes: "Generic engineering discipline; no personal paths"
+
+  - path: Rules/gaabwiki-agent.mdc
+    type: config
+    owner_domain: project-local
+    referenced_by: [install → ~/.cursor/rules]
+    references: ["/home/gaab/Documentos/karpathyWiki", KernelBot packs]
+    runtime_loaded: true
+    build_loaded: false
+    user_visible: false
+    portable: no
+    classification: PERSONAL_PATH
+    confidence: HIGH
+
+  - path: Agents/
+    type: agent
+    owner_domain: project-local
+    referenced_by: [humans, mirrors of skills]
+    references: [skills]
+    runtime_loaded: false
+    build_loaded: false
+    user_visible: true
+    portable: partial
+    classification: CORE_ARCHITECTURE
+    confidence: MEDIUM
+
+  - path: global-skills/
+    type: skill
+    owner_domain: project-local
+    referenced_by: [install → ~/.agents/skills]
+    references: []
+    runtime_loaded: true
+    build_loaded: false
+    user_visible: true
+    portable: yes
+    classification: OPTIONAL_COMPONENT
+    confidence: HIGH
+
+  - path: agent-setup/
+    type: module
+    owner_domain: project-local
+    referenced_by: [README profiles]
+    references: [gaabwiki defaults, VAULT_ROOT]
+    runtime_loaded: false
+    build_loaded: false
+    user_visible: true
+    portable: partial
+    classification: PERSONAL_CONFIGURATION
+    confidence: HIGH
+
+  - path: scripts/install-agents-global.sh
+    type: config
+    owner_domain: project-local
+    referenced_by: [README, GLOBAL-SETUP]
+    references: ["$REPO_ROOT", ~/.cursor, ~/.agents]
+    runtime_loaded: false
+    build_loaded: false
+    user_visible: true
+    portable: yes
+    classification: CORE_ARCHITECTURE
+    confidence: HIGH
+    notes: "Uses REPO_ROOT dynamically — portable installer pattern"
+
+  - path: mcp/
+    type: config
+    owner_domain: project-local
+    referenced_by: [install]
+    references: [mcp.env.example]
+    runtime_loaded: true
+    build_loaded: false
+    user_visible: false
+    portable: partial
+    classification: EXTERNAL_DEPENDENCY
+    confidence: HIGH
+
+  - path: memory/
+    type: knowledge source
+    owner_domain: project-local
+    referenced_by: [MegaBrain features]
+    references: [evidence bus]
+    runtime_loaded: true
+    build_loaded: false
+    user_visible: false
+    portable: no
+    classification: DEVELOPMENT_ARTIFACT
+    confidence: HIGH
+
+  - path: docs/
+    type: knowledge source
+    owner_domain: project-local
+    referenced_by: [humans, audits]
+    references: []
+    runtime_loaded: false
+    build_loaded: false
+    user_visible: true
+    portable: yes
+    classification: DEVELOPMENT_ARTIFACT
+    confidence: MEDIUM
+
+  - path: ~/.cursor/agents.env
+    type: config
+    owner_domain: user-global
+    referenced_by: [hooks, MegaBrain]
+    references: [AGENTS_ROOT=/home/gaab/Downloads/CursorSKILLS]
+    runtime_loaded: true
+    build_loaded: false
+    user_visible: false
+    portable: no
+    classification: PERSONAL_PATH
+    confidence: HIGH
+
+  - path: ~/.cursor/skills/
+    type: skill
+    owner_domain: user-global
+    referenced_by: [Cursor]
+    references: [symlinks into repo]
+    runtime_loaded: true
+    build_loaded: false
+    user_visible: false
+    portable: partial
+    classification: LOCAL_ENVIRONMENT_ASSUMPTION
+    confidence: HIGH
+
+  - path: /home/gaab/Documentos/gitHub/karpathyWiki
+    type: knowledge source
+    owner_domain: host-specific
+    referenced_by: [ground.sh, knowledge.ts, ADR-0004]
+    references: [gaabwiki python package, LanceDB]
+    runtime_loaded: true
+    build_loaded: false
+    user_visible: true
+    portable: no
+    classification: PERSONAL_KNOWLEDGE
+    confidence: HIGH

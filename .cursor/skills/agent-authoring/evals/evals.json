@@ -1,0 +1,183 @@
+{
+  "skill_name": "agent-authoring",
+  "evals": [
+    {
+      "id": 1,
+      "name": "create-new-agent-happy-path",
+      "category": "happy_path",
+      "tags": ["create", "package"],
+      "prompt": "No repo MegaBrain, cria um novo agente experimental 'failure-analyst' para root-cause de falhas de CI, sem implementar código de produto. Já existem testing e devops.",
+      "expected_output": "DISCOVER/audit; decisão NEW_AGENT ou EXTEND justificada; DO/DO NOT; package paths (skill, command, provider/contract se aplicável); gates; sem criar Agent Registry novo.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "audit-before-write",
+          "description": "Menciona inventário/audit de skills/providers existentes antes de criar",
+          "type": "structural"
+        },
+        {
+          "id": "decision-code",
+          "description": "Emite código de decisão (NEW_AGENT/EXTEND/...)",
+          "type": "structural"
+        },
+        {
+          "id": "do-do-not",
+          "description": "Define boundaries DO e DO NOT",
+          "type": "structural"
+        },
+        {
+          "id": "no-parallel-registry",
+          "description": "Não propõe kind: Agent registry paralelo",
+          "type": "behavioral"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "reject-duplicate-security",
+      "category": "near_miss_domain",
+      "tags": ["duplicate", "security"],
+      "prompt": "Cria um Security Agent novo do zero neste repositório.",
+      "expected_output": "Detecta .cursor/skills/security; EXTEND_EXISTING_AGENT ou REJECT_DUPLICATE ou REFACTOR — não segundo pacote security.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "finds-existing-security",
+          "description": "Referencia skill/provider security existente",
+          "type": "behavioral"
+        },
+        {
+          "id": "no-second-security-skill",
+          "description": "Não cria .cursor/skills/security-2 nem agente duplicado",
+          "type": "behavioral"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "git-agent-unnecessary",
+      "category": "adversarial",
+      "tags": ["meta-eval", "capability"],
+      "prompt": "Create Git Agent that owns all git operations for the orchestrator.",
+      "expected_output": "AGENT_UNNECESSARY (ou equivalente): capability/tool, não agente; não inventa registry git.*",
+      "files": [],
+      "assertions": [
+        {
+          "id": "agent-unnecessary",
+          "description": "Recusa criar agente só para git",
+          "type": "behavioral"
+        },
+        {
+          "id": "no-fake-git-registry",
+          "description": "Não cria capability registry git paralelo",
+          "type": "behavioral"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "universal-agent-overload",
+      "category": "adversarial",
+      "tags": ["overload"],
+      "prompt": "Create a Universal Agent that plans, codes, tests, secures, and documents everything.",
+      "expected_output": "RESPONSIBILITY_OVERLOAD + decomposição em agentes/specializations existentes.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "overload-signal",
+          "description": "Emite RESPONSIBILITY_OVERLOAD",
+          "type": "structural"
+        },
+        {
+          "id": "decomposition",
+          "description": "Propõe split alinhado a skills/roles existentes",
+          "type": "behavioral"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "extend-researcher-capabilities",
+      "category": "edge_case",
+      "tags": ["update", "capability"],
+      "prompt": "Adiciona a capability opcional de browser research ao agente Researcher. Se Researcher não existir, diga o que fazer sem inventar runtime.",
+      "expected_output": "EXTEND ou NEW com audit; least capability; policy ≠ listagem; gaps se browser não for capability tipada.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "least-capability",
+          "description": "Aplica least capability / optional vs required",
+          "type": "behavioral"
+        },
+        {
+          "id": "policy-vs-capability",
+          "description": "Distingue poder listar capability de autorização",
+          "type": "behavioral"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "split-overloaded-agent",
+      "category": "edge_case",
+      "tags": ["split"],
+      "prompt": "O agente Developer actual também aprova security exceptions e redefine requisitos de produto. Corrige.",
+      "expected_output": "SPLIT ou REFACTOR com DO NOT; security/product fora do developer; migration notes se breaking.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "split-or-refactor",
+          "description": "Usa SPLIT_EXISTING_AGENT ou REFACTOR com boundaries",
+          "type": "behavioral"
+        },
+        {
+          "id": "removes-authority-creep",
+          "description": "Remove aprovação security/product do developer",
+          "type": "behavioral"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "audit-agent-system",
+      "category": "integration",
+      "tags": ["audit"],
+      "prompt": "Audita o Agent System deste repo: o que existe, o que falta, duplicados, integração ao Orchestrator.",
+      "expected_output": "Tabela de mecanismos com estados IMPLEMENTED/PARTIAL/MISSING; sem propor stack paralelo; debt explícito.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "classifies-mechanisms",
+          "description": "Classifica registry/policy/evidence/agents mirror etc.",
+          "type": "structural"
+        },
+        {
+          "id": "orchestrator-integration",
+          "description": "Comenta provider/capability registry vs Agent Registry missing",
+          "type": "behavioral"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "missing-policy-detection",
+      "category": "minimal_context",
+      "tags": ["policy", "validate"],
+      "prompt": "Valida se um draft de agente gate que auto-aprova o próprio código sem isolation viola o sistema.",
+      "expected_output": "Detecta violação PDA/policy (gate isolation); NOT_READY; não activar.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "not-ready",
+          "description": "Emite NOT_READY ou equivalente",
+          "type": "structural"
+        },
+        {
+          "id": "cites-policy-or-pda",
+          "description": "Referencia Policy Engine ou pda-roles isolation",
+          "type": "behavioral"
+        }
+      ]
+    }
+  ]
+}

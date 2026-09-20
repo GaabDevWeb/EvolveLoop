@@ -1,0 +1,65 @@
+evolveloopt_final:
+  date: "2026-09-19"
+  starting_baseline: baseline-v5-2026-09-19
+  final_baseline: baseline-v6-2026-09-19
+  final_verdict: SUCCESS_WITH_LIMITATIONS
+
+  automatic_observation: PASS_OPT_IN
+  automatic_analysis: PASS_OPT_IN
+  automatic_need_detection: PASS
+  automatic_candidate_generation: PASS
+  scope: PASS_WITH_LIMITATIONS
+  persistence: PASS
+  outcome_persistence: PASS
+  outcome_trigger: PASS
+  outcome_reingestion: PASS
+  observation_window: PASS
+  gate: PASS_PARTIAL  # GATE_ADAPTER_PARTIAL
+  live_registry: PASS_WHEN_INJECTED
+  live_event_coverage: PASS_LIMITED
+  runtime_resilience: PASS
+  backpressure: PASS
+  loop_protection: PASS
+  user_isolation: PASS_LOGICAL
+  core_isolation: PASS_HOLD
+  security: PASS_WITH_LIMITATIONS
+
+  tests: "184/184"
+  contracts: "7/7"
+  full_cycle: "5/5"
+  evals: "EV-EVOLVE-FINAL-001..007 + prior LIVE/L"
+  adversarial: PASS_WITH_LIMITATIONS
+  regression: PASS
+
+  critical_findings: 0
+  remaining_gaps: 6
+  unsupported_claims: 2  # production proven; fully autonomous self-modifying
+  open_questions: 3
+
+  remaining_gaps_list:
+    - PROD_GATE_EXTERNAL
+    - EVIDENCE_ADAPTER_NOT_CONNECTED
+    - EVAL_ADAPTER_NOT_CONNECTED
+    - USER_FEEDBACK_ADAPTER_NOT_CONNECTED
+    - DISK_TENANCY
+    - EVENT_VOCABULARY_LIMITED
+
+  open_questions_list:
+    - "When/how to invoke external Prototype Gate runner safely?"
+    - "Should Evidence Bus bridge be first-class or remain NOT_CONNECTED?"
+    - "Per-user evolutionDir partitioning vs shared store?"
+
+  delivery_semantics: BEST_EFFORT_HARNESS
+  production_proven: false
+  autonomy_label: "autonomous observation / analysis / detection / proposal + gated evolution"
+
+  written_report: docs/architecture/evolveloopt/final/EVOLVELOOP-FINAL-OPERATIONALIZATION-REPORT.md
+  validation_artifacts:
+    - docs/architecture/evolveloopt/final/FINAL-START-STATE.md
+    - docs/architecture/evolveloopt/final/FINAL-START-STATE.yaml
+    - docs/architecture/evolveloopt/final/CLAIM-VERIFICATION.yaml
+    - docs/architecture/evolveloopt/final/FINDINGS.yaml
+    - docs/architecture/evolveloopt/final/FINAL-AUDIT-MATRIX.yaml
+    - docs/architecture/evolveloopt/final/TRACEABILITY.yaml
+    - docs/architecture/evolveloopt/final/FINAL-STATUS.yaml
+    - docs/evals/baseline-v6-2026-09-19/

@@ -1,0 +1,43 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Contract
+metadata:
+  id: agent-architecture-mining
+  version: "1.0.0"
+  status: active
+
+spec:
+  capability: agent-architecture-mining
+  type: worker
+
+  semver:
+    major: 1
+    minor: 0
+    patch: 0
+
+  compatible_with:
+    - "contracts/agent-architecture-mining@1.0.x"
+
+  inputs:
+    - name: mining-request
+      required: true
+    - name: target
+      required: false
+    - name: mode
+      required: false
+
+  outputs:
+    - name: structured-artifacts
+      schema: artifacts/architecture-mining-report@1.0.0
+    - name: decision-codes
+      schema: artifacts/architecture-mining-decision@1.0.0
+
+  definition_of_done:
+    minimum_checks:
+      - epistemic_labels_present
+      - no_agent_system_mutation
+      - decision_in_allowed_set
+      - comparison_with_megabrain_when_applicable
+      - unknown_marked_when_insufficient_evidence
+
+  evidence:
+    schema: evidence/worker-default@1.0.0

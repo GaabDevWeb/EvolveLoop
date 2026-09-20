@@ -1,0 +1,77 @@
+architecture:
+  observed_at: "2026-09-19"
+  baseline_id: baseline-v1-2026-09-18
+  baseline_v2: NONE
+  runtime_modified_by_pipeline: false
+
+  agents:
+    megabrain_orchestrator_root: PRESENT_AS_TOOLING
+    note: "CursorSKILLS MegaBrain tooling ≠ WhatsApp KernelBot runtime"
+    new_agents_this_pipeline: 0
+
+  capabilities:
+    deterministic_provider_set: PRESENT
+    evidence_class: OBSERVED
+
+  providers:
+    deterministic: PRESENT
+    cursor_skill: PRESENT
+    mock: PRESENT
+
+  policy:
+    policy_engine: PRESENT
+    authority_deterministic: PRESENT
+    authority_on_all_providers: PARTIAL
+
+  runtime:
+    execution_engine: PRESENT
+    scheduler: PRESENT
+    registry: PRESENT
+    jobs: PRESENT
+    resume_pickup: OBSERVED
+
+  evidence:
+    engine_evidence_array: PRESENT
+    megabrain_evidence_bus: DISTINCT_NOT_ENGINE
+
+  knowledge:
+    filesystem_knowledge_store: PRESENT
+
+  telemetry:
+    execution_trace: PRESENT
+
+  evals:
+    catalog: PRESENT
+    runs_battery: COMPLETE
+    verdicts: COMPLETE
+    prototype_evals: NOT_PRODUCED
+
+  state:
+    run_state: PRESENT
+    checkpoints_jobs: PRESENT
+
+  sandbox: NOT_IMPLEMENTED
+  routing: NOT_IMPLEMENTED
+  stuck_detection: NOT_IMPLEMENTED
+  compaction: NOT_IMPLEMENTED
+
+  adrs:
+    ADR-DR-0001: ACCEPTED_KEEP
+    ADR-DR-0002: ACCEPTED_DEFER
+    ADR-DR-0003: ACCEPTED_DEFER
+    ADR-DR-0004: ACCEPTED_DEFER
+    ADR-DR-0005: ACCEPTED_DEFER
+
+  prototypes:
+    PT-001: BLOCKED_NOT_EXECUTED
+    PT-002: NEEDS_MORE_EVIDENCE_NOT_EXECUTED
+
+  regression_live:
+    tests: "103/103"
+    contracts: "7/7"
+    full_cycle: "5/5"
+
+  intended_vs_actual:
+    match: true
+    note: "ADRs say DEFER/KEEP/NOT_IMPLEMENTED; runtime matches — no unimplemented ADOPT claimed"
+    drift: []

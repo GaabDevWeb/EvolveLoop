@@ -1,0 +1,49 @@
+# DO NOT REMOVE — unresolved or critical until pruning phase
+# Generated: 2026-09-19T20:53:30Z
+# AUDIT ONLY — does not authorize deletion of others
+
+do_not_remove:
+  - id: image-to-code
+    reason: Active MegaBrain HARD-GATE (image attachment)
+  - id: brainstorming
+    reason: Optional upstream wired into orquestrar/prd; internal hard gate when used
+  - id: writing-plans
+    reason: Protected candidate until Superpowers migration decision (peer chain)
+  - id: executing-plans
+    reason: Documented Tier3 capability claim; resolve DOC_DRIFT before removal
+  - id: subagent-driven-development
+    reason: Superpowers peer; scripts present; resolve parallel-path decision
+  - id: finishing-a-development-branch
+    reason: Documented in ecosystem-v2 narrative; resolve DOC_DRIFT before removal
+  - id: systematic-debugging
+    reason: ABSORBED source DO for debugger — still required as Tier3 source
+  - id: grill-me
+    reason: OPTIONAL_UPSTREAM referenced; wrapper broken — fix or migrate before remove
+  - id: find-skills
+    reason: Claimed architectural fallback; implementation gap unresolved
+  - id: technical-library-dossier
+    reason: Real /library-dossier command path
+  - id: agent-browser
+    reason: Hard dep of dossier + frontend-pro fallback
+  - id: orquestrar
+    reason: MegaBrain root
+  - id: gaabwiki
+    reason: Hard gate Fase 0
+  - id: gaabwiki-mem
+    reason: Hooks dependency
+  - id: debugger
+    reason: Pipeline debug package
+  - id: frontend-pro
+    reason: Frontend worker + Vision
+  - id: prd
+    reason: Upstream hard gate
+  - id: planner
+    reason: Canonical planning
+  - id: testing
+    reason: Testing hard gate
+  - id: po-review
+    reason: PO acceptance hard gate
+  - id: security
+    reason: Security hard gate when required
+  - id: backend
+    reason: Primary backend worker

@@ -1,0 +1,58 @@
+evolveloopt_live:
+  runtime_observation:
+    status: IMPLEMENTED_OPT_IN
+  automatic_trigger:
+    status: IMPLEMENTED
+    component: LiveAnalysisCoordinator
+  scoped_analysis:
+    status: IMPLEMENTED
+    default_without_scope: REQUIRES_SCOPE
+  persistent_history:
+    status: IMPLEMENTED
+  longitudinal_detection:
+    status: IMPLEMENTED
+  candidate_generation:
+    status: IMPLEMENTED_AUTOMATIC_VIA_ANALYZE
+  gate_handoff:
+    status: IMPLEMENTED
+    bypass: false
+  outcome_window:
+    status: IMPLEMENTED
+    harness_fixture: ControlledGateFixture
+    production_gate_runner: NOT_IN_THIS_PACKAGE
+  outcome_persistence:
+    status: IMPLEMENTED
+  outcome_reingestion:
+    status: IMPLEMENTED
+  user_isolation:
+    status: IMPLEMENTED
+  core_isolation:
+    status: IMPLEMENTED_HOLD
+  registry:
+    status: LIVE_SNAPSHOT
+  security:
+    status: PASS_WITH_LIMITATIONS
+  backpressure:
+    status: IMPLEMENTED
+    max_analyses_per_minute: 30
+  retry_policy:
+    status: BOUNDED
+    note: "analysis failure recorded; no infinite retry"
+  loop_protection:
+    status: IMPLEMENTED
+    max_loop_depth: 2
+    post_evolution_skip_storm: true
+  evals:
+    status: IMPLEMENTED
+    ids: [EV-EVOLVE-LIVE-001, EV-EVOLVE-LIVE-002, EV-EVOLVE-LIVE-003, EV-EVOLVE-LIVE-004, EV-EVOLVE-LIVE-005, EV-EVOLVE-LIVE-006, EV-EVOLVE-LIVE-007, EV-EVOLVE-LIVE-008]
+  regression:
+    tests_before: 162
+    tests_after: 170
+    contracts: "7/7"
+    full_cycle: "5/5"
+  baselines:
+    v1_to_v4: intact
+    v5: baseline-v5-2026-09-19
+  final_status: SUCCESS_WITH_LIMITATIONS
+  remaining_gaps: 4
+  delivery_semantics: BEST_EFFORT

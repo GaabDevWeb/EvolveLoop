@@ -1,0 +1,92 @@
+# Audit test matrix — what was verified in this AUDIT phase
+# Generated: 2026-09-19T20:53:30Z
+
+tests:
+  - id: REF-001
+    type: reference_test
+    method: ripgrep skill ids across .cursor docs orchestrator evals commands hooks
+    result: PASS
+    notes: Extensive static hits collected for 11 protected + motion pack
+
+  - id: REF-002
+    type: dead_reference_test
+    method: resolve documented commands/skills to filesystem
+    result: FAIL_FINDINGS
+    findings:
+      - /descobrir command ABSENT
+      - grilling skill ABSENT
+      - using-superpowers package ABSENT from global-skills
+      - ~/.cursor/skills/gaabwiki-workspace referenced but missing
+      - frontend-pro-workspace comparison-report path missing in ecosystem-v2
+
+  - id: INV-001
+    type: invocation_test
+    method: read .cursor/commands/*.md → skill path mapping
+    result: PASS
+    notes: 29 command files mapped; library-dossier → technical-library-dossier confirmed
+
+  - id: INV-002
+    type: invocation_test
+    method: safe check — no runtime mutation; verify /descobrir file
+    result: PASS_NEGATIVE
+    notes: Confirmed absent (ls commands)
+
+  - id: DEP-001
+    type: dependency_test
+    method: provider.yaml entrypoints exist; CursorSkillProvider loads .cursor/skills only
+    result: PASS
+    notes: 0 broken provider entrypoints; global-skills not scanned by discovery.ts
+
+  - id: DEP-002
+    type: dependency_test
+    method: symlink ~/.agents/skills → project global-skills / .cursor/skills
+    result: PASS
+    notes: 11 protected candidates all symlinked; agent-architecture-mining missing symlink
+
+  - id: GATE-001
+    type: hard_gate_test
+    method: evidence review of image-attachment-gate + frontend-pro + commands
+    result: PASS
+    notes: image-to-code HARD_GATE policy confirmed; runtime_enforced=false
+
+  - id: GATE-002
+    type: hard_gate_test
+    method: agent-browser obligation in library-dossier + dossier SKILL
+    result: PASS
+    notes: skill-contract hard gate confirmed
+
+  - id: FLOW-001
+    type: flow_test
+    method: reconstruct MegaBrain phases from orquestrar/SKILL.md vs Superpowers
+    result: PASS
+    notes: Two parallel pipelines; Superpowers mid/downstream not wired
+
+  - id: FLOW-002
+    type: flow_test
+    method: research path researcher vs library-dossier
+    result: PASS
+    notes: Parallel, not chained
+
+  - id: FLOW-003
+    type: flow_test
+    method: find-skills documented fallback vs orchestrator discovery code
+    result: FAIL_FINDINGS
+    notes: DOCUMENTATION_DRIFT — TS discovery ≠ find-skills
+
+  - id: ABSORB-001
+    type: dependency_test
+    method: debugger PACKAGE-NOTE + source_skill metadata
+    result: PASS
+    notes: systematic-debugging ABSORBED_BY debugger
+
+  - id: FREQ-001
+    type: frequency
+    method: search telemetry/provider-stats
+    result: NOT_MEASURED
+    notes: No live skill usage metrics found
+
+  - id: SUBAGENT-001
+    type: reconciliation
+    method: 5 read-only explore subagents (dev/frontend/research/runtime/docs)
+    result: PASS
+    notes: Evidence reconciled without majority vote; conflicts logged as DRIFT

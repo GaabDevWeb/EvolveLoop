@@ -1,0 +1,31 @@
+generated: 2026-09-20T02:20:12Z
+status: KNOWLEDGE_PROFILE_SEAM_VALIDATED
+baseline_tests: 225/225
+post_tests: 236/236
+snapshot: .prune-snapshots/knowledge-seam-pre-20260920T021742Z/
+
+seam:
+  interface: orchestrator/src/knowledge/backend/types.ts
+  resolve: orchestrator/src/knowledge/backend/resolve.ts
+  wiki: orchestrator/src/knowledge/backend/wiki-backend.ts
+  fake_test_only: orchestrator/src/knowledge/backend/fake-backend.ts
+  profile: orchestrator/src/config/profile.ts
+  profile_file: profiles/default.yaml
+
+defaults:
+  KNOWLEDGE_BACKEND: wiki
+  WIKI_ROOT: canonical env
+  RAG_REPO_ROOT: alias
+
+gate:
+  old: wiki-grounding
+  new: knowledge-grounding
+  semantics: unchanged fail-closed
+  default_backend: wiki
+
+reused_abstractions:
+  - EvidenceSet
+  - knowledge.search / knowledge.inspect contracts
+  - KnowledgeStore (run-scoped)
+  - Capability Provider registry
+  - agent-setup profiles.yaml (install profiles; separate from megabrain profile file)

@@ -1,0 +1,30 @@
+gate:
+  status: PASS_WITH_REVISIONS
+
+  adr_valid: 0
+  adr_valid_with_limitations: 5
+  adr_needs_revision: 0
+  adr_insufficient: 0
+  adr_rejected: 0
+  adr_duplicate: 0
+
+  prototypes_approved: 0
+  prototypes_approved_with_constraints: 0
+  prototypes_needs_more_evidence: 2
+  prototypes_deferred: 0
+  prototypes_rejected: 0
+
+  future_experiments_valid: 4
+  future_experiments_redundant: 0
+  future_experiments_blocked: 0
+  future_experiments_deferred: 2
+  future_experiments_not_applicable: 0
+
+  implementation_performed: false
+  runtime_modified: false
+  baseline_modified: false
+
+  notes:
+    - "PASS_WITH_REVISIONS = all ADRs VALID_WITH_LIMITATIONS; non-blocking completeness items in REVISION-REQUIRED.md"
+    - "No prototype execution authorized"
+    - "No ADR authorizes runtime implementation now"

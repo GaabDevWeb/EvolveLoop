@@ -1,0 +1,366 @@
+# superpowers — mechanism inventory
+# source_type: LOCAL_CORPUS
+# version_examined: 6.3.0 (tag v6.3.0 / HEAD b36e082)
+# date: 2026-09-18
+
+target: superpowers
+path: /home/gaab/Documentos/reverseEnginering/superpowers
+mode: TARGET_RESEARCH
+
+mechanisms:
+  - id: M-BOOTSTRAP
+    name: Session bootstrap injection of using-superpowers
+    problem: Skills present on disk but never invoked
+    how: >
+      SessionStart hook (Claude/Cursor/Copilot variants) or plugin message
+      transform (OpenCode/Pi) embeds full using-superpowers SKILL.md in
+      <EXTREMELY_IMPORTANT> context; matcher includes startup|clear|compact
+      where supported.
+    evidence:
+      - path: hooks/session-start
+        label: OBSERVED
+      - path: hooks/hooks.json
+        label: OBSERVED
+      - path: .opencode/plugins/superpowers.js
+        label: OBSERVED
+      - path: .pi/extensions/superpowers.ts
+        label: OBSERVED
+      - path: docs/porting-to-a-new-harness.md
+        label: DOCUMENTED
+    costs:
+      - Per-session token overhead of meta-skill
+      - Platform-specific JSON field shapes (additional_context vs hookSpecificOutput)
+    failure_modes:
+      - Missing bootstrap → skills inert (acceptance test: brainstorming must auto-fire)
+      - Hermes: no post-compaction re-inject (DOCUMENTED README caveat)
+      - Double-injection without guards (OpenCode caches + marker check)
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+    utility: USEFUL
+
+  - id: M-MANDATORY-INVOKE
+    name: Mandatory skill invocation before any response
+    problem: Agents explore/clarify/code before process skills
+    how: >
+      using-superpowers requires invoke-before-any-action including clarifying
+      questions; 1% chance rule; Red Flags rationalization table; SUBAGENT-STOP
+      exemption for dispatched implementers.
+    evidence:
+      - path: skills/using-superpowers/SKILL.md
+        label: OBSERVED
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+    utility: USEFUL
+
+  - id: M-PROG-DISCLOSURE
+    name: Progressive disclosure via trigger-only descriptions
+    problem: Description summarizing workflow causes agents to skip full skill
+    how: >
+      Frontmatter description = when-to-use only; body loaded via Skill tool;
+      heavy refs in sibling files; ban @ force-load; token budgets for hot skills.
+    evidence:
+      - path: skills/writing-skills/SKILL.md
+        label: OBSERVED
+      - path: skills/subagent-driven-development/SKILL.md
+        label: OBSERVED
+    our_equivalence: SUBSTANTIAL
+    decision: ADAPT
+    confidence: HIGH
+    utility: USEFUL
+
+  - id: M-ACTION-VOCAB
+    name: Harness-neutral action vocabulary + tool maps
+    problem: Skill bodies hardcode Claude Task/TodoWrite/etc.
+    how: >
+      Skills describe actions; per-harness references/*-tools.md and/or
+      bootstrap append maps to native tools; porting must not edit skill bodies.
+    evidence:
+      - path: docs/porting-to-a-new-harness.md
+        label: DOCUMENTED
+      - path: skills/using-superpowers/references/
+        label: OBSERVED
+      - path: RELEASE-NOTES.md
+        label: DOCUMENTED
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+    utility: USEFUL
+
+  - id: M-MULTI-HARNESS-PORTS
+    name: Thin adapter per coding-agent harness
+    problem: Same methodology across many IDEs/CLIs
+    how: Plugin manifests + bootstrap injector + install docs per harness
+    evidence:
+      - path: README.md
+        label: DOCUMENTED
+      - path: .cursor-plugin/plugin.json
+        label: OBSERVED
+      - path: .claude-plugin/plugin.json
+        label: OBSERVED
+    our_equivalence: NONE
+    decision: DEFER
+    confidence: MEDIUM
+    utility: CONDITIONALLY_USEFUL
+
+  - id: M-WORKFLOW-PIPE
+    name: Composed SDLC skill pipeline
+    problem: Agents jump to implementation
+    how: >
+      brainstorming → using-git-worktrees → writing-plans →
+      SDD|executing-plans → TDD/review → finishing-a-development-branch
+    evidence:
+      - path: README.md
+        label: DOCUMENTED
+      - path: skills/
+        label: OBSERVED
+    our_equivalence: SUBSTANTIAL
+    decision: ADAPT
+    confidence: HIGH
+    utility: USEFUL
+
+  - id: M-PATH-ROUTER
+    name: Brainstorming three-path router + hard approval gate
+    problem: Ceremony too heavy or too light; unapproved implementation
+    how: >
+      Classify spike|bounded|architectural; HARD-GATE approval before any
+      implementation skill/code; one-way ratchet on discovered complexity.
+    evidence:
+      - path: skills/brainstorming/SKILL.md
+        label: OBSERVED
+      - path: RELEASE-NOTES.md
+        label: DOCUMENTED
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+    utility: USEFUL
+
+  - id: M-SDD-CONTROLLER
+    name: Subagent-driven development controller loop
+    problem: Context pollution; weak/gameable multi-review; expensive models
+    how: >
+      Fresh implementer per task; single task-reviewer dual verdict; file-based
+      brief/review-package; named models; ban coaching reviewers; fix loop ≤5
+      then adjudicate; continuous execution with limited stop conditions.
+    evidence:
+      - path: skills/subagent-driven-development/SKILL.md
+        label: OBSERVED
+      - path: skills/subagent-driven-development/implementer-prompt.md
+        label: OBSERVED
+      - path: skills/subagent-driven-development/task-reviewer-prompt.md
+        label: OBSERVED
+      - path: RELEASE-NOTES.md
+        label: DOCUMENTED
+    our_equivalence: SUBSTANTIAL
+    decision: ALREADY_PRESENT
+    residual_gap: anti-coaching + file handoff + dual-verdict single reviewer
+    residual_decision: ADAPT
+    confidence: HIGH
+    utility: USEFUL
+
+  - id: M-SDD-LEDGER
+    name: Plan-scoped durable progress ledger
+    problem: Compaction causes controllers to re-dispatch completed tasks
+    how: >
+      scripts/sdd-workspace → .superpowers/sdd/<plan>/; progress.md ledger
+      with plan identity; Task N complete lines; Ruling records; workspace
+      deleted at plan end.
+    evidence:
+      - path: skills/subagent-driven-development/SKILL.md
+        label: OBSERVED
+      - path: skills/subagent-driven-development/scripts/sdd-workspace
+        label: OBSERVED
+      - path: docs/superpowers/specs/2026-07-06-sdd-plan-scoped-workspace.md
+        label: DOCUMENTED
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+    utility: USEFUL
+
+  - id: M-PLAN-CONTRACTS
+    name: Plan Global Constraints + task Interfaces
+    problem: Context-isolated implementers invent neighbor APIs
+    how: Verbatim global constraints; Consumes/Produces signatures per task
+    evidence:
+      - path: skills/writing-plans/SKILL.md
+        label: OBSERVED
+      - path: RELEASE-NOTES.md
+        label: DOCUMENTED
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+    utility: USEFUL
+
+  - id: M-TDD-IRON
+    name: TDD Iron Law with delete-and-rewrite
+    problem: Implementation before failing tests
+    how: NO PRODUCTION CODE WITHOUT FAILING TEST FIRST; delete pre-written code
+    evidence:
+      - path: skills/test-driven-development/SKILL.md
+        label: OBSERVED
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+    utility: CONDITIONALLY_USEFUL
+
+  - id: M-VERIFY-GATE
+    name: Verification-before-completion evidence gate
+    problem: Success claims without fresh command output
+    how: Gate function identify→run→read→verify before any completion claim
+    evidence:
+      - path: skills/verification-before-completion/SKILL.md
+        label: OBSERVED
+    our_equivalence: SUBSTANTIAL
+    decision: ALREADY_PRESENT
+    confidence: HIGH
+    utility: USEFUL
+
+  - id: M-DEBUG-PHASES
+    name: Systematic four-phase debugging
+    problem: Symptom fixes without root cause
+    how: Phased investigation with supporting technique files
+    evidence:
+      - path: skills/systematic-debugging/SKILL.md
+        label: OBSERVED
+      - path: skills/systematic-debugging/
+        label: OBSERVED
+    our_equivalence: SUBSTANTIAL
+    decision: ALREADY_PRESENT
+    confidence: HIGH
+    utility: USEFUL
+
+  - id: M-RATIONALIZATION
+    name: Rationalization / Red Flags prompt pattern
+    problem: Agents invent exemptions to process
+    how: Tables mapping rationalizing thoughts to mandatory reality; spirit>letter
+    evidence:
+      - path: skills/using-superpowers/SKILL.md
+        label: OBSERVED
+      - path: skills/verification-before-completion/SKILL.md
+        label: OBSERVED
+      - path: skills/brainstorming/SKILL.md
+        label: OBSERVED
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+    utility: USEFUL
+
+  - id: M-SKILL-TDD
+    name: TDD + adversarial pressure testing for skills
+    problem: Untested skill prose that doesn’t change behavior
+    how: >
+      Baseline subagent pressure scenarios RED then write skill GREEN;
+      CLAUDE.md requires eval evidence for skill behavior changes.
+    evidence:
+      - path: skills/writing-skills/SKILL.md
+        label: OBSERVED
+      - path: CLAUDE.md
+        label: OBSERVED
+      - path: tests/explicit-skill-requests/
+        label: OBSERVED
+      - path: docs/testing.md
+        label: DOCUMENTED
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+    utility: USEFUL
+
+  - id: M-INSTR-HIERARCHY
+    name: Explicit instruction hierarchy
+    problem: Unclear precedence user vs skill vs defaults
+    how: User instructions override skills; skills override default behavior
+    evidence:
+      - path: skills/using-superpowers/SKILL.md
+        label: OBSERVED
+    our_equivalence: EQUIVALENT
+    decision: ALREADY_PRESENT
+    confidence: HIGH
+    utility: USEFUL
+
+  - id: M-HITL-GATES
+    name: Human-in-the-loop selective gates
+    problem: Autonomy without approval where it matters
+    how: >
+      Always approve design before impl; SDD continuous unless irreversible,
+      security, external side-effect, or total guess.
+    evidence:
+      - path: skills/brainstorming/SKILL.md
+        label: OBSERVED
+      - path: skills/subagent-driven-development/SKILL.md
+        label: OBSERVED
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+    utility: USEFUL
+
+  - id: M-WORKTREE
+    name: Project-local git worktrees for isolation
+    problem: Implementing on main; parallel branch collisions
+    how: Prefer .worktrees/ or worktrees/ in project (post-v6 global dir removed)
+    evidence:
+      - path: skills/using-git-worktrees/SKILL.md
+        label: OBSERVED
+      - path: RELEASE-NOTES.md
+        label: DOCUMENTED
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+    utility: USEFUL
+
+  - id: M-EVAL-SPLIT
+    name: Plugin tests vs skill-behavior evals split
+    problem: Mixing infra unit tests with LLM behavior judgments
+    how: tests/ for plugin code; evals/ drill for live sessions (submodule)
+    evidence:
+      - path: docs/testing.md
+        label: DOCUMENTED
+      - path: CLAUDE.md
+        label: DOCUMENTED
+      - note: evals/ absent in this LOCAL_CORPUS checkout
+        label: OBSERVED
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+    utility: USEFUL
+
+  - id: M-ZERO-DEP
+    name: Zero third-party dependency plugin policy
+    problem: Optional deps / ecosystem coupling
+    how: CLAUDE.md rejects PRs adding third-party deps except new harness support
+    evidence:
+      - path: CLAUDE.md
+        label: OBSERVED
+      - path: package.json
+        label: OBSERVED
+    our_equivalence: NONE
+    decision: DEFER
+    confidence: MEDIUM
+    utility: CONDITIONALLY_USEFUL
+
+  - id: M-TELEMETRY-OPTIN
+    name: Optional visual companion version beacon
+    problem: Authors lack usage signal for plugins
+    how: Logo URL includes version; SUPERPOWERS_DISABLE_TELEMETRY opt-out
+    evidence:
+      - path: README.md
+        label: DOCUMENTED
+    our_equivalence: NONE
+    decision: REJECT
+    confidence: HIGH
+    utility: NOT_APPLICABLE
+
+  - id: M-CONTRIB-GATE
+    name: Anti-slop contributor / harness acceptance gates
+    problem: Low-quality agent PRs; fake harness ports
+    how: >
+      94% rejection narrative; PR template; disclose model/harness; acceptance
+      test "Let's make a react todo list" must auto-trigger brainstorming.
+    evidence:
+      - path: CLAUDE.md
+        label: OBSERVED
+    our_equivalence: NONE
+    decision: DEFER
+    confidence: HIGH
+    utility: USEFUL
+)

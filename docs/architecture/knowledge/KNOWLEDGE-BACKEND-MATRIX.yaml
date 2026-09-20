@@ -1,0 +1,12 @@
+backends:
+  - id: wiki
+    production: true
+    default: true
+    class: WikiKnowledgeBackend
+    root_env: [WIKI_ROOT, RAG_REPO_ROOT]
+    cli_env: WIKI_CLI_MODULE
+  - id: fake
+    production: false
+    default: false
+    class: FakeKnowledgeBackend
+    purpose: unit tests only

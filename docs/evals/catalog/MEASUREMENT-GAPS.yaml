@@ -1,0 +1,78 @@
+gaps:
+
+  - id: MG-001
+    property: live_task_success
+    why_not_measured: "E-001 offline only; no live task oracle"
+    current_limitation: "activation_match_rate ≠ task_success"
+    minimum_enablement: "host catalog control + live task rubric (PT-001 / E-001-LIVE)"
+    status: NOT_CURRENTLY_EVALUABLE
+
+  - id: MG-002
+    property: live_host_catalog_injection
+    why_not_measured: "ENVIRONMENT gap"
+    current_limitation: "offline harness only"
+    minimum_enablement: "controlled host injection API"
+    status: NOT_CURRENTLY_EVALUABLE
+
+  - id: MG-003
+    property: vendor_tokenizer
+    why_not_measured: "whitespace PROXY only"
+    current_limitation: "token_estimate is PROXY"
+    minimum_enablement: "vendor or declared tokenizer policy"
+    status: NOT_CURRENTLY_EVALUABLE
+
+  - id: MG-004
+    property: global_exactly_once
+    why_not_measured: "only STATE_WRITE job-path fixture measured"
+    current_limitation: "exactly-once global NOT_EVALUABLE"
+    minimum_enablement: "multi-surface side-effect instrumentation"
+    status: NOT_EVALUABLE
+
+  - id: MG-005
+    property: os_kill_recovery
+    why_not_measured: "E-005 same-process only"
+    current_limitation: "OS kill NOT_MEASURED"
+    minimum_enablement: "PT-002 after Prototype Gate"
+    status: READY_AFTER_FIXTURE
+
+  - id: MG-006
+    property: external_side_effects_beyond_STATE_WRITE
+    why_not_measured: "fixture scoped to JobFileExecutor STATE_WRITE"
+    current_limitation: "confirm-path not instrumented"
+    minimum_enablement: "confirm-path mutation instrumentation"
+    status: NEEDS_MORE_INSTRUMENTATION
+
+  - id: MG-007
+    property: full_HITL
+    why_not_measured: "job-path only; confirm/human UX not measured"
+    current_limitation: "HITL PARTIALLY_OBSERVED"
+    minimum_enablement: "approval/rejection/human-wait fixtures"
+    status: NOT_CURRENTLY_EVALUABLE
+
+  - id: MG-008
+    property: sandbox_posture
+    why_not_measured: "sandbox NOT_IMPLEMENTED"
+    current_limitation: "path flags ≠ sandbox"
+    minimum_enablement: "security model then runtime primitive"
+    status: BLOCKED_BY_ARCHITECTURE
+
+  - id: MG-009
+    property: semantic_stuck
+    why_not_measured: "StuckDetector absent; semantics undefined"
+    current_limitation: "maxIterations ≠ stuck"
+    minimum_enablement: "DEFINE SEMANTICS FIRST"
+    status: BLOCKED_BY_ARCHITECTURE
+
+  - id: MG-010
+    property: compaction_reinject
+    why_not_measured: "no compaction pipeline; ownership unresolved"
+    current_limitation: "Knowledge≠Memory≠Checkpoint unresolved for compact"
+    minimum_enablement: "ownership ADR then pipeline"
+    status: BLOCKED_BY_ARCHITECTURE
+
+  - id: MG-011
+    property: authority_on_Mock_CursorSkill_JobFile
+    why_not_measured: "Authority wired on DeterministicProvider only"
+    current_limitation: "soft policy gap remains"
+    minimum_enablement: "wire Authority or scoped Eval expansion"
+    status: PARTIAL_COVERAGE_ONLY

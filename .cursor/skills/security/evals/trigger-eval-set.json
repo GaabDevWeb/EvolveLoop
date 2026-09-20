@@ -1,0 +1,31 @@
+{
+  "skill_name": "security",
+  "version": "2.0.0",
+  "should_trigger": [
+    "/seguranca Fase 4",
+    "Security framework revisão",
+    "Capability matrix auditoria",
+    "Threat coverage relatório",
+    "Security debt estimativa",
+    "Evidence level L3 PoC",
+    "SARIF security findings",
+    "MITRE CWE OWASP mapping",
+    "Attack chains comprometimento",
+    "Stripe webhook segurança",
+    "GraphQL security review",
+    "Auto planejar módulos stack",
+    "Dynamic pentest staging",
+    "Security score CI gate"
+  ],
+  "should_not_trigger": [
+    "Aceite PO release",
+    "Planejar sprint produto",
+    "Criar componente React",
+    "Documentar README",
+    "Implementar login feature",
+    "Testes unitários Jest",
+    "Review visual UX",
+    "Gerar diagrama ER",
+    "Deploy produção sem auditoria"
+  ]
+}

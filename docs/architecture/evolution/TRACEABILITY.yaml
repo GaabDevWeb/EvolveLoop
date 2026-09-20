@@ -1,0 +1,68 @@
+# Master Traceability — Architecture Evolution
+
+baseline_id: baseline-v1-2026-09-18
+
+trace:
+
+  - source: docs/research/hypotheses/H-001-skill-list-budget.md
+    hypothesis: H-001
+    experiment: E-001
+    prototype: PT-001
+    evidence: [E001-EV-*, CLM-E001-*]
+    eval: [EV-007, EV-008]
+    claim: [CLM-E001-001, CLM-E001-002]
+    verdict: WEAKENED
+    adr: ADR-DR-0002
+    prototype_gate: BLOCKED
+    implementation: NOT_IMPLEMENTED
+    regression: "103/103 unchanged"
+    final_state: "DEFER production budget preserved"
+
+  - source: docs/research/hypotheses/H-005-hitl-runstate-resume.md
+    hypothesis: H-005
+    experiment: E-005
+    prototype: PT-002
+    evidence: [E005-EV-*, CLM-E005-*]
+    eval: [EV-006]
+    claim: [CLM-E005-001, CLM-E005-002, CLM-E005-003]
+    verdict: WEAKENED
+    adr: ADR-DR-0001
+    prototype_gate: NEEDS_MORE_EVIDENCE
+    implementation: NOT_IMPLEMENTED
+    regression: "103/103 unchanged"
+    final_state: "KEEP job-path; OS-kill still open"
+
+  - source: docs/research/hypotheses/H-002-sandbox-refuse-unenforceable.md
+    hypothesis: H-002
+    experiment: E-002
+    prototype: null
+    evidence: []
+    eval: []
+    claim: []
+    verdict: INCONCLUSIVE
+    adr: ADR-DR-0003
+    prototype_gate: n/a
+    implementation: NOT_IMPLEMENTED
+    final_state: "DEFER sandbox"
+
+  - source: docs/research/hypotheses/H-003-stuck-detector-halts-thrash.md
+    hypothesis: H-003
+    experiment: E-003
+    prototype: null
+    verdict: INCONCLUSIVE
+    adr: ADR-DR-0004
+    implementation: NOT_IMPLEMENTED
+    final_state: "DEFER stuck"
+
+  - source: docs/research/hypotheses/H-004-compaction-preserves-constraints.md
+    hypothesis: H-004
+    experiment: E-004
+    prototype: null
+    verdict: INCONCLUSIVE
+    adr: ADR-DR-0005
+    implementation: NOT_IMPLEMENTED
+    final_state: "DEFER compaction"
+
+links_intact: true
+broken_links: []
+note: "Prototype execution/eval nodes absent by gate decision — not broken links."

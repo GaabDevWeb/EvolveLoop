@@ -1,0 +1,49 @@
+eval:
+  id: EV-005
+  name: Evidence Integrity (Engine Evidence[])
+  category: EVIDENCE
+  version: 1
+  question: "Do engine Evidence builders/validators accept well-formed Evidence[] and reject invalid shapes under existing tests?"
+  property: engine_evidence_integrity
+  baseline_id: baseline-v1-2026-09-18
+  source: { experiments: [], claims: [], evidence: [BASELINE_ONLY] }
+  readiness: READY
+  scope:
+    includes: [Evidence_array, validators]
+    excludes: [MegaBrain_Evidence_Bus_FS]
+  setup: { cwd: orchestrator/ }
+  control: null
+  treatment: null
+  fixtures: [existing]
+  metrics:
+    - id: EV005-M_evidence_suite_pass
+      name: evidence_suite_pass
+      definition: evidence unit tests pass
+      unit: bool
+      collection_method: vitest
+      source: tests/unit/evidence.test.ts
+      type: DIRECT
+      interpretation: engine_evidence_schema_integrity
+      limitations: [≠_MegaBrain_bus]
+  success_criteria: ["evidence unit tests PASS"]
+  failure_criteria: [false_accept, false_reject, suite_FAIL]
+  repetitions: { minimum: 1, recommended: 1, reason: deterministic }
+  isolation: local_test_process
+  cleanup: none
+  reproducibility:
+    commands:
+      - "npx vitest run tests/unit/evidence.test.ts"
+  limitations:
+    - "Evidence[] ≠ MegaBrain Evidence Bus"
+    - "gate artifact_path_missing enforcement may remain NOT_IMPLEMENTED"
+  regression_reference: baseline-v1-2026-09-18
+  safety_constraints: [read_only]
+  eval_contract:
+    inputs: []
+    preconditions: []
+    action: run_evidence_tests
+    observations: [pass_fail]
+    metrics: [EV005-M_evidence_suite_pass]
+    oracle: { type: suite_pass }
+    cleanup: []
+    artifacts: [vitest_stdout]

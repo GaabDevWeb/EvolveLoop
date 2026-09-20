@@ -1,0 +1,65 @@
+experiments:
+
+  - id: E-001-LIVE
+    question: Does catalog size/truncation affect live host skill selection and live task_success?
+    current_unknown: live injection + live task_success
+    existing_evidence: E-001 offline precision/token_estimate (PROXY)
+    missing_evidence:
+      - controlled live catalog injection
+      - live task_success
+      - vendor tokenizer or accepted proxy policy
+    prerequisite: host harness without engine max_skills unless later product decision
+    final_gate: VALID
+    rationale: Not answered by offline E-001; high information value before any budget feature.
+
+  - id: E-005-OS-KILL
+    question: Does job-path resume avoid duplicate STATE_WRITE after OS process kill?
+    current_unknown: OS kill / process restart
+    existing_evidence: E-005 SAME_ENGINE + NEW_ENGINE in-process
+    missing_evidence:
+      - true process termination
+      - restart pickup
+    prerequisite: durable jobsDir + checkpoint (already present)
+    final_gate: VALID
+    rationale: NEW_ENGINE ≠ OS kill; not redundant with E-005.
+
+  - id: E-005-CONFIRM-SIDE-EFFECT
+    question: Does confirm-gated product mutation path also avoid duplicates on resume?
+    current_unknown: side effects beyond STATE_WRITE job JSON
+    existing_evidence: JobFileExecutor mutation log (STATE_WRITE only)
+    missing_evidence: confirm-path / external write instrumentation
+    prerequisite: define mutation surface under test
+    final_gate: VALID
+    rationale: Distinct surface from E-005 STATE_WRITE; not redundant.
+
+  - id: E-002-SEC-MODEL
+    question: What enforceable security model and attestation signals exist before posture labels?
+    current_unknown: sandbox model + refuse-unenforceable
+    existing_evidence: path confinement; Authority on DeterministicProvider
+    missing_evidence: OS isolation design; attestation; provider coverage
+    prerequisite: ADR-DR-0003 process (architecture before experiment)
+    final_gate: DEFERRED
+    rationale: >
+      Valid question, but primarily an architecture decision sequence, not a runnable
+      experiment until security-model checklist is drafted. Keep as deferred work item
+      under ADR-DR-0003; do not treat as implementation task.
+
+  - id: E-003-STUCK-DEF
+    question: What operational definition of stuck yields acceptable false_stuck_rate?
+    current_unknown: stuck semantics
+    existing_evidence: maxIterations bound-only
+    missing_evidence: labeled thrash fixtures; metrics
+    prerequisite: DEFINE SEMANTICS FIRST (ADR-DR-0004)
+    final_gate: VALID
+    rationale: Needed after/during semantics definition; not answered by existing experiments.
+
+  - id: E-004-OWNERSHIP
+    question: Who owns compacted context vs Memory/Knowledge/Checkpoint and reinject validation?
+    current_unknown: ownership + loss validation
+    existing_evidence: baseline Knowledge≠Memory≠Checkpoint
+    missing_evidence: ownership ADR + loss metrics
+    prerequisite: ARCHITECTURE FIRST (ADR-DR-0005)
+    final_gate: DEFERRED
+    rationale: >
+      Valid architectural question; experiment fixtures premature until ownership ADR answers
+      gate §18 questions. Defer runnable experiment; architecture work first.

@@ -1,0 +1,60 @@
+eval:
+  id: EV-004
+  name: Policy Decision and Authority Enforcement
+  category: AUTHORITY
+  version: 1
+  question: "On the DeterministicProvider path, does CapabilityAuthority deny/confirm enforcement match policy decisions (execution blocked when denied)?"
+  property: authority_enforcement_deterministic_path
+  baseline_id: baseline-v1-2026-09-18
+  source: { experiments: [], claims: [], evidence: [BASELINE_ONLY] }
+  readiness: READY
+  scope:
+    includes: [DeterministicProvider, CapabilityAuthority, PolicyEngine]
+    excludes: [Mock_Authority, CursorSkill_Authority, JobFile_Authority, OS_sandbox]
+  setup: { cwd: orchestrator/ }
+  control: null
+  treatment: null
+  fixtures: [existing_authority_fixtures]
+  metrics:
+    - id: EV004-M_authority_deny_blocks
+      name: authority_deny_blocks
+      definition: deny path yields AUTHORITY_DENIED / blocked execution
+      unit: bool_suite
+      collection_method: vitest
+      source: tests/unit/authority.test.ts
+      type: DIRECT
+      interpretation: enforcement_observed
+      limitations: [deterministic_path_only]
+    - id: EV004-M_policy_engine_pass
+      name: policy_engine_pass
+      definition: PolicyEngine unit suite pass
+      unit: bool
+      collection_method: vitest
+      source: tests/unit/policy-engine.test.ts
+      type: DIRECT
+      interpretation: policy_decision_layer
+      limitations: [decision_≠_enforcement_everywhere]
+  success_criteria:
+    - "authority deny blocks on deterministic path"
+    - "policy-engine tests PASS"
+  failure_criteria: [policy_bypass_on_deterministic_path, suite_FAIL]
+  repetitions: { minimum: 1, recommended: 1, reason: deterministic }
+  isolation: local_test_process
+  cleanup: none
+  reproducibility:
+    commands:
+      - "npx vitest run tests/unit/authority.test.ts tests/unit/policy-engine.test.ts"
+  limitations:
+    - "Policy Decision ≠ Enforcement on unwired providers"
+    - "not_sandbox"
+  regression_reference: baseline-v1-2026-09-18
+  safety_constraints: [read_only]
+  eval_contract:
+    inputs: []
+    preconditions: []
+    action: run_authority_policy_tests
+    observations: [deny_blocks, suite_pass]
+    metrics: [EV004-M_authority_deny_blocks, EV004-M_policy_engine_pass]
+    oracle: { type: suite_pass_and_assert_deny }
+    cleanup: []
+    artifacts: [vitest_stdout]

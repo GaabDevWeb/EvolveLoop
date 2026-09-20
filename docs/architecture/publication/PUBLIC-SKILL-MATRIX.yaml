@@ -1,0 +1,31 @@
+skills:
+  PUBLIC_CORE:
+    - orquestrar
+    - wiki  # Context Engineer / knowledge grounding
+    - prd
+    - planner
+    - backend
+    - frontend-pro
+    - testing
+    - security
+    - po-review
+    - documentation
+    - debugger
+    - grill-me  # HARD-GATE
+    - image-to-code  # HARD-GATE
+    - systematic-debugging
+  PUBLIC_OPTIONAL:
+    - meta-skills
+    - devops
+    - database
+    - adr
+    - architect
+    - researcher
+    - remaining tier3 from prune KEEP_CORE
+    - wiki-mem  # public optional; GaabType default-on
+  GAAB_PROFILE:
+    - wiki-mem as always-on requirement
+  EXTERNAL_HOST:
+    - wiki-carpaccio
+    - ip-as-logo
+  note: Do not re-prune; use pruning validation as SSOT

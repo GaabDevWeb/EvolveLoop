@@ -1,0 +1,31 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Provider
+metadata:
+  name: system
+  version: "1.0.0"
+  description: "Deterministic system inspection"
+  owner: agents-team
+spec:
+  plugin:
+    type: deterministic
+    entrypoint: "src/providers/deterministic/index.ts"
+  capabilities:
+    - id: system.inspect
+      contract: contracts/system.inspect@1.0.0
+      type: worker
+    - id: system.cpu
+      contract: contracts/system.cpu@1.0.0
+      type: worker
+    - id: system.memory
+      contract: contracts/system.memory@1.0.0
+      type: worker
+    - id: system.disk
+      contract: contracts/system.disk@1.0.0
+      type: worker
+    - id: system.processes
+      contract: contracts/system.processes@1.0.0
+      type: worker
+  runtime:
+    cost: low
+  availability: active
+  priority: 50

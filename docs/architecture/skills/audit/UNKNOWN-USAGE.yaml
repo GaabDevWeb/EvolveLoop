@@ -1,0 +1,39 @@
+# Unknown usage — could not fully determine
+# Generated: 2026-09-19T20:53:30Z
+
+unknown:
+  - id: grill-me
+    unknown_aspect: effective_execution
+    known: referenced as optional upstream by orquestrar/prd
+    gap: grilling primitive and /grilling command ABSENT — whether sessions succeed is UNKNOWN
+    classification_note: NOT unused; WRAPPER + OPTIONAL_UPSTREAM with broken target
+
+  - id: find-skills
+    unknown_aspect: agent_auto_invocation_rate
+    known: skill exists; Cursor description-driven discovery possible
+    gap: no metrics; documented TS fallback NOT implemented
+    classification_note: DISCOVERY + DOCUMENTED_FALLBACK_UNIMPLEMENTED
+
+  - id: writing-plans
+    unknown_aspect: manual_invocation_outside_megabrain
+    known: not referenced by orquestrar/planner commands
+    gap: may still be invoked by Cursor when user asks for Superpowers-style plans
+    classification_note: DOCUMENTATION_ONLY for MegaBrain; STANDALONE possible
+
+  - id: motion_pack_usage
+    ids: [gsap, framer-motion, lenis, hover-effects, particles, r3f-shaders]
+    unknown_aspect: how often Cursor auto-selects via description match
+    known: no MegaBrain/orquestrar/command callers
+    gap: NOT_MEASURED frequency
+
+  - id: ip-as-logo
+    location: ~/.agents/skills/ip-as-logo
+    unknown_aspect: relation_to_CursorSKILLS
+    known: not in project global-skills
+    gap: outside audit repo scope for MegaBrain flows
+
+  - id: wiki-carpaccio
+    location: ~/.agents/skills/wiki-carpaccio
+    unknown_aspect: active_use_vs_docs
+    known: docs mention project knowledge contract
+    gap: not part of MegaBrain command table

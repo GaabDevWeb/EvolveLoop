@@ -1,0 +1,64 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Contract
+metadata:
+  id: planning
+  version: "1.0.0"
+  status: active
+
+spec:
+  capability: planning
+  type: worker
+
+  semver:
+    major: 1
+    minor: 0
+    patch: 0
+
+  compatible_with:
+    - "contracts/planning@1.0.x"
+    - "capability-orchestrator/planner@2.1.0"
+
+  inputs:
+    - name: feature-request
+      required: true
+    - name: upstream-artifacts
+      required: false
+      schema: artifacts/doc-package@1.x
+    - name: knowledge
+      required: false
+    - name: memory-scope
+      required: false
+
+  outputs:
+    - name: capability-ir
+      schema: artifacts/capability-ir@2.0.0
+      path: memory/<feature_id>/plan.ir.yaml
+    - name: execution-plan
+      schema: artifacts/execution-plan@1.0.0
+    - name: planner-evidence
+      schema: evidence/planning@2.1.0
+
+  definition_of_done:
+    minimum_checks:
+      - objective_and_global_closure_stated
+      - existence_verification_table
+      - acyclic_dag_with_critical_path
+      - interface_contracts_on_cross_boundary
+      - per_id_acceptance_criteria
+      - pda_briefings_for_m_l_tasks
+      - plan_ir_yaml_emitted
+      - planning_evidence_emitted
+    forbidden:
+      - provider_id_on_ir_nodes
+      - product_code_implementation
+      - security_gate_verdict
+      - final_policy_id_selection
+
+  evidence:
+    schema: evidence/planning@2.1.0
+    emitter: planner
+    payload_type: planning
+
+  runtime_compatibility:
+    pda_roles: [plan]
+    phase: 1

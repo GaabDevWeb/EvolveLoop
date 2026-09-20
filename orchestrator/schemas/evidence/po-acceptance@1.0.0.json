@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "evidence/po-acceptance@1.0.0",
+  "title": "PoAcceptanceEvidence",
+  "type": "object",
+  "required": ["kind", "metadata", "spec"],
+  "properties": {
+    "kind": { "const": "Evidence" },
+    "metadata": {
+      "type": "object",
+      "required": ["node_id", "run_id", "provider_id", "capability"],
+      "properties": {
+        "node_id": { "type": "string" },
+        "run_id": { "type": "string" },
+        "provider_id": { "type": "string" },
+        "capability": { "const": "po-acceptance" }
+      }
+    },
+    "spec": {
+      "type": "object",
+      "required": ["status", "verdict", "checks"],
+      "properties": {
+        "status": { "enum": ["complete", "partial", "failed"] },
+        "verdict": { "enum": ["passed", "rejected", "conditional", null] },
+        "checks": { "type": "array" },
+        "acceptance_summary": {
+          "type": "object",
+          "properties": {
+            "executive": { "enum": ["APROVADO", "REJEITADO"] },
+            "orchestrator_status": { "enum": ["OK", "Ajustes necessários"] },
+            "blocking_count": { "type": "number", "minimum": 0 },
+            "gate_phase_6": { "enum": ["LIBERADO", "BLOQUEADO"] }
+          }
+        },
+        "duration_ms": { "type": "number" }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+profile:
+  file: profiles/default.yaml
+  loader: orchestrator/src/config/profile.ts
+  not_a_runtime: true
+belongs_in_profile_or_env:
+  - WIKI_ROOT
+  - KNOWLEDGE_BACKEND override
+  - memory.enabled / wiki-mem preference
+  - host paths via agents.env
+belongs_in_core:
+  - Engine / Policy / Evidence / EvolveLoop
+  - KnowledgeBackend interface
+  - knowledge-grounding policy
+  - grill-me / image-to-code

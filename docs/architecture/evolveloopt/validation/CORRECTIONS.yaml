@@ -1,0 +1,39 @@
+corrections:
+  - id: C-001
+    finding: F-OUT-EMPTY-AFTER
+    change: "Treat afterTotal===0 as INCONCLUSIVE/REMAINS_ACTIVE before rate comparison (never IMPROVED from zero observations)"
+    files:
+      - orchestrator/src/evolveloop/outcome/outcome-tracker.ts
+    rationale: "Adversarial MEASURED: beforeFail=2, after=[], outcome was IMPROVED"
+    tests_added:
+      - "INCONCLUSIVE for empty-after even when before had failures"
+    tests_run: "vitest run → 138/138"
+    regression: PASS
+
+  - id: C-002
+    finding: F-LIFE-OVERWRITE
+    change: "Preserve REGRESSED and REMAINS_ACTIVE across LongitudinalNeedDetector.detect re-analyze"
+    files:
+      - orchestrator/src/evolveloop/lifecycle/need-lifecycle.ts
+    rationale: "Adversarial MEASURED: recordOutcome(REGRESSED) then analyze() → EMERGING"
+    tests_added:
+      - "preserves REGRESSED lifecycle across re-analyze"
+    tests_run: "vitest run → 138/138"
+    regression: PASS
+
+  - id: C-003
+    finding: F-ANALYZE-SCOPE
+    change: "analyze() accepts optional user_id/project_id and passes them to PersistentSignalStore.query"
+    files:
+      - orchestrator/src/evolveloop/longitudinal-controller.ts
+    rationale: "query isolation ≠ analyze isolation; unscoped analyze aggregated all users"
+    tests_added:
+      - "analyze(user_id) does not mix User B signals"
+    tests_run: "vitest run → 138/138"
+    regression: PASS
+    residual: "Default analyze() without filter still aggregates whole store; replayAnalyze does not accept user_id"
+
+policy:
+  only_small_local_fixes: true
+  baselines_mutated: false
+  new_architecture: false

@@ -1,0 +1,33 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Contract
+metadata:
+  id: documentation
+  version: "1.0.0"
+  status: active
+
+spec:
+  capability: documentation
+  type: gate
+  semver:
+    major: 1
+    minor: 0
+    patch: 0
+
+  inputs:
+    - name: accepted-delivery
+      required: false
+    - name: agent-history
+      required: false
+
+  outputs:
+    - name: documentation-report
+      schema: evidence/documentation@1.0.0
+
+  definition_of_done:
+    minimum_checks:
+      - history_consolidated_or_absence_declared
+      - master_readme_sections
+      - anti_hallucination_pass
+
+  evidence:
+    schema: evidence/documentation@1.0.0

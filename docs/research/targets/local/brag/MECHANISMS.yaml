@@ -1,0 +1,246 @@
+# MECHANISMS.yaml — tgt-brag (AUXILIARY / packaging lens)
+# Epistemic: OBSERVED | DOCUMENTED | MEASURED | INFERRED | HYPOTHESIS | OPINION
+# Decisions: ALREADY_PRESENT | ADOPT | ADAPT | PROTOTYPE | DEFER | REJECT
+
+target_id: tgt-brag
+name: brag
+path: /home/gaab/Documentos/reverseEnginering/brag
+mode: TARGET_RESEARCH
+depth: AUXILIARY
+lens:
+  - skill_packaging
+  - distribution
+  - developer_ux
+  - examples_demonstration
+  - multimedia_usage
+  - documentation
+  - skill_consumption
+skip:
+  - agent_runtime_deep_dive
+  - hyperframes_internals
+date: 2026-09-18
+
+identity:
+  primary_type: SKILL_PACKAGE
+  secondary_types: [LAUNCH_SITE, DEMO_SUITE, MEDIA_ASSET_LIBRARY]
+  version_plugin: "0.2.2"  # OBSERVED .claude-plugin/plugin.json
+  version_tooling_pyproject: "0.1.0"  # OBSERVED skills/brag/scripts/pyproject.toml
+  license: MIT
+  provenance: https://github.com/latent-spaces/brag
+  confidence: HIGH
+
+inventory_summary:
+  skill_root: skills/brag/
+  discovery_symlinks:
+    - .claude/skills/brag -> ../../skills/brag
+    - .agents/skills/brag -> ../../skills/brag
+    - .opencode/skills/brag -> ../../skills/brag
+  plugin_manifests:
+    - .claude-plugin/plugin.json
+    - .claude-plugin/marketplace.json
+  examples_count: 5
+  docs_gallery_examples: 3  # horse-tinder, fish-flight-school, taxi-for-taxis
+  exact_duplicate_groups_docs_examples: 9  # 3 slugs × {mp4,html,css} per corpus audit
+  media:
+    ogg_count: 228  # OBSERVED under skills/brag
+    wav_count: 32
+    mp3_count: 5
+    example_mp4: present_in_all_examples
+  evals_tests: none  # OBSERVED
+  hyperframes: external_NOT_IN_CORPUS
+
+mechanisms:
+  - id: M-BRAG-01
+    name: multi_path_skill_discovery_symlinks
+    problem: Multiple agents look for skills in different directories.
+    mechanism: Single canonical skills/brag/ tree; git symlinks at agent discovery paths; .gitattributes marks symlink paths -text.
+    evidence:
+      - path: .claude/skills/brag
+        label: OBSERVED
+      - path: .agents/skills/brag
+        label: OBSERVED
+      - path: .opencode/skills/brag
+        label: OBSERVED
+      - path: .gitattributes
+        label: OBSERVED
+      - path: README.md
+        label: DOCUMENTED
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+    mega_brain_notes: Useful if shipping skills for Cursor+Codex+Claude+opencode from one repo.
+
+  - id: M-BRAG-02
+    name: claude_plugin_marketplace_packaging
+    problem: Claude Code users expect marketplace/plugin install UX.
+    mechanism: .claude-plugin/plugin.json + marketplace.json pointing source ./ 
+    evidence:
+      - path: .claude-plugin/plugin.json
+        label: OBSERVED
+      - path: .claude-plugin/marketplace.json
+        label: OBSERVED
+    our_equivalence: NONE
+    decision: DEFER
+    confidence: MEDIUM
+    mega_brain_notes: Only if MegaBrain/CursorSKILLS intentionally ships to Claude marketplace.
+
+  - id: M-BRAG-03
+    name: cross_agent_cli_and_fallback_docs
+    problem: Agents without SKILL discovery still need install path.
+    mechanism: npx skills add (vercel-labs/skills) + docs/other-agents.md (paste / path / copy folder).
+    evidence:
+      - path: README.md
+        label: DOCUMENTED
+      - path: docs/other-agents.md
+        label: DOCUMENTED
+      - path: docs/index.html
+        label: OBSERVED  # install CTAs
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: M-BRAG-04
+    name: progressive_disclosure_workflow_gates
+    problem: Full video workflow too large for one SKILL.md context load.
+    mechanism: SKILL.md dispatches; step references loaded per phase; explicit Gate artifacts (plan, check, mp4).
+    evidence:
+      - path: skills/brag/SKILL.md
+        label: OBSERVED
+      - path: skills/brag/references/step-1-inspect.md
+        label: OBSERVED
+      - path: skills/brag/references/step-2-plan.md
+        label: OBSERVED
+      - path: skills/brag/references/step-3-compose.md
+        label: OBSERVED
+      - path: skills/brag/references/step-4-deliver.md
+        label: OBSERVED
+    our_equivalence: SUBSTANTIAL
+    decision: ALREADY_PRESENT
+    residual: ADAPT optional machine-checkable artifact gates (Evidence-style) — not required by this target alone
+    confidence: HIGH
+
+  - id: M-BRAG-05
+    name: bundled_multimedia_skill_assets
+    problem: Agents cannot rely on web-fetched music/SFX for offline/reproducible renders.
+    mechanism: Ship music (mp3) + SFX (ogg/wav) + precomputed cue/sfx analysis JSON/MD inside skill assets; copy subset into composition/assets before render.
+    evidence:
+      - path: skills/brag/assets/music/
+        label: OBSERVED
+      - path: skills/brag/assets/sfx/
+        label: OBSERVED
+      - path: skills/brag/references/audio.md
+        label: DOCUMENTED
+      - path: skills/brag/assets/music/README.md
+        label: DOCUMENTED  # license verify still open
+    our_equivalence: NONE
+    decision: ADAPT  # as packaging policy for media-heavy skills; REJECT as default for all skills
+    confidence: HIGH
+    costs:
+      - repo_size_dominant  # ~75MiB OBSERVED corpus map
+      - music_license_documentation_incomplete  # DOCUMENTED caveat
+
+  - id: M-BRAG-06
+    name: fake_product_examples_as_demo_suite
+    problem: Visitors/users need proof of output without running Hyperframes.
+    mechanism: Absurd fake product sites (PRODUCT.md + HTML/CSS) with committed brag.mp4; README calls them benchmark suite.
+    evidence:
+      - path: examples/
+        label: OBSERVED
+      - path: README.md
+        label: DOCUMENTED
+      - path: _corpus-audit/raw/media-duration-sample.json
+        label: MEASURED  # ~21-23s videos
+    our_equivalence: PARTIAL  # we have evals; they have visual demos without harness
+    decision: ADAPT
+    confidence: HIGH
+    anti_pattern_risk: treating_demo_videos_as_evals  # REJECT as eval substitute
+
+  - id: M-BRAG-07
+    name: docs_examples_exact_duplicate_publish_mirror
+    problem: GitHub Pages /docs must be self-contained; examples/ is source demo tree.
+    mechanism: Byte-identical copies of html/css/mp4 under docs/examples for 3 gallery slugs; docs adds brag.jpg + site.jpg.
+    evidence:
+      - path: _corpus-audit/DUPLICATE-REPORT.md
+        label: OBSERVED
+      - path: docs/README.md
+        label: DOCUMENTED
+      - note: two examples not mirrored (bicycles-for-snakes, psychologists-for-chatbots)
+        label: OBSERVED
+    causal_reason: UNKNOWN  # U-BR-02; likely Pages self-containment INFERRED
+    our_equivalence: NONE
+    decision: PROTOTYPE  # prefer symlink or build-time sync over dual EXACT_DUPLICATE
+    confidence: MEDIUM
+
+  - id: M-BRAG-08
+    name: docs_media_integrity_check
+    problem: Marketing site can claim N brags while media paths break.
+    mechanism: scripts/check-docs.mjs validates local src/href/poster existence and gallery count copy vs video count.
+    evidence:
+      - path: scripts/check-docs.mjs
+        label: OBSERVED
+      - path: docs/README.md
+        label: DOCUMENTED
+    our_equivalence: NONE
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: M-BRAG-09
+    name: skill_as_product_launch_site
+    problem: Skill README alone does not convert visitors.
+    mechanism: Static docs/ site (no build) with hero self-brag video, dual install CTAs, gallery, a11y/reduced-motion requirements in PRODUCT.md.
+    evidence:
+      - path: docs/index.html
+        label: OBSERVED
+      - path: PRODUCT.md
+        label: DOCUMENTED
+      - path: docs/README.md
+        label: DOCUMENTED
+    our_equivalence: PARTIAL
+    decision: ADAPT  # when a skill is also a product surface
+    confidence: HIGH
+
+  - id: M-BRAG-10
+    name: external_renderer_ownership_split
+    problem: Skill should not reimplement video composition/render stack.
+    mechanism: /brag owns story/brief/audio selection; Hyperframes owns composition/check/render; requires sibling hyperframes-* skills.
+    evidence:
+      - path: skills/brag/SKILL.md
+        label: DOCUMENTED
+      - path: README.md
+        label: DOCUMENTED
+    our_equivalence: SUBSTANTIAL  # Capability vs Provider lens
+    decision: ALREADY_PRESENT  # idea; REJECT importing Hyperframes into MegaBrain core
+    confidence: HIGH
+    runtime_status: UNKNOWN  # not executed; not in corpus
+
+  - id: M-BRAG-11
+    name: invocation_flag_parsing_contract
+    problem: Users need tone/format/voice without new skills.
+    mechanism: Documented CLI-like flags in natural language invocation; --voice opt-in dispatch first.
+    evidence:
+      - path: skills/brag/SKILL.md
+        label: OBSERVED
+    our_equivalence: PARTIAL
+    decision: ADAPT  # for skills with optional modes
+    confidence: MEDIUM
+    note: Parsing is instruction-level, not a real argv parser — brittle under agent variance (INFERRED failure mode)
+
+  - id: M-BRAG-12
+    name: maintainer_audio_analysis_tooling
+    problem: Beat/cue metadata expensive to invent at plan time.
+    mechanism: Optional Python+librosa script generates music-cues.*; runtime may fall back to hyperframes beats.
+    evidence:
+      - path: skills/brag/scripts/analyze_music_cues.py
+        label: OBSERVED
+      - path: skills/brag/scripts/pyproject.toml
+        label: OBSERVED
+      - path: skills/brag/assets/music/cues/
+        label: OBSERVED
+    our_equivalence: NONE
+    decision: DEFER  # domain-specific unless we author media skills
+    confidence: MEDIUM
+
+comparisons_baseline_ref: /home/gaab/Documentos/reverseEnginering/research/OUR-SYSTEM-BASELINE.md
+
+do_not_rank: true
+implementation_forbidden: true

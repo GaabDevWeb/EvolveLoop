@@ -1,0 +1,316 @@
+# MECHANISMS.yaml — Pydantic AI inventory
+# TARGET_RESEARCH | OFFICIAL_EXTERNAL | 2026-09-18
+# Epistemic: prefer DOCUMENTED; OBSERVED only for public metadata (PyPI/GitHub)
+
+target: pydanticai
+slug: pydanticai
+category: SDK
+provenance: OFFICIAL_EXTERNAL
+mode: TARGET_RESEARCH
+version_examined: "2.45.0"  # PyPI pydantic-ai, MEASURED 2026-09-18
+license: MIT
+repos:
+  - https://github.com/pydantic/pydantic-ai
+docs_canonical: https://pydantic.dev/docs/ai/
+baseline: research/OUR-SYSTEM-BASELINE.md
+
+mechanisms:
+  - id: PAI-AGENT
+    name: Typed Agent container
+    lens: [Agents, Type safety]
+    problem: Reusable LLM conversation unit with bound instructions/tools/model/output
+    mechanism: >
+      Agent[DepsT, OutputT] holds instructions, tools/toolsets, output_type, deps_type,
+      model, settings, capabilities; run/run_sync/run_stream/run_stream_events/iter/realtime
+    evidence:
+      label: DOCUMENTED
+      sources:
+        - https://pydantic.dev/docs/ai/core-concepts/agent/
+    costs:
+      - Python-centric SDK lock-in for this pattern
+      - Agent-as-global-app can hide auth/policy boundaries if misused
+    failure_modes:
+      - Streaming end_strategy can leave dangling tool calls unexecuted (DOCUMENTED)
+    our_equivalence: PARTIAL
+    decision: REJECT  # as MegaBrain runtime replacement
+    decision_alt: ALREADY_PRESENT  # conceptual agent unit
+    confidence: HIGH
+
+  - id: PAI-DEPS
+    name: Dependency injection via deps_type + RunContext
+    lens: [Dependencies, Context, Type safety]
+    problem: Provide typed services/data to prompts, tools, validators without globals
+    mechanism: >
+      deps_type on Agent (type-check only at construction); pass deps= instance at run;
+      access via RunContext[Deps].deps; agent.override(deps=...) for tests
+    evidence:
+      label: DOCUMENTED
+      sources:
+        - https://pydantic.dev/docs/ai/core-concepts/dependencies/
+        - https://github.com/pydantic/pydantic-ai/blob/main/docs/dependencies.md
+    costs:
+      - Deps object can become a god-object
+      - Sync deps run in thread pool (run_in_executor)
+    failure_modes:
+      - Wrong deps_type vs RunContext parameterization → static errors; runtime mismatch if bypassed
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: PAI-TOOLS
+    name: Typed function tools + schema extraction
+    lens: [Typed tools, Validation, Type safety]
+    problem: Expose side effects/retrieval to the model with validated arguments
+    mechanism: >
+      @agent.tool / @tool_plain / tools=[...] / Tool(...); JSON Schema from signature;
+      docstring params via griffe; Pydantic validates args before invocation
+    evidence:
+      label: DOCUMENTED
+      sources:
+        - https://pydantic.dev/docs/ai/tools-toolsets/tools/
+    costs:
+      - Tool explosion if many tools registered
+      - Docstring format sensitivity
+    failure_modes:
+      - Missing parameter descriptions if require_parameter_descriptions=True → UserError
+      - Confusing function tools with output tools (same API surface to model)
+    our_equivalence: SUBSTANTIAL
+    decision: ALREADY_PRESENT  # Capability/tool registration role
+    decision_adapt: ADAPT  # schema discipline + retries
+    confidence: HIGH
+
+  - id: PAI-TOOLSETS
+    name: Toolsets, MCP, native & deferred tools
+    lens: [Tool execution, Extensibility]
+    problem: Group third-party/MCP/native tools; HITL/external execution
+    mechanism: >
+      toolsets combined into one toolset; MCP capabilities; native provider tools
+      (web search, code exec, etc.); deferred tools for approval/external exec
+    evidence:
+      label: DOCUMENTED
+      sources:
+        - https://pydantic.dev/docs/ai/tools-toolsets/tools/
+        - https://github.com/pydantic/pydantic-ai/blob/main/README.md
+    costs:
+      - Provider-specific native tool availability varies (ModelProfile)
+    failure_modes:
+      - Native tool unsupported → runtime limitation; profile flags mitigate
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: PAI-OUTPUT
+    name: Structured output_type
+    lens: [Structured outputs, Validation, Type safety]
+    problem: Guarantee typed final result from a run
+    mechanism: >
+      output_type = Pydantic models/scalars/unions/lists/output functions;
+      default uses tool-calling for structured data; ToolOutput/NativeOutput/PromptedOutput markers
+    evidence:
+      label: DOCUMENTED
+      sources:
+        - https://pydantic.dev/docs/ai/core-concepts/output/
+    costs:
+      - Type-checker friction on unions/lists (PEP-747 notes in docs)
+    failure_modes:
+      - UnexpectedModelBehavior when retry budget exhausted
+      - Empty/thinking-only responses special-cased when None allowed
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: PAI-VALIDATE
+    name: Validation + ModelRetry budgets
+    lens: [Validation, Recovery, Reliability]
+    problem: Correct invalid tool args / structured outputs without aborting immediately
+    mechanism: >
+      Pydantic validation errors fed back; raise ModelRetry from tools/output validators;
+      separate retries budgets for tools vs output (int or dict); ctx.retry
+    evidence:
+      label: DOCUMENTED
+      sources:
+        - https://pydantic.dev/docs/ai/core-concepts/agent/
+        - Context7 /pydantic/pydantic-ai retries.md excerpts
+    costs:
+      - Extra model calls / latency / cost
+      - Infinite loops prevented only by budgets
+    failure_modes:
+      - Budget exhaustion → UnexpectedModelBehavior
+      - Poor retry messages → thrashing
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: PAI-MODEL
+    name: Model / Provider / Profile abstraction
+    lens: [Model abstraction]
+    problem: Port agents across vendors and gateways
+    mechanism: >
+      provider:model string resolution; Model classes; Provider auth/endpoints;
+      ModelProfile capability flags (supports_tools, json schema, native tools, context_window);
+      FallbackModel; ConcurrencyLimitedModel; TestModel; FunctionModel
+    evidence:
+      label: DOCUMENTED
+      sources:
+        - https://pydantic.dev/docs/ai/models/overview/
+    costs:
+      - Extra packages per provider
+      - Profile mismatches when using OpenAI-compatible proxies
+    failure_modes:
+      - Missing optional deps → install hint at runtime (DOCUMENTED)
+    our_equivalence: SUBSTANTIAL
+    decision: ALREADY_PRESENT
+    decision_adapt: ADAPT  # profile flags
+    confidence: HIGH
+
+  - id: PAI-GRAPH-INTERNAL
+    name: Internal agent execution graph + Agent.iter
+    lens: [Graph capabilities, Execution]
+    problem: Orchestrate prompt → model → tools → end with optional node control
+    mechanism: >
+      Built on pydantic-graph; nodes UserPromptNode, ModelRequestNode, CallToolsNode, End;
+      Agent.iter / AgentRun.next for inspection/injection
+    evidence:
+      label: DOCUMENTED
+      sources:
+        - https://pydantic.dev/docs/ai/core-concepts/agent/#running-agents
+        - https://pydantic.dev/docs/api/search (agent graph iter)
+    costs:
+      - Complexity if overused vs agent.run
+    failure_modes:
+      - Manual next() misuse can skip required validation paths (UNKNOWN detail)
+    our_equivalence: PARTIAL
+    decision: ALREADY_PRESENT  # Task IR / plan graph role
+    confidence: MEDIUM
+
+  - id: PAI-GRAPH-STANDALONE
+    name: pydantic-graph typed FSM library
+    lens: [Graph capabilities]
+    problem: Explicit multi-step workflows beyond single agent loop
+    mechanism: >
+      BaseNode + GraphBuilder + GraphRunContext; edges from return type annotations;
+      usable without GenAI
+    evidence:
+      label: DOCUMENTED
+      sources:
+        - https://pydantic.dev/docs/ai/graph/graph/
+    costs:
+      - Advanced generics; docs warn against overuse (“nail gun”)
+    failure_modes:
+      - Over-graphification of simple agent tasks (anti-pattern called out by docs)
+    our_equivalence: PARTIAL
+    decision: DEFER
+    confidence: MEDIUM
+
+  - id: PAI-CONTEXT
+    name: RunContext + history + deferred capabilities
+    lens: [Context]
+    problem: Thread runtime state; continue chats; progressive tool loading
+    mechanism: >
+      RunContext (deps, usage, retry, agent, enqueue, emit, context_window_used…);
+      message_history; Capability(defer_loading=True) on-demand load
+    evidence:
+      label: DOCUMENTED
+      sources:
+        - https://pydantic.dev/docs/ai/core-concepts/dependencies/
+        - https://github.com/pydantic/pydantic-ai/blob/main/README.md
+    costs:
+      - Context explosion if history unbounded
+      - Deferred tools still consume description tokens when advertised
+    failure_modes:
+      - UNKNOWN exact token accounting for deferred capability advertisements
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: PAI-DURABLE
+    name: Durable execution capabilities
+    lens: [Durable execution, Persistence]
+    problem: Keep one run alive across crashes/restarts; long async/HITL
+    mechanism: >
+      TemporalDurability / DBOS / Prefect / Restate / AWS Lambda durable;
+      model+tool as durable activities/steps; not a chat-store
+    evidence:
+      label: DOCUMENTED
+      sources:
+        - https://pydantic.dev/docs/ai/capabilities/durable_execution/overview/
+        - https://pydantic.dev/docs/ai/capabilities/durable_execution/temporal/
+    costs:
+      - Engine ops burden; DynamicToolset ID constraints under durable exec
+    failure_modes:
+      - Decorator tool registration after durable unit creation unsupported (DOCUMENTED warning)
+    our_equivalence: NONE
+    our_status_note: baseline Persistence PARTIAL — not Temporal-class
+    decision: DEFER
+    confidence: HIGH
+
+  - id: PAI-OTEL
+    name: OpenTelemetry + Logfire instrumentation
+    lens: [Observability]
+    problem: Trace model requests, tool calls, cost
+    mechanism: >
+      Optional logfire.instrument_pydantic_ai(); OTel spans; genai-prices cost;
+      works with other OTel backends
+    evidence:
+      label: DOCUMENTED
+      sources:
+        - https://pydantic.dev/docs/ai/integrations/logfire/
+    costs:
+      - Logfire is commercial SaaS (free tier DOCUMENTED); optional overhead if unused claimed low
+    failure_modes:
+      - UNKNOWN exact span schema stability across versions without reading source
+    our_equivalence: PARTIAL
+    decision: ADAPT  # OTel patterns
+    decision_reject: REJECT  # mandatory Logfire
+    confidence: HIGH
+
+  - id: PAI-CAPABILITY
+    name: Capability composition
+    lens: [Agents, Extensibility, Context]
+    problem: Bundle reusable tools+instructions+hooks+settings
+    mechanism: >
+      Capability[...] with @capability.tool / instructions; Agent(capabilities=[...]);
+      Harness ships Coder/Researcher as composed capabilities
+    evidence:
+      label: DOCUMENTED
+      sources:
+        - https://github.com/pydantic/pydantic-ai/blob/main/README.md
+    costs:
+      - Harness is a second package; boundary core vs harness can blur product decisions
+    failure_modes:
+      - UNKNOWN middleware ordering semantics without full capabilities/custom.md audit
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: PAI-EVALS
+    name: Pydantic Evals
+    lens: [Evaluation]
+    problem: Code-first evaluation of agent/LLM functions
+    mechanism: OSS evals library shipped with stack; Logfire UI optional
+    evidence:
+      label: DOCUMENTED
+      sources:
+        - https://pydantic.dev/llms.txt
+        - README “Measured, not vibes”
+    costs:
+      - Separate discipline; not automatic
+    failure_modes:
+      - UNKNOWN depth of PAI-specific graders without reading evals docs in full
+    our_equivalence: PARTIAL
+    decision: DEFER
+    confidence: LOW
+
+anti_patterns_observed_in_docs:
+  - id: AP-OVERGRAPH
+    name: Using graphs when a single Agent suffices
+    evidence: DOCUMENTED warning in graph.md (“nail gun”)
+    mega_brain_note: Aligns with analysis-framework unnecessary orchestration
+
+popularity_signals:
+  github_stars: 20032  # MEASURED via GitHub API 2026-09-18
+  pypi_version: "2.45.0"  # MEASURED
+  note: Not used as technical merit
+
+comparison_rules_applied: true
+decision_vocabulary_only: true

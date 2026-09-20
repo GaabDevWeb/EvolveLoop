@@ -1,0 +1,37 @@
+{
+  "name": "@agents/orchestrator",
+  "version": "2.0.0",
+  "description": "Orquestrador v2 — Execution Engine baseado em Capability IR",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:unit": "vitest run tests/unit",
+    "test:integration": "vitest run tests/integration",
+    "test:evals": "vitest run tests/evals",
+    "run-engine": "node dist/cli/run-engine.js",
+    "registry-builder": "node dist/cli/registry-builder.js",
+    "registry-builder:ci": "bash scripts/registry-builder-ci.sh",
+    "run-jobs": "node dist/cli/run-jobs.js"
+  },
+  "bin": {
+    "run-engine": "./dist/cli/run-engine.js",
+    "registry-builder": "./dist/cli/registry-builder.js",
+    "run-jobs": "./dist/cli/run-jobs.js"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.0",
+    "yaml": "^2.6.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

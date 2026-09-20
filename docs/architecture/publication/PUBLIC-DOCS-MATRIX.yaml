@@ -1,0 +1,26 @@
+docs:
+  USER_DOCS:
+    - README.md (future rewrite)
+    - GLOBAL-SETUP.md (depersonalize)
+    - AGENT.md (future)
+    - docs/user/* (if created)
+  ARCHITECTURE_DOCS:
+    - docs/architecture/knowledge/*
+    - docs/architecture/evolveloopt/* (freeze + contracts)
+    - docs/architecture/skills/audit|pruning (summary; full audit may be INTERNAL)
+    - docs/architecture/portability/* (summary)
+    - docs/architecture/publication/* (this plan)
+  DEVELOPER_DOCS:
+    - orchestrator/README if any
+    - contracts/
+    - CONTRIBUTING (future)
+  RESEARCH_HISTORY:
+    - docs/research/*
+    action: KEEP_PUBLIC_as_archive_or_MOVE_TO_HISTORY
+  PERSONAL_NOTES:
+    - any Documentos-specific howtos
+    action: REMOVE_FROM_PUBLIC
+  INTERNAL_AUDITS:
+    - full prune snapshots references
+    - CORE-VS-PERSONAL with host paths
+    action: sanitize_paths_or_INTERNAL

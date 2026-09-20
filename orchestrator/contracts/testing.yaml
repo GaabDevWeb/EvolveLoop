@@ -1,0 +1,31 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Contract
+metadata:
+  id: testing
+  version: "1.0.0"
+  status: active
+
+spec:
+  capability: testing
+  type: gate
+  semver:
+    major: 1
+    minor: 0
+    patch: 0
+
+  inputs:
+    - name: implementation-artifacts
+      required: true
+
+  outputs:
+    - name: test-report
+      schema: evidence/test-report@1.0.0
+
+  definition_of_done:
+    schema: schemas/dod/testing@1.0.0
+    minimum_checks:
+      - suite_executed
+      - verdict_emitted
+
+  evidence:
+    schema: evidence/test-report@1.0.0

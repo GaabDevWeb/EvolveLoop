@@ -1,0 +1,17 @@
+# Path map after generalization
+canonical_runtime_on_author_host: /home/gaab/Documentos/gitHub/karpathyWiki
+legacy_divergent_path: /home/gaab/Documentos/karpathyWiki
+resolution:
+  preferred_env: WIKI_ROOT
+  alias_env: RAG_REPO_ROOT
+  also_accepted: VAULT_ROOT (agent-setup)
+  absolute_defaults_in_runtime: none
+  agents_env_author:
+    WIKI_ROOT: /home/gaab/Documentos/gitHub/karpathyWiki
+    RAG_REPO_ROOT: $WIKI_ROOT
+cli_module:
+  env: WIKI_CLI_MODULE
+  default: gaabwiki  # EXTERNAL vault package
+deferred:
+  - AGENTS_ROOT missing-path default in older agent-setup (fixed to require env)
+  - Documentos locale assumption outside wiki root (reduced)

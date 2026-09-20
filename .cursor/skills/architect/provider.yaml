@@ -1,0 +1,38 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Provider
+metadata:
+  name: architect
+  version: "1.0.0"
+  description: "Architecture analysis and system design (not ADR drafting)"
+  owner: agents-team
+
+spec:
+  plugin:
+    type: cursor-skill
+    entrypoint: ".cursor/skills/architect/SKILL.md"
+
+  capabilities:
+    - id: architecture-analysis
+      contract: contracts/architecture-analysis@1.0.0
+      type: upstream
+
+  interfaces:
+    outputs:
+      - name: architecture-document
+        path: docs/ARCHITECTURE.md
+      - name: architecture-analysis-optional
+        path: docs/architecture/
+
+  runtime:
+    cost: medium
+    subagent_type: generalPurpose
+
+  telemetry:
+    key: provider.architect
+
+  availability: active
+  priority: 78
+
+  constraints:
+    - signal: prefers_analysis_over_adr
+      note: "Formal ADRs go to architecture-decision / adr"

@@ -1,0 +1,71 @@
+# Evidence Consolidation — Evolution Layer
+# Does NOT overwrite docs/evals/results/** historical ledgers.
+
+baseline_id: baseline-v1-2026-09-18
+generated: 2026-09-19
+layer: evolution_consolidation
+
+sources_preserved:
+  experiments: docs/evals/experiments/
+  results: docs/evals/results/
+  runs: docs/evals/runs/
+  verdicts: docs/evals/verdicts/
+  prototype_gate: docs/architecture/prototype-gate/
+
+prototype_evidence:
+  PT-001:
+    executed: false
+    status: NOT_PRODUCED
+    reason: BLOCKED_AT_GATE
+  PT-002:
+    executed: false
+    status: NOT_PRODUCED
+    reason: NEEDS_MORE_EVIDENCE_AT_GATE
+
+historical_summary:
+  E-001:
+    result: SUPPORTED_OFFLINE_SCOPED
+    confidence: MEDIUM
+    hypothesis_verdict: WEAKENED
+  E-005:
+    result: SUPPORTED_JOB_PATH_STATE_WRITE
+    confidence: HIGH
+    hypothesis_verdict: WEAKENED
+  eval_battery:
+    executed: 9
+    pass: 9
+    blocked_future: 6
+
+claims_impact_from_this_pipeline:
+  reinforced: 0
+  weakened: 0
+  contradicted: 0
+  note: "No new prototype measurements; claim statuses unchanged from CLAIM-VALIDATION.yaml"
+
+contradictions:
+  - id: CX-GATE-DOC-STALE
+    type: DOCUMENTATION_DRIFT
+    description: >
+      docs/architecture/gate/* still lists prototypes as NEEDS_MORE_EVIDENCE from prior ADR gate;
+      current SSOT for prototype authorization is docs/architecture/prototype-gate/ (PT-001 BLOCKED).
+    resolution: PREFER_PROTOTYPE_GATE_SSOT
+    status: DOCUMENTED
+
+  - id: CX-READY-VS-APPROVED
+    type: SCOPE_CONFLICT
+    description: READY_FOR_GATE ≠ APPROVED
+    resolution: intentional
+    status: DOCUMENTED
+
+evidence_quality:
+  new_prototype_evidence: NONE
+  historical_evidence: UNCHANGED
+  inflation_risk: LOW
+
+unsupported_still:
+  - production_skill_budget_required
+  - global_exactly_once
+  - full_HITL_validated
+  - sandbox_effective
+  - live_task_success_improved
+  - OS_kill_resume_proven

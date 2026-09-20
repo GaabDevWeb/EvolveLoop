@@ -1,0 +1,14 @@
+baseline_id: baseline-v2-2026-09-19
+parent: baseline-v1-2026-09-18
+tests: { total: 120, passed: 120, failed: 0 }
+contracts: { total: 7, passed: 7 }
+full_cycle: { total: 5, passed: 5 }
+evolveloop:
+  unit_and_eval_tests: 17
+  autonomy_ceiling: PROPOSE
+  core_auto_mutation: false
+mechanisms:
+  evolveloop: IMPLEMENTED_GATED
+  sandbox: NOT_IMPLEMENTED
+  stuck_detection: NOT_IMPLEMENTED
+  model_routing: NOT_IMPLEMENTED

@@ -1,0 +1,61 @@
+traceability:
+  mission: evolveloop-final-operationalization
+  cycle_id: evolveloop-final-2026-09-19
+  parent_baseline: baseline-v5-2026-09-19
+  final_baseline: baseline-v6-2026-09-19
+
+  phases:
+    - id: P0
+      name: state_reconciliation
+      artifacts:
+        - docs/architecture/evolveloopt/final/FINAL-START-STATE.md
+        - docs/architecture/evolveloopt/final/FINAL-START-STATE.yaml
+    - id: P1
+      name: reproduce
+      evidence: "vitest 170→184 after impl; contracts 7/7; full-cycle 5/5"
+    - id: P3
+      name: outcome_trigger
+      code:
+        - orchestrator/src/evolveloop/live/live-coordinator.ts
+        - orchestrator/src/evolveloop/live/scoped-cadence.ts
+      tests:
+        - orchestrator/tests/unit/evolveloop/outcome-auto-analyze.test.ts
+        - orchestrator/tests/evals/evolveloop-final-evals.test.ts
+    - id: P4
+      name: gate_adapter_partial
+      code:
+        - orchestrator/src/evolveloop/handoff/gate-result.ts
+        - orchestrator/src/evolveloop/live/observation-window.ts
+    - id: P5
+      name: observation_window_automation
+      code:
+        - orchestrator/src/evolveloop/live/observation-window.ts
+        - orchestrator/src/evolveloop/live/live-coordinator.ts
+    - id: P6
+      name: event_coverage
+      code:
+        - orchestrator/src/evolveloop/adapters/runtime-observer.ts
+    - id: P8
+      name: cli_evolve
+      code:
+        - orchestrator/src/cli/run-engine.ts
+
+  evals:
+    - EV-EVOLVE-FINAL-001
+    - EV-EVOLVE-FINAL-002
+    - EV-EVOLVE-FINAL-003
+    - EV-EVOLVE-FINAL-004
+    - EV-EVOLVE-FINAL-005
+    - EV-EVOLVE-FINAL-006
+    - EV-EVOLVE-FINAL-007
+
+  prior_evals_preserved:
+    - EV-EVOLVE-LIVE-001..008
+    - EV-EVOLVE-L-001..008
+
+  baselines_intact:
+    - docs/evals/baseline/
+    - docs/evals/baseline-v2-2026-09-19/
+    - docs/evals/baseline-v3-2026-09-19/
+    - docs/evals/baseline-v4-2026-09-19/
+    - docs/evals/baseline-v5-2026-09-19/

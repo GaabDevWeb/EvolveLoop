@@ -1,0 +1,142 @@
+# Preflight Evidence — Prototype Gate
+# Read-only observations. No prototype execution. No runtime mutation.
+
+baseline_id: baseline-v1-2026-09-18
+generated: 2026-09-19
+
+evidence:
+
+  - id: PF-001
+    prototype: BOTH
+    check: baseline_protection
+    source: docs/evals/baseline/BASELINE-CHECKSUMS.sha256
+    observed: "sha256sum -c from baseline dir → all listed files OK"
+    status: PASS
+    notes: Baseline document checksums intact at gate time.
+
+  - id: PF-002
+    prototype: BOTH
+    check: source_integrity_runtime
+    source: docs/evals/baseline/CRITICAL-FINGERPRINTS.sha256
+    observed: "sha256sum -c from orchestrator/ → all critical src fingerprints OK"
+    status: PASS
+    notes: No unexpected runtime source drift detected vs baseline critical set.
+
+  - id: PF-003
+    prototype: PT-001
+    check: live_host_catalog_injection
+    source:
+      - docs/evals/catalog/MEASUREMENT-GAPS.yaml (MG-002)
+      - docs/evals/catalog/EVAL-DEPENDENCIES.yaml (EV-F-001 status MISSING)
+      - docs/evals/runs/CLAIM-VALIDATION.yaml (CLM-E001-004 NOT_EVALUATED)
+      - rg max_skills|catalogBudget|injectCatalog in orchestrator/src → no matches
+    observed: "Controlled live host catalog injection API not present/available in this environment"
+    status: FAIL
+    notes: Spec precondition requires control or BLOCKED. Documented ENVIRONMENT gap remains.
+
+  - id: PF-004
+    prototype: PT-001
+    check: live_task_success_oracle
+    source:
+      - docs/evals/catalog/MEASUREMENT-GAPS.yaml (MG-001)
+      - docs/evals/runs/EV-F-001/RESULT.yaml (BLOCKED_BY_ENVIRONMENT)
+      - find docs for tokenizer policy / live task harness → none for PT-001
+    observed: "live_task_success required metric not collectable; tokenizer policy document MISSING"
+    status: FAIL
+    notes: Required success criterion #2 cannot be satisfied now.
+
+  - id: PF-005
+    prototype: PT-002
+    check: jobs_runtime_apis
+    source: orchestrator/src/jobs/{job-store,job-pickup,job-resume,checkpoint}.ts
+    observed: "jobs/ present; critical fingerprints OK"
+    status: PASS
+    notes: Compatible with existing jobs/resume; no new abstraction required.
+
+  - id: PF-006
+    prototype: PT-002
+    check: disposable_jobsDir_and_tmp
+    source: /tmp writability probe
+    observed: "touch/rm under /tmp OK; prototypes/workspaces/ directory MISSING"
+    status: PASS
+    notes: Spec allows /tmp/pt-002-*; missing workspaces/ is not a blocker.
+
+  - id: PF-007
+    prototype: PT-002
+    check: process_signal_capability
+    source: python os.kill(SIGTERM) on owned sleep subprocess
+    observed: "TERM on owned PID succeeded (return -15); uid=1000; sudo requires password"
+    status: PASS
+    notes: >
+      Capability to signal owned processes exists. This is NOT equivalent to a campaign
+      kill policy (SIGKILL vs SIGTERM still undefined in PT-002 open questions).
+
+  - id: PF-008
+    prototype: PT-002
+    check: kill_policy
+    source: docs/architecture/finalization/prototypes/PT-002-os-kill-job-resume.md Open Questions
+    observed: "Exact kill signal (SIGKILL vs SIGTERM) policy for the campaign? — unresolved"
+    status: FAIL
+    notes: Hardening deferred this to gate; gate must not invent/edit policy → NEEDS_MORE_EVIDENCE.
+
+  - id: PF-009
+    prototype: PT-002
+    check: OS_kill_harness
+    source:
+      - docs/evals/catalog/EVAL-DEPENDENCIES.yaml (EV-F-003 OS_kill_harness MISSING)
+      - docs/evals/experiments/E-005/harness (same-process only; OS kill NOT_MEASURED)
+    observed: "E-005 harness available for same-process; OS-kill harness absent"
+    status: FAIL
+    notes: Gate did not create harness. Critical dependency for measurement remains MISSING.
+
+  - id: PF-010
+    prototype: BOTH
+    check: contamination_surface
+    source: filesystem writability tests
+    observed: ".cursor/skills and orchestrator/src are writable by current user"
+    status: UNKNOWN
+    notes: >
+      Spec forbids writes there. Writability increases contamination risk if execution
+      discipline fails — enforcement is procedural, not OS sandbox (sandbox NOT_IMPLEMENTED).
+
+  - id: PF-011
+    prototype: BOTH
+    check: dry_run
+    source: filesystem search for prototype dry-run runner
+    observed: DRY_RUN_UNAVAILABLE
+    status: NOT_APPLICABLE
+    notes: Gate performed read-only preflight only; no dry-run runner exists; none created.
+
+  - id: PF-012
+    prototype: PT-001
+    check: offline_fallback
+    source: PT-001 question + E-001 results
+    observed: "Offline path answers E-001 offline question, not PT-001 live question"
+    status: FAIL
+    notes: APPROVED_WITH_CONSTRAINTS offline rejected under gate §39.
+
+  - id: PF-013
+    prototype: PT-002
+    check: post_restart_job_completion
+    source: PT-002 Open Questions
+    observed: "Who completes the external job after restart? — unresolved"
+    status: FAIL
+    notes: Operational procedure required before APPROVED*.
+
+  - id: PF-014
+    prototype: BOTH
+    check: sandbox_pretense
+    source: docs/audit (OS sandbox NOT_IMPLEMENTED)
+    observed: "Neither prototype claims OS sandbox as dependency"
+    status: PASS
+    notes: PT-002 uses disposable jobsDir + PID scope; not labeled sandbox.
+
+  - id: PF-015
+    prototype: BOTH
+    check: prototype_spec_hashes
+    source: sha256sum of hardened specs
+    observed:
+      PT-001: 54d9ec041da9b712db92d55b6dcb92f941aa28574860ecbe012780dce16c7d1b
+      PT-002: 7376ad33986b2559a40acd2ea571039b6bd2658a5752d8a0cb3022bed77aae8d
+    status: PASS
+    notes: Specs read as-is; not edited during gate.

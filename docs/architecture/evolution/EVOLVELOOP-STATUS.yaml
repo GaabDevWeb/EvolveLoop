@@ -1,0 +1,28 @@
+evolveloopsystem:
+  status: SUCCESS_WITH_LIMITATIONS
+
+  signal_detection: IMPLEMENTED
+  pattern_detection: IMPLEMENTED
+  need_detection: IMPLEMENTED
+  root_cause: IMPLEMENTED
+  candidate_generation: IMPLEMENTED
+  user_scoping: IMPLEMENTED
+  core_scoping: IMPLEMENTED_HOLD
+  authoring_integration: HANDOFF_LABELS_ONLY
+  architecture_pipeline: EVOLUTION_REQUEST_HANDOFF
+  evaluation: EV-EVOLVE-001_AND_17_TESTS
+  regression: "120/120"
+  security: PASS_WITH_LIMITATIONS
+
+  autonomy:
+    observation: AUTONOMOUS
+    analysis: AUTONOMOUS
+    proposal: AUTONOMOUS
+    prototype: GATED
+    implementation: GATED
+    core_mutation: FORBIDDEN_AT_THIS_LAYER
+
+  baseline:
+    v1: baseline-v1-2026-09-18
+    v2: baseline-v2-2026-09-19
+    v1_modified: false

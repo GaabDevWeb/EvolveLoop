@@ -1,0 +1,50 @@
+# Agent portability matrix
+
+agents:
+  - name: Orquestrador-v2 / orquestrar / MegaBrain
+    role: root orchestrator
+    classification: CORE_ORCHESTRATION_AGENT
+    personal_references: [GaabWiki hard-gate text]
+    portable: partial
+    final_class: CORE_BUT_CONFIGURABLE
+    confidence: HIGH
+
+  - name: gaabwiki / Gaabwiki.md
+    role: Context Engineer / grounding
+    classification: PERSONAL_AGENT
+    personal_references: [GaabWiki, karpathyWiki, project packs]
+    portable: false
+    final_class: PERSONAL_PROFILE
+    confidence: HIGH
+
+  - name: gaabwiki-mem / Gaabwiki-mem.md
+    role: episodic knowledge / librarian assist
+    classification: PERSONAL_AGENT
+    personal_references: [vault sessions path]
+    portable: false
+    final_class: PERSONAL_PROFILE
+    confidence: HIGH
+
+  - name: Planner / backend / frontend-pro / database / devops
+    role: workers
+    classification: GENERIC_AGENT
+    personal_references: none_material
+    portable: true
+    final_class: CORE
+    confidence: HIGH
+
+  - name: Tester / Security / Po-review / Documentation
+    role: gates
+    classification: GENERIC_AGENT
+    personal_references: none_material
+    portable: true
+    final_class: CORE
+    confidence: HIGH
+
+  - name: Prd / Adr / Architect / Researcher / Debugger / Validator / Failure-analyst / Code-reviewer / Skill-authoring / Agent-authoring / Agent-architecture-mining
+    role: specialists
+    classification: GENERIC_AGENT
+    personal_references: none_or_docs_only
+    portable: true
+    final_class: PUBLIC_OPTIONAL
+    confidence: MEDIUM

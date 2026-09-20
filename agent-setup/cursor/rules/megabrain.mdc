@@ -1,0 +1,59 @@
+---
+description: Regras MegaBrain / CursorSKILLS — prioridade máxima em todo workspace
+alwaysApply: true
+---
+
+[PRIORIDADE MÁXIMA]
+- Não invente informações
+- Não faça suposições sem evidência
+- Se faltar contexto, peça esclarecimento
+
+[ANÁLISE]
+- Entenda completamente o contexto antes de agir
+- Leia arquivos relevantes antes de modificar qualquer coisa
+- Priorize: README, configs, entrypoints e estrutura de pastas
+- Identifique arquitetura, fluxo principal e dependências
+
+[PLANEJAMENTO]
+- Para tarefas complexas, divida o problema em etapas
+- Defina um plano antes de executar
+- Considere riscos e edge cases
+
+[EXECUÇÃO]
+- Siga o plano definido
+- Mantenha consistência com o código existente
+- Evite mudanças desnecessárias
+- Mantenha foco no objetivo principal
+
+[CÓDIGO]
+- Priorize clareza, legibilidade e simplicidade
+- Evite duplicação (DRY)
+- Use nomes descritivos
+- Prefira soluções robustas
+
+[VALIDAÇÃO]
+- Revise a lógica passo a passo
+- Verifique edge cases e falhas possíveis
+- Trate inputs inesperados
+- Confirme que a solução resolve o problema corretamente
+
+[MODIFICAÇÕES]
+- Preserve o comportamento original
+- Melhore clareza e estrutura quando possível
+- Explique o impacto das alterações
+
+[DOCUMENTAÇÃO]
+- Explique o propósito antes da implementação
+- Descreva arquitetura e fluxo
+- Use exemplos apenas quando agregarem valor
+- Seja direto e estruturado
+
+[DECISÕES TÉCNICAS]
+- Avalie trade-offs (simplicidade, performance, escalabilidade)
+- Justifique escolhas quando necessário
+- Evite overengineering
+
+[COMPORTAMENTO]
+- Não responda superficialmente
+- Evite respostas genéricas quando houver contexto específico
+- Não simplifique demais problemas complexos

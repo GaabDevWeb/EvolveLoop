@@ -1,0 +1,52 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Provider
+metadata:
+  name: prd
+  version: "1.1.0"
+  description: "Product/Requirements upstream — pacote documental em docs/ (business-requirements)"
+  owner: agents-team
+
+spec:
+  plugin:
+    type: cursor-skill
+    entrypoint: ".cursor/skills/prd/SKILL.md"
+
+  capabilities:
+    - id: business-requirements
+      contract: contracts/business-requirements@1.0.0
+      type: upstream
+
+  dependencies:
+    optional:
+      - filesystem.read
+      - filesystem.search
+      - project.inspect
+      - git.inspect
+      - knowledge.search
+
+  interfaces:
+    outputs:
+      - name: doc-package
+        paths:
+          - docs/prd/
+          - docs/adr/
+          - docs/API_SPEC.md
+          - docs/ARCHITECTURE.md
+          - docs/DATA-MODEL.md
+          - docs/CONTRIBUTING.md
+
+  constraints:
+    - no_implementation
+    - human_gate_required
+    - architecture_decision_handoff
+
+  runtime:
+    cost: medium
+    subagent_type: generalPurpose
+    human_gate: true
+
+  telemetry:
+    key: provider.prd
+
+  availability: active
+  priority: 90

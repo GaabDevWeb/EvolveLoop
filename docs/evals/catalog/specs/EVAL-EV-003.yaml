@@ -1,0 +1,45 @@
+eval:
+  id: EV-003
+  name: Registry Correctness
+  category: REGISTRY
+  version: 1
+  question: "Does the Capability/Provider registry satisfy contract and deterministic selection invariants covered by existing registry tests?"
+  property: registry_correctness
+  baseline_id: baseline-v1-2026-09-18
+  source: { experiments: [], claims: [], evidence: [BASELINE_ONLY] }
+  readiness: READY
+  scope: { note: REUSE_EXISTING_TEST_COVERAGE — not a rewritten unit catalog }
+  setup: { cwd: orchestrator/ }
+  control: null
+  treatment: null
+  fixtures: [existing]
+  metrics:
+    - id: EV003-M-registry_suite_pass
+      name: registry_suite_pass
+      definition: pass of registry unit/contract tests
+      unit: bool
+      collection_method: vitest
+      source: tests/unit/registry*.ts
+      type: DIRECT
+      interpretation: registry_invariants_hold
+      limitations: [not_full_product_discovery]
+  success_criteria: ["registry suite PASS"]
+  failure_criteria: [suite_FAIL]
+  repetitions: { minimum: 1, recommended: 1, reason: deterministic }
+  isolation: local_test_process
+  cleanup: none
+  reproducibility:
+    commands:
+      - "npx vitest run tests/unit/registry.test.ts tests/unit/registry-builder.test.ts tests/unit/registry-contract.test.ts"
+  limitations: [REUSE_EXISTING_TEST_COVERAGE]
+  regression_reference: baseline-v1-2026-09-18
+  safety_constraints: [read_only]
+  eval_contract:
+    inputs: []
+    preconditions: []
+    action: run_registry_tests
+    observations: [pass_fail]
+    metrics: [EV003-M-registry_suite_pass]
+    oracle: { type: suite_pass }
+    cleanup: []
+    artifacts: [vitest_stdout]

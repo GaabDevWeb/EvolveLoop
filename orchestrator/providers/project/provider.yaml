@@ -1,0 +1,19 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Provider
+metadata:
+  name: project
+  version: "1.0.0"
+  description: "Deterministic project inspection"
+  owner: agents-team
+spec:
+  plugin:
+    type: deterministic
+    entrypoint: "src/providers/deterministic/index.ts"
+  capabilities:
+    - id: project.inspect
+      contract: contracts/project.inspect@1.0.0
+      type: worker
+  runtime:
+    cost: low
+  availability: active
+  priority: 50

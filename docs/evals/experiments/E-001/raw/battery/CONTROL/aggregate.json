@@ -1,0 +1,143 @@
+{
+  "type": "CONTROL",
+  "sample_count": 5,
+  "sample_note": "INITIAL EXPERIMENTAL SAMPLE",
+  "catalog": {
+    "condition_id": "CONTROL",
+    "type": "CONTROL",
+    "requested_catalog_size": 23,
+    "actual_catalog_size": 23,
+    "skill_ids": [
+      "adr",
+      "backend",
+      "researcher",
+      "frontend-pro",
+      "architect",
+      "agent-architecture-mining",
+      "agent-authoring",
+      "gaabwiki",
+      "code-reviewer",
+      "planner",
+      "po-review",
+      "testing",
+      "debugger",
+      "prd",
+      "database",
+      "documentation",
+      "gaabwiki-mem",
+      "devops",
+      "orquestrar",
+      "security",
+      "skill-authoring",
+      "failure-analyst",
+      "validator"
+    ],
+    "selection_strategy": "all_skills_seeded_order",
+    "seed": "e001-v1-2026-09-18",
+    "catalog_fingerprint": "a91e10d36db69c0a5f1ee1168982d9b1caac44bacd51add279986608b67ad1e6",
+    "max_description_tokens": null,
+    "prefix_token_estimate": 1673,
+    "prefix_bytes": 13843
+  },
+  "activation_precision": {
+    "mean": 0.3352272727272727,
+    "median": 0.3352272727272727,
+    "min": 0.3352272727272727,
+    "max": 0.3352272727272727,
+    "values": [
+      0.3352272727272727,
+      0.3352272727272727,
+      0.3352272727272727,
+      0.3352272727272727,
+      0.3352272727272727
+    ]
+  },
+  "activation_recall": {
+    "mean": 0.3352272727272727,
+    "median": 0.3352272727272727,
+    "min": 0.3352272727272727,
+    "max": 0.3352272727272727,
+    "values": [
+      0.3352272727272727,
+      0.3352272727272727,
+      0.3352272727272727,
+      0.3352272727272727,
+      0.3352272727272727
+    ]
+  },
+  "token_estimate": {
+    "mean": 1673.0,
+    "median": 1673,
+    "min": 1673,
+    "max": 1673,
+    "values": [
+      1673,
+      1673,
+      1673,
+      1673,
+      1673
+    ],
+    "classification": "PROXY"
+  },
+  "wall_clock_duration": {
+    "mean": 0.06746791060004398,
+    "median": 0.06717946300000222,
+    "min": 0.0629162190000443,
+    "max": 0.07111317499993675,
+    "values": [
+      0.0629162190000443,
+      0.06717946300000222,
+      0.07111317499993675,
+      0.06639042000006157,
+      0.06974027600017507
+    ]
+  },
+  "variance_note": "offline scorer deterministic \u2192 precision/recall/token identical across reps; wall_clock may vary",
+  "runs": [
+    {
+      "run_id": "E001-CONTROL-r01-2c7a0e6d",
+      "sequence": 1,
+      "activation_precision": 0.3352272727272727,
+      "activation_recall": 0.3352272727272727,
+      "token_estimate": 1673,
+      "wall_clock_duration": 0.0629162190000443,
+      "catalog_fingerprint": "a91e10d36db69c0a5f1ee1168982d9b1caac44bacd51add279986608b67ad1e6"
+    },
+    {
+      "run_id": "E001-CONTROL-r02-67d2191e",
+      "sequence": 2,
+      "activation_precision": 0.3352272727272727,
+      "activation_recall": 0.3352272727272727,
+      "token_estimate": 1673,
+      "wall_clock_duration": 0.06717946300000222,
+      "catalog_fingerprint": "a91e10d36db69c0a5f1ee1168982d9b1caac44bacd51add279986608b67ad1e6"
+    },
+    {
+      "run_id": "E001-CONTROL-r03-22df5e1f",
+      "sequence": 3,
+      "activation_precision": 0.3352272727272727,
+      "activation_recall": 0.3352272727272727,
+      "token_estimate": 1673,
+      "wall_clock_duration": 0.07111317499993675,
+      "catalog_fingerprint": "a91e10d36db69c0a5f1ee1168982d9b1caac44bacd51add279986608b67ad1e6"
+    },
+    {
+      "run_id": "E001-CONTROL-r04-81a73439",
+      "sequence": 4,
+      "activation_precision": 0.3352272727272727,
+      "activation_recall": 0.3352272727272727,
+      "token_estimate": 1673,
+      "wall_clock_duration": 0.06639042000006157,
+      "catalog_fingerprint": "a91e10d36db69c0a5f1ee1168982d9b1caac44bacd51add279986608b67ad1e6"
+    },
+    {
+      "run_id": "E001-CONTROL-r05-6390a499",
+      "sequence": 5,
+      "activation_precision": 0.3352272727272727,
+      "activation_recall": 0.3352272727272727,
+      "token_estimate": 1673,
+      "wall_clock_duration": 0.06974027600017507,
+      "catalog_fingerprint": "a91e10d36db69c0a5f1ee1168982d9b1caac44bacd51add279986608b67ad1e6"
+    }
+  ]
+}

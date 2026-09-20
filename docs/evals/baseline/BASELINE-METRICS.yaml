@@ -1,0 +1,54 @@
+baseline:
+  id: baseline-v1-2026-09-18
+  version: V1
+  timestamp: "2026-09-18T23:29:33Z"
+
+  runtime:
+    full_cycle_total: 5
+    full_cycle_passed: 5
+    full_cycle_failed: 0
+
+  tests:
+    total: 103
+    passed: 103
+    failed: 0
+    skipped: 0
+    files: 27
+
+  contracts:
+    total: 7
+    passed: 7
+    failed: 0
+    suite: tests/contracts/contract-prototype.test.ts
+
+  build:
+    status: FAIL
+    command: npm run build
+    preexisting: true
+
+  mechanisms:
+    jobs: IMPLEMENTED_OBSERVED
+    resume: OBSERVED
+    pickup: OBSERVED
+    hitl: PARTIALLY_OBSERVED
+    sandbox: NOT_IMPLEMENTED
+    model_routing: NOT_IMPLEMENTED
+    stuck_detection: NOT_IMPLEMENTED
+
+  known_gaps:
+    - os_sandbox
+    - model_routing
+    - semantic_stuck_detection
+    - gate_artefact_path_validation
+    - authority_not_on_mock_cursorskill_jobfile
+    - tsc_build_fail
+
+  performance:
+    kind: OBSERVED_BASELINE
+    test_duration: "1.34s"
+    full_cycle_duration: "0.017s_tests / 0.503s_wall"
+    jobs_suites_duration: "0.172s_tests / 0.678s_wall"
+
+  source_revision:
+    git: ABSENT
+    tree_content_sha256: "5600f9df2c99dde25771567faeaaa25d39c55575c046e36b55fb965149813795"

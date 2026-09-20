@@ -1,0 +1,45 @@
+changes:
+
+  - file: docs/evals/experiments/E-005/harness/e005-duplicate-mutate.test.ts
+    operation: ADD
+    purpose: Isolated CONTROL/TREATMENT harness measuring duplicate_mutate via instrumented JobFileExecutor
+    why_required: E-005 completion gap — duplicate_mutate was NOT_MEASURED
+    runtime_semantics_changed: false
+    evidence: "InstrumentingJobFileExecutor wraps JobFileExecutor; no orchestrator/src edits"
+
+  - file: docs/evals/experiments/E-005/FIXTURE.md
+    operation: ADD
+    purpose: Fixture documentation
+    why_required: experiment documentation requirement
+    runtime_semantics_changed: false
+    evidence: null
+
+  - file: docs/evals/experiments/E-005/REPRODUCE.md
+    operation: ADD
+    purpose: Reproduction commands
+    why_required: reproducibility
+    runtime_semantics_changed: false
+    evidence: null
+
+  - file: docs/evals/experiments/E-005/E-005-RESULT.md
+    operation: ADD
+    purpose: Result report after measurement
+    why_required: experiment reporting
+    runtime_semantics_changed: false
+    evidence: raw/dup-mutate/
+
+  - file: docs/evals/experiments/E-005/raw/dup-mutate/**
+    operation: ADD
+    purpose: Raw matrix, per-rep JSON, summary, invariant logs
+    why_required: evidence preservation
+    runtime_semantics_changed: false
+    evidence: null
+
+  - file: orchestrator/tests/evals/_e005_dup_mutate.test.ts
+    operation: ADD
+    purpose: Temporary copy for vitest include path
+    why_required: package vitest only includes tests/**
+    runtime_semantics_changed: false
+    evidence: "DELETED after run — not left in tree"
+
+note: "No files under orchestrator/src were modified. runtime_semantics_changed MUST_BE_FALSE for all changes."

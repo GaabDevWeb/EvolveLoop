@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "evidence/documentation@1.0.0",
+  "title": "DocumentationEvidence",
+  "type": "object",
+  "required": ["kind", "metadata", "spec"],
+  "properties": {
+    "kind": { "const": "Evidence" },
+    "metadata": {
+      "type": "object",
+      "required": ["node_id", "run_id", "provider_id", "capability"],
+      "properties": {
+        "node_id": { "type": "string" },
+        "run_id": { "type": "string" },
+        "provider_id": { "type": "string" },
+        "capability": { "const": "documentation" }
+      }
+    },
+    "spec": {
+      "type": "object",
+      "required": ["status", "verdict", "checks"],
+      "properties": {
+        "status": { "enum": ["complete", "partial", "failed"] },
+        "verdict": { "enum": ["passed", "rejected", "conditional", null] },
+        "checks": { "type": "array" },
+        "documentation_summary": {
+          "type": "object",
+          "properties": {
+            "files": { "type": "array", "items": { "type": "string" } },
+            "history_consolidated": { "type": "boolean" },
+            "diagram_count": { "type": "number", "minimum": 0 },
+            "tbds": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "duration_ms": { "type": "number" }
+      }
+    }
+  }
+}

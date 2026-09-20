@@ -1,0 +1,14 @@
+gaab_profile:
+  - key: WIKI_ROOT absolute author vault
+    class: GAAB_PROFILE
+  - key: projects.yaml pack map
+    class: GAAB_PROFILE
+  - key: wiki-mem always-on
+    class: GAAB_PROFILE
+  - key: wiki-agent project table
+    class: GAAB_PROFILE
+  - key: GaabDevWeb remotes
+    class: GAAB_PERSONAL
+  - key: MCP secrets
+    class: SECRET
+    placement: ENV_never_git

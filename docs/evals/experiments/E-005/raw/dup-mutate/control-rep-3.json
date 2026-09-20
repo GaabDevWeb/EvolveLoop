@@ -1,0 +1,53 @@
+{
+  "row": {
+    "experiment_id": "E-005",
+    "condition": "CONTROL",
+    "sequence": 3,
+    "job_run_id": "8139ab75-6a03-480d-b6ed-7a5303111123",
+    "feature_id": "e005-dup-mutate",
+    "node_id": "test-only",
+    "mutation": {
+      "expected": 1,
+      "observed": 1
+    },
+    "interruption": {
+      "requested": false,
+      "observed": false
+    },
+    "persistence": {
+      "state_saved": false,
+      "state_restored": false,
+      "note": "no interrupt — checkpoint may clear on success"
+    },
+    "resume": {
+      "attempted": false,
+      "succeeded": null
+    },
+    "completion": {
+      "status": "success",
+      "blocked_reason": null
+    },
+    "duplicate_mutate": {
+      "value": false,
+      "observed_mutations": 1
+    },
+    "continuation": {
+      "same_engine": true,
+      "same_process": true,
+      "node_final_status": "satisfied"
+    }
+  },
+  "mutations": [
+    {
+      "experiment_id": "E-005",
+      "condition": "CONTROL",
+      "sequence": 1,
+      "run_id": "8139ab75-6a03-480d-b6ed-7a5303111123",
+      "operation_id": "test-only:job_file_write",
+      "mutation_id": "8139ab75-6a03-480d-b6ed-7a5303111123:1",
+      "node_id": "test-only",
+      "capability": "testing",
+      "timestamp": "2026-09-19T00:00:01.120Z"
+    }
+  ]
+}

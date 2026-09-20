@@ -1,0 +1,70 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Provider
+metadata:
+  name: planner
+  version: "1.0.0"
+  description: "Strategic planning — Capability IR DAG + Planner Evidence (Fase 1)"
+  owner: agents-team
+
+spec:
+  plugin:
+    type: cursor-skill
+    entrypoint: ".cursor/skills/planner/SKILL.md"
+
+  capabilities:
+    - id: planning
+      contract: contracts/planning@1.0.0
+      type: worker
+
+  interfaces:
+    inputs:
+      - name: feature-request
+        required: true
+      - name: upstream-docs
+        required: false
+        paths:
+          - docs/prd/
+          - docs/ARCHITECTURE.md
+          - docs/DATA-MODEL.md
+          - docs/API_SPEC.md
+          - docs/adr/
+          - docs/CONTRIBUTING.md
+      - name: knowledge
+        required: false
+    outputs:
+      - name: plan-markdown
+        schema: artifacts/execution-plan@1.0.0
+      - name: capability-ir
+        path: memory/<feature_id>/plan.ir.yaml
+        schema: artifacts/capability-ir@2.0.0
+      - name: planner-evidence
+        schema: evidence/planning@2.1.0
+
+  dependencies:
+    optional:
+      - filesystem.read
+      - filesystem.list
+      - filesystem.search
+      - project.inspect
+      - git.inspect
+      - repository.inspect
+      - knowledge.search
+
+  runtime:
+    cost: medium
+    subagent_type: generalPurpose
+    pda_role: plan
+
+  constraints:
+    stack: [cursor, megabrain]
+    platforms: [cursor]
+    signals:
+      - phase: "1"
+      - role: plan
+      - forbids: [product-implementation, security-gate]
+
+  telemetry:
+    key: provider.planner
+
+  availability: active
+  priority: 85

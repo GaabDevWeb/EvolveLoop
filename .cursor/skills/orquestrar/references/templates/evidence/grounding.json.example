@@ -1,0 +1,15 @@
+{
+  "kind": "Grounding",
+  "feature_id": "2026-08-25-demo",
+  "cycle_id": "C1",
+  "submitted_at": "2026-08-25T00:30:00Z",
+  "wiki_grounding": "applied",
+  "fontes": [
+    {"path": "kernelbot/wiki/auth.md", "note": "contrato JWT"}
+  ],
+  "contratos": [
+    "POST /auth/login devolve {access, refresh}"
+  ],
+  "gaps": [],
+  "wiki_log": "kernelbot/log.md"
+}

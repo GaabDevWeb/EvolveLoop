@@ -1,0 +1,320 @@
+# MECHANISMS inventory — security-audit-skill
+# source_type: LOCAL_CORPUS
+# mode: TARGET_RESEARCH
+# date: 2026-09-18
+# git_head: c1c8a8c1471069fb0e188eeaff69b8e8db6564a8
+# reproducibility_validators: UNKNOWN
+
+target:
+  id: tgt-security-audit-skill
+  name: security-audit-skill
+  path: /home/gaab/Documentos/reverseEnginering/security-audit-skill
+  category: skills-protocol
+  primary_type: SKILL_SYSTEM
+  secondary_types: [MULTI_AGENT_SYSTEM, EVALUATION_SYSTEM, ORCHESTRATION_SYSTEM]
+  provenance:
+    origin: PUBLIC_REPOSITORY
+    repository: https://github.com/cloudflare/security-audit-skill
+    license: MIT
+    authenticity: CONFIRMED
+  related_external:
+    - name: cloudflare-vulnerability-harness
+      status: NOT_IN_CORPUS
+      relation: DERIVED_FROM_seed  # README: skill seeded harness; reverse direction UNKNOWN
+      evidence_label: DOCUMENTED
+
+mechanisms:
+  - id: M01
+    name: dual_operating_mode
+    problem: Loading skill must not auto-authorize full audit artifact creation
+    mechanism: guidance_mode vs full_audit_mode; ambiguous → one clarifying question
+    evidence:
+      - path: skills/security-audit/SKILL.md
+        label: OBSERVED
+    our_equivalence: SUBSTANTIAL
+    our_composite: DOCUMENTED + IMPLEMENTED  # Policy + skill contracts
+    decision: ALREADY_PRESENT
+    confidence: HIGH
+    residual_gap: explicit ambiguity question UX
+
+  - id: M02
+    name: boundary_and_result_gate
+    problem: Checklist deviations and defense-in-depth gaps reported as vulns
+    mechanism: Require lower-trust principal, control, crossed boundary, concrete result; hardening ≠ finding
+    evidence:
+      - path: skills/security-audit/SKILL.md
+        label: OBSERVED
+      - path: skills/security-audit/HUNTING.md
+        label: OBSERVED
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: M03
+    name: tri_verdict_findings_contract
+    problem: Speculative leads mixed with proven issues; severity without impact
+    mechanism: >
+      confirmed | needs_validation | rejected with mutually exclusive fields;
+      NV forbids severity; rejected retains disproof for future runs
+    evidence:
+      - path: skills/security-audit/report-schema.json
+        label: OBSERVED
+      - path: skills/security-audit/validate-findings.cjs
+        label: OBSERVED
+      - path: skills/security-audit/VALIDATION-AND-REPORTING.md
+        label: OBSERVED
+    our_equivalence: PARTIAL
+    our_mechanism: Evidence Bus / contracts
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: M04
+    name: adversarial_independent_verification
+    problem: Hunter confirmation bias; self-graded findings
+    mechanism: >
+      Phase 3 fresh general verifier tries to refute; Phase 5 research verifier checks
+      structured record; material replacement requires another independent verifier;
+      malformed/prose-wrapped results discarded without repair
+    evidence:
+      - path: skills/security-audit/VALIDATION-AND-REPORTING.md
+        label: OBSERVED
+    our_equivalence: SUBSTANTIAL
+    our_mechanism: PDA critic/gate roles
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: M05
+    name: deterministic_coverage_ledger
+    problem: Narrative coverage claims without unit evidence
+    mechanism: >
+      coverage-ledger.json units keyed by canonical surface::boundary::subsystem::attack_class;
+      status state machine; attempts archive; parent sole updater; validate-coverage-ledger.cjs
+    evidence:
+      - path: skills/security-audit/RECONNAISSANCE.md
+        label: OBSERVED
+      - path: skills/security-audit/validate-coverage-ledger.cjs
+        label: OBSERVED
+    our_equivalence: PARTIAL
+    our_mechanism: Task IR / Capability IR
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: M06
+    name: coverage_critic_waves
+    problem: Silent gaps after hunter wave; agent-count mistaken for completeness
+    mechanism: >
+      Post-wave research critic proposes missing_units/reassign_ids; standard/deep final-clean critic;
+      quick profile = one wave + deferred critic finds
+    evidence:
+      - path: skills/security-audit/HUNTING.md
+        label: OBSERVED
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: M07
+    name: severity_capped_by_impact
+    problem: Overall severity inflated beyond demonstrated impact
+    mechanism: Validator rejects overall_severity rank > impact.score
+    evidence:
+      - path: skills/security-audit/validate-findings.cjs
+        label: OBSERVED
+      - path: skills/security-audit/SKILL.md
+        label: OBSERVED
+    our_equivalence: NONE_TO_PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: M08
+    name: schema_first_then_prose
+    problem: Prose-only hunter output cannot be deduped or verified; report/JSON disagree
+    mechanism: >
+      Structured hunter/verifier JSON; parent writes findings.json; Phase 6 derives REPORT
+      from verified records only; anti-pattern #10
+    evidence:
+      - path: skills/security-audit/HUNTING.md
+        label: OBSERVED
+      - path: skills/security-audit/VALIDATION-AND-REPORTING.md
+        label: OBSERVED
+      - path: skills/security-audit/SKILL.md
+        label: OBSERVED
+    our_equivalence: SUBSTANTIAL
+    decision: ALREADY_PRESENT
+    confidence: HIGH
+
+  - id: M09
+    name: os_sandbox_or_needs_validation
+    problem: Target-controlled builds/tests can escape or contact live systems
+    mechanism: >
+      Execute only in OS-enforced sandbox (no external net, allowlisted env, RO target,
+      scratch writes, resource limits) else do not execute — retain exact blocker as NV
+    evidence:
+      - path: skills/security-audit/SKILL.md
+        label: DOCUMENTED
+    implementation_in_corpus: ABSENT
+    our_equivalence: UNKNOWN
+    our_mechanism: Sandbox UNKNOWN–PARTIAL (baseline)
+    decision: DEFER
+    confidence: MEDIUM
+    note: Promotion to PROTOTYPE only after MegaBrain sandbox audit
+
+  - id: M10
+    name: race_safe_artifact_promotion
+    problem: Scratch output is target-controlled; naive copy enables TOCTOU/symlink escape
+    mechanism: >
+      Parent-only 11-step no-follow descriptor walk, regular-file + nlink=1, size bounds,
+      exclusive dest create; agents never write retained artifacts/
+    evidence:
+      - path: skills/security-audit/SKILL.md
+        label: DOCUMENTED
+      - path: skills/security-audit/HUNTING.md
+        label: DOCUMENTED  # verbatim prompt block
+    implementation_in_corpus: ABSENT
+    our_equivalence: UNKNOWN
+    decision: DEFER
+    confidence: MEDIUM
+
+  - id: M11
+    name: write_isolation_parent_ownership
+    problem: Concurrent agents corrupt shared ledger/findings or target source
+    mechanism: >
+      Parent sole writer of shared run files; per-agent agents/<id>/{scratch,artifacts};
+      hunters/verifiers never edit target source
+    evidence:
+      - path: skills/security-audit/SKILL.md
+        label: OBSERVED
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: M12
+    name: domain_companion_attack_classes
+    problem: Generic classes miss LLM/MCP, supply-chain, cloud IAM, local IPC, etc.
+    mechanism: >
+      ATTACK-CLASSES.md + 9 companion files; select by source-visible trust boundary
+      not language name; copy blocks verbatim into hunter prompts
+    evidence:
+      - path: skills/security-audit/ATTACK-CLASSES.md
+        label: OBSERVED
+      - path: skills/security-audit/AI-AND-LLM.md
+        label: OBSERVED
+    our_equivalence: PARTIAL
+    decision: DEFER
+    confidence: MEDIUM
+    note: REJECT as wholesale product merge into MegaBrain core
+
+  - id: M13
+    name: profiles_and_budget_reservation
+    problem: Hunters consume budget leaving no validators/critics → false completeness
+    mechanism: >
+      Profiles quick|standard|deep; reserve baseline recon + critics + validation before hunting;
+      incomplete_reason codes; unvalidated candidates stay in ledger not findings
+    evidence:
+      - path: skills/security-audit/SKILL.md
+        label: OBSERVED
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: M14
+    name: prior_run_additive_coverage
+    problem: Re-audits forget prior evidence or treat stale confirmed as still true
+    mechanism: >
+      Compare current source vs prior records; carry same-source confirmed with re-verify;
+      changed-source revalidation units; NV/deferred never suppress coverage
+    evidence:
+      - path: skills/security-audit/SKILL.md
+        label: OBSERVED
+      - path: skills/security-audit/RECONNAISSANCE.md
+        label: OBSERVED
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: M15
+    name: agent_neutral_platform_mapping
+    problem: Skill locked to one vendor agent API
+    mechanism: Parent / Task tool / research / general role mapping
+    evidence:
+      - path: skills/security-audit/SKILL.md
+        label: OBSERVED
+    our_equivalence: SUBSTANTIAL
+    decision: ALREADY_PRESENT
+    confidence: HIGH
+
+  - id: M16
+    name: zero_dep_schema_validators
+    problem: Findings/ledger silently invalid; hostile JSON diagnostics
+    mechanism: >
+      Custom JSON Schema interpreters + semantic state/severity checks; size/depth caps;
+      diagnostic character escaping; unit tests present
+    evidence:
+      - path: skills/security-audit/validate-findings.cjs
+        label: OBSERVED
+      - path: skills/security-audit/validate-coverage-ledger.cjs
+        label: OBSERVED
+      - path: skills/security-audit/validate-findings.test.cjs
+        label: OBSERVED
+    test_execution: NOT_RUN
+    reproducibility: UNKNOWN
+    our_equivalence: PARTIAL
+    our_mechanism: orchestrator contract tests / skill evals
+    decision: ADAPT
+    confidence: MEDIUM  # HIGH on existence; MEDIUM on runtime correctness without run
+
+  - id: M17
+    name: incomplete_run_first_class
+    problem: Mid-phase abort implies success or hides gaps
+    mechanism: >
+      Terminal states only complete (Phase 6 + validators) or incomplete with exact reason;
+      partial report must disclose unvalidated fingerprints
+    evidence:
+      - path: skills/security-audit/SKILL.md
+        label: OBSERVED
+      - path: skills/security-audit/VALIDATION-AND-REPORTING.md
+        label: OBSERVED
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: M18
+    name: fingerprint_stable_root_cause
+    problem: Same defect reappears across waves/verdicts as new finding
+    mechanism: >
+      Source-derived fingerprint stable across states; sorted unique in findings.json;
+      exclude line/wave/agent/severity from fingerprint
+    evidence:
+      - path: skills/security-audit/HUNTING.md
+        label: OBSERVED
+      - path: skills/security-audit/validate-findings.cjs
+        label: OBSERVED
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: M19
+    name: six_phase_security_audit_product
+    problem: End-to-end vulnerability audit orchestration for coding agents
+    mechanism: Full recon→hunt→validate→schema→verify→report workflow
+    evidence:
+      - path: README.md
+        label: DOCUMENTED
+      - path: skills/security-audit/SKILL.md
+        label: OBSERVED
+    our_equivalence: NONE
+    decision: DEFER  # REJECT as product clone; harvest M01–M18 instead
+    confidence: HIGH
+
+decisions_vocabulary_used:
+  - ALREADY_PRESENT
+  - ADAPT
+  - DEFER
+  # ADOPT, PROTOTYPE, REJECT reserved; REJECT noted as alternative for M12/M19 product clone
+
+summary_counts:
+  ALREADY_PRESENT: 3
+  ADAPT: 12
+  DEFER: 4
+  ADOPT: 0
+  PROTOTYPE: 0
+  REJECT: 0  # product-clone REJECT expressed under DEFER notes

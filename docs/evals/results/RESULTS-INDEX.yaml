@@ -1,0 +1,52 @@
+results:
+
+  - experiment: E-001
+    report: docs/evals/experiments/E-001/E-001-RESULT.md
+    machine_result: docs/evals/experiments/E-001/E-001-RESULTS.yaml
+    raw: docs/evals/experiments/E-001/raw/battery/
+    evidence_ids: [E001-EV-001, E001-EV-002, E001-EV-003, E001-EV-004]
+    metric_ids: [E001-M-001, E001-M-002, E001-M-003, E001-M-004, E001-M-005, E001-M-006, E001-M-007, E001-M-008, E001-M-009, E001-M-010, E001-M-011, E001-M-012, E001-M-013]
+    claim_ids: [CLM-E001-001, CLM-E001-002, CLM-E001-003, CLM-E001-004, CLM-E001-005]
+    status: EXECUTED
+
+  - experiment: E-005
+    report: docs/evals/experiments/E-005/E-005-RESULT.md
+    machine_result: docs/evals/experiments/E-005/raw/dup-mutate/summary-metrics.json
+    raw: docs/evals/experiments/E-005/raw/dup-mutate/
+    evidence_ids: [E005-EV-001, E005-EV-002, E005-EV-003]
+    metric_ids: [E005-M-001, E005-M-002, E005-M-003, E005-M-004, E005-M-005, E005-M-006, E005-M-007]
+    claim_ids: [CLM-E005-001, CLM-E005-002, CLM-E005-003, CLM-E005-004, CLM-E005-005]
+    status: COMPLETED_FIXTURE
+
+  - experiment: E-002
+    report: docs/evals/experiments/E-002/
+    machine_result: null
+    raw: docs/evals/experiments/E-002/raw/
+    evidence_ids: []
+    metric_ids: []
+    claim_ids: []
+    status: BLOCKED
+
+  - experiment: E-003
+    report: docs/evals/experiments/E-003/
+    machine_result: null
+    raw: docs/evals/experiments/E-003/raw/
+    evidence_ids: []
+    metric_ids: []
+    claim_ids: []
+    status: BLOCKED
+
+  - experiment: E-004
+    report: docs/evals/experiments/E-004/
+    machine_result: null
+    raw: docs/evals/experiments/E-004/raw/
+    evidence_ids: []
+    metric_ids: []
+    claim_ids: []
+    status: BLOCKED
+
+ledgers:
+  evidence: docs/evals/results/EVIDENCE-LEDGER.yaml
+  metrics: docs/evals/results/METRIC-LEDGER.yaml
+  claims: docs/evals/results/CLAIMS.yaml
+  experiments: docs/evals/results/EXPERIMENT-RESULTS.yaml

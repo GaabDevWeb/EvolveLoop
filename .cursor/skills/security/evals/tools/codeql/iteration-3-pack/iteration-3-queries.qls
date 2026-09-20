@@ -1,0 +1,7 @@
+- description: Iteration-3 minimal security queries for benchmark fixtures
+- queries: .
+- apply: SqliConcat.ql
+- apply: MassAssignment.ql
+- apply: OpenRedirect.ql
+- apply: TrustClientPrice.ql
+- apply: DynamicSqlConcat.ql

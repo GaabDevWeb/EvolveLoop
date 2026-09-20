@@ -1,0 +1,43 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Contract
+metadata:
+  id: agent-authoring
+  version: "1.0.0"
+  status: active
+
+spec:
+  capability: agent-authoring
+  type: worker
+
+  semver:
+    major: 1
+    minor: 0
+    patch: 0
+
+  compatible_with:
+    - "contracts/agent-authoring@1.0.x"
+
+  inputs:
+    - name: authoring-request
+      required: true
+    - name: target-agent-id
+      required: false
+
+  outputs:
+    - name: decision-code
+      schema: artifacts/agent-authoring-decision@1.0.0
+    - name: package-paths
+      schema: artifacts/agent-package@1.0.0
+    - name: validation-status
+      schema: artifacts/gate-status@1.0.0
+
+  definition_of_done:
+    minimum_checks:
+      - audit_performed
+      - duplication_decision_emitted
+      - no_parallel_architecture
+      - quality_gates_reported
+      - debt_listed
+
+  evidence:
+    schema: evidence/worker-default@1.0.0

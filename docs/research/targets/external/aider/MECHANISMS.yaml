@@ -1,0 +1,360 @@
+# Aider — mechanism inventory (TARGET_RESEARCH)
+# Provenance: OFFICIAL_EXTERNAL
+# Date: 2026-09-18
+# Versions: GitHub main ~0.86.3.dev; release v0.86.0
+# Epistemic labels: OBSERVED | DOCUMENTED | MEASURED | INFERRED | HYPOTHESIS | OPINION
+
+target:
+  slug: aider
+  name: Aider
+  category: coding-agent
+  org: Aider-AI
+  repo: https://github.com/Aider-AI/aider
+  docs: https://aider.chat/docs/
+  license: Apache-2.0
+  provenance: OFFICIAL_EXTERNAL
+
+access:
+  installed_locally: false
+  executed: false
+  sources: [official_docs, github_raw_source, github_rest_api]
+
+lenses_applied:
+  - coding_loop
+  - repository_context
+  - file_selection
+  - edit_generation
+  - diff_application
+  - git_integration
+  - model_interaction
+  - command_execution
+  - context_management
+  - validation
+  - ux
+
+mechanisms:
+
+  - id: AIDER-CODING-LOOP
+    name: Interactive coding loop with bounded reflections
+    problem: Turn user intent into applied file changes with recovery from bad LLM output
+    how: >
+      Coder.run → run_one → send_message → apply_updates → auto_commit →
+      optional lint/test → reflected_message loop (max_reflections=3)
+    evidence:
+      - label: OBSERVED
+        refs: [aider/coders/base_coder.py#run, run_one, send_message, apply_updates]
+      - label: DOCUMENTED
+        refs: [https://aider.chat/docs/usage.html]
+    costs: [latency_per_turn, token_cost, user_confirm_friction]
+    failure_modes: [reflection_exhaustion, context_window_exhausted, malformed_edits]
+    our_equivalence: PARTIAL
+    our_status: IMPLEMENTED_TESTED  # orchestrator/PDA exists but different shape
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: AIDER-REPOMAP
+    name: Token-budgeted repository map (tree-sitter + PageRank)
+    problem: Provide whole-repo structural context without sending all files
+    how: >
+      Parse tags via tree-sitter queries; build file dependency graph;
+      rank with networkx PageRank; emit signature/definition lines within --map-tokens budget
+      (default ~1024; expands when few chat files)
+    evidence:
+      - label: DOCUMENTED
+        refs: [https://aider.chat/docs/repomap.html, https://aider.chat/2023/10/22/repomap.html]
+      - label: OBSERVED
+        refs: [aider/repomap.py#get_ranked_tags, get_repo_map]
+    costs: [CPU_parse, map_staleness, imperfect_language_coverage]
+    failure_modes: [wrong_relevance, oversized_map, unsupported_syntax]
+    our_equivalence: NONE
+    our_status: ABSENT
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: AIDER-FILE-SELECTION
+    name: Explicit chat file set + read-only + mention offers
+    problem: Control which files are editable and visible in detail
+    how: >
+      CLI paths, /add, /drop, /read-only; LLM/user path mentions trigger confirm-to-add;
+      docs advise adding only files that need edits
+    evidence:
+      - label: DOCUMENTED
+        refs: [https://aider.chat/docs/usage.html, https://aider.chat/docs/usage/commands.html]
+      - label: OBSERVED
+        refs: [base_coder.py#check_for_file_mentions]
+    costs: [user_cognitive_load, missed_files]
+    failure_modes: [over_add_context_bloat, under_add_wrong_edits]
+    our_equivalence: PARTIAL
+    our_status: UNKNOWN  # Cursor tools differ; GAP needs MegaBrain coding-path audit
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: AIDER-EDIT-FORMATS
+    name: Per-model edit format grammars
+    problem: Different LLMs fail differently at emitting machine-parseable edits
+    how: >
+      Formats whole | diff (SEARCH/REPLACE) | diff-fenced | udiff | editor-diff/whole;
+      selected by model metadata or --edit-format / --editor-edit-format
+    evidence:
+      - label: DOCUMENTED
+        refs: [https://aider.chat/docs/more/edit-formats.html]
+      - label: OBSERVED
+        refs: [aider/coders/*_coder.py]
+    costs: [prompt_complexity, format_proliferation]
+    failure_modes: [model_ignores_format, lazy_elision_in_wrong_format]
+    our_equivalence: PARTIAL
+    our_status: ABSENT  # as portable MegaBrain library
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: AIDER-FUZZY-APPLY
+    name: Multi-strategy SEARCH/REPLACE application
+    problem: Exact block match fails due to whitespace/drift/elision
+    how: >
+      editblock_coder strategies (perfect, whitespace, edit-distance, dotdotdot);
+      search_replace flexible strategies including DMP/git-inspired paths
+    evidence:
+      - label: OBSERVED
+        refs: [aider/coders/editblock_coder.py, aider/coders/search_replace.py]
+    costs: [incorrect_fuzzy_match_risk, complexity]
+    failure_modes: [silent_wrong_location_replace, HYPOTHESIS]
+    our_equivalence: NONE
+    our_status: ABSENT
+    decision: PROTOTYPE
+    confidence: HIGH
+
+  - id: AIDER-APPLY-REFLECT
+    name: Reflect malformed edits back to the model
+    problem: Recover when LLM violates edit format or apply throws
+    how: ValueError → reflected_message with error text → another turn within max_reflections
+    evidence:
+      - label: OBSERVED
+        refs: [base_coder.py#apply_updates]
+    costs: [extra_LLM_calls]
+    failure_modes: [infinite_near_miss_until_cap]
+    our_equivalence: PARTIAL  # Evidence/gates exist; not this exact loop
+    our_status: PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: AIDER-ARCHITECT-EDITOR
+    name: Two-model architect then editor
+    problem: Reason about solution without also emitting perfect edit syntax in one shot
+    how: >
+      ArchitectCoder (AskCoder subclass) proposes plain text; on confirm, forks Coder.create
+      with editor_model / editor_edit_format; map_tokens=0 for editor pass
+    evidence:
+      - label: DOCUMENTED
+        refs: [https://aider.chat/docs/usage/modes.html, https://aider.chat/2024/09/26/architect.html]
+      - label: OBSERVED
+        refs: [aider/coders/architect_coder.py]
+      - label: MEASURED
+        refs: [architect blog pass-rate tables — their harness]
+    costs: [2x_latency_cost]
+    failure_modes: [architect_vague, editor_misread]
+    our_equivalence: SUBSTANTIAL  # PDA plan/exec
+    our_status: IMPLEMENTED
+    decision: ALREADY_PRESENT
+    residual_adapt: model_pairing_config
+    confidence: HIGH
+
+  - id: AIDER-GIT-INTEGRATION
+    name: Auto-commit, dirty-commit, undo, attribution
+    problem: Make AI edits reviewable and revertible; separate human dirty state
+    how: >
+      GitRepo.commit; dirty commit before AI edit; /undo last aider commit;
+      weak model for conventional commit messages; attribution (aider) / Co-authored-by;
+      default commits with --no-verify unless --git-commit-verify
+    evidence:
+      - label: DOCUMENTED
+        refs: [https://aider.chat/docs/git.html]
+      - label: OBSERVED
+        refs: [aider/repo.py]
+    costs: [commit_noise, skipped_hooks_risk]
+    failure_modes: [undo_wrong_commit, hook_bypass]
+    our_equivalence: NONE
+    our_status: ABSENT
+    decision: ADAPT
+    confidence: HIGH
+    sub_decisions:
+      - aspect: commit_fence_and_undo
+        decision: ADAPT
+      - aspect: default_skip_pre_commit_hooks
+        decision: REJECT
+
+  - id: AIDER-LINT-TEST-LOOP
+    name: Post-edit lint/test with optional repair reflection
+    problem: Detect and fix AI-introduced breakage
+    how: >
+      auto_lint on edited files (built-in or --lint-cmd); optional --auto-test;
+      confirm_ask then reflected_message = errors
+    evidence:
+      - label: DOCUMENTED
+        refs: [https://aider.chat/docs/usage/lint-test.html]
+      - label: OBSERVED
+        refs: [base_coder.py post-apply lint/test]
+    costs: [flaky_tests, formatter_false_positives]
+    failure_modes: [lint_cmd_misconfigured, loop_on_flakes]
+    our_equivalence: PARTIAL
+    our_status: PARTIAL  # Evidence Bus / gates
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: AIDER-CONTEXT-CHUNKS
+    name: Ordered ChatChunks + reminder + token guard
+    problem: Assemble stable, cache-friendly, complete prompts
+    how: >
+      system → examples → readonly → repo → done → chat_files → cur → reminder;
+      check_tokens; system_reminder placement sys|user
+    evidence:
+      - label: OBSERVED
+        refs: [chat_chunks.py, base_coder.py#format_chat_chunks]
+    costs: [rigid_ordering]
+    failure_modes: [reminder_dropped_near_limit]
+    our_equivalence: PARTIAL
+    our_status: ABSENT
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: AIDER-PROMPT-CACHE
+    name: Provider prompt caching via cache_control headers
+    problem: Reduce cost/latency on large static prefix
+    how: >
+      --cache-prompts; mark examples/system, repo/readonly, chat_files ephemeral cache;
+      optional keepalive pings
+    evidence:
+      - label: DOCUMENTED
+        refs: [https://aider.chat/docs/usage/caching.html]
+      - label: OBSERVED
+        refs: [chat_chunks.py#add_cache_control_headers]
+    costs: [provider_lock_in, stream_disables_cache_stats]
+    failure_modes: [cache_miss_from_prefix_churn]
+    our_equivalence: NONE
+    our_status: ABSENT
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: AIDER-HISTORY-SUMMARY
+    name: ChatSummary compression of older messages
+    problem: Long sessions exceed context
+    how: ChatSummary with max_tokens budget; summarize_start/worker/end around turns
+    evidence:
+      - label: OBSERVED
+        refs: [aider/history.py, base_coder.py summarizer hooks]
+    costs: [summary_information_loss]
+    failure_modes: [bad_summary_misleads_later_edits]
+    our_equivalence: PARTIAL  # episodic memory different
+    our_status: PARTIAL
+    decision: DEFER
+    confidence: MEDIUM
+
+  - id: AIDER-INFINITE-OUTPUT
+    name: Prefill continuation past output token limits
+    problem: Large multi-file edits truncated by max_output_tokens
+    how: On FinishReasonLength, if supports_assistant_prefill, append/prefix assistant and continue
+    evidence:
+      - label: DOCUMENTED
+        refs: [https://aider.chat/docs/more/infinite-output.html]
+      - label: OBSERVED
+        refs: [base_coder.py#send_message FinishReasonLength branch]
+    costs: [join_heuristics, provider_dependency]
+    failure_modes: [seam_corruption]
+    our_equivalence: UNKNOWN
+    our_status: UNKNOWN
+    decision: DEFER
+    confidence: MEDIUM
+
+  - id: AIDER-MODEL-LAYER
+    name: Multi-provider models with weak/editor roles
+    problem: Connect many LLMs; assign roles (main, weak commit msgs, editor)
+    how: models.py registry; /model /weak-model /editor-model; LiteLLM completions
+    evidence:
+      - label: DOCUMENTED
+        refs: [https://aider.chat/docs/llms.html]
+      - label: OBSERVED
+        refs: [aider/models.py, send path in base_coder]
+    costs: [metadata_drift, provider_quirks]
+    failure_modes: [wrong_default_edit_format]
+    our_equivalence: SUBSTANTIAL  # Provider Registry
+    our_status: IMPLEMENTED
+    decision: ALREADY_PRESENT
+    confidence: MEDIUM
+
+  - id: AIDER-SHELL-RUN
+    name: Shell command execution with optional chat inclusion
+    problem: Gather runtime errors/output as context
+    how: /run (alias !), /test, /git; run_cmd via subprocess/pexpect; confirm share output
+    evidence:
+      - label: DOCUMENTED
+        refs: [commands docs, lint-test docs]
+      - label: OBSERVED
+        refs: [aider/run_cmd.py]
+    costs: [security_if_unattended]
+    failure_modes: [destructive_commands_if_yes_always]
+    our_equivalence: PARTIAL
+    our_status: PARTIAL  # Policy Engine exists
+    decision: ALREADY_PRESENT
+    residual: ensure_policy_gates_on_shell
+    confidence: MEDIUM
+
+  - id: AIDER-WATCH-UX
+    name: IDE AI comment watch mode
+    problem: Drive agent from editor without leaving IDE
+    how: --watch-files; comments AI / AI! / AI?; highlight comments in prompt; remove after
+    evidence:
+      - label: DOCUMENTED
+        refs: [https://aider.chat/docs/usage/watch.html]
+    costs: [false_triggers, dual_UX]
+    failure_modes: [comment_syntax_mismatch]
+    our_equivalence: PARTIAL  # Cursor hooks
+    our_status: PARTIAL
+    decision: DEFER
+    confidence: MEDIUM
+
+  - id: AIDER-CONVENTIONS
+    name: Conventions via read-only markdown in chat
+    problem: Steer style/libraries without hard policy engine
+    how: CONVENTIONS.md via --read / /read-only; optional always-read in YAML config
+    evidence:
+      - label: DOCUMENTED
+        refs: [https://aider.chat/docs/usage/conventions.html]
+    costs: [soft_guidance_only]
+    failure_modes: [model_ignores_conventions]
+    our_equivalence: PARTIAL  # Skills / Knowledge
+    our_status: PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: AIDER-PUBLIC-LEADERBOARDS
+    name: External code-edit / refactor benchmarks
+    problem: Compare LLM edit skill quantitatively
+    how: Published polyglot/edit leaderboards on aider.chat
+    evidence:
+      - label: DOCUMENTED
+        refs: [https://aider.chat/docs/leaderboards/]
+      - label: MEASURED
+        note: Metrics belong to Aider harness; not re-run here
+    costs: [harness_bias]
+    failure_modes: [overfit_to_aider_edit_formats]
+    our_equivalence: NONE
+    our_status: PARTIAL  # our evals different
+    decision: REJECT  # as MegaBrain SSOT
+    confidence: HIGH
+
+  - id: AIDER-WHOLE-RUNTIME
+    name: Adopt Aider as MegaBrain coding runtime
+    problem: N/A — product-level replacement
+    how: N/A
+    evidence:
+      - label: OPINION
+        note: Separated; not used for decisions below
+      - label: INFERRED
+        note: Stack mismatch with CursorSKILLS/orchestrator contracts
+    our_equivalence: NONE
+    decision: REJECT
+    confidence: HIGH
+
+comparison_rules_applied:
+  our_baseline: /home/gaab/Documentos/reverseEnginering/research/OUR-SYSTEM-BASELINE.md
+  decision_vocab: [ALREADY_PRESENT, ADOPT, ADAPT, PROTOTYPE, DEFER, REJECT]
+  note: No ADOPT of Aider wholesale; ADOPT absent for mechanisms — prefer ADAPT into existing registries.

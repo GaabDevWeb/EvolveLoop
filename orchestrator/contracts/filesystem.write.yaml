@@ -1,0 +1,31 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Contract
+metadata:
+  id: filesystem.write
+  version: "1.0.0"
+  status: active
+
+spec:
+  capability: filesystem.write
+  type: worker
+  semver:
+    major: 1
+    minor: 0
+    patch: 0
+  deterministic: true
+  side_effects: true
+  requires_confirmation: true
+  permissions:
+    filesystem: write
+    network: false
+    shell: false
+  cost:
+    latency: low
+    token_cost: none
+    compute_cost: low
+    network_cost: none
+    risk: medium
+  provider_requirements:
+    plugin: deterministic
+  evidence:
+    schema: evidence/worker-default@1.0.0

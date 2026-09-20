@@ -1,0 +1,68 @@
+evolveloopt:
+  scope:
+    status: IMPLEMENTED
+    contract: AnalysisScope required
+    default_analyze: REQUIRES_SCOPE
+    system_requires: authorize_system
+  persistence:
+    status: IMPLEMENTED
+    store: PersistentSignalStore
+  historical_consumption:
+    status: IMPLEMENTED
+  cross_run:
+    status: IMPLEMENTED
+    min_unique_executions: 3
+  lifecycle:
+    status: IMPLEMENTED
+    history: lifecycle_history
+    preserves: [REGRESSED, REMAINS_ACTIVE, RESOLVED]
+  outcome:
+    status: IMPLEMENTED
+    empty_after: INCONCLUSIVE
+    low_sample: INCONCLUSIVE
+  outcome_reingestion:
+    status: IMPLEMENTED
+    path: "recordOutcome → outcomes.jsonl + post_evolution_* signal → analyze loadOutcomes"
+  registry:
+    status: IMPLEMENTED
+    mode: live_CapabilityRegistry_snapshot
+    skills_agents: agentsRoot_scan_or_hint
+    injected_inventory: still_supported_override
+  adapters:
+    jsonl-events: CONNECTED
+    runtime-eventbus: CONNECTED
+    evidence-bus: NOT_CONNECTED
+    eval-results: NOT_CONNECTED
+    user-feedback: NOT_CONNECTED
+  runtime_wiring:
+    status: IMPLEMENTED_OPT_IN
+    hook: "ExecutionEngine({ evolveLoop, evolveScope })"
+    isolation: non_blocking_observer
+  loop_cadence:
+    status: IMPLEMENTED
+    class: AnalysisCadence
+    defaults: { min_new_signals: 3, cooldown_ms: 60000 }
+  user_isolation:
+    status: IMPLEMENTED
+  core_isolation:
+    status: IMPLEMENTED_HOLD
+  closed_loop:
+    status: IMPLEMENTED_WITH_LIMITATIONS
+    notes: "harness + EventBus proven; Evidence/Eval/Feedback not connected; Prototype Gate handoff only"
+  security:
+    status: PASS_WITH_LIMITATIONS
+  evals:
+    status: IMPLEMENTED
+    ids: [EV-EVOLVE-L-001, EV-EVOLVE-L-002, EV-EVOLVE-L-003, EV-EVOLVE-L-004, EV-EVOLVE-L-005, EV-EVOLVE-L-006, EV-EVOLVE-L-007, EV-EVOLVE-L-008]
+  regression:
+    tests: "162/162"
+    contracts: "7/7"
+    full_cycle: "5/5"
+  baselines:
+    v1: intact
+    v2: intact
+    v3: intact
+    v4: baseline-v4-2026-09-19
+  final_status: SUCCESS_WITH_LIMITATIONS
+  remaining_gaps: 5
+  unsupported_claims: 6

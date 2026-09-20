@@ -1,0 +1,47 @@
+# EvolveLoop — local artefacts and secrets
+
+# Secrets / environment
+.env
+.env.*
+!.env.example
+mcp/mcp.env
+**/*.pem
+**/credentials.json
+
+# Dependencies and builds
+node_modules/
+dist/
+build/
+coverage/
+agent-setup/.venv/
+agent-setup/.pytest_cache/
+.tools/
+**/__pycache__/
+*.pyc
+*.tsbuildinfo
+
+# Local memory / sessions / workspaces
+memory/
+*-workspace/
+security-workspace/
+**/runs/
+.cursor/pickup/
+orchestrator/jobs/
+orchestrator/data/
+
+# Prune / scratch
+.prune-snapshots/
+*.log
+scratch/
+.tmp/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+
+# MCP backups
+mcp.json.bak.*
+
+# Personal profile outputs (generated)
+profiles/gaabtype/paths.local.yaml
+profiles/*/local.override.yaml

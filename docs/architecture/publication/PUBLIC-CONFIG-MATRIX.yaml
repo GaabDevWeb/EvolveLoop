@@ -1,0 +1,27 @@
+configs:
+  - key: KNOWLEDGE_BACKEND
+    class: DEFAULT_CONFIG
+    placement: ENV_or_PROFILE
+    public_default: wiki
+  - key: WIKI_ROOT
+    class: HOST_CONFIG
+    placement: ENV
+    public_default: unset_required_or_prompted
+  - key: RAG_REPO_ROOT
+    class: DEFAULT_CONFIG
+    placement: ENV_ALIAS
+    status: alias_of_WIKI_ROOT
+  - key: WIKI_CLI_MODULE
+    class: EXTERNAL_DEPENDENCY
+    placement: ENV
+    public_default: gaabwiki_or_documented
+  - key: AGENTS_ROOT
+    class: HOST_CONFIG
+    placement: ENV
+  - key: memory.enabled
+    class: USER_CONFIG
+    placement: PROFILE
+    public_default: true_or_false_TBD
+  - key: profiles/default.yaml
+    class: DEFAULT_CONFIG
+    placement: PROFILE_FILE

@@ -1,0 +1,32 @@
+[
+  {
+    "query": "should-trigger: pedido substantivo com contexto real do utilizador",
+    "should_trigger": true,
+    "notes": "formulação casual, não menciona o nome da skill"
+  },
+  {
+    "query": "should-trigger: sinónimo ou reformulação do mesmo intent",
+    "should_trigger": true,
+    "notes": "tom formal"
+  },
+  {
+    "query": "should-trigger: pedido implícito — utilizador descreve problema, não pede skill",
+    "should_trigger": true,
+    "notes": ""
+  },
+  {
+    "query": "should-not: near-miss com palavras-chave partilhadas mas skill diferente",
+    "should_trigger": false,
+    "notes": "ex.: mesma área, acção diferente"
+  },
+  {
+    "query": "should-not: pedido que skill irmã no pipeline deve tratar",
+    "should_trigger": false,
+    "notes": ""
+  },
+  {
+    "query": "should-not: pergunta conceptual sem entrega",
+    "should_trigger": false,
+    "notes": "não confundir com pedido de execução"
+  }
+]

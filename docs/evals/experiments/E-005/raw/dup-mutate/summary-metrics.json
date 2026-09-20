@@ -1,0 +1,22 @@
+{
+  "experiment_id": "E-005",
+  "baseline_id": "baseline-v1-2026-09-18",
+  "expected_mutations": 1,
+  "sample": {
+    "control": 5,
+    "treatment_same_engine": 5,
+    "treatment_new_engine": 5
+  },
+  "metrics": {
+    "resume_success": 1,
+    "duplicate_mutate_any": false,
+    "control_all_mutation_1": true,
+    "treatment_all_mutation_1": true
+  },
+  "same_process_interruption": "MEASURED",
+  "same_process_note": "Interruption = end of run(wait_for_jobs_ms=0) then run(resume) on same or new engine in same Node process. pause() flag not used as checkpoint interrupt. OS process kill NOT_MEASURED.",
+  "os_process_kill": "NOT_MEASURED",
+  "duplicate_side_effect": "MEASURED_AS_STATE_WRITE",
+  "state_integrity": "MEASURED",
+  "runs": 15
+}

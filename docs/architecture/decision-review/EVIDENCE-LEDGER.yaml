@@ -1,0 +1,137 @@
+claims:
+
+  - id: CL-E001-01
+    claim: "Under offline harness, smaller catalog sizes were associated with higher activation_precision"
+    evidence_ids: [E001-BAT-01]
+    source: docs/evals/experiments/E-001/E-001-RESULTS.yaml
+    scope: offline_overlap_ranker / 176 tasks / seed e001-v1-2026-09-18
+    confidence: MEDIUM
+    classification: DIRECTLY_OBSERVED
+    allowed_interpretation:
+      - "catalog size affects offline activation ranking under this harness"
+    forbidden_interpretation:
+      - "catalog budget improves live agent performance"
+      - "task_success improved"
+
+  - id: CL-E001-02
+    claim: "token_estimate decreased under all treatments vs CONTROL"
+    evidence_ids: [E001-BAT-01]
+    source: docs/evals/experiments/E-001/raw/battery/battery-summary.json
+    scope: whitespace PROXY estimate of materialized prefix
+    confidence: MEDIUM
+    classification: PROXY
+    allowed_interpretation:
+      - "prefix text volume (whitespace tokens) fell with size/truncation budgets"
+    forbidden_interpretation:
+      - "vendor token cost reduced in production"
+      - "live context window improved"
+
+  - id: CL-E001-03
+    claim: "T_TOKENS_40 reduced token_estimate by ~39.6% vs CONTROL"
+    evidence_ids: [E001-BAT-01]
+    source: docs/architecture/decision-review/E-001-TOKEN-RECONCILIATION.md
+    scope: CONTROL 1673 → T_TOKENS_40 1010 only
+    confidence: HIGH
+    classification: PROXY
+    allowed_interpretation:
+      - "~40% refers only to description-truncation treatment"
+    forbidden_interpretation:
+      - "~40% applies to T_SKILLS_5 or T_SKILLS_10"
+
+  - id: CL-E001-04
+    claim: "live task_success was not measured"
+    evidence_ids: [E001-BAT-01]
+    source: docs/evals/experiments/E-001/E-001-RESULTS.yaml
+    scope: E-001 battery
+    confidence: HIGH
+    classification: NOT_MEASURED
+    allowed_interpretation:
+      - "cannot decide production budget on task outcome grounds"
+    forbidden_interpretation:
+      - "activation_match_rate equals task_success"
+
+  - id: CL-E001-05
+    claim: "live host catalog injection was not measured"
+    evidence_ids: [E001-BAT-01]
+    source: docs/evals/experiments/E-001/ENABLEMENT-REPORT.md
+    scope: Cursor/MegaBrain host
+    confidence: HIGH
+    classification: NOT_MEASURED
+    allowed_interpretation:
+      - "offline effect ≠ host injection effect"
+    forbidden_interpretation:
+      - "production skill selection behaves like offline ranker"
+
+  - id: CL-E005-01
+    claim: "No duplicate STATE_WRITE mutation observed (mutation_count=1 on 15/15 runs)"
+    evidence_ids: [E005-DM-01, E005-DM-02]
+    source: docs/evals/experiments/E-005/E-005-RESULT.md
+    scope: job-path JobFileExecutor STATE_WRITE fixture
+    confidence: HIGH
+    classification: DIRECTLY_OBSERVED
+    allowed_interpretation:
+      - "supports current resume behavior for this fixture"
+    forbidden_interpretation:
+      - "proves global exactly-once semantics"
+      - "covers external side effects beyond job JSON"
+
+  - id: CL-E005-02
+    claim: "resume_success = 1.0 on 10/10 treatment runs"
+    evidence_ids: [E005-DM-01]
+    source: docs/evals/experiments/E-005/raw/dup-mutate/summary-metrics.json
+    scope: TREATMENT_SAME_ENGINE + TREATMENT_NEW_ENGINE
+    confidence: HIGH
+    classification: DIRECTLY_OBSERVED
+    allowed_interpretation:
+      - "job-path interrupt→complete→resume worked under fixture"
+    forbidden_interpretation:
+      - "full product HITL is complete"
+      - "OS crash recovery proven"
+
+  - id: CL-E005-03
+    claim: "same-process interruption MEASURED; OS kill NOT_MEASURED"
+    evidence_ids: [E005-DM-01]
+    source: docs/evals/experiments/E-005/raw/dup-mutate/summary-metrics.json
+    scope: "wait=0 end-of-run then resume; same Node process; NEW_ENGINE ≠ OS kill"
+    confidence: HIGH
+    classification: DIRECTLY_OBSERVED
+    allowed_interpretation:
+      - "in-process same/new engine resume measured"
+    forbidden_interpretation:
+      - "process restart or SIGKILL recovery measured"
+
+  - id: CL-E005-04
+    claim: "HITL remains PARTIALLY_OBSERVED at product scope"
+    evidence_ids: [BASELINE-V1]
+    source: docs/evals/baseline/BASELINE-METRICS.yaml
+    scope: baseline + E-005 job-path only
+    confidence: HIGH
+    classification: MEASURED
+    allowed_interpretation:
+      - "job-path wait/persist/resume strengthened; confirm UX / full HITL not proven"
+    forbidden_interpretation:
+      - "E-005 upgrades HITL to fully observed product readiness"
+
+  - id: CL-BASE-01
+    claim: "Baseline V1 invariants 103/103, 7/7, 5/5 after sync and experiments"
+    evidence_ids: [BASELINE-V1]
+    source: docs/evals/baseline/
+    scope: CursorSKILLS orchestrator post runtime-sync
+    confidence: HIGH
+    classification: DIRECTLY_OBSERVED
+    allowed_interpretation:
+      - "experiment harnesses did not regress core suite"
+    forbidden_interpretation:
+      - "all research ALREADY_PRESENT claims are fully proven"
+
+  - id: CL-PRIN-01
+    claim: "Knowledge ≠ Memory ≠ Checkpoint; Evidence ≠ Telemetry; Policy Decision ≠ Enforcement"
+    evidence_ids: [BASELINE-ARCH]
+    source: docs/evals/baseline/ARCHITECTURE-BASELINE.md
+    scope: architecture baseline boundaries
+    confidence: HIGH
+    classification: DOCUMENTED_ONLY
+    allowed_interpretation:
+      - "experiments CONFIRM these boundaries remain useful"
+    forbidden_interpretation:
+      - "boundaries authorize new duplicate systems"

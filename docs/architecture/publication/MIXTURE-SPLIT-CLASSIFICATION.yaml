@@ -1,0 +1,32 @@
+# Files mixing generic logic + Gaab-specific config — plan classification only
+mixtures:
+  - path: .cursor/commands/MegaBrain.md
+    mix: brand entry + architecture orchestration contract
+    class: PROFILE_EXTRACTION  # brand rename; architecture stays
+  - path: .cursor/rules/megabrain.mdc
+    mix: discipline rules + MegaBrain name
+    class: CONFIG_EXTRACTION  # rename file/brand; keep rules
+  - path: profiles/default.yaml
+    mix: already mostly clean defaults
+    class: CLEAN_SPLIT
+  - path: .cursor/hooks (wiki-mem always-on)
+    mix: core pickup + personal memory hooks
+    class: PROFILE_EXTRACTION
+  - path: agent-setup docs / GLOBAL-SETUP.md
+    mix: install mechanism + author path examples
+    class: CONFIG_EXTRACTION
+  - path: Rules/wiki-agent or historical gaabwiki-agent references
+    mix: grounding policy + personal project table
+    class: PROFILE_EXTRACTION
+  - path: WIKI_CLI_MODULE default gaabwiki
+    mix: generic wiki backend + EXTERNAL CLI module name
+    class: ADAPTER_EXTRACTION  # keep EXTERNAL; document
+  - path: docs/architecture/portability/* host path tables
+    mix: architecture audit + personal path evidence
+    class: CLEAN_SPLIT  # keep as historical audit; sanitize for public README
+  - path: EvolveLoop sources
+    mix: none material
+    class: CLEAN_SPLIT
+  - path: KnowledgeBackend + WikiKnowledgeBackend
+    mix: none (already seamed)
+    class: CLEAN_SPLIT

@@ -1,0 +1,51 @@
+# Post-prune skill inventory
+generated: 2026-09-19T21:40:00Z
+status: PRUNING_VALIDATED
+
+counts:
+  global_before: 20
+  global_after: 13
+  local_before: 23
+  local_after: 23
+  removed: 7
+  restored: 0
+
+global_skills_remaining:
+  - agent-browser
+  - brainstorming
+  - executing-plans
+  - find-skills
+  - finishing-a-development-branch
+  - frontend-design
+  - grill-me
+  - image-to-code
+  - subagent-driven-development
+  - systematic-debugging
+  - technical-library-dossier
+  - ui-ux-pro-max
+  - writing-plans
+
+removed:
+  - linkedin-posts
+  - gsap
+  - framer-motion
+  - lenis
+  - hover-effects
+  - particles
+  - r3f-shaders
+
+explicitly_kept_review_tier:
+  - writing-plans
+  - executing-plans
+  - subagent-driven-development
+  - finishing-a-development-branch
+  - frontend-design
+  - ui-ux-pro-max
+
+host_only_untouched:
+  - ip-as-logo
+  - wiki-carpaccio
+
+pack_scope_note: >
+  Remoção limitadas a CursorSKILLS/global-skills e symlinks de pack em ~/.agents/skills.
+  Não houve apagamento indiscriminado de ~/.agents/skills/**.

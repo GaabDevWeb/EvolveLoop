@@ -1,0 +1,60 @@
+evolveloopt_final_start:
+  date: "2026-09-19"
+  mission: final_operationalization
+  claimed_baseline: baseline-v5-2026-09-19
+  reconciled: true
+  reconciled_after_impl: "2026-09-19T19:20:00Z"
+  source_of_truth: repo_code_and_live_docs
+  gaabwiki:
+    status: applied_with_gap
+    gap: "RAG no_hits for CursorSKILLS EvolveLoop; use repo docs"
+  capabilities:
+    persistent_history: IMPLEMENTED
+    cross_run_aggregation: IMPLEMENTED
+    longitudinal_detection: IMPLEMENTED
+    scoped_automatic_analysis: IMPLEMENTED
+    automatic_candidate_generation: IMPLEMENTED
+    live_registry_snapshot: IMPLEMENTED
+    runtime_observer: IMPLEMENTED_OPT_IN
+    outcome_persistence: IMPLEMENTED
+    outcome_reingestion: IMPLEMENTED
+    outcome_auto_analyze: IMPLEMENTED  # afterOutcome on LiveAnalysisCoordinator
+    observation_windows: IMPLEMENTED
+    gate_handoff_json: IMPLEMENTED
+    gate_fixture: IMPLEMENTED
+    gate_result_adapter: PARTIAL
+    production_gate_runner: NOT_IN_THIS_PACKAGE
+    user_isolation: IMPLEMENTED_LOGICAL
+    core_hold: IMPLEMENTED
+    backpressure: IMPLEMENTED
+    loop_depth_protection: IMPLEMENTED
+    runtime_non_blocking: IMPLEMENTED
+    cli_evolve: IMPLEMENTED_OPT_IN_DEFAULT_OFF
+  critical_gap:
+    id: OUTCOME_AUTO_ANALYZE
+    status: CLOSED
+    closed_by: "LiveAnalysisCoordinator.afterOutcome + closeAndFeedback; cadence after_outcome"
+    residual: "bare LongitudinalEvolveLoop.recordOutcome without coordinator still does not schedule"
+  secondary_gaps:
+    - id: PROD_GATE
+      status: EXTERNAL_FIXTURE_ONLY
+    - id: EVIDENCE_ADAPTER
+      status: NOT_CONNECTED
+    - id: EVAL_ADAPTER
+      status: NOT_CONNECTED
+    - id: USER_FEEDBACK_ADAPTER
+      status: NOT_CONNECTED
+    - id: EVENT_VOCABULARY
+      status: LIMITED_WITH_RETRY
+    - id: DISK_TENANCY
+      status: LOGICAL_SCOPE_ONLY
+  verification:
+    tests: "184/184"
+    contracts: "7/7"
+    full_cycle: "5/5"
+    environment: "linux local vitest; git ABSENT"
+    reproduced: true
+    evolveloop_tree_hash: "a2a44ba4f4d9aaff6da380c9b8e704f2268113297bb25b6524055530eb873107"
+  prior_live_status: SUCCESS_WITH_LIMITATIONS
+  autonomy_ceiling: PROPOSE
+  next_phase: ARTIFACTS_AND_BASELINE

@@ -1,0 +1,40 @@
+version: 1
+schema: agent-setup-manifest-v1
+
+platforms:
+  - debian
+  - ubuntu
+
+ide:
+  cursor:
+    required: true
+
+profiles:
+  default: standard
+
+components:
+  rules: true
+  commands: true
+  hooks: true
+  skills: true
+  megabrain: true
+  wiki: true
+  memory: true
+  rag: false
+  systemd_user: false
+
+providers:
+  cursor_api:
+    required: false
+  ollama:
+    required: false
+
+paths:
+  cursor_dir: "~/.cursor"
+  agents_skills_dir: "~/.agents/skills"
+  agent_setup_state: "~/.agent-setup"
+  backups_dir: "~/.agent-setup/backups"
+
+sources:
+  cursor_skills_repo: "${AGENTS_ROOT}"
+  vault: "${VAULT_ROOT}"

@@ -1,0 +1,49 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Contract
+metadata:
+  id: business-requirements
+  version: "1.0.0"
+  status: active
+
+spec:
+  capability: business-requirements
+  type: upstream
+
+  semver:
+    major: 1
+    minor: 0
+    patch: 0
+
+  compatible_with:
+    - "contracts/business-requirements@1.0.x"
+
+  inputs:
+    - name: feature-intent
+      required: true
+    - name: stakeholders-or-users
+      required: false
+    - name: known-constraints
+      required: false
+    - name: existing-docs
+      required: false
+    - name: brainstorming-notes
+      required: false
+
+  outputs:
+    - name: doc-package
+      schema: artifacts/doc-package@1.0.0
+    - name: approval-gate
+      schema: artifacts/human-gate@1.0.0
+
+  definition_of_done:
+    minimum_checks:
+      - package_mode_declared
+      - required_artifacts_present
+      - rf_rnf_numbered
+      - cross_check_consistency
+      - human_gate_emitted
+      - no_implementation_artifacts
+      - handoff_planner_ready
+
+  evidence:
+    schema: evidence/worker-default@1.0.0

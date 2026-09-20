@@ -1,0 +1,168 @@
+{
+  "skill_name": "technical-library-dossier",
+  "evals": [
+    {
+      "id": 1,
+      "name": "react-dossier-happy-path",
+      "category": "happy_path",
+      "tags": ["react", "framework-popular", "docs-ricas"],
+      "prompt": "Preciso dominar React antes de começar um projeto grande. Cria um dossiê técnico completo sobre React e grava em docs/dossiers/react.md.",
+      "expected_output": "Markdown com 38 secções, diagramas Mermaid em arquitectura, API de hooks documentada, referências separadas por tipo, menção a agent-browser/Puppeteer na pesquisa",
+      "files": [],
+      "assertions": [
+        {
+          "id": "has-38-sections",
+          "description": "Output contém as 38 secções numeradas do template (ou N/A justificado para SEO/A11y)",
+          "type": "structural"
+        },
+        {
+          "id": "has-mermaid",
+          "description": "Pelo menos 2 diagramas Mermaid em secções de arquitectura ou fluxo interno",
+          "type": "structural"
+        },
+        {
+          "id": "has-references-section",
+          "description": "Secção 38 com referências categorizadas (docs, GitHub, artigos, etc.)",
+          "type": "structural"
+        },
+        {
+          "id": "cites-official-sources",
+          "description": "Afirmações críticas citam react.dev ou github.com/facebook/react",
+          "type": "content"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "zustand-minimal-context",
+      "category": "minimal_context",
+      "tags": ["zustand", "state-management"],
+      "prompt": "dossiê técnico zustand",
+      "expected_output": "Agente infere LIB_NAME=Zustand, produz dossiê completo sem pedir clarificações desnecessárias",
+      "files": [],
+      "assertions": [
+        {
+          "id": "infers-lib-name",
+          "description": "Documento focado em Zustand, não state management genérico",
+          "type": "content"
+        },
+        {
+          "id": "has-comparison",
+          "description": "Secção 22 compara Zustand com Redux, Jotai ou similar em tabela",
+          "type": "structural"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "niche-lib-sparse-docs",
+      "category": "edge_case",
+      "tags": ["documentacao-escassa", "lacunas"],
+      "prompt": "Faz pesquisa profunda e dossiê completo sobre 'mitt' (event emitter). A documentação é mínima — não inventes APIs.",
+      "expected_output": "Dossiê honesto com lacunas declaradas; API pequena documentada com precisão; secção 21 sobre quando não usar",
+      "files": [],
+      "assertions": [
+        {
+          "id": "declares-gaps",
+          "description": "Secções sem info pública marcam lacuna explicitamente em vez de inventar",
+          "type": "content"
+        },
+        {
+          "id": "proportionate-api",
+          "description": "Secção API proporcional ao tamanho real da lib (não inflada artificialmente)",
+          "type": "content"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "breaking-changes-focus",
+      "category": "edge_case",
+      "tags": ["migracao", "changelog"],
+      "prompt": "Dossiê técnico sobre Next.js 15 com foco em breaking changes e migração desde v14. Todas as secções do template.",
+      "expected_output": "Secções 23, 24 e 25 detalhadas com tabela de breaking changes entre versões",
+      "files": [],
+      "assertions": [
+        {
+          "id": "breaking-changes-table",
+          "description": "Secção 24 lista breaking changes com versão de introdução",
+          "type": "structural"
+        },
+        {
+          "id": "changelog-summary",
+          "description": "Secção 25 resume evolução recente da biblioteca",
+          "type": "structural"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "tutorial-request-adversarial",
+      "category": "adversarial",
+      "tags": ["tutorial-vs-dossie"],
+      "prompt": "Me ensina React rapidinho, só o básico pra começar hoje.",
+      "expected_output": "Skill NÃO deve disparar OU se disparar por reformulação, utilizador que pediu dossiê recebe formato completo — este eval testa que pedido de tutorial rápido não é o trigger principal",
+      "files": [],
+      "assertions": [
+        {
+          "id": "not-shallow-tutorial",
+          "description": "Se executado, output tem ≥20 secções e não é só um getting started de 500 palavras",
+          "type": "format"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "ambiguous-lib-name",
+      "category": "edge_case",
+      "tags": ["ambiguidade", "clarificacao"],
+      "prompt": "Quero dossiê técnico completo sobre Motion.",
+      "expected_output": "Agente pede clarificação (Framer Motion vs Motion One) OU documenta ambas com secção de desambiguação",
+      "files": [],
+      "assertions": [
+        {
+          "id": "handles-ambiguity",
+          "description": "Resposta aborda ambiguidade do nome antes de assumir uma lib",
+          "type": "content"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "near-miss-implementation",
+      "category": "near_miss_domain",
+      "tags": ["implementacao", "nao-dossie"],
+      "prompt": "Implementa autenticação com NextAuth no meu projeto em src/auth.ts.",
+      "expected_output": "Skill não deve ser invocada — tarefa de implementação, não pesquisa/documentação de biblioteca",
+      "files": [],
+      "assertions": [
+        {
+          "id": "should-not-trigger",
+          "description": "Agente implementa código sem produzir dossiê de 38 secções",
+          "type": "behavior"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "integration-with-tools",
+      "category": "integration",
+      "tags": ["agent-browser", "puppeteer"],
+      "prompt": "/library-dossier TanStack Query — usa as ferramentas de browser obrigatórias e inclui screenshots da doc oficial na secção de arquitectura.",
+      "expected_output": "Dossiê menciona navegação real; pasta assets com screenshots; protocolo de pesquisa seguido",
+      "files": [],
+      "assertions": [
+        {
+          "id": "uses-browser-tools",
+          "description": "Evidência de uso de agent-browser e/ou Puppeteer (screenshots, URLs visitadas, não só conhecimento estático)",
+          "type": "process"
+        },
+        {
+          "id": "has-screenshots",
+          "description": "Pelo menos 1 imagem referenciada no markdown de arquitectura ou devtools",
+          "type": "structural"
+        }
+      ]
+    }
+  ]
+}

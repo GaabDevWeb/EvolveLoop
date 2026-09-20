@@ -1,0 +1,37 @@
+# Pre-prune snapshot
+timestamp: 20260919T213550Z
+git_branch: null
+git_commit: null
+working_tree_clean: n/a
+git_absent: true
+snapshot_dir: .prune-snapshots/pre-prune-20260919T213550Z
+snapshot_tarball: .prune-snapshots/global-skills-pre-prune-20260919T213550Z.tar.gz
+skills_total_global: 20
+skills_total_local: 23
+skills_protected_source: docs/architecture/skills/audit/DO-NOT-REMOVE-V2.yaml
+skills_to_remove:
+  - linkedin-posts   # PRUNE_CANDIDATE
+  - gsap             # motion standalone (user: remove from pack)
+  - framer-motion
+  - lenis
+  - hover-effects
+  - particles
+  - r3f-shaders
+skills_explicitly_kept_despite_review:
+  - writing-plans
+  - executing-plans
+  - subagent-driven-development
+  - finishing-a-development-branch
+  - frontend-design
+  - ui-ux-pro-max
+baseline:
+  unit_integration_evals: 212/212 PASS
+  orchestrator_test_files: 38
+provider_manifests: orchestrator/providers + .cursor/skills/*/provider.yaml
+commands: .cursor/commands
+agents: Agents/
+rollback_available: true
+rollback_method: tar -xzf .prune-snapshots/global-skills-pre-prune-20260919T213550Z.tar.gz -C .
+host_only_untouched:
+  - ip-as-logo
+  - wiki-carpaccio

@@ -1,0 +1,30 @@
+test_suite_fingerprint:
+  baseline_id: baseline-v1-2026-09-18
+  framework: vitest
+  framework_version_resolved: "2.1.9"
+  package_script: "vitest run"
+  test_file_count: 29
+  test_case_count_listed: 103
+  test_names_file: TEST-NAMES.txt
+  directories:
+    - tests/unit
+    - tests/integration
+    - tests/contracts
+    - tests/evals
+  critical_test_sha256:
+    - path: tests/integration/full-cycle.test.ts
+      sha256: bc1b8005db3230d0a291ad255b7a319362d512b52c99f32c73d6558a3701b6c8
+    - path: tests/integration/job-resume.test.ts
+      sha256: ad82b32f02ac84ab995f213671e19f2e2b4acdd0b306c99a7f99c16ecb2c2ed6
+    - path: tests/unit/job-pickup.test.ts
+      sha256: 87e55c87e1b1a155960e6a7c1b993f5cfd6eb67b62c34dcab6fcfc843049d771
+    - path: tests/contracts/contract-prototype.test.ts
+      sha256: e8a99173e4ee75c7295bb164ad340081aa81ea6133d80c5dfbef3afdb32215b1
+    - path: tests/unit/evidence.test.ts
+      sha256: 7d14721692a8135798b383a2b7050e04c6b91b61425e9e97a01bac6448b7065d
+    - path: tests/unit/authority.test.ts
+      sha256: b88f7346fb4f519c703a291a7d392eb2d1c6f4c50e5fce36830ee18aee10c7f5
+    - path: tests/unit/deterministic-capabilities.test.ts
+      sha256: 550fb64be45fc015255e6505f396f6c136ad2b187d0329b158e9784ddf81f80b
+  all_test_files_sha256_aggregate:
+    sha256: bea5241cd01e3f056a52af4213e648f885983c3603a329e681d0cd06480725af

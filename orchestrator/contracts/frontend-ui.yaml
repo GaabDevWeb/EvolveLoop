@@ -1,0 +1,43 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Contract
+metadata:
+  id: frontend-ui
+  version: "2.0.0"
+  status: active
+
+spec:
+  capability: frontend-ui
+  type: worker
+  semver:
+    major: 2
+    minor: 0
+    patch: 0
+
+  compatible_with:
+    - "contracts/frontend-ui@1.x"
+
+  breaking_changes:
+    - version: "2.0.0"
+      description: "design-spec obrigatório como input"
+      migration: "Adicionar input design-spec ou usar provider v1.x"
+
+  inputs:
+    - name: api-contract
+      schema: contracts/api@1.x
+      required: false
+    - name: design-spec
+      schema: artifacts/design-spec@1.0.0
+      required: true
+
+  outputs:
+    - name: ui-artifacts
+      schema: artifacts/frontend-pages@1.0.0
+
+  definition_of_done:
+    minimum_checks:
+      - ui_renders
+      - api_consumed
+      - responsive_baseline
+
+  evidence:
+    schema: evidence/worker-default@1.0.0

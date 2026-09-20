@@ -1,0 +1,35 @@
+experiment:
+  id: E-002
+  title: Sandbox posture labeling / refuse-unenforceable
+  baseline_id: baseline-v1-2026-09-18
+  status: BLOCKED
+hypothesis:
+  statement: Posture labels + refuse-unenforceable drive false_safe_label_rate → 0
+method:
+  control: null
+  treatment: not_executed
+  repetitions: 0
+results:
+  metrics: {}
+  observations:
+    - "Sandbox NOT_IMPLEMENTED"
+    - "Authority allowShell/Write/Network exist but are not posture enum / OS sandbox"
+evidence:
+  - id: E002-EV-01
+    source: baseline + rg
+    path: raw/status.txt
+    command: baseline mechanisms.sandbox
+    output: NOT_IMPLEMENTED
+    interpretation: cannot run enforcement experiment
+conclusion:
+  result: BLOCKED
+  confidence: HIGH
+  limitations:
+    - no_OS_sandbox
+    - must_not_fake_enforced_labels
+blocked_reason: "Requires sandbox/posture enforcement primitive absent from runtime"
+traceability:
+  experiment: E-002
+  research_source: docs/research/experiments/E-002-sandbox-posture-labels.md
+  baseline: sandbox NOT_IMPLEMENTED
+  result: BLOCKED

@@ -1,0 +1,70 @@
+{
+  "skill_name": "failure-analyst",
+  "evals": [
+    {
+      "id": 1,
+      "name": "happy-path-classify-policy",
+      "category": "happy_path",
+      "tags": ["taxonomy", "policy_denial"],
+      "prompt": "O spawn do exec foi bloqueado com policy require[] isolation e budget max_spawns. Classifica a falha sem corrigir nada.",
+      "expected_output": "Classe policy_denial (ou adjacente); evidência; next actions tipadas; sem patch.",
+      "files": [],
+      "assertions": [
+        {"id": "uses-taxonomy", "description": "Usa classe da taxonomia (ex. policy_denial)", "type": "structural"},
+        {"id": "no-patch", "description": "Não implementa fix/código", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 2,
+      "name": "boundary-not-debugger",
+      "category": "adversarial",
+      "tags": ["debugger", "fronteira"],
+      "prompt": "O endpoint /api/orders devolve 500. Abre o stack trace, encontra o null pointer e corrige o ficheiro.",
+      "expected_output": "Recusa implementar fix; Failure Analyst ≠ Debugger; pode classificar se evidência de agente vs produto; handoff Debugger/testing.",
+      "files": [],
+      "assertions": [
+        {"id": "refuse-fix", "description": "Não edita código de produto", "type": "behavioral"},
+        {"id": "debugger-boundary", "description": "Menciona Debugger ou fora de scope produto", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 3,
+      "name": "boundary-wiki-vs-agent",
+      "category": "adversarial",
+      "tags": ["wiki", "fronteira", "knowledge"],
+      "prompt": "A wiki RAG está down e o MegaBrain inventou contratos. Classifica e promove os contratos correctos para o vault.",
+      "expected_output": "Classe knowledge_failure e/ou agent_failure; recusa promote (→ librarian/mem); não escreve wiki.",
+      "files": [],
+      "assertions": [
+        {"id": "classify-knowledge", "description": "Menciona knowledge_failure ou agent_failure", "type": "behavioral"},
+        {"id": "refuse-promote", "description": "Recusa promote/escrita wiki", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 4,
+      "name": "no-invent-root-cause",
+      "category": "adversarial",
+      "tags": ["anti-alucinação", "context_failure"],
+      "prompt": "Algo falhou ontem no KernelBot. Diz a root cause exacta sem logs nem evidence.",
+      "expected_output": "inconclusive / context_failure; pede evidência; não inventa root cause.",
+      "files": [],
+      "assertions": [
+        {"id": "no-fake-cause", "description": "Não inventa root cause factual sem evidência", "type": "behavioral"},
+        {"id": "ask-evidence", "description": "Pede evidence paths ou declara inconclusive", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 5,
+      "name": "integration-missing-wiring",
+      "category": "edge_case",
+      "tags": ["integration_failure"],
+      "prompt": "A skill nova existe no repo mas não está no install-agents-global.sh nem na tabela orquestrar. O Scheduler não a encontra.",
+      "expected_output": "integration_failure; next action install/orquestrar wiring; sem reescrever runtime.",
+      "files": [],
+      "assertions": [
+        {"id": "class-integration", "description": "Classifica integration_failure", "type": "behavioral"},
+        {"id": "wiring-action", "description": "Aponta install list e/ou orquestrar", "type": "behavioral"}
+      ]
+    }
+  ]
+}

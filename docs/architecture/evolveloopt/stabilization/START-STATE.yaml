@@ -1,0 +1,22 @@
+stabilization_start:
+  date: "2026-09-19"
+  prior_verdict: VALIDATED_WITH_LIMITATIONS
+  prior_tests: 138
+  gaps:
+    - analyze_default_unscoped
+    - outcomes_not_reingested
+    - registry_injected_only
+    - adapters_not_runtime_wired
+  reuse:
+    - CapabilityRegistry
+    - EventBus
+    - JsonlEventPersister
+    - resolveDataPaths.evolutionDir
+    - ExecutionEngine (opt-in)
+  forbidden:
+    - second_registry
+    - second_event_bus
+    - second_evolution_engine
+  baselines:
+    do_not_mutate: [v1, v2, v3]
+    create_v4_when_criteria_met: true

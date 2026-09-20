@@ -1,0 +1,34 @@
+# DO NOT REMOVE V2
+generated: 2026-09-19
+
+do_not_remove:
+  - orquestrar
+  - gaabwiki
+  - gaabwiki-mem
+  - prd
+  - planner
+  - grill-me          # HARD-GATE operational
+  - image-to-code     # HARD-GATE
+  - frontend-pro
+  - backend
+  - testing
+  - debugger
+  - systematic-debugging  # ABSORBED source DO
+  - security
+  - po-review
+  - documentation
+  - agent-browser     # dossier HARD + FE fallback
+  - technical-library-dossier
+  - find-skills       # user discovery + /descobrir
+  - brainstorming     # optional upstream still referenced
+  - researcher
+  - architect
+  - adr
+  - code-reviewer
+  - validator
+  - database
+  - devops
+  - failure-analyst
+  - agent-authoring
+  - skill-authoring
+  - agent-architecture-mining

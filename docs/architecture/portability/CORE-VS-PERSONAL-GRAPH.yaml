@@ -1,0 +1,86 @@
+# PERSONALIZATION → CORE dependency graph
+
+edges:
+  - from: GaabWiki
+    to: Knowledge abstraction
+    TYPE: DIRECT_RUNTIME
+    DIRECTION: PERSONAL → CORE
+    SEVERITY: CRITICAL
+    REMOVABILITY: hard_without_replacement
+
+  - from: /home/gaab/... defaults
+    to: Config / RAG_REPO_ROOT
+    TYPE: CONFIGURATION
+    DIRECTION: PERSONAL → CORE
+    SEVERITY: CRITICAL
+    REMOVABILITY: medium
+
+  - from: gaabwiki agent/skill
+    to: Agent / skill system
+    TYPE: DIRECT_RUNTIME
+    DIRECTION: PERSONAL → CORE
+    SEVERITY: HIGH
+    REMOVABILITY: medium
+
+  - from: /wiki /mem commands
+    to: Orchestrator workflow
+    TYPE: OPTIONAL
+    DIRECTION: PERSONAL → CORE
+    SEVERITY: HIGH
+    REMOVABILITY: medium
+
+  - from: gaabwiki-mem hooks
+    to: Cursor session runtime
+    TYPE: DIRECT_RUNTIME
+    DIRECTION: PERSONAL → CORE
+    SEVERITY: HIGH
+    REMOVABILITY: medium
+
+  - from: Project pack map (KernelBot…)
+    to: Grounding ritual
+    TYPE: CONFIGURATION
+    DIRECTION: PERSONAL → CORE
+    SEVERITY: MEDIUM
+    REMOVABILITY: easy
+
+  - from: GaabDevWeb naming
+    to: Documentation / clone
+    TYPE: NAMING
+    DIRECTION: PERSONAL → DOCS
+    SEVERITY: LOW
+    REMOVABILITY: easy
+
+  - from: ADR-0004 GaabWiki=RAG
+    to: Architecture decision
+    TYPE: DOCUMENTATION
+    DIRECTION: PERSONAL → CORE
+    SEVERITY: HIGH
+    REMOVABILITY: hard
+
+  - from: python -m gaabwiki
+    to: knowledge.search provider
+    TYPE: DIRECT_RUNTIME
+    DIRECTION: PERSONAL → CORE
+    SEVERITY: HIGH
+    REMOVABILITY: medium
+
+  - from: Portuguese command names
+    to: UX surface
+    TYPE: OPTIONAL
+    DIRECTION: PERSONAL → WORKFLOW
+    SEVERITY: LOW
+    REMOVABILITY: easy
+
+  - from: memory/ and eval battery paths
+    to: Repo tree
+    TYPE: ACCIDENTAL
+    DIRECTION: HOST → REPO
+    SEVERITY: INFORMATIONAL
+    REMOVABILITY: easy
+
+  - from: Essential pack absolute paths
+    to: Rebuild manifests
+    TYPE: ACCIDENTAL
+    DIRECTION: PERSONAL → DOCS
+    SEVERITY: MEDIUM
+    REMOVABILITY: easy

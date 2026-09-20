@@ -1,0 +1,25 @@
+evolveloopt_v1_final_start:
+  date: "2026-09-19"
+  mission: v1_final_audit_freeze_operations
+  claimed_prior_baseline: baseline-v6-2026-09-19
+  reproduced:
+    tests_before_correction: "184/184"
+    tests_after_correction: "196/196"
+    contracts: "7/7"
+    full_cycle: "5/5"
+  gaabwiki:
+    status: applied_with_gap
+    gap: "RAG no_hits for CursorSKILLS EvolveLoop"
+  confirmed_defects_at_start:
+    - id: V1-C-001
+      severity: HIGH
+      status: CORRECTED
+      summary: scope_fallback_stamp_leak
+    - id: V1-C-002
+      severity: MED
+      status: CORRECTED
+      summary: unlabeled_gate_overtrusted
+  autonomy_ceiling: PROPOSE
+  v1_definition:
+    includes: [persistent, longitudinal, event-driven, scope-aware, gated, observable, bounded, testable, traceable]
+    excludes: [fully_autonomous, self_modifying, production_proven, agi_evolution]

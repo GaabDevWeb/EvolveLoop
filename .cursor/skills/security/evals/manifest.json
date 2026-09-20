@@ -1,0 +1,80 @@
+{
+  "version": "1.1.0",
+  "framework_version": "2.1.0",
+  "architecture_frozen": true,
+  "fixture_states": {
+    "vulnerable": "Vulnerabilidade real — must detect + block",
+    "fixed": "Corrigido — must not block",
+    "ambiguous": "Seguro mas parece perigoso — must not block; L0-L1 OK"
+  },
+  "benchmark_categories": {
+    "A_parity": {
+      "goal": "Não ser significativamente pior que ferramentas tradicionais em classes OWASP/SAST clássicas.",
+      "examples": ["SQLi", "XSS", "SSRF", "Path Traversal", "Command Injection", "Secrets", "Mass Assignment", "JWT", "CORS", "CSP"]
+    },
+    "B_complementary": {
+      "goal": "Onde o framework agrega valor (contexto, lógica, cadeias, arquitetura).",
+      "examples": ["Business Logic", "IDOR complexo", "Attack Chains", "Threat Modeling", "Multi-step exploit", "LLM Security", "Trust Boundaries", "Never Trust Client", "Riscos de integração"]
+    },
+    "C_orchestration": {
+      "goal": "Medir qualidade de orquestração (auto-planeamento / activação de módulos / coverage coerente).",
+      "examples": ["providers activados correctamente", "scanners escolhidos", "capabilities detectadas", "módulos desnecessários evitados", "coverage coerente"]
+    }
+  },
+  "runner_matrix": [
+    "baseline",
+    "with_skill",
+    "semgrep",
+    "codeql",
+    "with_skill+semgrep",
+    "with_skill+codeql"
+  ],
+  "runner_matrix_deep": [
+    "with_skill-ablation"
+  ],
+  "categories": {
+    "auth": {
+      "idor-basic": { "status": "implemented", "priority": "P0", "fixture_states": ["vulnerable", "fixed"], "benchmark_class": "B_complementary" },
+      "mass-assignment": { "status": "implemented", "priority": "P0", "fixture_states": ["vulnerable", "fixed"], "benchmark_class": "A_parity" },
+      "bola-nested": { "status": "planned", "priority": "P1" },
+      "jwt-none": { "status": "planned", "priority": "P1" }
+    },
+    "injections": {
+      "sqli-classic": { "status": "implemented", "priority": "P0", "fixture_states": ["vulnerable", "fixed"], "benchmark_class": "A_parity" },
+      "sqli-suspect-safe": { "status": "implemented", "priority": "P0", "fixture_states": ["ambiguous", "fixed"], "benchmark_class": "A_parity" },
+      "redirect-allowlist": { "status": "implemented", "priority": "P0", "fixture_states": ["ambiguous"], "benchmark_class": "A_parity" },
+      "sqli-orm": { "status": "planned", "priority": "P1" },
+      "ssti": { "status": "planned", "priority": "P2" },
+      "xss-react": { "status": "planned", "priority": "P1" },
+      "xss-angular": { "status": "planned", "priority": "P2" }
+    },
+    "business": {
+      "negative-price": { "status": "implemented", "priority": "P0", "fixture_states": ["vulnerable", "fixed"], "benchmark_class": "B_complementary" },
+      "coupon-race": { "status": "planned", "priority": "P1" },
+      "replay-payment": { "status": "planned", "priority": "P1" },
+      "inventory-race": { "status": "planned", "priority": "P1" }
+    },
+    "regression": {
+      "xss-return": { "status": "planned", "priority": "P0" }
+    },
+    "llm": {
+      "prompt-injection": { "status": "planned", "priority": "P2" },
+      "tool-escalation": { "status": "planned", "priority": "P2" },
+      "rag-leak": { "status": "planned", "priority": "P2" }
+    },
+    "cloud": { "_status": "planned" },
+    "docker": { "_status": "planned" },
+    "kubernetes": { "_status": "planned" },
+    "graphql": { "_status": "planned" },
+    "websocket": { "_status": "planned" },
+    "oauth": { "_status": "planned" },
+    "csrf": { "_status": "planned" }
+  },
+  "ship_gate": {
+    "min_recall_implemented": 0.8,
+    "max_fp_block_rate_on_fixed": 0.05,
+    "max_fp_block_rate_on_ambiguous": 0.05,
+    "max_recall_drop_per_release": 0.05,
+    "min_with_skill_win_rate": 0.6
+  }
+}

@@ -1,0 +1,5 @@
+title = "AG benchmark iteration-6 gitleaks"
+# Uses gitleaks default rules; P0 fixtures have no secrets by design.
+
+[extend]
+useDefault = true

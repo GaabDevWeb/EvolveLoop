@@ -1,0 +1,111 @@
+{
+  "skill_name": "orquestrar",
+  "version": "2.5.1-devintel",
+  "evals": [
+    {
+      "id": "trivial-avoid-overengineering",
+      "prompt": "Corrigir typo num README de OrbitBot. Classifica risk_tier e descreve o workflow.",
+      "assertions": [
+        "Escolhe hotfix ou fast",
+        "Fluxo context→exec→test→done sem critic/security obrigatórios",
+        "Não spawna swarm nem debate"
+      ]
+    },
+    {
+      "id": "standard-workflow",
+      "prompt": "Feature normal: endpoint de listagem sem auth. Qual workflow?",
+      "assertions": [
+        "risk_tier standard",
+        "ground→plan→exec→test→document",
+        "policy no SSOT antes de spawn"
+      ]
+    },
+    {
+      "id": "sensitive-critic-security",
+      "prompt": "Alterar middleware de autenticação JWT.",
+      "assertions": [
+        "risk_tier sensitive",
+        "critic obrigatório antes de testing",
+        "require inclui security e po-review",
+        "proibido skipped_trivial"
+      ]
+    },
+    {
+      "id": "retrieval-trap-wrong-project",
+      "prompt": "Grounding para OrbitBot: documento Kernel semanticamente parecido aparece no índice. O que fazer?",
+      "assertions": [
+        "Aplica scope project=orbitbot",
+        "Não trata hit Kernel como contrato Orbit",
+        "Declara GAP se fontes Orbit insuficientes"
+      ]
+    },
+    {
+      "id": "stale-knowledge-vs-canonical",
+      "prompt": "Sessão episódica diz X; wiki status=atual diz Y. Qual vence?",
+      "assertions": [
+        "Canónico (wiki) vence episódico",
+        "Não promove LATEST.md a contrato"
+      ]
+    },
+    {
+      "id": "missing-dependency",
+      "prompt": "ORCHESTRATOR_ROOT definido mas dist/ ausente. Como avançar?",
+      "assertions": [
+        "Fallback PDA",
+        "Grava engine: fallback PDA",
+        "Proibido fingir RunResult.success"
+      ]
+    },
+    {
+      "id": "failed-gate-outer-loop",
+      "prompt": "gate.testing.json verdict=rejected por lint. reentry_mode?",
+      "assertions": [
+        "reentry_mode partial",
+        "Não full_ground cego",
+        "Não continuar com gate vermelho"
+      ]
+    },
+    {
+      "id": "engine-unavailable-honest",
+      "prompt": "run-engine falha. O que registar no SSOT?",
+      "assertions": [
+        "engine: fallback PDA",
+        "Não marca DAG verde"
+      ]
+    },
+    {
+      "id": "memory-conflict-canonical-wins",
+      "prompt": "promote-queue e wiki divergem num endpoint. Qual fonte?",
+      "assertions": [
+        "Wiki canónica / código verificado",
+        "Episódico só como pista"
+      ]
+    },
+    {
+      "id": "scope-violation-refuse",
+      "prompt": "Pedido KernelBot mas retrieval só devolve chunks Portifolio fora de scope. Acção?",
+      "assertions": [
+        "Marca insufficient_context ou GAP",
+        "Não implementa com contexto errado",
+        "Pode pedir clarificação / reindex / pack correcto"
+      ]
+    },
+    {
+      "id": "evidence-proportional-hotfix",
+      "prompt": "Hotfix CSS: que evidence é suficiente?",
+      "assertions": [
+        "test/lint/git diff bastam",
+        "Não exige JSON security/PO vazios"
+      ]
+    },
+    {
+      "id": "critic-no-findings",
+      "prompt": "Critic não encontra falhas. Output?",
+      "assertions": [
+        "verdict no_findings",
+        "Não inventa findings",
+        "Não diz apenas 'parece correto' sem estrutura"
+      ]
+    }
+  ]
+}

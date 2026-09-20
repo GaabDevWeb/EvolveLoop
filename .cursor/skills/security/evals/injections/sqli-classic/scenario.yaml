@@ -1,0 +1,35 @@
+id: injections/sqli-classic
+version: 1
+category: injections
+priority: P0
+description: SQL concatenado com query param id
+
+stack: node-express-sqlite
+providers_expected: [api-security-reviewer]
+
+vulnerable:
+  prompt: |
+    Audita GET /users?id= em evals/injections/sqli-classic/vulnerable/.
+  expected:
+    must_detect: [SQL_INJECTION]
+    must_block: true
+    min_evidence_level: L2
+    must_include_cwe: [CWE-89]
+    must_include_owasp: ["A03:2021"]
+    must_include_mitre: [T1190]
+  tool_comparison:
+    semgrep: should_detect: true
+
+fixed:
+  prompt: |
+    Audita GET /users?id= em evals/injections/sqli-classic/fixed/.
+  expected:
+    must_detect: []
+    must_block: false
+    must_not_block: true
+
+assertions:
+  - id: sqli
+    description: Vulnerabilidade SQLi por concatenação
+  - id: taxonomy
+    description: CWE-89 mapeado

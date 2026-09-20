@@ -1,0 +1,42 @@
+experiment:
+  id: E-001
+  title: Skill catalog budget prototype
+  baseline_id: baseline-v1-2026-09-18
+  status: BLOCKED
+hypothesis:
+  statement: Catalog budget (max_skills/max_description_tokens) improves precision and lowers prefix tokens at similar success
+method:
+  control: CONTROL_NOT_AVAILABLE
+  treatment: not_executed
+  repetitions: 0
+  procedure: "Search confirmed no budget API; inventory only"
+results:
+  metrics: {}
+  observations:
+    - "23 skills under .cursor/skills; 20 under global-skills"
+    - "No max_skills/max_description_tokens in orchestrator/src"
+evidence:
+  - id: E001-EV-01
+    source: filesystem
+    path: raw/skill-inventory.txt
+    command: find SKILL.md counts
+    output: "23 + 20 packages"
+    interpretation: catalog exists but unmanaged by budget API
+  - id: E001-EV-02
+    source: ripgrep
+    path: raw/budget-api-search.txt
+    command: "rg max_skills|max_description_tokens orchestrator/src"
+    output: NO_MATCHES
+    interpretation: treatment surface absent
+conclusion:
+  result: BLOCKED
+  confidence: HIGH
+  limitations:
+    - no_host_catalog_budget_harness
+    - would_require_new_control_API
+blocked_reason: "No configurable catalog budget / measurable activation harness; implementing would violate no-new-primitive rule"
+traceability:
+  experiment: E-001
+  research_source: docs/research/experiments/E-001-skill-catalog-budget.md
+  baseline: no budget mechanism
+  result: BLOCKED

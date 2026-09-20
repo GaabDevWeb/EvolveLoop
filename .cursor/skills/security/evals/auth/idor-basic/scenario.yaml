@@ -1,0 +1,39 @@
+id: auth/idor-basic
+version: 1
+category: auth
+priority: P0
+description: User autenticado acede perfil de outro user via ID no path sem ownership check
+
+stack: node-express
+providers_expected: [auth-reviewer, api-security-reviewer]
+
+vulnerable:
+  prompt: |
+    Fase 4 /seguranca. Audita o endpoint GET /users/:id em evals/auth/idor-basic/vulnerable/.
+    User 14 autenticado pode ver user 15?
+  expected:
+    must_detect: [IDOR, BOLA, BROKEN_ACCESS_CONTROL]
+    must_block: true
+    min_evidence_level: L2
+    must_include_cwe: [CWE-639, CWE-862]
+    must_include_owasp: ["A01:2021"]
+  known_false_negative: null
+
+fixed:
+  prompt: |
+    Fase 4 /seguranca. Audita GET /users/:id em evals/auth/idor-basic/fixed/ (versão corrigida).
+  expected:
+    must_detect: []
+    must_block: false
+    must_not_block: true
+  known_false_positive: "Enumeração por timing ainda possível — informativo OK, não bloquear"
+
+assertions:
+  - id: idor-detected
+    description: Identifica IDOR ou acesso cross-user
+  - id: authz-table
+    description: Tabela Recurso|Ação|Controle|Falha ou equivalente
+  - id: verdict-vuln
+    description: BLOQUEADO em vulnerable
+  - id: verdict-fixed
+    description: SEGURO PARA RELEASE em fixed (sem bloqueio por IDOR)

@@ -1,0 +1,59 @@
+{
+  "skill_name": "frontend-pro",
+  "version": "1.1.0",
+  "evals": [
+    {
+      "id": 1,
+      "name": "build-login-page",
+      "category": "happy_path",
+      "prompt": "Cria página login Next.js + Tailwind. Modo Build.",
+      "assertions": [
+        { "id": "mode-build", "description": "Modo Build explícito" },
+        { "id": "boot-sequence", "description": "Boot sequence ou stack detectada" },
+        { "id": "tokens", "description": "Menciona design tokens ou ui-ux-pro-max" }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "review-screenshots",
+      "category": "happy_path",
+      "prompt": "Review visual localhost:3000/login. Modo Review.",
+      "assertions": [
+        { "id": "mode-review", "description": "Modo Review" },
+        { "id": "screenshots", "description": "Matriz screenshots ou .frontend-review/" },
+        { "id": "viewport", "description": "Multi-viewport mencionado" }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "testing-boundary",
+      "category": "near_miss_domain",
+      "prompt": "Corre Cypress E2E na login page.",
+      "assertions": [
+        { "id": "no-e2e", "description": "Recusa E2E/testing" },
+        { "id": "redirect", "description": "Redireciona testing skill" }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "vision-landing",
+      "category": "edge_case",
+      "prompt": "Landing premium SaaS com mockup Figma. Modo Vision.",
+      "assertions": [
+        { "id": "mode-vision", "description": "Modo Vision" },
+        { "id": "image-to-code", "description": "Delega image-to-code" }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "orquestrador-handoff",
+      "category": "integration",
+      "prompt": "UI login entregue. Handoff orquestrador Fase 2.",
+      "assertions": [
+        { "id": "entrega", "description": "ENTREGA CONSOLIDADA ou paths" },
+        { "id": "capability", "description": "frontend-ui worker" },
+        { "id": "review-next", "description": "Menciona frontend-review Fase 2.5 se aplicável" }
+      ]
+    }
+  ]
+}

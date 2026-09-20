@@ -1,0 +1,116 @@
+{
+  "skill_name": "agent-authoring",
+  "description_under_test": "current",
+  "queries": [
+    {
+      "id": 1,
+      "query": "Cria um novo agente Security",
+      "should_trigger": true
+    },
+    {
+      "id": 2,
+      "query": "Revise o Developer Agent",
+      "should_trigger": true
+    },
+    {
+      "id": 3,
+      "query": "Adicione capacidades ao Researcher",
+      "should_trigger": true
+    },
+    {
+      "id": 4,
+      "query": "Divida esse agente em dois",
+      "should_trigger": true
+    },
+    {
+      "id": 5,
+      "query": "Audite o Agent System",
+      "should_trigger": true
+    },
+    {
+      "id": 6,
+      "query": "Verifique se os agentes estão integrados ao Orchestrator",
+      "should_trigger": true
+    },
+    {
+      "id": 7,
+      "query": "Crie evals para esse agente",
+      "should_trigger": true
+    },
+    {
+      "id": 8,
+      "query": "/agent-authoring migrate contract do planner",
+      "should_trigger": true
+    },
+    {
+      "id": 9,
+      "query": "Detect duplicated agents in MegaBrain",
+      "should_trigger": true
+    },
+    {
+      "id": 10,
+      "query": "Atualize todos os agentes para o novo contrato",
+      "should_trigger": true
+    },
+    {
+      "id": 11,
+      "query": "Melhora só a description da skill testing para disparar melhor",
+      "should_trigger": false,
+      "near_miss": "skill-authoring"
+    },
+    {
+      "id": 12,
+      "query": "Escreve evals comparativos with_skill vs baseline para frontend-pro",
+      "should_trigger": false,
+      "near_miss": "skill-authoring"
+    },
+    {
+      "id": 13,
+      "query": "/MegaBrain implementa endpoint de login",
+      "should_trigger": false,
+      "near_miss": "orquestrar"
+    },
+    {
+      "id": 14,
+      "query": "Implementa a API de pagamentos no backend",
+      "should_trigger": false,
+      "near_miss": "backend"
+    },
+    {
+      "id": 15,
+      "query": "Corre o gate de segurança nesta feature",
+      "should_trigger": false,
+      "near_miss": "security"
+    },
+    {
+      "id": 16,
+      "query": "Regista ADR sobre escolha de Postgres",
+      "should_trigger": false,
+      "near_miss": "adr"
+    },
+    {
+      "id": 17,
+      "query": "Planeja a feature de export CSV",
+      "should_trigger": false,
+      "near_miss": "planner"
+    },
+    {
+      "id": 18,
+      "query": "Como funciona o Evidence Bus?",
+      "should_trigger": false,
+      "near_miss": "conceptual/orquestrar docs"
+    },
+    {
+      "id": 19,
+      "query": "Cria uma rule do Cursor para commits em português",
+      "should_trigger": false,
+      "near_miss": "create-rule"
+    },
+    {
+      "id": 20,
+      "query": "Instala a skill brainstorming do skills.sh",
+      "should_trigger": false,
+      "near_miss": "find-skills"
+    }
+  ]
+}

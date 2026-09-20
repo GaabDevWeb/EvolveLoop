@@ -1,0 +1,36 @@
+{
+  "skill_name": "example-skill",
+  "evals": [
+    {
+      "id": 1,
+      "name": "descriptive-eval-name",
+      "category": "happy_path",
+      "tags": ["exemplo", "dominio"],
+      "prompt": "Prompt realista com contexto: paths, papel do utilizador, nomes de ficheiros",
+      "expected_output": "Descrição do que um output correcto contém",
+      "files": [],
+      "assertions": [
+        {
+          "id": "has-required-sections",
+          "description": "Output contém todas as secções obrigatórias definidas na skill",
+          "type": "structural"
+        },
+        {
+          "id": "format-valid",
+          "description": "Formato de saída respeita o template da skill",
+          "type": "format"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "edge-case-eval",
+      "category": "edge_case",
+      "tags": [],
+      "prompt": "Segundo prompt cobrindo caso limite ou input inesperado",
+      "expected_output": "Como a skill deve lidar com o edge case",
+      "files": [],
+      "assertions": []
+    }
+  ]
+}

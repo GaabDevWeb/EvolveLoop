@@ -1,0 +1,26 @@
+{
+  "skill_name": "wiki",
+  "description_under_test": "see SKILL.md frontmatter",
+  "queries": [
+    {"id": 1, "query": "Scout BM25 na Wiki do KernelBot", "should_trigger": true},
+    {"id": 2, "query": "O que a wiki diz da integração OrbitBot com o Kernel?", "should_trigger": true},
+    {"id": 3, "query": "/wiki scout gaps no RAG kernelbot", "should_trigger": true},
+    {"id": 4, "query": "Carrega o pack kernelbot-rag antes de eu implementar", "should_trigger": true},
+    {"id": 5, "query": "Grounding Obsidian karpathyWiki para o filtro por projeto", "should_trigger": true},
+    {"id": 6, "query": "Quais contratos da Wiki para o ISS / Xray-Spec?", "should_trigger": true},
+    {"id": 7, "query": "Antes de mexer no KernelBot, o que a wiki documenta sobre search?", "should_trigger": true},
+    {"id": 8, "query": "Usa a skill wiki para scout de arquitectura OrbitBot", "should_trigger": true},
+    {"id": 9, "query": "Wiki do ecossistema Gaab: paths do BM25", "should_trigger": true},
+    {"id": 10, "query": "Injeta grounding da vault antes de editar KernelBot", "should_trigger": true},
+    {"id": 11, "query": "Explica o que é RAG em geral", "should_trigger": false},
+    {"id": 12, "query": "Cria um componente React de login", "should_trigger": false},
+    {"id": 13, "query": "Debug este erro TypeError em Python sem relação à wiki", "should_trigger": false},
+    {"id": 14, "query": "Como configurar Ollama para um projeto qualquer", "should_trigger": false},
+    {"id": 15, "query": "Escreve um commit message para estas mudanças", "should_trigger": false},
+    {"id": 16, "query": "Compara LangChain vs LlamaIndex conceptualmente", "should_trigger": false},
+    {"id": 17, "query": "Abre o Linear e cria um issue genérico", "should_trigger": false},
+    {"id": 18, "query": "Refatora este ficheiro CSS do landing page", "should_trigger": false},
+    {"id": 19, "query": "Quanto é 15% de 240?", "should_trigger": false},
+    {"id": 20, "query": "Gera um PR description para o repo actual", "should_trigger": false}
+  ]
+}

@@ -1,0 +1,175 @@
+# Personal connections — what binds personal env into MegaBrain
+# diagnostic only
+
+connections:
+  - id: PC-001
+    from: GaabWiki vault (karpathyWiki)
+    to: MegaBrain HARD-GATE (orquestrar)
+    type: DIRECT_RUNTIME
+    direction: PERSONALIZATION → CORE
+    severity: CRITICAL
+    removability: hard
+    evidence:
+      - .cursor/skills/orquestrar/references/gaabwiki-grounding-gate.md
+      - .cursor/skills/orquestrar/SKILL.md
+      - Rules/gaabwiki-agent.mdc
+    publication: EXTRACT_TO_PROFILE
+
+  - id: PC-002
+    from: DEFAULT_RAG_ROOT=/home/gaab/Documentos/gitHub/karpathyWiki
+    to: knowledge.search provider
+    type: DIRECT_RUNTIME
+    direction: PERSONALIZATION → CORE
+    severity: CRITICAL
+    removability: medium
+    evidence:
+      - orchestrator/src/providers/deterministic/knowledge.ts:6-9
+    note: "Env RAG_REPO_ROOT overrides; default is host-personal"
+    publication: GENERALIZE_FIRST
+
+  - id: PC-003
+    from: ground.sh ROOT default
+    to: /wiki skill ritual
+    type: DIRECT_RUNTIME
+    direction: PERSONALIZATION → CORE
+    severity: CRITICAL
+    removability: medium
+    evidence:
+      - .cursor/skills/gaabwiki/scripts/ground.sh:11
+    publication: GENERALIZE_FIRST
+
+  - id: PC-004
+    from: mem.py VAULT default (/home/gaab/Documentos/karpathyWiki)
+    to: episodic hooks
+    type: DIRECT_RUNTIME
+    direction: PERSONALIZATION → CORE
+    severity: HIGH
+    removability: medium
+    evidence:
+      - .cursor/hooks/gaabwiki-mem/mem.py:13
+    note: "DIVERGENT default vs ground.sh (gitHub path) — dual personal path drift"
+    publication: GENERALIZE_FIRST
+
+  - id: PC-005
+    from: Rules/gaabwiki-agent.mdc vault path (legado)
+    to: all Cursor workspaces alwaysApply
+    type: CONFIGURATION
+    direction: PERSONALIZATION → CORE
+    severity: HIGH
+    removability: medium
+    evidence:
+      - Rules/gaabwiki-agent.mdc:8
+    publication: EXTRACT_TO_PROFILE
+
+  - id: PC-006
+    from: Project pack map (KernelBot, OrbitBot, ISS, Portifolio, Xray-Spec)
+    to: gaabwiki grounding ritual
+    type: CONFIGURATION
+    direction: PERSONALIZATION → CORE
+    severity: HIGH
+    removability: easy
+    evidence:
+      - Rules/gaabwiki-agent.mdc project table
+      - .cursor/skills/gaabwiki/references/packs.md
+    publication: EXTRACT_TO_PROFILE
+
+  - id: PC-007
+    from: GaabDevWeb GitHub org
+    to: README clone URLs
+    type: NAMING
+    direction: PERSONALIZATION → DOCS
+    severity: LOW
+    removability: easy
+    evidence:
+      - README.md:3
+    publication: GENERALIZE_FIRST
+
+  - id: PC-008
+    from: ~/.cursor/agents.env AGENTS_ROOT
+    to: orchestrator runtime resolution
+    type: CONFIGURATION
+    direction: HOST → CORE
+    severity: MEDIUM
+    removability: easy
+    evidence:
+      - ~/.cursor/agents.env (user-global)
+      - scripts/install-agents-global.sh writes REPO_ROOT
+    publication: READY_AS_IS
+    note: "Mechanism portable; current value is host-specific"
+
+  - id: PC-009
+    from: ADR-0004 RAG = GaabWiki
+    to: platform knowledge architecture
+    type: DOCUMENTATION
+    direction: PERSONALIZATION → CORE decision
+    severity: HIGH
+    removability: hard
+    evidence:
+      - docs/adr/0004-project-knowledge-contract.md
+    publication: EXTRACT_TO_PROFILE
+
+  - id: PC-010
+    from: python -m gaabwiki CLI
+    to: deterministic knowledge provider
+    type: DIRECT_RUNTIME
+    direction: PERSONALIZATION → CORE
+    severity: HIGH
+    removability: medium
+    evidence:
+      - orchestrator/src/providers/deterministic/knowledge.ts:18
+    publication: EXTRACT_TO_PROFILE
+
+  - id: PC-011
+    from: Portuguese command surface (/planejar, /testes, /seguranca)
+    to: Cursor UX
+    type: OPTIONAL
+    direction: PERSONALIZATION → WORKFLOW
+    severity: LOW
+    removability: easy
+    evidence:
+      - .cursor/commands/*.md
+    publication: EXTRACT_TO_PROFILE
+
+  - id: PC-012
+    from: memory/* feature sessions + .prune-snapshots
+    to: local working tree
+    type: ACCIDENTAL
+    direction: HOST → REPO
+    severity: INFORMATIONAL
+    removability: easy
+    evidence:
+      - memory/, .prune-snapshots/
+    publication: REMOVE_FROM_PUBLIC_CORE
+
+  - id: PC-013
+    from: reverseEnginering research corpus paths in docs
+    to: docs/research
+    type: DOCUMENTATION
+    direction: PERSONALIZATION → DOCS
+    severity: LOW
+    removability: easy
+    evidence:
+      - docs/research/README.md
+    publication: REMOVE_FROM_PUBLIC_CORE
+
+  - id: PC-014
+    from: gaabwiki-mem hooks always-on
+    to: Cursor session lifecycle
+    type: DIRECT_RUNTIME
+    direction: PERSONALIZATION → WORKFLOW
+    severity: HIGH
+    removability: medium
+    evidence:
+      - .cursor/hooks.json
+    publication: EXTRACT_TO_PROFILE
+
+  - id: PC-015
+    from: Essential skill pack marks gaabwiki critical+hard_gate
+    to: environment rebuild
+    type: CONFIGURATION
+    direction: PERSONALIZATION → DEPLOY
+    severity: HIGH
+    removability: easy
+    evidence:
+      - docs/architecture/skills/environment/CURSOR-ESSENTIAL-SKILL-PACK.yaml
+    publication: EXTRACT_TO_PROFILE

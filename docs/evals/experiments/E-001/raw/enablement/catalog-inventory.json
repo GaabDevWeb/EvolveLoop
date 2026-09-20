@@ -1,0 +1,167 @@
+{
+  "skills": [
+    {
+      "skill_id": "adr",
+      "name": "adr",
+      "description": "Architecture Decision Record: documenta decis\u00f5es irrevers\u00edveis ou de alto impacto\nem docs/adr/NNNN-titulo.md. Use quando invocar /adr, registar decis\u00e3o arquitectural,\nescolher stack, padr\u00e3o ou trade-off t\u00e9cnico mid-cycle, ou complementar pacote prd\ncom ADR isolado. Modification formal local \u2014 n\u00e3o substitui pacote completo (use /prd)\nnem an\u00e1lise estrutural ampla (use /architect). N\u00e3o use para requisitos de neg\u00f3cio (prd),\ndesenho de sistema (architect), plano de tarefas (planner), implementa\u00e7\u00e3o (backend),\nnem brainstorming.",
+      "bytes": 3287
+    },
+    {
+      "skill_id": "agent-architecture-mining",
+      "name": "agent-architecture-mining",
+      "description": "Engenharia reversa arquitetural de sistemas agentic: desmonta frameworks,\ncoding agents, Agent Skills e protocolos de tools; extrai mecanismos com\nevid\u00eancias; compara com o Agent System MegaBrain (ALREADY_PRESENT|ADOPT|\nADAPT|PROTOTYPE|DEFER|REJECT). Use quando invocar /agent-architecture-mining,\nminerar arquitectura agentic, reverse-engineer LangGraph/CrewAI/OpenAI Agents/\nClaude Code/Codex/Cursor/MCP/Anthropic Skills, extrair padr\u00f5es/anti-padr\u00f5es,\ngap analysis vs nosso sistema, ou princ\u00edpios em AGENT_ARCHITECTURE_PRINCIPLES.md.\nN\u00e3o use para implementar mudan\u00e7as no Agent System (agent-authoring), desenhar\na nossa arquitectura de produto (architect), dossi\u00ea gen\u00e9rico de biblioteca\n(technical-library-dossier), pesquisa web gen\u00e9rica (researcher), nem orquestrar\nfeatures (orquestrar).",
+      "bytes": 6165
+    },
+    {
+      "skill_id": "agent-authoring",
+      "name": "agent-authoring",
+      "description": "F\u00e1brica e manuten\u00e7\u00e3o de agentes do ecossistema MegaBrain: cria, audita, revisa,\nactualiza, migra, valida, versiona e integra Agent Packages (Skill + Command +\nProvider/Contract + Agents espelho + install/orquestrar). Use quando o utilizador\ninvocar /agent-authoring, pedir criar/revisar/actualizar agente, adicionar\ncapacidades, dividir/fundir agentes, auditar o Agent System, verificar integra\u00e7\u00e3o\nao Orchestrator, criar evals de agente, detectar duplicados, ou migrar contratos\nde agentes. N\u00e3o use para s\u00f3 escrever/melhorar o corpo de uma skill isolada\n(prefira skill-authoring), orquestra\u00e7\u00e3o de features (orquestrar), implementa\u00e7\u00e3o\nde produto (backend/frontend-pro), nem ADR avulso (adr).",
+      "bytes": 9042
+    },
+    {
+      "skill_id": "architect",
+      "name": "architect",
+      "description": "An\u00e1lise e desenho de arquitectura de sistema: op\u00e7\u00f5es, trade-offs, fronteiras de\ncomponentes, riscos e proposta de estrutura (ex. docs/ARCHITECTURE.md). Use quando\ninvocar /architect, pedir architecture review, desenho de sistema, C4/camadas,\nmigra\u00e7\u00e3o estrutural, ou an\u00e1lise de impacto arquitectural. N\u00e3o use para redigir ADR\nnumerado isolado (adr), pacote documental de produto (prd), grafo de execu\u00e7\u00e3o\n(planner), nem implementa\u00e7\u00e3o (backend/frontend). N\u00e3o \u00e9 Universal Agent.",
+      "bytes": 5220
+    },
+    {
+      "skill_id": "backend",
+      "name": "backend",
+      "description": "Engenharia de backend s\u00e9nior (PDA exec): APIs resilientes, dom\u00ednio isolado,\npersist\u00eancia performante e contratos tipados em Python ou Node.js; tamb\u00e9m\nrefactor estrutural de c\u00f3digo servidor existente (mode:refactor). Use quando\ninvocar /backend, ou o MegaBrain pedir servidor, API REST/GraphQL/gRPC, endpoints,\nregras de neg\u00f3cio, reposit\u00f3rios, autentica\u00e7\u00e3o no servidor, webhooks, jobs de\ndom\u00ednio, valida\u00e7\u00e3o server-side, integra\u00e7\u00f5es backend, \"s\u00f3 backend\" / feature sem\nUI, ou refactor/clean-up de m\u00f3dulos backend sem feature greenfield. N\u00e3o use para\nUI/visual (frontend-pro), schema/DBA pesado (database), CI/deploy (devops),\nplaneamento (planner), PRD (prd), gate de testes (testing), security gate\n(security), aceite PO (po-review), nem diagn\u00f3stico root-cause (debugger). Escopo\nmisto FE+BE: implemente s\u00f3 backend e exponha contrato para consumo futuro.",
+      "bytes": 19301
+    },
+    {
+      "skill_id": "code-reviewer",
+      "name": "code-reviewer",
+      "description": "Code review adversarial (capability code-review): qualidade de implementa\u00e7\u00e3o,\nsmells, contratos de API no diff, riscos de regress\u00e3o e LGTM|CHANGES_REQUESTED\ncom findings estruturados. Use quando /code-reviewer, /revisar-codigo, review de\nPR/diff, cheirar patch antes de merge, ou postura critic p\u00f3s-exec. N\u00c3O \u00e9 aceite\nPO (po-review), suite de testes (testing), Validator de DoD formal (validator),\nnem security profunda (security). Code Reviewer \u2260 PO \u2260 Validator \u2260 Tester.",
+      "bytes": 5662
+    },
+    {
+      "skill_id": "database",
+      "name": "database",
+      "description": "Engenharia de schema e persist\u00eancia (PDA exec): modelagem, migra\u00e7\u00f5es versionadas,\n\u00edndices, constraints e optimiza\u00e7\u00e3o de queries. Use quando /database, schema,\nmigra\u00e7\u00f5es SQL/ORM, ER, \u00edndices, normaliza\u00e7\u00e3o, ou MegaBrain n\u00f3 database-schema /\nDBA pesado delegado de backend. N\u00e3o use para API/endpoints (backend), UI\n(frontend-pro), CI/deploy (devops), PRD (prd), planeamento (planner), gates\ntesting/security/po.",
+      "bytes": 5343
+    },
+    {
+      "skill_id": "debugger",
+      "name": "debugger",
+      "description": "Diagn\u00f3stico sistem\u00e1tico de bugs, falhas de teste e comportamento inesperado:\nroot cause antes de qualquer fix (Iron Law). Use quando invocar /debugger ou\n/debug, ap\u00f3s 3 retries de /testes, ou perante bug/falha/build/integra\u00e7\u00e3o sem\ncausa clara. N\u00e3o use para refactor estrutural (backend mode:refactor), gate de\ntestes (testing), veredito security (security), an\u00e1lise de falhas de processo/\npostmortem (failure-analyst quando existir), nem implementa\u00e7\u00e3o greenfield.",
+      "bytes": 7114
+    },
+    {
+      "skill_id": "devops",
+      "name": "devops",
+      "description": "CI/CD, pipelines, deploy e IaC (PDA exec): GitHub Actions, Docker, runbooks e\ngates de deploy. Use quando /devops, CI, pipeline, deploy, containeriza\u00e7\u00e3o, ou\nMegaBrain Fase 4b com DoD CI/deploy. N\u00e3o use para features (backend/frontend-pro),\nschema (database), PRD (prd), nem veredictos testing/security/po (s\u00f3 orquestra\njobs que os executam).",
+      "bytes": 4783
+    },
+    {
+      "skill_id": "documentation",
+      "name": "documentation",
+      "description": "Documentarian (Fase 6 /documentar): Master README, Mermaid, consolida\u00e7\u00e3o de\n`.agent_history.md`, DX/API docs. Use ap\u00f3s PO OK e seguran\u00e7a sem bloqueio, ou\nquando pedirem README/docs/onboarding/arquitectura escrita. N\u00e3o use para\nimplementar produto, aceite PO (po-review), security, testes, nem Code Reviewer.",
+      "bytes": 18568
+    },
+    {
+      "skill_id": "failure-analyst",
+      "name": "failure-analyst",
+      "description": "Classifica\u00e7\u00e3o de falhas do Agent System MegaBrain (agent/capability/policy/\ncontext/knowledge/integration/\u2026). Use quando /failure-analyst, /analisar-falha,\npost-mortem de spawn, gate vermelho sem root cause, ou decompor \u201cporque falhou\u201d.\nN\u00e3o use para implementar fix, debug de c\u00f3digo de produto (Debugger), research\nweb (researcher), nem gates de teste/seguran\u00e7a/PO. Failure Analyst \u2260 Debugger.",
+      "bytes": 6849
+    },
+    {
+      "skill_id": "frontend-pro",
+      "name": "frontend-pro",
+      "description": "Frontend especializado (PDA exec + gate visual): Build, Review, Vision, Fix, Audit\ncom design system pesquis\u00e1vel, boot sequence, matriz multi-viewport, Puppeteer/\nagent-browser, anti-slop e delega\u00e7\u00e3o obrigat\u00f3ria a image-to-code com imagem anexada.\nUse quando /frontend-pro, UI web (landing, dashboard, SaaS), componentes, tokens,\nreview visual com evid\u00eancia, mockup anexado. N\u00e3o use para backend/API (backend),\nschema (database), CI/deploy (devops), E2E suite gate (testing), planeamento\n(planner), aceite PO (po-review), security gate (security), nem documenta\u00e7\u00e3o\n(documentation). KEEP specialized \u2014 n\u00e3o fundir com Universal Developer.",
+      "bytes": 11274
+    },
+    {
+      "skill_id": "gaabwiki",
+      "name": "gaabwiki",
+      "description": "Context Engineer MegaBrain: grounding / context pack da GaabWiki (vault\nkarpathyWiki) via ritual ground.sh (scout/search) + pack do projeto, template\nFontes/Contratos/GAPs/M\u00e9todo/Handoff, Relevant Context > Maximum Context, e\nrecusa de coding via gaabwiki vibe. Use quando /wiki, Context Engineer,\nGaabWiki, karpathyWiki, KernelBot, OrbitBot, ISS, Xray-Spec, scout/pack wiki,\nou grounding Obsidian no ecossistema Gaab. N\u00e3o use para mem\u00f3ria epis\u00f3dica /\npromote librarian (gaabwiki-mem), pesquisa web externa (/pesquisar researcher),\nchat gen\u00e9rico, RAG de outros projectos, nem como substituto do Agent coding.",
+      "bytes": 7675
+    },
+    {
+      "skill_id": "gaabwiki-mem",
+      "name": "gaabwiki-mem",
+      "description": "Knowledge / librarian MegaBrain: mem\u00f3ria epis\u00f3dica de sess\u00f5es Cursor (.ai/sessions,\nLATEST.md) e promo\u00e7\u00e3o controlada (promote-queue \u2192 log.md \u00b1 wiki/). Use quando\n/mem, Knowledge Agent, librarian, continuidade entre chats, mem search, promote\npara can\u00f3nico, ou estilo claude-mem. N\u00e3o use para grounding/contratos can\u00f3nicos\n(gaabwiki Context Engineer + RAG), pesquisa web externa (/pesquisar),\nnem como substituto do HARD-GATE MegaBrain. N\u00e3o duplica knowledge.search\n(DeterministicProvider).",
+      "bytes": 5439
+    },
+    {
+      "skill_id": "orquestrar",
+      "name": "orquestrar",
+      "description": "Agente aut\u00f3nomo de ciclo fechado: Execution Engine default (standard|sensitive),\nbudget num\u00e9rico (max_spawns), routing qualitativo de modelo, SSOT, PDA com pap\u00e9is\nplan|exec|gate|explore|critic|librarian, GATE_BUNDLE herdado em toda a \u00e1rvore,\nouter loop (partial|plan_reset|full_ground), Policy Engine (risk_tier/topology/budget/require),\nEvidence Bus (JSON em evidence_dir), critic adversarial, librarian via hook de fila\n(promote-queue; sem write cego em wiki/), matriz continuar|corrigir|replanear.\nUse quando invocar /MegaBrain, orquestra\u00e7\u00e3o multi-agente por etapa, sub-subagentes,\n  ou fluxo completo de feature. HARD-GATE GaabWiki: gaabwiki-grounding-gate.md.\nGATE_BUNDLE: gate-bundle.md. Pap\u00e9is: pda-roles.md. Outer loop: outer-loop.md.\nPolicy Engine: policy-engine.md. Evidence Bus: evidence-bus.md.\nModel routing: model-routing.md. Imagem \u2192 image-attachment-gate.md.\nN\u00e3o use para skill isolada sem ciclo.",
+      "bytes": 37012
+    },
+    {
+      "skill_id": "planner",
+      "name": "planner",
+      "description": "Capability planning (PDA role plan): decomp\u00f5e objectivos em grafos de execu\u00e7\u00e3o\n(DAG), contratos de interface, caminho cr\u00edtico, paralelismo deleg\u00e1vel, crit\u00e9rios\nde aceite t\u00e9cnicos, Briefings PDA e Capability IR (`plan.ir.yaml`). Use quando\ninvocar /planejar, pedir plano, roadmap, breakdown, depend\u00eancias, ordem de\nimplementa\u00e7\u00e3o, ou antes de features/refatora\u00e7\u00f5es/migra\u00e7\u00f5es multi-camada. N\u00e3o use\npara passos triviais de uma linha; execu\u00e7\u00e3o literal com plano fechado (orquestrar);\nrequisitos de produto (/prd); ADRs isolados (/adr); implementa\u00e7\u00e3o (/backend,\n/frontend-pro); gate de testes (/testes); nem security gate (/security).",
+      "bytes": 25972
+    },
+    {
+      "skill_id": "po-review",
+      "name": "po-review",
+      "description": "Aceite de produto (PO) \u2014 gate Fase 5 (/validar): auditoria adversarial de\nvalor, DoD do planner, teste do utilizador cego e UX/DX. Emite OK | Ajustes\nnecess\u00e1rios + pend\u00eancias sem \"Como\". Use ap\u00f3s gates t\u00e9cnicos, UAT de alto\nn\u00edvel, \"est\u00e1 pronto para release?\" ou antes de /documentar.\nN\u00c3O \u00e9 Code Reviewer (estilo/arquitectura/PR \u2014 Wave C3). N\u00e3o use para testes\n(testing), security profunda, implementar c\u00f3digo, nem documenta\u00e7\u00e3o (documentation).",
+      "bytes": 17198
+    },
+    {
+      "skill_id": "prd",
+      "name": "prd",
+      "description": "Product/Requirements upstream: produz pacote documental (PRD, API_SPEC,\nARCHITECTURE, DATA-MODEL, CONTRIBUTING + ADR draft quando aplic\u00e1vel) em docs/\nantes de qualquer c\u00f3digo. Use quando invocar /prd, criar PRD, especifica\u00e7\u00e3o de\nproduto, requisitos de neg\u00f3cio, documenta\u00e7\u00e3o formal de feature, ou o MegaBrain\nprecisar de artefactos upstream aprovados. HARD-GATE: sem pacote aprovado n\u00e3o\navan\u00e7a para planner. Complementa brainstorming (di\u00e1logo) com docs estruturados.\nN\u00e3o use para implementar c\u00f3digo (backend/frontend), planear tarefas (planner),\nnem decis\u00f5es arquitecturais isoladas de alto impacto (use /adr ou Architect).\nN\u00e3o use brainstorming explorat\u00f3rio sem entrega documental\n(use ~/.agents/skills/brainstorming).",
+      "bytes": 9582
+    },
+    {
+      "skill_id": "researcher",
+      "name": "researcher",
+      "description": "Pesquisa externa MegaBrain: fontes cit\u00e1veis, source_policy, anti-alucina\u00e7\u00e3o.\nUse quando /pesquisar, /research, papers, docs oficiais externas, scrape/web,\ncomparar vendors, ou fact-check com URL. N\u00e3o use para grounding can\u00f3nico\n(gaabwiki /wiki), promote epis\u00f3dico (gaabwiki-mem /mem), coding de produto,\nnem debug de falhas de agente (failure-analyst). Researcher \u2260 Knowledge.",
+      "bytes": 6369
+    },
+    {
+      "skill_id": "security",
+      "name": "security",
+      "description": "Orquestrador plugin-based de revis\u00e3o de seguran\u00e7a: capability registry, modos\nfast/standard/deep, red/blue/judge, mem\u00f3ria entre auditorias, evidence L0-L4,\nattack chains, threat coverage, MITRE/CWE/OWASP, security debt, SARIF/JSON.\nUse para gate Fase 4 (/seguranca), threat modeling, hardening, security score,\nregress\u00f5es de seguran\u00e7a ou valida\u00e7\u00e3o pr\u00e9-release. N\u00e3o substitui pentest certificado.\nN\u00e3o use para planeamento (planner), aceite PO (po-review), suite de testes\n(testing), nem code review de estilo/arquitectura (Code Reviewer \u2014 Wave C3).",
+      "bytes": 5604
+    },
+    {
+      "skill_id": "skill-authoring",
+      "name": "skill-authoring",
+      "description": "F\u00e1brica de skills + papel Evaluator (eval-authoring): ciclo de evals, runners\nisolados, assertions, trigger optimization. Use quando /skill-authoring, criar\nou melhorar SKILL.md, pedir evals/benchmark/triggering. N\u00e3o use para gates de\nfeature (testing, validator, po-review, code-reviewer), packages de agente\n(agent-authoring), nem Observer/telemetria de runtime. Built-in create-skill\npara fundamentos de estrutura.",
+      "bytes": 11235
+    },
+    {
+      "skill_id": "testing",
+      "name": "testing",
+      "description": "Gate de valida\u00e7\u00e3o t\u00e9cnica (capability testing): detecta runner de testes no repo,\nexecuta suite scoped ao brief, analisa falhas, aplica correc\u00e7\u00f5es m\u00ednimas in-scope,\nre-executa e emite veredito VERDE|VERMELHO|SUBSTITUTO com evidence JSON para o\nExecution Engine. Use quando o orquestrador invocar /testes, Fase 3, ap\u00f3s\nimplementa\u00e7\u00e3o backend/frontend, reproduzir falha de CI, validar DoD t\u00e9cnico antes\nde security ou PO, ou pedir correr testes com relat\u00f3rio estruturado. Produz\ntest-report + telemetry/evidence/*.json. N\u00e3o use para aceite de produto (po-review),\nauditoria de seguran\u00e7a (security), implementar features (backend/frontend), nem\nplaneamento (planner). N\u00e3o emita OK de release \u2014 isso \u00e9 Fase 5. N\u00e3o \u00e9 Code Reviewer\nnem Validator (`validator`). Code Reviewer \u2260 este gate.",
+      "bytes": 6481
+    },
+    {
+      "skill_id": "validator",
+      "name": "validator",
+      "description": "Gate fino de valida\u00e7\u00e3o formal (capability validation): confronta DoD/checklist\ne artefactos/evidence no disco com veredito PASS|FAIL|INCOMPLETE. Use quando\n/validator, /validar-artefacto, fechar checklist de plano, ou confirmar que\nevidence files existem antes de avan\u00e7ar fase. N\u00c3O \u00e9 suite de testes (testing),\naceite PO (po-review), nem code review (code-reviewer). Validator \u2260 Tester \u2260\nPO \u2260 Code Reviewer.",
+      "bytes": 5017
+    }
+  ],
+  "seeded_order": [
+    "adr",
+    "backend",
+    "researcher",
+    "frontend-pro",
+    "architect",
+    "agent-architecture-mining",
+    "agent-authoring",
+    "gaabwiki",
+    "code-reviewer",
+    "planner",
+    "po-review",
+    "testing",
+    "debugger",
+    "prd",
+    "database",
+    "documentation",
+    "gaabwiki-mem",
+    "devops",
+    "orquestrar",
+    "security",
+    "skill-authoring",
+    "failure-analyst",
+    "validator"
+  ]
+}

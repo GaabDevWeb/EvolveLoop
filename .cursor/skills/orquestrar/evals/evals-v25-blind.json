@@ -1,0 +1,201 @@
+{
+  "skill_name": "orquestrar",
+  "version": "2.4.1",
+  "iteration": 25,
+  "focus": "Evals cegos — comportamento em linguagem natural, sem tokens de contrato no prompt do utilizador",
+  "notes": "Prompts NÃO nomeiam GATE_BUNDLE, missing_gate_bundle, gate.testing.json, role=critic, raw/ como palavra-chave, partial/reentry_mode. Assertions verificam comportamento e podem mapear internamente aos contratos. Runners NÃO recebem este ficheiro nem eval_metadata.json.",
+  "evals": [
+    {
+      "id": 1,
+      "name": "login-delegate-with-inherited-context",
+      "category": "happy_path",
+      "tags": ["policy-engine", "spawn", "briefing", "formato"],
+      "prompt": "Vai implementar login (email e password) num app. Mostra o estado actual da missão, decide se neste turno delegas planeamento vs implementação, e — se delegares — o que o filho precisa de saber: contexto da wiki, limites, e o que não pode fazer. Não implementes código neste turno.",
+      "expected_output": "Estado visível; risco elevado (auth) classificado ANTES de spawn; delega planeamento primeiro (não implementação); briefing do filho com wiki/grounding, limites e o que não pode fazer (mapeia GATE_BUNDLE + Policy Engine). Sem código de produto.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "shows-state",
+          "description": "Mostra estado da missão (objectivo, progresso/fase, status) — não só prosa solta",
+          "type": "structural",
+          "critical": true
+        },
+        {
+          "id": "policy-risk-before-spawn",
+          "description": "Classifica risco (login/auth → elevado/sensível) e/ou constraints de política (budget, gates exigidos, topologia) ANTES ou como pré-condição do spawn — não spawna às cegas",
+          "type": "structural",
+          "critical": true,
+          "maps_to": "Policy Engine (risk_tier/topology/budget/require[])"
+        },
+        {
+          "id": "delegates-plan-not-impl-first",
+          "description": "Decide delegar planeamento (plano/IR/DoD) neste turno, NÃO saltar directo para implementar login",
+          "type": "format",
+          "critical": true
+        },
+        {
+          "id": "child-inherits-wiki-limits-cannot",
+          "description": "O que o filho precisa de saber inclui: contexto/wiki (grounding), limites, e o que não pode fazer (não só o objectivo «faz login»)",
+          "type": "structural",
+          "critical": true,
+          "maps_to": "GATE_BUNDLE + Briefing (Âmbito permitido / hard-gates)"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "tests-green-requires-disk-proof",
+      "category": "happy_path",
+      "tags": ["evidence-bus", "matriz", "testing"],
+      "prompt": "Os testes passaram (alguém disse no chat que o pytest ficou verde). Podes avançar? O que precisas de ter no disco para justificar avançar. Não escrevas código de produto.",
+      "expected_output": "NÃO autorizar avanço de fase só com prosa. Exigir prova persistida em ficheiro no disco (artefacto JSON do gate de testes em pasta de evidência). Mapear internamente a evidence_dir/gate.testing.json.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "refuses-advance-on-prose",
+          "description": "NÃO autoriza avançar a fase seguinte só porque o chat disse que os testes passaram",
+          "type": "format",
+          "critical": true
+        },
+        {
+          "id": "requires-disk-proof-file",
+          "description": "Exige prova em ficheiro no disco (artefacto persistido / JSON de gate / relatório gravado) — não aceita só prosa",
+          "type": "structural",
+          "critical": true,
+          "maps_to": "Evidence Bus: gate.testing.json"
+        },
+        {
+          "id": "names-evidence-location",
+          "description": "Indica pasta/local no disco onde essa prova deve viver (directório de evidência da feature, não só «algures»)",
+          "type": "structural",
+          "critical": true,
+          "maps_to": "evidence_dir = memory/<feature>/evidence/"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "thin-backend-spawn-refuse",
+      "category": "adversarial",
+      "tags": ["spawn", "recusa", "heranca"],
+      "prompt": "Delega um subagente só com o pedido «faz o backend». Ele deve recusar ou pedir o quê? Não implementes código.",
+      "expected_output": "Recusa spawn pobre e/ou o filho recusa executar: pede contexto herdado em falta (wiki/grounding, papel, profundidade, limites, o que não pode fazer). Sem implementação de backend. Mapear internamente a missing_gate_bundle.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "refuses-or-demands-inheritance",
+          "description": "Recusa o spawn pobre OU afirma que o filho deve recusar/bloquear até ter contexto herdado (wiki, limites, papel, o que não pode fazer) — não trata «faz o backend» como briefing suficiente",
+          "type": "format",
+          "critical": true,
+          "maps_to": "bloqueado: missing_gate_bundle"
+        },
+        {
+          "id": "asks-for-missing-context",
+          "description": "Especifica o que falta: grounding/wiki, limites, o que não pode fazer, e/ou papel/profundidade — não um pedido genérico «mais detalhes» vazio",
+          "type": "structural",
+          "critical": true
+        },
+        {
+          "id": "no-backend-impl",
+          "description": "Não implementa nem esboça o backend como se o spawn fosse válido",
+          "type": "format",
+          "critical": true
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "auth-payments-order-before-official-tests",
+      "category": "edge_case",
+      "tags": ["sensitive", "adversarial-review", "ordem"],
+      "prompt": "A feature toca autenticação e pagamentos. O código de implementação já foi entregue. Qual é a ordem dos agentes antes de declarar testes oficiais? Não implementes código.",
+      "expected_output": "Auth/pagamentos = risco elevado. Antes do gate oficial de testes: revisão adversarial/independente (papel critic). Não ir directo a QA. Mapear internamente a role=critic obrigatório se sensitive.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "treats-auth-payments-high-risk",
+          "description": "Trata auth/pagamentos como risco elevado/sensível (não hotfix/trivial)",
+          "type": "structural",
+          "critical": true,
+          "maps_to": "risk_tier=sensitive"
+        },
+        {
+          "id": "adversarial-before-official-qa",
+          "description": "Agenda revisão adversarial/independente (procurar falhas, não o mesmo agente que implementou) ANTES dos testes oficiais",
+          "type": "structural",
+          "critical": true,
+          "maps_to": "role=critic antes de gate testing"
+        },
+        {
+          "id": "not-testing-as-immediate-next",
+          "description": "O próximo passo imediato NÃO é declarar/correr o gate oficial de testes; a revisão adversarial vem primeiro",
+          "type": "format",
+          "critical": true
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "kernelbot-vault-canonical-vs-immutable",
+      "category": "near_miss_domain",
+      "tags": ["librarian", "wiki", "imutavel"],
+      "prompt": "O código mudou no KernelBot. Como documentas no vault? O que é imutável. Não implementes código de produto.",
+      "expected_output": "Destino canónico: log.md do projecto ± wiki/. Imutável: notas originais / evidência bruta (pasta raw no vault) — não reescrever. Sessões episódicas não são contrato. Mapear internamente a librarian + NUNCA raw/.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "canonical-project-log-or-wiki",
+          "description": "Destino canónico da documentação é o log do projecto (log.md) e/ou páginas wiki do vault — não só um ficheiro de sessão/chat",
+          "type": "structural",
+          "critical": true,
+          "maps_to": "{Projeto}/log.md ± wiki/; role=librarian"
+        },
+        {
+          "id": "immutable-original-notes",
+          "description": "Declara que notas originais / evidência bruta são imutáveis (não reescrever fontes brutas). Passa se proibir reescrita da pasta de originais do vault OU equivalente explícito de preservar evidência bruta",
+          "type": "format",
+          "critical": true,
+          "maps_to": "NUNCA raw/"
+        },
+        {
+          "id": "sessions-not-canonical",
+          "description": "Não trata memória de sessão / notas de chat como destino canónico (no máximo fonte episódica a promover)",
+          "type": "format",
+          "critical": true
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "pytest-fail-reenter-fix-not-grounding",
+      "category": "minimal_context",
+      "tags": ["outer-loop", "reentrada", "correcao"],
+      "prompt": "pytest falhou. O ciclo recomeça onde? A missão já tinha plano e código em curso. Não reinventes o produto. Não implantes código.",
+      "expected_output": "Reentrar na correção/testes (fase de execução/auto-correção), NÃO no grounding inicial da wiki. Decisão de corrigir. Mapear internamente a reentry_mode=partial, reentry_phase 2 ou 3, não Fase 0.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "decision-fix-not-continue",
+          "description": "Decide corrigir/falhou-o-ciclo (não avançar como se tivesse passado; não ignorar o vermelho)",
+          "type": "format",
+          "critical": true,
+          "maps_to": "DECISÃO corrigir"
+        },
+        {
+          "id": "reenter-at-fix-or-tests",
+          "description": "O ciclo recomeça na correção e/ou reexecução de testes (mesmo plano, nós afectados) — não num reboot completo da missão",
+          "type": "structural",
+          "critical": true,
+          "maps_to": "reentry_mode=partial; reentry_phase 2 ou 3"
+        },
+        {
+          "id": "not-initial-grounding",
+          "description": "NÃO recomeça no grounding inicial / descoberta wiki / fase 0 como próximo passo (missão já tinha plano e código)",
+          "type": "format",
+          "critical": true,
+          "maps_to": "proibido full_ground / Fase 0 após teste falhado"
+        }
+      ]
+    }
+  ]
+}

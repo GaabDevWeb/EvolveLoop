@@ -1,0 +1,21 @@
+{
+  "feature_id": "2026-08-25-demo",
+  "cycle_id": "C1",
+  "max_spawn_depth": 3,
+  "max_spawns": 8,
+  "spawn_count": 1,
+  "updated_at": "2026-08-25T00:41:00Z",
+  "root": {
+    "role": "raiz",
+    "spawn_depth": 0,
+    "children": [
+      {
+        "role": "gate",
+        "spawn_depth": 1,
+        "skill": "testing",
+        "parent_cycle_id": "C1",
+        "evidence": "memory/2026-08-25-demo/evidence/gate.testing.json"
+      }
+    ]
+  }
+}

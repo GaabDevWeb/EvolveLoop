@@ -1,0 +1,139 @@
+findings:
+  - id: F-OUT-EMPTY-AFTER
+    severity: CRITICAL
+    category: IMPLEMENTATION_DEFECT
+    claim: "empty-after never IMPROVED"
+    observed: "beforeFail=2, afterTotal=0 → IMPROVED/RESOLVED (pre-fix)"
+    expected: "INCONCLUSIVE"
+    evidence: "/tmp/evolveloop-adversarial-findings.json F2; outcome-tracker.ts rateAfter=0 path"
+    impact: "False positive evolution success; premature need RESOLVED"
+    recommendation: "Gate empty after-window before rate math"
+    requires_code_change: true
+    blocks_next_stage: true
+    status_after_correction: FIXED
+
+  - id: F-LIFE-OVERWRITE
+    severity: HIGH
+    category: IMPLEMENTATION_DEFECT
+    claim: "Outcome lifecycle survives re-analyze"
+    observed: "REGRESSED/REMAINS_ACTIVE overwritten to EMERGING on analyze()"
+    expected: "Preserve outcome-driven lifecycle"
+    evidence: "adversarial F3/F3b; need-lifecycle rebuilt lifecycle from patterns only"
+    impact: "Breaks closed-loop memory of post-evolution state"
+    recommendation: "Preserve REGRESSED/REMAINS_ACTIVE in detect()"
+    requires_code_change: true
+    blocks_next_stage: true
+    status_after_correction: FIXED
+
+  - id: F-ANALYZE-SCOPE
+    severity: HIGH
+    category: IMPLEMENTATION_DEFECT
+    claim: "analyze isolated per user"
+    observed: "analyze() queried entire store; User A+B mixed"
+    expected: "Scoped analysis API"
+    evidence: "adversarial F1; longitudinal-controller query without user_id"
+    impact: "Cross-user pattern/need leakage when callers omit filter"
+    recommendation: "Add user_id/project_id to analyze opts; document default"
+    requires_code_change: true
+    blocks_next_stage: false
+    status_after_correction: FIXED_WITH_RESIDUAL
+    residual: "Unscoped default remains; needs.json not partitioned"
+
+  - id: F-ADAPTER-LABEL
+    severity: MEDIUM
+    category: DOCUMENTATION
+    claim: "jsonl adapter CONNECTED"
+    observed: "Helper exists; controller has no auto ingest from telemetry"
+    expected: "CONNECTED means live path source→adapter→persist→analyze"
+    evidence: "ADAPTER_REGISTRY; LongitudinalEvolveLoop methods"
+    impact: "Overclaim of live observation"
+    recommendation: "Keep NOT_AUTO_WIRED in status; or wire intentionally"
+    requires_code_change: false
+    blocks_next_stage: false
+    status_after_correction: OPEN
+
+  - id: F-OUTCOME-NOT-CONSUMED
+    severity: MEDIUM
+    category: ARCHITECTURAL_DEFECT
+    claim: "Closed-loop uses outcomes in next analysis"
+    observed: "loadOutcomes has zero callers in package"
+    expected: "Next analyze considers outcomes or documented as lifecycle-only closure"
+    evidence: "grep loadOutcomes; architecture reviewers"
+    impact: "Closure is need-lifecycle only, not full outcome feedback"
+    recommendation: "Document accurately or consume outcomes"
+    requires_code_change: false
+    blocks_next_stage: false
+    status_after_correction: OPEN
+
+  - id: F-REGISTRY-INJECTED
+    severity: MEDIUM
+    category: TEST_GAP
+    claim: "registry_aware: true"
+    observed: "String inventory injection; default empty arrays"
+    expected: "Live registry consultation or honest label"
+    evidence: "diagnosis/registry-aware.ts; controller inventory default"
+    impact: "Reuse decisions only when caller supplies inventory"
+    recommendation: "Wire registry snapshot or downgrade claim"
+    requires_code_change: false
+    blocks_next_stage: false
+    status_after_correction: OPEN
+
+  - id: F-DUAL-STACK
+    severity: LOW
+    category: ARCHITECTURAL_DEFECT
+    claim: "Single evolution architecture"
+    observed: "Episodic EvolveLoopController + LongitudinalEvolveLoop parallel"
+    expected: "Documented dual-mode or consolidation"
+    evidence: "controller.ts vs longitudinal-controller.ts"
+    impact: "Policy drift risk"
+    recommendation: "Document dual-stack; prefer longitudinal for cross-run"
+    requires_code_change: false
+    blocks_next_stage: false
+    status_after_correction: OPEN
+
+  - id: F-NOT-IN-ENGINE
+    severity: MEDIUM
+    category: INTEGRATION
+    claim: "EvolveLoop longitudinal in product runtime"
+    observed: "No CLI/engine call to LongitudinalEvolveLoop found in review"
+    expected: "Integrated observation path or explicit library-only claim"
+    evidence: "Security reviewer CLI scan"
+    impact: "Library capability ≠ production behavior"
+    recommendation: "Clarify library-only vs wire job"
+    requires_code_change: false
+    blocks_next_stage: false
+    status_after_correction: OPEN
+
+  - id: F-BASELINE-POST-FIX
+    severity: LOW
+    category: DOCUMENTATION
+    claim: "V3 reflects actual implementation"
+    observed: "Corrections changed longitudinal hashes vs V3 CRITICAL fingerprints"
+    expected: "Document BASELINE_DRIFT; do not auto-mutate V1/V2"
+    evidence: "sha256 post-fix ≠ V3 listed hashes for outcome/lifecycle/controller"
+    impact: "V3 snapshot stale after audit fixes"
+    recommendation: "Optional baseline-v4 when product requests"
+    requires_code_change: false
+    blocks_next_stage: false
+    status_after_correction: OPEN
+
+  - id: F-DOC-STALE-135
+    severity: LOW
+    category: DOCUMENTATION
+    claim: "tests 135/135"
+    observed: "Post-audit 138/138"
+    expected: "Update status docs"
+    evidence: "vitest run"
+    impact: "Doc drift"
+    recommendation: "Update LONGITUDINAL-STATUS regression counts"
+    requires_code_change: false
+    blocks_next_stage: false
+    status_after_correction: OPEN
+
+counts:
+  critical: 1
+  high: 2
+  medium: 4
+  low: 3
+  fixed: 3
+  open: 7

@@ -1,0 +1,98 @@
+# Knowledge / Wiki personalization map
+# Central question answered with evidence
+
+central_question: >
+  Does MegaBrain conceptually depend on a wiki named GaabWiki,
+  or on a Knowledge/Wiki abstraction with a personal implementation?
+
+answer:
+  verdict: HYBRID_WITH_PERSONAL_BINDING
+  summary: >
+    Contracts and KnowledgeStore are generic. The HARD-GATE policy, skill names,
+    CLI module, default paths, and ADR-0004 bind the platform to GaabWiki as the
+    concrete RAG/context engine. Removing GaabWiki without a replacement provider
+    breaks the normative MegaBrain loop; the TypeScript KnowledgeStore alone is
+    insufficient for vault grounding.
+  confidence: HIGH
+
+layers:
+  - component: orchestrator KnowledgeStore / FilesystemKnowledgeStore
+    class: CORE_KNOWLEDGE_INTERFACE
+    evidence: orchestrator/src/knowledge/knowledge-store.ts
+    personal: false
+
+  - component: contracts knowledge.search / knowledge.inspect / knowledge-promote
+    class: CORE_KNOWLEDGE_INTERFACE
+    evidence: orchestrator/contracts/knowledge.*.yaml
+    personal: false
+
+  - component: contract context-grounding
+    class: CORE_KNOWLEDGE_INTERFACE
+    evidence: orchestrator/contracts/context-grounding.yaml
+    personal: false
+    leak: "notes still say HARD-GATE node id gaabwiki-grounding"
+
+  - component: deterministic knowledge.ts provider
+    class: PERSONAL_ADAPTER
+    evidence: "spawn python -m gaabwiki; DEFAULT_RAG_ROOT personal"
+    personal: true
+    seam: WEAK_SEAM
+    note: "Capability generic; implementation personal"
+
+  - component: gaabwiki skill + ground.sh
+    class: PERSONAL_ADAPTER
+    evidence: .cursor/skills/gaabwiki/**
+    personal: true
+    also: PERSONAL_KNOWLEDGE_SOURCE_RITUAL
+
+  - component: karpathyWiki vault corpus
+    class: PERSONAL_KNOWLEDGE_SOURCE
+    evidence: RAG_REPO_ROOT vault on host
+    personal: true
+    portable: false
+
+  - component: gaabwiki Python RAG engine (external vault package)
+    class: GENERIC_KNOWLEDGE_ENGINE
+    evidence: ADR-0004; scout hits gaabwiki-rag.md
+    personal: naming_personal
+    note: "Engine design (BM25/LanceDB/hybrid) is generic; brand+path personal"
+    confidence: MEDIUM
+
+  - component: gaabwiki-mem + hooks
+    class: OPTIONAL_KNOWLEDGE_COMPONENT
+    evidence: .cursor/hooks/gaabwiki-mem, /mem
+    personal: true
+    note: "Episodic; explicitly not SSOT contracts"
+
+  - component: wiki-carpaccio (.ai/)
+    class: OPTIONAL_KNOWLEDGE_COMPONENT
+    evidence: ADR-0004 dual contract; host-only skill
+    personal: false_concept
+    host_pack: true
+
+  - component: orquestrar gaabwiki-grounding HARD-GATE
+    class: PERSONAL_ADAPTER  # policy binding
+    conceptual_core: true
+    evidence: gaabwiki-grounding-gate.md
+    seam: ACCIDENTAL_COUPLING
+    note: "Gate should be knowledge-grounding; currently named/path-bound to GaabWiki"
+
+seams:
+  - id: S-K-1
+    kind: EXISTING_SEAM
+    description: "Capability knowledge.* vs provider implementation"
+  - id: S-K-2
+    kind: EXISTING_SEAM
+    description: "RAG_REPO_ROOT env override"
+  - id: S-K-3
+    kind: WEAK_SEAM
+    description: "DEFAULT_RAG_ROOT absolute personal path"
+  - id: S-K-4
+    kind: MISSING_SEAM
+    description: "No pluggable KnowledgeBackend interface in TS beyond spawn gaabwiki"
+  - id: S-K-5
+    kind: ACCIDENTAL_COUPLING
+    description: "HARD-GATE id/docs require GaabWiki by name"
+  - id: S-K-6
+    kind: ACCIDENTAL_COUPLING
+    description: "Dual default vault paths (legado vs gitHub) across rule/hooks/skill"

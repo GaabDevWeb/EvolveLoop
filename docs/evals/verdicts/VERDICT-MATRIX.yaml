@@ -1,0 +1,112 @@
+# Verdict Matrix
+
+baseline_id: baseline-v1-2026-09-18
+
+hypotheses:
+
+  - id: H-001
+    statement: Skill catalog budget improves activation quality and reduces context pressure (with task_success parity)
+    experiments:
+      - id: E-001
+        result: SUPPORTED_OFFLINE_SCOPED
+    evals:
+      - id: EV-007
+        result: PASS
+      - id: EV-008
+        result: PASS
+    claims:
+      supported: [CLM-E001-001, CLM-E001-002]
+      weakened: []
+      refuted: []
+      not_evaluated: [CLM-E001-003, CLM-E001-004]
+      partially: [CLM-E001-005]
+    verdict: WEAKENED
+    confidence: MEDIUM
+    scope: offline_catalog_harness_PROXY_tokens
+    limitations:
+      - task_success_NOT_MEASURED
+      - live_host_NOT_MEASURED
+      - proxy_token_estimate
+      - same_basis_eval_corroboration
+    decision_readiness: MORE_EVIDENCE_REQUIRED
+
+  - id: H-002
+    statement: Refuse-if-unenforceable reduces false safety labels
+    experiments:
+      - id: E-002
+        result: BLOCKED
+    evals: []
+    claims:
+      supported: []
+      weakened: []
+      refuted: []
+      not_evaluated: [H-002-entire]
+    verdict: INCONCLUSIVE
+    confidence: UNKNOWN
+    scope: not_evaluated
+    limitations: [experiment_blocked]
+    decision_readiness: ARCHITECTURE_REQUIRED
+
+  - id: H-003
+    statement: Stuck detector cuts thrash cost without harming healthy tasks
+    experiments:
+      - id: E-003
+        result: BLOCKED
+    evals: []
+    claims:
+      supported: []
+      weakened: []
+      refuted: []
+      not_evaluated: [H-003-entire]
+    verdict: INCONCLUSIVE
+    confidence: UNKNOWN
+    scope: not_evaluated
+    limitations: [experiment_blocked]
+    decision_readiness: ARCHITECTURE_REQUIRED
+
+  - id: H-004
+    statement: Compaction hygiene preserves constraints
+    experiments:
+      - id: E-004
+        result: BLOCKED
+    evals: []
+    claims:
+      supported: []
+      weakened: []
+      refuted: []
+      not_evaluated: [H-004-entire]
+    verdict: INCONCLUSIVE
+    confidence: UNKNOWN
+    scope: not_evaluated
+    limitations: [experiment_blocked]
+    decision_readiness: ARCHITECTURE_REQUIRED
+
+  - id: H-005
+    statement: Serialized HITL/job resume after process restart without duplicate side effects
+    experiments:
+      - id: E-005
+        result: SUPPORTED_JOB_PATH_STATE_WRITE
+    evals:
+      - id: EV-006
+        result: PASS
+    claims:
+      supported: [CLM-E005-001, CLM-E005-002, CLM-E005-003]
+      weakened: []
+      refuted: []
+      not_evaluated: [CLM-E005-005]
+      partially: [CLM-E005-004]
+    verdict: WEAKENED
+    confidence: MEDIUM
+    scope: job_path_STATE_WRITE_same_process
+    limitations:
+      - OS_kill_NOT_MEASURED
+      - global_exactly_once_NOT_EVALUATED
+      - full_HITL_NOT_MEASURED
+      - same_basis_eval_corroboration
+    decision_readiness: DECISION_READY
+
+counts:
+  SUPPORTED: 0
+  WEAKENED: 2
+  REFUTED: 0
+  INCONCLUSIVE: 3

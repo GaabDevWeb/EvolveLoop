@@ -1,0 +1,67 @@
+# Configuration portability
+
+configs:
+  - path: ~/.cursor/agents.env
+    class: HOST_SPECIFIC
+    secrets: false
+    personal: true
+    portable: mechanism_yes_value_no
+    notes: AGENTS_ROOT points to clone
+
+  - path: mcp/mcp.env.example
+    class: PUBLIC_OPTIONAL
+    secrets: placeholders_only
+    personal: false
+    note: "Real ~/.cursor/mcp.env may contain SECRET_DETECTED — not scanned into report"
+
+  - path: mcp/mcp.json
+    class: EXTERNAL_DEPENDENCY
+    portable: partial
+    notes: third-party MCP servers
+
+  - path: .cursor/hooks.json
+    class: PERSONAL_PROFILE
+    portable: partial
+    notes: embeds gaabwiki-mem lifecycle
+
+  - path: Rules/gaabwiki-agent.mdc
+    class: PERSONAL
+    portable: false
+    personal_paths: true
+
+  - path: .cursor/rules/megabrain.mdc
+    class: CORE
+    portable: true
+
+  - path: agent-setup/manifest/profiles.yaml
+    class: CORE_BUT_CONFIGURABLE
+    portable: true
+    notes: "profiles already separate minimal/standard/full — good seam; gaabwiki in minimal"
+
+  - path: agent-setup/config/defaults/env.example
+    class: CORE_BUT_CONFIGURABLE
+    portable: true
+    notes: RAG_REPO_ROOT empty — good
+
+  - path: orchestrator/package.json
+    class: CORE
+    portable: true
+    deps: "dev only: typescript vitest yaml @types/node — zero runtime npm deps"
+
+  - path: docs/architecture/skills/environment/CURSOR-ESSENTIAL-SKILL-PACK.yaml
+    class: PERSONAL_PROFILE
+    portable: false
+    notes: absolute /home/gaab paths + gaabwiki critical
+
+  - path: memory/*/evidence/*.json
+    class: DEVELOPMENT_ARTIFACT
+    portable: false
+
+secrets_policy:
+  rule: "If secret material encountered → SECRET_DETECTED without value"
+  findings:
+    - location: mcp/mcp.env.example
+      status: placeholders_only
+    - location: ~/.cursor/mcp.env
+      status: NOT_OPENED_IN_AUDIT
+      risk: may_contain_SECRET_DETECTED

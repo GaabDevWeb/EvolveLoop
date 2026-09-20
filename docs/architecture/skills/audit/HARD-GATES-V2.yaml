@@ -1,0 +1,62 @@
+# Hard Gates V2
+
+generated: 2026-09-19T21:30:00Z
+
+gates:
+  - id: grill-me
+    condition: design_planning_scope (Policy require[])
+    enforcement: policy_agent + evidence_bus
+    evidence: memory/<feature_id>/evidence/gate.grill-me.json
+    fail_closed: true
+    ts_engine_enforced: false
+    status: OPERATIONAL
+    skill_path: ~/.agents/skills/grill-me/SKILL.md
+    contract: .cursor/skills/orquestrar/references/grill-me-gate.md
+
+  - id: image-to-code
+    condition: image_attachment
+    enforcement: policy_agent + GATE_BUNDLE
+    evidence: SSOT image_attachment + Vision
+    fail_closed: true
+    ts_engine_enforced: false
+    status: UNCHANGED_HARD_GATE
+    skill_path: ~/.agents/skills/image-to-code/SKILL.md
+    contract: .cursor/skills/orquestrar/references/image-attachment-gate.md
+    note: "policy hard gate ≠ TS engine enforcement (documented explicitly)"
+
+  - id: gaabwiki
+    condition: MegaBrain technical cycle
+    enforcement: policy_agent
+    evidence: grounding.json
+    fail_closed: true
+    ts_engine_enforced: false
+    status: UNCHANGED
+
+  - id: prd-approval
+    condition: Fase 0.5
+    enforcement: HITL
+    evidence: docs approved marker
+    fail_closed: true
+    status: UNCHANGED
+
+  - id: testing
+    condition: require tests
+    enforcement: evidence_bus
+    evidence: gate.testing.json
+    fail_closed: true
+    status: UNCHANGED
+
+  - id: debugger
+    condition: testing failed ×3
+    enforcement: orquestrar policy
+    evidence: debug delivery
+    fail_closed: true
+    absorbs: systematic-debugging
+    status: UNCHANGED
+
+  - id: agent-browser-in-dossier
+    condition: /library-dossier session
+    enforcement: skill_contract
+    evidence: research protocol nav/screenshots
+    fail_closed: true
+    status: UNCHANGED

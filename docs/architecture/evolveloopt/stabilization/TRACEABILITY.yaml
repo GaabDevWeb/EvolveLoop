@@ -1,0 +1,28 @@
+traceability:
+  chain:
+    - step: Runtime Event
+      component: EventBus.emit (NodeFailed|FeatureBlocked|GateRejected)
+    - step: Observation
+      component: eventToRawObservation / adaptJsonlEventsFile
+    - step: Signal
+      component: SignalMiner → PersistentSignalStore.appendSignals
+    - step: Pattern
+      component: CrossRunAggregator (unique_executions≥3)
+    - step: Need
+      component: LongitudinalNeedDetector (+ outcome-aware lifecycle)
+    - step: Candidate
+      component: EvolutionCandidateGenerator + diagnoseWithInventory(live snapshot)
+    - step: Request
+      component: buildEvolutionRequest → submitEvolutionRequest (handoff dir)
+    - step: Evolution
+      component: EXISTING Prototype Gate pipeline (external; HOLD for CORE)
+    - step: Outcome
+      component: OutcomeTracker.evaluate → appendOutcome + post_evolution_* ingest
+    - step: Next Signal / Analysis
+      component: analyze(scope) loadOutcomes + historical signals
+  cadence:
+    component: AnalysisCadence
+    note: "Observer never auto-analyzes; caller/schedule decides"
+  scope:
+    required: AnalysisScope
+    system_gate: authorize_system

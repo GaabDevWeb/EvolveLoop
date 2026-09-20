@@ -1,0 +1,59 @@
+prototypes:
+
+  - id: PT-001
+    decision: DR-003 / ADR-DR-0002 gated
+    hypothesis: Live host catalog budget improves real skill activation without harming live task_success
+    evidence:
+      - E-001 offline associations (insufficient alone)
+      - ADR-DR-0002 DEFER production budget
+    success_criteria:
+      present: true
+      items:
+        - live task_success measured
+        - catalog injection controlled
+        - vendor or documented tokenizer
+    scope: Host/Cursor catalog injection — NOT engine max_skills
+    must_not_change:
+      - orchestrator/src capability/registry semantics
+      - baseline V1
+    final_gate: NEEDS_MORE_EVIDENCE
+    constraints:
+      - Must add explicit rollback strategy before any execution
+      - Must add data/runtime isolation plan
+      - PRODUCTION_STATUS must remain NOT_IMPLEMENTED
+      - prototype_success ≠ production_adoption
+      - Must not add max_skills to engine during prototype
+    rationale: >
+      Question is meaningful and not answered by offline E-001. Hypothesis and success
+      criteria exist. Gate §27 fails: rollback / isolation / measurement plan not specified
+      in PROTOTYPE-QUEUE.yaml. Therefore not APPROVED for execution; revise queue entry first.
+    PRODUCTION_STATUS: NOT_IMPLEMENTED
+    execution_authorized: false
+
+  - id: PT-002
+    decision: DR-002 / ADR-DR-0001 gated
+    hypothesis: Job-path resume remains free of duplicate STATE_WRITE after OS process kill + restart
+    evidence:
+      - E-005 same-process only
+      - OS kill NOT_MEASURED
+    success_criteria:
+      present: true
+      items:
+        - OS termination MEASURED
+        - mutation_count still 1
+        - resume_success defined for restart
+    scope: OS kill / process restart recovery
+    must_not_change:
+      - claim exactly-once globally from PT-002 alone
+      - baseline V1 semantics without new experiment
+    final_gate: NEEDS_MORE_EVIDENCE
+    constraints:
+      - Must add rollback / disposable jobsDir isolation
+      - NEW_ENGINE-in-same-process is not a substitute measurement
+      - Must not upgrade HITL or exactly-once claims from prototype alone
+      - PRODUCTION_STATUS NOT_IMPLEMENTED
+    rationale: >
+      Meaningful gap relative to E-005. Success criteria present. Missing rollback and
+      isolation details required by prototype safety gate. Not APPROVED for execution yet.
+    PRODUCTION_STATUS: NOT_IMPLEMENTED
+    execution_authorized: false

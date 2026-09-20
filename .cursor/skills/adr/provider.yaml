@@ -1,0 +1,33 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Provider
+metadata:
+  name: adr
+  version: "1.0.1"
+  description: "Architecture Decision Records isolados (capability architecture-decision@1.0.0)"
+  owner: agents-team
+
+spec:
+  plugin:
+    type: cursor-skill
+    entrypoint: ".cursor/skills/adr/SKILL.md"
+
+  capabilities:
+    - id: architecture-decision
+      contract: contracts/architecture-decision@1.0.0
+      type: upstream
+
+  interfaces:
+    outputs:
+      - name: adr-document
+        schema: artifacts/adr-document@1.0.0
+        path: docs/adr/
+
+  runtime:
+    cost: low
+    subagent_type: generalPurpose
+
+  telemetry:
+    key: provider.adr
+
+  availability: active
+  priority: 75

@@ -1,0 +1,58 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Contract
+metadata:
+  id: database-schema
+  version: "1.0.0"
+  status: active
+
+spec:
+  capability: database-schema
+  type: worker
+
+  semver:
+    major: 1
+    minor: 0
+    patch: 0
+
+  compatible_with:
+    - "contracts/database-schema@1.0.x"
+
+  inputs:
+    - name: data-model
+      path: docs/DATA-MODEL.md
+      required: false
+    - name: api-spec
+      path: docs/API_SPEC.md
+      required: false
+    - name: adr-set
+      path: docs/adr/
+      required: false
+
+  outputs:
+    - name: migrations
+      schema: evidence/migrations@1.0.0
+    - name: handoff
+      schema: artifacts/entrega-consolidada@1.0.0
+
+  definition_of_done:
+    minimum_checks:
+      - migration_paths_emitted
+      - rollback_documented
+      - indexes_justified_when_added
+      - assumptions_listed_if_no_data_model
+      - entrega_consolidada_emitted
+    forbidden:
+      - http_endpoint_implementation
+      - frontend_ui_implementation
+      - ci_pipeline_ownership
+      - plaintext_secrets_in_seeds
+      - policy_bypass
+
+  evidence:
+    schema: evidence/migrations@1.0.0
+    emitter: database
+    payload_type: migrations
+
+  runtime_compatibility:
+    pda_roles: [exec]
+    phase: 2

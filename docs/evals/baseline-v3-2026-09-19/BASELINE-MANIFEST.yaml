@@ -1,0 +1,8 @@
+baseline:
+  id: baseline-v3-2026-09-19
+  version: V3
+  parent: baseline-v2-2026-09-19
+  created_at: "2026-09-19T15:15:00Z"
+  reason: "Longitudinal EvolveLoop — persistent signals, cross-run aggregation, outcomes"
+  tests: { total: 135, passed: 135 }
+  evolveloop_tests: 32

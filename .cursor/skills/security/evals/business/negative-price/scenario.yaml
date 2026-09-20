@@ -1,0 +1,33 @@
+id: business/negative-price
+version: 1
+category: business
+priority: P0
+description: Checkout usa price e quantity do body sem recalcular no servidor
+
+stack: node-express
+providers_expected: [business-logic-reviewer]
+
+vulnerable:
+  prompt: |
+    Audita POST /checkout em evals/business/negative-price/vulnerable/.
+    Cliente envia price: -10, quantity: 1.
+  expected:
+    must_detect: [NEVER_TRUST_CLIENT, BUSINESS_LOGIC, PAYMENT_BYPASS]
+    must_block: true
+    min_evidence_level: L2
+    must_include_cwe: [CWE-20, CWE-1284]
+    must_include_owasp: ["A04:2021"]
+
+fixed:
+  prompt: |
+    Audita POST /checkout em evals/business/negative-price/fixed/.
+  expected:
+    must_detect: []
+    must_block: false
+    must_not_block: true
+
+assertions:
+  - id: price-from-body
+    description: Identifica preço/desconto do req.body
+  - id: business-abuse
+    description: Simula preço negativo ou abuse case

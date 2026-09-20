@@ -1,0 +1,53 @@
+integrity_audit:
+  overall: PASS_WITH_LIMITATIONS
+  generated: 2026-09-19
+  method: independent explore auditors (architecture/evidence/security/regression/documentation)
+
+  findings:
+
+    - id: A-001
+      severity: info
+      auditor: architecture
+      claim_risk: low
+      observation: "ADRs KEEP/DEFER + NOT_IMPLEMENTED consistent with runtime"
+      recommendation: "Cite finalization/adrs as ADR SSOT"
+
+    - id: B-001
+      severity: high
+      auditor: evidence
+      claim_risk: high
+      observation: "Prototype results do not exist; claiming them would be false"
+      recommendation: "Never claim PT-001/PT-002 outcomes from this pipeline"
+
+    - id: C-001
+      severity: info
+      auditor: security
+      claim_risk: low
+      observation: "No false sandbox claim; sandbox NOT_IMPLEMENTED explicit"
+      recommendation: "Keep path-restriction ≠ sandbox language"
+
+    - id: D-001
+      severity: info
+      auditor: regression
+      claim_risk: none
+      observation: "Live npm test 103/103; baseline V1 only"
+      recommendation: "None"
+
+    - id: E-001
+      severity: medium
+      auditor: documentation
+      claim_risk: medium
+      observation: "READY_FOR_GATE ≠ gate APPROVED — intentional"
+      recommendation: "Always publish both layers"
+
+    - id: E-002
+      severity: medium
+      auditor: documentation
+      claim_risk: medium
+      observation: "docs/architecture/gate/* stale vs prototype-gate SSOT for PT status"
+      recommendation: "Prefer docs/architecture/prototype-gate/* for authorization claims"
+
+  false_claims_found: 0
+  baseline_corruption: false
+  architecture_drift: false
+  scope_inflation_detected: false

@@ -1,0 +1,98 @@
+adrs:
+
+  - id: ADR-DR-0001
+    previous_status: VALID_WITH_LIMITATIONS
+    final_status: ACCEPTED
+    evidence_revalidated: true
+    limitations:
+      - job-path STATE_WRITE only
+      - OS kill NOT_MEASURED
+      - full HITL NOT_ESTABLISHED
+    revisions:
+      - added reversibility N/A block
+      - mandatory template sections
+      - explicit Evidence Scope table
+    implementation_status: NOT_IMPLEMENTED
+    decision_preserved: KEEP job-path resume; DEFER exactly-once
+
+  - id: ADR-DR-0002
+    previous_status: VALID_WITH_LIMITATIONS
+    final_status: ACCEPTED
+    evidence_revalidated: true
+    limitations:
+      - offline only
+      - token_estimate PROXY
+      - task_success NOT_MEASURED
+    revisions:
+      - reversibility N/A
+      - optional docs ADAPT marked out of scope
+      - token axes kept separate (~40% = T_TOKENS_40)
+    implementation_status: NOT_IMPLEMENTED
+    decision_preserved: DEFER production budget; KEEP runtime
+
+  - id: ADR-DR-0003
+    previous_status: VALID_WITH_LIMITATIONS
+    final_status: ACCEPTED
+    evidence_revalidated: true
+    limitations:
+      - security model unanswered (checklist pending)
+    revisions:
+      - full security-model open-questions checklist
+      - ARCHITECTURAL_DECISION_REQUIRED restated
+    implementation_status: NOT_IMPLEMENTED
+    decision_preserved: DEFER; DEFINE SECURITY MODEL FIRST
+
+  - id: ADR-DR-0004
+    previous_status: VALID_WITH_LIMITATIONS
+    final_status: ACCEPTED
+    evidence_revalidated: true
+    limitations:
+      - stuck semantics unanswered (checklist pending)
+    revisions:
+      - expanded stuck semantics questions (progress, FP/FN, recovery)
+    implementation_status: NOT_IMPLEMENTED
+    decision_preserved: DEFER; DEFINE SEMANTICS FIRST
+
+  - id: ADR-DR-0005
+    previous_status: VALID_WITH_LIMITATIONS
+    final_status: ACCEPTED
+    evidence_revalidated: true
+    limitations:
+      - ownership unanswered by design
+    revisions:
+      - explicit out-of-scope statement for answering ownership
+      - future ownership ADR required
+    implementation_status: NOT_IMPLEMENTED
+    decision_preserved: DEFER; ARCHITECTURE FIRST
+
+prototypes:
+
+  - id: PT-001
+    previous_status: NEEDS_MORE_EVIDENCE
+    final_status: READY_FOR_GATE
+    rollback: defined
+    isolation: defined
+    success_criteria: measurable
+    failure_criteria: defined
+    measurement: defined
+    remaining_gaps:
+      - host injection API availability unknown until gate/preflight
+      - gold live task labels may be missing
+    related_adr: ADR-DR-0002
+
+  - id: PT-002
+    previous_status: NEEDS_MORE_EVIDENCE
+    final_status: READY_FOR_GATE
+    rollback: defined
+    isolation: defined
+    success_criteria: measurable
+    failure_criteria: defined
+    measurement: defined
+    remaining_gaps:
+      - kill signal policy to fix at gate/preflight
+      - LOW_SAMPLE likely
+    related_adr: ADR-DR-0001
+
+conflicts: []
+
+do_not_change_violations: []

@@ -1,0 +1,82 @@
+# Skill Usage Matrix V2 (pre-pruning)
+generated: 2026-09-19T21:30:00Z
+baseline: SKILL-USAGE-MATRIX.yaml (audit)
+frequency_source: NOT_MEASURED_production | harness_unit_ok
+
+skills_delta_from_v1:
+  - id: grill-me
+    runtime_role: upstream_tier3
+    flow_role: UPSTREAM_FLOW
+    policy_role: HARD_GATE
+    hard_gate: true
+    fallback: false
+    dependency: []
+    actual_usage: STRUCTURAL + COMMAND (/grill-me) — prod activations NOT_MEASURED
+    confidence: high_structural / low_frequency
+    removal_risk: critical
+    recommended_disposition: DO_NOT_REMOVE
+
+  - id: image-to-code
+    runtime_role: tier3_policy
+    flow_role: FRONTEND
+    policy_role: HARD_GATE
+    hard_gate: true
+    fallback: false
+    actual_usage: STRUCTURAL
+    confidence: high_structural / low_frequency
+    removal_risk: critical
+    recommended_disposition: DO_NOT_REMOVE
+    note: policy≠TS_enforcement documented
+
+  - id: find-skills
+    runtime_role: discovery_user
+    flow_role: DISCOVERY
+    policy_role: none
+    hard_gate: false
+    fallback: false
+    actual_usage: COMMAND (/descobrir) + skill
+    confidence: high
+    removal_risk: medium
+    recommended_disposition: KEEP_SPECIALIZED
+
+  - id: systematic-debugging
+    runtime_role: methodology_source
+    flow_role: DEBUGGING
+    policy_role: absorbed
+    hard_gate: true  # via debugger Iron Law
+    dependency: [debugger]
+    actual_usage: ABSORBED
+    recommended_disposition: DO_NOT_REMOVE
+
+  - id: writing-plans
+    recommended_disposition: REVIEW
+  - id: executing-plans
+    recommended_disposition: REVIEW
+  - id: subagent-driven-development
+    recommended_disposition: REVIEW
+  - id: finishing-a-development-branch
+    recommended_disposition: REVIEW
+  - id: linkedin-posts
+    recommended_disposition: PRUNE_CANDIDATE
+  - id: gsap
+    recommended_disposition: KEEP_DISCOVERABLE
+  - id: framer-motion
+    recommended_disposition: KEEP_DISCOVERABLE
+  - id: lenis
+    recommended_disposition: KEEP_DISCOVERABLE
+  - id: hover-effects
+    recommended_disposition: KEEP_DISCOVERABLE
+  - id: particles
+    recommended_disposition: KEEP_DISCOVERABLE
+  - id: r3f-shaders
+    recommended_disposition: KEEP_DISCOVERABLE
+  - id: agent-browser
+    recommended_disposition: DO_NOT_REMOVE
+  - id: technical-library-dossier
+    recommended_disposition: DO_NOT_REMOVE
+  - id: brainstorming
+    recommended_disposition: KEEP_OPTIONAL
+
+local_megabrain_core:
+  recommended_disposition: KEEP_CORE
+  ids: [orquestrar, gaabwiki, gaabwiki-mem, prd, planner, frontend-pro, backend, testing, debugger, security, po-review, documentation, code-reviewer, validator, researcher, architect, adr, database, devops, failure-analyst, agent-authoring, skill-authoring, agent-architecture-mining]

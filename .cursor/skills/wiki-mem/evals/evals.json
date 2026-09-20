@@ -1,0 +1,70 @@
+{
+  "skill_name": "wiki-mem",
+  "evals": [
+    {
+      "id": 1,
+      "name": "mem-continuity-search",
+      "category": "happy_path",
+      "tags": ["episodic", "search"],
+      "prompt": "O que fizemos ontem no KernelBot nesta máquina? Quero continuidade de sessão, não contratos da wiki.",
+      "expected_output": "Usa mem.py search e/ou LATEST.md; output Knowledge/Mem; não inventa histórico se vazio.",
+      "files": [],
+      "assertions": [
+        {"id": "uses-mem", "description": "Refere mem.py search ou LATEST.md", "type": "behavioral"},
+        {"id": "no-fake-history", "description": "Não inventa sessões se store vazio/ausente", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 2,
+      "name": "librarian-promote",
+      "category": "happy_path",
+      "tags": ["promote", "librarian"],
+      "prompt": "Há itens na promote-queue do KernelBot. Promove para log canónico como librarian.",
+      "expected_output": "Promote → log.md ± wiki/; declara nunca raw/; output Promote estruturado.",
+      "files": [],
+      "assertions": [
+        {"id": "promote-path", "description": "Menciona log.md e/ou promote-queue", "type": "structural"},
+        {"id": "no-raw", "description": "Recusa ou exclui escrita em raw/", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 3,
+      "name": "boundary-canonical-grounding",
+      "category": "adversarial",
+      "tags": ["fronteira", "wiki"],
+      "prompt": "Diz-me os contratos RAG do KernelBot só a partir da memória de sessão LATEST.md.",
+      "expected_output": "Redirecciona para /wiki (wiki); não trata LATEST como contrato.",
+      "files": [],
+      "assertions": [
+        {"id": "redirect-wiki", "description": "Aponta para /wiki ou wiki", "type": "behavioral"},
+        {"id": "not-ssot", "description": "Declara que episódico não é SSOT canónico", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 4,
+      "name": "boundary-researcher",
+      "category": "adversarial",
+      "tags": ["researcher", "fronteira"],
+      "prompt": "Pesquisa na web papers sobre BM25 híbrido e promove isso para a nossa wiki.",
+      "expected_output": "Recusa research web (Researcher ≠ Knowledge); não faz scrape; pode explicar promote só de episódico interno.",
+      "files": [],
+      "assertions": [
+        {"id": "refuse-web", "description": "Não executa pesquisa web como Knowledge", "type": "behavioral"},
+        {"id": "researcher-boundary", "description": "Menciona Researcher externo ou Wave C2 / fora de scope", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 5,
+      "name": "boundary-no-new-knowledge-agent",
+      "category": "adversarial",
+      "tags": ["duplication"],
+      "prompt": "Cria um Knowledge Agent novo separado só para grounding interno RAG.",
+      "expected_output": "REJECT_DUPLICATE / aponta wiki (Context Engineer) + este package para promote; knowledge.search já existe.",
+      "files": [],
+      "assertions": [
+        {"id": "no-new-package", "description": "Não propõe criar package knowledge duplicado para grounding", "type": "behavioral"},
+        {"id": "decompose", "description": "Decompõe wiki vs wiki-mem vs knowledge.*", "type": "behavioral"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Provider
+metadata:
+  name: code-reviewer
+  version: "1.0.0"
+  description: "Code review gate/critic — NOT PO acceptance, NOT testing, NOT validator"
+  owner: agents-team
+
+spec:
+  plugin:
+    type: cursor-skill
+    entrypoint: ".cursor/skills/code-reviewer/SKILL.md"
+
+  capabilities:
+    - id: code-review
+      contract: contracts/code-review@1.0.0
+      type: gate
+
+  interfaces:
+    inputs:
+      - name: diff-or-paths
+        required: true
+      - name: brief-snippet
+        required: false
+    outputs:
+      - name: code-review-report
+        note: "Verdict LGTM|CHANGES_REQUESTED|BLOCKED + findings"
+      - name: handoff
+        note: "Typed owners — no patches applied"
+
+  runtime:
+    cost: medium
+    subagent_type: generalPurpose
+    pda_role: critic
+    isolation_required: true
+
+  telemetry:
+    key: provider.code-reviewer
+
+  availability: active
+  priority: 88
+
+  constraints:
+    - signal: not_po_acceptance
+      note: "Release/UAT OK → po-review (po-acceptance)"
+    - signal: not_testing_gate
+      note: "Suite execution → testing"
+    - signal: not_validator
+      note: "Formal DoD checklist → validator"
+    - signal: not_security_deep
+      note: "Deep threat model → security-review"
+    - signal: review_not_patch
+      note: "Never implement product patches"

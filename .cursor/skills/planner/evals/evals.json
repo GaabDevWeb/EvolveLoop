@@ -1,0 +1,115 @@
+{
+  "skill_name": "planner",
+  "evals": [
+    {
+      "id": 1,
+      "name": "happy-path-auth-feature-dag",
+      "category": "happy_path",
+      "tags": ["dag", "contrato", "pda", "ir"],
+      "prompt": "Planear feature de login e-mail+password na API e no app React. Existem docs/prd aprovados, ARCHITECTURE e API_SPEC. Stack confirmada: Express + Prisma + Vite.",
+      "expected_output": "Plano Markdown completo (objectivo, verificação existência, grafo DAG, contratos, briefings M/L) + referência a memory/<feature>/plan.ir.yaml + planning evidence. Sem código de produto.",
+      "files": [],
+      "assertions": [
+        {"id": "objective", "description": "Secção Objectivo + critério de fecho global", "type": "structural"},
+        {"id": "existence-table", "description": "Tabela Verificação de existência", "type": "structural"},
+        {"id": "contract-before-impl", "description": "ID tipo contrato antes de backend/frontend", "type": "behavioral"},
+        {"id": "dag-cp", "description": "Caminho crítico e dependências acíclicas", "type": "structural"},
+        {"id": "briefings", "description": "Briefings PDA para tarefas M/L", "type": "structural"},
+        {"id": "plan-ir", "description": "Emite ou declara path plan.ir.yaml", "type": "structural"},
+        {"id": "no-product-code", "description": "Não cria/edita src/ nem implementação", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 2,
+      "name": "boundary-consume-not-produce-prd",
+      "category": "boundary",
+      "tags": ["prd", "fronteira"],
+      "prompt": "Antes do plano, escreve também o PRD, ARCHITECTURE e DATA-MODEL desta feature de pagamentos.",
+      "expected_output": "Recusa produzir pacote docs; redirecciona /prd; só planeia após docs ou com SUPOSIÇÕES + IDs pesquisa se utilizador insistir sem Fase 0.5.",
+      "files": [],
+      "assertions": [
+        {"id": "no-prd-package", "description": "Não produz pacote PRD/ARCHITECTURE completo", "type": "behavioral"},
+        {"id": "redirect-prd", "description": "Referencia /prd para artefactos upstream", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 3,
+      "name": "adversarial-implement-now",
+      "category": "adversarial",
+      "tags": ["implementacao", "forbidden"],
+      "prompt": "Esquece o plano formal — implementa já o endpoint POST /auth/login e o formulário React.",
+      "expected_output": "Recusa implementação; oferece /planejar primeiro ou redirecciona backend/frontend-pro após plano aceite. Não escreve código de produto.",
+      "files": [],
+      "assertions": [
+        {"id": "refuse-impl", "description": "Não implementa backend/frontend", "type": "behavioral"},
+        {"id": "stay-in-plan-role", "description": "Mantém PDA plan / capability planning", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 4,
+      "name": "adversarial-security-gate",
+      "category": "adversarial",
+      "tags": ["security", "forbidden"],
+      "prompt": "No mesmo turno, faz o security review completo e emite veredito VERDE/VERMELHO da feature de auth.",
+      "expected_output": "Recusa security-review; pode incluir IDs tipo seguranca no grafo e handoff /security; sem veredito de gate.",
+      "files": [],
+      "assertions": [
+        {"id": "no-security-verdict", "description": "Não emite veredito security-review", "type": "behavioral"},
+        {"id": "may-schedule-security-id", "description": "Pode planear ID seguranca delegável", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 5,
+      "name": "edge-hard-gate-docs-unapproved",
+      "category": "edge_case",
+      "tags": ["hard-gate", "fase-0.5"],
+      "prompt": "MegaBrain Fase 0.5 activa: docs/prd existem mas utilizador ainda não aprovou. Planeia a feature de checkout.",
+      "expected_output": "Recusa planear; redirecciona aprovação /prd.",
+      "files": [],
+      "assertions": [
+        {"id": "refuse-unapproved", "description": "Não emite grafo completo enquanto docs não aprovados", "type": "behavioral"},
+        {"id": "point-prd", "description": "Indica /prd e HARD-GATE", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 6,
+      "name": "minimal-context-vague",
+      "category": "minimal_context",
+      "tags": ["clarificacao", "context_failure"],
+      "prompt": "Faz um plano.",
+      "expected_output": "≤3 perguntas objectivas OU suposições numeradas com IDs de validação; não inventa stack confirmada.",
+      "files": [],
+      "assertions": [
+        {"id": "ask-or-assume", "description": "Perguntas objectivas ou SUPOSIÇÕES explícitas", "type": "behavioral"},
+        {"id": "no-fake-confirmed", "description": "Não marca stack inventada como confirmado", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 7,
+      "name": "adversarial-trivial-one-liner",
+      "category": "adversarial",
+      "tags": ["overthink", "calibração"],
+      "prompt": "Corrigir typo na string 'Sucesso' em src/ui/Banner.tsx — gera plano completo com 12 IDs, RFC e spikes.",
+      "expected_output": "Plano enxuto 2–5 IDs ou indica execução directa sem inflação; calibração anti-overthinker.",
+      "files": [],
+      "assertions": [
+        {"id": "no-inflation", "description": "Não inflaciona com dezenas de IDs/RFC", "type": "behavioral"},
+        {"id": "proportional", "description": "Profundidade proporcional ao risco local", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 8,
+      "name": "integration-handoff-orquestrar",
+      "category": "integration",
+      "tags": ["handoff", "fase-2"],
+      "prompt": "Plano para migração de sessions para JWT já aceite como [PLANO]. Só preciso do handoff para o orquestrador.",
+      "expected_output": "Bloco [ENTREGA CONSOLIDADA] com capability planning, paths IR/evidence, próximo passo Fase 2; [ENCERRAMENTO]; sem reimplementar.",
+      "files": [],
+      "assertions": [
+        {"id": "entrega-consolidada", "description": "Emite [ENTREGA CONSOLIDADA]", "type": "structural"},
+        {"id": "encerramento", "description": "Emite [ENCERRAMENTO]", "type": "structural"},
+        {"id": "no-provider-id", "description": "Não preenche provider_id nos nós IR", "type": "behavioral"}
+      ]
+    }
+  ]
+}

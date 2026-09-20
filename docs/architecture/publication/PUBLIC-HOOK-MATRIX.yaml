@@ -1,0 +1,14 @@
+hooks:
+  - id: after-engine / orchestrator pickup
+    class: core_hook
+    public: true
+  - id: wiki-mem session / stop / promote-queue
+    class: profile_hook
+    public_default: optional_or_off
+    gaabtype: on
+  - id: personal path injectors
+    class: host_hook
+    public: false
+  - id: prune / audit scratch hooks
+    class: development_hook
+    public: false

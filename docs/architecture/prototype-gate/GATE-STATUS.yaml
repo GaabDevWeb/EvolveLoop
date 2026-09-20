@@ -1,0 +1,41 @@
+gate:
+  status: COMPLETE_WITH_BLOCKERS
+  baseline_id: baseline-v1-2026-09-18
+  generated: 2026-09-19
+
+  baseline_modified: false
+  runtime_modified: false
+  prototypes_executed: false
+  dependencies_installed: false
+  adrs_modified: false
+  dry_run: DRY_RUN_UNAVAILABLE
+
+  prototypes:
+
+    - id: PT-001
+      status: BLOCKED
+      risk: HIGH
+      hard_blockers:
+        - live_host_catalog_injection_MISSING
+        - live_task_success_UNAVAILABLE
+        - tokenizer_policy_document_MISSING
+      constraints: []
+      execution_authorized: false
+
+    - id: PT-002
+      status: NEEDS_MORE_EVIDENCE
+      risk: HIGH
+      hard_blockers:
+        - kill_signal_policy_UNDEFINED
+        - OS_kill_harness_MISSING
+        - post_restart_job_completion_UNDEFINED
+      constraints: []
+      execution_authorized: false
+
+  summary:
+    APPROVED: 0
+    APPROVED_WITH_CONSTRAINTS: 0
+    NEEDS_MORE_EVIDENCE: 1
+    BLOCKED: 1
+    REJECTED: 0
+    execution_authorized: 0

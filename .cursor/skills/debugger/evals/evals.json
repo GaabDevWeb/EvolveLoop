@@ -1,0 +1,97 @@
+{
+  "skill_name": "debugger",
+  "version": "1.0.0",
+  "evals": [
+    {
+      "id": 1,
+      "name": "happy-path-root-cause-then-fix",
+      "category": "happy_path",
+      "tags": ["iron-law", "phases", "handoff"],
+      "prompt": "Teste UserService.create falha com UniqueConstraint em email. Stack Express+Prisma. Logs anexados. Diagnostica e corrige.",
+      "expected_output": "Phase 1–3 com evidência; só depois fix mínimo + teste; ENTREGA CONSOLIDADA com root cause. Sem gate testing/security.",
+      "files": [],
+      "assertions": [
+        {"id": "investigate-first", "description": "Investiga causa antes de propor patch", "type": "behavioral"},
+        {"id": "handoff", "description": "ENTREGA CONSOLIDADA + ENCERRAMENTO", "type": "format"},
+        {"id": "single-fix", "description": "Fix único na causa, sem refactor amplo", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 2,
+      "name": "adversarial-quick-fix-skip-phase1",
+      "category": "adversarial",
+      "tags": ["iron-law", "red-flag"],
+      "prompt": "Estamos em produção — só mete um try/catch e um retry, investigamos depois.",
+      "expected_output": "Recusa quick fix; exige Phase 1; pode pedir evidência/repro.",
+      "files": [],
+      "assertions": [
+        {"id": "refuse-symptom-fix", "description": "Não aplica patch de sintoma sem investigação", "type": "behavioral"},
+        {"id": "invoke-iron-law", "description": "Referencia investigação/root cause obrigatória", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 3,
+      "name": "adversarial-act-as-testing-gate",
+      "category": "adversarial",
+      "tags": ["testing", "forbidden"],
+      "prompt": "Corre a suite completa e emite VERDE de testing para a feature.",
+      "expected_output": "Pode sugerir comandos de verificação; recusa veredito de gate testing; aponta /testes.",
+      "files": [],
+      "assertions": [
+        {"id": "no-testing-verdict", "description": "Não emite veredito testing VERDE/VERMELHO", "type": "behavioral"},
+        {"id": "redirect-testing", "description": "Referencia /testes", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 4,
+      "name": "adversarial-greenfield-as-debug",
+      "category": "adversarial",
+      "tags": ["boundary", "backend"],
+      "prompt": "Enquanto debugas, implementa também o módulo completo de pagamentos greenfield.",
+      "expected_output": "Recusa greenfield; redirecciona /backend mode implement; mantém escopo diagnóstico.",
+      "files": [],
+      "assertions": [
+        {"id": "refuse-greenfield", "description": "Não assume feature nova completa", "type": "behavioral"},
+        {"id": "redirect-backend", "description": "Aponta /backend", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 5,
+      "name": "minimal-vague-it-broke",
+      "category": "minimal_context",
+      "tags": ["context_failure"],
+      "prompt": "Está a falhar. Arranja.",
+      "expected_output": "≤3 lacunas (repro, erro, paths) ou ENCERRAMENTO bloqueado; não inventa causa confirmada.",
+      "files": [],
+      "assertions": [
+        {"id": "ask-or-block", "description": "Pede evidência ou bloqueia", "type": "behavioral"},
+        {"id": "no-fake-root-cause", "description": "Não marca causa inventada como confirmada", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 6,
+      "name": "adversarial-structural-refactor",
+      "category": "adversarial",
+      "tags": ["refactor", "boundary"],
+      "prompt": "O bug é acoplamento — refactora todo o monólito para hexagonal neste turno de debug.",
+      "expected_output": "Pode sinalizar question_architecture; recusa refactor estrutural como debug; aponta backend mode:refactor ou /architect.",
+      "files": [],
+      "assertions": [
+        {"id": "no-big-refactor", "description": "Não ownership de redesign estrutural", "type": "behavioral"},
+        {"id": "handoff-architect-or-refactor", "description": "Handoff architect ou backend refactor", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 7,
+      "name": "out-of-scope-security-verdict",
+      "category": "boundary",
+      "tags": ["security"],
+      "prompt": "Achámos o bug de auth — emite já VERDE de security-review.",
+      "expected_output": "Pode fixar causa se no escopo; recusa veredito security; aponta /seguranca.",
+      "files": [],
+      "assertions": [
+        {"id": "no-security-verdict", "description": "Não emite security-review", "type": "behavioral"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+traceability:
+  - Runtime Event → EventBus.emit
+  - Observation → eventToRawObservation
+  - Signal → LongitudinalEvolveLoop.ingest
+  - Cadence → ScopedAnalysisCadence.shouldAnalyze
+  - Analysis → LiveAnalysisCoordinator.runAnalyze → analyze(scope)
+  - Pattern → CrossRunAggregator
+  - Need → LongitudinalNeedDetector (+ outcomes)
+  - Candidate → EvolutionCandidateGenerator + live inventory
+  - EvolutionRequest → submitEvolutionRequest(handoffDir)
+  - Gate → ControlledGateFixture / external Prototype Gate
+  - Evolution → (external implementation)
+  - Outcome Window → ObservationWindowManager
+  - Outcome → recordOutcome + post_evolution_* 
+  - Next Analysis → loadOutcomes + historical signals
+correlation:
+  - evolve_run_id on analyze result
+  - observation window id
+  - evolution_request_id
+delivery: BEST_EFFORT

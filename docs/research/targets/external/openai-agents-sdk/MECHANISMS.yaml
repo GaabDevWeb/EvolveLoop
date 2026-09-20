@@ -1,0 +1,304 @@
+# MECHANISMS inventory — OpenAI Agents SDK
+# source_type: OFFICIAL_EXTERNAL
+# target: openai-agents-sdk
+# date: 2026-09-18
+# versions: docs live + openai-agents-python v0.22.3; TS docs reviewed at overview level
+
+target:
+  slug: openai-agents-sdk
+  name: OpenAI Agents SDK
+  category: SDK
+  languages: [python, typescript]
+  license: MIT
+  repos:
+    - url: https://github.com/openai/openai-agents-python
+      latest_release: v0.22.3
+    - url: https://github.com/openai/openai-agents-js
+  docs:
+    - https://openai.github.io/openai-agents-python/
+    - https://openai.github.io/openai-agents-js/
+    - https://developers.openai.com/api/docs/guides/agents/sdk
+
+primitives_documented:
+  - Agents
+  - Runner / agent loop
+  - Tools (function, hosted, local execution, agents-as-tools, MCP, experimental Codex)
+  - Handoffs
+  - Guardrails
+  - Sessions
+  - Tracing
+  - Context (RunContextWrapper)
+  - Human-in-the-loop (RunState)
+  - SandboxAgent (beta)
+  - Realtime / voice (secondary for this lens)
+
+mechanisms:
+  - id: M01-agent-loop
+    name: Runner agent loop
+    problem: Multi-step model↔tool↔handoff without custom loop
+    how: >
+      Runner.run|run_sync|run_streamed calls model; on final output ends;
+      on handoff switches agent; on tools executes and loops; max_turns default 10
+    epistemic: [DOCUMENTED, OBSERVED]
+    sources:
+      - https://openai.github.io/openai-agents-python/running_agents/
+      - https://raw.githubusercontent.com/openai/openai-agents-python/v0.22.3/src/agents/run.py
+      - https://raw.githubusercontent.com/openai/openai-agents-python/v0.22.3/src/agents/run_config.py
+    observed_facts:
+      - DEFAULT_MAX_TURNS = 10
+    our_equivalence: PARTIAL
+    our_mechanism: Orchestrator / Runtime + Capability IR
+    decision: ALREADY_PRESENT
+    decision_note: Role of orchestration already present; do not replace with Runner
+    confidence: HIGH
+    utility: CONDITIONALLY_USEFUL
+
+  - id: M02-function-tools
+    name: Function tools + schema validation
+    problem: Expose app actions with validated arguments/results
+    how: "@tool/function_tool; schema from signatures; Pydantic/TypeAdapter; tool_use_behavior; reset_tool_choice"
+    epistemic: [DOCUMENTED]
+    sources:
+      - https://openai.github.io/openai-agents-python/tools/
+      - https://openai.github.io/openai-agents-python/agents/
+    our_equivalence: PARTIAL
+    our_mechanism: Capability Registry + Provider + contracts/schemas
+    decision: ALREADY_PRESENT
+    residual: ADAPT tool-level guardrail/lifecycle ideas
+    confidence: HIGH
+    utility: USEFUL
+
+  - id: M03-hosted-tools
+    name: Hosted OpenAI tools
+    problem: Search/code/image/hosted MCP without local impl
+    how: WebSearchTool, FileSearchTool, CodeInterpreterTool, HostedMCPTool, ImageGenerationTool, ToolSearchTool, ProgrammaticToolCallingTool
+    epistemic: [DOCUMENTED]
+    sources:
+      - https://openai.github.io/openai-agents-python/tools/
+    our_equivalence: NONE
+    our_mechanism: Provider Registry (generic)
+    decision: DEFER
+    decision_alt: REJECT as MegaBrain core primitive
+    confidence: HIGH
+    utility: CONDITIONALLY_USEFUL
+
+  - id: M04-agents-as-tools
+    name: Agents as tools (manager pattern)
+    problem: Specialize sub-agents while manager keeps conversation control
+    how: Agent.as_tool(tool_name, tool_description, needs_approval?, parameters?)
+    epistemic: [DOCUMENTED]
+    sources:
+      - https://openai.github.io/openai-agents-python/agents/
+      - https://openai.github.io/openai-agents-python/multi_agent/
+    our_equivalence: PARTIAL
+    our_mechanism: PDA multi-agent Task roles / capability delegation
+    decision: ALREADY_PRESENT
+    residual: ADAPT control-retention vs transfer clarity
+    confidence: MEDIUM
+    utility: USEFUL
+
+  - id: M05-handoffs
+    name: Handoffs (peer control transfer)
+    problem: Route to specialist that owns the remainder of the turn
+    how: >
+      handoffs list / handoff(); exposed as transfer_to_* tools; on_handoff;
+      input_type metadata; input_filter; nest_handoff_history (opt-in beta)
+    epistemic: [DOCUMENTED]
+    sources:
+      - https://openai.github.io/openai-agents-python/handoffs/
+    our_equivalence: PARTIAL
+    our_mechanism: PDA role handoffs / Task tool
+    decision: ADAPT
+    decision_note: Adapt history filtering / when-to-handoff guidance; no second handoff framework
+    confidence: MEDIUM
+    utility: CONDITIONALLY_USEFUL
+    failure_modes:
+      - excess handoffs / context pollution
+      - input guardrails only on first agent in chain
+
+  - id: M06-guardrails
+    name: Input / output / tool guardrails
+    problem: Validate and halt unsafe/irrelevant I/O; control cost
+    how: >
+      tripwire exceptions; input run_in_parallel vs blocking;
+      tool guardrails on FunctionTool and local MCP; output sanitization on reject
+    epistemic: [DOCUMENTED]
+    sources:
+      - https://openai.github.io/openai-agents-python/guardrails/
+    our_equivalence: PARTIAL
+    our_mechanism: Policy Engine + Evidence gates
+    decision: ADAPT
+    confidence: HIGH
+    utility: USEFUL
+    costs:
+      - parallel mode may burn tokens/tools before cancel
+      - agent I/O guardrails do not wrap every mid-chain step
+
+  - id: M07-sessions
+    name: Conversational Sessions
+    problem: Persist multi-turn history without manual to_input_list
+    how: >
+      Session get/append around Runner; SQLiteSession, OpenAIConversationsSession,
+      RedisSession, SQLAlchemy, encrypted, AdvancedSQLite; session_input_callback;
+      mutually exclusive with conversation_id/previous_response_id
+    epistemic: [DOCUMENTED]
+    sources:
+      - https://openai.github.io/openai-agents-python/sessions/
+    our_equivalence: PARTIAL
+    our_mechanism: gaabwiki-mem / .ai/sessions (episodic; not agent working memory)
+    decision: PROTOTYPE
+    confidence: MEDIUM
+    utility: USEFUL
+    failure_modes:
+      - context explosion if full history always prepended
+
+  - id: M08-context-di
+    name: Local context dependency injection
+    problem: Share app state/deps with tools/hooks without LLM visibility
+    how: Runner.run(..., context=T); RunContextWrapper[T]; ToolContext metadata; same type across run
+    epistemic: [DOCUMENTED]
+    sources:
+      - https://openai.github.io/openai-agents-python/context/
+    our_equivalence: UNKNOWN
+    our_mechanism: Orchestrator job/skill context (needs audit)
+    decision: DEFER
+    confidence: LOW
+    utility: USEFUL
+    risks:
+      - secrets in context persist into RunState serialization
+
+  - id: M09-hitl-runstate
+    name: Human-in-the-loop approvals + RunState
+    problem: Gate sensitive tools; durable pause/resume across processes
+    how: >
+      needs_approval bool|callable; interruptions ToolApprovalItem;
+      state.approve/reject; to_json/from_json; works across handoffs and Agent.as_tool;
+      MCP/shell/hosted approval variants
+    epistemic: [DOCUMENTED, OBSERVED]
+    sources:
+      - https://openai.github.io/openai-agents-python/human_in_the_loop/
+      - https://github.com/openai/openai-agents-python/blob/main/src/agents/run_state.py
+    our_equivalence: PARTIAL
+    our_mechanism: Policy + Cursor hooks; durable mid-run state UNKNOWN
+    decision: PROTOTYPE
+    confidence: HIGH
+    utility: USEFUL
+
+  - id: M10-tracing
+    name: Built-in tracing / spans
+    problem: Visualize and monitor agent workflows
+    how: >
+      Default trace per Runner; agent/generation/function/guardrail/handoff spans;
+      BatchTraceProcessor to OpenAI; add_trace_processor / set_trace_processors;
+      sensitive data flag; ZDR disables tracing
+    epistemic: [DOCUMENTED]
+    sources:
+      - https://openai.github.io/openai-agents-python/tracing/
+    our_equivalence: PARTIAL
+    our_mechanism: summarizeExecutionTrace + Telemetry
+    decision: ADAPT
+    confidence: HIGH
+    utility: USEFUL
+
+  - id: M11-mcp
+    name: MCP server tool calling
+    problem: Use MCP tools beside function tools
+    how: >
+      mcp_servers (stdio/sse/streamable HTTP); HostedMCPTool; tool_filter;
+      tool_input/output_guardrails on local MCP; require_approval
+    epistemic: [DOCUMENTED]
+    sources:
+      - https://openai.github.io/openai-agents-python/mcp/
+    our_equivalence: PARTIAL
+    our_mechanism: Cursor MCP (workspace); Orchestrator MCP UNKNOWN
+    decision: ADAPT
+    decision_note: Adapt filter/guardrail/approval patterns; DEFER HostedMCP as core
+    confidence: MEDIUM
+    utility: USEFUL
+
+  - id: M12-sandbox
+    name: Sandbox agents (beta)
+    problem: Isolated mutable workspace with resume/snapshots
+    how: >
+      SandboxAgent + Manifest + capabilities (fs/shell/skills/memory/compaction);
+      SandboxRunConfig client (UnixLocal, Docker, hosted providers);
+      sandbox session ≠ conversational Session
+    epistemic: [DOCUMENTED]
+    sources:
+      - https://openai.github.io/openai-agents-python/sandbox_agents/
+      - https://openai.github.io/openai-agents-python/sandbox/guide/
+      - https://openai.github.io/openai-agents-python/sandbox/clients/
+    our_equivalence: NONE
+    our_mechanism: Sandbox UNKNOWN–PARTIAL
+    decision: PROTOTYPE
+    decision_note: Prototype isolation concept; DEFER depending on beta SDK API
+    confidence: HIGH
+    utility: CONDITIONALLY_USEFUL
+    warnings:
+      - UnixLocalSandboxClient weak/no OS confinement on Linux (documented)
+
+  - id: M13-hooks
+    name: Lifecycle hooks
+    problem: Observe/extend run without forking Runner
+    how: RunHooks (whole run) vs AgentHooks; on_agent/llm/tool/handoff callbacks
+    epistemic: [DOCUMENTED]
+    sources:
+      - https://openai.github.io/openai-agents-python/agents/
+    our_equivalence: PARTIAL
+    our_mechanism: Cursor hooks + promote-queue
+    decision: ADAPT
+    confidence: MEDIUM
+    utility: USEFUL
+
+  - id: M14-structured-output
+    name: Structured final outputs
+    problem: Typed agent results
+    how: output_type → Responses structured outputs via TypeAdapter-compatible types
+    epistemic: [DOCUMENTED]
+    sources:
+      - https://openai.github.io/openai-agents-python/agents/
+    our_equivalence: PARTIAL
+    our_mechanism: contracts/schemas / Capability IR
+    decision: ALREADY_PRESENT
+    confidence: HIGH
+    utility: USEFUL
+
+  - id: M16-server-continuation
+    name: Server-managed conversation continuation
+    problem: Continuity without client session store
+    how: conversation_id / previous_response_id / auto_previous_response_id (exclusive with Session)
+    epistemic: [DOCUMENTED]
+    sources:
+      - https://openai.github.io/openai-agents-python/sessions/
+      - https://openai.github.io/openai-agents-python/running_agents/
+    our_equivalence: NONE
+    our_mechanism: n/a
+    decision: DEFER
+    confidence: HIGH
+    utility: CONDITIONALLY_USEFUL
+
+anti_patterns_observed_or_warned:
+  - id: AP-handoff-overuse
+    description: Too many peer handoffs / unclear routing
+    source: multi_agent + handoffs docs (design guidance)
+    epistemic: DOCUMENTED
+  - id: AP-parallel-guardrail-side-effects
+    description: Parallel input guardrails allow agent/tools to start before tripwire
+    source: guardrails docs
+    epistemic: DOCUMENTED
+  - id: AP-context-explosion
+    description: Session full-history prepend without compaction
+    source: sessions docs (callback exists to mitigate)
+    epistemic: INFERRED from DOCUMENTED behavior
+  - id: AP-unix-local-false-isolation
+    description: Treating UnixLocal as secure sandbox
+    source: sandbox_agents docs warning
+    epistemic: DOCUMENTED
+  - id: AP-secret-in-runstate
+    description: Secrets in RunContextWrapper.context serialized with HITL state
+    source: HITL + context docs
+    epistemic: DOCUMENTED
+
+comparison_rules_applied:
+  decisions_vocab: [ALREADY_PRESENT, ADOPT, ADAPT, PROTOTYPE, DEFER, REJECT]
+  note: No ADOPT of full SDK as MegaBrain runtime. No rankings.

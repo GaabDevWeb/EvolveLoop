@@ -1,0 +1,15 @@
+core_purity:
+  hardcoded_personal_paths: 0
+  personal_identity_references: 0
+  personal_knowledge_imports: 0
+  personal_profile_imports: 0
+  external_personal_dependencies: 0
+  scan_paths:
+    - orchestrator/src/knowledge/backend/types.ts
+    - orchestrator/src/knowledge/backend/resolve.ts
+    - orchestrator/src/config/profile.ts
+    - orchestrator/src/providers/deterministic/knowledge.ts
+    - engine/scheduler/policy/evidence/evolveloop (sample)
+  exceptions:
+    - wiki-backend.ts may reference EXTERNAL module name gaabwiki via WIKI_CLI_MODULE default
+      classification: EXTERNAL

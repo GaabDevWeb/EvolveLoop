@@ -1,0 +1,30 @@
+final_audit_matrix:
+  dimensions:
+    correctness:
+      status: PASS
+      notes: "196/196; ATTACK suite green after V1-C-001/002"
+    architectural_integrity:
+      status: PASS_WITH_LIMITATIONS
+      notes: "No second runtime/registry/scheduler; legacy dual cadence export"
+    security_scope:
+      status: PASS_WITH_LIMITATIONS
+      notes: "Unlabeled reject; SYSTEM authorize; logical tenancy only"
+    long_run_behavior:
+      status: PASS_WITH_LIMITATIONS
+      notes: "Storm bounded; no TTL; storage growth limitation documented"
+    evidence_claim_integrity:
+      status: PASS
+      notes: "CONTRADICTED claims explicit; docs treated as claims"
+    operational_readiness:
+      status: PASS_OBSERVATION_FIRST
+      notes: "OPERATIONS.md; default OFF; enable via --evolve"
+
+  reviewers_independent:
+    architecture: PASS_WITH_LIMITATIONS
+    runtime: PASS_WITH_LIMITATIONS
+    security: PASS_WITH_LIMITATIONS
+    evidence: PASS
+    eval: PASS
+    operations: PASS_OBSERVATION_FIRST
+
+  v1_decision: V1_READY_WITH_LIMITATIONS

@@ -1,0 +1,55 @@
+experiments:
+
+  - id: E-001
+    sample_quality: MEDIUM
+    measurement_quality: MEDIUM
+    control_quality: HIGH
+    reproducibility: HIGH
+    proxy_dependency: MEDIUM
+    scope_clarity: HIGH
+    overall: MEDIUM
+    notes:
+      - "INITIAL SAMPLE; deterministic scorer → reps do not add statistical variance"
+      - "token_estimate PROXY; task_success NOT_MEASURED"
+
+  - id: E-005
+    sample_quality: MEDIUM
+    measurement_quality: HIGH
+    control_quality: HIGH
+    reproducibility: HIGH
+    proxy_dependency: LOW
+    scope_clarity: HIGH
+    overall: HIGH
+    notes:
+      - "n=5 per arm; fixture-scoped STATE_WRITE"
+      - "OS kill NOT_MEASURED"
+
+  - id: E-002
+    sample_quality: UNKNOWN
+    measurement_quality: UNKNOWN
+    control_quality: UNKNOWN
+    reproducibility: UNKNOWN
+    proxy_dependency: UNKNOWN
+    scope_clarity: HIGH
+    overall: UNKNOWN
+    notes: ["BLOCKED — no execution"]
+
+  - id: E-003
+    sample_quality: UNKNOWN
+    measurement_quality: UNKNOWN
+    control_quality: UNKNOWN
+    reproducibility: UNKNOWN
+    proxy_dependency: UNKNOWN
+    scope_clarity: HIGH
+    overall: UNKNOWN
+    notes: ["BLOCKED — no execution"]
+
+  - id: E-004
+    sample_quality: UNKNOWN
+    measurement_quality: UNKNOWN
+    control_quality: UNKNOWN
+    reproducibility: UNKNOWN
+    proxy_dependency: UNKNOWN
+    scope_clarity: HIGH
+    overall: UNKNOWN
+    notes: ["BLOCKED — no execution"]

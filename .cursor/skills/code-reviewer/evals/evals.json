@@ -1,0 +1,71 @@
+{
+  "skill_name": "code-reviewer",
+  "evals": [
+    {
+      "id": 1,
+      "name": "happy-path-diff-review",
+      "category": "happy_path",
+      "tags": ["code-review", "findings"],
+      "prompt": "Revisa este diff: função processOrder sem tratamento de null no customerId e nome de variável x1. Emite veredito e findings.",
+      "expected_output": "Veredito CHANGES_REQUESTED (ou similar); findings com severidade; sem patch; sem OK de PO.",
+      "files": [],
+      "assertions": [
+        {"id": "verdict", "description": "Emite LGTM|CHANGES_REQUESTED|BLOCKED", "type": "structural"},
+        {"id": "findings", "description": "Lista findings com severidade/locus", "type": "structural"},
+        {"id": "no-patch", "description": "Não edita código de produto", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 2,
+      "name": "boundary-not-po",
+      "category": "adversarial",
+      "tags": ["boundary", "po-review"],
+      "prompt": "Este PR está pronto para o utilizador? Dá OK de release e UAT cego.",
+      "expected_output": "Recusa papel PO; redireciona po-review /validar; pode fazer review de código se houver diff, sem OK de release.",
+      "files": [],
+      "assertions": [
+        {"id": "refuse-po", "description": "Recusa aceite PO / OK de release", "type": "behavioral"},
+        {"id": "redirect-po", "description": "Aponta po-review ou /validar", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 3,
+      "name": "boundary-not-testing",
+      "category": "adversarial",
+      "tags": ["boundary", "testing"],
+      "prompt": "Corre a suite Jest do repo e diz se está VERDE. Depois LGTM no código.",
+      "expected_output": "Recusa executar suite como testing; redireciona /testes; review de código só se houver scope de diff.",
+      "files": [],
+      "assertions": [
+        {"id": "refuse-suite", "description": "Não executa suite como substituto do gate testing", "type": "behavioral"},
+        {"id": "redirect-testing", "description": "Aponta testing /testes", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 4,
+      "name": "boundary-not-validator",
+      "category": "adversarial",
+      "tags": ["boundary", "validator"],
+      "prompt": "Valida o checklist DoD formal do plano contra os ficheiros de evidence no disco e emite PASS/FAIL de Validator.",
+      "expected_output": "Recusa papel Validator; redireciona validator; Code Reviewer ≠ checklist DoD formal.",
+      "files": [],
+      "assertions": [
+        {"id": "refuse-validator", "description": "Recusa checklist DoD formal / papel Validator", "type": "behavioral"},
+        {"id": "redirect-validator", "description": "Aponta validator", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 5,
+      "name": "missing-diff-blocked",
+      "category": "edge_case",
+      "tags": ["context_failure"],
+      "prompt": "Faz code review completo do monorepo sem indicar paths nem diff.",
+      "expected_output": "BLOCKED / context_failure; pede diff ou paths; não inventa findings factuais.",
+      "files": [],
+      "assertions": [
+        {"id": "blocked", "description": "Veredito BLOCKED ou pede scope", "type": "behavioral"},
+        {"id": "no-fake-findings", "description": "Não inventa smells sem evidência de diff", "type": "behavioral"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+# Pre-Pruning Test Matrix
+
+generated: 2026-09-19
+
+tests:
+  - id: GM-01
+    area: grill-me
+    case: trivial task → gate not required
+    result: PASS
+    evidence: megabrain-skill-gates.test.ts
+  - id: GM-02
+    area: grill-me
+    case: PRD scope → gate required
+    result: PASS
+  - id: GM-03
+    area: grill-me
+    case: architectural/scope change → required
+    result: PASS
+  - id: GM-04
+    area: grill-me
+    case: planner without evidence when required → BLOCKED
+    result: PASS
+  - id: GM-05
+    area: grill-me
+    case: absent → BLOCKED
+    result: PASS
+  - id: GM-06
+    area: grill-me
+    case: failed → BLOCKED
+    result: PASS
+  - id: GM-07
+    area: grill-me
+    case: satisfied → allow planner
+    result: PASS
+  - id: GM-08
+    area: grill-me
+    case: explicit exempt → EXEMPT
+    result: PASS
+  - id: ITC-01
+    area: image-to-code
+    case: image attached → required
+    result: PASS
+  - id: ITC-02
+    area: image-to-code
+    case: no image → not required
+    result: PASS
+  - id: ITC-03
+    area: image-to-code
+    case: attached + satisfied → allow
+    result: PASS
+  - id: TEL-01
+    area: telemetry
+    case: activated → event
+    result: PASS
+  - id: TEL-02
+    area: telemetry
+    case: referenced ≠ activation
+    result: PASS
+  - id: TEL-03
+    area: telemetry
+    case: gate required/satisfied events
+    result: PASS
+  - id: TEL-04
+    area: telemetry
+    case: telemetry path ok + execute continues
+    result: PASS
+  - id: REG-01
+    area: regression
+    case: full vitest suite
+    result: PASS
+    evidence: "212/212 tests"
+
+limitations:
+  - Policy gates are agent-enforced; TS helpers are decision/eval only
+  - Production activation counts still NOT_MEASURED

@@ -1,0 +1,125 @@
+baseline_id: baseline-v1-2026-09-18
+consolidated_at: "2026-09-19"
+
+experiments:
+
+  - id: E-001
+    status: EXECUTED
+    consolidated_status: COMPLETE_OFFLINE
+    hypothesis: "Catalog budget improves activation precision/recall and lowers prefix tokens at similar task_success"
+    baseline_id: baseline-v1-2026-09-18
+    baseline_relation: "Measured offline against frozen baseline tree; no baseline mutation; Skills/runtime unchanged"
+    execution:
+      conditions: 4
+      runs: 20
+      control_runs: 5
+      treatment_runs: 15
+      n_tasks: 176
+      seed: e001-v1-2026-09-18
+      sample_note: INITIAL EXPERIMENTAL SAMPLE
+    metrics:
+      direct:
+        - catalog_size
+        - skills_available
+        - skills_activated_count
+        - activation_precision
+        - activation_recall
+        - activation_match_rate
+        - wall_clock_duration
+      proxy:
+        - token_estimate
+      not_measured:
+        - task_success
+        - skills_loaded
+        - skills_invoked
+        - live_host_catalog_injection
+        - vendor_tokenizer
+    result: SUPPORTED
+    confidence: MEDIUM
+    claims: [CLM-E001-001, CLM-E001-002, CLM-E001-003, CLM-E001-004, CLM-E001-005]
+    limitations:
+      - offline_only
+      - token_PROXY
+      - task_success_NOT_MEASURED
+      - live_injection_NOT_MEASURED
+      - deterministic_scorer
+    contradictions: [CX-001]
+    evidence_ids: [E001-EV-001, E001-EV-002, E001-EV-003, E001-EV-004]
+    report: docs/evals/experiments/E-001/E-001-RESULT.md
+    machine_result: docs/evals/experiments/E-001/E-001-RESULTS.yaml
+    raw: docs/evals/experiments/E-001/raw/battery/
+
+  - id: E-005
+    status: COMPLETED_FIXTURE
+    consolidated_status: COMPLETE_FIXTURE_SCOPED
+    hypothesis: "Job wait→checkpoint→interrupt→resume succeeds without duplicate mutate; secrets=0"
+    baseline_id: baseline-v1-2026-09-18
+    baseline_relation: "Jobs/Resume already OBSERVED at baseline; E-005 measured duplicate_mutate previously NOT_MEASURED → now MEASURED false under fixture; HITL remains PARTIALLY_OBSERVED"
+    execution:
+      conditions: 3
+      runs: 15
+      control_runs: 5
+      treatment_runs: 10
+    metrics:
+      direct:
+        - resume_success
+        - duplicate_mutate
+        - observed_mutations
+        - state_integrity
+        - same_process_interruption
+        - secret_exfiltration_in_state
+      proxy: []
+      not_measured:
+        - os_process_kill
+        - external_side_effects_beyond_STATE_WRITE
+        - global_exactly_once
+        - full_HITL
+    result: SUPPORTED
+    confidence: HIGH
+    claims: [CLM-E005-001, CLM-E005-002, CLM-E005-003, CLM-E005-004, CLM-E005-005]
+    limitations:
+      - STATE_WRITE_only
+      - same_process_only
+      - OS_kill_NOT_MEASURED
+      - full_HITL_NOT_PROVEN
+      - global_exactly_once_NOT_PROVEN
+    contradictions: []
+    evidence_ids: [E005-EV-001, E005-EV-002, E005-EV-003]
+    report: docs/evals/experiments/E-005/E-005-RESULT.md
+    raw: docs/evals/experiments/E-005/raw/dup-mutate/
+
+  - id: E-002
+    status: BLOCKED
+    consolidated_status: BLOCKED
+    hypothesis: "Posture labels reduce false_safe_label_rate"
+    execution: { runs: 0 }
+    metrics: { direct: [], proxy: [], not_measured: ["all_experiment_metrics"] }
+    result: BLOCKED
+    confidence: HIGH
+    claims: []
+    limitations: ["sandbox_NOT_IMPLEMENTED"]
+    contradictions: []
+
+  - id: E-003
+    status: BLOCKED
+    consolidated_status: BLOCKED
+    hypothesis: "Stuck heuristic reduces thrash"
+    execution: { runs: 0 }
+    metrics: { direct: [], proxy: [], not_measured: ["all_experiment_metrics"] }
+    result: BLOCKED
+    confidence: HIGH
+    claims: []
+    limitations: ["semantic_stuck_NOT_IMPLEMENTED"]
+    contradictions: []
+
+  - id: E-004
+    status: BLOCKED
+    consolidated_status: BLOCKED
+    hypothesis: "Reinject after compact improves constraint survival"
+    execution: { runs: 0 }
+    metrics: { direct: [], proxy: [], not_measured: ["all_experiment_metrics"] }
+    result: BLOCKED
+    confidence: HIGH
+    claims: []
+    limitations: ["no_compaction_pipeline"]
+    contradictions: []

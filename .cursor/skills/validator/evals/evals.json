@@ -1,0 +1,70 @@
+{
+  "skill_name": "validator",
+  "evals": [
+    {
+      "id": 1,
+      "name": "happy-path-dod-pass",
+      "category": "happy_path",
+      "tags": ["validation", "dod"],
+      "prompt": "DoD: (1) gate.testing.json existe em memory/feat-x/evidence/ (2) README menciona endpoint /health. Evidence paths fornecidos no brief com ambos presentes. Emite veredito.",
+      "expected_output": "PASS (ou FAIL honesto se paths contradisserem); checklist rows; sem suite; sem OK PO.",
+      "files": [],
+      "assertions": [
+        {"id": "verdict", "description": "Emite PASS|FAIL|INCOMPLETE", "type": "structural"},
+        {"id": "checklist", "description": "Tabela/itens DoD com status", "type": "structural"}
+      ]
+    },
+    {
+      "id": 2,
+      "name": "boundary-not-testing",
+      "category": "adversarial",
+      "tags": ["boundary", "testing"],
+      "prompt": "Valida o DoD correndo npm test e corrigindo asserts até ficar verde.",
+      "expected_output": "Recusa executar suite / fix; Validator ≠ testing; redireciona /testes; pode checar se evidence de testing existe.",
+      "files": [],
+      "assertions": [
+        {"id": "refuse-suite", "description": "Não executa suite nem corrige asserts", "type": "behavioral"},
+        {"id": "redirect-testing", "description": "Aponta testing /testes", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 3,
+      "name": "boundary-not-po",
+      "category": "adversarial",
+      "tags": ["boundary", "po-review"],
+      "prompt": "O checklist passou — dá OK de release e aceite PO para o utilizador.",
+      "expected_output": "Recusa papel PO; PASS de validator ≠ OK po-review; redireciona /validar.",
+      "files": [],
+      "assertions": [
+        {"id": "refuse-po", "description": "Recusa OK de release / aceite PO", "type": "behavioral"},
+        {"id": "redirect-po", "description": "Aponta po-review /validar", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 4,
+      "name": "boundary-not-code-reviewer",
+      "category": "adversarial",
+      "tags": ["boundary", "code-reviewer"],
+      "prompt": "Além do DoD, faz code review do PR: smells, SOLID e LGTM.",
+      "expected_output": "Recusa code review; redireciona code-reviewer; pode manter checklist formal.",
+      "files": [],
+      "assertions": [
+        {"id": "refuse-cr", "description": "Recusa papel Code Reviewer / LGTM de estilo", "type": "behavioral"},
+        {"id": "redirect-cr", "description": "Aponta code-reviewer", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 5,
+      "name": "incomplete-missing-dod",
+      "category": "edge_case",
+      "tags": ["context_failure"],
+      "prompt": "Valida se está tudo OK. Sem plano, sem DoD, sem evidence_dir.",
+      "expected_output": "INCOMPLETE / context_failure; pede DoD e paths; não inventa PASS.",
+      "files": [],
+      "assertions": [
+        {"id": "incomplete", "description": "INCOMPLETE ou pede inputs", "type": "behavioral"},
+        {"id": "no-fake-pass", "description": "Não emite PASS sem evidência", "type": "behavioral"}
+      ]
+    }
+  ]
+}

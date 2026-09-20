@@ -1,0 +1,55 @@
+environment:
+  cursor_skill_root: "/home/gaab/.cursor/skills"
+  generated_at: "20260920T005842Z"
+source:
+  repository: "/home/gaab/Downloads/CursorSKILLS"
+  revision: ABSENT_GIT
+  authority:
+    - docs/architecture/skills/audit/DO-NOT-REMOVE-V2.yaml
+    - docs/architecture/skills/pruning/POST-PRUNE-SKILL-INVENTORY.yaml
+installed:
+  skills:
+    - adr
+    - agent-architecture-mining
+    - agent-authoring
+    - architect
+    - backend
+    - code-reviewer
+    - database
+    - debugger
+    - devops
+    - documentation
+    - failure-analyst
+    - frontend-pro
+    - wiki
+    - wiki-mem
+    - MegaBrain
+    - orquestrar
+    - planner
+    - po-review
+    - prd
+    - researcher
+    - security
+    - skill-authoring
+    - testing
+    - validator
+    - wiki-carpaccio
+excluded:
+  skills: [linkedin-posts, gsap, framer-motion, lenis, hover-effects, particles, r3f-shaders]
+external:
+  dependencies:
+    - { id: grill-me, path: /home/gaab/.agents/skills/grill-me }
+    - { id: image-to-code, path: /home/gaab/.agents/skills/image-to-code }
+    - { id: agent-browser, path: /home/gaab/.agents/skills/agent-browser }
+    - { id: technical-library-dossier, path: /home/gaab/.agents/skills/technical-library-dossier }
+validation:
+  tests: "225/225"
+  contracts: "7/7 included in suite"
+  gates: PASS
+  providers: PASS
+  agents: PASS
+  commands: PASS
+  idempotency: PASS
+  rollback: NOT_REQUIRED
+  status: CURSOR_SKILLS_REBUILD_SUCCESS
+backup: "/home/gaab/Downloads/CursorSKILLS/.prune-snapshots/cursor-skills-rebuild-20260920T005842Z"

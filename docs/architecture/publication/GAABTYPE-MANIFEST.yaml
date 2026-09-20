@@ -1,0 +1,33 @@
+# GaabType = personal profile overlay — plan only
+# Recommended form: profile directory (NOT duplicated core branch)
+
+recommendation:
+  form: profile_directory_overlay
+  alternatives_considered:
+    - branch_with_full_copy: rejected (duplicates core)
+    - separate_overlay_repo: optional later for private corpus docs
+  no_duplicated_core: true
+
+gaabtype:
+  profile_files:
+    - profiles/gaabtype/knowledge.yaml
+    - profiles/gaabtype/paths.example.yaml
+    - profiles/gaabtype/projects.yaml
+    - profiles/gaabtype/preferences.yaml
+  personal_commands: []  # reuse /wiki /mem; no new required
+  personal_hooks:
+    - enable wiki-mem always-on in hooks.json (profile install)
+  personal_defaults:
+    - WIKI_ROOT → author vault
+    - memory.enabled: true
+    - locale PT command aliases
+  personal_project_mappings:
+    - KernelBot / OrbitBot / ISS / Portifolio / Xray-Spec pack table
+  personal_knowledge_config:
+    - WIKI_CLI_MODULE=gaabwiki
+    - corpus outside git
+  host_configuration:
+    - ~/.cursor/agents.env AGENTS_ROOT
+    - Documentos locale if any remaining
+  local_services:
+    - optional systemd gaabwiki watch (agent-setup full)

@@ -1,0 +1,182 @@
+baseline_id: baseline-v1-2026-09-18
+
+claims:
+
+  - id: CLM-E001-001
+    experiment: E-001
+    statement: "Under the tested offline conditions, smaller catalog sizes were associated with higher offline activation_precision versus CONTROL."
+    evidence_ids: [E001-EV-001, E001-EV-003]
+    metric_ids: [E001-M-004]
+    scope: offline_catalog_harness / seed e001-v1-2026-09-18 / 176 tasks / INITIAL SAMPLE n=5 per condition
+    evidence_type: DIRECTLY_OBSERVED
+    confidence: MEDIUM
+    allowed_interpretation:
+      - "Catalog size was associated with changes in offline activation ranking under this harness."
+    forbidden_interpretation:
+      - "Catalog budget improves live agent performance."
+      - "task_success improved."
+      - "Production quality improved."
+    limitations:
+      - offline_overlap_ranker_not_host_LLM
+      - deterministic_scorer
+
+  - id: CLM-E001-002
+    experiment: E-001
+    statement: "Under the tested offline conditions, all treatments were associated with lower whitespace token_estimate versus CONTROL."
+    evidence_ids: [E001-EV-001, E001-EV-003, E001-EV-004]
+    metric_ids: [E001-M-007]
+    scope: offline_harness PROXY whitespace
+    evidence_type: PROXY
+    confidence: MEDIUM
+    allowed_interpretation:
+      - "Prefix text volume (whitespace tokens) fell with size/truncation budgets."
+      - "T_TOKENS_40 reduced token_estimate by ~39.6% vs CONTROL (~40%)."
+      - "T_SKILLS_5 reduced by ~77%; T_SKILLS_10 by ~53%."
+    forbidden_interpretation:
+      - "~40% applies to T_SKILLS_5 or T_SKILLS_10."
+      - "Vendor token cost reduced in production."
+      - "Live context window improved."
+    limitations:
+      - token_estimate_is_PROXY
+
+  - id: CLM-E001-003
+    experiment: E-001
+    statement: "Live task_success was not measured in E-001."
+    evidence_ids: [E001-EV-002, E001-EV-003]
+    metric_ids: [E001-M-009]
+    scope: E-001 battery
+    evidence_type: NOT_MEASURED
+    confidence: HIGH
+    allowed_interpretation:
+      - "Cannot decide production budget on task outcome grounds from E-001 alone."
+    forbidden_interpretation:
+      - "activation_match_rate equals task_success."
+      - "task_success is zero / false / no effect."
+    limitations: []
+
+  - id: CLM-E001-004
+    experiment: E-001
+    statement: "Live host catalog injection was not measured in E-001."
+    evidence_ids: [E001-EV-003]
+    metric_ids: [E001-M-012]
+    scope: Cursor/MegaBrain host
+    evidence_type: NOT_MEASURED
+    confidence: HIGH
+    allowed_interpretation:
+      - "Offline effect ≠ host injection effect."
+    forbidden_interpretation:
+      - "Production skill selection behaves like offline ranker."
+    limitations: []
+
+  - id: CLM-E001-005
+    experiment: E-001
+    statement: "E-001 result classification SUPPORTED applies only to offline harness observables."
+    evidence_ids: [E001-EV-003]
+    metric_ids: [E001-M-004, E001-M-007]
+    scope: offline_catalog_budget_harness_only
+    evidence_type: MEASURED
+    confidence: MEDIUM
+    allowed_interpretation:
+      - "SUPPORTED is scoped offline decision input."
+    forbidden_interpretation:
+      - "SUPPORTED means implement max_skills now."
+      - "Global agent maturity proven."
+    limitations:
+      - initial_experimental_sample
+
+  - id: CLM-E005-001
+    experiment: E-005
+    statement: "No duplicate STATE_WRITE mutation was observed in the tested fixture (observed_mutations=1 on 15/15 runs; duplicate_mutate=false)."
+    evidence_ids: [E005-EV-001, E005-EV-002]
+    metric_ids: [E005-M-002, E005-M-003]
+    scope: job-path JobFileExecutor STATE_WRITE fixture
+    evidence_type: DIRECTLY_OBSERVED
+    confidence: HIGH
+    allowed_interpretation:
+      - "Supports current resume behavior for this fixture."
+    forbidden_interpretation:
+      - "The system guarantees global exactly-once semantics."
+      - "All external side effects are exactly-once."
+      - "The system is globally idempotent."
+    limitations:
+      - STATE_WRITE_only
+      - LOW_SAMPLE
+
+  - id: CLM-E005-002
+    experiment: E-005
+    statement: "Job-path resume succeeded in the tested treatment runs (resume_success=1.0 on 10/10)."
+    evidence_ids: [E005-EV-001, E005-EV-003]
+    metric_ids: [E005-M-001]
+    scope: TREATMENT_SAME_ENGINE + TREATMENT_NEW_ENGINE; same Node process
+    evidence_type: DIRECTLY_OBSERVED
+    confidence: HIGH
+    allowed_interpretation:
+      - "Interrupt→complete→resume worked under the fixture."
+    forbidden_interpretation:
+      - "Full HITL is validated."
+      - "OS crash recovery proven."
+      - "engine.pause() semantics proven."
+    limitations:
+      - same_process_only
+      - job_path_only
+
+  - id: CLM-E005-003
+    experiment: E-005
+    statement: "State integrity under the fixture was MEASURED (checkpoint present; resume restored waiting graph)."
+    evidence_ids: [E005-EV-001, E005-EV-003]
+    metric_ids: [E005-M-004]
+    scope: job-path fixture
+    evidence_type: MEASURED
+    confidence: HIGH
+    allowed_interpretation:
+      - "Checkpoint/resume integrity observed for this fixture."
+    forbidden_interpretation:
+      - "All RunState product persistence is proven."
+    limitations:
+      - fixture_scoped
+
+  - id: CLM-E005-004
+    experiment: E-005
+    statement: "Same-process interruption was MEASURED; OS process kill was NOT_MEASURED."
+    evidence_ids: [E005-EV-001, E005-EV-002]
+    metric_ids: [E005-M-005, E005-M-006]
+    scope: wait=0 end-of-run then resume; NEW_ENGINE ≠ OS kill
+    evidence_type: DIRECTLY_OBSERVED
+    confidence: HIGH
+    allowed_interpretation:
+      - "In-process same/new engine resume measured."
+    forbidden_interpretation:
+      - "Process restart or SIGKILL recovery measured."
+    limitations: []
+
+  - id: CLM-E005-005
+    experiment: E-005
+    statement: "Full product HITL remains NOT proven; baseline HITL stays PARTIALLY_OBSERVED."
+    evidence_ids: [E005-EV-003]
+    metric_ids: [E005-M-001]
+    scope: product HITL vs job-path
+    evidence_type: NOT_MEASURED
+    confidence: HIGH
+    allowed_interpretation:
+      - "Job-path wait/persist/resume strengthened; confirm UX not proven."
+    forbidden_interpretation:
+      - "E-005 upgrades HITL to fully observed product readiness."
+    limitations: []
+
+unsupported_claims_explicitly_rejected:
+
+  - id: UNSUP-E001-001
+    statement: "Production skill budget is required."
+    reason: "task_success and live injection NOT_MEASURED"
+
+  - id: UNSUP-E001-002
+    statement: "Whitespace token_estimate equals vendor token cost."
+    reason: "PROXY only"
+
+  - id: UNSUP-E005-001
+    statement: "Global exactly-once is guaranteed."
+    reason: "fixture STATE_WRITE scope only"
+
+  - id: UNSUP-E005-002
+    statement: "Full HITL is validated."
+    reason: "job-path only; confirm/human paths NOT_MEASURED"

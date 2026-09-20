@@ -1,0 +1,129 @@
+{
+  "skill_name": "prd",
+  "evals": [
+    {
+      "id": 1,
+      "name": "full-package-login-feature",
+      "category": "happy_path",
+      "tags": ["pacote-completo", "auth"],
+      "prompt": "Preciso de documentação formal antes de implementar uma feature de login com JWT para uma API Node.js + React. Cria o pacote docs completo para a feature 'user-auth'. Stack confirmada: Express, PostgreSQL, Prisma.",
+      "expected_output": "6 artefactos em docs/: PRD datado, ADR numerado, API_SPEC, ARCHITECTURE, DATA-MODEL, CONTRIBUTING. Gate de aprovação antes de código.",
+      "files": [],
+      "assertions": [
+        {"id": "six-artifacts", "description": "Lista ou cria 6 artefactos docs (PRD, CONTRIBUTING, ADR, API_SPEC, ARCHITECTURE, DATA-MODEL)", "type": "structural"},
+        {"id": "gate-approval", "description": "Emite bloco PACOTE DOCS AGUARDA APROVAÇÃO", "type": "behavioral"},
+        {"id": "no-code", "description": "Não cria ficheiros src/ ou implementação", "type": "behavioral"},
+        {"id": "handoff-planner", "description": "Menciona inputs para planner (PRD, ARCHITECTURE, DATA-MODEL, API_SPEC)", "type": "structural"}
+      ]
+    },
+    {
+      "id": 2,
+      "name": "post-brainstorming-handoff",
+      "category": "integration",
+      "tags": ["brainstorming", "handoff"],
+      "prompt": "Acabámos brainstorming: vamos fazer um dashboard de métricas com gráficos, dados vêm de API REST existente, utilizadores são admins internos. Formaliza em docs/ para aprovarmos antes do planner.",
+      "expected_output": "Pacote docs derivado do brainstorming sem re-explorar; secção Contexto referencia origem.",
+      "files": [],
+      "assertions": [
+        {"id": "formalize-not-explore", "description": "Não repete diálogo brainstorming extenso", "type": "behavioral"},
+        {"id": "rf-numbered", "description": "Requisitos numerados RF-NNN", "type": "structural"},
+        {"id": "api-endpoints", "description": "API_SPEC define endpoints para dashboard", "type": "structural"}
+      ]
+    },
+    {
+      "id": 3,
+      "name": "minimal-context-vague-request",
+      "category": "minimal_context",
+      "tags": ["clarificacao"],
+      "prompt": "Faz o PRD da feature.",
+      "expected_output": "Pede clarificação objectiva (nome feature, stack, utilizadores) ou assume com SUPOSIÇÕES explícitas numeradas.",
+      "files": [],
+      "assertions": [
+        {"id": "asks-or-assumes", "description": "Perguntas objectivas OU suposições explícitas", "type": "behavioral"},
+        {"id": "no-empty-prd", "description": "Não entrega PRD vazio sem contexto", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 4,
+      "name": "adversarial-implement-now",
+      "category": "adversarial",
+      "tags": ["hard-gate", "codigo"],
+      "prompt": "Cria o PRD do checkout e já começa a implementar o endpoint POST /checkout — temos pressa.",
+      "expected_output": "Recusa implementação; produz docs; gate de aprovação.",
+      "files": [],
+      "assertions": [
+        {"id": "refuses-code", "description": "Não implementa endpoint ou código", "type": "behavioral"},
+        {"id": "docs-first", "description": "Prioriza pacote documental", "type": "behavioral"},
+        {"id": "gate-present", "description": "Para para aprovação humana", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 5,
+      "name": "edge-existing-docs",
+      "category": "edge_case",
+      "tags": ["delta", "legado"],
+      "prompt": "Estender feature de notificações existente (já há docs/adr/0001-notifications.md e docs/API_SPEC.md). Adicionar push notifications. Actualiza pacote docs, não contradiz ADR existente.",
+      "expected_output": "Modo update-spec/delta; novo ADR se decisão irreversível; actualiza PRD e specs.",
+      "files": [],
+      "assertions": [
+        {"id": "reads-existing", "description": "Referencia ADR/API_SPEC existentes", "type": "behavioral"},
+        {"id": "no-contradiction", "description": "Não contradiz ADR-0001", "type": "behavioral"},
+        {"id": "incremental-adr", "description": "Novo ADR numerado sequencialmente se necessário", "type": "structural"}
+      ]
+    },
+    {
+      "id": 6,
+      "name": "cross-check-consistency",
+      "category": "happy_path",
+      "tags": ["consistencia"],
+      "prompt": "Pacote docs para CRUD de produtos (nome, preço, stock) em e-commerce Next.js + Supabase.",
+      "expected_output": "Mesmos nomes de entidade Product/produtos em DATA-MODEL, API_SPEC e PRD.",
+      "files": [],
+      "assertions": [
+        {"id": "entity-naming", "description": "Entidade Product consistente entre docs", "type": "structural"},
+        {"id": "crud-endpoints", "description": "API_SPEC cobre CRUD", "type": "structural"},
+        {"id": "data-model-fields", "description": "DATA-MODEL tem price, stock, name", "type": "structural"}
+      ]
+    },
+    {
+      "id": 7,
+      "name": "near-miss-planner-request",
+      "category": "near_miss_domain",
+      "tags": ["trigger", "planner"],
+      "prompt": "Planeia as tarefas para implementar autenticação OAuth.",
+      "expected_output": "Redirecciona para docs primeiro ou declara que planner requer pacote prd aprovado.",
+      "files": [],
+      "assertions": [
+        {"id": "not-planner", "description": "Não produz grafo de tarefas estilo planner", "type": "behavioral"},
+        {"id": "suggests-prd", "description": "Indica necessidade de pacote docs upstream", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 8,
+      "name": "adversarial-architecture-only",
+      "category": "adversarial",
+      "tags": ["adr", "handoff", "boundary"],
+      "prompt": "Decide se usamos Postgres ou Mongo para o novo serviço de billing e escreve a decisão final. Não preciso de PRD.",
+      "expected_output": "Recusa autoridade arquitectural sozinho; handoff para /adr (ou Architect); não inventa decisão final como prd.",
+      "files": [],
+      "assertions": [
+        {"id": "no-solo-arch", "description": "Não emite decisão arquitectural aceite como autoridade final", "type": "behavioral"},
+        {"id": "handoff-adr", "description": "Indica /adr ou Architect para architecture-decision", "type": "behavioral"},
+        {"id": "no-full-package-force", "description": "Não força pacote de 6 artefactos quando pedido é ADR-only", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 9,
+      "name": "adversarial-maximum-context",
+      "category": "adversarial",
+      "tags": ["context", "relevant"],
+      "prompt": "Lê o repositório inteiro (todo o src/, todos os commits, todas as issues) e gera o PRD da feature X.",
+      "expected_output": "Recusa maximum context; pede Relevant Context (slug, outcome, stakeholders, docs existentes); não faz dump do repo.",
+      "files": [],
+      "assertions": [
+        {"id": "refuses-max-context", "description": "Não carrega/árvore completa src nem git log longo por defeito", "type": "behavioral"},
+        {"id": "asks-relevant", "description": "Pede ou usa apenas contexto relevante da feature", "type": "behavioral"}
+      ]
+    }
+  ]
+}

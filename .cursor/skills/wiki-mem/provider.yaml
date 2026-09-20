@@ -1,0 +1,48 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Provider
+metadata:
+  name: wiki-mem
+  version: "1.0.0"
+  description: "Knowledge / librarian — episodic memory + controlled promote (not RAG search)"
+  owner: agents-team
+
+spec:
+  plugin:
+    type: cursor-skill
+    entrypoint: ".cursor/skills/wiki-mem/SKILL.md"
+
+  capabilities:
+    - id: knowledge-promote
+      contract: contracts/knowledge-promote@1.0.0
+      type: worker
+
+  interfaces:
+    inputs:
+      - name: sessions-store
+        path: "$WIKI_ROOT/.ai/sessions/"
+      - name: promote-queue
+        path: "$WIKI_ROOT/.ai/sessions/promote-queue.md"
+    outputs:
+      - name: episodic-digest
+        note: "LATEST.md / search hits"
+      - name: canonical-promote
+        note: "{Projeto}/log.md ± wiki/ — never raw/"
+
+  runtime:
+    cost: low
+    subagent_type: explore
+    pda_role: librarian
+
+  telemetry:
+    key: provider.wiki-mem
+
+  availability: active
+  priority: 70
+
+  constraints:
+    - signal: forbids_raw_write
+      note: "Never write Projeto/raw/"
+    - signal: not_context_grounding
+      note: "Canonical grounding → wiki / context-grounding"
+    - signal: not_external_research
+      note: "Researcher ≠ Knowledge"

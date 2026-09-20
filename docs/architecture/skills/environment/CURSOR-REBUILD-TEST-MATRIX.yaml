@@ -1,0 +1,36 @@
+matrix:
+  generated_at: "20260920T005842Z"
+  cases:
+    - id: T-BACKUP
+      result: PASS
+    - id: T-WIPE-TARGET-ONLY
+      result: PASS
+    - id: T-INSTALL-ESSENTIAL
+      result: PASS
+      count: 25
+    - id: T-NO-REMOVED-REINTRO
+      result: PASS
+      skills: [gsap, framer-motion, lenis, hover-effects, particles, r3f-shaders, linkedin-posts]
+    - id: T-HARDGATE-GRILL-ME
+      result: PASS
+    - id: T-HARDGATE-IMAGE-TO-CODE
+      result: PASS
+    - id: T-DEBUGGER-ABSORBS-SYSTEMATIC
+      result: PASS
+    - id: T-LIBRARY-DOSSIER-DEPS
+      result: PASS
+    - id: T-FIND-SKILLS-NOT-RUNTIME-FALLBACK
+      result: PASS
+    - id: T-COMMANDS-CORE
+      result: PASS
+    - id: T-IDEMPOTENCY
+      result: PASS
+    - id: T-VITEST-FULL
+      result: PASS
+      tests: "225/225"
+    - id: T-EVOLVELOOP
+      result: PASS
+      note: "included in 225/196+evolveloop suite"
+    - id: T-AGENTS-UNTOUCHED
+      result: PASS
+      count: 39

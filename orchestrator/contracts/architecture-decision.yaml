@@ -1,0 +1,57 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Contract
+metadata:
+  id: architecture-decision
+  version: "1.0.0"
+  status: active
+
+spec:
+  capability: architecture-decision
+  type: upstream
+  semver:
+    major: 1
+    minor: 0
+    patch: 0
+
+  compatible_with:
+    - "contracts/architecture-decision@1.0.x"
+    - architecture-analysis@1.x
+    - business-requirements@1.x
+    - planning@1.x
+
+  inputs:
+    - name: decision-context
+      required: true
+    - name: existing-adrs
+      schema: artifacts/adr-set@1.x
+      required: false
+    - name: architecture-baseline
+      schema: artifacts/architecture-doc@1.x
+      required: false
+    - name: product-specs
+      schema: artifacts/prd-package@1.x
+      required: false
+
+  outputs:
+    - name: adr-document
+      schema: artifacts/adr-document@1.0.0
+      path: docs/adr/
+
+  definition_of_done:
+    minimum_checks:
+      - adr_numbered_nnnn
+      - context_decision_alternatives_consequences
+      - at_least_two_alternatives
+      - status_declared
+      - architecture_crossref_or_na
+      - handoff_emitted
+      - no_full_architecture_analysis
+      - no_prd_package
+      - no_implementation_artifacts
+
+  evidence:
+    schema: evidence/upstream-default@1.0.0
+
+  runtime_compatibility:
+    pda_roles: [plan]
+    phase: 0.5

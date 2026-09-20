@@ -1,0 +1,101 @@
+# Identity / naming references
+
+identifiers:
+  - identifier: GaabWiki
+    location: "skills, rules, ADR, commands, providers, docs (~180 files)"
+    type: wiki_brand
+    classification: PERSONAL_IDENTITY
+    replacement_candidate: "ProjectWiki | KnowledgeVault | MegaWiki"
+    risk: HIGH
+    note: "Also functions as ARCHITECTURAL_NAME in current hard-gate — dual nature"
+    confidence: HIGH
+
+  - identifier: gaabwiki (skill/CLI package/module)
+    location: ".cursor/skills/gaabwiki, python -m gaabwiki, error codes GAABWIKI_*"
+    type: skill_and_cli
+    classification: PERSONAL_IDENTITY
+    replacement_candidate: "knowledge-grounding skill + rag-cli"
+    risk: HIGH
+    confidence: HIGH
+
+  - identifier: gaabwiki-mem / GaabWiki-Mem
+    location: ".cursor/skills/gaabwiki-mem, hooks, /mem"
+    type: skill
+    classification: PERSONAL_IDENTITY
+    replacement_candidate: "episodic-memory | session-memory"
+    risk: MEDIUM
+    confidence: HIGH
+
+  - identifier: Gaab / gaab (username path)
+    location: "/home/gaab/** hardcoded"
+    type: unix_username
+    classification: PERSONAL_IDENTITY
+    replacement_candidate: "$HOME / env"
+    risk: CRITICAL
+    confidence: HIGH
+
+  - identifier: GaabDevWeb
+    location: README.md GitHub URLs
+    type: github_org
+    classification: PERSONAL_IDENTITY
+    replacement_candidate: "org placeholder or upstream org"
+    risk: LOW
+    confidence: HIGH
+
+  - identifier: MegaBrain
+    location: commands, brand, skill alias
+    type: product_brand
+    classification: PROJECT_IDENTITY
+    replacement_candidate: "keep (product name) or Orchestrator"
+    risk: LOW
+    confidence: HIGH
+    note: "NOT personal author name — architectural/product brand"
+
+  - identifier: CursorSKILLS
+    location: repo name
+    type: repo
+    classification: PROJECT_IDENTITY
+    replacement_candidate: "keep or MegaBrain"
+    risk: LOW
+    confidence: HIGH
+
+  - identifier: karpathyWiki
+    location: vault name defaults
+    type: vault_name
+    classification: PERSONAL_IDENTITY
+    replacement_candidate: "user vault name via config"
+    risk: HIGH
+    confidence: HIGH
+    note: "Homage naming; hosts personal corpus"
+
+  - identifier: KernelBot / OrbitBot / ISS / Portifolio / Xray-Spec
+    location: gaabwiki pack tables, rules
+    type: personal_projects
+    classification: PERSONAL_IDENTITY
+    replacement_candidate: "profile project registry"
+    risk: MEDIUM
+    confidence: HIGH
+
+  - identifier: GaabType
+    location: "(not found in repo — audit proposal only)"
+    type: proposed_profile_branch
+    classification: UNKNOWN
+    replacement_candidate: "personal profile overlay name"
+    risk: INFORMATIONAL
+    confidence: HIGH
+
+  - identifier: Gabriel / Roese / DeCarli
+    location: "(no matches found in scoped scan excl node_modules)"
+    type: personal_name
+    classification: UNKNOWN
+    replacement_candidate: n/a
+    risk: INFORMATIONAL
+    confidence: MEDIUM
+
+  - identifier: orquestrar
+    location: skill folder (PT)
+    type: skill_name
+    classification: ARCHITECTURAL_NAME
+    replacement_candidate: "optional EN alias already MegaBrain"
+    risk: LOW
+    confidence: HIGH

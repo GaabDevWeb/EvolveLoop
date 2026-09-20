@@ -1,0 +1,201 @@
+{
+  "targets": 21,
+  "decision_totals": {
+    "DEFER": 221,
+    "REJECT": 153,
+    "ALREADY_PRESENT": 211,
+    "ADAPT": 466,
+    "PROTOTYPE": 128,
+    "ADOPT": 32
+  },
+  "reject_embed_count": 9,
+  "reject_embed": [
+    "local/agency-agents",
+    "local/mattpocock-skills",
+    "external/crewai",
+    "external/cursor",
+    "external/langgraph",
+    "external/mcp",
+    "external/microsoft-agent-framework",
+    "external/openhands",
+    "external/pydanticai"
+  ],
+  "theme_presence_in_reports": {
+    "skills_progressive": 21,
+    "handoff": 21,
+    "evidence": 21,
+    "telemetry": 21,
+    "plan_act": 21,
+    "checkpoint": 19,
+    "mcp": 17,
+    "sandbox": 16,
+    "guardrail": 16,
+    "hitl": 15,
+    "compaction": 13,
+    "reject_runtime": 9
+  },
+  "decision_by_target": {
+    "local/agency-agents": {
+      "DEFER": 11,
+      "REJECT": 8,
+      "ALREADY_PRESENT": 11,
+      "ADAPT": 4,
+      "PROTOTYPE": 3
+    },
+    "local/brag": {
+      "ADAPT": 21,
+      "DEFER": 6,
+      "ALREADY_PRESENT": 6,
+      "REJECT": 9,
+      "PROTOTYPE": 4,
+      "ADOPT": 1
+    },
+    "local/mattpocock-skills": {
+      "ADAPT": 38,
+      "PROTOTYPE": 5,
+      "DEFER": 13,
+      "REJECT": 7,
+      "ALREADY_PRESENT": 3,
+      "ADOPT": 1
+    },
+    "local/security-audit-skill": {
+      "ADAPT": 25,
+      "DEFER": 13,
+      "PROTOTYPE": 5,
+      "ALREADY_PRESENT": 9,
+      "REJECT": 10,
+      "ADOPT": 2
+    },
+    "local/superpowers": {
+      "ADAPT": 38,
+      "DEFER": 10,
+      "ALREADY_PRESENT": 10,
+      "ADOPT": 2,
+      "REJECT": 4,
+      "PROTOTYPE": 3
+    },
+    "external/aider": {
+      "ADAPT": 29,
+      "PROTOTYPE": 6,
+      "ALREADY_PRESENT": 8,
+      "REJECT": 8,
+      "DEFER": 8,
+      "ADOPT": 3
+    },
+    "external/anthropic-agent-skills": {
+      "ALREADY_PRESENT": 15,
+      "ADAPT": 18,
+      "PROTOTYPE": 7,
+      "DEFER": 6,
+      "REJECT": 6
+    },
+    "external/claude-code": {
+      "ALREADY_PRESENT": 20,
+      "DEFER": 9,
+      "PROTOTYPE": 10,
+      "ADAPT": 25,
+      "REJECT": 2,
+      "ADOPT": 1
+    },
+    "external/cline": {
+      "ALREADY_PRESENT": 16,
+      "ADAPT": 16,
+      "DEFER": 15,
+      "PROTOTYPE": 8,
+      "REJECT": 5
+    },
+    "external/codex": {
+      "ADAPT": 23,
+      "PROTOTYPE": 11,
+      "ALREADY_PRESENT": 11,
+      "DEFER": 9,
+      "REJECT": 2,
+      "ADOPT": 1
+    },
+    "external/crewai": {
+      "ALREADY_PRESENT": 17,
+      "REJECT": 16,
+      "PROTOTYPE": 6,
+      "ADOPT": 2,
+      "ADAPT": 19,
+      "DEFER": 10
+    },
+    "external/cursor": {
+      "REJECT": 8,
+      "ALREADY_PRESENT": 20,
+      "DEFER": 19,
+      "ADAPT": 10,
+      "PROTOTYPE": 4,
+      "ADOPT": 1
+    },
+    "external/langgraph": {
+      "ADAPT": 18,
+      "PROTOTYPE": 4,
+      "DEFER": 10,
+      "REJECT": 5,
+      "ALREADY_PRESENT": 2,
+      "ADOPT": 1
+    },
+    "external/llamaindex": {
+      "ADAPT": 21,
+      "REJECT": 9,
+      "ALREADY_PRESENT": 8,
+      "PROTOTYPE": 7,
+      "DEFER": 6
+    },
+    "external/mcp": {
+      "ADOPT": 11,
+      "ADAPT": 22,
+      "ALREADY_PRESENT": 4,
+      "PROTOTYPE": 7,
+      "DEFER": 13,
+      "REJECT": 14
+    },
+    "external/microsoft-agent-framework": {
+      "ADAPT": 22,
+      "DEFER": 6,
+      "ALREADY_PRESENT": 6,
+      "PROTOTYPE": 5,
+      "REJECT": 8,
+      "ADOPT": 1
+    },
+    "external/openai-agents-sdk": {
+      "ALREADY_PRESENT": 11,
+      "DEFER": 15,
+      "ADAPT": 26,
+      "PROTOTYPE": 14,
+      "REJECT": 5,
+      "ADOPT": 2
+    },
+    "external/openhands": {
+      "ADAPT": 20,
+      "PROTOTYPE": 8,
+      "DEFER": 17,
+      "ALREADY_PRESENT": 10,
+      "REJECT": 5,
+      "ADOPT": 1
+    },
+    "external/pydanticai": {
+      "REJECT": 11,
+      "ALREADY_PRESENT": 13,
+      "ADAPT": 28,
+      "DEFER": 8,
+      "PROTOTYPE": 1
+    },
+    "external/roo-code": {
+      "ADAPT": 19,
+      "ALREADY_PRESENT": 8,
+      "DEFER": 7,
+      "PROTOTYPE": 5,
+      "REJECT": 4
+    },
+    "external/swe-agent": {
+      "ADAPT": 24,
+      "REJECT": 7,
+      "PROTOTYPE": 5,
+      "ADOPT": 2,
+      "DEFER": 10,
+      "ALREADY_PRESENT": 3
+    }
+  }
+}

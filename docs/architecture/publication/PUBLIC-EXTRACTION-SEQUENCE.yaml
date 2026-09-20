@@ -1,0 +1,37 @@
+sequence:
+  - step: 1
+    action: freeze current state (tag/snapshot; no force)
+  - step: 2
+    action: verify baseline (orchestrator 236/236; EvolveLoop 93/93)
+  - step: 3
+    action: scrub host paths from docs intended for public
+  - step: 4
+    action: isolate public core inventory (apply manifests; still no branch required)
+  - step: 5
+    action: define profiles/gaabtype overlay (files only when executing)
+  - step: 6
+    action: make wiki-mem opt-in in public default hooks
+  - step: 7
+    action: finalize profiles/default.yaml as public defaults
+  - step: 8
+    action: decide public name (from naming audit)
+  - step: 9
+    action: write LICENSE + SECURITY + CONTRIBUTING skeleton
+  - step: 10
+    action: rewrite README per planned structure
+  - step: 11
+    action: write AGENT.md per requirements
+  - step: 12
+    action: create public main branch/release cut (execution phase)
+  - step: 13
+    action: attach GaabType profile overlay (private or same-repo profiles/)
+  - step: 14
+    action: gitignore/clean memory workspaces prune-snapshots
+  - step: 15
+    action: fresh-clone test (clean user)
+  - step: 16
+    action: clean-environment install via AGENT.md
+  - step: 17
+    action: full regression (orchestrator + evolveloop + smoke wiki optional)
+  - step: 18
+    action: publish

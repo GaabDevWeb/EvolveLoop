@@ -1,0 +1,355 @@
+# CrewAI — MECHANISMS inventory
+# TARGET_RESEARCH | OFFICIAL_EXTERNAL | 2026-09-18
+# Epistemic: OBSERVED | DOCUMENTED | INFERRED | HYPOTHESIS | UNKNOWN
+# Decision: ALREADY_PRESENT | ADOPT | ADAPT | PROTOTYPE | DEFER | REJECT
+
+target:
+  slug: crewai
+  name: CrewAI
+  category: sdk-multi-agent
+  repo: https://github.com/crewAIInc/crewAI
+  docs: https://docs.crewai.com
+  version_examined: "1.15.22"
+  license: MIT
+
+mechanisms:
+  - id: M01_role_agent
+    name: Role/Goal/Backstory Agent
+    problem: Specialize LLM workers with persona and tools
+    how: >
+      Agent pydantic model with role, goal, backstory, llm, tools,
+      max_iter, allow_delegation, knowledge, skills; executed via AgentExecutor.
+    evidence: OBSERVED
+    sources:
+      - lib/crewai/src/crewai/agent/core.py
+      - lib/crewai/src/crewai/agents/agent_builder/base_agent.py
+    costs:
+      - Prompt bloat from persona fields
+      - Weak separation of decide vs do
+    failure_modes:
+      - Over-agentization (many personas, little structure)
+      - Unbounded tool use without max_iter respect
+    our_equivalence: PARTIAL
+    our_mechanism: Skills + PDA roles + Agent contracts
+    decision: REJECT  # library; concept ALREADY_PRESENT
+    decision_note: "Do not adopt CrewAI Agent runtime; persona concept already present"
+    confidence: HIGH
+
+  - id: M02_task_unit
+    name: Task as work unit
+    problem: Discrete assignable work with expected output and deps
+    how: >
+      Task holds description, expected_output, agent, context list,
+      output_pydantic/json, async_execution, human_input, guardrails.
+    evidence: OBSERVED
+    sources:
+      - lib/crewai/src/crewai/task.py
+    costs:
+      - Natural-language tasks harder to policy than Capability IR
+    failure_modes:
+      - Missing agent in sequential process raises ValueError
+      - Context explosion when aggregating many prior outputs
+    our_equivalence: SUBSTANTIAL
+    our_mechanism: Capability IR plan.ir.yaml / Task Graph
+    decision: ALREADY_PRESENT
+    confidence: HIGH
+
+  - id: M03_crew_container
+    name: Crew as team container
+    problem: Bind agents+tasks+process+shared config
+    how: >
+      Crew.kickoff runs prepare_kickoff then sequential or hierarchical
+      _execute_tasks; callbacks, memory, knowledge, tracing at crew level.
+    evidence: OBSERVED
+    sources:
+      - lib/crewai/src/crewai/crew.py
+      - lib/crewai/src/crewai/crews/utils.py
+    costs:
+      - Fat object with many optional concerns
+    failure_modes:
+      - Process value not implemented raises NotImplementedError
+    our_equivalence: PARTIAL
+    our_mechanism: Orchestrator + multi-agent PDA
+    decision: REJECT  # as dependency
+    decision_note: "Container ideas already covered by orchestrator; no new Crew type"
+    confidence: HIGH
+
+  - id: M04_sequential_process
+    name: Sequential process
+    problem: Deterministic ordered multi-step execution
+    how: Process.sequential → _execute_tasks in list order; context from prior outputs
+    evidence: OBSERVED
+    sources:
+      - lib/crewai/src/crewai/process.py
+      - crew.py _run_sequential_process
+    costs: Latency sum of tasks; no parallelism unless async_execution
+    failure_modes: Brittle order; skipped ConditionalTask semantics
+    our_equivalence: SUBSTANTIAL
+    our_mechanism: Orchestrator sequential capability plans
+    decision: ALREADY_PRESENT
+    confidence: HIGH
+
+  - id: M05_hierarchical_manager
+    name: Hierarchical manager + delegation tools
+    problem: Dynamic routing / oversight among specialists
+    how: >
+      manager_agent (or auto-created) executes ALL tasks; allow_delegation
+      injects DelegateWorkTool + AskQuestionTool over coworker agents.
+      _get_agent_to_use returns manager when hierarchical.
+    evidence: OBSERVED
+    sources:
+      - crew.py _get_agent_to_use, _create_manager_agent, _prepare_tools
+      - tools/agent_tools/agent_tools.py
+      - tools/agent_tools/delegate_work_tool.py
+    costs:
+      - Extra LLM hops and tokens
+      - Manager must not have custom tools (code raises Exception if tools present)
+    failure_modes:
+      - Docs overclaim “validation gate”
+      - Delegation loops / wrong coworker selection
+      - Missing manager_llm/manager_agent → validation error
+    our_equivalence: PARTIAL
+    our_mechanism: PDA multi-agent roles via Task tool
+    decision: PROTOTYPE
+    decision_note: "Evaluate pattern vs PDA; do not import CrewAI manager"
+    confidence: MEDIUM
+
+  - id: M06_flow_orchestrator
+    name: Flow stateful event DSL
+    problem: App-level control, branching, persistence around crews
+    how: >
+      Flow[T] with @start/@listen/@router, or_/and_, Pydantic/dict state,
+      kickoff→async runtime, @persist backends, checkpoints mutually exclusive
+      with restore_from_state_id.
+    evidence: OBSERVED
+    sources:
+      - flow/flow.py
+      - flow/runtime/__init__.py
+      - flow/dsl/*
+      - flow/persistence/*
+      - docs production-architecture
+    costs:
+      - Dual orchestration (Flow + Crew)
+      - Large runtime module complexity
+    failure_modes:
+      - Combining from_checkpoint and restore_from_state_id → ValueError
+      - Hidden state bugs across steps
+    our_equivalence: PARTIAL
+    our_mechanism: Orchestrator + PARTIAL jobs/checkpoints
+    decision: ADAPT
+    decision_note: "Adapt explicit state+branching into our Runtime; REJECT Flow engine"
+    confidence: HIGH
+
+  - id: M07_crew_planner
+    name: CrewPlanner NL plan append
+    problem: Improve execution by pre-planning steps
+    how: >
+      Extra Agent+Task with output_pydantic PlannerTaskPydanticOutput;
+      concatenates plan strings onto each task.description.
+    evidence: OBSERVED
+    sources:
+      - utilities/planning_handler.py
+      - crews/utils.py prepare_kickoff (if crew.planning)
+    costs: Extra LLM call; unstructured plan text; description pollution
+    failure_modes: Duplicate/missing task_number plans; planning failure ValueError
+    our_equivalence: NONE
+    our_mechanism: Structured plan.ir (different)
+    decision: DEFER
+    decision_note: "Anti-pattern risk relative to structured IR planning"
+    confidence: MEDIUM
+
+  - id: M08_delegation_tools
+    name: Tool-mediated agent delegation
+    problem: Let an agent call coworkers without graph rewiring
+    how: AgentTools builds DelegateWorkTool + AskQuestionTool when allow_delegation
+    evidence: OBSERVED
+    sources:
+      - tools/agent_tools/*
+      - agent/core.py get_delegation_tools
+    costs: Tool-call latency; context string handoff quality
+    failure_modes: Wrong coworker name; recursive delegation
+    our_equivalence: PARTIAL
+    our_mechanism: Task tool / PDA handoffs
+    decision: PROTOTYPE
+    confidence: MEDIUM
+
+  - id: M09_task_guardrails
+    name: Task output guardrails + retries
+    problem: Block or transform bad outputs before next step
+    how: >
+      Callable or LLMGuardrail(str); process_guardrail → GuardrailResult;
+      retry up to guardrail_max_retries; callables dropped on JSON checkpoint.
+    evidence: OBSERVED
+    sources:
+      - task.py
+      - utilities/guardrail.py
+      - docs production-architecture
+    costs: Retries multiply tokens; serialization gap for callables
+    failure_modes: Exhaust retries → task failure; false-positive LLM guards
+    our_equivalence: PARTIAL
+    our_mechanism: Evidence Bus + Policy Engine
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: M10_unified_memory
+    name: Unified Memory (LLM-analyzed)
+    problem: Remember/recall across steps/runs
+    how: >
+      Memory.remember/recall with LLM analysis, composite scoring,
+      pluggable storage (default lancedb per field description), scopes/slices.
+    evidence: OBSERVED
+    sources:
+      - memory/unified_memory.py
+      - docs edge/concepts/memory
+    costs: Embed+LLM on save; memory pollution; drain-before-complete complexity
+    failure_modes: Async save race (mitigated by _drain_memory_writes)
+    our_equivalence: PARTIAL
+    our_mechanism: gaabwiki-mem episodic (not agent working memory)
+    decision: DEFER
+    confidence: MEDIUM
+
+  - id: M11_knowledge_rag
+    name: Knowledge sources → prompt retrieval
+    problem: Ground agents on document corpora
+    how: Knowledge aggregates typed sources; query injected in execute_task
+    evidence: OBSERVED
+    sources:
+      - knowledge/knowledge.py
+      - agent/core.py execute_task knowledge path
+    costs: Embedding/index ops; chromadb dep in package
+    failure_modes: Init failure logged; empty retrieval
+    our_equivalence: PARTIAL
+    our_mechanism: GaabWiki + RAG gate
+    decision: REJECT  # module; intent ALREADY_PRESENT
+    confidence: HIGH
+
+  - id: M12_max_iter_bound
+    name: AgentExecutor max_iter hard stop
+    problem: Bound ReAct/tool loops
+    how: Iteration counter + check_max_iterations → force final answer path
+    evidence: OBSERVED
+    sources:
+      - experimental/agent_executor.py
+      - agent max_iter field (docs 20; executor field default 25 — CONFLICT)
+    costs: Forced incomplete answers
+    failure_modes: Default mismatch confusion; still high token use before stop
+    our_equivalence: PARTIAL
+    our_mechanism: Policy/runtime limits (audit GAP)
+    decision: ADAPT
+    confidence: HIGH
+
+  - id: M13_event_otel_observability
+    name: Event bus + OpenTelemetry tracing
+    problem: Observe multi-agent/flow execution
+    how: crewai_event_bus emits typed events; OTEL baggage/spans; tracing flag
+    evidence: OBSERVED
+    sources:
+      - events/*
+      - crew.py kickoff try/finally
+      - pyproject opentelemetry deps
+    costs: Vendor tracing grants; noise volume
+    failure_modes: TraceGrantError; lost events if drained after teardown
+    our_equivalence: PARTIAL
+    our_mechanism: summarizeExecutionTrace (PARTIAL)
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: M14_agent_skills
+    name: Skills progressive disclosure
+    problem: Package reusable agent instructions/resources
+    how: SkillFrontmatter + DisclosureLevel 1 metadata / 2 SKILL.md / 3 resources
+    evidence: OBSERVED
+    sources:
+      - skills/models.py
+    costs: Loader complexity
+    failure_modes: Invalid skill name/description validation
+    our_equivalence: EQUIVALENT
+    our_mechanism: .cursor/skills/**/SKILL.md
+    decision: ALREADY_PRESENT
+    confidence: HIGH
+
+  - id: M15_mcp_tools
+    name: MCP tool resolver on agent
+    problem: Attach MCP servers as tools
+    how: MCPToolResolver.resolve(mcps); cleanup after task
+    evidence: OBSERVED
+    sources:
+      - agent/core.py get_mcp_tools
+      - mcp/ (package present)
+    costs: Connection lifecycle
+    failure_modes: Resolver errors logged; stale clients if cleanup skipped
+    our_equivalence: SUBSTANTIAL
+    our_mechanism: Cursor MCP ecosystem
+    decision: ALREADY_PRESENT
+    confidence: HIGH
+
+  - id: M16_persist_checkpoint
+    name: Flow/Crew persistence and checkpoints
+    problem: Resume after crash or HITL
+    how: "@persist decorator + SQLite etc; CheckpointConfig; dual systems"
+    evidence: OBSERVED
+    sources:
+      - flow/persistence/*
+      - flow kickoff ValueError if both restore modes
+      - crew kickoff from_checkpoint
+    costs: Dual mental models; callable guardrails dropped on serialize
+    failure_modes: Silent fallback if restore_from_state_id missing
+    our_equivalence: PARTIAL
+    our_mechanism: jobs/checkpoints PARTIAL
+    decision: ADAPT
+    decision_note: Prefer one resume model when adapting
+    confidence: MEDIUM
+
+  - id: M17_code_execution_tool
+    name: Optional agent code execution
+    problem: Let agents run code
+    how: allow_code_execution + code_execution_mode safe|unsafe (docs Docker safe)
+    evidence: DOCUMENTED
+    sources:
+      - docs agents attributes
+      - crew _prepare_tools code path (OBSERVED call site)
+    costs: RCE risk if unsafe
+    failure_modes: Sandbox escape UNKNOWN without deep tool audit
+    our_equivalence: UNKNOWN
+    our_mechanism: Sandbox UNKNOWN–PARTIAL in baseline
+    decision: DEFER
+    confidence: LOW
+
+  - id: M18_share_crew
+    name: share_crew vendor sharing
+    problem: Vendor wants execution data for model training (vendor)
+    how: Crew.share_crew flag (default False)
+    evidence: OBSERVED
+    sources:
+      - crew.py Field share_crew
+    costs: Privacy / data exfil risk if enabled
+    failure_modes: Accidental enable in prod
+    our_equivalence: NONE
+    decision: REJECT
+    confidence: HIGH
+
+  - id: M19_consensual_process
+    name: Consensual process (unimplemented)
+    problem: Unknown (TODO)
+    how: Comment in Process enum only
+    evidence: OBSERVED
+    sources:
+      - process.py "# TODO: consensual"
+    decision: DEFER
+    confidence: HIGH
+
+anti_patterns_observed:
+  - id: AP01_dual_orchestration
+    name: Flow shell + Crew team without clear boundary
+    evidence: DOCUMENTED recommendation + OBSERVED two kickoff stacks
+  - id: AP02_nl_plan_append
+    name: Planning as description string mutation
+    evidence: OBSERVED planning_handler
+  - id: AP03_docs_code_skew
+    name: Docs defaults disagree with code (cache, memory taxonomy, hierarchical narrative)
+    evidence: CONFLICT set in UNKNOWNS.md
+  - id: AP04_over_agentization_risk
+    name: Many role agents for what could be capabilities/tools
+    evidence: INFERRED from framework affordances (not measured)
+
+comparison_baseline: research/OUR-SYSTEM-BASELINE.md

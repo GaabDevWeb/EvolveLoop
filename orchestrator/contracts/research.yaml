@@ -1,0 +1,45 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Contract
+metadata:
+  id: research
+  version: "1.0.0"
+  status: active
+
+spec:
+  capability: research
+  type: worker
+  semver:
+    major: 1
+    minor: 0
+    patch: 0
+
+  inputs:
+    - name: research-question
+      required: true
+    - name: source-policy-overrides
+      required: false
+    - name: allowlist
+      required: false
+
+  outputs:
+    - name: research-report
+      schema: artifacts/research-report@1.0.0
+      required: true
+    - name: source-list
+      required: true
+    - name: handoff
+      required: false
+
+  evidence:
+    schema: evidence/worker-default@1.0.0
+
+  compatible_with:
+    - planning@1.x
+    - architecture-analysis@1.x
+    - documentation@1.x
+    - context-grounding@1.x
+
+  notes:
+    - "External sources only — not knowledge-promote / episodic mem."
+    - "source_policy: cite or mark UNVERIFIED; MCP down → no invented facts."
+    - "Does not write wiki/, log.md, or raw/."

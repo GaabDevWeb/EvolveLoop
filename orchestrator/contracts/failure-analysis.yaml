@@ -1,0 +1,45 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Contract
+metadata:
+  id: failure-analysis
+  version: "1.0.0"
+  status: active
+
+spec:
+  capability: failure-analysis
+  type: worker
+  semver:
+    major: 1
+    minor: 0
+    patch: 0
+
+  inputs:
+    - name: symptom
+      required: true
+    - name: evidence-paths
+      required: false
+    - name: involved-providers
+      required: false
+
+  outputs:
+    - name: failure-classification
+      schema: artifacts/failure-classification@1.0.0
+      required: true
+    - name: next-actions
+      required: true
+    - name: handoff
+      required: false
+
+  evidence:
+    schema: evidence/worker-default@1.0.0
+
+  compatible_with:
+    - testing@1.x
+    - security-review@1.x
+    - planning@1.x
+    - documentation@1.x
+
+  notes:
+    - "Classifies Agent System failures; does not implement fixes."
+    - "Distinct from Debugger (product code) and from testing gate verdicts."
+    - "Taxonomy: agent/capability/provider/policy/context/knowledge/validation/evaluation/integration/out_of_scope."

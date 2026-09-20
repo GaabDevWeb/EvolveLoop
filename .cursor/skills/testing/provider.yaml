@@ -1,0 +1,32 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Provider
+metadata:
+  name: testing
+  version: "1.2.0"
+  description: "Tester — technical validation gate (capability testing)"
+  owner: agents-team
+
+spec:
+  plugin:
+    type: cursor-skill
+    entrypoint: ".cursor/skills/testing/SKILL.md"
+
+  capabilities:
+    - id: testing
+      contract: contracts/testing@1.0.0
+      type: gate
+
+  interfaces:
+    outputs:
+      - name: test-report
+        schema: evidence/test-report@1.0.0
+
+  runtime:
+    cost: low
+    subagent_type: shell
+
+  telemetry:
+    key: provider.testing
+
+  availability: active
+  priority: 80

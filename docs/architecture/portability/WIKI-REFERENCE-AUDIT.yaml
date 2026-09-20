@@ -1,0 +1,35 @@
+# Residual reference audit (post-rename)
+scan_scope: active surface (excl. historical audit/pruning/evolveloopt/portability pre-docs, evals, research, memory, workspaces)
+
+residuals:
+  - value: gaabwiki (python -m / package path)
+    classification: VALID_EXTERNAL
+    locations:
+      - orchestrator/src/providers/deterministic/knowledge.ts (WIKI_CLI_MODULE default)
+      - .cursor/skills/wiki/scripts/ground.sh
+      - .cursor/skills/wiki/references/cli.md
+    note: vault Python package not renamed
+
+  - value: GaabWiki in vault corpus pages
+    classification: VALID_EXTERNAL
+    locations: karpathyWiki/.ai/wiki/gaabwiki-*.md
+    note: outside CursorSKILLS rename scope
+
+  - value: GaabWiki in docs/architecture/skills/audit|pruning|evolveloopt
+    classification: VALID_HISTORICAL
+    note: preserved per phase rules
+
+  - value: GaabWiki in docs/architecture/portability/PORTABILITY-*
+    classification: VALID_HISTORICAL
+    note: forensic audit chronology
+
+  - value: GaabWiki in docs/research|docs/evals|memory
+    classification: VALID_HISTORICAL
+    note: research/session artifacts
+
+  - value: /home/gaab in wiki CHANGELOG historical line
+    classification: VALID_PERSONAL_HISTORY
+    location: .cursor/skills/wiki/CHANGELOG.md
+    note: changelog entry; runtime no longer uses absolute default
+
+broken_active_references: []

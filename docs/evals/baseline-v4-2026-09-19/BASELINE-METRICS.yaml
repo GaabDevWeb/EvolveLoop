@@ -1,0 +1,8 @@
+metrics:
+  tests_total: 162
+  tests_passed: 162
+  contracts: 7
+  full_cycle: 5
+  evolveloop_unit: 49
+  evolveloop_l_evals: 8
+  engine_evolve_hook: 2

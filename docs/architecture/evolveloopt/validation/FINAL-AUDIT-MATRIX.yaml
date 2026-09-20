@@ -1,0 +1,38 @@
+final_audit:
+  timestamp: "2026-09-19T15:25:00Z"
+  mode: POST_CORRECTION
+  independent_reviewers:
+    architecture: "longitudinal real; outcomes not consumed; isolation opt-in; dual-stack"
+    security: "no silent core mutation in package; isolation HIGH residual; flags declarative"
+    evidence_evals: "fixture-validated only; EV-001..007 prove harness contracts"
+  eight_focus:
+    analyze_user_scope:
+      pre: CONTRADICTED
+      post: PARTIALLY_VERIFIED
+      note: "API filter added; default still unscoped"
+    empty_after_outcome:
+      pre: CONTRADICTED
+      post: VERIFIED
+    lifecycle_overwrite:
+      pre: CONTRADICTED
+      post: VERIFIED
+    live_adapters:
+      status: PARTIALLY_VERIFIED
+      note: "JSONL helper only; others NOT_CONNECTED"
+    historical_store_consumed:
+      status: VERIFIED
+    cross_run_in_controller:
+      status: VERIFIED
+    outcome_to_need_closure:
+      status: PARTIALLY_VERIFIED
+      note: "via lifecycle; outcomes file not re-read"
+    registry_aware_reality:
+      status: PARTIALLY_VERIFIED
+      note: "injected inventory"
+  tests:
+    before_correction: { total: 135, passed: 135 }
+    after_correction: { total: 138, passed: 138 }
+  verdict: VALIDATED_WITH_LIMITATIONS
+  matrix_ref: AUDIT-MATRIX.yaml
+  findings_ref: FINDINGS.yaml
+  claims_ref: CLAIM-VERIFICATION.yaml

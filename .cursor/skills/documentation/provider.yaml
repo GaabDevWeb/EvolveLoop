@@ -1,0 +1,38 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Provider
+metadata:
+  name: documentation
+  version: "1.0.0"
+  description: "Documentarian — Fase 6 documentation gate"
+  owner: agents-team
+
+spec:
+  plugin:
+    type: cursor-skill
+    entrypoint: ".cursor/skills/documentation/SKILL.md"
+
+  capabilities:
+    - id: documentation
+      contract: contracts/documentation@1.0.0
+      type: gate
+
+  interfaces:
+    outputs:
+      - name: documentation-report
+        schema: evidence/documentation@1.0.0
+
+  runtime:
+    cost: medium
+    subagent_type: generalPurpose
+
+  runtime_compatibility:
+    engine: ">=2.0.0 <3.0.0"
+    evidence: ">=2.1.0 <3.0.0"
+    execution: ">=2.1.0"
+    executor_types: [cursor-skill]
+
+  telemetry:
+    key: provider.documentation
+
+  availability: active
+  priority: 70

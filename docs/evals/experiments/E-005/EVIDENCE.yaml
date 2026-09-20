@@ -1,0 +1,67 @@
+experiment:
+  id: E-005
+  title: HITL RunState fixture (job-path scope)
+  baseline_id: baseline-v1-2026-09-18
+  status: PARTIALLY_READY
+  start_time: "2026-09-18T23:35:14Z"
+  end_time: "2026-09-18T23:37:00Z"
+
+hypothesis:
+  statement: >
+    Job fixture can block on external work, persist checkpoint, survive process-boundary
+    analogue, resume successfully without secrets in state; duplicate mutate=0 when gated.
+
+method:
+  control: "tests/integration/job-resume.test.ts x5"
+  treatment: "E-005 harness: new engine + resume after JobStore.completeJob x5"
+  repetitions: 5
+  procedure: see EXPERIMENT.md
+
+results:
+  metrics:
+    resume_success_rate: 1.0
+    control_pass_rate: 1.0
+    secret_exfiltration_in_state: 0
+    duplicate_mutate_count: null
+  observations:
+    - "blocked_reason awaiting_external_jobs before complete"
+    - "checkpoint present under jobsDir/checkpoints/"
+    - "second engine resume → success"
+    - "duplicate_mutate NOT_MEASURED"
+
+evidence:
+  - id: E005-EV-01
+    source: vitest
+    path: raw/control-summary.json
+    command: "npx vitest run tests/integration/job-resume.test.ts (x5)"
+    output: '{"repetitions":5,"successful":5,"failed":0}'
+    interpretation: control job-resume stable
+  - id: E005-EV-02
+    source: vitest harness
+    path: raw/harness-summary.json
+    command: "npx vitest run tests/evals/_e005_experiment_harness.test.ts (x5, then deleted)"
+    output: '{"repetitions":5,"successful":5,"failed":0}'
+    interpretation: treatment resume_success=1
+  - id: E005-EV-03
+    source: metrics
+    path: raw/last-run-metrics.json
+    command: harness
+    output: "secret_exfiltration_in_state=0; process_kill=SIMULATED_NEW_ENGINE_INSTANCE"
+    interpretation: no secret patterns in checkpoint sample
+
+conclusion:
+  result: SUPPORTED
+  confidence: MEDIUM
+  limitations:
+    - job_path_only
+    - simulated_process_boundary
+    - duplicate_mutate_unmeasured
+    - LOW_SAMPLE
+    - not_full_product_HITL
+
+traceability:
+  experiment: E-005
+  research_source: docs/research/experiments/E-005-hitl-runstate-fixture.md
+  hypothesis: resume_success=1; secrets=0; duplicate_mutate=0
+  baseline: jobs/resume OBSERVED
+  result: SUPPORTED (scoped)

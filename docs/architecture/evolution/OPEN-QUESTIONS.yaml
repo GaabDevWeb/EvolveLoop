@@ -1,0 +1,83 @@
+open_questions:
+
+  architecture:
+    - id: OQ-A-001
+      question: "Security model checklist for sandbox (ADR-DR-0003)?"
+    - id: OQ-A-002
+      question: "Stuck semantics definition (ADR-DR-0004)?"
+    - id: OQ-A-003
+      question: "Context ownership for compaction (ADR-DR-0005)?"
+
+  runtime:
+    - id: OQ-R-001
+      question: "When (if ever) to add engine max_skills vs host-only shaping?"
+    - id: OQ-R-002
+      question: "Authority coverage for Mock/CursorSkill/JobFile?"
+
+  security:
+    - id: OQ-S-001
+      question: "Refuse-if-unenforceable posture labels — design after security model?"
+
+  sandbox:
+    - id: OQ-SB-001
+      question: "What constitutes enforceability signal on this host?"
+
+  state:
+    - id: OQ-ST-001
+      question: "SIGKILL vs SIGTERM policy for PT-002?"
+    - id: OQ-ST-002
+      question: "Who completes external job after OS-kill restart?"
+
+  routing:
+    - id: OQ-RT-001
+      question: "Is model routing in-scope for Agent System or host-only?"
+
+  stuck_detection:
+    - id: OQ-SK-001
+      question: "Progress metrics for false-positive thresholds?"
+
+  compaction:
+    - id: OQ-C-001
+      question: "Non-droppable span ownership: Policy vs Evidence vs Skills?"
+
+  knowledge:
+    - id: OQ-K-001
+      question: "Should CursorSKILLS get a Wiki pack/silo?"
+
+  agent_design:
+    - id: OQ-AG-001
+      question: "Any new agent justified before PT-001/PT-002 produce evidence? (current answer: no)"
+
+  evaluation:
+    - id: OQ-E-001
+      question: "Live task_success oracle design for PT-001?"
+    - id: OQ-E-002
+      question: "OS_kill_harness location and PID containment format?"
+
+  evolveloop:
+    - id: OQ-EL-001
+      question: "Compose in-run PatternAggregator events into EvolveLoop SignalMiner?"
+    - id: OQ-EL-002
+      question: "Production JsonlEventPersister → RawObservation adapter defaults?"
+    - id: OQ-EL-003
+      question: "Retention/cooldown defaults for needs beyond tests (need_cooldown_ms>0)?"
+    - id: OQ-EL-004
+      question: "Connect Evidence[] and eval-run adapters (currently NOT_CONNECTED)?"
+    - id: OQ-EL-005
+      question: "Richer post-evolution outcome metrics than failure-rate heuristic?"
+
+counts:
+  total: 20
+  by_area:
+    architecture: 3
+    runtime: 2
+    security: 1
+    sandbox: 1
+    state: 2
+    routing: 1
+    stuck_detection: 1
+    compaction: 1
+    knowledge: 1
+    agent_design: 1
+    evaluation: 2
+    evolveloop: 5

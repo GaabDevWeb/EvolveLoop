@@ -1,0 +1,67 @@
+eval:
+  id: EV-008
+  name: Catalog Context Overhead (Proxy)
+  category: CONTEXT
+  version: 1
+  question: "Under offline catalog conditions, does token_estimate (whitespace PROXY) decrease for treatments vs CONTROL as recorded, without claiming vendor token accuracy?"
+  property: catalog_context_overhead_proxy
+  baseline_id: baseline-v1-2026-09-18
+  source:
+    experiments: [E-001]
+    claims: [CLM-E001-002]
+    evidence: [E001-EV-001, E001-EV-004]
+  readiness: READY
+  scope:
+    metric_type: PROXY
+    token_axes:
+      size_budget: [T_SKILLS_5, T_SKILLS_10]
+      truncation: [T_TOKENS_40]
+    note: "~40% language only for T_TOKENS_40 vs CONTROL"
+  setup:
+    cwd: docs/evals/experiments/E-001/harness
+  control:
+    configuration: { token_estimate_ref: 1673 }
+  treatment:
+    variable: catalog_size_or_desc_truncation
+  fixtures:
+    - docs/evals/experiments/E-001/conditions.yaml
+  metrics:
+    - id: E001-M-007
+      name: token_estimate
+      type: PROXY
+      unit: tokens_est
+      method: whitespace
+      limitations: [vendor_tokenizer_NOT_MEASURED]
+    - id: E001-M-008
+      name: wall_clock_duration
+      type: DIRECT
+      limitations: [harness_latency_only]
+  success_criteria:
+    - "token_estimate(treatment) < token_estimate(CONTROL) for all treatments"
+    - "T_TOKENS_40 relative change ≈ −0.396 vs CONTROL"
+    - "output labels token_estimate as PROXY"
+  failure_criteria:
+    - PROXY_reported_as_exact_vendor
+    - axes_conflated
+    - skills_modified
+  repetitions: { minimum: 1, recommended: 1, reason: deterministic }
+  isolation: read_only_skills
+  cleanup: none
+  reproducibility:
+    commands: ["python3 catalog_harness.py dry"]
+  limitations: [PROXY_only, not_production_cost]
+  regression_reference: baseline-v1-2026-09-18
+  safety_constraints: [never_upgrade_PROXY]
+  eval_contract:
+    inputs: [conditions]
+    preconditions: []
+    action: materialize_prefix_and_estimate
+    observations: [token_estimate_by_condition]
+    metrics: [E001-M-007]
+    oracle:
+      type: inequality_and_relative
+      rules:
+        - "all treatments < CONTROL"
+        - "T_TOKENS_40 relative ≈ -39.6% (tolerance small float)"
+    cleanup: []
+    artifacts: [battery-summary or dry-run json]

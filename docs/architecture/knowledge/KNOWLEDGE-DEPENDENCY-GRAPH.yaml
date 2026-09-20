@@ -1,0 +1,20 @@
+edges:
+  - from: MegaBrain Policy
+    to: knowledge-grounding
+    type: REQUIRE
+  - from: knowledge-grounding
+    to: KnowledgeBackend
+    type: USES
+  - from: KnowledgeBackend
+    to: Wiki (default)
+    type: IMPLEMENTS
+  - from: deterministic knowledge.search
+    to: resolveKnowledgeBackend
+    type: CALLS
+  - from: Profile
+    to: KnowledgeBackend id
+    type: CONFIGURES
+  - from: wiki-mem
+    to: KnowledgeBackend
+    type: INDEPENDENT
+    note: episodic memory — not RAG backend

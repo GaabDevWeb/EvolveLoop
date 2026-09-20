@@ -1,0 +1,64 @@
+traceability:
+
+  - eval_id: EV-001
+    baseline: baseline-v1-2026-09-18
+    experiment: null
+    claim: null
+    evidence: BASELINE_ONLY
+    metric: [EV001-M-pass_rate]
+
+  - eval_id: EV-002
+    baseline: baseline-v1-2026-09-18
+    experiment: null
+    claim: null
+    evidence: BASELINE_ONLY
+    metric: [EV002-M-selection_correct, EV002-M-selection_evidence_present]
+
+  - eval_id: EV-003
+    baseline: baseline-v1-2026-09-18
+    experiment: null
+    claim: null
+    evidence: BASELINE_ONLY
+    metric: [EV003-M-registry_suite_pass]
+
+  - eval_id: EV-004
+    baseline: baseline-v1-2026-09-18
+    experiment: null
+    claim: null
+    evidence: BASELINE_ONLY
+    metric: [EV004-M_authority_deny_blocks, EV004-M_policy_engine_pass]
+
+  - eval_id: EV-005
+    baseline: baseline-v1-2026-09-18
+    experiment: null
+    claim: null
+    evidence: BASELINE_ONLY
+    metric: [EV005-M_evidence_suite_pass]
+
+  - eval_id: EV-006
+    baseline: baseline-v1-2026-09-18
+    experiment: E-005
+    claim: [CLM-E005-001, CLM-E005-002, CLM-E005-003]
+    evidence: [E005-EV-001, E005-EV-002, E005-EV-003]
+    metric: [E005-M-001, E005-M-002, E005-M-003, E005-M-004]
+
+  - eval_id: EV-007
+    baseline: baseline-v1-2026-09-18
+    experiment: E-001
+    claim: [CLM-E001-001, CLM-E001-005]
+    evidence: [E001-EV-001, E001-EV-003]
+    metric: [E001-M-001, E001-M-004, E001-M-005, E001-M-006]
+
+  - eval_id: EV-008
+    baseline: baseline-v1-2026-09-18
+    experiment: E-001
+    claim: [CLM-E001-002]
+    evidence: [E001-EV-001, E001-EV-004]
+    metric: [E001-M-007, E001-M-008]
+
+  - eval_id: EV-009
+    baseline: baseline-v1-2026-09-18
+    experiment: [E-001, E-005]
+    claim: null
+    evidence: BASELINE_ONLY
+    metric: [EV009-M_tests, EV009-M_contracts, EV009-M_full_cycle, EV009-M_checksum]

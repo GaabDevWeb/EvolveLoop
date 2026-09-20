@@ -1,0 +1,28 @@
+{
+  "skill_name": "po-review",
+  "version": "1.0.0",
+  "should_trigger": [
+    "Está pronto para release?",
+    "/validar aceite PO",
+    "UAT de alto nível login feature",
+    "Validar requisitos vs entrega",
+    "Gate Fase 5 orquestrador",
+    "Aceite final antes documentar",
+    "PO review adversarial",
+    "Critérios aceite planner cumpridos?",
+    "Auditar entrega produto",
+    "Veredito OK ou Ajustes necessários"
+  ],
+  "should_not_trigger": [
+    "Corre pytest suite",
+    "Implementar endpoint backend",
+    "Planejar roadmap Q3",
+    "Auditar OWASP SQL injection",
+    "Criar landing page Tailwind",
+    "Documentar API OpenAPI",
+    "Threat modeling STRIDE",
+    "Fix CSS header only",
+    "Run vitest after feature",
+    "Design system tokens dashboard"
+  ]
+}

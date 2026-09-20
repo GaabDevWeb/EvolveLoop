@@ -1,0 +1,28 @@
+# Definitive classification (plan; no mutations)
+inventory:
+  orchestrator/: PUBLIC_CORE
+  orchestrator/src/knowledge/: PUBLIC_CORE
+  profiles/default.yaml: PUBLIC_CONFIG
+  profiles/gaabtype/ (future): GAAB_PROFILE
+  .cursor/skills/orquestrar: PUBLIC_CORE
+  .cursor/skills/wiki: PUBLIC_CORE
+  .cursor/skills/wiki-mem: PUBLIC_PROFILE  # optional public; Gaab on
+  .cursor/commands/*: PUBLIC_CORE  # brand exceptions
+  .cursor/rules/megabrain.mdc: PUBLIC_CORE  # rename later
+  .cursor/hooks/* wiki-mem: GAAB_PROFILE_or_PUBLIC_OPTIONAL
+  Agents/: PUBLIC_CORE
+  global-skills/: PUBLIC_CORE
+  agent-setup/: PUBLIC_CORE
+  scripts/: PUBLIC_CORE
+  mcp/*.example: PUBLIC_CONFIG
+  mcp.env: HOST_ONLY  # secrets
+  memory/: DEVELOPMENT_ONLY
+  "*-workspace/": DEVELOPMENT_ONLY
+  .prune-snapshots/: DEVELOPMENT_ONLY
+  docs/architecture/publication/: PUBLIC_CORE  # this audit
+  docs/research/: HISTORICAL
+  docs/architecture/portability/* with host paths: HISTORICAL_sanitize
+  EXTERNAL CLI gaabwiki: EXTERNAL
+  personal vault corpus: EXTERNAL
+  GaabDevWeb remotes: GAAB_PERSONAL
+  node_modules/ dist/: DEVELOPMENT_ONLY

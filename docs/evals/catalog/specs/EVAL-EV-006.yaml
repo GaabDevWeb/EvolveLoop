@@ -1,0 +1,111 @@
+eval:
+  id: EV-006
+  name: Job Resume and STATE_WRITE Non-Duplication
+  category: RECOVERY
+  version: 1
+  question: "Under the E-005 job-path fixture, does interrupt→resume complete with resume_success and observed_mutations=1 (no duplicate STATE_WRITE)?"
+  property: job_path_resume_state_write_integrity
+  baseline_id: baseline-v1-2026-09-18
+  source:
+    experiments: [E-005]
+    claims: [CLM-E005-001, CLM-E005-002, CLM-E005-003]
+    evidence: [E005-EV-001, E005-EV-002, E005-EV-003]
+  readiness: READY_AFTER_FIXTURE
+  scope:
+    runtime: ExecutionEngine + jobs/
+    side_effect: STATE_WRITE JobFileExecutor
+    process: same_Node_process
+    excludes: [global_exactly_once, OS_kill, full_HITL, confirm_path]
+  setup:
+    preconditions:
+      - "E-005 fixture available (FIXTURE.md / harness pattern)"
+      - "disposable jobsDir"
+      - "instrumenting mutation log (no fake idempotency)"
+  control:
+    description: uninterrupted wait-for-jobs completion
+    configuration: { wait_for_jobs_ms: 10000 }
+  treatment:
+    description: wait=0 interrupt → external complete → resume
+    variable: engine_instance (SAME_ENGINE | NEW_ENGINE)
+    configuration: { wait_for_jobs_ms: 0, resume: true }
+  fixtures:
+    - docs/evals/experiments/E-005/FIXTURE.md
+    - docs/evals/experiments/E-005/REPRODUCE.md
+  metrics:
+    - id: E005-M-001
+      name: resume_success
+      type: DIRECT
+      unit: ratio
+      source: fixture metrics
+      interpretation: treatment final success
+      limitations: [same_process_only]
+    - id: E005-M-002
+      name: duplicate_mutate
+      type: DIRECT
+      unit: bool
+      source: mutation log
+      interpretation: mutations>1
+      limitations: [STATE_WRITE_only]
+    - id: E005-M-003
+      name: observed_mutations
+      type: DIRECT
+      unit: count
+      source: mutation log
+      interpretation: expect 1
+      limitations: []
+    - id: E005-M-004
+      name: state_integrity
+      type: DIRECT
+      unit: status
+      source: checkpoint presence + resume
+      interpretation: fixture state integrity
+      limitations: [fixture_scoped]
+  success_criteria:
+    - "resume_success = 1.0 on treatment sample"
+    - "duplicate_mutate = false"
+    - "observed_mutations = 1"
+    - "baseline checksums unchanged; no orchestrator/src mutation"
+  failure_criteria:
+    - duplicate_mutation
+    - resume_failure
+    - state_corruption
+    - isolation_violation
+    - baseline_contamination
+    - metric_collection_failure
+  repetitions:
+    minimum: 3
+    recommended: 5
+    reason: "match E-005 INITIAL SAMPLE spirit; not statistical proof"
+  isolation:
+    filesystem: disposable_jobsDir
+    process: test_harness_only
+  cleanup: delete_disposable_jobsDir
+  reproducibility:
+    reference: docs/evals/experiments/E-005/REPRODUCE.md
+  limitations:
+    - "exactly_once_global_NOT_EVALUABLE"
+    - "OS_kill_NOT_IN_SCOPE"
+    - "HITL_PARTIALLY_OBSERVED_unchanged"
+  regression_reference: baseline-v1-2026-09-18
+  safety_constraints:
+    - no_baseline_write
+    - no_global_exactly_once_claim_in_artifacts
+    - disposable_jobsDir_only
+  eval_contract:
+    inputs: [fixture_IR, jobsDir]
+    preconditions: [jobs_module_present]
+    action: control_and_treatment_resume_runs
+    observations: [mutation_count, resume_success, checkpoint]
+    metrics: [E005-M-001, E005-M-002, E005-M-003, E005-M-004]
+    oracle:
+      metric: observed_mutations
+      operator: eq
+      threshold: 1
+      also: { resume_success: 1.0, duplicate_mutate: false }
+    cleanup: [remove_jobsDir]
+    artifacts: [summary-metrics.json, per-run json]
+  threshold:
+    metric: resume_success
+    minimum: 1.0
+    sample: "recommended 5 per treatment arm"
+    justified_by: E-005 observed sample

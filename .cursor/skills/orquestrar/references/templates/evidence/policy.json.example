@@ -1,0 +1,16 @@
+{
+  "policy_id": "high-reliability",
+  "risk_tier": "standard",
+  "topology": "pipeline",
+  "min_confidence": 0.7,
+  "require": ["wiki_grounding", "tests", "po-review"],
+  "budget": {
+    "max_tokens": "normal",
+    "max_spawns": 8,
+    "max_wallclock": "4h",
+    "max_spawn_depth": 3,
+    "max_outer_cycles": 5
+  },
+  "cycle_id": "C1",
+  "submitted_at": "2026-08-25T00:41:00Z"
+}

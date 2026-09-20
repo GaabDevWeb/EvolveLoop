@@ -1,0 +1,179 @@
+decisions:
+
+  - id: DR-001
+    topic: Job-path resume / checkpoint (E-005 scope)
+    current_state: Jobs/checkpoint/resume IMPLEMENTED + OBSERVED after runtime sync; HITL PARTIALLY_OBSERVED
+    evidence:
+      research: PROTOTYPE HITL / jobs (pre-audit fragile on incomplete tree)
+      audit: jobs missing then restored via Controlled Runtime Sync
+      experiments: E-005 SUPPORTED (15/15 mutation=1; resume_success=1.0)
+    observed_scope: "job-path STATE_WRITE; same Node process; SAME_ENGINE and NEW_ENGINE; not OS kill; not confirm-gated product writes"
+    decision: KEEP
+    confidence: HIGH
+    rationale: >
+      Existing job-path resume mechanism satisfied the tested failure class
+      (interrupt → persist → resume without second JobFileExecutor mutation).
+      No new recovery primitive is justified by this evidence.
+    limitations:
+      - not global exactly-once
+      - OS kill NOT_MEASURED
+      - side-effect scope STATE_WRITE only
+      - full HITL NOT proven
+    implementation_allowed_now: false
+    follow_up: DEFER global exactly-once claim; optional future OS-kill experiment
+    related_adr: ADR-DR-0001
+    research_reconciliation: REFINE (HITL/jobs from WEAKENS-on-missing-tree → CONFIRM job-path after sync+E-005)
+
+  - id: DR-002
+    topic: Global exactly-once / universal idempotency
+    current_state: Not claimed by baseline; not proven by E-005
+    evidence:
+      research: caution against overclaim
+      audit: Authority/policy gaps remain on non-deterministic providers
+      experiments: E-005 explicitly forbids global exactly-once interpretation
+    observed_scope: none for global claim
+    decision: DEFER
+    confidence: HIGH
+    rationale: Absence of duplicates in one fixture is insufficient for a global guarantee.
+    limitations: []
+    implementation_allowed_now: false
+    follow_up: Future experiments on external side effects / OS kill / confirm path
+
+  - id: DR-003
+    topic: Production skill catalog budget (max_skills / engine budget)
+    current_state: No max_skills in orchestrator; Skills as SKILL.md packages ALREADY_PRESENT
+    evidence:
+      research: ADAPT + PROTOTYPE progressive disclosure / skill budgets
+      audit: NOT_IMPLEMENTED in orchestrator; host concern
+      experiments: E-001 SUPPORTED offline; task_success NOT_MEASURED; live injection NOT_MEASURED; token PROXY
+    observed_scope: offline harness only
+    decision: DEFER
+    confidence: MEDIUM
+    rationale: >
+      Offline association between catalog size and activation/token_estimate is real
+      under harness conditions, but insufficient to require production runtime budget API.
+      Prefer KEEP CURRENT runtime + optional documentation guidance; prototype only after live metrics.
+    limitations:
+      - offline ranker ≠ host LLM
+      - token_estimate PROXY
+      - task_success NOT_MEASURED
+    implementation_allowed_now: false
+    follow_up: DOCUMENT GUIDANCE optional; live host experiment before PROTOTYPE budget in engine
+    related_adr: ADR-DR-0002
+    research_reconciliation: REFINE (still PROTOTYPE/DEFER for production; offline evidence does not elevate to IMPLEMENT)
+
+  - id: DR-004
+    topic: Document-only catalog guidance (non-runtime)
+    current_state: Skill authoring docs may discuss description length / relevance
+    evidence:
+      research: progressive disclosure
+      experiments: E-001 offline patterns
+    observed_scope: documentation / authoring practice
+    decision: ADAPT
+    confidence: LOW
+    rationale: >
+      Non-binding authoring guidance is the smallest change consistent with offline evidence
+      without claiming production performance gains.
+    limitations:
+      - not a runtime feature
+      - LOW confidence that docs alone change outcomes
+    implementation_allowed_now: false
+    follow_up: If pursued, docs-only change outside orchestrator/src; still not an experiment substitute
+
+  - id: DR-005
+    topic: OS Sandbox / posture labels (E-002)
+    current_state: sandbox NOT_IMPLEMENTED; path confinement ≠ sandbox; Authority flags ≠ posture
+    evidence:
+      research: PROTOTYPE sandbox
+      audit: NOT_IMPLEMENTED OS isolation
+      experiments: E-002 BLOCKED
+    observed_scope: no sandbox experiment executed
+    decision: DEFER
+    confidence: HIGH
+    rationale: Security model / enforcement attestation must be defined before posture enum or sandbox code.
+    limitations: []
+    implementation_allowed_now: false
+    follow_up: DEFINE SECURITY MODEL FIRST
+    related_adr: ADR-DR-0003
+    research_reconciliation: CONFIRM (PROTOTYPE remains; do not fake labels)
+
+  - id: DR-006
+    topic: Semantic stuck detector (E-003)
+    current_state: maxIterations bound only; no StuckDetector
+    evidence:
+      research: PROTOTYPE
+      audit: NOT_IMPLEMENTED semantic
+      experiments: E-003 BLOCKED
+    observed_scope: no stuck experiment
+    decision: DEFER
+    confidence: HIGH
+    rationale: Operational definition of stuck is unresolved (iteration vs semantic vs non-progress).
+    limitations: []
+    implementation_allowed_now: false
+    follow_up: DEFINE SEMANTICS FIRST
+    related_adr: ADR-DR-0004
+    research_reconciliation: CONFIRM
+
+  - id: DR-007
+    topic: Context compaction / reinject (E-004)
+    current_state: NOT_IMPLEMENTED
+    evidence:
+      research: PROTOTYPE
+      audit: no engine compaction
+      experiments: E-004 BLOCKED
+    observed_scope: none
+    decision: DEFER
+    confidence: HIGH
+    rationale: Ownership among Memory / Knowledge / Checkpoint / context compaction unresolved.
+    limitations: []
+    implementation_allowed_now: false
+    follow_up: ARCHITECTURE FIRST (ownership boundaries)
+    related_adr: ADR-DR-0005
+    research_reconciliation: CONFIRM
+
+  - id: DR-008
+    topic: Capability + Provider registries / single orchestrator
+    current_state: IMPLEMENTED core loop; DO-NOT-CHANGE
+    evidence:
+      research: ALREADY_PRESENT / REJECT duplicate
+      audit: CONFIRMS registries; WEAKENS then sync restored jobs
+      experiments: E-005 uses existing jobs path — no second orchestrator needed
+    observed_scope: system baseline + E-005
+    decision: KEEP
+    confidence: HIGH
+    rationale: Experiments reinforce using existing mechanisms; no evidence for second registry/orchestrator.
+    limitations: []
+    implementation_allowed_now: false
+    follow_up: none
+    research_reconciliation: CONFIRM DO-NOT-CHANGE
+
+  - id: DR-009
+    topic: Evidence Bus dual meaning
+    current_state: Engine Evidence[] ≠ MegaBrain FS evidence bus
+    evidence:
+      research: ALREADY_PRESENT (fragile)
+      audit: WEAKENS equation
+      experiments: no experiment altered this
+    observed_scope: documentation/architecture
+    decision: KEEP
+    confidence: HIGH
+    rationale: Preserve boundary; do not merge systems based on naming.
+    limitations: []
+    implementation_allowed_now: false
+    follow_up: documentation clarity only if needed
+    research_reconciliation: CONFIRM WEAKENS of naive ALREADY_PRESENT
+
+  - id: DR-010
+    topic: Policy Decision vs Enforcement coverage
+    current_state: Authority wired on DeterministicProvider; not Mock/CursorSkill/JobFile
+    evidence:
+      research: ALREADY_PRESENT Policy
+      audit: REFINES split
+      experiments: E-005 does not close authority gap
+    observed_scope: audit + baseline
+    decision: DEFER
+    confidence: MEDIUM
+    rationale: Gap remains real but out of E-001/E-005 evidence; not auto-authorized by job resume success.
+    limitations: []
+    implementation_allowed_now: false
+    follow_up: separate decision/experiment if prioritized

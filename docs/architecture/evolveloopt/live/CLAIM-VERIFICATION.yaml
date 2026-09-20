@@ -1,0 +1,74 @@
+claims:
+  - id: CL-LIVE-01
+    text: "real runtime event initiates analysis automatically"
+    status: VERIFIED
+    evidence: "EV-EVOLVE-LIVE-001/008 EventBus→coordinator"
+    scope: harness_opt_in
+    limitations: "requires evolveCoordinator attached; CLI default off"
+
+  - id: CL-LIVE-02
+    text: "automatic analysis always carries explicit scope"
+    status: VERIFIED
+    evidence: "ScopedAnalysisCadence keys; SYSTEM authorize"
+
+  - id: CL-LIVE-03
+    text: "analysis consumes persistent historical state"
+    status: VERIFIED
+    evidence: "LIVE-008 restart + store.query"
+
+  - id: CL-LIVE-04
+    text: "need detected without manual analyze()"
+    status: VERIFIED
+    evidence: "LIVE-001/003"
+
+  - id: CL-LIVE-05
+    text: "EvolutionRequest without manual invocation"
+    status: VERIFIED
+    evidence: "analyze auto-submits when handoffDir set"
+
+  - id: CL-LIVE-06
+    text: "request passes existing gate"
+    status: PARTIALLY_VERIFIED
+    evidence: "handoff JSON + ControlledGateFixture"
+    limitations: "full Prototype Gate runner external"
+
+  - id: CL-LIVE-07
+    text: "approved evolution creates observation window"
+    status: VERIFIED
+    evidence: "LIVE-005/008 ObservationWindowManager; may open via fixture approve or post-need open when no SUBMIT"
+    limitations: "production Prototype Gate runner not in package"
+
+  - id: CL-LIVE-08
+    text: "outcome persisted and re-ingested"
+    status: VERIFIED
+    evidence: "LIVE-005/006/008 loadOutcomes >= 1; restart preserves outcomes"
+
+  - id: CL-LIVE-09
+    text: "User A cannot affect User B"
+    status: VERIFIED
+    evidence: "LIVE-002"
+
+  - id: CL-LIVE-10
+    text: "Core candidate mutates core"
+    status: CONTRADICTED
+    evidence: "HOLD; mutates_core false; fixture blocks core mutation"
+
+  - id: CL-LIVE-11
+    text: "loop self-triggers indefinitely"
+    status: CONTRADICTED
+    evidence: "max_loop_depth; cooldown; post_evolution skip"
+
+  - id: CL-LIVE-12
+    text: "EvolveLoop failure breaks main runtime"
+    status: CONTRADICTED
+    evidence: "LIVE-007; try/catch on observer/coordinator"
+
+  - id: CL-LIVE-13
+    text: "production proven"
+    status: CONTRADICTED
+    evidence: "harness only; explicit unsupported"
+
+  - id: CL-LIVE-14
+    text: "fully autonomous / self-improving"
+    status: CONTRADICTED
+    evidence: "gated PROPOSE; lifecycle update ≠ self-improvement claim"

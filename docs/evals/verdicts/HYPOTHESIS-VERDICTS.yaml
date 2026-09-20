@@ -1,0 +1,446 @@
+# Hypothesis Verdicts — Canonical YAML
+# Synthesis only. Does not alter historical artifacts.
+# baseline_id: baseline-v1-2026-09-18
+# generated: 2026-09-19
+
+meta:
+  phase: hypothesis_verdict_evaluation_synthesis
+  baseline_id: baseline-v1-2026-09-18
+  catalog_version: v1
+  eval_run_id: eval-battery-v1-2026-09-19
+  source_hypotheses: [H-001, H-002, H-003, H-004, H-005]
+  invented_hypotheses: []
+  duplicates_consolidated:
+    - id: H-001
+      also_appears_as:
+        - docs/research/hypotheses/H-001-skill-list-budget.md (HYP-001)
+        - docs/evals/experiments/E-001/HYPOTHESIS.md
+      note: DUPLICATE_HYPOTHESIS — single verdict under H-001
+    - id: H-005
+      also_appears_as:
+        - docs/research/hypotheses/H-005-hitl-runstate-resume.md (HYP-005)
+        - docs/evals/experiments/E-005/E-005-RESULT.md (scoped experimental hypothesis)
+      note: DUPLICATE_HYPOTHESIS — research H-005 is canonical; E-005 scopes a subset
+
+independence_notes:
+  - pair: [E-001, EV-007]
+    relationship: CORROBORATED_SAME_BASIS
+    note: EV-007 reuses E-001 offline catalog harness / conditions; not independent replication
+  - pair: [E-001, EV-008]
+    relationship: CORROBORATED_SAME_BASIS
+    note: EV-008 reuses E-001 token_estimate PROXY path
+  - pair: [E-005, EV-006]
+    relationship: CORROBORATED_SAME_BASIS
+    note: EV-006 rehydrates E-005 job resume / STATE_WRITE fixture; not 30 independent observations
+
+verdicts:
+
+  - hypothesis_id: H-001
+    research_id: HYP-001
+    original_statement: >
+      Se introduzirmos um orçamento explícito de catálogo de skills (limites de tokens/contagem)
+      sob condição de muitas skills instaladas, esperamos observar melhor precisão de activação
+      e menos context pressure, medido por taxa de skill-correct e tokens de prefixo — com
+      task_success similar (critério de sucesso da hipótese de research / E-001).
+    source: docs/research/hypotheses/H-001-skill-list-budget.md
+    source_artifact: docs/evals/experiments/E-001/HYPOTHESIS.md
+    experiment: E-001
+    baseline_id: baseline-v1-2026-09-18
+    baseline_relation: >
+      Baseline provides unconstrained catalog analogue (CONTROL). Treatments compared to CONTROL
+      under offline harness; baseline runtime invariants unchanged (103/7/5).
+
+    evidence:
+      research: [P-001, docs/research/experiments/E-001-skill-catalog-budget.md]
+      experiments: [E-001]
+      evals: [EV-007, EV-008]
+      baseline: [baseline-v1-2026-09-18]
+      claims: [CLM-E001-001, CLM-E001-002, CLM-E001-003, CLM-E001-004, CLM-E001-005]
+
+    evaluation:
+      eval_ids: [EV-007, EV-008]
+      statuses: [PASS, PASS]
+      claim_validation:
+        CLM-E001-001: SUPPORTED_BY_EVAL
+        CLM-E001-002: SUPPORTED_BY_EVAL
+        CLM-E001-003: NOT_EVALUATED
+        CLM-E001-004: NOT_EVALUATED
+        CLM-E001-005: PARTIALLY_SUPPORTED
+
+    subclaims:
+      - id: H-001-SC-A
+        statement: Catalog size / budget alters offline activation behavior (precision/recall/match)
+        evidence_ids: [E001-EV-001, E001-EV-003]
+        metric_ids: [E001-M-004]
+        eval_ids: [EV-007]
+        status: SUPPORTED
+        sample: {conditions: 4, control_runs: 5, treatment_runs: 15, tasks: 176}
+      - id: H-001-SC-B
+        statement: Catalog size / truncation reduces prefix token_estimate (PROXY whitespace)
+        evidence_ids: [E001-EV-001, E001-EV-003, E001-EV-004]
+        metric_ids: [E001-M-007]
+        eval_ids: [EV-008]
+        status: SUPPORTED
+        proxy_dependency: true
+        token_note: "~40% reduction applies to T_TOKENS_40 only (not T5/T10)"
+      - id: H-001-SC-C
+        statement: Catalog budget improves or preserves live task_success
+        evidence_ids: [E001-EV-002, E001-EV-003]
+        metric_ids: [E001-M-009]
+        eval_ids: []
+        status: INCONCLUSIVE
+        note: task_success = NOT_MEASURED
+
+    supported_subclaims: [H-001-SC-A, H-001-SC-B]
+    weakened_subclaims: []
+    refuted_subclaims: []
+    unevaluated_subclaims: [H-001-SC-C]
+
+    verdict: WEAKENED
+    confidence: MEDIUM
+    proxy_dependency: true
+    sample_size:
+      conditions: 4
+      control_runs: 5
+      treatment_runs: 15
+      repetitions_per_condition: 5
+    decision_readiness: MORE_EVIDENCE_REQUIRED
+
+    scope: >
+      Offline catalog harness only; deterministic overlap ranker; whitespace token_estimate PROXY;
+      seed e001-v1-2026-09-18. Not live Cursor/MegaBrain injection.
+
+    reasoning: >
+      Subclaims A and B are sustained by E-001 and corroborated (same basis) by EV-007/EV-008.
+      The original research hypothesis and success criteria also require task_success parity /
+      improvement. That component remains NOT_MEASURED. Under canonical rules, a compound
+      hypothesis with major untested success criterion is WEAKENED, not fully SUPPORTED.
+      EV-007/EV-008 PASS does not convert H-001 into universal SUPPORTED.
+
+    limitations:
+      - offline_overlap_ranker_not_host_LLM
+      - token_estimate_is_PROXY
+      - task_success_NOT_MEASURED
+      - live_host_injection_NOT_MEASURED
+      - vendor_tokenizer_NOT_MEASURED
+      - initial_sample_n5_per_condition
+      - eval_corroboration_not_independent_replication
+
+    allowed_claims:
+      - "Under offline harness conditions, smaller catalogs were associated with higher activation_precision vs CONTROL."
+      - "Treatments were associated with lower whitespace token_estimate vs CONTROL."
+      - "T_TOKENS_40 reduced token_estimate by ~39.6% vs CONTROL (~40%)."
+    forbidden_claims:
+      - "Catalog budget improves live agent / production task_success."
+      - "Whitespace token_estimate equals vendor billing tokens."
+      - "~40% applies to T_SKILLS_5 or T_SKILLS_10."
+      - "max_skills must be implemented now."
+      - "EV-007/EV-008 PASS means H-001 is universally true."
+
+    adr_impact: ADR-DR-0002
+    future_questions:
+      - hypothesis: H-001
+        missing_evidence: live task_success under host catalog injection
+        why_missing: ENVIRONMENT / live host gap; offline harness only
+        required_precondition: PT-001 / E-001-LIVE with host control of catalog prefix
+
+  - hypothesis_id: H-002
+    research_id: HYP-002
+    original_statement: >
+      Se Policy recusar posturas "full access" quando o host não consegue aplicar sandbox
+      equivalente, esperamos observar menos execuções com isolamento declarado mas falso.
+    source: docs/research/hypotheses/H-002-sandbox-refuse-unenforceable.md
+    source_artifact: docs/research/experiments/E-002-sandbox-posture-labels.md
+    experiment: E-002
+    baseline_id: baseline-v1-2026-09-18
+    baseline_relation: >
+      Baseline/runtime lacks OS sandbox + posture enum; absence is a gap, not a refutation
+      of usefulness.
+
+    evidence:
+      research: [P-005, GAP-001, E-002 research brief]
+      experiments: [E-002]
+      evals: []
+      baseline: [baseline-v1-2026-09-18]
+      claims: []
+
+    evaluation:
+      eval_ids: []
+      statuses: [BLOCKED_VIA_EV-F_SANDBOX_PATH]
+      note: Related future evals remain BLOCKED_BY_RUNTIME/ARCHITECTURE; not executed
+
+    subclaims:
+      - id: H-002-SC-A
+        statement: Refuse-if-unenforceable reduces falsely labeled safe runs
+        status: INCONCLUSIVE
+        note: E-002 BLOCKED — mechanism not implemented; no measurement
+      - id: H-002-SC-B
+        statement: Mechanism would not be useful if implemented
+        status: NOT_APPLICABLE
+        note: Absence of implementation ≠ utility refutation
+
+    supported_subclaims: []
+    weakened_subclaims: []
+    refuted_subclaims: []
+    unevaluated_subclaims: [H-002-SC-A]
+
+    verdict: INCONCLUSIVE
+    confidence: UNKNOWN
+    proxy_dependency: false
+    decision_readiness: ARCHITECTURE_REQUIRED
+
+    scope: Not experimentally evaluated (BLOCKED)
+    reasoning: >
+      E-002 was BLOCKED_BY_RUNTIME (sandbox/posture not present). BLOCKED is not REFUTED.
+      No Eval measured sandbox efficacy. Hypothesis remains open.
+    limitations:
+      - experiment_blocked
+      - no_direct_metrics
+      - negative_evidence_only_absence_of_mechanism
+    allowed_claims:
+      - "Sandbox / posture-enforceability mechanism is not present in current runtime (gap)."
+    forbidden_claims:
+      - "Sandbox is ineffective."
+      - "Refuse-if-unenforceable is refuted."
+      - "E-002 BLOCKED proves the hypothesis false."
+    adr_impact: ADR-DR-0003
+    future_questions:
+      - hypothesis: H-002
+        missing_evidence: posture labels vs real enforcement audit
+        why_missing: runtime sandbox + security model undefined
+        required_precondition: security model (ADR-DR-0003) then implementable E-002
+
+  - hypothesis_id: H-003
+    research_id: HYP-003
+    original_statement: >
+      Se um detector de loops sem progresso interromper ou escalar sob jobs autónomos longos,
+      esperamos menor custo médio em tarefas que thrasham, sem cair success em tarefas saudáveis.
+    source: docs/research/hypotheses/H-003-stuck-detector-halts-thrash.md
+    source_artifact: docs/research/experiments/E-003-stuck-detector-heuristic.md
+    experiment: E-003
+    baseline_id: baseline-v1-2026-09-18
+    baseline_relation: "Baseline has maxIterations bounds only; no semantic stuck detector."
+
+    evidence:
+      research: [P-007, GAP-004]
+      experiments: [E-003]
+      evals: []
+      baseline: [baseline-v1-2026-09-18]
+      claims: []
+
+    evaluation:
+      eval_ids: []
+      statuses: []
+      note: No READY eval covers semantic stuck detection
+
+    subclaims:
+      - id: H-003-SC-A
+        statement: Stuck detector reduces thrash cost without harming healthy tasks
+        status: INCONCLUSIVE
+        note: E-003 BLOCKED
+
+    supported_subclaims: []
+    weakened_subclaims: []
+    refuted_subclaims: []
+    unevaluated_subclaims: [H-003-SC-A]
+
+    verdict: INCONCLUSIVE
+    confidence: UNKNOWN
+    decision_readiness: ARCHITECTURE_REQUIRED
+    scope: Not experimentally evaluated
+    reasoning: "E-003 BLOCKED_BY_ARCHITECTURE/RUNTIME. No metrics. Not REFUTED."
+    limitations: [experiment_blocked, semantics_undefined]
+    allowed_claims:
+      - "Semantic stuck detector is not implemented; only coarse loop bounds exist."
+    forbidden_claims:
+      - "Stuck detection is useless."
+      - "H-003 is refuted."
+    adr_impact: ADR-DR-0004
+    future_questions:
+      - hypothesis: H-003
+        missing_evidence: thrash cost and false-positive rates under defined stuck semantics
+        why_missing: detector + semantics missing
+        required_precondition: define stuck semantics (ADR-DR-0004) then E-003
+
+  - hypothesis_id: H-004
+    research_id: HYP-004
+    original_statement: >
+      Se marcarmos Policy/Evidence/active-skill spans como non-droppable (ou re-inject post-compact),
+      esperamos menos violações de process skills após compactação.
+    source: docs/research/hypotheses/H-004-compaction-preserves-constraints.md
+    source_artifact: docs/research/experiments/E-004-compaction-reinject.md
+    experiment: E-004
+    baseline_id: baseline-v1-2026-09-18
+    baseline_relation: >
+      No compaction/reinject pipeline observed. E-005 checkpoint ≠ compaction hygiene.
+
+    evidence:
+      research: [P-008, GAP-002]
+      experiments: [E-004]
+      evals: []
+      baseline: [baseline-v1-2026-09-18]
+      claims: []
+
+    evaluation:
+      eval_ids: []
+      statuses: []
+
+    subclaims:
+      - id: H-004-SC-A
+        statement: Compaction hygiene preserves critical constraints
+        status: INCONCLUSIVE
+        note: E-004 BLOCKED
+
+    supported_subclaims: []
+    weakened_subclaims: []
+    refuted_subclaims: []
+    unevaluated_subclaims: [H-004-SC-A]
+
+    verdict: INCONCLUSIVE
+    confidence: UNKNOWN
+    decision_readiness: ARCHITECTURE_REQUIRED
+    scope: Not experimentally evaluated
+    reasoning: "E-004 BLOCKED. Do not equate job checkpoint evidence with compaction correctness."
+    limitations: [experiment_blocked, no_compact_pipeline]
+    allowed_claims:
+      - "Compaction/reinject pipeline is not present to evaluate."
+    forbidden_claims:
+      - "Compaction correctness is proven."
+      - "H-004 is refuted."
+      - "E-005 checkpoint proves compaction hygiene."
+    adr_impact: ADR-DR-0005
+    future_questions:
+      - hypothesis: H-004
+        missing_evidence: constraint survival rate across compact events
+        why_missing: no compaction ownership/pipeline
+        required_precondition: context ownership architecture then E-004
+
+  - hypothesis_id: H-005
+    research_id: HYP-005
+    original_statement: >
+      Se jobs serializarem waits de aprovação (RunState-like) sob condição de restart do processo,
+      esperamos observar resume correcto sem re-executar side effects concluídos, medido por
+      idempotency tests e taxa de resume success.
+    source: docs/research/hypotheses/H-005-hitl-runstate-resume.md
+    source_artifact: docs/evals/experiments/E-005/E-005-RESULT.md
+    experiment: E-005
+    baseline_id: baseline-v1-2026-09-18
+    baseline_relation: >
+      Baseline Jobs/Resume OBSERVED; HITL PARTIALLY_OBSERVED. E-005 strengthens job-path
+      measurement without upgrading product HITL to fully observed.
+
+    evidence:
+      research: [P-004, P-009, GAP-005]
+      experiments: [E-005]
+      evals: [EV-006]
+      baseline: [baseline-v1-2026-09-18]
+      claims: [CLM-E005-001, CLM-E005-002, CLM-E005-003, CLM-E005-004, CLM-E005-005]
+
+    evaluation:
+      eval_ids: [EV-006]
+      statuses: [PASS]
+      claim_validation:
+        CLM-E005-001: SUPPORTED_BY_EVAL
+        CLM-E005-002: SUPPORTED_BY_EVAL
+        CLM-E005-003: SUPPORTED_BY_EVAL
+        CLM-E005-004: PARTIALLY_SUPPORTED
+        CLM-E005-005: NOT_EVALUATED
+      independence: CORROBORATED_SAME_BASIS_WITH_E-005
+
+    subclaims:
+      - id: H-005-SC-A
+        statement: Job-path resume restores expected waiting/completed state
+        evidence_ids: [E005-EV-001, E005-EV-003]
+        metric_ids: [E005-M-001, E005-M-004]
+        eval_ids: [EV-006]
+        status: SUPPORTED
+        sample: {runs: 15, treatment_resume: 10}
+      - id: H-005-SC-B
+        statement: Job-path resume avoids duplicate STATE_WRITE mutation
+        evidence_ids: [E005-EV-001, E005-EV-002]
+        metric_ids: [E005-M-002, E005-M-003]
+        eval_ids: [EV-006]
+        status: SUPPORTED
+        scope: STATE_WRITE_job_JSON_only
+      - id: H-005-SC-C
+        statement: Global exactly-once semantics hold
+        status: INCONCLUSIVE
+        note: NOT_EVALUATED / out of fixture scope
+      - id: H-005-SC-D
+        statement: External side-effect exactly-once (beyond STATE_WRITE)
+        status: INCONCLUSIVE
+        note: NOT_MEASURED
+      - id: H-005-SC-E
+        statement: OS process kill / true process restart recovery
+        status: INCONCLUSIVE
+        note: NOT_MEASURED (same Node process only; NEW_ENGINE ≠ OS kill)
+      - id: H-005-SC-F
+        statement: Full product HITL validated
+        status: INCONCLUSIVE
+        note: NOT_MEASURED; baseline remains PARTIALLY_OBSERVED
+
+    supported_subclaims: [H-005-SC-A, H-005-SC-B]
+    weakened_subclaims: []
+    refuted_subclaims: []
+    unevaluated_subclaims: [H-005-SC-C, H-005-SC-D, H-005-SC-E, H-005-SC-F]
+
+    verdict: WEAKENED
+    confidence: MEDIUM
+    sample_size:
+      total_runs: 15
+      control: 5
+      treatment_same_engine: 5
+      treatment_new_engine: 5
+    decision_readiness: DECISION_READY
+    decision_readiness_note: >
+      DECISION_READY for scoped KEEP of job-path resume (already reflected in ADR-DR-0001).
+      MORE_EVIDENCE_REQUIRED for process-kill / global exactly-once / full HITL portions of H-005.
+
+    scope: >
+      Job-path JobFileExecutor STATE_WRITE fixture; same-process interrupt/resume
+      (SAME_ENGINE + NEW_ENGINE). Not OS-kill, not confirm-gated external mutates, not global
+      exactly-once, not full product HITL.
+
+    reasoning: >
+      Measurable job-path subclaims A/B are strongly supported (E-005 15/15; resume_success=1.0;
+      duplicate_mutate=false) and corroborated by EV-006 on the same fixture basis.
+      The original research hypothesis explicitly conditions on process restart and broad
+      side-effect non-duplication / idempotency. Those components remain NOT_MEASURED.
+      Therefore the original compound H-005 is WEAKENED relative to its full statement,
+      while the scoped job-path claim set remains empirically sustained.
+
+    limitations:
+      - STATE_WRITE_only
+      - same_process_only
+      - OS_kill_NOT_MEASURED
+      - full_HITL_NOT_MEASURED
+      - LOW_SAMPLE_n5_per_arm
+      - eval_same_fixture_not_independent_n30
+      - engine.pause_not_used
+
+    allowed_claims:
+      - "Under the tested job-path fixture, resume succeeded without duplicate STATE_WRITE."
+      - "Checkpoint/state integrity was measured for this fixture."
+    forbidden_claims:
+      - "Global exactly-once is guaranteed."
+      - "All external side effects are exactly-once."
+      - "OS crash recovery is proven."
+      - "Full HITL is validated."
+      - "EV-006 PASS proves product HITL readiness."
+
+    adr_impact: ADR-DR-0001
+    future_questions:
+      - hypothesis: H-005
+        missing_evidence: OS-kill / true process restart resume + non-STATE_WRITE side effects
+        why_missing: fixture deliberately same-process; Prototype Gate for PT-002
+        required_precondition: PT-002 authorized after Prototype Gate
+
+summary:
+  hypotheses_analyzed: 5
+  SUPPORTED: 0
+  WEAKENED: 2
+  REFUTED: 0
+  INCONCLUSIVE: 3
+  note: >
+    Zero full SUPPORTED at original-hypothesis level because H-001 and H-005 are compound
+    and retain major NOT_MEASURED success components. Supported *subclaims* exist under both.

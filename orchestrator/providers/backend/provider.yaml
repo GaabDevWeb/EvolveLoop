@@ -1,0 +1,83 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Provider
+metadata:
+  name: backend
+  version: "1.2.0"
+  description: "Backend implementation + refactor mode — API, domain, persistence (Fase 2)"
+  owner: agents-team
+
+spec:
+  plugin:
+    type: cursor-skill
+    entrypoint: ".cursor/skills/backend/SKILL.md"
+
+  capabilities:
+    - id: backend-implementation
+      contract: contracts/backend-implementation@1.2.0
+      type: worker
+      modes:
+        - name: implement
+          default: true
+        - name: refactor
+
+  interfaces:
+    inputs:
+      - name: briefing
+        required: false
+      - name: mode
+        required: false
+        note: "implement | refactor"
+      - name: api-contract
+        required: false
+        paths:
+          - docs/API_SPEC.md
+      - name: upstream-docs
+        required: false
+        paths:
+          - docs/ARCHITECTURE.md
+          - docs/DATA-MODEL.md
+          - docs/adr/
+    outputs:
+      - name: backend-artifacts
+        schema: artifacts/backend-module@1.0.0
+      - name: handoff
+        schema: artifacts/entrega-consolidada@1.0.0
+
+  dependencies:
+    optional:
+      - filesystem.read
+      - filesystem.list
+      - filesystem.search
+      - filesystem.write
+      - project.inspect
+      - git.inspect
+      - git.status
+      - repository.inspect
+      - shell.execute
+      - database-schema
+
+  runtime:
+    cost: medium
+    subagent_type: generalPurpose
+    pda_role: exec
+
+  runtime_compatibility:
+    engine: ">=2.0.0 <3.0.0"
+    evidence: ">=2.1.0 <3.0.0"
+    execution: ">=2.1.0"
+    executor_types: [cursor-skill]
+
+  constraints:
+    stack: [cursor, megabrain]
+    platforms: [cursor]
+    signals:
+      - phase: "2"
+      - role: exec
+      - forbids: [frontend-ui, devops-deploy, security-gate, testing-gate]
+      - refactorer_role: "mode:refactor (no separate agent)"
+
+  telemetry:
+    key: provider.backend
+
+  availability: active
+  priority: 100

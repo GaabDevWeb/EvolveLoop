@@ -1,0 +1,424 @@
+# IMPLEMENTATION-MATRIX
+# Implementation Audit 2026-09-18 — CursorSKILLS Agent System
+# Status enum: IMPLEMENTED | PARTIALLY_IMPLEMENTED | SPEC_ONLY | DOCUMENTED_ONLY | DEAD_OR_UNREACHABLE | NOT_IMPLEMENTED | UNKNOWN
+
+schema_version: "1.0"
+audit_date: "2026-09-18"
+code_root: "/home/gaab/Downloads/CursorSKILLS"
+orchestrator_package: "@agents/orchestrator@2.0.0"
+
+test_execution:
+  - command: "npx vitest run tests/unit/{ir,registry,policy-engine,authority,evidence,orchestrator,execution-trace,knowledge-memory,deterministic-capabilities}.test.ts"
+    result: "43 passed, 2 failed (evidence.test.ts), 2026-09-18"
+  - command: "npx vitest run tests/contracts/contract-prototype.test.ts"
+    result: "7 passed"
+  - command: "npx vitest run tests/integration/full-cycle.test.ts"
+    result: "FAIL load — missing src/jobs/job-store.js"
+
+mechanisms:
+
+  - id: M-AGENT-MODEL
+    name: Executable Agent model / Agent Registry
+    category: agent
+    research_decision:
+      previous: ALREADY_PRESENT (architectural lens) / ADAPT PDA
+      source_document: docs/research/DECISION-MATRIX.md
+    implementation_status: DOCUMENTED_ONLY
+    confidence: HIGH
+    implementation:
+      files: ["Agents/*.md", ".cursor/skills/**/SKILL.md"]
+      symbols: []
+      entrypoints: []
+    runtime_path: "Host loads Markdown; engine schedules capabilities — no Agent class registry"
+    tests: NO_TEST
+    execution_evidence: "NOT_OBSERVED Agent instance selection in ExecutionEngine"
+    evidence_ids: [EA-0008]
+    gaps: ["No engine Agent Registry"]
+    notes: "Do not confuse Agents/*.md with runtime Agent"
+
+  - id: M-CAPABILITY-IR
+    name: Capability IR
+    category: capability
+    research_decision:
+      previous: ALREADY_PRESENT
+      source_document: DECISION-MATRIX
+    implementation_status: IMPLEMENTED
+    confidence: HIGH
+    implementation:
+      files: ["orchestrator/src/ir/", "orchestrator/src/types/index.ts"]
+      symbols: ["validateIR"]
+      entrypoints: ["cli/run-engine.ts --ir"]
+    runtime_path: "IR → validateIR → GraphStore"
+    tests: UNIT_TEST
+    execution_evidence: "tests/unit/ir.test.ts PASSED"
+    evidence_ids: [EA-0001]
+    gaps: []
+    notes: ""
+
+  - id: M-CAPABILITY-REGISTRY
+    name: Capability Registry + selectWithEvidence
+    category: capability
+    research_decision:
+      previous: ALREADY_PRESENT
+      source_document: DECISION-MATRIX
+    implementation_status: IMPLEMENTED
+    confidence: HIGH
+    implementation:
+      files: ["orchestrator/src/registry/registry-client.ts"]
+      symbols: ["selectWithEvidence"]
+      entrypoints: ["ExecutionEngine.selectProvider"]
+    runtime_path: "Scheduler → RegistryClient.selectWithEvidence → ProviderEntry"
+    tests: UNIT_TEST
+    execution_evidence: "tests/unit/registry.test.ts PASSED"
+    evidence_ids: [EA-0002]
+    gaps: []
+    notes: ""
+
+  - id: M-PROVIDER-ROUTER
+    name: ProviderRouter + plugins
+    category: provider
+    research_decision:
+      previous: ALREADY_PRESENT
+      source_document: DECISION-MATRIX
+    implementation_status: IMPLEMENTED
+    confidence: HIGH
+    implementation:
+      files:
+        - orchestrator/src/providers/mock-provider.ts
+        - orchestrator/src/plugins/plugin-loader.ts
+        - orchestrator/src/plugins/cursor-skill-provider.ts
+        - orchestrator/src/providers/deterministic/index.ts
+        - orchestrator/src/executors/smart-mock-executor.ts
+      symbols: ["ProviderRouter", "CursorSkillProvider", "JobFileExecutor", "CallbackSkillExecutor", "DeterministicProvider"]
+      entrypoints: ["run-engine setupProviders"]
+    runtime_path: "ProviderRouter.get(id).execute"
+    tests: UNIT_TEST
+    execution_evidence: "cursor-skill-provider + deterministic-capabilities tests; CallbackSkillExecutor tests-only"
+    evidence_ids: [EA-0010]
+    gaps: ["DeterministicProvider not default CLI wiring"]
+    notes: ""
+
+  - id: M-RUNTIME-ENGINE
+    name: ExecutionEngine orchestrator runtime
+    category: runtime
+    research_decision:
+      previous: ALREADY_PRESENT
+      source_document: DECISION-MATRIX
+    implementation_status: PARTIALLY_IMPLEMENTED
+    confidence: HIGH
+    implementation:
+      files: ["orchestrator/src/engine/execution-engine.ts"]
+      symbols: ["ExecutionEngine.run"]
+      entrypoints: ["cli/run-engine.ts"]
+    runtime_path: "see ACTUAL-ARCHITECTURE.md"
+    tests: "INTEGRATION_TEST blocked — missing jobs/"
+    execution_evidence: "Source OBSERVED; full-cycle cannot load; unit pieces PASS"
+    evidence_ids: [EA-0001, EA-0003]
+    gaps: ["src/jobs/ ABSENT in CursorSKILLS tree"]
+    notes: "CRITICAL tree sync gap"
+
+  - id: M-EXECUTION-POLICY
+    name: ExecutionPolicy / PolicyEngine
+    category: policy
+    research_decision:
+      previous: ALREADY_PRESENT
+      source_document: DECISION-MATRIX
+    implementation_status: IMPLEMENTED
+    confidence: HIGH
+    implementation:
+      files: ["orchestrator/src/policies/policy-engine.ts", "orchestrator/policies/*.yaml"]
+      symbols: ["PolicyEngine.resolve", "gateEnabled"]
+      entrypoints: ["ExecutionEngine.run policy_id"]
+    runtime_path: "resolve → Scheduler uses retries/gates/strategy"
+    tests: UNIT_TEST
+    execution_evidence: "tests/unit/policy-engine.test.ts PASSED"
+    evidence_ids: [EA-0004]
+    gaps: ["Does not enforce capability side-effects"]
+    notes: "policy decision ≠ authority enforcement"
+
+  - id: M-CAPABILITY-AUTHORITY
+    name: CapabilityAuthority enforce
+    category: policy
+    research_decision:
+      previous: ALREADY_PRESENT (bundled under Policy)
+      source_document: DECISION-MATRIX / IMPLEMENTATION-STATUS
+    implementation_status: PARTIALLY_IMPLEMENTED
+    confidence: HIGH
+    implementation:
+      files: ["orchestrator/src/authority/capability-authority.ts"]
+      symbols: ["authorize", "CapabilityAuthority"]
+      entrypoints: ["DeterministicProvider.execute only"]
+    runtime_path: "authorize → deny/confirm fail codes"
+    tests: UNIT_TEST
+    execution_evidence: "authority + deterministic-capabilities PASSED; Mock/CursorSkill bypass"
+    evidence_ids: [EA-0005]
+    gaps: ["Not wired to MockProvider or CursorSkillProvider"]
+    notes: ""
+
+  - id: M-EVIDENCE-ENGINE
+    name: In-run Evidence builders/validators
+    category: evidence
+    research_decision:
+      previous: ALREADY_PRESENT (Evidence Bus)
+      source_document: DECISION-MATRIX
+    implementation_status: PARTIALLY_IMPLEMENTED
+    confidence: MEDIUM
+    implementation:
+      files: ["orchestrator/src/evidence/"]
+      symbols: ["validateEvidence", "build*Evidence"]
+      entrypoints: ["ExecutionEngine.processRunResult"]
+    runtime_path: "provider evidence → validateEvidence → allEvidence[]"
+    tests: UNIT_TEST
+    execution_evidence: "evidence.test.ts 2 FAILED 2026-09-18"
+    evidence_ids: [EA-0006]
+    gaps: ["Validator/test drift"]
+    notes: ""
+
+  - id: M-EVIDENCE-BUS-MEGABRAIN
+    name: MegaBrain memory/*/evidence JSON gates
+    category: evidence
+    research_decision:
+      previous: ALREADY_PRESENT
+      source_document: orquestrar evidence-bus.md / research baseline
+    implementation_status: DOCUMENTED_ONLY
+    confidence: HIGH
+    implementation:
+      files: [".cursor/skills/orquestrar/references/evidence-bus.md", "memory/"]
+      symbols: []
+      entrypoints: ["PDA/process convention — not ExecutionEngine"]
+    runtime_path: "NOT_OBSERVED in orchestrator write path"
+    tests: NO_TEST
+    execution_evidence: "Engine DataPaths.memoryDir = preferences/decisions/context yaml only"
+    evidence_ids: [EA-0007]
+    gaps: ["Dual Evidence vocabulary"]
+    notes: "FRAGILE ALREADY_PRESENT"
+
+  - id: M-KNOWLEDGE
+    name: KnowledgeStore + wiki search capability
+    category: knowledge
+    research_decision:
+      previous: ALREADY_PRESENT
+      source_document: DECISION-MATRIX
+    implementation_status: PARTIALLY_IMPLEMENTED
+    confidence: MEDIUM
+    implementation:
+      files:
+        - orchestrator/src/knowledge/
+        - orchestrator/src/providers/deterministic/knowledge.ts
+      symbols: ["FilesystemKnowledgeStore", "knowledgeSearch"]
+      entrypoints: ["Scheduler consult_before_schedule", "DeterministicProvider knowledge.*"]
+    runtime_path: "search/propose via store; wiki subprocess optional"
+    tests: UNIT_TEST
+    execution_evidence: "knowledge-memory + deterministic tests"
+    evidence_ids: [EA-0009]
+    gaps: ["External RAG dependency"]
+    notes: ""
+
+  - id: M-MEMORY
+    name: FilesystemMemoryStore
+    category: memory
+    research_decision:
+      previous: PARTIAL episodic / DEFER long Store
+      source_document: DECISION-MATRIX
+    implementation_status: IMPLEMENTED
+    confidence: HIGH
+    implementation:
+      files: ["orchestrator/src/memory/"]
+      symbols: ["FilesystemMemoryStore", "MemoryStore"]
+      entrypoints: ["ExecutionEngine + --data-dir"]
+    runtime_path: "memory/{feature}/{context,preferences,decisions}.yaml"
+    tests: UNIT_TEST + INTEGRATION_TEST (persistence)
+    execution_evidence: "knowledge-memory + filesystem-stores tests"
+    evidence_ids: []
+    gaps: ["Not agent working-memory / not Evidence Bus"]
+    notes: "Separate from Knowledge"
+
+  - id: M-JOBS-CHECKPOINT
+    name: JobStore / checkpoint / resume
+    category: persistence
+    research_decision:
+      previous: PROTOTYPE HITL RunState / PARTIAL jobs
+      source_document: DECISION-MATRIX E-005
+    implementation_status: DEAD_OR_UNREACHABLE
+    confidence: HIGH
+    implementation:
+      files: ["orchestrator/src/engine/execution-engine.ts imports", "AGENTS/.../src/jobs/* sibling"]
+      symbols: ["JobStore", "saveCheckpoint", "loadCheckpoint"]
+      entrypoints: ["cli/run-jobs.ts", "engine --resume"]
+    runtime_path: "INTENDED waiting → checkpoint → resume — MODULE MISSING HERE"
+    tests: "tests exist but cannot load"
+    execution_evidence: "ls src/jobs → ENOENT; sibling has 4 files"
+    evidence_ids: [EA-0003, EA-0014]
+    gaps: ["Sync jobs into CursorSKILLS tree"]
+    notes: "CRITICAL"
+
+  - id: M-HITL
+    name: HITL confirm / human wait
+    category: hitl
+    research_decision:
+      previous: PROTOTYPE
+      source_document: DECISION-MATRIX
+    implementation_status: PARTIALLY_IMPLEMENTED
+    confidence: HIGH
+    implementation:
+      files: ["authority/", "deterministic/", "cursor-skill-provider.ts"]
+      symbols: ["confirm", "CONFIRMATION_REQUIRED", "JOB_PENDING"]
+      entrypoints: ["DeterministicProvider", "JobFileExecutor"]
+    runtime_path: "confirm→fail; waiting→jobs (missing)"
+    tests: UNIT_TEST (confirm); job tests blocked
+    execution_evidence: "deterministic-capabilities PASSED"
+    evidence_ids: [EA-0014]
+    gaps: ["No interactive confirm resume loop"]
+    notes: ""
+
+  - id: M-SANDBOX
+    name: OS sandbox
+    category: sandbox
+    research_decision:
+      previous: PROTOTYPE
+      source_document: DECISION-MATRIX
+    implementation_status: NOT_IMPLEMENTED
+    confidence: HIGH
+    implementation:
+      files: ["persistence/paths.ts", "authority/"]
+      symbols: ["assertWithinWorkspace", "allowShell"]
+      entrypoints: ["DeterministicProvider shell.execute"]
+    runtime_path: "spawn({shell:true}) without OS jail"
+    tests: UNIT_TEST (path escape only)
+    execution_evidence: "SmartMock capabilities.sandbox===false"
+    evidence_ids: [EA-0012]
+    gaps: ["No seatbelt/docker/landlock"]
+    notes: ""
+
+  - id: M-HOOKS
+    name: Lifecycle hooks
+    category: hooks
+    research_decision:
+      previous: ADAPT hooks→Policy
+      source_document: DECISION-MATRIX
+    implementation_status: PARTIALLY_IMPLEMENTED
+    confidence: HIGH
+    implementation:
+      files: [".cursor/hooks.json", ".cursor/hooks/*.sh"]
+      symbols: []
+      entrypoints: ["Cursor stop / afterShellExecution"]
+    runtime_path: "Cursor → shell → run-jobs invoke"
+    tests: NO_TEST
+    execution_evidence: "files OBSERVED; not orchestrator/src"
+    evidence_ids: []
+    gaps: ["Not in-engine hooks; bypassable if hooks disabled"]
+    notes: ""
+
+  - id: M-TELEMETRY
+    name: Telemetry / summarizeExecutionTrace
+    category: telemetry
+    research_decision:
+      previous: PARTIAL
+      source_document: OUR-SYSTEM-BASELINE / IMPLEMENTATION-STATUS
+    implementation_status: PARTIALLY_IMPLEMENTED
+    confidence: HIGH
+    implementation:
+      files: ["orchestrator/src/telemetry/", "persistence/jsonl-event-persister.ts"]
+      symbols: ["summarizeExecutionTrace", "MetricsAccumulator"]
+      entrypoints: ["export; tests; MetricsAccumulator in engine"]
+    runtime_path: "events JSONL if data-dir; summarize NOT in run()"
+    tests: UNIT_TEST
+    execution_evidence: "execution-trace.test.ts; summarize not hot-path"
+    evidence_ids: []
+    gaps: ["Dead-ish summarize on hot path"]
+    notes: ""
+
+  - id: M-VALIDATION
+    name: Validation (IR/evidence/contracts)
+    category: validation
+    research_decision:
+      previous: ADAPT evidence/validation
+      source_document: research
+    implementation_status: PARTIALLY_IMPLEMENTED
+    confidence: MEDIUM
+    implementation:
+      files: ["ir/validator.ts", "evidence/validator.ts", "contracts/"]
+      symbols: ["validateIR", "validateEvidence"]
+      entrypoints: ["engine run / processRunResult"]
+    runtime_path: "fail closed on IR; evidence validation present with test drift"
+    tests: UNIT_TEST + CONTRACT
+    execution_evidence: "contract-prototype PASSED; evidence 2 FAIL"
+    evidence_ids: [EA-0006]
+    gaps: ["Evidence test drift"]
+    notes: ""
+
+  - id: M-RECOVERY-RETRY
+    name: Recovery / retry
+    category: recovery
+    research_decision:
+      previous: ADAPT hard bounds / retries
+      source_document: DECISION-MATRIX
+    implementation_status: PARTIALLY_IMPLEMENTED
+    confidence: MEDIUM
+    implementation:
+      files: ["policies/policy-engine.ts", "engine/execution-engine.ts"]
+      symbols: ["retriesFor", "maxIterations"]
+      entrypoints: ["processRunResult"]
+    runtime_path: "policy retries; maxIterations=500; no stuck heuristic"
+    tests: "partial via policy/engine scenarios"
+    execution_evidence: "policy-engine tests; no stuck tests"
+    evidence_ids: [EA-0013]
+    gaps: ["No semantic stuck detector"]
+    notes: ""
+
+  - id: M-MODEL-ROUTING
+    name: Model routing
+    category: routing
+    research_decision:
+      previous: ADAPT sticky model (defer mostly)
+      source_document: DECISION-MATRIX
+    implementation_status: NOT_IMPLEMENTED
+    confidence: HIGH
+    implementation:
+      files: []
+      symbols: []
+      entrypoints: []
+    runtime_path: "provider_strategy selects ProviderEntry not LLM model"
+    tests: NO_TEST
+    execution_evidence: "NOT_OBSERVED"
+    evidence_ids: [EA-0011]
+    gaps: ["No ModelRouter"]
+    notes: ""
+
+  - id: M-EVALS
+    name: Evals harness
+    category: evals
+    research_decision:
+      previous: PARTIAL
+      source_document: baseline
+    implementation_status: PARTIALLY_IMPLEMENTED
+    confidence: MEDIUM
+    implementation:
+      files: ["orchestrator/tests/evals/", ".cursor/skills/**/evals/"]
+      symbols: []
+      entrypoints: ["npm run test:evals"]
+    runtime_path: "vitest eval scenarios; skill JSON evals separate"
+    tests: "tests/evals present; full suite not fully run this audit"
+    execution_evidence: "engine-scenarios referenced; jobs block some"
+    evidence_ids: []
+    gaps: ["Incomplete run due to jobs/"]
+    notes: ""
+
+  - id: M-SKILLS-PACKAGES
+    name: Skill packages on disk
+    category: skills
+    research_decision:
+      previous: ALREADY_PRESENT
+      source_document: DECISION-MATRIX
+    implementation_status: IMPLEMENTED
+    confidence: HIGH
+    implementation:
+      files: [".cursor/skills/**/SKILL.md"]
+      symbols: []
+      entrypoints: ["Cursor / MegaBrain host"]
+    runtime_path: "Host skill loading; JobFileExecutor for cursor-skill providers"
+    tests: "skill-level evals uneven"
+    execution_evidence: "directory listing OBSERVED"
+    evidence_ids: [EA-0008]
+    gaps: ["Not parsed by ExecutionEngine as IR"]
+    notes: ""

@@ -1,0 +1,59 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Contract
+metadata:
+  id: devops-deploy
+  version: "1.0.0"
+  status: active
+
+spec:
+  capability: devops-deploy
+  type: worker
+
+  semver:
+    major: 1
+    minor: 0
+    patch: 0
+
+  compatible_with:
+    - "contracts/devops-deploy@1.0.x"
+
+  inputs:
+    - name: architecture
+      path: docs/ARCHITECTURE.md
+      required: false
+    - name: contributing
+      path: docs/CONTRIBUTING.md
+      required: false
+    - name: existing-ci
+      required: false
+
+  outputs:
+    - name: pipeline
+      paths:
+        - .github/workflows/
+        - docs/runbooks/
+    - name: handoff
+      schema: artifacts/entrega-consolidada@1.0.0
+
+  definition_of_done:
+    minimum_checks:
+      - pipeline_or_runbook_paths_emitted
+      - no_plaintext_secrets
+      - secret_names_listed
+      - validation_command_documented
+      - entrega_consolidada_emitted
+    forbidden:
+      - product_feature_implementation
+      - disable_tests_to_go_green
+      - plaintext_credentials_in_yaml
+      - security_or_po_verdict
+      - policy_bypass
+
+  evidence:
+    schema: evidence/worker-default@1.0.0
+    emitter: devops
+    payload_type: worker
+
+  runtime_compatibility:
+    pda_roles: [exec]
+    phase: 4b

@@ -1,0 +1,14 @@
+scan_after_seam:
+  CORE_LEAK: []
+  PROFILE:
+    - profiles/default.yaml (no personal paths)
+    - ~/.cursor/agents.env WIKI_ROOT (host)
+  EXTERNAL:
+    - WIKI_CLI_MODULE default gaabwiki (vault package)
+    - vault corpus pages named gaabwiki-*
+  HISTORICAL:
+    - docs/architecture/portability/*
+    - docs/architecture/skills/audit|pruning
+    - docs/research|evals|memory
+  DOCUMENTATION:
+    - docs/architecture/knowledge/* (this phase)

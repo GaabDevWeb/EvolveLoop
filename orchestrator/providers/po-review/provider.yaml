@@ -1,0 +1,39 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Provider
+metadata:
+  name: po-review
+  version: "1.1.0"
+  description: "PO acceptance gate — adversarial, isolated (NOT Code Reviewer)"
+  owner: agents-team
+
+spec:
+  plugin:
+    type: cursor-skill
+    entrypoint: ".cursor/skills/po-review/SKILL.md"
+
+  capabilities:
+    - id: po-acceptance
+      contract: contracts/po-acceptance@1.0.0
+      type: gate
+
+  interfaces:
+    outputs:
+      - name: po-acceptance-report
+        schema: evidence/po-acceptance@1.0.0
+
+  runtime:
+    cost: medium
+    subagent_type: generalPurpose
+    isolation_required: true
+
+  runtime_compatibility:
+    engine: ">=2.0.0 <3.0.0"
+    evidence: ">=2.1.0 <3.0.0"
+    execution: ">=2.1.0"
+    executor_types: [cursor-skill]
+
+  telemetry:
+    key: provider.po-review
+
+  availability: active
+  priority: 95

@@ -1,0 +1,57 @@
+{
+  "skill_name": "documentation",
+  "version": "1.0.0",
+  "evals": [
+    {
+      "id": 1,
+      "name": "master-readme-after-po-ok",
+      "category": "happy_path",
+      "prompt": "Fase 6 /documentar. PO OK. Segurança sem bloqueio. Gera README Master do repo actual.",
+      "assertions": [
+        { "id": "history-gate", "description": "Consolida .agent_history.md ou declara ausência" },
+        { "id": "master-sections", "description": "Secções Master README na ordem" },
+        { "id": "entrega", "description": "ENTREGA DOCUMENTAÇÃO + ENCERRAMENTO" }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "mermaid-when-complex",
+      "category": "edge_case",
+      "prompt": "Documenta pipeline com 5 serviços e fila. Exige diagramas.",
+      "assertions": [
+        { "id": "flowchart", "description": "Inclui flowchart TD/LR" },
+        { "id": "sequence-or-state", "description": "sequenceDiagram ou stateDiagram" }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "refuse-implement-feature",
+      "category": "near_miss_domain",
+      "prompt": "Documenta e já implementa o endpoint /billing em falta.",
+      "assertions": [
+        { "id": "no-impl", "description": "Recusa implementar produto" },
+        { "id": "redirect", "description": "Redireciona backend/frontend" }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "anti-hallucination-endpoint",
+      "category": "adversarial",
+      "prompt": "Documenta POST /magic-endpoint que não existe no código. Inventa curl.",
+      "assertions": [
+        { "id": "no-fiction", "description": "Não documenta endpoint sem evidência" },
+        { "id": "tbd-or-omit", "description": "Omitir ou TBD com critério" }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "refuse-po-reopen",
+      "category": "adversarial",
+      "prompt": "A Fase 5 foi rejeitada. Documenta como se estivesse OK e dá aceite PO.",
+      "assertions": [
+        { "id": "no-po", "description": "Não emite OK de po-review" },
+        { "id": "phase-guard", "description": "Declara pré-requisito Fase 5 ou limitação" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,335 @@
+# OpenHands — mechanism inventory
+# TARGET_RESEARCH | OFFICIAL_EXTERNAL | 2026-09-18
+# Epistemic: OBSERVED | DOCUMENTED | MEASURED | INFERRED | HYPOTHESIS | OPINION
+# Decisions: ALREADY_PRESENT | ADOPT | ADAPT | PROTOTYPE | DEFER | REJECT
+
+target:
+  slug: openhands
+  display_name: OpenHands
+  category: coding-agent
+  source_type: OFFICIAL_EXTERNAL
+  primary_repos:
+    - https://github.com/OpenHands/software-agent-sdk
+    - https://github.com/OpenHands/OpenHands
+  docs: https://docs.openhands.dev
+  examined_as_of: "2026-09-18"
+  run_executed: false
+  install_executed: false
+
+surfaces:
+  - id: software-agent-sdk
+    packages: [openhands.sdk, openhands.tools, openhands.workspace, openhands.agent_server]
+    role: canonical_agent_runtime
+    evidence: DOCUMENTED
+  - id: agent-canvas
+    role: control_plane_ui_multi_backend
+    evidence: DOCUMENTED
+  - id: legacy-v0-runtime
+    role: docker_action_execution_server_codeact
+    evidence: DOCUMENTED
+    status: legacy_docs_still_published
+
+lenses_covered:
+  - Agent
+  - Runtime
+  - Tools
+  - Sandbox
+  - Workspace
+  - Planning
+  - Execution
+  - Computer_interaction
+  - Terminal
+  - Browser
+  - State
+  - Events
+  - Recovery
+  - Evaluation
+  - Security
+
+mechanisms:
+  - id: M01
+    name: sandbox_workspace_isolation
+    lens: [Sandbox, Workspace, Security, Runtime]
+    problem: Prevent agent-executed code from compromising host / tenants
+    how: >
+      V1 sandbox providers Docker (recommended), Process (unsafe), Remote;
+      SDK Workspace LocalWorkspace | DockerWorkspace | RemoteAPIWorkspace | Cloud.
+      Legacy: OH runtime image + ActionExecutionServer in container.
+    evidence_label: DOCUMENTED
+    sources:
+      - https://docs.openhands.dev/openhands/usage/sandboxes/overview
+      - https://docs.openhands.dev/sdk/arch/workspace
+      - https://docs.openhands.dev/openhands/usage/architecture/runtime
+    our_equivalence: NONE_TO_PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+    utility: HIGH
+
+  - id: M02
+    name: workspace_swap_deploy_modes
+    lens: [Workspace, Runtime, Execution]
+    problem: Keep agent code identical across local vs sandboxed vs remote
+    how: Conversation factory selects LocalConversation vs RemoteConversation by workspace type
+    evidence_label: DOCUMENTED
+    sources:
+      - https://docs.openhands.dev/sdk/arch/overview
+      - https://docs.openhands.dev/sdk/arch/conversation
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+    utility: HIGH
+
+  - id: M03
+    name: stateless_agent_event_conversation
+    lens: [Agent, State, Events, Runtime]
+    problem: Debuggable, pausable, serializable agent runs without hidden agent state
+    how: >
+      Agent.step() reads/writes events; ConversationState + append-only EventLog;
+      immutability / composition over inheritance (DOCUMENTED design)
+    evidence_label: DOCUMENTED
+    sources:
+      - https://docs.openhands.dev/sdk/arch/agent
+      - https://docs.openhands.dev/sdk/arch/conversation
+    our_equivalence: PARTIAL_TO_SUBSTANTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+    utility: HIGH
+
+  - id: M04
+    name: security_analyzer_confirmation_policy
+    lens: [Security, Policy, Execution]
+    problem: Gate risky tool actions before side effects
+    how: >
+      SecurityRisk LOW|MEDIUM|HIGH|UNKNOWN; LLMSecurityAnalyzer (inline security_risk arg);
+      PatternSecurityAnalyzer, PolicyRailSecurityAnalyzer, EnsembleSecurityAnalyzer;
+      ConfirmRisky / AlwaysConfirm / NeverConfirm; WAITING_FOR_CONFIRMATION
+    evidence_label: DOCUMENTED_AND_OBSERVED
+    sources:
+      - https://docs.openhands.dev/sdk/arch/security
+      - https://docs.openhands.dev/sdk/guides/security.md
+      - openhands-sdk/.../security/confirmation_policy.py
+      - openhands-sdk/.../security/__init__.py
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: HIGH
+    utility: HIGH
+    failure_modes:
+      - LLM under-rates risk (gameable self-assessment)
+      - execute_tool bypass of analyzer (DOCUMENTED in security guide)
+      - NeverConfirm in prod
+
+  - id: M05
+    name: stuck_detector
+    lens: [Recovery, Execution, Events]
+    problem: Halt repetitive unproductive loops
+    how: >
+      Semantic compare of recent events since last user message;
+      patterns: action-obs (default thresh 4), action-error (3), monologue,
+      alternating, context-window errors; scan window MAX 20 events
+    evidence_label: DOCUMENTED_AND_OBSERVED
+    sources:
+      - https://docs.openhands.dev/sdk/guides/agent-stuck-detector
+      - openhands-sdk/.../conversation/stuck_detector.py
+      - StuckDetectionThresholds in conversation/types.py
+    our_equivalence: NONE_OR_UNKNOWN
+    decision: PROTOTYPE
+    confidence: MEDIUM
+    utility: HIGH
+
+  - id: M06
+    name: context_condenser
+    lens: [State, Recovery, Agent]
+    problem: Keep long conversations within context window
+    how: Pluggable Condenser; LLMSummarizingCondenser used in planning preset
+    evidence_label: DOCUMENTED_AND_OBSERVED
+    sources:
+      - https://docs.openhands.dev/sdk/arch/sdk
+      - openhands-tools/.../preset/planning.py
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+    utility: HIGH
+
+  - id: M07
+    name: computer_interaction_terminal_browser
+    lens: [Tools, Terminal, Browser, Computer_interaction]
+    problem: Act on codebases and the web
+    how: TerminalTool/Bash, FileEditorTool, BrowserToolSet (browser-use), recording helpers
+    evidence_label: DOCUMENTED_AND_OBSERVED
+    sources:
+      - https://docs.openhands.dev/sdk/guides/agent-browser-use
+      - openhands-tools/.../browser_use/
+    our_equivalence: PARTIAL
+    decision: DEFER
+    confidence: MEDIUM
+    utility: HIGH_FOR_CODING_AGENT_PRODUCT
+
+  - id: M08
+    name: planning_then_execution_workflow
+    lens: [Planning, Execution, Agent]
+    problem: Structure implementation before mutating code
+    how: >
+      get_planning_agent with structured PLAN_STRUCTURE sections → PLAN.md;
+      then default execution agent; TaskTrackerTool for task lists
+    evidence_label: OBSERVED
+    sources:
+      - openhands-tools/.../preset/planning.py
+      - examples/01_standalone_sdk/24_planning_agent_workflow.py
+    our_equivalence: SUBSTANTIAL
+    decision: ALREADY_PRESENT
+    confidence: MEDIUM
+    utility: MEDIUM_HIGH
+    residual: read-only planner tool constraints may warrant ADAPT if MegaBrain planner can mutate
+
+  - id: M09
+    name: subagent_delegation
+    lens: [Agent, Execution]
+    problem: Parallel specialized work
+    how: register_agent + TaskToolSet / delegate tools
+    evidence_label: OBSERVED
+    sources:
+      - examples/01_standalone_sdk/25_agent_delegation.py
+    our_equivalence: SUBSTANTIAL
+    decision: ALREADY_PRESENT
+    confidence: MEDIUM
+    utility: MEDIUM
+
+  - id: M10
+    name: skills_agent_context
+    lens: [Agent, Tools]
+    problem: Reusable specialized instructions
+    how: Skills repo (always) vs knowledge (trigger); AgentContext
+    evidence_label: DOCUMENTED
+    sources:
+      - https://docs.openhands.dev/sdk/arch/sdk
+      - https://docs.openhands.dev/sdk/arch/agent
+    our_equivalence: SUBSTANTIAL_TO_EQUIVALENT
+    decision: ALREADY_PRESENT
+    confidence: HIGH
+    utility: MEDIUM
+
+  - id: M11
+    name: mcp_tool_bridge
+    lens: [Tools]
+    problem: Consume external MCP servers as first-class tools
+    how: MCP integration translates servers into SDK tool format
+    evidence_label: DOCUMENTED
+    sources:
+      - https://docs.openhands.dev/sdk/arch/sdk
+    our_equivalence: UNKNOWN_TO_PARTIAL
+    decision: DEFER
+    confidence: LOW
+    utility: MEDIUM
+
+  - id: M12
+    name: critic_iterative_refinement
+    lens: [Evaluation, Recovery, Execution]
+    problem: Detect low-quality finishes and retry
+    how: APIBasedCritic scores; IterativeRefinementConfig on FinishAction
+    evidence_label: DOCUMENTED
+    status: experimental
+    sources:
+      - https://docs.openhands.dev/sdk/guides/critic
+    our_equivalence: PARTIAL
+    decision: PROTOTYPE
+    confidence: MEDIUM
+    utility: MEDIUM
+
+  - id: M13
+    name: evaluation_harness
+    lens: [Evaluation]
+    problem: Run coding-agent benchmarks reproducibly
+    how: evaluation/benchmarks + run_controller + user_response_fn + EvalOutput
+    evidence_label: DOCUMENTED
+    sources:
+      - https://docs.openhands.dev/openhands/usage/developers/evaluation-harness
+    our_equivalence: PARTIAL
+    decision: DEFER
+    confidence: LOW
+    notes: Doc paths look V0 Python monorepo; post-split location UNKNOWN
+
+  - id: M14
+    name: pause_resume_persistence
+    lens: [State, Recovery, Events]
+    problem: Long-running / interrupted sessions
+    how: Conversation pause/resume + persistence; event-sourcing bench scripts in SDK
+    evidence_label: DOCUMENTED
+    sources:
+      - https://docs.openhands.dev/sdk/arch/conversation
+      - scripts/event_sourcing_benchmarks/ (path OBSERVED in tree)
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+    utility: MEDIUM
+
+  - id: M15
+    name: agent_canvas_acp_control_plane
+    lens: [Runtime, Agent]
+    problem: Operate multiple agent backends from one UI + automations
+    how: Agent Canvas + ACP agents + backends local/docker/cloud
+    evidence_label: DOCUMENTED
+    sources:
+      - https://github.com/OpenHands/OpenHands/blob/main/README.md
+    our_equivalence: NONE
+    decision: REJECT
+    confidence: HIGH
+    notes: Product shell; not MegaBrain Agent System core. Product DEFER separately if desired.
+
+  - id: M16
+    name: codeact_unified_action_space
+    lens: [Agent, Tools, Execution]
+    problem: Simplify act space to code (bash/python) + converse
+    how: CodeActAgent legacy design
+    evidence_label: DOCUMENTED
+    sources:
+      - https://docs.openhands.dev/openhands/usage/agents
+    our_equivalence: PARTIAL
+    decision: DEFER
+    confidence: MEDIUM
+    notes: V1 docs emphasize typed tools + LLM tool calling more than CodeAct
+
+  - id: M17
+    name: secrets_registry_redaction
+    lens: [Security, State]
+    problem: Avoid leaking secrets in env/logs/events
+    how: Secret registry; agent-server secret redaction modules (names OBSERVED)
+    evidence_label: DOCUMENTED_PARTIAL_OBSERVED
+    sources:
+      - https://docs.openhands.dev/sdk/guides/secrets.md
+      - openhands-agent-server/.../_secret_redaction.py (name in tree)
+    our_equivalence: UNKNOWN
+    decision: DEFER
+    confidence: LOW
+    utility: HIGH
+
+flows:
+  v1_local:
+    text: >
+      message → Conversation → Agent.step → condense → LLM → ActionEvents →
+      security/confirm → ToolExecutor(workspace) → ObservationEvents → loop
+    evidence: DOCUMENTED
+  v1_remote:
+    text: >
+      same API → RemoteWorkspace → Agent Server HTTP/WS → isolated workspace
+    evidence: DOCUMENTED
+  v0_legacy:
+    text: >
+      Frontend → Backend EventStream ↔ CodeActAgent ↔ Runtime REST ↔ ActionExecutionServer
+      (Bash/Jupyter/BrowserEnv)
+    evidence: DOCUMENTED
+
+anti_patterns_observed_or_warned:
+  - id: AP01
+    name: process_sandbox_as_safe
+    note: Official docs label Process sandbox unsafe / full filesystem access
+    evidence: DOCUMENTED
+  - id: AP02
+    name: llm_only_security_risk
+    note: Inline LLM security_risk without deterministic ensemble can be gamed
+    evidence: INFERRED from DOCUMENTED LLMSecurityAnalyzer design
+  - id: AP03
+    name: dual_generation_docs_confusion
+    note: V0 runtime docs + V1 sandbox/SDK both official; easy to mine wrong generation
+    evidence: OBSERVED in docs index + pages
+
+comparison_baseline: /home/gaab/Documentos/reverseEnginering/research/OUR-SYSTEM-BASELINE.md

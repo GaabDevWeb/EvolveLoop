@@ -1,0 +1,87 @@
+# Removal candidates — CANDIDATES ONLY. Do not delete in this phase.
+# Generated: 2026-09-19T20:53:30Z
+
+candidates:
+  - id: linkedin-posts
+    removal_status: ARCHIVE_CANDIDATE
+    reason: Only README/INVENTORY references; no MegaBrain/command/orquestrar caller
+    blockers: []
+
+  - id: writing-plans
+    removal_status: REMOVE_AFTER_MIGRATION
+    reason: Not wired into MegaBrain (planner is canonical); Superpowers-only terminal
+    blockers:
+      - brainstorming still points to writing-plans as terminal
+      - decide whether Superpowers path remains supported
+
+  - id: subagent-driven-development
+    removal_status: REMOVE_AFTER_MIGRATION
+    reason: Parallel to MegaBrain PDA; docs/research only for MegaBrain
+    blockers:
+      - writing-plans REQUIRED SUB-SKILL
+      - scripts may still be used manually
+
+  - id: executing-plans
+    removal_status: REMOVE_AFTER_MIGRATION
+    reason: Documented Tier3 but not called by orquestrar SKILL
+    blockers:
+      - ecosystem-v2 plan-execution claim must be updated or implemented
+
+  - id: finishing-a-development-branch
+    removal_status: REMOVE_AFTER_MIGRATION
+    reason: DOCUMENTATION_DRIFT vs MegaBrain Fase 5-6
+    blockers:
+      - ecosystem-v2 narrative step 4
+      - Superpowers peer chain
+
+  - id: gsap
+    removal_status: OPTIONAL
+    reason: Standalone motion specialist; no MegaBrain flow caller
+    blockers: []
+
+  - id: framer-motion
+    removal_status: OPTIONAL
+    reason: Standalone; no MegaBrain flow caller
+    blockers: []
+
+  - id: lenis
+    removal_status: OPTIONAL
+    reason: Standalone; no MegaBrain flow caller
+    blockers: []
+
+  - id: hover-effects
+    removal_status: OPTIONAL
+    reason: Standalone; no MegaBrain flow caller
+    blockers: []
+
+  - id: particles
+    removal_status: OPTIONAL
+    reason: Standalone; no MegaBrain flow caller
+    blockers: []
+
+  - id: r3f-shaders
+    removal_status: OPTIONAL
+    reason: Standalone; no MegaBrain flow caller
+    blockers: []
+
+  - id: frontend-design
+    removal_status: OPTIONAL
+    reason: Partially absorbed into frontend-pro anti-slop
+    blockers:
+      - confirm anti-slop no longer needs external skill path
+
+  - id: ui-ux-pro-max
+    removal_status: OPTIONAL
+    reason: Forked into frontend-pro; may still supply data tables
+    blockers:
+      - frontend-pro data dependency check
+
+explicitly_not_candidates_this_phase:
+  - image-to-code
+  - find-skills
+  - agent-browser
+  - technical-library-dossier
+  - systematic-debugging
+  - brainstorming
+  - grill-me
+  - all_.cursor_skills_megabrain_core

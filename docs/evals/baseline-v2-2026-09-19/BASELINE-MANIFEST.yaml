@@ -1,0 +1,15 @@
+baseline:
+  id: baseline-v2-2026-09-19
+  version: V2
+  parent: baseline-v1-2026-09-18
+  created_at: "2026-09-19T15:00:00Z"
+  reason: "EvolveLoop need-detection layer added to orchestrator (observe→propose→handoff; no core auto-mutation)"
+  source_revision:
+    git: ABSENT
+    tree_content_sha256: "3823d66aa66decae8390bf79fa78d76726405f3c6b1a3984dc654650ab19978e"
+  tests:
+    total: 120
+    passed: 120
+  contracts: 7
+  full_cycle: 5
+  evolveloop_tests: 17

@@ -1,0 +1,102 @@
+claims:
+  - id: CL-FINAL-01
+    text: persistent longitudinal history
+    status: VERIFIED
+    evidence: PersistentSignalStore + restart evals LIVE-006 / FINAL
+
+  - id: CL-FINAL-02
+    text: longitudinal cross-run detection
+    status: VERIFIED
+    evidence: CrossRunAggregator + need-lifecycle
+
+  - id: CL-FINAL-03
+    text: automatic scoped analysis without manual analyze()
+    status: VERIFIED
+    evidence: LiveAnalysisCoordinator + EV-EVOLVE-FINAL-001
+    scope: harness_opt_in
+    limitations: "CLI/engine default OFF; not a production daemon"
+
+  - id: CL-FINAL-04
+    text: live EventBus observation
+    status: VERIFIED
+    evidence: attachEvolveLoopObserver + EVENT_COVERAGE
+    limitations: "limited vocabulary; OBSERVE_ONLY types not ingested"
+
+  - id: CL-FINAL-05
+    text: live registry snapshot
+    status: VERIFIED
+    evidence: snapshotInventoryFromRegistry; UNKNOWN when unavailable
+    limitations: "requires injected CapabilityRegistry"
+
+  - id: CL-FINAL-06
+    text: outcome persistence and re-ingestion
+    status: VERIFIED
+    evidence: recordOutcome + store.appendOutcome
+
+  - id: CL-FINAL-07
+    text: outcome triggers next automatic analysis
+    status: VERIFIED
+    evidence: afterOutcome + EV-EVOLVE-FINAL-002/007
+    limitations: "requires coordinator path; INCONCLUSIVE does not trigger; capped by outcomeTriggerCount"
+
+  - id: CL-FINAL-08
+    text: observation window before/after
+    status: VERIFIED
+    evidence: ObservationWindowManager + OutcomeTracker empty/low-sample → INCONCLUSIVE
+
+  - id: CL-FINAL-09
+    text: gated evolution / gate boundary
+    status: PARTIALLY_VERIFIED
+    evidence: EvolutionRequest handoff JSON + ControlledGateFixture + readGateResult/ingestGateResult
+    limitations: "production Prototype Gate runner NOT_IN_THIS_PACKAGE"
+
+  - id: CL-FINAL-10
+    text: scoped USER/PROJECT/WORKSPACE/SYSTEM
+    status: VERIFIED
+    evidence: AnalysisScope + authorize_system for SYSTEM
+    limitations: "logical tenancy; shared evolutionDir"
+
+  - id: CL-FINAL-11
+    text: adaptive closed-loop
+    status: PARTIALLY_VERIFIED
+    evidence: outcome→afterOutcome→analyze updates need lifecycle from history
+    limitations: "harness timing (sync, cooldown_ms:0); not production timing"
+
+  - id: CL-FINAL-12
+    text: autonomous observation
+    status: VERIFIED
+    scope: opt_in
+    evidence: EventBus observer when evolve enabled
+
+  - id: CL-FINAL-13
+    text: autonomous detection
+    status: VERIFIED
+    scope: after_automatic_analyze
+    evidence: pattern/need detectors inside analyze()
+
+  - id: CL-FINAL-14
+    text: autonomous proposal
+    status: VERIFIED
+    evidence: candidate generator + EvolutionRequest SUBMIT/HOLD
+    limitations: "autonomy_ceiling PROPOSE"
+
+  - id: CL-FINAL-15
+    text: gated evolution (production)
+    status: UNVERIFIED
+    evidence: none in-package
+    limitations: "fixture/external adapter only"
+
+  - id: CL-FINAL-16
+    text: production proven
+    status: CONTRADICTED
+    evidence: "harness-only evals; adapters NOT_CONNECTED; default OFF"
+
+  - id: CL-FINAL-17
+    text: fully autonomous self-modifying system
+    status: CONTRADICTED
+    evidence: "PROPOSE ceiling; CORE HOLD; no auto-apply of mutations"
+
+  - id: CL-FINAL-18
+    text: CLI operational activation
+    status: VERIFIED
+    evidence: "run-engine --evolve --evolve-scope-type --evolve-scope-id; default OFF"

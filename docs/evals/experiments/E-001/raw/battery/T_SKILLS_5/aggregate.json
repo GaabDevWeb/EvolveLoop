@@ -1,0 +1,125 @@
+{
+  "type": "TREATMENT",
+  "sample_count": 5,
+  "sample_note": "INITIAL EXPERIMENTAL SAMPLE",
+  "catalog": {
+    "condition_id": "T_SKILLS_5",
+    "type": "TREATMENT",
+    "requested_catalog_size": 5,
+    "actual_catalog_size": 5,
+    "skill_ids": [
+      "adr",
+      "backend",
+      "researcher",
+      "frontend-pro",
+      "architect"
+    ],
+    "selection_strategy": "seeded_order_prefix",
+    "seed": "e001-v1-2026-09-18",
+    "catalog_fingerprint": "8e3c06fdda3dfdb9a14c9f4b7bf2f722d718563cfdc549be849123c599521ebb",
+    "max_description_tokens": null,
+    "prefix_token_estimate": 382,
+    "prefix_bytes": 3106
+  },
+  "activation_precision": {
+    "mean": 0.5113636363636364,
+    "median": 0.5113636363636364,
+    "min": 0.5113636363636364,
+    "max": 0.5113636363636364,
+    "values": [
+      0.5113636363636364,
+      0.5113636363636364,
+      0.5113636363636364,
+      0.5113636363636364,
+      0.5113636363636364
+    ]
+  },
+  "activation_recall": {
+    "mean": 0.5113636363636364,
+    "median": 0.5113636363636364,
+    "min": 0.5113636363636364,
+    "max": 0.5113636363636364,
+    "values": [
+      0.5113636363636364,
+      0.5113636363636364,
+      0.5113636363636364,
+      0.5113636363636364,
+      0.5113636363636364
+    ]
+  },
+  "token_estimate": {
+    "mean": 382.0,
+    "median": 382,
+    "min": 382,
+    "max": 382,
+    "values": [
+      382,
+      382,
+      382,
+      382,
+      382
+    ],
+    "classification": "PROXY"
+  },
+  "wall_clock_duration": {
+    "mean": 0.017805315799978415,
+    "median": 0.017770462000044063,
+    "min": 0.01753277799980424,
+    "max": 0.017998138999928415,
+    "values": [
+      0.017996405000076265,
+      0.01753277799980424,
+      0.017998138999928415,
+      0.0177287950000391,
+      0.017770462000044063
+    ]
+  },
+  "variance_note": "offline scorer deterministic \u2192 precision/recall/token identical across reps; wall_clock may vary",
+  "runs": [
+    {
+      "run_id": "E001-T_SKILLS_5-r01-5c99a1f1",
+      "sequence": 1,
+      "activation_precision": 0.5113636363636364,
+      "activation_recall": 0.5113636363636364,
+      "token_estimate": 382,
+      "wall_clock_duration": 0.017996405000076265,
+      "catalog_fingerprint": "8e3c06fdda3dfdb9a14c9f4b7bf2f722d718563cfdc549be849123c599521ebb"
+    },
+    {
+      "run_id": "E001-T_SKILLS_5-r02-44a5ca3a",
+      "sequence": 2,
+      "activation_precision": 0.5113636363636364,
+      "activation_recall": 0.5113636363636364,
+      "token_estimate": 382,
+      "wall_clock_duration": 0.01753277799980424,
+      "catalog_fingerprint": "8e3c06fdda3dfdb9a14c9f4b7bf2f722d718563cfdc549be849123c599521ebb"
+    },
+    {
+      "run_id": "E001-T_SKILLS_5-r03-84bb41da",
+      "sequence": 3,
+      "activation_precision": 0.5113636363636364,
+      "activation_recall": 0.5113636363636364,
+      "token_estimate": 382,
+      "wall_clock_duration": 0.017998138999928415,
+      "catalog_fingerprint": "8e3c06fdda3dfdb9a14c9f4b7bf2f722d718563cfdc549be849123c599521ebb"
+    },
+    {
+      "run_id": "E001-T_SKILLS_5-r04-4e222f95",
+      "sequence": 4,
+      "activation_precision": 0.5113636363636364,
+      "activation_recall": 0.5113636363636364,
+      "token_estimate": 382,
+      "wall_clock_duration": 0.0177287950000391,
+      "catalog_fingerprint": "8e3c06fdda3dfdb9a14c9f4b7bf2f722d718563cfdc549be849123c599521ebb"
+    },
+    {
+      "run_id": "E001-T_SKILLS_5-r05-3ca455e2",
+      "sequence": 5,
+      "activation_precision": 0.5113636363636364,
+      "activation_recall": 0.5113636363636364,
+      "token_estimate": 382,
+      "wall_clock_duration": 0.017770462000044063,
+      "catalog_fingerprint": "8e3c06fdda3dfdb9a14c9f4b7bf2f722d718563cfdc549be849123c599521ebb"
+    }
+  ]
+}

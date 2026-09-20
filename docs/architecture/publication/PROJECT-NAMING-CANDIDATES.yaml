@@ -1,0 +1,372 @@
+# Project naming candidates — audit only; no rename executed
+# Generated: 2026-09-20T02:26:30Z
+# No numeric scores. Collision checks are superficial web search (2026-09-20).
+
+meta:
+  current_name: MegaBrain
+  personal_profile_name: GaabType
+  options_for_MegaBrain: [KEEP, RENAME, CODENAME_ONLY]
+  direction_preferred_in_audit: RENAME_or_CODENAME_ONLY
+  note: Prefer technical local-first orchestration/evidence identity; avoid Brain/Bot/AI/GPT/Neo/Quantum
+
+families:
+
+  Infrastructure:
+    - name: Caplane
+      pronunciation: CAP-lane
+      semantic_association: control/capability plane for agents
+      technical_tone: HIGH
+      memorability: MEDIUM
+      breadth: HIGH
+      architecture_fit: HIGH
+      personalization_risk: LOW
+      branding_risk: LOW
+      ambiguity: MEDIUM
+      likely_collision: LOW
+      github_namespace_risk: LOW
+      domain_risk: UNKNOWN
+      package_name_fit: HIGH
+      cli_fit: HIGH
+      collision_notes: "No Caplane agent product found; adjacent CodePlane exists (different)"
+
+    - name: Skillplane
+      pronunciation: SKILL-plane
+      semantic_association: skills + control plane
+      technical_tone: HIGH
+      memorability: MEDIUM
+      breadth: MEDIUM
+      architecture_fit: MEDIUM
+      personalization_risk: LOW
+      branding_risk: LOW
+      ambiguity: MEDIUM
+      likely_collision: LOW
+      github_namespace_risk: UNKNOWN
+      domain_risk: UNKNOWN
+      package_name_fit: HIGH
+      cli_fit: HIGH
+      collision_notes: "No major hit in superficial search"
+
+    - name: Harnesskit
+      pronunciation: HAR-ness-kit
+      semantic_association: agent harness toolkit
+      technical_tone: MEDIUM
+      memorability: MEDIUM
+      breadth: MEDIUM
+      architecture_fit: MEDIUM
+      personalization_risk: LOW
+      branding_risk: MEDIUM
+      ambiguity: HIGH
+      likely_collision: MEDIUM
+      github_namespace_risk: MEDIUM
+      domain_risk: UNKNOWN
+      package_name_fit: MEDIUM
+      cli_fit: MEDIUM
+      collision_notes: "harness is overloaded term in agent space"
+
+  Systems:
+    - name: Runledger
+      pronunciation: RUN-led-ger
+      semantic_association: runs + evidence ledger
+      technical_tone: HIGH
+      memorability: HIGH
+      breadth: MEDIUM
+      architecture_fit: HIGH
+      personalization_risk: LOW
+      branding_risk: LOW
+      ambiguity: LOW
+      likely_collision: HIGH
+      github_namespace_risk: HIGH
+      domain_risk: HIGH
+      package_name_fit: LOW
+      cli_fit: MEDIUM
+      collision_notes: "OCCUPIED — runledger/Runledger CI for agents"
+
+    - name: Gatework
+      pronunciation: GATE-work
+      semantic_association: gates + workflow
+      technical_tone: HIGH
+      memorability: MEDIUM
+      breadth: MEDIUM
+      architecture_fit: HIGH
+      personalization_risk: LOW
+      branding_risk: LOW
+      ambiguity: MEDIUM
+      likely_collision: LOW
+      github_namespace_risk: UNKNOWN
+      domain_risk: UNKNOWN
+      package_name_fit: HIGH
+      cli_fit: HIGH
+      collision_notes: "No major agent product hit"
+
+    - name: Policyrun
+      pronunciation: POL-i-see-run
+      semantic_association: policy-driven runs
+      technical_tone: HIGH
+      memorability: LOW
+      breadth: MEDIUM
+      architecture_fit: HIGH
+      personalization_risk: LOW
+      branding_risk: LOW
+      ambiguity: MEDIUM
+      likely_collision: LOW
+      github_namespace_risk: UNKNOWN
+      domain_risk: UNKNOWN
+      package_name_fit: HIGH
+      cli_fit: MEDIUM
+      collision_notes: "Descriptive; may feel generic"
+
+  Orchestration:
+    - name: Orchestron
+      pronunciation: or-KES-tron
+      semantic_association: orchestration
+      technical_tone: MEDIUM
+      memorability: MEDIUM
+      breadth: HIGH
+      architecture_fit: MEDIUM
+      personalization_risk: LOW
+      branding_risk: MEDIUM
+      ambiguity: MEDIUM
+      likely_collision: HIGH
+      github_namespace_risk: HIGH
+      domain_risk: MEDIUM
+      package_name_fit: LOW
+      cli_fit: MEDIUM
+      collision_notes: "OCCUPIED — npm/GitLab process manager Orchestron"
+
+    - name: PDAkit
+      pronunciation: P-D-A kit
+      semantic_association: plan-drive-act kit
+      technical_tone: HIGH
+      memorability: MEDIUM
+      breadth: MEDIUM
+      architecture_fit: HIGH
+      personalization_risk: LOW
+      branding_risk: MEDIUM
+      ambiguity: HIGH
+      likely_collision: MEDIUM
+      github_namespace_risk: MEDIUM
+      domain_risk: UNKNOWN
+      package_name_fit: MEDIUM
+      cli_fit: MEDIUM
+      collision_notes: "PDA acronym overloaded (personal digital assistant)"
+
+    - name: WorktreeOS
+      pronunciation: WORK-tree O-S
+      semantic_association: worktree-centric agent OS
+      technical_tone: MEDIUM
+      memorability: MEDIUM
+      breadth: LOW
+      architecture_fit: LOW
+      personalization_risk: LOW
+      branding_risk: MEDIUM
+      ambiguity: MEDIUM
+      likely_collision: MEDIUM
+      github_namespace_risk: MEDIUM
+      domain_risk: UNKNOWN
+      package_name_fit: MEDIUM
+      cli_fit: LOW
+      collision_notes: "Too narrow vs full architecture (knowledge/evolveloop)"
+
+  Knowledge:
+    - name: Evidora
+      pronunciation: eh-vi-DOR-ah
+      semantic_association: evidence
+      technical_tone: MEDIUM
+      memorability: HIGH
+      breadth: MEDIUM
+      architecture_fit: MEDIUM
+      personalization_risk: LOW
+      branding_risk: HIGH
+      ambiguity: MEDIUM
+      likely_collision: HIGH
+      github_namespace_risk: HIGH
+      domain_risk: HIGH
+      package_name_fit: LOW
+      cli_fit: MEDIUM
+      collision_notes: "OCCUPIED — evidora.io digital interaction evidence platform"
+
+    - name: Evidune
+      pronunciation: EH-vi-doon
+      semantic_association: evidence + tune/evolution
+      technical_tone: MEDIUM
+      memorability: MEDIUM
+      breadth: MEDIUM
+      architecture_fit: MEDIUM
+      personalization_risk: LOW
+      branding_risk: HIGH
+      ambiguity: MEDIUM
+      likely_collision: HIGH
+      github_namespace_risk: HIGH
+      domain_risk: MEDIUM
+      package_name_fit: LOW
+      cli_fit: MEDIUM
+      collision_notes: "OCCUPIED — Evidune skill self-evolution framework"
+
+    - name: Corpuskit
+      pronunciation: COR-pus-kit
+      semantic_association: knowledge corpus toolkit
+      technical_tone: MEDIUM
+      memorability: LOW
+      breadth: LOW
+      architecture_fit: LOW
+      personalization_risk: LOW
+      branding_risk: LOW
+      ambiguity: MEDIUM
+      likely_collision: LOW
+      github_namespace_risk: LOW
+      domain_risk: UNKNOWN
+      package_name_fit: HIGH
+      cli_fit: MEDIUM
+      collision_notes: "Too wiki/RAG-centric; undersells orchestration"
+
+  Evolution:
+    - name: Outerloop
+      pronunciation: OW-ter-loop
+      semantic_association: outer loop governance
+      technical_tone: HIGH
+      memorability: HIGH
+      breadth: MEDIUM
+      architecture_fit: HIGH
+      personalization_risk: LOW
+      branding_risk: MEDIUM
+      ambiguity: MEDIUM
+      likely_collision: HIGH
+      github_namespace_risk: HIGH
+      domain_risk: MEDIUM
+      package_name_fit: LOW
+      cli_fit: MEDIUM
+      collision_notes: "OCCUPIED — cobusgreyling/outerloop evidence→verdict governance"
+
+    - name: Evolplane
+      pronunciation: ee-VOL-plane
+      semantic_association: evolution + plane
+      technical_tone: MEDIUM
+      memorability: MEDIUM
+      breadth: MEDIUM
+      architecture_fit: MEDIUM
+      personalization_risk: LOW
+      branding_risk: LOW
+      ambiguity: MEDIUM
+      likely_collision: LOW
+      github_namespace_risk: UNKNOWN
+      domain_risk: UNKNOWN
+      package_name_fit: HIGH
+      cli_fit: HIGH
+      collision_notes: "No major hit; EvolveLoop subsystem already named — risk of conflation"
+
+    - name: Loopforge
+      pronunciation: LOOP-forge
+      semantic_association: forge loops
+      technical_tone: MEDIUM
+      memorability: HIGH
+      breadth: MEDIUM
+      architecture_fit: MEDIUM
+      personalization_risk: LOW
+      branding_risk: HIGH
+      ambiguity: MEDIUM
+      likely_collision: HIGH
+      github_namespace_risk: HIGH
+      domain_risk: HIGH
+      package_name_fit: LOW
+      cli_fit: MEDIUM
+      collision_notes: "OCCUPIED family — ForgeLoop / Forgeloop-kit / Plan Forge adjacent"
+
+  Neutral_technical:
+    - name: Meridian
+      pronunciation: meh-RID-ee-un
+      semantic_association: reference meridian / orientation
+      technical_tone: MEDIUM
+      memorability: HIGH
+      breadth: HIGH
+      architecture_fit: MEDIUM
+      personalization_risk: LOW
+      branding_risk: HIGH
+      ambiguity: HIGH
+      likely_collision: HIGH
+      github_namespace_risk: HIGH
+      domain_risk: HIGH
+      package_name_fit: LOW
+      cli_fit: MEDIUM
+      collision_notes: "Very common product name across industries"
+
+    - name: Northstack
+      pronunciation: NORTH-stack
+      semantic_association: stacked local-first tooling
+      technical_tone: MEDIUM
+      memorability: MEDIUM
+      breadth: HIGH
+      architecture_fit: MEDIUM
+      personalization_risk: LOW
+      branding_risk: MEDIUM
+      ambiguity: MEDIUM
+      likely_collision: MEDIUM
+      github_namespace_risk: MEDIUM
+      domain_risk: UNKNOWN
+      package_name_fit: HIGH
+      cli_fit: HIGH
+      collision_notes: "Generic stack branding risk"
+
+    - name: Cadence
+      pronunciation: KAY-dense
+      semantic_association: rhythm of gates/loops
+      technical_tone: MEDIUM
+      memorability: HIGH
+      breadth: HIGH
+      architecture_fit: MEDIUM
+      personalization_risk: LOW
+      branding_risk: HIGH
+      ambiguity: HIGH
+      likely_collision: HIGH
+      github_namespace_risk: HIGH
+      domain_risk: HIGH
+      package_name_fit: LOW
+      cli_fit: MEDIUM
+      collision_notes: "Uber Cadence workflow engine; high collision"
+
+    - name: Reliquary
+      pronunciation: REL-i-kweh-ree
+      semantic_association: store of evidence/artifacts
+      technical_tone: MEDIUM
+      memorability: HIGH
+      breadth: MEDIUM
+      architecture_fit: MEDIUM
+      personalization_risk: LOW
+      branding_risk: MEDIUM
+      ambiguity: MEDIUM
+      likely_collision: MEDIUM
+      github_namespace_risk: MEDIUM
+      domain_risk: UNKNOWN
+      package_name_fit: MEDIUM
+      cli_fit: LOW
+      collision_notes: "Fantasy/game connotations; CLI awkward"
+
+    - name: Hardgate
+      pronunciation: HARD-gate
+      semantic_association: hard gates / fail-closed
+      technical_tone: HIGH
+      memorability: MEDIUM
+      breadth: LOW
+      architecture_fit: MEDIUM
+      personalization_risk: LOW
+      branding_risk: LOW
+      ambiguity: LOW
+      likely_collision: LOW
+      github_namespace_risk: UNKNOWN
+      domain_risk: UNKNOWN
+      package_name_fit: HIGH
+      cli_fit: HIGH
+      collision_notes: "Undersells knowledge/orchestration breadth"
+
+layers:
+  public_project_name: TBD_from_shortlist
+  repository_name: TBD_slug
+  internal_codename: MegaBrain_optional
+  personal_profile: GaabType
+
+shortlist_for_later_decision_not_ranked:
+  - Caplane
+  - Gatework
+  - Skillplane
+  - Evolplane
+  - Hardgate
+  - Northstack

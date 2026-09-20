@@ -1,0 +1,75 @@
+# Implementation Decision Gate
+# After ADR review with no ADR changes and no prototype execution evidence.
+
+baseline_id: baseline-v1-2026-09-18
+generated: 2026-09-19
+
+candidates:
+
+  - id: IMP-001
+    change: "Implement production max_skills / catalog budget in orchestrator"
+    related_adr: ADR-DR-0002
+    related_prototype: PT-001
+    classification: RUNTIME_CHANGE
+    problem_real: PARTIAL  # offline associations exist; live problem unmeasured
+    evidence_sufficient: false
+    architecture_justifies: false  # ADR DEFERs
+    already_solved: false
+    duplication_risk: "would add engine field vs host injection path"
+    scope_bounded: false
+    rollback_defined: n/a
+    regression_coverage: n/a
+    security_understood: n/a
+    decision: DEFER
+    rationale: "PT-001 BLOCKED; ADR-DR-0002 DEFER; live task_success NOT_MEASURED"
+
+  - id: IMP-002
+    change: "Claim or implement global exactly-once / OS-kill recovery feature"
+    related_adr: ADR-DR-0001
+    related_prototype: PT-002
+    classification: RUNTIME_CHANGE
+    evidence_sufficient: false
+    architecture_justifies: false
+    decision: DEFER
+    rationale: "PT-002 NEEDS_MORE_EVIDENCE; OS kill NOT_MEASURED; ADR DEFERs exactly-once"
+
+  - id: IMP-003
+    change: "Implement OS sandbox"
+    related_adr: ADR-DR-0003
+    classification: ARCHITECTURAL_CHANGE
+    evidence_sufficient: false
+    decision: DEFER
+    rationale: "Security model unanswered; sandbox NOT_IMPLEMENTED"
+
+  - id: IMP-004
+    change: "Implement semantic StuckDetector"
+    related_adr: ADR-DR-0004
+    classification: ARCHITECTURAL_CHANGE
+    decision: DEFER
+    rationale: "Semantics undefined"
+
+  - id: IMP-005
+    change: "Implement compaction reinject"
+    related_adr: ADR-DR-0005
+    classification: ARCHITECTURAL_CHANGE
+    decision: DEFER
+    rationale: "Ownership unanswered"
+
+  - id: IMP-006
+    change: "Documentation-only note that Prototype Gate SSOT is prototype-gate/"
+    classification: DOCUMENTATION_ONLY
+    decision: IMPLEMENT_CONSTRAINED
+    scope: "docs/architecture/evolution artifacts only (this pipeline)"
+    rationale: "Clarify SSOT without rewriting historical gate/ ADR-gate files"
+
+summary:
+  IMPLEMENT: 0
+  IMPLEMENT_CONSTRAINED: 1  # evolution docs only
+  PROTOTYPE_FURTHER: 2  # PT-001/PT-002 when prerequisites met
+  DEFER: 5
+  REJECT: 0
+
+runtime_implementation_authorized: false
+orchestrator_src_may_change: false
+skills_may_change: false
+baseline_may_change: false

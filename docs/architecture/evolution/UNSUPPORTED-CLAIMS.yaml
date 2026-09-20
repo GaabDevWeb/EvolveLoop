@@ -1,0 +1,75 @@
+claims:
+
+  - claim: "Production skill catalog budget is required / proven"
+    reason: "PT-001 BLOCKED; live task_success NOT_MEASURED; ADR-DR-0002 DEFERs"
+    missing_evidence: [live_host_injection, live_task_success]
+    current_scope: "offline E-001 associations only"
+    future_evidence_required: "PT-001 after environment enablement"
+
+  - claim: "Global exactly-once / OS-kill resume proven"
+    reason: "PT-002 not executed; E-005 same-process only"
+    missing_evidence: [OS_kill_harness, kill_policy, process_restart_runs]
+    current_scope: "job-path STATE_WRITE same-process"
+    future_evidence_required: "PT-002 after NEEDS_MORE_EVIDENCE cleared"
+
+  - claim: "Sandbox validated / secure OS isolation"
+    reason: "sandbox NOT_IMPLEMENTED; path restriction ≠ sandbox"
+    missing_evidence: [security_model, sandbox_primitive, E-002]
+    current_scope: "authority path checks only"
+    future_evidence_required: "ADR-DR-0003 checklist then E-002"
+
+  - claim: "Semantic stuck detection exists"
+    reason: "StuckDetector NOT_IMPLEMENTED; maxIterations ≠ stuck"
+    missing_evidence: [stuck_semantics, E-003]
+    current_scope: "loop bounds only"
+    future_evidence_required: "ADR-DR-0004 answers then prototype"
+
+  - claim: "Compaction preserves constraints"
+    reason: "no compaction pipeline; E-004 BLOCKED"
+    missing_evidence: [ownership_ADR, compaction_events]
+    current_scope: "checkpoint ≠ compaction"
+    future_evidence_required: "ADR-DR-0005 ownership then E-004"
+
+  - claim: "Full product HITL validated"
+    reason: "HITL PARTIALLY_OBSERVED; job-path only"
+    missing_evidence: [confirm_UX, human_wait_fixtures]
+    current_scope: "job wait/persist/resume"
+    future_evidence_required: "HITL product fixtures"
+
+  - claim: "Whitespace token_estimate equals vendor billing tokens"
+    reason: "PROXY only"
+    missing_evidence: [vendor_tokenizer]
+    current_scope: "offline whitespace estimate"
+    future_evidence_required: "declared tokenizer policy"
+
+  - claim: "Prototype Gate APPROVED PT-001/PT-002"
+    reason: "FALSE — PT-001 BLOCKED, PT-002 NEEDS_MORE_EVIDENCE"
+    missing_evidence: []
+    current_scope: "docs/architecture/prototype-gate/GATE-STATUS.yaml"
+    future_evidence_required: "n/a — claim unsupported now"
+
+  - claim: "EvolveLoop is fully autonomous / self-improving / production-ready"
+    reason: "Autonomy ceiling is PROPOSE; implementation remains gated; live telemetry adapters thin"
+    missing_evidence: [live_jsonl_adapters_in_production, post_change_outcome_evals]
+    current_scope: "deterministic synthetic+unit validated loop"
+    future_evidence_required: "wire JsonlEventPersister adapters + outcome evals after gated changes"
+
+  - claim: "unauthorized_mutation=false proves no filesystem side effects"
+    reason: "Flag is control-plane literal; handoffDir writes are intentional artifacts only"
+    missing_evidence: [measured_mutation_audit]
+    current_scope: "no runtime/skill/policy/core mutation in package"
+    future_evidence_required: "optional FS allowlist + mutation audit"
+
+  - claim: "Longitudinal EvolveLoop proven in production"
+    reason: "Harness + unit/integration only; Evidence/Eval/user-feedback adapters NOT_CONNECTED"
+    missing_evidence: [production_multi_week_corpus]
+    current_scope: "controlled synthetic longitudinal tests EV-002..007"
+    future_evidence_required: "live observation adapters + field study"
+
+  - claim: "Post-evolution SUCCESS always means problem solved"
+    reason: "Outcomes are IMPROVED/UNCHANGED/REGRESSED/INCONCLUSIVE — never bare SUCCESS"
+    missing_evidence: []
+    current_scope: "OutcomeTracker heuristics"
+    future_evidence_required: "richer before/after task metrics"
+
+count: 12

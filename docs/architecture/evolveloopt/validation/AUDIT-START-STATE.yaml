@@ -1,0 +1,61 @@
+audit_start:
+  timestamp: "2026-09-19T15:17:00Z"
+  mode: PHASE_A_READ_ONLY
+  project_root: /home/gaab/Downloads/CursorSKILLS
+  orchestrator: /home/gaab/Downloads/CursorSKILLS/orchestrator
+environment:
+  os: linux-6.12.88+deb13-amd64
+  arch: x86_64
+  node: v24.15.0
+  package_manager: npm
+  runtime: node-esm
+  test_runner: vitest@2.1.9
+  permissions: local_rw_tmpdir_ok
+source_tree:
+  evolveloop_root: orchestrator/src/evolveloop
+  longitudinal_controller: orchestrator/src/evolveloop/longitudinal-controller.ts
+  persistent_store: orchestrator/src/evolveloop/persistence/signal-store.ts
+  cross_run: orchestrator/src/evolveloop/aggregation/cross-run.ts
+  need_lifecycle: orchestrator/src/evolveloop/lifecycle/need-lifecycle.ts
+  outcome: orchestrator/src/evolveloop/outcome/outcome-tracker.ts
+  tests:
+    - orchestrator/tests/unit/evolveloop/evolveloop.test.ts
+    - orchestrator/tests/unit/evolveloop/longitudinal.test.ts
+baselines:
+  v1:
+    path: docs/evals/baseline
+    id: baseline-v1-2026-09-18
+    self_checksum: PASS
+    critical_vs_current: { ok: 20, drift: 1, drifted: [src/index.ts] }
+  v2:
+    path: docs/evals/baseline-v2-2026-09-19
+    id: baseline-v2-2026-09-19
+    self_checksum: PASS
+    critical_vs_current:
+      ok: 9
+      drift: 2
+      drifted: [src/evolveloop/index.ts, src/index.ts]
+  v3:
+    path: docs/evals/baseline-v3-2026-09-19
+    id: baseline-v3-2026-09-19
+    self_checksum: PASS
+    critical_vs_current: { ok: 8, drift: 0 }
+    note: "Does not fingerprint adapters/diagnosis/longitudinal-types — partial snapshot"
+prior_claims:
+  source: docs/architecture/evolveloopt/LONGITUDINAL-STATUS.yaml
+  tests: "135/135"
+  final_status: SUCCESS_WITH_LIMITATIONS
+  treated_as: CLAIMS_ONLY
+tests_at_start:
+  executed: true
+  total: 135
+  passed: 135
+  failed: 0
+  skipped: 0
+  evolveloop_unit: 17
+  longitudinal_unit: 15
+  contracts: 7
+  full_cycle: 5
+schemas_dir: docs/architecture/evolveloopt/schemas
+schemas_files: 0
+wiki_grounding: GAP_NO_EVOLVELOOP_CONTRACTS

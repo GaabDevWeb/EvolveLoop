@@ -1,0 +1,141 @@
+# Components that should remain conceptual core of public MegaBrain/main
+# diagnostic proposal — no code changes
+
+components:
+  - component: Agent model (PDA roles plan|exec|gate|explore|critic|librarian)
+    why_core: "Multi-agent orchestration contract independent of any vault"
+    dependencies: [GATE_BUNDLE, policy engine]
+    personal_coupling: low
+    portable: true
+    confidence: HIGH
+    final_class: CORE
+
+  - component: Capability model + Contract registry
+    why_core: "Scheduler resolves capabilities, not skill names"
+    dependencies: [orchestrator/contracts]
+    personal_coupling: low
+    portable: true
+    confidence: HIGH
+    final_class: CORE
+
+  - component: Provider model (deterministic / cursor-skill / mock)
+    why_core: "Seam between interface and implementation"
+    dependencies: [providers/*, discovery]
+    personal_coupling: medium
+    portable: true
+    confidence: HIGH
+    final_class: CORE_BUT_CONFIGURABLE
+    note: "knowledge deterministic provider currently personal-backed"
+
+  - component: Policy Engine (risk_tier, topology, budget, require[])
+    why_core: "Mission classification before spawn"
+    dependencies: [orquestrar references]
+    personal_coupling: low
+    portable: true
+    confidence: HIGH
+    final_class: CORE
+
+  - component: Execution Engine / Scheduler / IR
+    why_core: "Runtime DAG execution"
+    dependencies: [plan.ir.yaml, jobs]
+    personal_coupling: low
+    portable: true
+    confidence: HIGH
+    final_class: CORE
+
+  - component: Evidence Bus
+    why_core: "Gate continuation requires on-disk evidence JSON"
+    dependencies: [memory/<feature>/evidence]
+    personal_coupling: low
+    portable: true
+    confidence: HIGH
+    final_class: CORE
+
+  - component: Knowledge abstraction (KnowledgeStore + knowledge.* contracts)
+    why_core: "Generic search/inspect/promote interfaces"
+    dependencies: [knowledge.search.yaml, KnowledgeStore]
+    personal_coupling: high_at_provider
+    portable: true
+    confidence: HIGH
+    final_class: CORE_BUT_CONFIGURABLE
+
+  - component: Context-grounding contract
+    why_core: "Upstream ritual independent of vendor wiki name"
+    dependencies: [context-grounding.yaml]
+    personal_coupling: medium
+    portable: true
+    confidence: HIGH
+    final_class: CORE_BUT_CONFIGURABLE
+    note: "HARD-GATE node id still gaabwiki-grounding — naming leak"
+
+  - component: Telemetry
+    why_core: "Observation of runs"
+    dependencies: [orchestrator/src/telemetry]
+    personal_coupling: low
+    portable: true
+    confidence: MEDIUM
+    final_class: CORE
+
+  - component: Evals (vitest suites)
+    why_core: "Regression of architecture claims"
+    dependencies: [orchestrator/tests]
+    personal_coupling: medium
+    portable: partial
+    confidence: MEDIUM
+    final_class: DEVELOPMENT_ARTIFACT
+
+  - component: EvolveLoop
+    why_core: "Longitudinal need/outcome evolution — product differentiator"
+    dependencies: [signals, outcomes, candidates]
+    personal_coupling: low
+    portable: true
+    confidence: HIGH
+    final_class: CORE
+
+  - component: Task / Capability IR
+    why_core: "Planner output format"
+    dependencies: [ir/validator]
+    personal_coupling: low
+    portable: true
+    confidence: HIGH
+    final_class: CORE
+
+  - component: Hard gates (image-to-code, grill-me, testing, prd, security, po-review)
+    why_core: "Quality/safety architecture established"
+    dependencies: [global-skills, orquestrar]
+    personal_coupling: low_except_gaabwiki_gate
+    portable: true
+    confidence: HIGH
+    final_class: CORE
+
+  - component: Knowledge grounding HARD-GATE (concept)
+    why_core: "Agents must ground before inventing contracts"
+    dependencies: [knowledge provider]
+    personal_coupling: high_when_named_GaabWiki
+    portable: true_as_concept
+    confidence: HIGH
+    final_class: CORE_BUT_CONFIGURABLE
+
+  - component: Skill system (pipeline + tier3)
+    why_core: "Human/agent skill packaging"
+    dependencies: [.cursor/skills, global-skills]
+    personal_coupling: medium
+    portable: true
+    confidence: HIGH
+    final_class: CORE_BUT_CONFIGURABLE
+
+  - component: Observation / Outcome / Scope models (EvolveLoop + evidence)
+    why_core: "Closed-loop improvement"
+    dependencies: [evolveloop/outcome]
+    personal_coupling: low
+    portable: true
+    confidence: HIGH
+    final_class: CORE
+
+  - component: Installer (install-agents-global.sh + agent-setup profiles)
+    why_core: "Portable deploy of Cursor surface"
+    dependencies: [REPO_ROOT]
+    personal_coupling: medium_defaults
+    portable: true
+    confidence: HIGH
+    final_class: CORE_BUT_CONFIGURABLE

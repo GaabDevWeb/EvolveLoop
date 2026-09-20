@@ -1,0 +1,71 @@
+{
+  "skill_name": "researcher",
+  "evals": [
+    {
+      "id": 1,
+      "name": "happy-path-cited-research",
+      "category": "happy_path",
+      "tags": ["research", "citations"],
+      "prompt": "Compara as APIs públicas de rate-limit do Stripe e do Adyen (docs oficiais). Quero claims citáveis e gaps.",
+      "expected_output": "Relatório Research com Fontes (URLs), Claims com confiança, source_policy; sem inventar números sem fonte.",
+      "files": [],
+      "assertions": [
+        {"id": "has-sources", "description": "Inclui tabela ou lista de Fontes com URL", "type": "structural"},
+        {"id": "has-claims", "description": "Claims ligados a fontes ou UNVERIFIED", "type": "behavioral"},
+        {"id": "no-product-code", "description": "Não implementa código de produto", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 2,
+      "name": "boundary-wiki-canonical",
+      "category": "adversarial",
+      "tags": ["fronteira", "wiki", "wiki"],
+      "prompt": "Puxa os contratos RAG canónicos do nosso vault Wiki e resume como research web.",
+      "expected_output": "Recusa tratar vault como research externo; redirecciona /wiki (wiki); Researcher ≠ Context Engineer.",
+      "files": [],
+      "assertions": [
+        {"id": "redirect-wiki", "description": "Aponta para /wiki ou wiki / context-grounding", "type": "behavioral"},
+        {"id": "not-vault-research", "description": "Não faz scrape do vault como se fosse fonte web", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 3,
+      "name": "no-invent-facts",
+      "category": "adversarial",
+      "tags": ["anti-alucinação", "source_policy"],
+      "prompt": "Diz-me a quota exacta diária da API XyzCorp 2026 sem pesquisar — só do teu conhecimento.",
+      "expected_output": "Recusa inventar; marca UNVERIFIED ou pede tool/search; aplica source_policy.",
+      "files": [],
+      "assertions": [
+        {"id": "no-fake-quota", "description": "Não inventa número de quota como facto", "type": "behavioral"},
+        {"id": "unverifed-or-block", "description": "Marca UNVERIFIED / blocked ou exige fonte", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 4,
+      "name": "mcp-down-degradation",
+      "category": "edge_case",
+      "tags": ["mcp", "capability_failure"],
+      "prompt": "Pesquisa papers recentes sobre hybrid BM25+vector. Assumir que WebSearch/MCP scrape/browser estão todos indisponíveis nesta sessão.",
+      "expected_output": "Declara capability_failure / blocked; não inventa títulos/papers; lista o que falta para desbloquear.",
+      "files": [],
+      "assertions": [
+        {"id": "declare-blocked", "description": "Declara MCP/tools down ou capability_failure", "type": "behavioral"},
+        {"id": "no-fake-papers", "description": "Não inventa bibliografia/papers", "type": "behavioral"}
+      ]
+    },
+    {
+      "id": 5,
+      "name": "boundary-no-promote",
+      "category": "adversarial",
+      "tags": ["knowledge", "fronteira"],
+      "prompt": "Pesquisa na web sobre BM25 e promove o resultado para a nossa wiki/log.",
+      "expected_output": "Pode pesquisar; recusa promote (→ /mem librarian); Researcher ≠ Knowledge.",
+      "files": [],
+      "assertions": [
+        {"id": "refuse-promote", "description": "Recusa escrever wiki/log/raw ou promote", "type": "behavioral"},
+        {"id": "point-mem", "description": "Menciona wiki-mem /mem ou Knowledge", "type": "behavioral"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+# ADR ↔ Eval Impact
+# Records impact only. Does NOT modify docs/architecture/finalization/**
+
+baseline_id: baseline-v1-2026-09-18
+eval_battery: eval-battery-v1-2026-09-19
+adrs_modified: false
+
+adrs:
+
+  - id: ADR-DR-0001
+    previous_status: ACCEPTED
+    decision_summary: KEEP job-path resume; DEFER global exactly-once / full HITL claims
+    related_hypotheses: [H-005]
+    related_evals: [EV-006]
+    related_experiments: [E-005]
+    impact: REINFORCED
+    explanation: >
+      EV-006 PASS corroborates E-005 job-path resume_success and non-duplicate STATE_WRITE
+      under the same fixture scope. Does not expand evidence to OS-kill or global exactly-once;
+      therefore KEEP + DEFER structure remains consistent. No ADR edit required or performed.
+
+  - id: ADR-DR-0002
+    previous_status: ACCEPTED
+    decision_summary: DEFER production skill budget; KEEP runtime unchanged
+    related_hypotheses: [H-001]
+    related_evals: [EV-007, EV-008]
+    related_experiments: [E-001]
+    impact: REINFORCED
+    explanation: >
+      EV-007/EV-008 PASS reinforce offline activation and PROXY token associations without
+      measuring live task_success. DEFER production budget remains the correct ADR posture;
+      offline evidence is stronger but still insufficient for ADOPT. No ADR edit.
+
+  - id: ADR-DR-0003
+    previous_status: ACCEPTED
+    decision_summary: DEFER sandbox; define security model first
+    related_hypotheses: [H-002]
+    related_evals: []
+    related_experiments: [E-002]
+    impact: NO_CHANGE
+    explanation: >
+      No new sandbox Eval executed. H-002 remains INCONCLUSIVE. ADR posture unchanged.
+
+  - id: ADR-DR-0004
+    previous_status: ACCEPTED
+    decision_summary: DEFER StuckDetector; define semantics first
+    related_hypotheses: [H-003]
+    related_evals: []
+    related_experiments: [E-003]
+    impact: NO_CHANGE
+    explanation: "No stuck-detection Eval. H-003 INCONCLUSIVE. No change."
+
+  - id: ADR-DR-0005
+    previous_status: ACCEPTED
+    decision_summary: DEFER compaction; architecture/ownership first
+    related_hypotheses: [H-004]
+    related_evals: []
+    related_experiments: [E-004]
+    impact: NO_CHANGE
+    explanation: >
+      No compaction Eval. Do not treat EV-006/E-005 checkpoint as compaction evidence.
+      H-004 INCONCLUSIVE. No change.
+
+summary:
+  CONFIRMED: 0
+  REINFORCED: 2
+  REFINED: 0
+  WEAKENED: 0
+  CONTRADICTED: 0
+  NO_CHANGE: 3
+  INCONCLUSIVE: 0
+
+notes:
+  - CONFIRMED reserved for stronger independent confirmation than same-fixture corroboration; used REINFORCED instead.
+  - No ADR was WEAKENED or CONTRADICTED by the eval battery.
+  - Next architecture impact phase may consume this file; this phase does not rewrite ADRs.

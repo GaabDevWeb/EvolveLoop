@@ -1,0 +1,289 @@
+# MECHANISMS.yaml — Roo Code (OFFICIAL_EXTERNAL)
+# Generated: 2026-09-18
+# Mode: TARGET_RESEARCH
+# Epistemic: prefer DOCUMENTED/OBSERVED; no invented internals
+
+target:
+  slug: roo-code
+  name: Roo Code
+  category: coding-agent
+  org: RooCodeInc
+  repo: https://github.com/RooCodeInc/Roo-Code
+  docs: https://docs.roocode.com/
+  license: Apache-2.0
+  status:
+    lifecycle: shutdown
+    shutdown_date: "2026-05-15"
+    repo_archived: true
+    last_release: v3.54.0
+    last_push: "2026-05-15T18:08:47Z"
+    labels: [DOCUMENTED, OBSERVED]
+
+cline_relationship:
+  originated_from_cline: true
+  label: DOCUMENTED
+  evidence:
+    - "README disclaimer: Cline (from where Roo Code originated)"
+  github_api_fork_flag: false
+  github_api_parent: null
+  note: "Do not assume live fork graph equals historical fork; API parent null CONFLICT with narrative"
+  extension_id_hint: RooVeterinaryInc.roo-cline
+  extension_id_label: OBSERVED
+
+lenses_covered:
+  - Modes
+  - Roles
+  - Tools
+  - MCP
+  - Task_execution
+  - Delegation
+  - Context
+  - Rules
+  - Permissions
+  - Agent_specialization
+  - Workflow
+  - DX
+
+mechanisms:
+  - id: RC-MODES
+    name: Built-in modes
+    problem: Need specialized personas with different tool authority
+    mechanism: >
+      DEFAULT_MODES: architect, code, ask, debug, orchestrator — each with
+      slug, roleDefinition, whenToUse, description, groups, optional customInstructions
+    evidence:
+      - label: OBSERVED
+        ref: packages/types/src/mode.ts DEFAULT_MODES
+      - label: DOCUMENTED
+        ref: https://docs.roocode.com/basic-usage/using-modes
+    built_in:
+      code: { groups: [read, edit, command, mcp] }
+      ask: { groups: [read, mcp] }
+      architect:
+        groups:
+          - read
+          - [edit, { fileRegex: "\\.md$", description: "Markdown files only" }]
+          - mcp
+      debug: { groups: [read, edit, command, mcp] }
+      orchestrator: { groups: [] }
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: RC-CUSTOM-MODES
+    name: Custom / project modes
+    problem: Team-specific agents and shareable configs
+    mechanism: >
+      Global custom_modes.yaml|json; project .roomodes; override built-ins by same slug;
+      import/export YAML including rulesFiles; project overrides global
+    evidence:
+      - label: DOCUMENTED
+        ref: https://docs.roocode.com/features/custom-modes
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: RC-TOOL-GROUPS
+    name: Tool group ACL
+    problem: Coarse permissioning of agent capabilities
+    mechanism: >
+      groups ∈ {read, edit, command, mcp, modes}; edit may be tuple with fileRegex;
+      deprecated browser stripped by schema preprocess
+    evidence:
+      - label: OBSERVED
+        ref: packages/types/src/tool.ts toolGroups
+      - label: DOCUMENTED
+        ref: using-modes / custom-modes
+    tools_named_observed:
+      - execute_command
+      - read_file
+      - read_command_output
+      - write_to_file
+      - apply_diff
+      - edit
+      - search_and_replace
+      - search_replace
+      - edit_file
+      - apply_patch
+      - search_files
+      - list_files
+      - use_mcp_tool
+      - access_mcp_resource
+      - ask_followup_question
+      - attempt_completion
+      - switch_mode
+      - new_task
+      - codebase_search
+      - update_todo_list
+      - run_slash_command
+      - skill
+      - generate_image
+      - custom_tool
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: RC-HITL-AUTOAPPROVE
+    name: Human-in-the-loop + auto-approve matrix
+    problem: Balance speed vs safety for FS/shell/MCP
+    mechanism: >
+      Default approve/reject per tool use; Enabled master + permission tiles
+      (read, edit, commands allow/deny prefixes, browser, MCP dual-allow,
+      switch modes, subtasks, follow-up defaults); workspace boundary flags
+    evidence:
+      - label: DOCUMENTED
+        ref: https://docs.roocode.com/features/auto-approving-actions
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: RC-ORCHESTRATOR
+    name: Orchestrator / Boomerang subtasks
+    problem: Multi-step workflows and context poisoning
+    mechanism: >
+      Orchestrator groups empty; new_task(mode, message, todos?); parent pauses;
+      child isolated conversation; attempt_completion result summary returns to parent;
+      designed to avoid orchestrator reading files by default
+    evidence:
+      - label: DOCUMENTED
+        ref: https://docs.roocode.com/features/boomerang-tasks
+      - label: DOCUMENTED
+        ref: https://docs.roocode.com/advanced-usage/available-tools/new-task
+      - label: OBSERVED
+        ref: mode.ts orchestrator groups []
+      - label: DOCUMENTED
+        ref: https://docs.roocode.com/update-notes/v3.15
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+    notes: "Orchestration role ALREADY_PRESENT in MegaBrain; handoff summary schema is the ADAPT surface"
+
+  - id: RC-RULES
+    name: Layered rules and custom instructions
+    problem: Persist behavioral constraints beyond chat
+    mechanism: >
+      Load order documented: language preference; global UI instructions;
+      mode-specific UI instructions; mode rules dirs (~/.roo + .roo);
+      .roorules-{mode}; .rooignore notes; AGENTS.md|AGENT.md; generic rules dirs;
+      .roorules fallback. Workspace overrides global on conflict.
+    evidence:
+      - label: DOCUMENTED
+        ref: https://docs.roocode.com/features/custom-instructions
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: RC-ROOIGNORE
+    name: .rooignore access control
+    problem: Exclude sensitive/large paths from agent tools
+    mechanism: >
+      gitignore-compatible patterns; blocks read/write/diff tools; listing/mentions
+      filtered or locked; execute_command partial protection for known readers;
+      not a system sandbox
+    evidence:
+      - label: DOCUMENTED
+        ref: https://docs.roocode.com/features/rooignore
+    our_equivalence: PARTIAL
+    decision: ADAPT
+    confidence: MEDIUM
+
+  - id: RC-MCP
+    name: MCP client
+    problem: Extend tools/resources without core fork
+    mechanism: >
+      MCP servers via STDIO / Streamable HTTP / legacy SSE; use_mcp_tool;
+      access_mcp_resource; tool approval UX; dual always-allow with global setting
+    evidence:
+      - label: DOCUMENTED
+        ref: https://docs.roocode.com/features/mcp/overview
+      - label: DOCUMENTED
+        ref: auto-approving MCP section
+    our_equivalence: SUBSTANTIAL
+    decision: ALREADY_PRESENT
+    confidence: HIGH
+
+  - id: RC-CONTEXT-MENTIONS
+    name: Context mentions (@)
+    problem: User-directed context injection
+    mechanism: >
+      @file, @folder/ (non-recursive), @problems, @terminal, @git-hash,
+      @git-changes, @URL; slash commands via /; .rooignore interactions documented
+    evidence:
+      - label: DOCUMENTED
+        ref: https://docs.roocode.com/basic-usage/context-mentions
+    our_equivalence: PARTIAL
+    decision: DEFER
+    confidence: LOW
+    notes: "Cursor already has mentions; MegaBrain Agent System may not need port"
+
+  - id: RC-CODEBASE-INDEX
+    name: Semantic codebase indexing
+    problem: Meaning-based code retrieval
+    mechanism: >
+      Tree-sitter blocks → embeddings → Qdrant; codebase_search tool;
+      respects gitignore/rooignore; incremental file watch
+    evidence:
+      - label: DOCUMENTED
+        ref: https://docs.roocode.com/features/codebase-indexing
+    our_equivalence: PARTIAL
+    decision: DEFER
+    confidence: MEDIUM
+
+  - id: RC-STICKY-MODEL
+    name: Sticky models per mode
+    problem: Different tasks prefer different models
+    mechanism: Remember last model used per mode; auto-select on mode switch
+    evidence:
+      - label: DOCUMENTED
+        ref: https://docs.roocode.com/basic-usage/using-modes
+    our_equivalence: UNKNOWN
+    decision: PROTOTYPE
+    confidence: LOW
+
+  - id: RC-TODOS
+    name: Todo list tool / new_task todos
+    problem: Track multi-step execution
+    mechanism: update_todo_list; optional todos param on new_task; optional require-todos setting
+    evidence:
+      - label: OBSERVED
+        ref: toolNames update_todo_list
+      - label: DOCUMENTED
+        ref: new_task docs; architect customInstructions
+    our_equivalence: PARTIAL
+    decision: DEFER
+    confidence: LOW
+
+anti_patterns_observed:
+  - id: AP-CONTEXT-POISON
+    description: Orchestrator with read/MCP fills context and hurts coordination
+    mitigation_documented: Empty groups + summary-only returns
+    label: DOCUMENTED
+  - id: AP-AUTOAPPROVE-SHELL
+    description: Auto-approve execute is high risk
+    mitigation_documented: Allow/deny prefix lists; longest-prefix deny wins
+    label: DOCUMENTED
+  - id: AP-NESTED-SUBTASKS
+    description: Deep new_task nesting complicates UI/navigation
+    mitigation_documented: Docs list limitation
+    label: DOCUMENTED
+
+decisions_rollups:
+  REJECT:
+    - adopt_roo_as_product_runtime
+    - second_agent_registry_kind
+  ALREADY_PRESENT:
+    - MCP_protocol_layer
+    - orchestration_role_class
+  ADAPT:
+    - mode_specialization_packs
+    - tool_group_hitl_matrix
+    - subtask_summary_handoff_contract
+    - layered_rules_loading_clarity
+  PROTOTYPE:
+    - sticky_per_role_model_prefs
+  DEFER:
+    - qdrant_code_index
+    - mention_ux_port
+    - todo_tool_parity
+
+comparison_baseline: research/OUR-SYSTEM-BASELINE.md

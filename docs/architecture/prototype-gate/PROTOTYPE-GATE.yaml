@@ -1,0 +1,324 @@
+# Prototype Gate — outputs only
+# Does not modify finalization/, ADRs, baseline, runtime, or evals.
+
+baseline_id: baseline-v1-2026-09-18
+generated: 2026-09-19
+phase: prototype_gate
+
+environment_snapshot:
+  os: Linux
+  kernel: 6.12.88+deb13-amd64
+  architecture: x86_64
+  node: v24.15.0
+  python: "3.13.5"
+  package_manager: npm (observed via node toolchain)
+  user: gaab
+  uid: 1000
+  sudo_nopass: false
+  docker: UNKNOWN_OR_UNAVAILABLE
+  tmp_writable: true
+  skills_tree_writable: true
+  orchestrator_src_writable: true
+  prototype_workspaces_dir: MISSING (spec allows /tmp/pt-00*)
+  secrets_recorded: none
+
+baseline_protection:
+  BASELINE-CHECKSUMS.sha256: OK
+  CRITICAL-FINGERPRINTS.sha256: OK
+  baseline_modified: false
+
+source_integrity:
+  SOURCE-REVISION: "tree_content_sha256=5600f9df2c99dde25771567faeaaa25d39c55575c046e36b55fb965149813795"
+  git: ABSENT
+  PT-001_spec_sha256: 54d9ec041da9b712db92d55b6dcb92f941aa28574860ecbe012780dce16c7d1b
+  PT-002_spec_sha256: 7376ad33986b2559a40acd2ea571039b6bd2658a5752d8a0cb3022bed77aae8d
+  runtime_unexpected_change: false
+
+dry_run:
+  PT-001: DRY_RUN_UNAVAILABLE
+  PT-002: DRY_RUN_UNAVAILABLE
+  note: No prototype dry-run runner exists; gate did not create one.
+
+gate:
+  baseline_id: baseline-v1-2026-09-18
+
+  prototypes:
+
+    - id: PT-001
+      title: Live host skill catalog budget measurement
+      related_adr: ADR-DR-0002
+      question: >
+        Does controlled live host catalog size/truncation change live skill activation
+        and live task_success relative to full-catalog CONTROL, without modifying
+        orchestrator catalog APIs?
+      hypothesis: >
+        Under live host injection, smaller catalogs improve activation and reduce context
+        volume without reducing live task_success versus CONTROL.
+      scope: Host/Cursor catalog injection only; no engine max_skills
+      non_goals:
+        - production max_skills
+        - vendor-token claims without tokenizer policy
+        - baseline/skills/orchestrator mutation
+
+      checks:
+        specification: PASS
+        environment: FAIL
+        dependencies: FAIL
+        isolation: PASS
+        rollback: PASS
+        measurement: FAIL
+        reproducibility: UNKNOWN
+        safety: PASS
+        runtime_compatibility: PASS
+        baseline_protection: PASS
+        architectural_boundary: PASS
+        offline_fallback_answers_question: FAIL
+
+      checklist:
+        question: PASS
+        hypothesis: PASS
+        scope: PASS
+        preconditions: FAIL
+        inputs: FAIL
+        control: UNKNOWN
+        treatment: UNKNOWN
+        metrics: FAIL
+        oracle: FAIL
+        success_criteria: PASS
+        failure_criteria: PASS
+        isolation: PASS
+        rollback: PASS
+        cleanup: PASS
+        data_containment: PASS
+        runtime_boundaries: PASS
+        environment: FAIL
+        reproducibility: UNKNOWN
+        safety: PASS
+
+      dependencies:
+        - name: ADR-DR-0002 ACCEPTED
+          status: AVAILABLE
+        - name: E-001 offline complete
+          status: AVAILABLE
+        - name: live_host_catalog_injection control API
+          status: MISSING
+        - name: live_task_success oracle / gold labels
+          status: MISSING
+        - name: tokenizer policy document (vendor or labeled PROXY)
+          status: MISSING
+        - name: ephemeral workspace path (/tmp or workspaces/)
+          status: AVAILABLE
+          note: /tmp writable; prototypes/workspaces/ missing (allowed by spec)
+
+      metrics_availability:
+        - name: catalog_size
+          source: host injection manifest
+          collection: count IDs
+          oracle: IV check
+          available_now: false
+          reason: no controllable host injection
+        - name: live_task_success
+          source: task harness
+          collection: pass/fail rubric
+          oracle: required DIRECT
+          available_now: false
+          reason: no live task oracle (MG-001 / EV-F-001)
+        - name: token_estimate_or_vendor
+          source: tokenizer policy
+          collection: count
+          oracle: PROXY or MEASURED per policy
+          available_now: false
+          reason: tokenizer policy document absent
+        - name: skills_activated
+          source: host/selection log
+          collection: recorded selection
+          oracle: DIRECT if log exists
+          available_now: false
+          reason: host path unavailable
+
+      hard_blockers:
+        - id: HB-PT001-01
+          type: critical_missing_dependency
+          detail: live_host_catalog_injection unavailable (ENVIRONMENT)
+        - id: HB-PT001-02
+          type: required_metric_unavailable
+          detail: live_task_success cannot be collected now
+        - id: HB-PT001-03
+          type: critical_missing_dependency
+          detail: tokenizer policy document required by preconditions — MISSING
+
+      constraints: []
+
+      risk: HIGH
+      final_status: BLOCKED
+      execution_authorized: false
+
+      offline_fallback:
+        considered: true
+        answers_main_question: false
+        reason: >
+          PT-001 question is live host activation + live task_success. Offline E-001
+          already answered the offline sub-question; constraining PT-001 to offline would
+          not answer this prototype's question (gate §39). Therefore APPROVED_WITH_CONSTRAINTS
+          offline is not applicable.
+
+      evidence:
+        - PF-001
+        - PF-002
+        - PF-003
+        - PF-004
+        - PF-010
+        - PF-011
+
+      rationale: >
+        Specification is READY_FOR_GATE-quality, but the environment cannot control live
+        catalog injection, cannot measure required live_task_success, and has no tokenizer
+        policy document. Spec itself says host-cannot-control → BLOCKED. Offline fallback
+        does not answer the live question. No architecture change required — environment
+        gap. Do not execute.
+
+    - id: PT-002
+      title: Job-path resume after OS process kill (STATE_WRITE)
+      related_adr: ADR-DR-0001
+      question: >
+        After true OS process termination mid job-path wait, does resume from durable
+        jobsDir checkpoint complete with observed_mutations=1 and defined resume_success?
+      hypothesis: >
+        Under OS kill + process restart, job-path resume remains free of duplicate
+        STATE_WRITE for the E-005-class fixture.
+      scope: STATE_WRITE job JSON; OS kill; new process resume; not global exactly-once
+      non_goals:
+        - global exactly-once claim
+        - confirm-gated writes
+        - engine.pause() as OS-kill substitute
+        - NEW_ENGINE-in-same-process as substitute
+
+      checks:
+        specification: PASS
+        environment: PASS
+        dependencies: FAIL
+        isolation: PASS
+        rollback: PASS
+        measurement: UNKNOWN
+        reproducibility: UNKNOWN
+        safety: FAIL
+        runtime_compatibility: PASS
+        baseline_protection: PASS
+        architectural_boundary: PASS
+        process_control: FAIL
+        kill_policy: FAIL
+        state_safety: PASS
+
+      checklist:
+        question: PASS
+        hypothesis: PASS
+        scope: PASS
+        preconditions: FAIL
+        inputs: UNKNOWN
+        control: PASS
+        treatment: UNKNOWN
+        metrics: PASS
+        oracle: PASS
+        success_criteria: PASS
+        failure_criteria: PASS
+        isolation: PASS
+        rollback: PASS
+        cleanup: PASS
+        data_containment: PASS
+        runtime_boundaries: PASS
+        environment: PASS
+        reproducibility: UNKNOWN
+        safety: FAIL
+
+      dependencies:
+        - name: ADR-DR-0001 ACCEPTED
+          status: AVAILABLE
+        - name: E-005 fixture conceptually reproducible
+          status: AVAILABLE
+        - name: jobs/ APIs present (job-store, pickup, resume, checkpoint)
+          status: AVAILABLE
+        - name: disposable jobsDir (/tmp)
+          status: AVAILABLE
+        - name: ability to signal own Node PID (no sudo)
+          status: AVAILABLE
+        - name: OS_kill_harness (kill+restart+mutation log)
+          status: MISSING
+        - name: kill signal policy (SIGKILL vs SIGTERM) fixed in campaign
+          status: MISSING
+        - name: post-restart external job completion procedure
+          status: MISSING
+
+      metrics_availability:
+        - name: os_kill_performed
+          source: harness
+          collection: PID death
+          oracle: required DIRECT
+          available_now: false
+          reason: OS_kill_harness missing; kill policy undefined
+        - name: process_restart
+          source: harness
+          collection: new PID
+          oracle: required DIRECT
+          available_now: false
+          reason: harness missing
+        - name: observed_mutations
+          source: mutation log
+          collection: append log length
+          oracle: expect 1
+          available_now: UNKNOWN
+          reason: pattern exists in E-005 harness; OS-kill adaptation not present
+        - name: resume_success
+          source: run result
+          collection: final success
+          oracle: define before run
+          available_now: UNKNOWN
+          reason: definition required at campaign start; not fixed beyond E-005 analogy
+
+      hard_blockers:
+        - id: HB-PT002-01
+          type: unsafe_process_control
+          detail: >
+            Kill command available for own PID, but campaign kill-signal policy
+            (SIGKILL vs SIGTERM) remains an open question in the hardened spec —
+            not a safe kill policy yet (gate §22/§40).
+        - id: HB-PT002-02
+          type: critical_missing_dependency
+          detail: OS_kill_harness MISSING (EVAL-DEPENDENCIES EV-F-003)
+        - id: HB-PT002-03
+          type: required_operational_procedure_undefined
+          detail: Who completes external job after restart — unresolved open question
+
+      constraints: []
+
+      risk: HIGH
+      final_status: NEEDS_MORE_EVIDENCE
+      execution_authorized: false
+
+      sandbox_note: >
+        OS sandbox = NOT_IMPLEMENTED. PT-002 does not require OS sandbox; it requires
+        disposable jobsDir + scoped PID kill. Do not call path restriction a sandbox.
+
+      evidence:
+        - PF-001
+        - PF-005
+        - PF-006
+        - PF-007
+        - PF-008
+        - PF-009
+        - PF-010
+        - PF-011
+
+      rationale: >
+        Spec and isolation/rollback text are gate-ready, and the local environment can
+        write /tmp and signal owned processes without sudo. However the hardened prototype
+        still leaves kill-signal policy and post-restart job completion undefined, and the
+        OS_kill_harness does not exist. Gate must not invent policy or create harnesses.
+        Therefore NEEDS_MORE_EVIDENCE — not APPROVED, not REJECTED. Do not execute.
+
+summary:
+  APPROVED: 0
+  APPROVED_WITH_CONSTRAINTS: 0
+  NEEDS_MORE_EVIDENCE: 1
+  BLOCKED: 1
+  REJECTED: 0
+  execution_authorized_count: 0

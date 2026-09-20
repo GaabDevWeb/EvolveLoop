@@ -1,0 +1,169 @@
+{
+  "run": {
+    "experiment_id": "E-001",
+    "baseline_id": "baseline-v1-2026-09-18",
+    "run_id": "E001-T_TOKENS_40-r05-adbc7510",
+    "condition_id": "T_TOKENS_40",
+    "sequence": 5,
+    "timestamp": "2026-09-19T13:11:02.845026+00:00",
+    "catalog": {
+      "requested_size": 23,
+      "actual_size": 23,
+      "skill_ids": [
+        "adr",
+        "backend",
+        "researcher",
+        "frontend-pro",
+        "architect",
+        "agent-architecture-mining",
+        "agent-authoring",
+        "gaabwiki",
+        "code-reviewer",
+        "planner",
+        "po-review",
+        "testing",
+        "debugger",
+        "prd",
+        "database",
+        "documentation",
+        "gaabwiki-mem",
+        "devops",
+        "orquestrar",
+        "security",
+        "skill-authoring",
+        "failure-analyst",
+        "validator"
+      ],
+      "fingerprint": "aa662c3c3b8d19d846d3d02b51938cc6ce8bf924f1efb0185c71423776e6fb1c"
+    },
+    "task": {
+      "id": "skill-eval-trigger-corpus",
+      "input_fingerprint": "5f237e7abc9a435121647fba0b12b1162200239b9025703f7c04af3a78d8bdfa",
+      "n_tasks": 176
+    },
+    "metrics": [
+      {
+        "name": "catalog_size",
+        "value": 23,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_available",
+        "value": 23,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_activated_count",
+        "value": 176,
+        "unit": "predictions",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "one top-1 prediction per scored task; AVAILABLE\u2260ACTIVATED"
+      },
+      {
+        "name": "skills_activated_unique",
+        "value": [
+          "adr",
+          "agent-architecture-mining",
+          "agent-authoring",
+          "architect",
+          "backend",
+          "code-reviewer",
+          "database",
+          "devops",
+          "documentation",
+          "failure-analyst",
+          "frontend-pro",
+          "gaabwiki",
+          "gaabwiki-mem",
+          "orquestrar",
+          "planner",
+          "po-review",
+          "prd",
+          "researcher",
+          "security",
+          "skill-authoring",
+          "testing",
+          "validator"
+        ],
+        "unit": "skill_ids",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_precision",
+        "value": 0.3409090909090909,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_recall",
+        "value": 0.3409090909090909,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "token_estimate",
+        "value": 1010,
+        "method": "whitespace",
+        "unit": "tokens_est",
+        "source": "estimate_tokens",
+        "classification": "PROXY",
+        "limitation": "vendor tokenizer unavailable"
+      },
+      {
+        "name": "wall_clock_duration",
+        "value": 0.05781052499992256,
+        "unit": "seconds",
+        "source": "perf_counter",
+        "classification": "DIRECT",
+        "note": "OBSERVED LATENCY not performance benchmark"
+      },
+      {
+        "name": "task_success",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "live task_success unavailable"
+      },
+      {
+        "name": "activation_match_rate",
+        "value": 0.3409090909090909,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "NOT live task_success; equals activation_precision in this harness"
+      },
+      {
+        "name": "skills_invoked",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "no live skill invocation"
+      },
+      {
+        "name": "skills_loaded",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "offline materialization only; not host load"
+      }
+    ],
+    "environment": {
+      "os": "Linux-6.12.88+deb13-amd64-x86_64-with-glibc2.41",
+      "python": "3.13.5",
+      "node": "v24.15.0",
+      "npm": "11.12.1",
+      "harness": "catalog_harness.py",
+      "seed": "e001-v1-2026-09-18",
+      "source_revision": "unknown",
+      "cwd": "/home/gaab/Downloads/CursorSKILLS"
+    },
+    "result": "OK",
+    "n_tasks_scored": 176,
+    "seed": "e001-v1-2026-09-18"
+  }
+}

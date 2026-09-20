@@ -1,0 +1,18 @@
+rules:
+  architecture_rules:
+    - megabrain.mdc discipline (evidence, no invent)
+    - knowledge-grounding / hard gates references
+  workflow_rules:
+    - orquestrar PDA / gate-bundle references in commands
+  personal_preference_rules:
+    - always-on wiki-mem promote expectations
+    - PT-only communication mandates if any in personal rules
+  host_rules:
+    - absolute WIKI_ROOT in alwaysApply rules (must not ship)
+  profile_rules:
+    - gaab project pack table (KernelBot/…)
+  public_main_should_include:
+    - architecture + workflow hard gates only
+  public_main_should_exclude:
+    - host absolute paths
+    - author project registry as mandatory

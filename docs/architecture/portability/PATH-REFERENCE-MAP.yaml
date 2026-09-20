@@ -1,0 +1,139 @@
+# Path reference map — PERSONAL_PATH and related
+# values shown; secrets never included
+
+path_references:
+  - path_reference:
+      value: "/home/gaab/Documentos/gitHub/karpathyWiki"
+      found_in:
+        - orchestrator/src/providers/deterministic/knowledge.ts
+        - .cursor/skills/gaabwiki/scripts/ground.sh
+        - .cursor/skills/gaabwiki/SKILL.md
+        - .cursor/skills/gaabwiki/references/cli.md
+        - .cursor/commands/mem.md
+      referenced_by: [knowledge.search, /wiki, /mem]
+      runtime_relevant: true
+      classification: PERSONAL_PATH
+      portable_alternative: "RAG_REPO_ROOT required; no absolute default OR default=$HOME/wiki"
+      risk: CRITICAL
+      confidence: HIGH
+
+  - path_reference:
+      value: "/home/gaab/Documentos/karpathyWiki"
+      found_in:
+        - Rules/gaabwiki-agent.mdc
+        - agent-setup/cursor/rules/gaabwiki-agent.mdc
+        - .cursor/hooks/gaabwiki-mem/mem.py
+        - agent-setup/skills/gaabwiki/**
+        - agent-setup/cursor/commands/MegaBrain.md
+        - docs/cursor-megabrain-rag-stack.md
+      referenced_by: [alwaysApply rule, hooks, agent-setup mirror]
+      runtime_relevant: true
+      classification: PERSONAL_PATH
+      portable_alternative: "Same RAG_REPO_ROOT; unify with gitHub path"
+      risk: CRITICAL
+      note: >
+        DIVERGENT from runtime ground.sh default. Disk truth (follow-up scan):
+        both paths EXIST as SEPARATE directories (different inodes) —
+        Documentos/karpathyWiki inode≠ Documentos/gitHub/karpathyWiki.
+        Risk: hooks/rules may write mem/logs to the wrong vault.
+      confidence: HIGH
+
+  - path_reference:
+      value: "$HOME/Documentos/GitHub/CursorSKILLS"
+      found_in:
+        - agent-setup/bootstrap.sh
+        - agent-setup/install.sh
+        - agent-setup/src/agent_setup/paths.py
+      referenced_by: [agent-setup AGENTS_ROOT default]
+      runtime_relevant: true_if_bootstrap_without_override
+      classification: PERSONAL_PATH
+      portable_alternative: "default = installer REPO_ROOT / require AGENTS_ROOT"
+      risk: HIGH
+      note: "MISSING on author disk; live agents.env uses Downloads/CursorSKILLS instead"
+      confidence: HIGH
+
+  - path_reference:
+      value: "/home/gaab/Downloads/CursorSKILLS"
+      found_in:
+        - ~/.cursor/agents.env (AGENTS_ROOT)
+        - docs/architecture/skills/environment/*.yaml
+        - docs/reconciliation/**
+        - agent-*-workspace eval reports
+      referenced_by: [orchestrator resolution, rebuild manifests]
+      runtime_relevant: true_for_agents_env
+      classification: PERSONAL_PATH
+      portable_alternative: "AGENTS_ROOT set by installer to clone path"
+      risk: HIGH
+      confidence: HIGH
+
+  - path_reference:
+      value: "/home/gaab/Documentos/gitHub/AGENTS/Cursor"
+      found_in:
+        - docs/reconciliation/**
+        - docs/architecture-audit-2026-09-17.md
+      referenced_by: [historical reconciliation]
+      runtime_relevant: false
+      classification: PERSONAL_PATH
+      portable_alternative: "docs-only; omit from public"
+      risk: INFORMATIONAL
+      confidence: HIGH
+
+  - path_reference:
+      value: "/home/gaab/Documentos/reverseEnginering/**"
+      found_in:
+        - docs/research/**
+        - memory/corpus-audit-reverseEnginering/**
+      referenced_by: [research corpus]
+      runtime_relevant: false
+      classification: PERSONAL_PATH
+      portable_alternative: "external research corpus; not product"
+      risk: LOW
+      confidence: HIGH
+
+  - path_reference:
+      value: "/home/gaab/Documentos/GitHub/{KernelBot,OrbitBot}"
+      found_in:
+        - agent-setup/skills/gaabwiki/SKILL.md pack table
+      referenced_by: [pack routing]
+      runtime_relevant: false_unless_those_projects
+      classification: PERSONAL_PATH
+      portable_alternative: "profile project map YAML"
+      risk: MEDIUM
+      confidence: HIGH
+
+  - path_reference:
+      value: "$HOME/.cursor/** and $HOME/.agents/**"
+      found_in:
+        - scripts/install-agents-global.sh
+        - GLOBAL-SETUP.md
+      referenced_by: [installer]
+      runtime_relevant: true
+      classification: LOCAL_ENVIRONMENT_ASSUMPTION
+      portable_alternative: "Keep — Cursor convention; not username-specific"
+      risk: LOW
+      confidence: HIGH
+
+  - path_reference:
+      value: "$HOME/Documentos/karpathyWiki"
+      found_in:
+        - agent-setup/bootstrap.sh
+        - agent-setup/install.sh
+        - agent-setup/src/agent_setup/paths.py
+      referenced_by: [agent-setup VAULT_ROOT]
+      runtime_relevant: true_on_agent_setup
+      classification: PERSONAL_DEFAULT
+      portable_alternative: "locale-neutral ~/Wiki or env-only"
+      risk: HIGH
+      note: "Assumes Portuguese XDG Documents folder name 'Documentos'"
+      confidence: HIGH
+
+  - path_reference:
+      value: "FILESYSTEM_ROOT=/home/SEU_USER/Documentos"
+      found_in:
+        - mcp/mcp.env.example
+      referenced_by: [MCP filesystem]
+      runtime_relevant: true_after_install
+      classification: PERSONAL_DEFAULT
+      portable_alternative: "placeholder OK; Documentos is locale-specific"
+      risk: MEDIUM
+      confidence: HIGH

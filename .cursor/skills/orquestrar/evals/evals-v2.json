@@ -1,0 +1,70 @@
+{
+  "skill_name": "orquestrar",
+  "version": "2.0.0",
+  "iteration": 2,
+  "focus": "Capability IR + Execution Engine + PDA v2",
+  "evals": [
+    {
+      "id": 1,
+      "name": "capability-ir-handoff",
+      "category": "happy_path",
+      "prompt": "Feature login. Produz Capability IR YAML com nodes backend-implementation, frontend-ui, testing (gate). Referencia Execution Engine em Cursor/orchestrator/.",
+      "assertions": [
+        { "id": "ir-yaml", "description": "Output Capability IR ou referencia specs/capability-ir.md" },
+        { "id": "gate-type", "description": "testing como type gate" },
+        { "id": "engine-ref", "description": "Menciona Cursor/orchestrator ou run-engine" }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "pda-spawn-testing",
+      "category": "integration",
+      "prompt": "Fase 3 concluida. Delega gate testing via PDA — briefing relampago + spawn isolado.",
+      "assertions": [
+        { "id": "pda", "description": "Menciona sub-agente isolado ou Task spawn" },
+        { "id": "briefing", "description": "Briefing com estrutura, objetivo, impedimentos" },
+        { "id": "no-inline", "description": "Nao executa testing inline na mesma sessao" }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "contract-version-block",
+      "category": "edge_case",
+      "prompt": "IR declara frontend-ui capability_version >=3.0.0 mas so existe provider@2.0.0. O que faz o engine?",
+      "assertions": [
+        { "id": "mismatch", "description": "Identifica contract_version_mismatch" },
+        { "id": "replan", "description": "Sugere replanejar ou ajustar versao" }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "provider-discovery",
+      "category": "edge_case",
+      "prompt": "Registry vazio para capability testing. Engine com discovery activo. Descreve fluxo ProviderDiscoveryStarted.",
+      "assertions": [
+        { "id": "discovery-event", "description": "Menciona ProviderDiscoveryStarted/Completed" },
+        { "id": "skill-scan", "description": "Scan .cursor/skills/*/provider.yaml" }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "gate-reject-replan",
+      "category": "adversarial",
+      "prompt": "Gate testing VERMELHO. Policy high-reliability. Qual decisao SSOT?",
+      "assertions": [
+        { "id": "decision", "description": "DECISAO corrigir ou replanejar, nao continuar" },
+        { "id": "invalidate", "description": "Menciona invalidate_downstream ou subgraph" }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "registry-builder",
+      "category": "integration",
+      "prompt": "Como regenerar capability-registry.yaml a partir de manifests + telemetria JSONL?",
+      "assertions": [
+        { "id": "cli", "description": "Comando registry-builder build" },
+        { "id": "inputs", "description": "Menciona --manifests e --telemetry" }
+      ]
+    }
+  ]
+}

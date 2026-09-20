@@ -1,0 +1,102 @@
+[
+  {
+    "query": "Cria um dossiê técnico completo sobre Vue 3",
+    "should_trigger": true,
+    "notes": "pedido directo com termo dossiê"
+  },
+  {
+    "query": "Preciso dominar Prisma antes de começar o backend — documentação profunda",
+    "should_trigger": true,
+    "notes": "intent implícito de pesquisa profunda"
+  },
+  {
+    "query": "/library-dossier SvelteKit",
+    "should_trigger": true,
+    "notes": "comando slash dedicado"
+  },
+  {
+    "query": "Pesquisa profunda sobre a biblioteca Zod — todas as APIs e edge cases",
+    "should_trigger": true,
+    "notes": "sinónimo pesquisa profunda"
+  },
+  {
+    "query": "Quero um material de referência permanente sobre Tailwind CSS v4",
+    "should_trigger": true,
+    "notes": "referência permanente = dossiê"
+  },
+  {
+    "query": "Documentação de nível enterprise sobre tRPC para a equipa",
+    "should_trigger": true,
+    "notes": "tom corporativo"
+  },
+  {
+    "query": "Antes de usar Drizzle ORM, preciso entender arquitectura interna e limitações",
+    "should_trigger": true,
+    "notes": "dominar antes de usar"
+  },
+  {
+    "query": "Compila tudo sobre Framer Motion: API, performance, integrações, erros comuns",
+    "should_trigger": true,
+    "notes": "lista de tópicos do template"
+  },
+  {
+    "query": "Dossiê técnico Three.js com diagramas e comparação com Babylon.js",
+    "should_trigger": true,
+    "notes": "secções específicas 2 e 22"
+  },
+  {
+    "query": "Como instalo o React com Vite?",
+    "should_trigger": false,
+    "notes": "how-to pontual, não dossiê"
+  },
+  {
+    "query": "Qual a diferença entre useMemo e useCallback?",
+    "should_trigger": false,
+    "notes": "pergunta conceptual rápida"
+  },
+  {
+    "query": "Implementa um hook useDebounce no meu projeto",
+    "should_trigger": false,
+    "notes": "implementação, near-miss"
+  },
+  {
+    "query": "Documenta o módulo src/api/users.ts do nosso projeto",
+    "should_trigger": false,
+    "notes": "skill irmã /documentar — docs de código local"
+  },
+  {
+    "query": "Consulta a API do axios no context7",
+    "should_trigger": false,
+    "notes": "lookup pontual via context7"
+  },
+  {
+    "query": "Escreve um tutorial de 10 minutos sobre GraphQL",
+    "should_trigger": false,
+    "notes": "tutorial simples explícito"
+  },
+  {
+    "query": "Faz code review deste componente React",
+    "should_trigger": false,
+    "notes": "code review, sem pesquisa de lib"
+  },
+  {
+    "query": "Resume o changelog do Next.js 14.2",
+    "should_trigger": false,
+    "notes": "resumo pontual, não dossiê completo"
+  },
+  {
+    "query": "Planeja a migração do nosso app para Remix",
+    "should_trigger": false,
+    "notes": "planning skill, não dossiê"
+  },
+  {
+    "query": "O que é o Zustand?",
+    "should_trigger": false,
+    "notes": "definição curta"
+  },
+  {
+    "query": "Benchmark rápido: esbuild vs webpack",
+    "should_trigger": false,
+    "notes": "comparação pontual sem dossiê"
+  }
+]

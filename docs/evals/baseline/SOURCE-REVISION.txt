@@ -1,0 +1,3 @@
+tree_content_sha256=5600f9df2c99dde25771567faeaaa25d39c55575c046e36b55fb965149813795
+method=sha256sum of sorted sha256 list of src+tests+policies+contracts+schemas+package manifests+vitest/tsconfig
+git=ABSENT

@@ -1,0 +1,40 @@
+{
+  "apiVersion": "capability-orchestrator.io/v2",
+  "kind": "EngineCheckpoint",
+  "saved_at": "2026-09-18T23:37:03.801Z",
+  "feature_id": "e005-hitl-fixture",
+  "policy_id": "rapid-prototype",
+  "ir_id": "e005-hitl-fixture",
+  "graph": {
+    "feature_id": "e005-hitl-fixture",
+    "nodes": [
+      {
+        "id": "test-only",
+        "capability": "testing",
+        "type": "gate",
+        "dependencies": [],
+        "inputs": [],
+        "outputs": [
+          {
+            "id": "test-report",
+            "path": "telemetry/evidence/test.json"
+          }
+        ],
+        "definition_of_done": [
+          {
+            "id": "d1",
+            "check": "Suite verde",
+            "verification": "automated"
+          }
+        ],
+        "gate": {
+          "verdict_required": true
+        },
+        "status": "waiting",
+        "retry_count": 0,
+        "provider_id": "testing",
+        "run_id": "534a19f8-4bf9-47c9-ae65-039f79c0fd9c"
+      }
+    ]
+  }
+}

@@ -1,0 +1,40 @@
+findings:
+  - id: L-OK-AUTO-ANALYZE
+    status: RESOLVED
+    claim: "cadence not wired to analyze"
+    evidence: "LiveAnalysisCoordinator.notifySignal → scheduleAnalyze"
+
+  - id: L-OK-SCOPE
+    status: RESOLVED
+    claim: "automatic global analyze"
+    evidence: "per-scope cadence; SYSTEM needs authorize_system"
+
+  - id: L-OK-WINDOW
+    status: RESOLVED_WITH_LIMITATIONS
+    claim: "no observation window"
+    evidence: "ObservationWindowManager + harness ControlledGateFixture"
+    residual: "production Prototype Gate runner not in orchestrator package"
+
+  - id: L-GAP-EVIDENCE
+    status: OPEN
+    severity: MEDIUM
+    claim: "evidence adapter"
+
+  - id: L-GAP-EVAL-ADAPTER
+    status: OPEN
+    severity: MEDIUM
+    claim: "eval results adapter"
+
+  - id: L-GAP-CLI-DEFAULT
+    status: OPEN
+    severity: LOW
+    claim: "run-engine enables evolve by default"
+
+  - id: L-GAP-PROD-GATE
+    status: OPEN
+    severity: MEDIUM
+    claim: "full Prototype Gate decision automation in-process"
+
+counts:
+  resolved: 3
+  open: 4

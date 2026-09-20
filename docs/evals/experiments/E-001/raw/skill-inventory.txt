@@ -1,0 +1,24 @@
+skill_packages:
+23
+20
+---
+37912 /home/gaab/Downloads/CursorSKILLS/.cursor/skills/orquestrar/SKILL.md
+9833 /home/gaab/Downloads/CursorSKILLS/.cursor/skills/prd/SKILL.md
+6323 /home/gaab/Downloads/CursorSKILLS/.cursor/skills/agent-architecture-mining/SKILL.md
+11491 /home/gaab/Downloads/CursorSKILLS/.cursor/skills/skill-authoring/SKILL.md
+5540 /home/gaab/Downloads/CursorSKILLS/.cursor/skills/gaabwiki-mem/SKILL.md
+6619 /home/gaab/Downloads/CursorSKILLS/.cursor/skills/testing/SKILL.md
+17843 /home/gaab/Downloads/CursorSKILLS/.cursor/skills/po-review/SKILL.md
+11459 /home/gaab/Downloads/CursorSKILLS/.cursor/skills/frontend-pro/SKILL.md
+19167 /home/gaab/Downloads/CursorSKILLS/.cursor/skills/documentation/SKILL.md
+5126 /home/gaab/Downloads/CursorSKILLS/.cursor/skills/validator/SKILL.md
+26855 /home/gaab/Downloads/CursorSKILLS/.cursor/skills/planner/SKILL.md
+4872 /home/gaab/Downloads/CursorSKILLS/.cursor/skills/devops/SKILL.md
+7885 /home/gaab/Downloads/CursorSKILLS/.cursor/skills/gaabwiki/SKILL.md
+7339 /home/gaab/Downloads/CursorSKILLS/.cursor/skills/debugger/SKILL.md
+5500 /home/gaab/Downloads/CursorSKILLS/.cursor/skills/database/SKILL.md
+5740 /home/gaab/Downloads/CursorSKILLS/.cursor/skills/security/SKILL.md
+19864 /home/gaab/Downloads/CursorSKILLS/.cursor/skills/backend/SKILL.md
+5783 /home/gaab/Downloads/CursorSKILLS/.cursor/skills/code-reviewer/SKILL.md
+7029 /home/gaab/Downloads/CursorSKILLS/.cursor/skills/failure-analyst/SKILL.md
+3387 /home/gaab/Downloads/CursorSKILLS/.cursor/skills/adr/SKILL.md

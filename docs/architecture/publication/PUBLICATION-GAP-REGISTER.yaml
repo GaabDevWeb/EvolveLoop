@@ -1,0 +1,48 @@
+publication_gap:
+  blocker:
+    - id: G-001
+      item: LICENSE missing
+      impact: cannot publish professionally
+    - id: G-002
+      item: AGENT.md missing (onboarding contract)
+      impact: fresh-clone path undefined
+    - id: G-003
+      item: README still personal / MegaBrain-first without public architecture framing
+      impact: first impression / clarity
+    - id: G-004
+      item: fresh-clone + clean-env install never executed
+      impact: reproducibility unproven
+    - id: G-005
+      item: personal corpus path leakage risk in docs/rules if not scrubbed
+      impact: privacy
+  high:
+    - id: G-010
+      item: wiki-mem hooks always-on vs public optional
+    - id: G-011
+      item: Cursor command text may still cite wiki-grounding-gate.md (drift vs knowledge-grounding)
+    - id: G-012
+      item: brand MegaBrain meme/personal for serious public surface
+    - id: G-013
+      item: GaabDevWeb / Documentos references in remaining docs/setup
+    - id: G-014
+      item: CONTRIBUTING / SECURITY / CODE_OF_CONDUCT absent
+    - id: G-015
+      item: third-party skill licenses not inventoried for NOTICE
+  medium:
+    - id: G-020
+      item: PT-only command surface without EN aliases
+    - id: G-021
+      item: memory/ and workspaces in tree risk accidental commit
+    - id: G-022
+      item: research/ architecture-gaps density for public README
+    - id: G-023
+      item: WIKI_CLI_MODULE still gaabwiki EXTERNAL naming
+    - id: G-024
+      item: agent-setup full profile may imply personal systemd
+  low:
+    - id: G-030
+      item: INVENTORY.md staleness
+    - id: G-031
+      item: historical Agents naming polish
+    - id: G-032
+      item: package npm name undecided until brand

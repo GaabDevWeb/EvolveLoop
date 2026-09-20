@@ -1,0 +1,161 @@
+baseline_id: baseline-v1-2026-09-18
+run:
+  status: PARTIAL
+  started_at: "2026-09-18T23:35:14Z"
+  ended_at: "2026-09-18T23:37:30Z"
+  e005_fixture_completed_at: "2026-09-18T24:00:14Z"
+  baseline_preserved: true
+  regressions: false
+  invariants_after:
+    tests: "103/103"
+    contracts: "7/7"
+    full_cycle: "5/5"
+  invariants_after_e005_fixture:
+    tests: "103/103"
+    contracts: "7/7"
+    full_cycle: "5/5"
+  invariants_after_e001_battery:
+    tests: "103/103"
+    contracts: "7/7"
+    full_cycle: "5/5"
+    baseline_checksums: OK
+    e001_status: EXECUTED
+
+experiments:
+
+  - id: E-005
+    status: COMPLETED_FIXTURE
+    hypothesis: "Job wait→checkpoint→interrupt→resume succeeds; secrets=0; duplicate_mutate=0"
+    baseline_id: baseline-v1-2026-09-18
+    execution:
+      repetitions: 5
+      control: "uninterrupted wait-for-jobs x5 → mutation=1"
+      treatment: "SAME_ENGINE resume x5 + NEW_ENGINE resume x5 → mutation=1"
+    results:
+      metrics:
+        resume_success_rate: 1.0
+        secret_exfiltration_in_state: 0
+        duplicate_mutate: false
+        observed_mutations: 1
+        same_process_interruption: MEASURED
+        os_process_kill: NOT_MEASURED
+        duplicate_side_effect: MEASURED_AS_STATE_WRITE
+        state_integrity: MEASURED
+      observations:
+        - "job_path_only STATE_WRITE mutation (JobFileExecutor.execute)"
+        - "InstrumentingJobFileExecutor never short-circuits duplicates"
+        - "15/15 runs observed_mutations=1"
+    conclusion:
+      classification: SUPPORTED
+      confidence: HIGH
+    evidence_ids: [E005-EV-01, E005-EV-02, E005-EV-03, E005-DM-01, E005-DM-02]
+    blocked_reason: null
+    limitations:
+      - scoped_not_full_HITL
+      - OS_kill_not_measured
+      - side_effect_scope_STATE_WRITE_only
+    report: docs/evals/experiments/E-005/E-005-RESULT.md
+
+  - id: E-001
+    status: EXECUTED
+    hypothesis: "Catalog budget improves activation precision and lowers prefix tokens"
+    baseline_id: baseline-v1-2026-09-18
+    execution:
+      repetitions: 5
+      note: "INITIAL EXPERIMENTAL SAMPLE; offline controlled; deterministic scorer"
+      control: CONTROL (23 skills)
+      treatment: "T_SKILLS_5, T_SKILLS_10, T_TOKENS_40"
+      total_runs: 20
+      n_tasks: 176
+    results:
+      metrics:
+        activation_precision_CONTROL: 0.3352
+        activation_precision_T_SKILLS_5: 0.5114
+        activation_precision_T_SKILLS_10: 0.4205
+        activation_precision_T_TOKENS_40: 0.3409
+        token_estimate_CONTROL: 1673
+        token_estimate_T_SKILLS_5: 382
+        token_estimate_T_SKILLS_10: 789
+        token_estimate_T_TOKENS_40: 1010
+        task_success: NOT_MEASURED
+        token_measurement: PROXY
+      observations:
+        - "Smaller catalogs associated with higher offline activation precision"
+        - "All treatments lowered whitespace token_estimate vs CONTROL"
+        - "T_TOKENS_40: large token cut, marginal precision gain"
+        - "No source Skills / runtime / baseline contamination"
+    conclusion:
+      classification: SUPPORTED
+      confidence: MEDIUM
+      scope: offline_harness_only
+    evidence_ids: [E001-BAT-01]
+    blocked_reason: null
+    limitations:
+      - offline_overlap_ranker_not_host_LLM
+      - live_task_success_NOT_MEASURED
+      - live_host_injection_NOT_MEASURED
+      - token_estimate_PROXY
+      - initial_sample_deterministic
+    report: docs/evals/experiments/E-001/E-001-RESULT.md
+    machine_readable: docs/evals/experiments/E-001/E-001-RESULTS.yaml
+    raw: docs/evals/experiments/E-001/raw/battery/
+
+  - id: E-004
+    status: BLOCKED
+    hypothesis: "Reinject after compact improves constraint survival"
+    baseline_id: baseline-v1-2026-09-18
+    execution:
+      repetitions: 0
+      control: null
+      treatment: null
+    results:
+      metrics: {}
+      observations:
+        - "no compaction pipeline"
+    conclusion:
+      classification: BLOCKED
+      confidence: HIGH
+    evidence_ids: [E004-EV-01]
+    blocked_reason: "No compaction/reinject hook"
+    limitations: []
+
+  - id: E-003
+    status: BLOCKED
+    hypothesis: "Stuck heuristic reduces thrash vs maxIterations-only"
+    baseline_id: baseline-v1-2026-09-18
+    execution:
+      repetitions: 0
+      control: null
+      treatment: null
+    results:
+      metrics: {}
+      observations:
+        - "maxIterations=500 only"
+    conclusion:
+      classification: BLOCKED
+      confidence: HIGH
+    evidence_ids: [E003-EV-01]
+    blocked_reason: "Semantic stuck detector NOT_IMPLEMENTED"
+    limitations:
+      - must_not_reclassify_maxIterations_as_semantic_detector
+
+  - id: E-002
+    status: BLOCKED
+    hypothesis: "Posture labels reduce false_safe_label_rate"
+    baseline_id: baseline-v1-2026-09-18
+    execution:
+      repetitions: 0
+      control: null
+      treatment: null
+    results:
+      metrics: {}
+      observations:
+        - "Sandbox NOT_IMPLEMENTED"
+        - "authority flags ≠ sandbox posture enum"
+    conclusion:
+      classification: BLOCKED
+      confidence: HIGH
+    evidence_ids: [E002-EV-01]
+    blocked_reason: "OS sandbox / posture enforcement absent; labels must not be faked"
+    limitations:
+      - this_experiment_does_not_prove_sandboxing

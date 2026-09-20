@@ -1,0 +1,20 @@
+{
+  "apiVersion": "capability-orchestrator.io/v2",
+  "kind": "Evidence",
+  "metadata": {
+    "node_id": "gate-security",
+    "cycle_id": "C1",
+    "emitter": "gate",
+    "capability": "security-review",
+    "submitted_at": "2026-08-25T00:42:00Z"
+  },
+  "spec": {
+    "status": "complete",
+    "verdict": "passed",
+    "confidence": 0.88,
+    "command": "npm run test:unit -- tests/unit/security",
+    "artifacts": [
+      {"path": "telemetry/evidence/security-review.json", "type": "file"}
+    ]
+  }
+}

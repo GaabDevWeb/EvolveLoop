@@ -1,0 +1,31 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Provider
+metadata:
+  name: git
+  version: "1.0.0"
+  description: "Deterministic git inspection"
+  owner: agents-team
+spec:
+  plugin:
+    type: deterministic
+    entrypoint: "src/providers/deterministic/index.ts"
+  capabilities:
+    - id: git.status
+      contract: contracts/git.status@1.0.0
+      type: worker
+    - id: git.diff
+      contract: contracts/git.diff@1.0.0
+      type: worker
+    - id: git.log
+      contract: contracts/git.log@1.0.0
+      type: worker
+    - id: git.inspect
+      contract: contracts/git.inspect@1.0.0
+      type: worker
+    - id: repository.inspect
+      contract: contracts/repository.inspect@1.0.0
+      type: worker
+  runtime:
+    cost: low
+  availability: active
+  priority: 50

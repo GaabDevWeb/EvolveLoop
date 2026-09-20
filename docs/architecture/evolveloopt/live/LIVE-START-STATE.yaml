@@ -1,0 +1,15 @@
+live_start:
+  date: "2026-09-19"
+  tests_before: 162
+  connected:
+    - eventbus_to_ingest
+    - cadence_class_exists
+    - analyze_scope_gate
+    - outcome_reingestion_manual
+  missing:
+    - cadence_to_analyze_wire
+    - automatic_scoped_analysis
+    - observation_window_scheduler
+    - automatic_outcome_from_window
+  autonomy_ceiling: PROPOSE
+  baselines_intact: [v1, v2, v3, v4]

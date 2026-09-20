@@ -1,0 +1,28 @@
+{
+  "skill_name": "frontend-pro",
+  "version": "1.1.0",
+  "should_trigger": [
+    "Criar landing page SaaS Tailwind",
+    "Review visual localhost dashboard",
+    "Design system tokens dark mode",
+    "Implementar UI login Next.js",
+    "Screenshot review multi-viewport",
+    "Modo Vision mockup premium",
+    "Fix achados frontend review",
+    "Audit visual pré-release",
+    "Componente shadcn formulário",
+    "UX dashboard admin"
+  ],
+  "should_not_trigger": [
+    "Correr Cypress E2E",
+    "Aceite PO final",
+    "Auditar SQL injection",
+    "Planejar backlog",
+    "Implementar API FastAPI",
+    "Documentar arquitectura",
+    "Gate testing Fase 3",
+    "Gerar OpenAPI spec",
+    "Orquestrar ciclo completo",
+    "Security OWASP review"
+  ]
+}

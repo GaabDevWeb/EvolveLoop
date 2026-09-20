@@ -1,0 +1,26 @@
+evolveloopt:
+  observation:
+    status: PARTIAL
+    jsonl_adapter: CONNECTED
+    runtime_eventbus: CONNECTED
+    automatic_analysis: IMPLEMENTED_OPT_IN
+    evidence_adapter: NOT_CONNECTED
+    eval_adapter: NOT_CONNECTED
+    user_feedback_adapter: NOT_CONNECTED
+  live_coordinator:
+    status: IMPLEMENTED
+    component: LiveAnalysisCoordinator
+  outcome_window:
+    status: IMPLEMENTED
+  regression:
+    tests: "170/170"
+    contracts: "7/7"
+    full_cycle: "5/5"
+  baselines:
+    v1: intact
+    v2: intact
+    v3: intact
+    v4: intact
+    v5: baseline-v5-2026-09-19
+  final_status: SUCCESS_WITH_LIMITATIONS
+  live_docs: docs/architecture/evolveloopt/live/

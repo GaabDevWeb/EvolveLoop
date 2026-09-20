@@ -1,0 +1,34 @@
+prototypes:
+
+  - id: PT-001
+    decision: DR-003 gated
+    hypothesis: Live host catalog budget improves real skill activation without harming live task_success
+    scope: Host/Cursor catalog injection experiment — NOT engine max_skills feature
+    success_criteria:
+      - live task_success measured
+      - catalog injection controlled
+      - vendor or documented tokenizer
+    constraints:
+      - offline E-001 alone insufficient to start engine feature
+    must_not_change:
+      - orchestrator/src capability/registry semantics
+      - baseline V1
+    related_experiment: E-001-LIVE (future)
+    implementation_allowed_now: false
+
+  - id: PT-002
+    decision: DR-002 gated
+    hypothesis: Job-path resume remains free of duplicate STATE_WRITE after OS process kill + restart
+    scope: OS kill / process restart recovery
+    success_criteria:
+      - OS termination MEASURED
+      - mutation_count still 1 under fixture
+      - resume_success defined for restart
+    constraints:
+      - NEW_ENGINE-in-same-process is not a substitute
+    must_not_change:
+      - claim exactly-once globally from PT-002 alone
+    related_experiment: E-005-OS-KILL (future)
+    implementation_allowed_now: false
+
+# No sandbox/stuck/compaction prototypes until architecture prerequisites land.

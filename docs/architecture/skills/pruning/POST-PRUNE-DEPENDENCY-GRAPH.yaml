@@ -1,0 +1,48 @@
+# Post-prune dependency graph (structural edges only)
+generated: 2026-09-19T21:40:00Z
+
+hard_gates:
+  grill-me:
+    type: CONDITIONAL_FAIL_CLOSED
+    blocks: [planner_transition]
+    evidence: megabrain-skill-gates.ts
+  image-to-code:
+    type: HARD_GATE
+    triggers_on: image_attachment
+    evidence: megabrain-skill-gates.ts + frontend-pro SKILL
+
+core_edges:
+  - from: library-dossier
+    to: technical-library-dossier
+    strength: HARD
+  - from: technical-library-dossier
+    to: agent-browser
+    strength: HARD
+  - from: frontend-pro
+    to: agent-browser
+    strength: FALLBACK_POLICY
+  - from: frontend-pro
+    to: image-to-code
+    strength: HARD_GATE_WHEN_IMAGE
+  - from: debugger
+    to: systematic-debugging
+    strength: ABSORBED_DO
+  - from: descobrir
+    to: find-skills
+    strength: USER_DISCOVERY
+  - from: find-skills
+    to: runtime_registry
+    strength: NONE  # not Registry fallback
+
+removed_edges_confirmed_absent:
+  - linkedin-posts
+  - gsap
+  - framer-motion
+  - lenis
+  - hover-effects
+  - particles
+  - r3f-shaders
+
+no_active_provider_points_to_removed: true
+no_active_command_requires_removed: true
+no_active_agent_requires_removed: true

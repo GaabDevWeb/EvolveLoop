@@ -1,0 +1,52 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Provider
+metadata:
+  name: researcher
+  version: "1.0.0"
+  description: "External research — cited sources, source_policy, anti-hallucination (not Knowledge)"
+  owner: agents-team
+
+spec:
+  plugin:
+    type: cursor-skill
+    entrypoint: ".cursor/skills/researcher/SKILL.md"
+
+  capabilities:
+    - id: research
+      contract: contracts/research@1.0.0
+      type: worker
+
+  interfaces:
+    inputs:
+      - name: research-question
+        required: true
+      - name: source-policy-overrides
+        required: false
+    outputs:
+      - name: research-report
+        note: "Cited claims + sources + gaps; never invented facts"
+      - name: handoff
+        note: "Structured handoff — no product patches"
+
+  runtime:
+    cost: medium
+    subagent_type: explore
+    pda_role: explore
+
+  telemetry:
+    key: provider.researcher
+
+  availability: active
+  priority: 72
+
+  constraints:
+    - signal: requires_citations
+      note: "Claims need URL/source or UNVERIFIED"
+    - signal: not_knowledge_promote
+      note: "wiki-mem owns promote — Researcher ≠ Knowledge"
+    - signal: not_context_grounding
+      note: "Canonical vault → wiki /wiki"
+    - signal: no_product_code
+      note: "No backend/frontend/database/devops implementation"
+    - signal: mcp_down_no_invent
+      note: "If search/MCP unavailable → capability_failure, do not invent"

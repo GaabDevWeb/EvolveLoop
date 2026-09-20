@@ -1,0 +1,84 @@
+eval:
+  id: EV-007
+  name: Offline Skill Activation under Catalog Conditions
+  category: SKILLS
+  version: 1
+  question: "Under the offline E-001 harness and fixed seed, do CONTROL vs catalog treatments produce the recorded activation_precision/recall associations without modifying source Skills?"
+  property: offline_skill_activation
+  baseline_id: baseline-v1-2026-09-18
+  source:
+    experiments: [E-001]
+    claims: [CLM-E001-001, CLM-E001-005]
+    evidence: [E001-EV-001, E001-EV-003]
+  readiness: READY
+  scope:
+    mode: OFFLINE_CONTROLLED
+    excludes: [live_task_success, live_host_injection, max_skills_feature]
+  setup:
+    cwd: docs/evals/experiments/E-001/harness
+    preconditions: [integrity_test_pass]
+  control:
+    description: CONTROL full catalog
+    configuration: { catalog_size: 23, seed: e001-v1-2026-09-18 }
+  treatment:
+    description: catalog size / truncation budgets
+    variable: catalog composition
+    configuration: conditions.yaml
+  fixtures:
+    - docs/evals/experiments/E-001/conditions.yaml
+    - docs/evals/experiments/E-001/harness/catalog_harness.py
+  metrics:
+    - id: E001-M-001
+      name: catalog_size
+      type: DIRECT
+    - id: E001-M-004
+      name: activation_precision
+      type: DIRECT
+      limitations: [offline_ranker]
+    - id: E001-M-005
+      name: activation_recall
+      type: DIRECT
+    - id: E001-M-006
+      name: activation_match_rate
+      type: DIRECT
+      limitations: [≠_task_success]
+  success_criteria:
+    - "integrity_test ALL_INTEGRITY_OK"
+    - "condition fingerprints match conditions.yaml"
+    - "T_SKILLS_5 precision > CONTROL; T_SKILLS_10 precision > CONTROL (association direction)"
+    - "source Skills hashes unchanged"
+    - "task_success remains labeled NOT_MEASURED"
+  failure_criteria:
+    - fingerprint_drift
+    - skills_modified
+    - integrity_fail
+    - reporting_activation_as_task_success
+  repetitions:
+    minimum: 1
+    recommended: 1
+    reason: "deterministic offline scorer — single run sufficient for fingerprint/precision check"
+  isolation: read_only_skills
+  cleanup: none_required
+  reproducibility:
+    commands:
+      - "python3 integrity_test.py"
+      - "python3 catalog_harness.py dry"
+  limitations:
+    - offline_≠_host
+    - task_success_NOT_MEASURED
+  regression_reference: baseline-v1-2026-09-18
+  safety_constraints: [no_max_skills, read_only_skills]
+  eval_contract:
+    inputs: [conditions.yaml, skills_root]
+    preconditions: [python3]
+    action: integrity_then_dry_or_battery
+    observations: [precision_by_condition, fingerprints]
+    metrics: [E001-M-001, E001-M-004, E001-M-005]
+    oracle:
+      type: directional_association
+      rules:
+        - "precision(T_SKILLS_5) > precision(CONTROL)"
+        - "precision(T_SKILLS_10) > precision(CONTROL)"
+        - "fingerprints_match_conditions"
+    cleanup: []
+    artifacts: [enablement-dry-run.json or battery-summary.json]

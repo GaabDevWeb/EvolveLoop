@@ -1,0 +1,9 @@
+baseline:
+  id: baseline-v4-2026-09-19
+  version: V4
+  parent: baseline-v3-2026-09-19
+  created_at: "2026-09-19T15:40:00Z"
+  reason: "Stabilization — mandatory scope, outcome reingestion, live registry snapshot, EventBus observer, engine opt-in"
+  tests: { total: 162, passed: 162 }
+  notes:
+    - "V1/V2/V3 preserved; this snapshot post-stabilization"

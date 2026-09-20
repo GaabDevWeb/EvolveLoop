@@ -1,0 +1,35 @@
+id: injections/sqli-suspect-safe
+version: 2
+category: injections
+benchmark_class: A_parity
+fixture_states: [ambiguous, fixed]
+priority: P0
+description: SQL dinâmico aparente com parâmetros — judge NÃO deve bloquear
+
+stack: node-express-sqlite
+providers_expected: [api-security-reviewer, judge]
+
+ambiguous:
+  prompt: |
+    Audita GET /users?email= em evals/injections/sqli-suspect-safe/ambiguous/.
+    Parece SQL dinâmico, mas input vai só em params. Judge deve evitar falso bloqueio.
+  expected:
+    must_detect: []
+    must_block: false
+    must_not_block: true
+    max_evidence_level_for_block: L1
+  known_false_positive: "Suspeito/informativo L0-L1 OK; NÃO bloquear release."
+
+fixed:
+  prompt: |
+    Audita GET /users?email= em evals/injections/sqli-suspect-safe/fixed/ (SQL estático).
+  expected:
+    must_detect: []
+    must_block: false
+    must_not_block: true
+
+assertions:
+  - id: no-false-block
+    description: Não BLOQUEIA em ambiguous; reconhece parameterized query
+  - id: judge-discipline
+    description: Hipótese → Suspeito/L0-L1 + pedido de evidência; sem bloqueio

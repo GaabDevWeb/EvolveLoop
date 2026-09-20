@@ -1,0 +1,65 @@
+baseline:
+  id: baseline-v1-2026-09-18
+  version: V1
+  created_at: "2026-09-18T23:29:22Z"
+  measured_at: "2026-09-18T23:29:33Z"
+  source_tree: /home/gaab/Downloads/CursorSKILLS
+  runtime_path: /home/gaab/Downloads/CursorSKILLS/orchestrator
+  package:
+    name: "@agents/orchestrator"
+    version: "2.0.0"
+  source_revision:
+    git: ABSENT
+    tree_content_sha256: "5600f9df2c99dde25771567faeaaa25d39c55575c046e36b55fb965149813795"
+    method: "sha256 of concatenated sorted per-file sha256 lines for src,tests,policies,contracts,schemas,package.json,package-lock.json,vitest.config.ts,tsconfig.json"
+  environment:
+    os: "Linux 6.12.88+deb13-amd64"
+    arch: x86_64
+    node: v24.15.0
+    npm: 11.12.1
+    typescript_tsc: 5.9.3
+    vitest: 2.1.9
+    python: 3.13.5
+
+artifacts:
+  - path: ARCHITECTURE-BASELINE.md
+    role: architecture_snapshot
+  - path: RUNTIME-BASELINE.md
+    role: runtime_report
+  - path: BASELINE-METRICS.yaml
+    role: metrics
+  - path: BASELINE-MANIFEST.yaml
+    role: manifest
+  - path: REPRODUCE-BASELINE.md
+    role: reproduction
+  - path: SOURCE-MANIFEST.yaml
+    role: inventory
+  - path: CRITICAL-FINGERPRINTS.sha256
+    role: code_fingerprints
+  - path: SOURCE-REVISION.txt
+    role: revision
+  - path: TEST-SUITE-FINGERPRINT.yaml
+    role: test_fingerprint
+  - path: TEST-NAMES.txt
+    role: test_case_list
+  - path: measurement-npm-test.log
+    role: measurement_evidence
+  - path: measurement-full-cycle.log
+    role: measurement_evidence
+  - path: measurement-contracts.log
+    role: measurement_evidence
+  - path: measurement-jobs-tests.log
+    role: measurement_evidence
+  - path: measurement-build.log
+    role: measurement_evidence
+
+validation:
+  tests: "103/103 PASS"
+  contracts: "7/7 PASS"
+  full_cycle: "5/5 PASS"
+  build: "FAIL (preexisting tsc)"
+  jobs_resume_pickup: "5/5 PASS (job-resume 2 + job-pickup 3)"
+
+integrity:
+  status: FROZEN
+  note: "Do not edit baseline V1 after BASELINE-CHECKSUMS.sha256; create V2 if system changes"

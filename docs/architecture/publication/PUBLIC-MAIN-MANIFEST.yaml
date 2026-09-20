@@ -1,0 +1,82 @@
+# Future public main contents — plan only
+main:
+  directories:
+    - path: orchestrator/
+      reason_in_main: runtime CORE
+      personal_coupling: low
+      migration_required: none
+      risk: LOW
+    - path: .cursor/skills/
+      reason_in_main: skill contracts (pipeline + wiki)
+      personal_coupling: medium (wiki-mem optional)
+      migration_required: make wiki-mem optional in default hooks
+      risk: MEDIUM
+    - path: .cursor/commands/
+      reason_in_main: user entrypoints
+      personal_coupling: medium (PT names, MegaBrain brand)
+      migration_required: brand rename later; locale pack optional
+      risk: MEDIUM
+    - path: .cursor/rules/megabrain.mdc
+      reason_in_main: discipline rules
+      personal_coupling: naming only
+      migration_required: rename with brand
+      risk: LOW
+    - path: Agents/
+      reason_in_main: human mirrors
+      personal_coupling: low
+      migration_required: none
+      risk: LOW
+    - path: global-skills/
+      reason_in_main: pruned public pack
+      personal_coupling: low
+      migration_required: none
+      risk: LOW
+    - path: profiles/default.yaml
+      reason_in_main: portable defaults
+      personal_coupling: none
+      migration_required: none
+      risk: LOW
+    - path: agent-setup/
+      reason_in_main: install mechanism
+      personal_coupling: medium (defaults historically personal — already improved)
+      migration_required: scrub remaining Documentos assumptions in docs
+      risk: MEDIUM
+    - path: scripts/
+      reason_in_main: install-agents-global.sh
+      personal_coupling: low
+      migration_required: ensure WIKI_ROOT documented not hardcoded
+      risk: LOW
+    - path: mcp/
+      reason_in_main: templates only
+      personal_coupling: low
+      migration_required: keep env.example placeholders
+      risk: LOW
+    - path: docs/architecture/{knowledge,evolveloopt,skills,portability,publication}/
+      reason_in_main: architecture docs
+      personal_coupling: historical mentions OK
+      migration_required: curate user-facing subset
+      risk: LOW
+    - path: Rules/Rules.md
+      reason_in_main: source for megabrain.mdc
+      personal_coupling: naming
+      migration_required: brand
+      risk: LOW
+  files:
+    - path: README.md
+      reason_in_main: entry docs
+      migration_required: rewrite for public (structure planned)
+      risk: HIGH
+    - path: GLOBAL-SETUP.md
+      reason_in_main: install
+      migration_required: depersonalize
+      risk: MEDIUM
+    - path: INVENTORY.md
+      reason_in_main: pack inventory
+      migration_required: refresh completeness
+      risk: LOW
+  commands: [MegaBrain, wiki, prd, planejar, backend, frontend-pro, testes, seguranca, validar, documentar, debugger, grill-me, ...]
+  skills: [orquestrar, wiki, prd, planner, workers, gates, grill-me, image-to-code, tier3 pruned]
+  agents: [Orquestrador, Wiki, workers, gates]
+  providers: [deterministic/*, knowledge WikiBackend, cursor-skill providers]
+  configs: [profiles/default.yaml, mcp.env.example, contracts]
+  docs: [architecture curated, user quickstart TBD]

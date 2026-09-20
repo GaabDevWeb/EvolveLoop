@@ -1,0 +1,17 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Contract
+metadata:
+  id: security-review
+  version: "1.0.0"
+  status: active
+
+spec:
+  capability: security-review
+  type: gate
+  semver:
+    major: 1
+    minor: 0
+    patch: 0
+
+  evidence:
+    schema: evidence/security-review@1.0.0

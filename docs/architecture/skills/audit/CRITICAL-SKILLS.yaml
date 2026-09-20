@@ -1,0 +1,41 @@
+# Critical Skills (hard gate | runtime | fallback | architecture | agent deps)
+# Generated: 2026-09-19T20:53:30Z
+# AUDIT ONLY
+
+critical:
+  - id: orquestrar
+    reasons: [architecture_dependency, agent_dependency, hard_gate_orchestrator]
+  - id: gaabwiki
+    reasons: [hard_gate]
+  - id: image-to-code
+    reasons: [hard_gate, agent_dependency, critical_low_frequency]
+  - id: prd
+    reasons: [hard_gate]
+  - id: testing
+    reasons: [hard_gate]
+  - id: debugger
+    reasons: [hard_gate, agent_dependency]
+  - id: systematic-debugging
+    reasons: [hard_gate_source_absorbed, skill_dependency]
+  - id: security
+    reasons: [hard_gate_conditional]
+  - id: po-review
+    reasons: [hard_gate]
+  - id: frontend-pro
+    reasons: [agent_dependency, hard_gate_vision]
+  - id: planner
+    reasons: [architecture_dependency]
+  - id: agent-browser
+    reasons: [fallback, hard_gate_in_dossier]
+  - id: technical-library-dossier
+    reasons: [command_entrypoint, hard_gate_skill_contract]
+  - id: find-skills
+    reasons: [architecture_claim_unresolved, discovery]
+  - id: brainstorming
+    reasons: [upstream_flow, internal_hard_gate]
+  - id: grill-me
+    reasons: [upstream_flow, wrapper_broken]
+  - id: gaabwiki-mem
+    reasons: [hook_dependency]
+  - id: backend
+    reasons: [runtime_dependency, agent_dependency]

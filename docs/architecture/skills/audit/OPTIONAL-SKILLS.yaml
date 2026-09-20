@@ -1,0 +1,71 @@
+# Optional skills — proven non-blocking for MegaBrain core
+# Generated: 2026-09-19T20:53:30Z
+
+optional:
+  - id: brainstorming
+    proof: orquestrar labels "Upstream opcional"; MegaBrain hard gate is prd approval
+    hard_dependencies_on_it: false
+  - id: grill-me
+    proof: orquestrar/prd mark optional between prd and planner
+    hard_dependencies_on_it: false
+    caveat: wrapper broken without grilling
+  - id: code-reviewer
+    proof: critic optional except risk_tier=sensitive
+    hard_dependencies_on_it: false
+  - id: validator
+    proof: fine-grained gate; not Fase 5 PO substitute
+    hard_dependencies_on_it: false
+  - id: failure-analyst
+    proof: specialized path; not on happy-path table as mandatory
+    hard_dependencies_on_it: false
+  - id: gsap
+    proof: no MegaBrain command/orquestrar edge
+    hard_dependencies_on_it: false
+  - id: framer-motion
+    proof: no MegaBrain command/orquestrar edge
+    hard_dependencies_on_it: false
+  - id: lenis
+    proof: no MegaBrain command/orquestrar edge
+    hard_dependencies_on_it: false
+  - id: hover-effects
+    proof: no MegaBrain command/orquestrar edge
+    hard_dependencies_on_it: false
+  - id: particles
+    proof: no MegaBrain command/orquestrar edge
+    hard_dependencies_on_it: false
+  - id: r3f-shaders
+    proof: no MegaBrain command/orquestrar edge
+    hard_dependencies_on_it: false
+  - id: linkedin-posts
+    proof: inventory/README only
+    hard_dependencies_on_it: false
+  - id: frontend-design
+    proof: anti-slop absorbed; external skill optional
+    hard_dependencies_on_it: false
+  - id: ui-ux-pro-max
+    proof: forked into frontend-pro; not Scheduler capability
+    hard_dependencies_on_it: false
+  - id: technical-library-dossier
+    proof: parallel research path; researcher does not call it
+    hard_dependencies_on_it: false
+    caveat: when invoked, agent-browser is hard inside skill
+  - id: writing-plans
+    proof: MegaBrain uses planner instead
+    hard_dependencies_on_it: false
+  - id: executing-plans
+    proof: MegaBrain uses PDA exec workers
+    hard_dependencies_on_it: false
+  - id: subagent-driven-development
+    proof: MegaBrain uses Task PDA
+    hard_dependencies_on_it: false
+  - id: finishing-a-development-branch
+    proof: MegaBrain uses po-review + documentar
+    hard_dependencies_on_it: false
+  - id: agent-browser
+    proof: optional/fallback in frontend-pro (Puppeteer primary)
+    hard_dependencies_on_it: false
+    caveat: hard inside technical-library-dossier
+  - id: find-skills
+    proof: not on MegaBrain happy path; discovery tool
+    hard_dependencies_on_it: false
+    caveat: docs claim architectural fallback (unimplemented)

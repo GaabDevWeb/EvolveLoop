@@ -1,0 +1,130 @@
+experiment: E-001
+baseline:
+  id: baseline-v1-2026-09-18
+catalog_source: /home/gaab/Downloads/CursorSKILLS/.cursor/skills
+selection:
+  deterministic: true
+  strategy: seeded_sha256_order_then_prefix
+  seed: e001-v1-2026-09-18
+token_estimate: whitespace_split_count
+conditions:
+  -
+    id: CONTROL
+    catalog_size: 23
+    max_description_tokens: null
+    skill_ids:
+      - adr
+      - backend
+      - researcher
+      - frontend-pro
+      - architect
+      - agent-architecture-mining
+      - agent-authoring
+      - gaabwiki
+      - code-reviewer
+      - planner
+      - po-review
+      - testing
+      - debugger
+      - prd
+      - database
+      - documentation
+      - gaabwiki-mem
+      - devops
+      - orquestrar
+      - security
+      - skill-authoring
+      - failure-analyst
+      - validator
+    selection_method: all_skills_seeded_order
+    seed: e001-v1-2026-09-18
+    fingerprint: a91e10d36db69c0a5f1ee1168982d9b1caac44bacd51add279986608b67ad1e6
+  -
+    id: T_SKILLS_5
+    catalog_size: 5
+    max_description_tokens: null
+    skill_ids:
+      - adr
+      - backend
+      - researcher
+      - frontend-pro
+      - architect
+    selection_method: seeded_order_prefix
+    seed: e001-v1-2026-09-18
+    fingerprint: 8e3c06fdda3dfdb9a14c9f4b7bf2f722d718563cfdc549be849123c599521ebb
+  -
+    id: T_SKILLS_10
+    catalog_size: 10
+    max_description_tokens: null
+    skill_ids:
+      - adr
+      - backend
+      - researcher
+      - frontend-pro
+      - architect
+      - agent-architecture-mining
+      - agent-authoring
+      - gaabwiki
+      - code-reviewer
+      - planner
+    selection_method: seeded_order_prefix
+    seed: e001-v1-2026-09-18
+    fingerprint: d7d55ac8898df448fa2f23a13f1847651378c835095bc89819250d93a5347933
+  -
+    id: T_TOKENS_40
+    catalog_size: 23
+    max_description_tokens: 40
+    skill_ids:
+      - adr
+      - backend
+      - researcher
+      - frontend-pro
+      - architect
+      - agent-architecture-mining
+      - agent-authoring
+      - gaabwiki
+      - code-reviewer
+      - planner
+      - po-review
+      - testing
+      - debugger
+      - prd
+      - database
+      - documentation
+      - gaabwiki-mem
+      - devops
+      - orquestrar
+      - security
+      - skill-authoring
+      - failure-analyst
+      - validator
+    selection_method: all_skills_desc_truncated
+    seed: e001-v1-2026-09-18
+    fingerprint: aa662c3c3b8d19d846d3d02b51938cc6ce8bf924f1efb0185c71423776e6fb1c
+    note: Corpus descriptions are all <=108 whitespace tokens; 40 yields measurable prefix reduction. 200 would equal CONTROL on this corpus.
+inventory:
+  skill_count: 23
+  skill_ids_seeded_order:
+    - adr
+    - backend
+    - researcher
+    - frontend-pro
+    - architect
+    - agent-architecture-mining
+    - agent-authoring
+    - gaabwiki
+    - code-reviewer
+    - planner
+    - po-review
+    - testing
+    - debugger
+    - prd
+    - database
+    - documentation
+    - gaabwiki-mem
+    - devops
+    - orquestrar
+    - security
+    - skill-authoring
+    - failure-analyst
+    - validator

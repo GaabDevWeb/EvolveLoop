@@ -1,0 +1,251 @@
+audit:
+  - id: A-SIG-001
+    component: SignalMiner
+    claim: "Normalizes observations with provenance, fingerprint, synthetic flag"
+    implementation: IMPLEMENTED
+    integration: USED_BY_ingest
+    tests: TESTED
+    execution: PASSED
+    measurement: OBSERVED
+    security: N/A
+    status: VERIFIED
+    evidence:
+      - orchestrator/src/evolveloop/signal-miner.ts
+      - orchestrator/tests/unit/evolveloop/evolveloop.test.ts
+    limitations: ["Miner-level dedupe is in-memory per instance; durable dedupe is store fingerprints"]
+
+  - id: A-STORE-001
+    component: PersistentSignalStore
+    claim: "Persistent observation survives process restart"
+    implementation: IMPLEMENTED
+    integration: INTEGRATED
+    tests: TESTED
+    execution: PASSED
+    measurement: MEASURED
+    security: "shared evolutionDir — no tenancy"
+    status: VERIFIED
+    evidence:
+      - EV-EVOLVE-002 restart test
+      - adversarial F5 cross-instance
+    limitations: ["restart = new JS instance same dir; not OS crash/fsync proof"]
+
+  - id: A-XRUN-001
+    component: CrossRunAggregator
+    claim: "unique_executions >= 3 required; same-run triple is not a pattern"
+    implementation: IMPLEMENTED
+    integration: INTEGRATED_IN_analyze
+    tests: TESTED
+    execution: PASSED
+    measurement: MEASURED
+    security: N/A
+    status: VERIFIED
+    evidence:
+      - EV-EVOLVE-003
+      - adversarial F6
+
+  - id: A-HIST-001
+    component: LongitudinalEvolveLoop.analyze
+    claim: "Historical store is consumed during analysis"
+    implementation: IMPLEMENTED
+    integration: INTEGRATED
+    tests: TESTED
+    execution: PASSED
+    measurement: MEASURED
+    security: N/A
+    status: VERIFIED
+    evidence:
+      - longitudinal-controller.ts store.query → aggregator
+      - adversarial F5 RunA/B/C
+    limitations: ["outcomes.jsonl NOT consumed by analyze"]
+
+  - id: A-NEED-001
+    component: LongitudinalNeedDetector
+    claim: "Longitudinal need detection with lifecycle"
+    implementation: IMPLEMENTED
+    integration: INTEGRATED
+    tests: TESTED
+    execution: PASSED
+    measurement: MEASURED
+    security: N/A
+    status: PARTIALLY_VERIFIED
+    evidence:
+      - lifecycle/need-lifecycle.ts
+      - EV-EVOLVE-006
+    limitations:
+      - "needs.json global per dir (not user-partitioned)"
+      - "STALE/REOPENED paths partially exercised"
+
+  - id: A-LIFE-001
+    component: Need lifecycle overwrite
+    claim: "REGRESSED/REMAINS_ACTIVE preserved across re-analyze"
+    implementation: IMPLEMENTED
+    integration: INTEGRATED
+    tests: TESTED
+    execution: PASSED_AFTER_FIX
+    measurement: MEASURED
+    security: N/A
+    status: VERIFIED
+    evidence:
+      - pre-fix: REGRESSED→EMERGING OBSERVED
+      - post-fix: REGRESSED preserved MEASURED
+    limitations: ["pre-fix defect was CONTRADICTED vs safety claim"]
+
+  - id: A-RCA-001
+    component: RootCauseAnalyzer
+    claim: "Registry-aware causal diagnosis"
+    implementation: IMPLEMENTED
+    integration: PARTIAL
+    tests: TESTED
+    execution: PASSED
+    measurement: OBSERVED
+    security: N/A
+    status: PARTIALLY_VERIFIED
+    evidence:
+      - root-cause.ts PATTERN_TO_CAUSE table
+      - diagnoseWithInventory injected strings
+    limitations:
+      - "heuristic suspected causes, not proven causality"
+      - "no live Agent/Skill/Capability registry read"
+
+  - id: A-CAND-001
+    component: EvolutionCandidateGenerator
+    claim: "Candidates with lineage, bounds, CORE HOLD"
+    implementation: IMPLEMENTED
+    integration: INTEGRATED
+    tests: TESTED
+    execution: PASSED
+    measurement: MEASURED
+    security: "PROPOSE ceiling"
+    status: VERIFIED
+    evidence:
+      - EV-EVOLVE-005 HOLD
+      - max_candidates_per_cycle storm test
+
+  - id: A-ISO-001
+    component: User isolation
+    claim: "User A signals/needs/candidates do not leak to B"
+    implementation: PARTIAL
+    integration: OPT_IN
+    tests: TESTED
+    execution: PASSED_WITH_CALLER_FILTER
+    measurement: MEASURED
+    security: HIGH_RESIDUAL
+    status: PARTIALLY_VERIFIED
+    evidence:
+      - query({user_id}) isolated
+      - analyze({user_id}) isolated AFTER correction
+      - analyze() without filter still aggregates all users
+    limitations:
+      - "default analyze unscoped"
+      - "needs file shared"
+      - "replayAnalyze ignores user_id"
+
+  - id: A-CORE-001
+    component: CORE_CANDIDATE
+    claim: "CORE candidate without core mutation"
+    implementation: IMPLEMENTED_HOLD
+    integration: INTEGRATED
+    tests: TESTED
+    execution: PASSED
+    measurement: MEASURED
+    security: VERIFIED_HOLD
+    status: VERIFIED
+    evidence:
+      - buildEvolutionRequest HOLD
+      - mutates_core false hardcoded
+
+  - id: A-OUT-001
+    component: OutcomeTracker
+    claim: "Post-evolution outcome before/after; empty-after INCONCLUSIVE"
+    implementation: IMPLEMENTED
+    integration: CALLER_SUPPLIED_WINDOWS
+    tests: TESTED
+    execution: PASSED_AFTER_FIX
+    measurement: MEASURED
+    security: N/A
+    status: PARTIALLY_VERIFIED
+    evidence:
+      - pre-fix empty-after→IMPROVED CONTRADICTED
+      - post-fix empty-after→INCONCLUSIVE VERIFIED
+    limitations:
+      - "before/after caller-trusted"
+      - "outcomes not fed back into analyze"
+
+  - id: A-LOOP-001
+    component: Closed loop
+    claim: "persist→analyze→need→candidate→outcome→next analysis"
+    implementation: IMPLEMENTED_WITH_LIMITATIONS
+    integration: PARTIAL
+    tests: TESTED
+    execution: PASSED
+    measurement: MEASURED
+    security: N/A
+    status: PARTIALLY_VERIFIED
+    evidence:
+      - ingest/analyze/recordOutcome API
+      - CLOSED_replay_uses_history
+    limitations:
+      - "outcome does not re-enter analyze except via need lifecycle"
+      - "not wired to production engine/CLI"
+
+  - id: A-ADP-001
+    component: Adapters
+    claim: "JSONL CONNECTED; Evidence/Eval/Feedback NOT_CONNECTED"
+    implementation: LABELS_PLUS_JSONL_HELPER
+    integration: NOT_AUTO_WIRED
+    tests: TESTED_HELPER
+    execution: PASSED
+    measurement: OBSERVED
+    security: N/A
+    status: PARTIALLY_VERIFIED
+    evidence:
+      - ADAPTER_REGISTRY
+      - no ingestFromJsonl on controller
+    limitations: ["CONNECTED ≠ live pipeline"]
+
+  - id: A-SEC-001
+    component: Security / autonomy
+    claim: "PASS_WITH_LIMITATIONS; autonomy OBSERVE/ANALYZE/PROPOSE"
+    implementation: DECLARATIVE_FLAGS
+    integration: HANDOFF_ONLY
+    tests: TESTED_FLAGS
+    execution: PASSED
+    measurement: OBSERVED
+    security: PASS_WITH_LIMITATIONS
+    status: PARTIALLY_VERIFIED
+    evidence:
+      - unauthorized_mutation hardcoded false
+      - HOLD for CORE
+    limitations: ["flags not runtime-enforced measurements"]
+
+  - id: A-TEST-001
+    component: Test suite
+    claim: "135/135"
+    implementation: N/A
+    integration: N/A
+    tests: EXECUTED
+    execution: "pre-fix 135/135; post-fix 138/138"
+    measurement: MEASURED
+    security: N/A
+    status: VERIFIED
+    evidence:
+      - vitest run 2026-09-19
+    limitations: ["prior claim count stale after audit regressions added"]
+
+  - id: A-BASE-001
+    component: Baselines V1/V2/V3
+    claim: "V1+V2 intact; V3 created"
+    implementation: N/A
+    integration: N/A
+    tests: N/A
+    execution: CHECKSUMMED
+    measurement: MEASURED
+    security: N/A
+    status: PARTIALLY_VERIFIED
+    evidence:
+      - V1/V2/V3 self-checksums PASS
+      - V3 critical files match pre-correction sources
+    limitations:
+      - "V1/V2 index.ts DRIFT expected"
+      - "post-audit code drifts V3 outcome/lifecycle/controller hashes"
+      - "BASELINE_DRIFT after corrections — new baseline not auto-created"

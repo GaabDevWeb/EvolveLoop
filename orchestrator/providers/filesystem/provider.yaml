@@ -1,0 +1,28 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Provider
+metadata:
+  name: filesystem
+  version: "1.0.0"
+  description: "Deterministic filesystem primitives"
+  owner: agents-team
+spec:
+  plugin:
+    type: deterministic
+    entrypoint: "src/providers/deterministic/index.ts"
+  capabilities:
+    - id: filesystem.read
+      contract: contracts/filesystem.read@1.0.0
+      type: worker
+    - id: filesystem.write
+      contract: contracts/filesystem.write@1.0.0
+      type: worker
+    - id: filesystem.list
+      contract: contracts/filesystem.list@1.0.0
+      type: worker
+    - id: filesystem.search
+      contract: contracts/filesystem.search@1.0.0
+      type: worker
+  runtime:
+    cost: low
+  availability: active
+  priority: 50

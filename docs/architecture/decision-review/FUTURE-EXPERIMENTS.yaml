@@ -1,0 +1,54 @@
+experiments:
+
+  - id: E-001-LIVE
+    question: Does catalog size/truncation affect live host skill selection and live task_success?
+    why_unknown: E-001 offline only; task_success and host injection NOT_MEASURED
+    existing_evidence: offline precision/token_estimate associations (PROXY tokens)
+    missing_evidence:
+      - controlled live catalog injection
+      - live task_success
+      - vendor tokenizer (or explicit accepted proxy)
+    prerequisite: host experiment harness without adding engine max_skills unless product decision later
+    priority: HIGH
+
+  - id: E-005-OS-KILL
+    question: Does job-path resume avoid duplicate STATE_WRITE after OS process kill?
+    why_unknown: E-005 measured same-process only; OS kill NOT_MEASURED
+    existing_evidence: SAME_ENGINE + NEW_ENGINE in-process resume; mutation=1
+    missing_evidence:
+      - true process termination
+      - restart pickup
+    prerequisite: durable jobsDir + checkpoint already present
+    priority: MEDIUM
+
+  - id: E-005-CONFIRM-SIDE-EFFECT
+    question: Does confirm-gated product mutation path also avoid duplicates on resume?
+    why_unknown: E-005 side-effect scope = STATE_WRITE job JSON only
+    existing_evidence: JobFileExecutor mutation log
+    missing_evidence: confirm-path / external write instrumentation
+    prerequisite: define mutation surface under test
+    priority: MEDIUM
+
+  - id: E-002-SEC-MODEL
+    question: What enforceable security model and attestation signals exist before posture labels?
+    why_unknown: sandbox NOT_IMPLEMENTED; labels without enforcement forbidden
+    existing_evidence: path confinement; Authority flags on DeterministicProvider
+    missing_evidence: OS isolation design; refuse-unenforceable policy
+    prerequisite: architecture decision on Policy vs Sandbox vs Authority
+    priority: HIGH (if security prioritized)
+
+  - id: E-003-STUCK-DEF
+    question: What operational definition of stuck yields acceptable false_stuck_rate?
+    why_unknown: no StuckDetector; maxIterations ≠ semantic stuck
+    existing_evidence: bound-only stop
+    missing_evidence: labeled thrash fixtures; metric definitions
+    prerequisite: DEFINE SEMANTICS FIRST
+    priority: MEDIUM
+
+  - id: E-004-OWNERSHIP
+    question: Who owns compacted context vs Memory vs Knowledge vs Checkpoint, and how is reinject validated?
+    why_unknown: compaction NOT_IMPLEMENTED; ownership unresolved
+    existing_evidence: baseline boundaries Knowledge≠Memory≠Checkpoint
+    missing_evidence: ownership ADR + loss/validation metrics
+    prerequisite: ARCHITECTURE FIRST
+    priority: LOW–MEDIUM

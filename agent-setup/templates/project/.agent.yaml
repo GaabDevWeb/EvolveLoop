@@ -1,0 +1,19 @@
+project:
+  name: "{{PROJECT_NAME}}"
+  root: "."
+
+ai:
+  enabled: true
+
+wiki:
+  enabled: true
+  vault: "{{VAULT_ROOT}}"
+
+rag:
+  enabled: false
+
+memory:
+  enabled: true
+
+megabrain:
+  enabled: true

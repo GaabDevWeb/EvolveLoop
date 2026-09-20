@@ -1,0 +1,13 @@
+{
+  "gate": "grill-me",
+  "required": true,
+  "status": "satisfied",
+  "skill_id": "grill-me",
+  "skill_version": "2.0.0",
+  "skill_path": "~/.agents/skills/grill-me/SKILL.md",
+  "timestamp": "2026-09-19T00:00:00.000Z",
+  "feature_id": "<feature_id>",
+  "result_reference": "GRILL_ME_RESULT",
+  "reason": "shared understanding confirmed",
+  "verdict": "pass"
+}

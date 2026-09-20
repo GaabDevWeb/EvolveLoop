@@ -1,0 +1,79 @@
+# Source inventory at Baseline V1 (orchestrator)
+
+runtime_root: /home/gaab/Downloads/CursorSKILLS/orchestrator
+package: "@agents/orchestrator@2.0.0"
+
+counts:
+  src_ts_files: 52
+  jobs_modules: 4
+  policies_files: 1
+  contracts_files: 40
+  schemas_files: 4
+  providers_files: 15
+  test_files_listed: 29
+
+directories:
+  core:
+    - src/engine/
+    - src/scheduler/
+    - src/registry/
+    - src/graph/
+    - src/ir/
+    - src/state/
+  jobs:
+    - src/jobs/checkpoint.ts
+    - src/jobs/job-pickup.ts
+    - src/jobs/job-resume.ts
+    - src/jobs/job-store.ts
+  policy_authority:
+    - src/policies/
+    - src/authority/
+    - policies/
+  evidence:
+    - src/evidence/
+  memory_knowledge:
+    - src/memory/
+    - src/knowledge/
+  telemetry:
+    - src/telemetry/
+  providers_plugins_executors:
+    - src/providers/
+    - src/plugins/
+    - src/executors/
+    - providers/
+  entrypoints:
+    - src/cli/run-engine.ts
+    - src/cli/run-jobs.ts
+    - src/cli/registry-builder.ts
+    - src/index.ts
+  tests:
+    - tests/unit/
+    - tests/integration/
+    - tests/contracts/
+    - tests/evals/
+  contracts_schemas:
+    - contracts/
+    - schemas/
+  config:
+    - package.json
+    - package-lock.json
+    - tsconfig.json
+    - vitest.config.ts
+
+excluded_from_inventory:
+  - node_modules/
+  - dist/
+  - coverage/
+  - temporary logs outside baseline/
+
+scripts_from_package_json:
+  build: tsc
+  test: vitest run
+  test:unit: vitest run tests/unit
+  test:integration: vitest run tests/integration
+  test:evals: vitest run tests/evals
+  run-engine: node dist/cli/run-engine.js
+  run-jobs: node dist/cli/run-jobs.js
+  registry-builder: node dist/cli/registry-builder.js
+
+note: "run-engine/run-jobs via npm scripts require dist/; Vitest baseline path does not."

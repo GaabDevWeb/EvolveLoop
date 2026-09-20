@@ -1,0 +1,57 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Contract
+metadata:
+  id: debug
+  version: "1.0.0"
+  status: active
+
+spec:
+  capability: debug
+  type: worker
+
+  semver:
+    major: 1
+    minor: 0
+    patch: 0
+
+  compatible_with:
+    - "contracts/debug@1.0.x"
+
+  inputs:
+    - name: briefing
+      required: false
+    - name: error-evidence
+      required: false
+    - name: reproduction
+      required: false
+    - name: memory-scope
+      required: false
+
+  outputs:
+    - name: debug-report
+      schema: artifacts/debug-report@1.0.0
+    - name: handoff
+      schema: artifacts/entrega-consolidada@1.0.0
+
+  definition_of_done:
+    minimum_checks:
+      - root_cause_investigated_before_fix
+      - evidence_documented
+      - single_hypothesis_or_explicit_unknown
+      - entrega_consolidada_emitted
+    forbidden:
+      - fix_without_phase1
+      - testing_gate_verdict
+      - security_gate_verdict
+      - greenfield_feature_ownership
+      - structural_refactor_as_debug
+      - policy_bypass
+
+  evidence:
+    schema: evidence/worker-default@1.0.0
+    emitter: debugger
+    payload_type: worker
+
+  runtime_compatibility:
+    pda_roles: [explore, exec]
+    note: "Typically after testing retries exhausted; not a gate"

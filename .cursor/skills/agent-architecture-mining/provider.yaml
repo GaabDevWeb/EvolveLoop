@@ -1,0 +1,46 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Provider
+metadata:
+  name: agent-architecture-mining
+  version: "1.0.0"
+  description: "Observational reverse-engineering of agentic architectures"
+  owner: agents-team
+
+spec:
+  plugin:
+    type: cursor-skill
+    entrypoint: ".cursor/skills/agent-architecture-mining/SKILL.md"
+
+  capabilities:
+    - id: agent-architecture-mining
+      contract: contracts/agent-architecture-mining@1.0.0
+      type: worker
+
+  interfaces:
+    inputs:
+      - name: mining-request
+        required: true
+      - name: target
+        required: false
+      - name: mode
+        required: false
+    outputs:
+      - name: target-report
+        schema: artifacts/architecture-mining-report@1.0.0
+      - name: findings
+        schema: artifacts/architecture-finding@1.0.0
+
+  runtime:
+    cost: medium
+    subagent_type: generalPurpose
+
+  constraints:
+    stack: [cursor, megabrain]
+    platforms: [cursor]
+    mutates_agent_system: false
+
+  telemetry:
+    key: provider.agent-architecture-mining
+
+  availability: experimental
+  priority: 35

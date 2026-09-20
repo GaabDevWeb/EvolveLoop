@@ -1,0 +1,364 @@
+# MECHANISMS.yaml — Claude Code / Claude Agent SDK
+# TARGET_RESEARCH | OFFICIAL_EXTERNAL | 2026-09-18
+# Epistemic: claims are DOCUMENTED unless label says otherwise.
+# Decisions vs MegaBrain: ALREADY_PRESENT | ADOPT | ADAPT | PROTOTYPE | DEFER | REJECT
+
+target:
+  id: claude-code
+  name: Claude Code + Claude Agent SDK
+  category: coding-agent+sdk
+  vendor: Anthropic
+  provenance: OFFICIAL_EXTERNAL
+  docs_root: https://code.claude.com/docs/
+  examined_on: "2026-09-18"
+  runtime_versions_pinned: false
+
+surfaces:
+  - id: interactive-cli
+    description: Claude Code CLI/IDE/Desktop/web sessions
+    evidence: DOCUMENTED
+  - id: agent-sdk
+    description: Python claude-agent-sdk + TypeScript @anthropic-ai/claude-agent-sdk embed same loop
+    evidence: DOCUMENTED
+    packages:
+      - claude-agent-sdk
+      - "@anthropic-ai/claude-agent-sdk"
+
+mechanisms:
+  - id: CC-LOOP
+    name: Autonomous agent loop
+    lens: Agent loop
+    problem: Complete multi-step coding tasks without host reimplementing tool orchestration
+    how: |
+      Receive prompt+system+tools+history → model responds with text and/or tool_use →
+      execute tools → feed results → repeat until no tool_use or maxTurns/maxBudgetUsd.
+      Messages: SystemMessage(init|compact_boundary|…), AssistantMessage, UserMessage, ResultMessage.
+    costs:
+      - Unbounded turns/cost without caps
+      - Context growth with every tool I/O
+    failure_modes:
+      - error_max_turns / error_max_budget_usd
+      - error_during_execution / refusal stop_reason
+      - Open-ended prompts run long
+    alternatives:
+      - Single-shot LLM + host orchestration
+      - Explicit task graphs (our Capability IR)
+    our_equivalence: PARTIAL
+    our_mechanism: Orchestrator + orquestrar + PDA Task roles
+    decision: ALREADY_PRESENT
+    decision_note: Do not replace MegaBrain runtime with Claude loop; optional ADAPT of caps
+    confidence: HIGH
+    utility: USEFUL
+    sources:
+      - https://code.claude.com/docs/en/agent-sdk/agent-loop
+
+  - id: CC-TOOLS
+    name: Built-in coding tool surface
+    lens: Tools
+    problem: Agent needs filesystem, search, shell, web actions
+    how: |
+      Built-ins include Read, Edit, Write, Glob, Grep, Bash, WebSearch, WebFetch,
+      ToolSearch, Agent, Skill, AskUserQuestion, TaskCreate/Update, Monitor.
+      Readonly tools may run in parallel; mutating tools sequential.
+      MCP and custom SDK tools extend surface.
+    costs:
+      - Tool schemas consume context
+      - Large tool outputs inflate window
+    failure_modes:
+      - Tool denied → model retries or stops
+      - Unsandboxed Bash still powerful
+    our_equivalence: SUBSTANTIAL
+    our_mechanism: Capability/Provider registries (different tool names/contracts)
+    decision: ALREADY_PRESENT
+    secondary_decision: PROTOTYPE
+    secondary_note: Progressive/lazy tool schema loading (ToolSearch pattern)
+    confidence: HIGH
+    utility: USEFUL
+    sources:
+      - https://code.claude.com/docs/en/tools
+      - https://code.claude.com/docs/en/agent-sdk/agent-loop
+
+  - id: CC-SKILLS
+    name: Progressive skill packages
+    lens: Skills
+    problem: Long procedures bloat always-on context if placed in CLAUDE.md
+    how: |
+      SKILL.md with YAML frontmatter; descriptions load at session start;
+      full body loads on invoke (/name or automatic). Agent Skills open standard
+      + Claude extensions (allowed-tools, context:fork, hooks, dynamic !`cmd` injection).
+      Locations: enterprise / ~/.claude/skills / .claude/skills / plugins.
+    costs:
+      - Discovery/description tokens still present
+      - Conflicting skills by name need precedence rules
+    failure_modes:
+      - Model ignores skill when description weak
+      - Nested monorepo skill naming complexity
+    our_equivalence: SUBSTANTIAL
+    our_mechanism: ".cursor/skills/**/SKILL.md"
+    decision: ALREADY_PRESENT
+    secondary_decision: ADAPT
+    secondary_note: allowed-tools / fork / dynamic injection if missing in our skill schema
+    confidence: HIGH
+    utility: USEFUL
+    sources:
+      - https://code.claude.com/docs/en/skills
+
+  - id: CC-CLAUDEMD
+    name: Hierarchical CLAUDE.md instructions
+    lens: Context / CLAUDE.md
+    problem: Persist project/user/org guidance across fresh context windows
+    how: |
+      Managed / user / project / local CLAUDE.md + CLAUDE.local.md; walk up tree;
+      subdirectory files on-demand; .claude/rules/ with optional paths:; @imports (max 4 hops).
+      Explicitly NOT enforcement — use hooks/permissions to block.
+    costs:
+      - Tokens every request (prompt-cached after first)
+      - Poor adherence if long/contradictory
+    failure_modes:
+      - Instructions treated as soft; model may violate
+      - Nested CLAUDE.md lost after compaction until re-trigger
+    our_equivalence: PARTIAL
+    our_mechanism: Cursor rules + GaabWiki grounding + megabrain.mdc
+    decision: ADAPT
+    confidence: HIGH
+    utility: USEFUL
+    sources:
+      - https://code.claude.com/docs/en/memory
+      - https://code.claude.com/docs/en/claude-md
+
+  - id: CC-AUTOMEM
+    name: Auto memory
+    lens: Context / Memory
+    problem: Capture learnings without manual CLAUDE.md edits
+    how: |
+      Model-written notes under ~/.claude/projects/<id>/memory/;
+      MEMORY.md loads first 200 lines or 25KB; topic files on demand.
+      Subagents do not inherit parent auto memory unless configured (fork exception).
+    costs:
+      - Pollutable / non-canonical knowledge
+      - Soft guidance only
+    failure_modes:
+      - Stale or wrong memories influence behavior
+    our_equivalence: NONE
+    our_mechanism: gaabwiki-mem / Evidence Bus (different contracts)
+    decision: DEFER
+    confidence: MEDIUM
+    utility: CONDITIONALLY_USEFUL
+    sources:
+      - https://code.claude.com/docs/en/memory
+
+  - id: CC-CTX
+    name: Context window management
+    lens: Context management
+    problem: History+tools exhaust context; need continuity of critical rules
+    how: |
+      Accumulate history across turns; prompt-cache stable prefixes;
+      auto-compaction with compact_boundary; PreCompact hooks;
+      project-root CLAUDE.md + auto memory re-injected after compact;
+      skill bodies re-injected with caps (5k/skill, 25k total per context-window doc);
+      subagents isolate heavy reads; ToolSearch defers MCP schemas.
+    costs:
+      - Summary loss of early instructions
+      - Compaction itself uses tokens
+    failure_modes:
+      - Path-scoped rules / nested CLAUDE.md not auto re-injected
+      - Over-compaction loses acceptance criteria unless in CLAUDE.md
+    our_equivalence: PARTIAL
+    our_mechanism: sessions/memory PARTIAL; compaction UNKNOWN
+    decision: PROTOTYPE
+    confidence: MEDIUM
+    utility: USEFUL
+    sources:
+      - https://code.claude.com/docs/en/agent-sdk/agent-loop
+      - https://code.claude.com/docs/en/context-window
+
+  - id: CC-SUBAGENT
+    name: Isolated subagent contexts
+    lens: Subagents / Delegation
+    problem: Research/logs flood parent conversation
+    how: |
+      Agent tool spawns fresh conversation; intermediate tools stay inside;
+      only final text returns. Built-ins Explore/Plan (readonly, skip CLAUDE.md+git status),
+      general-purpose. Custom agents as markdown+YAML in .claude/agents/.
+      Optional memory field for subagent auto memory scope.
+    costs:
+      - Handoff loss (parent doesn't see intermediate evidence)
+      - Nested spend counts toward budget
+    failure_modes:
+      - Weak prompt to subagent → incomplete results
+      - Over-delegation / agent teams complexity (separate feature)
+    our_equivalence: SUBSTANTIAL
+    our_mechanism: Task tool PDA roles
+    decision: ALREADY_PRESENT
+    secondary_decision: ADAPT
+    secondary_note: Explicit summary-only isolation + Explore-like readonly defaults
+    confidence: HIGH
+    utility: USEFUL
+    sources:
+      - https://code.claude.com/docs/en/sub-agents
+      - https://code.claude.com/docs/en/agent-sdk/subagents
+
+  - id: CC-HOOKS
+    name: Deterministic lifecycle hooks
+    lens: Hooks
+    problem: Soft instructions cannot guarantee policy; need code-side gates
+    how: |
+      Events: SessionStart/End, UserPromptSubmit, PreToolUse, PostToolUse, Stop,
+      SubagentStart/Stop, PreCompact, etc. Types: command, http, mcp_tool, prompt, agent.
+      Run outside model context (no token cost). Can block tools.
+    costs:
+      - Parallel hook latency
+      - Misconfigured hooks break workflows
+    failure_modes:
+      - Hook failures / timeouts (behavior version-dependent — see UNKNOWNS)
+    our_equivalence: PARTIAL
+    our_mechanism: Cursor hooks + promote-queue
+    decision: ADAPT
+    confidence: HIGH
+    utility: USEFUL
+    sources:
+      - https://code.claude.com/docs/en/hooks
+      - https://code.claude.com/docs/en/hooks-guide
+
+  - id: CC-PERM
+    name: Tiered permissions + modes
+    lens: Permissions / Tool restrictions
+    problem: Balance autonomy and safety for tools
+    how: |
+      Rules Tool or Tool(specifier); evaluate deny then ask then allow.
+      Modes: default/manual, acceptEdits, plan, auto (classifier), dontAsk, bypassPermissions.
+      Bare deny removes tool from model context. Enforced by Claude Code not model.
+      Same rule format across settings, CLI flags, SDK, subagents, skills, hooks.
+    costs:
+      - Prompt fatigue vs over-permissive modes
+      - bypassPermissions dangerous outside isolation
+    failure_modes:
+      - Deny cannot be overridden by narrower allow
+      - Soft CLAUDE.md cannot grant privileges
+    our_equivalence: SUBSTANTIAL
+    our_mechanism: Policy Engine
+    decision: ALREADY_PRESENT
+    secondary_decision: ADAPT
+    secondary_note: Mode vocabulary (plan/acceptEdits) for DX
+    confidence: HIGH
+    utility: USEFUL
+    sources:
+      - https://code.claude.com/docs/en/permissions
+
+  - id: CC-SANDBOX
+    name: OS sandboxed Bash
+    lens: Sandbox
+    problem: Frequent Bash prompts vs unsafe autonomy
+    how: |
+      Seatbelt (macOS) / bubblewrap+socat (Linux/WSL2); FS write scope + network proxy;
+      modes auto-allow vs keep prompts; allowUnsandboxedCommands fallback;
+      failIfUnavailable for hard gate. Native Windows unsupported (use WSL2).
+    costs:
+      - Platform deps and AppArmor quirks
+      - Commands that need unsandboxed still prompt
+    failure_modes:
+      - Missing deps → warn and continue unless failIfUnavailable
+      - False sense of safety if unsandboxed allowed
+    our_equivalence: UNKNOWN
+    our_mechanism: baseline UNKNOWN–PARTIAL
+    decision: PROTOTYPE
+    decision_alt: DEFER
+    confidence: LOW
+    utility: USEFUL
+    sources:
+      - https://code.claude.com/docs/en/sandboxing
+
+  - id: CC-MCP
+    name: MCP integration
+    lens: MCP
+    problem: Extend tools to external services without baking into product
+    how: |
+      .mcp.json project servers; trust dialog / enabledMcpjsonServers;
+      user/enterprise configs; --strict-mcp-config; ToolSearch defers schemas by default.
+    costs:
+      - Many tools → context if search off
+      - Trust/supply-chain risk of project MCP
+    failure_modes:
+      - Untrusted folder ignores checked-in approvals (v2.1.196+)
+    our_equivalence: PARTIAL
+    our_mechanism: Cursor MCP + providers
+    decision: ALREADY_PRESENT
+    secondary_decision: ADAPT
+    confidence: HIGH
+    utility: USEFUL
+    sources:
+      - https://code.claude.com/docs/en/mcp
+
+  - id: CC-SESSION
+    name: Session persistence resume/fork
+    lens: Sessions
+    problem: Continue work after interrupt; branch approaches; multi-turn apps
+    how: |
+      JSONL transcripts under ~/.claude/projects/; resume/continue/fork;
+      SDK SessionStore for cross-host; permission mode restore has special cases;
+      cleanupPeriodDays default 30; persistSession false / SKIP_PROMPT_HISTORY.
+    costs:
+      - Disk growth; privacy of transcripts
+      - Config flags not all restored on resume
+    failure_modes:
+      - Fork branches conversation not filesystem (edits are real)
+      - Cross-host without SessionStore fails
+    our_equivalence: PARTIAL
+    our_mechanism: jobs/checkpoints + gaabwiki-mem
+    decision: ADAPT
+    confidence: MEDIUM
+    utility: USEFUL
+    sources:
+      - https://code.claude.com/docs/en/sessions
+      - https://code.claude.com/docs/en/agent-sdk/sessions
+
+  - id: CC-BUDGET
+    name: Turn and budget caps + effort
+    lens: Coding workflow / Reliability
+    problem: Bound runaway autonomous loops
+    how: |
+      maxTurns (tool-use turns), maxBudgetUsd (includes subagents from v2.1.217+),
+      effort low|medium|high|xhigh|max independent of extended thinking display.
+    our_equivalence: PARTIAL
+    our_mechanism: Orchestrator limits / gates (verify depth)
+    decision: ADAPT
+    confidence: HIGH
+    utility: USEFUL
+    sources:
+      - https://code.claude.com/docs/en/agent-sdk/agent-loop
+
+  - id: CC-WORKFLOW
+    name: Coding agent workflow patterns
+    lens: Coding workflow
+    problem: Typical edit-test loop for repos
+    how: |
+      DOCUMENTED patterns: plan mode research via Plan subagent; Explore for readonly search;
+      Edit/Write + Bash tests; skills /verify /run; hooks for project rules.
+      Exact default system prompt / planner internals = UNKNOWN.
+    our_equivalence: PARTIAL
+    our_mechanism: PDA plan→exec→gate
+    decision: ALREADY_PRESENT
+    confidence: MEDIUM
+    utility: USEFUL
+    sources:
+      - https://code.claude.com/docs/en/sub-agents
+      - https://code.claude.com/docs/en/skills
+      - https://code.claude.com/docs/en/agent-sdk/agent-loop
+
+anti_patterns_observed_or_warned:
+  - id: soft-policy-only
+    description: Relying on CLAUDE.md for security instead of hooks/permissions
+    label: DOCUMENTED_WARNING
+  - id: context-explosion
+    description: Many MCP tools without ToolSearch; huge tool outputs
+    label: DOCUMENTED
+  - id: bypass-outside-isolation
+    description: bypassPermissions outside containers/VMs
+    label: DOCUMENTED_WARNING
+  - id: auto-memory-as-ssot
+    description: Treating model-written memory as canonical knowledge
+    label: INFERRED_RISK
+
+comparison_rules_applied: OUR-SYSTEM-BASELINE.md
+no_ranking: true
+no_implementation: true

@@ -1,0 +1,79 @@
+claims:
+  - id: CL-V1-01
+    text: persistent
+    status: VERIFIED
+    evidence: PersistentSignalStore + restart evals
+  - id: CL-V1-02
+    text: longitudinal
+    status: VERIFIED
+    evidence: CrossRunAggregator unique_executions + need-lifecycle
+  - id: CL-V1-03
+    text: event-driven
+    status: VERIFIED
+    scope: opt_in_limited_vocab
+    evidence: EventBus observer EVENT_COVERAGE
+  - id: CL-V1-04
+    text: scope-aware
+    status: VERIFIED
+    evidence: resolveAnalysisScope; ATTACK-01 reject unlabeled; ATTACK-02 isolation
+  - id: CL-V1-05
+    text: gated
+    status: PARTIALLY_VERIFIED
+    evidence: EvolutionRequest handoff + fixture/external; no direct mutation
+    limitations: production gate EXTERNAL
+  - id: CL-V1-06
+    text: observable
+    status: VERIFIED
+    limitations: not full runtime observability
+  - id: CL-V1-07
+    text: bounded
+    status: VERIFIED
+    evidence: storm ATTACK-04; outcome depth ATTACK-05; cadence backpressure
+  - id: CL-V1-08
+    text: testable
+    status: VERIFIED
+    evidence: "196/196"
+  - id: CL-V1-09
+    text: traceable
+    status: VERIFIED
+    evidence: fingerprints, lifecycle_history, gate provenance
+  - id: CL-V1-10
+    text: automatic analysis without manual analyze()
+    status: VERIFIED
+    scope: harness_opt_in
+  - id: CL-V1-11
+    text: outcome feedback triggers next analysis
+    status: VERIFIED
+    evidence: afterOutcome FINAL-002
+  - id: CL-V1-12
+    text: fully autonomous / self-modifying
+    status: CONTRADICTED
+  - id: CL-V1-13
+    text: production proven
+    status: CONTRADICTED
+  - id: CL-V1-14
+    text: live = full observability
+    status: CONTRADICTED
+  - id: CL-V1-15
+    text: fixture gate = production gate
+    status: CONTRADICTED
+  - id: CL-V1-16
+    text: physical multi-tenant isolation
+    status: UNVERIFIED
+    note: only logical isolation
+
+data_flow:
+  - arrow: Runtime→EventBus
+    status: USED
+  - arrow: EventBus→Observer
+    status: LIVE_OPT_IN
+  - arrow: Observer→Observation→Signal→Store
+    status: CONNECTED
+  - arrow: Store→Cadence→Analysis
+    status: CONNECTED
+  - arrow: Analysis→Pattern→Need→RCA→Candidate→Request
+    status: CONNECTED
+  - arrow: Request→Gate
+    status: EXTERNAL_OR_FIXTURE
+  - arrow: Gate→Window→Outcome→Persist→Feedback→Analysis
+    status: CONNECTED_VIA_COORDINATOR

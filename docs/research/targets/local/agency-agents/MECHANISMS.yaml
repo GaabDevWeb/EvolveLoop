@@ -1,0 +1,274 @@
+# agency-agents — mechanism inventory
+# source_type: LOCAL_CORPUS
+# target: tgt-agency-agents
+# examined_at: 2026-09-18
+# git_head: ad9264e309bd5e5422c04784372d7841b1e5d604
+# agent_persona_count_observed: 279
+
+meta:
+  identity_primary: SYSTEM_PROMPT_CORPUS
+  identity_secondary:
+    - AGENT_ROSTER_CATALOG
+    - DISTRIBUTION_ADAPTERS
+    - COORDINATION_DOCTRINE_DOCS
+  identity_not:
+    - EXECUTABLE_MULTI_AGENT_RUNTIME
+    - AGENT_PROCESS_ORCHESTRATOR
+  confidence: HIGH
+
+roster:
+  divisions_ssot: divisions.json
+  division_count: 18
+  persona_md_with_name_frontmatter: 279
+  by_division:
+    academic: 6
+    design: 10
+    engineering: 64
+    finance: 5
+    game-development: 21
+    gis: 13
+    healthcare: 3
+    marketing: 36
+    paid-media: 7
+    product: 5
+    project-management: 7
+    research: 1
+    sales: 9
+    security: 12
+    spatial-computing: 6
+    specialized: 59
+    support: 6
+    testing: 9  # PERSONAS (QA specialists), NOT unit tests
+  non_divisions:
+    - strategy
+    - integrations
+    - examples
+    - scripts
+
+mechanisms:
+  - id: M-AA-01
+    name: specialist_persona_roster
+    problem: Lack of deep domain role framing in generic assistants
+    mechanism: Large library of Markdown personas with identity, rules, deliverables, metrics
+    evidence:
+      - label: OBSERVED
+        source: division/**/*.md count=279
+      - label: DOCUMENTED
+        source: README.md roster tables
+    costs:
+      - context/token load if many installed
+      - maintenance surface (near-duplicates; originality CI)
+      - role overlap / contradictory advice across personas
+    failure_modes:
+      - over-agentization (many files ≠ better system)
+      - host silently drops agents (OpenCode ~119 limit — DOCUMENTED)
+      - user confuses roster with multi-agent runtime
+    alternatives:
+      - fewer capability-scoped skills with contracts
+      - dynamic retrieval of specialist snippets
+    our_equivalence: PARTIAL
+    our_state: skills + PDA roles (SUBSTANTIAL class) without bulk domain roster
+    utility: CONDITIONALLY_USEFUL
+    decision: REJECT  # bulk import
+    confidence: HIGH
+
+  - id: M-AA-02
+    name: division_catalog_and_discovery
+    problem: Finding the right specialist in a large set
+    mechanism: divisions.json labels/icons/colors; README tables; Hermes search tool (when generated)
+    evidence:
+      - label: OBSERVED
+        source: divisions.json
+      - label: DOCUMENTED
+        source: integrations/hermes/README.md
+    our_equivalence: PARTIAL
+    utility: USEFUL
+    decision: DEFER
+    confidence: MEDIUM
+
+  - id: M-AA-03
+    name: persona_prompt_architecture_schema
+    problem: Inconsistent agent definitions
+    mechanism: >
+      YAML frontmatter (required name, description, color; optional emoji, vibe, services);
+      body sections Identity/Mission/Critical Rules/Deliverables/Workflow/Communication/Metrics;
+      lint-agents.sh; OpenClaw persona vs operational section split
+    evidence:
+      - label: OBSERVED
+        source: scripts/lint-agents.sh
+      - label: DOCUMENTED
+        source: CONTRIBUTING.md Agent Design Guidelines
+    our_equivalence: SUBSTANTIAL
+    utility: USEFUL
+    decision: ALREADY_PRESENT
+    confidence: HIGH
+
+  - id: M-AA-04
+    name: multi_host_convert_install_matrix
+    problem: Same roster must land in divergent host file formats
+    mechanism: >
+      tools.json defines format + installKind (per-agent | roster | plugin) + dest templates;
+      convert.sh renderers; install.sh detection/install; check-tools.sh CI sync
+    evidence:
+      - label: OBSERVED
+        source: tools.json
+      - label: OBSERVED
+        source: scripts/convert.sh, scripts/install.sh (read headers/structure; not executed)
+    our_equivalence: NONE
+    utility: USEFUL  # for packaging products
+    decision: DEFER
+    confidence: HIGH
+
+  - id: M-AA-05
+    name: lazy_roster_router_hermes
+    problem: Advertising hundreds of skills at host startup blows context
+    mechanism: >
+      Generated Hermes plugin exposes fixed tools search/inspect/load/delegate;
+      roster bodies in data/agents.json loaded on demand
+    evidence:
+      - label: DOCUMENTED
+        source: integrations/hermes/README.md
+      - label: OBSERVED
+        source: scripts/build-hermes-plugin.py parse/collect logic
+      - label: OBSERVED
+        source: .gitignore integrations/hermes/agency-agents-router/ (generated absent)
+    our_equivalence: PARTIAL
+    utility: USEFUL
+    decision: PROTOTYPE
+    confidence: MEDIUM
+
+  - id: M-AA-06
+    name: nexus_coordination_doctrine
+    problem: Uncoordinated specialists → conflict, duplicated work, context loss
+    mechanism: >
+      NEXUS 7-phase playbooks; handoff markdown templates; activation prompt library;
+      quality-gate language (evidence over claims; max 3 retries)
+    evidence:
+      - label: DOCUMENTED
+        source: strategy/nexus-strategy.md
+      - label: DOCUMENTED
+        source: strategy/coordination/handoff-templates.md
+      - label: DOCUMENTED
+        source: strategy/coordination/agent-activation-prompts.md
+    note: Doctrine executed by humans/host LLM — no NEXUS runtime binary in corpus
+    our_equivalence: SUBSTANTIAL_intent_PARTIAL_enforcement
+    utility: CONDITIONALLY_USEFUL
+    decision: ADAPT  # templates only; gates ALREADY_PRESENT via Evidence Bus
+    confidence: HIGH
+
+  - id: M-AA-07
+    name: prompt_orchestrator_persona
+    problem: Desire for end-to-end pipeline without infra
+    mechanism: >
+      specialized/agents-orchestrator.md instructs host to "Please spawn <agent>…"
+      through PM → ArchitectUX → Dev↔QA → Reality Checker loops
+    evidence:
+      - label: OBSERVED
+        source: specialized/agents-orchestrator.md
+    our_equivalence: NONE
+    utility: UNPROVEN  # as autonomous pipeline; may help humans as checklist
+    decision: REJECT  # as architecture to copy for MegaBrain runtime
+    confidence: HIGH
+
+  - id: M-AA-08
+    name: multi_agent_systems_architect_persona
+    problem: Teams need design guidance for topologies/failure modes
+    mechanism: Advisory persona documenting sequential/parallel/hierarchical/mesh patterns, HITL, evals
+    evidence:
+      - label: OBSERVED
+        source: engineering/engineering-multi-agent-systems-architect.md
+    our_equivalence: PARTIAL  # knowledge content vs MegaBrain principles docs
+    utility: CONDITIONALLY_USEFUL
+    decision: DEFER
+    confidence: MEDIUM
+
+  - id: M-AA-09
+    name: mcp_memory_prompt_addon
+    problem: Personas are session-stateless by default
+    mechanism: Documented Memory Integration section calling MCP remember/recall/rollback/search
+    evidence:
+      - label: DOCUMENTED
+        source: integrations/mcp-memory/README.md
+    our_equivalence: PARTIAL
+    utility: CONDITIONALLY_USEFUL
+    decision: ALREADY_PRESENT
+    confidence: MEDIUM
+
+  - id: M-AA-10
+    name: presentation_metadata_for_app
+    problem: Desktop app needs browseable catalog UX
+    mechanism: color/emoji/vibe frontmatter + division icon/color; tools.json accents
+    evidence:
+      - label: OBSERVED
+        source: frontmatter samples; divisions.json; tools.json
+      - label: DOCUMENTED
+        source: README agency-agents-app (external)
+    our_equivalence: NOT_APPLICABLE
+    utility: NOT_APPLICABLE
+    decision: REJECT
+    confidence: HIGH
+
+  - id: M-AA-11
+    name: evidence_skeptic_qa_personas
+    problem: Premature "production ready" certifications
+    mechanism: testing/* personas (Reality Checker defaults NEEDS WORK; Evidence Collector; etc.)
+    evidence:
+      - label: OBSERVED
+        source: testing/testing-reality-checker.md
+      - label: OBSERVED
+        source: divisions.json testing division
+    our_equivalence: SUBSTANTIAL  # ethos; MegaBrain Evidence Bus is stronger enforcement
+    utility: CONDITIONALLY_USEFUL
+    decision: ALREADY_PRESENT
+    confidence: MEDIUM
+
+  - id: M-AA-12
+    name: packaging_integrity_tooling
+    problem: Drift between divisions.json, convert, install, tools.json
+    mechanism: check-divisions.sh, check-tools.sh, convert-outputs.sha256, originality check, test-* scripts
+    evidence:
+      - label: OBSERVED
+        source: scripts/*
+    our_equivalence: PARTIAL  # MegaBrain has contracts/tests differently
+    utility: USEFUL
+    decision: DEFER
+    confidence: LOW
+
+anti_patterns_observed:
+  - id: AP-AA-01
+    name: over_agentization
+    description: Hundreds of personas without shared capability IR, policy, or evidence gates
+    label: INFERRED
+    premises:
+      - 279 personas OBSERVED
+      - no runtime orchestrator OBSERVED
+      - SECURITY.md states non-executable definitions
+
+  - id: AP-AA-02
+    name: directory_name_false_friend_testing
+    description: testing/ looks like test suite but is persona division
+    label: OBSERVED
+    resolution: prefer file contents + divisions.json
+
+  - id: AP-AA-03
+    name: marketing_multi_agent_ambiguity
+    description: README/NEXUS language implies synchronized agency; delivery is prompts + host
+    label: DOCUMENTED_vs_OBSERVED
+    resolution: prefer SECURITY.md + code inventory
+
+install_kinds:
+  per-agent:
+    description: one rendered file/dir per agent
+    examples: [claude-code, cursor, codex, opencode, gemini-cli]
+  roster:
+    description: one combined file for all selected agents
+    examples: [aider, windsurf]
+  plugin:
+    description: built artifact, not per-agent string renderable
+    examples: [hermes]
+
+absence:
+  package_managers: [package.json, pyproject.toml, Cargo.toml, go.mod]
+  semver_tags: true  # none OBSERVED (audit: 0 tags)
+  generated_integrations_in_checkout: true  # gitignored
+  agency_agents_app_source: true  # NOT_IN_CORPUS

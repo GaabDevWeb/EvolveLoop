@@ -1,0 +1,73 @@
+# Environment / host assumptions
+
+assumptions:
+  - name: Linux
+    class: REQUIRED
+    evidence: scripts bash, paths, systemd user units in agent-setup full profile
+    confidence: HIGH
+
+  - name: Debian-ish Documentos folder
+    class: PERSONAL
+    evidence: "$HOME/Documentos defaults in agent-setup"
+    confidence: HIGH
+
+  - name: Cursor IDE
+    class: REQUIRED
+    evidence: .cursor/**, hooks.json, commands
+    confidence: HIGH
+
+  - name: Node.js 20+
+    class: RECOMMENDED
+    evidence: README prerequisites; orchestrator TypeScript
+    confidence: HIGH
+
+  - name: Python 3 + gaabwiki package
+    class: PERSONAL
+    evidence: knowledge.ts spawn; ground.sh
+    note: "Required only if knowledge grounding provider = GaabWiki"
+    confidence: HIGH
+
+  - name: Ollama (embeddings)
+    class: OPTIONAL
+    evidence: ADR-0004/0005 degraded BM25
+    confidence: HIGH
+
+  - name: Docker
+    class: OPTIONAL
+    evidence: MCP docker; README
+    confidence: HIGH
+
+  - name: Git
+    class: REQUIRED
+    evidence: git.* capabilities; install clone
+    confidence: HIGH
+
+  - name: MCP servers (GitHub, Firecrawl, Playwright, etc.)
+    class: OPTIONAL
+    evidence: mcp/mcp.json
+    confidence: HIGH
+
+  - name: Puppeteer / Playwright / Browser MCP
+    class: OPTIONAL
+    evidence: mcp + agent-browser
+    confidence: HIGH
+
+  - name: Hyprland / GNOME
+    class: UNKNOWN
+    evidence: none_in_repo
+    confidence: HIGH
+
+  - name: zsh
+    class: DEVELOPMENT_ONLY
+    evidence: user shell in session; scripts are bash
+    confidence: MEDIUM
+
+  - name: systemd user units (gaabwiki-watch)
+    class: PERSONAL
+    evidence: agent-setup full profile
+    confidence: HIGH
+
+  - name: SSH GitHub access to GaabDevWeb
+    class: PERSONAL
+    evidence: README clone URL
+    confidence: HIGH

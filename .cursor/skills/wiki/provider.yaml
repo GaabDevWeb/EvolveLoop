@@ -1,0 +1,48 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Provider
+metadata:
+  name: wiki
+  version: "1.2.0"
+  description: "Context Engineer — Wiki grounding / context pack (not RAG bridge)"
+  owner: agents-team
+
+spec:
+  plugin:
+    type: cursor-skill
+    entrypoint: ".cursor/skills/wiki/SKILL.md"
+
+  capabilities:
+    - id: context-grounding
+      contract: contracts/context-grounding@1.0.0
+      type: upstream
+
+  interfaces:
+    outputs:
+      - name: grounding-template
+        note: "Fontes / Contratos / GAPs / Pack / Método / Handoff"
+      - name: context-pack
+        note: "Relevant Context only — not full vault dump"
+
+  dependencies:
+    optional:
+      - knowledge.search
+      - knowledge.inspect
+
+  runtime:
+    cost: medium
+    subagent_type: explore
+    pda_role: explore
+
+  telemetry:
+    key: provider.wiki
+
+  availability: active
+  priority: 90
+
+  constraints:
+    - signal: hard_gate_knowledge_grounding
+      note: "Orquestrar Fase 0 node knowledge-grounding → this skill"
+    - signal: forbids_max_context_dump
+      note: "Relevant Context > Maximum Context"
+    - signal: not_knowledge_promote
+      note: "Promote / episodic → wiki-mem"

@@ -1,0 +1,129 @@
+experiment:
+  id: E-001
+  baseline_id: baseline-v1-2026-09-18
+  status: COMPLETE
+  mode: OFFLINE_CONTROLLED
+  started_at: "2026-09-19T13:11:00.984970+00:00"
+  ended_at: "2026-09-19T13:11:02.845400+00:00"
+  hypothesis_preserved: true
+
+sample:
+  repetitions_per_condition: 5
+  note: INITIAL EXPERIMENTAL SAMPLE
+  total_runs: 20
+  n_tasks: 176
+  task_id: skill-eval-trigger-corpus
+  task_input_fingerprint: 5f237e7abc9a435121647fba0b12b1162200239b9025703f7c04af3a78d8bdfa
+  seed: e001-v1-2026-09-18
+
+conditions:
+
+  - id: CONTROL
+    type: CONTROL
+    requested_catalog_size: 23
+    actual_catalog_size: 23
+    catalog_fingerprint: a91e10d36db69c0a5f1ee1168982d9b1caac44bacd51add279986608b67ad1e6
+    runs: 5
+    aggregates:
+      activation_precision: { mean: 0.3352272727272727, median: 0.3352272727272727, min: 0.3352272727272727, max: 0.3352272727272727 }
+      activation_recall: { mean: 0.3352272727272727, median: 0.3352272727272727, min: 0.3352272727272727, max: 0.3352272727272727 }
+      token_estimate: { mean: 1673, median: 1673, min: 1673, max: 1673, classification: PROXY }
+
+  - id: T_SKILLS_5
+    type: TREATMENT
+    requested_catalog_size: 5
+    actual_catalog_size: 5
+    catalog_fingerprint: 8e3c06fdda3dfdb9a14c9f4b7bf2f722d718563cfdc549be849123c599521ebb
+    runs: 5
+    aggregates:
+      activation_precision: { mean: 0.5113636363636364, median: 0.5113636363636364, min: 0.5113636363636364, max: 0.5113636363636364 }
+      activation_recall: { mean: 0.5113636363636364, median: 0.5113636363636364, min: 0.5113636363636364, max: 0.5113636363636364 }
+      token_estimate: { mean: 382, median: 382, min: 382, max: 382, classification: PROXY }
+
+  - id: T_SKILLS_10
+    type: TREATMENT
+    requested_catalog_size: 10
+    actual_catalog_size: 10
+    catalog_fingerprint: d7d55ac8898df448fa2f23a13f1847651378c835095bc89819250d93a5347933
+    runs: 5
+    aggregates:
+      activation_precision: { mean: 0.42045454545454547, median: 0.42045454545454547, min: 0.42045454545454547, max: 0.42045454545454547 }
+      activation_recall: { mean: 0.42045454545454547, median: 0.42045454545454547, min: 0.42045454545454547, max: 0.42045454545454547 }
+      token_estimate: { mean: 789, median: 789, min: 789, max: 789, classification: PROXY }
+
+  - id: T_TOKENS_40
+    type: TREATMENT
+    requested_catalog_size: 23
+    actual_catalog_size: 23
+    catalog_fingerprint: aa662c3c3b8d19d846d3d02b51938cc6ce8bf924f1efb0185c71423776e6fb1c
+    runs: 5
+    aggregates:
+      activation_precision: { mean: 0.3409090909090909, median: 0.3409090909090909, min: 0.3409090909090909, max: 0.3409090909090909 }
+      activation_recall: { mean: 0.3409090909090909, median: 0.3409090909090909, min: 0.3409090909090909, max: 0.3409090909090909 }
+      token_estimate: { mean: 1010, median: 1010, min: 1010, max: 1010, classification: PROXY }
+
+metrics:
+
+  - name: catalog_size
+    classification: DIRECT
+  - name: skills_available
+    classification: DIRECT
+  - name: skills_activated_count
+    classification: DIRECT
+  - name: activation_precision
+    classification: DIRECT
+  - name: activation_recall
+    classification: DIRECT
+  - name: wall_clock_duration
+    classification: DIRECT
+  - name: token_estimate
+    classification: PROXY
+    method: whitespace
+    limitation: vendor tokenizer unavailable
+  - name: task_success
+    classification: NOT_MEASURED
+  - name: skills_loaded
+    classification: NOT_MEASURED
+  - name: skills_invoked
+    classification: NOT_MEASURED
+  - name: live_host_catalog_injection
+    classification: NOT_MEASURED
+
+comparisons:
+
+  - metric: activation_precision
+    control: 0.3352272727272727
+    treatments:
+      T_SKILLS_5: { value: 0.5113636363636364, delta: 0.17613636363636365, relative_change: 0.5254237288135594 }
+      T_SKILLS_10: { value: 0.42045454545454547, delta: 0.08522727272727276, relative_change: 0.25423728813559326 }
+      T_TOKENS_40: { value: 0.3409090909090909, delta: 0.005681818181818188, relative_change: 0.01694915254237288 }
+    interpretation: association under offline harness
+
+  - metric: token_estimate
+    control: 1673
+    treatments:
+      T_SKILLS_5: { value: 382, delta: -1291, relative_change: -0.7716676634787806 }
+      T_SKILLS_10: { value: 789, delta: -884, relative_change: -0.5283921105797979 }
+      T_TOKENS_40: { value: 1010, delta: -663, relative_change: -0.3962934847579199 }
+    classification: PROXY
+    interpretation: association under offline harness; whitespace estimate only
+
+conclusion:
+  classification: SUPPORTED
+  confidence: MEDIUM
+  scope: offline_catalog_budget_harness_only
+  limitations:
+    - live_task_success_NOT_MEASURED
+    - live_host_injection_NOT_MEASURED
+    - token_estimate_is_PROXY
+    - offline_overlap_ranker_not_host_LLM
+    - initial_experimental_sample_n5_deterministic
+  evidence: docs/evals/experiments/E-001/raw/battery/
+  report: docs/evals/experiments/E-001/E-001-RESULT.md
+
+integrity:
+  harness_integrity: PASS
+  source_skills_modified: false
+  runtime_modified: false
+  baseline_preserved: true
+  contamination: false

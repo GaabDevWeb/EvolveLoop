@@ -1,0 +1,633 @@
+# Skill Usage Matrix — AUDIT ONLY (no pruning)
+# Generated: 2026-09-19T20:53:30Z
+# Scope: CursorSKILLS .cursor/skills + global-skills (+ install symlinks ~/.agents/skills)
+# Frequency: NOT_MEASURED (no live telemetry)
+
+audit_meta:
+  status: AUDIT_COMPLETE
+  catalog_mutation: false
+  skill_deletion: false
+  frequency_source: NOT_MEASURED
+
+skills:
+  # --- LOCAL MEGABRAIN (.cursor/skills) ---
+  - id: orquestrar
+    location: .cursor/skills/orquestrar
+    owner: megabrain
+    alias: [MegaBrain]
+    usage: { direct: false, indirect: true, command: true, agent: true, hook: false, eval: true, documentation: true }
+    flow: megabrain-root
+    callers: [/MegaBrain, Agents/Orquestrador-v2.md]
+    dependencies: [gaabwiki, prd, planner, frontend-pro, image-to-code, testing, debugger, po-review]
+    gate: { type: HARD_GATE, blocking: true, notes: "GaabWiki + image-attachment + GATE_BUNDLE policy" }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [CORE, HARD_GATE]
+    removal: { status: DO_NOT_REMOVE, reason: "Root orchestrator of MegaBrain" }
+    evidence:
+      - .cursor/commands/MegaBrain.md
+      - .cursor/skills/orquestrar/SKILL.md
+
+  - id: gaabwiki
+    location: .cursor/skills/gaabwiki
+    owner: megabrain
+    usage: { direct: true, indirect: true, command: true, agent: true, hook: false, eval: true, documentation: true }
+    flow: grounding
+    callers: [/wiki, orquestrar Fase 0]
+    dependencies: []
+    gate: { type: HARD_GATE, blocking: true, notes: "Fase 0 MegaBrain; skipped_trivial allowed" }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [CORE, HARD_GATE]
+    removal: { status: DO_NOT_REMOVE, reason: "Context grounding hard gate" }
+    evidence:
+      - .cursor/skills/orquestrar/references/gaabwiki-grounding-gate.md
+      - .cursor/commands/wiki.md
+
+  - id: gaabwiki-mem
+    location: .cursor/skills/gaabwiki-mem
+    owner: megabrain
+    usage: { direct: false, indirect: true, command: true, agent: true, hook: true, eval: true, documentation: true }
+    flow: episodic-memory
+    callers: [/mem, hooks sessionStart/afterFileEdit/stop/sessionEnd]
+    dependencies: []
+    gate: { type: SOFT_GATE, blocking: false }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [CORE]
+    removal: { status: DO_NOT_REMOVE, reason: "Hook + librarian path" }
+    evidence:
+      - .cursor/hooks.json
+      - .cursor/commands/mem.md
+
+  - id: prd
+    location: .cursor/skills/prd
+    owner: megabrain
+    usage: { direct: true, indirect: true, command: true, agent: true, hook: false, eval: true, documentation: true }
+    flow: planning-upstream
+    callers: [/prd, orquestrar Fase 0.5]
+    dependencies: [brainstorming, grill-me]
+    gate: { type: HARD_GATE, blocking: true, notes: "Human approval before planner" }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [CORE, HARD_GATE]
+    removal: { status: DO_NOT_REMOVE, reason: "Upstream product-spec hard gate" }
+    evidence:
+      - .cursor/commands/prd.md
+      - .cursor/skills/orquestrar/SKILL.md
+
+  - id: planner
+    location: .cursor/skills/planner
+    owner: megabrain
+    usage: { direct: true, indirect: true, command: true, agent: true, hook: false, eval: true, documentation: true }
+    flow: planning
+    callers: [/planejar, orquestrar Fase 1]
+    dependencies: [image-to-code]
+    gate: { type: SOFT_GATE, blocking: false }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [CORE]
+    removal: { status: DO_NOT_REMOVE, reason: "Canonical plan.ir.yaml producer" }
+    evidence:
+      - .cursor/commands/planejar.md
+      - .cursor/skills/planner/SKILL.md
+
+  - id: frontend-pro
+    location: .cursor/skills/frontend-pro
+    owner: megabrain
+    usage: { direct: true, indirect: true, command: true, agent: true, hook: false, eval: true, documentation: true }
+    flow: frontend
+    callers: [/frontend-pro, orquestrar frontend-ui]
+    dependencies: [image-to-code, agent-browser, ui-ux-pro-max, frontend-design]
+    gate: { type: HARD_GATE, blocking: true, notes: "Vision+image-to-code when image attached" }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [CORE, HARD_GATE]
+    removal: { status: DO_NOT_REMOVE, reason: "Primary frontend worker + Vision gate" }
+    evidence:
+      - .cursor/skills/frontend-pro/SKILL.md
+      - .cursor/commands/frontend-pro.md
+
+  - id: backend
+    location: .cursor/skills/backend
+    owner: megabrain
+    usage: { direct: true, indirect: true, command: true, agent: true, hook: false, eval: true, documentation: true }
+    flow: development
+    callers: [/backend]
+    dependencies: []
+    gate: { type: null, blocking: false }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [CORE]
+    removal: { status: DO_NOT_REMOVE, reason: "Primary backend worker" }
+    evidence: [.cursor/commands/backend.md]
+
+  - id: testing
+    location: .cursor/skills/testing
+    owner: megabrain
+    usage: { direct: true, indirect: true, command: true, agent: true, hook: false, eval: true, documentation: true }
+    flow: validation
+    callers: [/testes, orquestrar Fase 3]
+    dependencies: [debugger]
+    gate: { type: HARD_GATE, blocking: true, notes: "Evidence gate.testing.json" }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [CORE, HARD_GATE]
+    removal: { status: DO_NOT_REMOVE, reason: "Mandatory testing gate" }
+    evidence: [.cursor/commands/testes.md]
+
+  - id: debugger
+    location: .cursor/skills/debugger
+    owner: megabrain
+    usage: { direct: true, indirect: true, command: true, agent: true, hook: false, eval: true, documentation: true }
+    flow: debugging
+    callers: [/debugger, /debug, orquestrar after 3 test failures]
+    dependencies: [systematic-debugging]
+    gate: { type: HARD_GATE, blocking: true, notes: "Iron Law root-cause-before-fix" }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [CORE, HARD_GATE]
+    removal: { status: DO_NOT_REMOVE, reason: "Pipeline debug package; absorbs Tier3 DO" }
+    evidence:
+      - .cursor/skills/debugger/SKILL.md
+      - global-skills/systematic-debugging/PACKAGE-NOTE.md
+
+  - id: security
+    location: .cursor/skills/security
+    owner: megabrain
+    usage: { direct: true, indirect: true, command: true, agent: true, hook: false, eval: true, documentation: true }
+    flow: validation
+    callers: [/seguranca]
+    dependencies: []
+    gate: { type: HARD_GATE, blocking: true, notes: "When policy require[] includes security" }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [CORE, HARD_GATE]
+    removal: { status: DO_NOT_REMOVE, reason: "Security gate" }
+    evidence: [.cursor/commands/seguranca.md]
+
+  - id: po-review
+    location: .cursor/skills/po-review
+    owner: megabrain
+    usage: { direct: true, indirect: true, command: true, agent: true, hook: false, eval: true, documentation: true }
+    flow: validation
+    callers: [/validar, orquestrar Fase 5]
+    dependencies: [image-to-code, frontend-pro]
+    gate: { type: HARD_GATE, blocking: true, notes: "PO acceptance before docs phase" }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [CORE, HARD_GATE]
+    removal: { status: DO_NOT_REMOVE, reason: "PO acceptance gate" }
+    evidence: [.cursor/commands/validar.md]
+
+  - id: documentation
+    location: .cursor/skills/documentation
+    owner: megabrain
+    usage: { direct: true, indirect: true, command: true, agent: true, hook: false, eval: true, documentation: true }
+    flow: validation
+    callers: [/documentar, orquestrar Fase 6]
+    dependencies: []
+    gate: { type: SOFT_GATE, blocking: false }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [CORE]
+    removal: { status: DO_NOT_REMOVE, reason: "Fase 6 documentation gate" }
+    evidence: [.cursor/commands/documentar.md]
+
+  - id: code-reviewer
+    location: .cursor/skills/code-reviewer
+    owner: megabrain
+    usage: { direct: true, indirect: true, command: true, agent: true, hook: false, eval: true, documentation: true }
+    flow: validation
+    callers: [/code-reviewer, /revisar-codigo, PDA critic]
+    dependencies: []
+    gate: { type: SOFT_GATE, blocking: false }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [CORE, OPTIONAL]
+    removal: { status: DO_NOT_REMOVE, reason: "Quality gate/critic role" }
+    evidence: [.cursor/commands/code-reviewer.md]
+
+  - id: validator
+    location: .cursor/skills/validator
+    owner: megabrain
+    usage: { direct: true, indirect: true, command: true, agent: true, hook: false, eval: true, documentation: true }
+    flow: validation
+    callers: [/validator, /validar-artefacto]
+    dependencies: []
+    gate: { type: SOFT_GATE, blocking: false }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [CORE, OPTIONAL]
+    removal: { status: DO_NOT_REMOVE, reason: "Fine-grained DoD/evidence validation" }
+    evidence: [.cursor/commands/validator.md]
+
+  - id: researcher
+    location: .cursor/skills/researcher
+    owner: megabrain
+    usage: { direct: true, indirect: true, command: true, agent: true, hook: false, eval: true, documentation: true }
+    flow: research
+    callers: [/pesquisar, /research]
+    dependencies: []
+    gate: { type: null, blocking: false }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [CORE]
+    removal: { status: DO_NOT_REMOVE, reason: "External research worker" }
+    evidence: [.cursor/commands/pesquisar.md]
+
+  - id: architect
+    location: .cursor/skills/architect
+    owner: megabrain
+    usage: { direct: true, indirect: true, command: true, agent: true, hook: false, eval: true, documentation: true }
+    flow: architecture
+    callers: [/architect]
+    dependencies: []
+    gate: { type: null, blocking: false }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [CORE]
+    removal: { status: DO_NOT_REMOVE, reason: "Architecture analysis upstream" }
+    evidence: [.cursor/commands/architect.md]
+
+  - id: adr
+    location: .cursor/skills/adr
+    owner: megabrain
+    usage: { direct: true, indirect: true, command: true, agent: true, hook: false, eval: true, documentation: true }
+    flow: architecture
+    callers: [/adr]
+    dependencies: []
+    gate: { type: null, blocking: false }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [CORE]
+    removal: { status: DO_NOT_REMOVE, reason: "ADR authoring" }
+    evidence: [.cursor/commands/adr.md]
+
+  - id: database
+    location: .cursor/skills/database
+    owner: megabrain
+    usage: { direct: true, indirect: true, command: true, agent: true, hook: false, eval: true, documentation: true }
+    flow: development
+    callers: [/database]
+    dependencies: []
+    gate: { type: null, blocking: false }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [CORE]
+    removal: { status: DO_NOT_REMOVE, reason: "Schema worker" }
+    evidence: [.cursor/commands/database.md]
+
+  - id: devops
+    location: .cursor/skills/devops
+    owner: megabrain
+    usage: { direct: true, indirect: true, command: true, agent: true, hook: false, eval: true, documentation: true }
+    flow: development
+    callers: [/devops]
+    dependencies: []
+    gate: { type: null, blocking: false }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [CORE]
+    removal: { status: DO_NOT_REMOVE, reason: "Deploy/CI worker" }
+    evidence: [.cursor/commands/devops.md]
+
+  - id: failure-analyst
+    location: .cursor/skills/failure-analyst
+    owner: megabrain
+    usage: { direct: true, indirect: true, command: true, agent: true, hook: false, eval: true, documentation: true }
+    flow: debugging
+    callers: [/failure-analyst, /analisar-falha]
+    dependencies: []
+    gate: { type: null, blocking: false }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [CORE, OPTIONAL]
+    removal: { status: DO_NOT_REMOVE, reason: "Process failure classification" }
+    evidence: [.cursor/commands/failure-analyst.md]
+
+  - id: agent-authoring
+    location: .cursor/skills/agent-authoring
+    owner: megabrain
+    usage: { direct: true, indirect: true, command: true, agent: true, hook: false, eval: true, documentation: true }
+    flow: agent-authoring
+    callers: [/agent-authoring]
+    dependencies: []
+    gate: { type: null, blocking: false }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [CORE]
+    removal: { status: DO_NOT_REMOVE, reason: "Agent package authoring" }
+    evidence: [.cursor/commands/agent-authoring.md]
+
+  - id: skill-authoring
+    location: .cursor/skills/skill-authoring
+    owner: megabrain
+    usage: { direct: false, indirect: true, command: true, agent: true, hook: false, eval: false, documentation: true }
+    flow: skill-authoring
+    callers: [/skill-authoring]
+    dependencies: [image-to-code]
+    gate: { type: null, blocking: false }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [CORE]
+    removal: { status: DO_NOT_REMOVE, reason: "Skill authoring meta-package" }
+    evidence: [.cursor/commands/skill-authoring.md]
+
+  - id: agent-architecture-mining
+    location: .cursor/skills/agent-architecture-mining
+    owner: megabrain
+    usage: { direct: true, indirect: true, command: true, agent: true, hook: false, eval: true, documentation: true }
+    flow: architecture
+    callers: [/agent-architecture-mining]
+    dependencies: []
+    gate: { type: null, blocking: false }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [CORE]
+    removal: { status: DO_NOT_REMOVE, reason: "Agentic reverse-engineering miner" }
+    notes: "Symlink missing in ~/.agents/skills on audit host (install gap)"
+    evidence: [.cursor/commands/agent-architecture-mining.md]
+
+  # --- GLOBAL / TIER3 (11 protected candidates + rest) ---
+  - id: image-to-code
+    location: global-skills/image-to-code
+    owner: tier3
+    usage: { direct: false, indirect: true, command: true, agent: true, hook: false, eval: true, documentation: true }
+    flow: frontend
+    callers: [orquestrar, frontend-pro, MegaBrain.md, frontend-pro.md, po-review, planner, backend, testing]
+    dependencies: []
+    gate: { type: HARD_GATE, blocking: true, notes: "Any user-attached image → Vision + this skill; policy not TS-enforced" }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [HARD_GATE, CRITICAL_LOW_FREQUENCY]
+    removal: { status: DO_NOT_REMOVE, reason: "Active MegaBrain HARD-GATE" }
+    evidence:
+      - .cursor/skills/orquestrar/references/image-attachment-gate.md
+      - .cursor/skills/frontend-pro/SKILL.md
+      - .cursor/commands/frontend-pro.md
+
+  - id: brainstorming
+    location: global-skills/brainstorming
+    owner: tier3-superpowers
+    usage: { direct: false, indirect: true, command: false, agent: true, hook: false, eval: true, documentation: true }
+    flow: planning
+    callers: [orquestrar Fase 0.5, prd, brainstorming-handoff]
+    dependencies: [writing-plans]
+    gate: { type: SOFT_GATE, blocking: false, notes: "Optional MegaBrain upstream; internal HARD no-code until approval" }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [OPTIONAL, UPSTREAM_FLOW]
+    removal: { status: DO_NOT_REMOVE, reason: "Referenced optional upstream; internal hard gate when used" }
+    evidence:
+      - .cursor/skills/orquestrar/SKILL.md
+      - .cursor/skills/prd/SKILL.md
+
+  - id: writing-plans
+    location: global-skills/writing-plans
+    owner: tier3-superpowers
+    usage: { direct: false, indirect: false, command: false, agent: false, hook: false, eval: false, documentation: true }
+    flow: superpowers-parallel
+    callers: [brainstorming terminal]
+    dependencies: [subagent-driven-development, executing-plans]
+    gate: { type: null, blocking: false }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [OPTIONAL, DOCUMENTATION_ONLY]
+    removal: { status: REMOVE_AFTER_MIGRATION, reason: "Not wired into MegaBrain; planner is canonical; keep until Superpowers path decision" }
+    evidence:
+      - global-skills/brainstorming/SKILL.md
+      - docs/research/targets/local/superpowers/
+
+  - id: executing-plans
+    location: global-skills/executing-plans
+    owner: tier3-superpowers
+    usage: { direct: false, indirect: false, command: false, agent: false, hook: false, eval: false, documentation: true }
+    flow: superpowers-parallel
+    callers: [writing-plans, ecosystem-v2 plan-execution claim]
+    dependencies: [finishing-a-development-branch]
+    gate: { type: null, blocking: false }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [OPTIONAL, DOCUMENTATION_ONLY]
+    removal: { status: REMOVE_AFTER_MIGRATION, reason: "Documented Tier3; zero MegaBrain/orquestrar SKILL wiring; PDA exec is canonical" }
+    evidence:
+      - .cursor/skills/orquestrar/references/ecosystem-v2.md
+      - global-skills/executing-plans/SKILL.md
+
+  - id: subagent-driven-development
+    location: global-skills/subagent-driven-development
+    owner: tier3-superpowers
+    usage: { direct: false, indirect: false, command: false, agent: false, hook: false, eval: false, documentation: true }
+    flow: superpowers-parallel
+    callers: [writing-plans]
+    dependencies: [finishing-a-development-branch]
+    gate: { type: null, blocking: false }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [OPTIONAL, DOCUMENTATION_ONLY]
+    removal: { status: REMOVE_AFTER_MIGRATION, reason: "Parallel Superpowers executor; MegaBrain uses PDA Task tool" }
+    evidence:
+      - global-skills/writing-plans/SKILL.md
+      - docs/research/targets/local/superpowers/
+
+  - id: finishing-a-development-branch
+    location: global-skills/finishing-a-development-branch
+    owner: tier3-superpowers
+    usage: { direct: false, indirect: false, command: false, agent: false, hook: false, eval: false, documentation: true }
+    flow: superpowers-parallel
+    callers: [executing-plans, subagent-driven-development, ecosystem-v2 narrative]
+    dependencies: []
+    gate: { type: null, blocking: false }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [OPTIONAL, DOCUMENTATION_ONLY]
+    removal: { status: REMOVE_AFTER_MIGRATION, reason: "DOCUMENTATION_DRIFT vs MegaBrain Fase 5-6 po-review/documentar" }
+    evidence:
+      - .cursor/skills/orquestrar/references/ecosystem-v2.md
+      - .cursor/skills/orquestrar/SKILL.md
+
+  - id: systematic-debugging
+    location: global-skills/systematic-debugging
+    owner: tier3-superpowers
+    usage: { direct: false, indirect: true, command: true, agent: true, hook: false, eval: false, documentation: true }
+    flow: debugging
+    callers: [debugger package, /debugger]
+    dependencies: []
+    gate: { type: HARD_GATE, blocking: true, notes: "Iron Law absorbed into debugger" }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [CORE, HARD_GATE]
+    removal: { status: DO_NOT_REMOVE, reason: "ABSORBED_BY debugger; Tier3 DO source still required" }
+    absorbed_by: debugger
+    evidence:
+      - global-skills/systematic-debugging/PACKAGE-NOTE.md
+      - .cursor/skills/debugger/SKILL.md
+
+  - id: grill-me
+    location: global-skills/grill-me
+    owner: tier3
+    usage: { direct: false, indirect: true, command: false, agent: true, hook: false, eval: false, documentation: true }
+    flow: planning
+    callers: [orquestrar Fase 0.5, prd flow]
+    dependencies: [grilling]
+    gate: { type: SOFT_GATE, blocking: false }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [OPTIONAL, WRAPPER]
+    removal: { status: DO_NOT_REMOVE, reason: "OPTIONAL_UPSTREAM referenced; wrapper broken without grilling primitive" }
+    notes: "WRAPPER → /grilling; grilling skill ABSENT in CursorSKILLS and ~/.agents/skills"
+    evidence:
+      - global-skills/grill-me/SKILL.md
+      - .cursor/skills/orquestrar/SKILL.md
+      - docs/research/targets/local/mattpocock-skills/REPORT.md
+
+  - id: find-skills
+    location: global-skills/find-skills
+    owner: tier3
+    usage: { direct: false, indirect: false, command: false, agent: true, hook: false, eval: true, documentation: true }
+    flow: discovery
+    callers: [Cursor agent description match, docs claim /descobrir]
+    dependencies: []
+    gate: { type: null, blocking: false }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [DISCOVERY, DOCUMENTATION_ONLY]
+    removal: { status: DO_NOT_REMOVE, reason: "Claimed architectural fallback; NOT implemented in TS — unresolved until prune phase decides migrate-or-drop docs" }
+    notes: "DOCUMENTATION_DRIFT: ecosystem says Registry→find-skills; code scans provider.yaml only; /descobrir missing"
+    evidence:
+      - .cursor/skills/orquestrar/references/ecosystem-v2.md
+      - orchestrator/src/discovery/provider-discovery.ts
+      - global-skills/find-skills/SKILL.md
+
+  - id: technical-library-dossier
+    location: global-skills/technical-library-dossier
+    owner: tier3
+    usage: { direct: false, indirect: true, command: true, agent: true, hook: false, eval: true, documentation: true }
+    flow: research
+    callers: [/library-dossier]
+    dependencies: [agent-browser]
+    gate: { type: HARD_GATE, blocking: true, notes: "Skill-contract hard gate: agent-browser + Puppeteer" }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [OPTIONAL, HARD_GATE, COMMAND_ENTRYPOINT]
+    removal: { status: DO_NOT_REMOVE, reason: "Real command entrypoint; rare but gated" }
+    evidence:
+      - .cursor/commands/library-dossier.md
+      - global-skills/technical-library-dossier/SKILL.md
+
+  - id: agent-browser
+    location: global-skills/agent-browser
+    owner: tier3
+    usage: { direct: false, indirect: true, command: false, agent: true, hook: false, eval: true, documentation: true }
+    flow: browser
+    callers: [technical-library-dossier HARD, frontend-pro OPTIONAL/FALLBACK]
+    dependencies: []
+    gate: { type: CONDITIONAL, blocking: conditional }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [FALLBACK, HARD_GATE]
+    removal: { status: DO_NOT_REMOVE, reason: "Hard dep of library-dossier; fallback for frontend-pro" }
+    evidence:
+      - .cursor/skills/frontend-pro/references/browser-tools.md
+      - .cursor/commands/library-dossier.md
+
+  - id: frontend-design
+    location: global-skills/frontend-design
+    owner: tier3
+    usage: { direct: false, indirect: true, command: false, agent: false, hook: false, eval: false, documentation: true }
+    flow: frontend
+    callers: [frontend-pro anti-slop adaptation]
+    dependencies: []
+    gate: { type: null, blocking: false }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [OPTIONAL]
+    removal: { status: OPTIONAL, reason: "Content absorbed into frontend-pro anti-slop; skill still referenced" }
+    evidence:
+      - .cursor/skills/frontend-pro/references/anti-slop.md
+
+  - id: ui-ux-pro-max
+    location: global-skills/ui-ux-pro-max
+    owner: tier3
+    usage: { direct: false, indirect: true, command: false, agent: false, hook: false, eval: true, documentation: true }
+    flow: frontend
+    callers: [frontend-pro fork/data]
+    dependencies: []
+    gate: { type: null, blocking: false }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [OPTIONAL]
+    removal: { status: OPTIONAL, reason: "Forked into frontend-pro; keep as upstream data source until confirmed unused" }
+    evidence:
+      - .cursor/skills/frontend-pro/SKILL.md
+
+  - id: gsap
+    location: global-skills/gsap
+    owner: motion-pack
+    usage: { direct: false, indirect: false, command: false, agent: true, hook: false, eval: true, documentation: false }
+    flow: standalone
+    callers: []
+    dependencies: [lenis, hover-effects]
+    gate: { type: null, blocking: false }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [OPTIONAL, STANDALONE]
+    removal: { status: OPTIONAL, reason: "No MegaBrain flow caller; discoverable specialist" }
+    evidence: [global-skills/gsap/SKILL.md]
+
+  - id: framer-motion
+    location: global-skills/framer-motion
+    owner: motion-pack
+    usage: { direct: false, indirect: false, command: false, agent: true, hook: false, eval: true, documentation: false }
+    flow: standalone
+    callers: []
+    dependencies: [hover-effects]
+    gate: { type: null, blocking: false }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [OPTIONAL, STANDALONE]
+    removal: { status: OPTIONAL, reason: "No MegaBrain flow caller" }
+    evidence: [global-skills/framer-motion/SKILL.md]
+
+  - id: lenis
+    location: global-skills/lenis
+    owner: motion-pack
+    usage: { direct: false, indirect: false, command: false, agent: true, hook: false, eval: true, documentation: false }
+    flow: standalone
+    callers: []
+    dependencies: [gsap]
+    gate: { type: null, blocking: false }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [OPTIONAL, STANDALONE]
+    removal: { status: OPTIONAL, reason: "No MegaBrain flow caller" }
+    evidence: [global-skills/lenis/SKILL.md]
+
+  - id: hover-effects
+    location: global-skills/hover-effects
+    owner: motion-pack
+    usage: { direct: false, indirect: false, command: false, agent: true, hook: false, eval: true, documentation: false }
+    flow: standalone
+    callers: []
+    dependencies: [gsap, framer-motion, image-to-code]
+    gate: { type: null, blocking: false }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [OPTIONAL, STANDALONE]
+    removal: { status: OPTIONAL, reason: "No MegaBrain flow caller" }
+    evidence: [global-skills/hover-effects/SKILL.md]
+
+  - id: particles
+    location: global-skills/particles
+    owner: motion-pack
+    usage: { direct: false, indirect: false, command: false, agent: true, hook: false, eval: true, documentation: false }
+    flow: standalone
+    callers: []
+    dependencies: [r3f-shaders]
+    gate: { type: null, blocking: false }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [OPTIONAL, STANDALONE]
+    removal: { status: OPTIONAL, reason: "No MegaBrain flow caller" }
+    evidence: [global-skills/particles/SKILL.md]
+
+  - id: r3f-shaders
+    location: global-skills/r3f-shaders
+    owner: motion-pack
+    usage: { direct: false, indirect: false, command: false, agent: true, hook: false, eval: true, documentation: false }
+    flow: standalone
+    callers: []
+    dependencies: []
+    gate: { type: null, blocking: false }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [OPTIONAL, STANDALONE]
+    removal: { status: OPTIONAL, reason: "No MegaBrain flow caller" }
+    evidence: [global-skills/r3f-shaders/SKILL.md]
+
+  - id: linkedin-posts
+    location: global-skills/linkedin-posts
+    owner: content
+    usage: { direct: false, indirect: false, command: false, agent: true, hook: false, eval: false, documentation: true }
+    flow: standalone
+    callers: []
+    dependencies: []
+    gate: { type: null, blocking: false }
+    frequency: { value: NOT_MEASURED, source: null }
+    status: [OPTIONAL, STANDALONE]
+    removal: { status: ARCHIVE_CANDIDATE, reason: "Only README/INVENTORY references in MegaBrain repo" }
+    evidence: [README.md, INVENTORY.md]
+
+image_to_code:
+  existence: true
+  references:
+    - .cursor/skills/orquestrar/references/image-attachment-gate.md
+    - .cursor/skills/frontend-pro/SKILL.md
+    - .cursor/commands/frontend-pro.md
+    - .cursor/commands/MegaBrain.md
+    - .cursor/skills/po-review/SKILL.md
+    - .cursor/skills/planner/SKILL.md
+  hard_gate: true
+  callers: [orquestrar, frontend-pro, planner, po-review]
+  fallback: none_when_image_attached
+  removable: false
+  runtime_enforced: false

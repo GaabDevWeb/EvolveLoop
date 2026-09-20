@@ -1,0 +1,23 @@
+AGENT_md:
+  purpose: agent-assisted first-run configuration without personal host assumptions
+  pipeline:
+    - detect: OS, Cursor presence, existing WIKI_ROOT/RAG_REPO_ROOT, AGENTS_ROOT
+    - inspect: repo profiles/default.yaml, hooks, skills present
+    - backup: copy existing user hooks/rules before write
+    - ask_user:
+        - enable_wiki: yes/no
+        - wiki_mode: existing | new | disable_if_supported
+        - wiki_path: absolute path if enabled
+        - memory: enable wiki-mem hooks?
+        - local_model: preferences optional
+        - browser_tooling: optional
+        - optional_components: researcher, mcp packs
+        - profile: default | custom name (not GaabType in public prompts)
+    - configure_profile: write user profile yaml under profiles/ or ~/.config
+    - install: agents, skills, hooks per choices
+    - validate: health KnowledgeBackend, smoke tests, report missing env
+    - report: summary of what was installed; gaps
+  non_goals:
+    - do not clone author vault
+    - do not require GaabType
+    - do not invent secrets

@@ -1,0 +1,81 @@
+changes:
+
+  - id: C1
+    file: orchestrator/src/jobs/checkpoint.ts
+    operation: ADD
+    source: AGENTS/Cursor/orchestrator/src/jobs/checkpoint.ts
+    reason: Restore missing EngineCheckpoint persistence required by ExecutionEngine
+    classification: MISSING_RUNTIME_CODE
+    evidence:
+      - docs/reconciliation/JOBS-RECONCILIATION.md
+      - sha256: 80ab2e9240c9de759f1a94b97df9a671d647804d0c5dce55e610874126df8739
+    validation: "npm test 103/103; job-resume + full-cycle pass"
+    why_safe: "Byte-identical to AGENTS; deps only node:fs/path + GraphSnapshot already in CS"
+    regression_risk: LOW
+
+  - id: C2
+    file: orchestrator/src/jobs/job-store.ts
+    operation: ADD
+    source: AGENTS/Cursor/orchestrator/src/jobs/job-store.ts
+    reason: Restore SkillJob filesystem store
+    classification: MISSING_RUNTIME_CODE
+    evidence:
+      - sha256: a404577141f8fd6ced7cf8a339119f3cac493139da6f3d89eff142671407f1d3
+    validation: "discovery JobStore + full-cycle + job-resume"
+    why_safe: "node:fs/path only; no AGENTS-exclusive deps"
+    regression_risk: LOW
+
+  - id: C3
+    file: orchestrator/src/jobs/job-pickup.ts
+    operation: ADD
+    source: AGENTS/Cursor/orchestrator/src/jobs/job-pickup.ts
+    reason: Restore HITL pickup / invokePickup
+    classification: MISSING_RUNTIME_CODE
+    evidence:
+      - sha256: 797a69c42df07d81fd08632f05aa92ed4a2704a1dc913858d96f3f822c7c073b
+    validation: "job-pickup.test.ts 3/3"
+    why_safe: "Depends on JobStore + node builtins"
+    regression_risk: LOW
+
+  - id: C4
+    file: orchestrator/src/jobs/job-resume.ts
+    operation: ADD
+    source: AGENTS/Cursor/orchestrator/src/jobs/job-resume.ts
+    reason: Restore job result → ExecuteResult mapping
+    classification: MISSING_RUNTIME_CODE
+    evidence:
+      - sha256: 4f98e83e036eb2632eb783448344e08f5895698d39131c9d2c7bbd3e427dace0
+    validation: "job-resume.test.ts 2/2"
+    why_safe: "Imports types + validator already present and identical in CS"
+    regression_risk: LOW
+
+  - id: C5
+    file: orchestrator/src/cli/run-jobs.ts
+    operation: MODIFY
+    # actually NO content change applied
+    source: CursorSKILLS (preserved)
+    reason: Preserve LEGITIMATE_CURSOR_SKILLS_DELTA (evidence file guard on --success)
+    classification: LEGITIMATE_CURSOR_SKILLS_DELTA
+    evidence:
+      - docs/reconciliation/runtime-sync/RUN-JOBS-BEFORE.md
+    validation: "File unchanged vs backup; suite green with jobs restored"
+    why_safe: "No overwrite; AGENTS missing guard is weaker"
+    regression_risk: NONE
+    note: "Declared MODIFY in planning sense = reconciliation decision; on-disk operation = KEEP"
+
+  - id: C6
+    file: orchestrator/tests/unit/evidence.test.ts
+    operation: MODIFY
+    source: AGENTS/Cursor/orchestrator/tests/unit/evidence.test.ts
+    reason: Align tests to implemented Evidence contract; remove aspirational artifact_path_missing asserts
+    classification: TEST_IS_STALE
+    evidence:
+      - docs/reconciliation/runtime-sync/EVIDENCE-TEST-DIAGNOSIS.md
+      - validateEvidenceV21 has no artifact_path_missing
+      - buildGateEvidence sets artifacts: []
+    validation: "evidence.test.ts 3/3; deferred asserts archived"
+    why_safe: "Matches AGENTS SSOT + implemented validator; aspirational tests preserved in DEFERRED doc"
+    regression_risk: LOW
+    deferred: docs/reconciliation/runtime-sync/DEFERRED-evidence-gate-artefact-asserts.md
+
+deletes: []

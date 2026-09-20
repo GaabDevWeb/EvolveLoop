@@ -1,0 +1,81 @@
+final_audit_matrix:
+  property: status
+  rows:
+    - property: automatic_observation
+      status: PASS_OPT_IN
+      evidence: EventBus observer + EVENT_COVERAGE
+    - property: automatic_analysis
+      status: PASS_OPT_IN
+      evidence: LiveAnalysisCoordinator cadence
+    - property: automatic_need_detection
+      status: PASS
+      evidence: analyze() need-lifecycle
+    - property: automatic_candidate_generation
+      status: PASS
+      evidence: candidate-generator via analyze
+    - property: scope_safety
+      status: PASS_WITH_LIMITATIONS
+      evidence: AnalysisScope; logical tenancy only
+    - property: persistence
+      status: PASS
+      evidence: PersistentSignalStore restart
+    - property: outcome_persistence
+      status: PASS
+    - property: outcome_trigger
+      status: PASS
+      evidence: afterOutcome FINAL-002
+    - property: outcome_reingestion
+      status: PASS
+    - property: observation_window
+      status: PASS
+    - property: gate_boundary
+      status: PASS_PARTIAL
+      evidence: handoff + fixture + gate-result adapter
+    - property: live_registry
+      status: PASS_WHEN_INJECTED
+    - property: live_event_coverage
+      status: PASS_LIMITED
+    - property: runtime_resilience
+      status: PASS
+      evidence: FINAL-006
+    - property: backpressure
+      status: PASS
+    - property: loop_protection
+      status: PASS
+    - property: user_isolation
+      status: PASS_LOGICAL
+    - property: core_isolation
+      status: PASS_HOLD
+    - property: security_ceiling_propose
+      status: PASS
+    - property: production_proven
+      status: FAIL_EXPLICIT
+    - property: evidence_adapter
+      status: NOT_CONNECTED
+    - property: eval_adapter
+      status: NOT_CONNECTED
+    - property: user_feedback_adapter
+      status: NOT_CONNECTED
+    - property: cli_evolve
+      status: PASS_DEFAULT_OFF
+
+reviewers:
+  architecture:
+    verdict: PASS_WITH_LIMITATIONS
+    notes: "Closed loop wired; no second runtime; dual cadence export residual"
+  runtime:
+    verdict: PASS_WITH_LIMITATIONS
+    notes: "Non-blocking observer; opt-in only"
+  security:
+    verdict: PASS_WITH_LIMITATIONS
+    notes: "PROPOSE ceiling; logical tenancy; scope fallback residual"
+  evidence:
+    verdict: PASS_WITH_LIMITATIONS
+    notes: "Harness evidence strong; production evidence absent"
+  eval:
+    verdict: PASS
+    notes: "FINAL-001..007 present with claim boundaries"
+
+adversarial:
+  source: critic_pda_evolveloop-final-2026-09-19
+  recommended_verdict: SUCCESS_WITH_LIMITATIONS

@@ -1,0 +1,77 @@
+dependencies:
+
+  - eval_id: EV-001
+    requires: [orchestrator_tests, full-cycle, contracts]
+    type: [HARNESS]
+    status: AVAILABLE
+
+  - eval_id: EV-002
+    requires: [registry_tests, contracts]
+    type: [HARNESS]
+    status: AVAILABLE
+
+  - eval_id: EV-003
+    requires: [registry_tests]
+    type: [HARNESS]
+    status: AVAILABLE
+
+  - eval_id: EV-004
+    requires: [authority_tests, policy_engine_tests]
+    type: [HARNESS]
+    status: AVAILABLE
+
+  - eval_id: EV-005
+    requires: [evidence_tests]
+    type: [HARNESS]
+    status: AVAILABLE
+
+  - eval_id: EV-006
+    requires: [E-005_fixture, disposable_jobsDir, mutation_instrumentation]
+    type: [FIXTURE, HARNESS]
+    status: AVAILABLE_AFTER_FORMALIZATION
+    note: "Fixture exists historically; Eval Runner must rehydrate disposable procedure"
+
+  - eval_id: EV-007
+    requires: [E-001_harness, conditions.yaml]
+    type: [HARNESS, FIXTURE]
+    status: AVAILABLE
+
+  - eval_id: EV-008
+    requires: [E-001_harness]
+    type: [HARNESS]
+    status: AVAILABLE
+
+  - eval_id: EV-009
+    requires: [npm_test, baseline_checksums]
+    type: [HARNESS]
+    status: AVAILABLE
+
+  - eval_id: EV-F-001
+    requires: [live_host_catalog_injection, live_task_oracle]
+    type: [ENVIRONMENT, INSTRUMENTATION]
+    status: MISSING
+
+  - eval_id: EV-F-002
+    requires: [multi_surface_side_effect_instrumentation]
+    type: [RUNTIME, INSTRUMENTATION]
+    status: MISSING
+
+  - eval_id: EV-F-003
+    requires: [PT-002_gate_approval, OS_kill_harness]
+    type: [FIXTURE]
+    status: SPEC_READY_EXECUTION_BLOCKED
+
+  - eval_id: EV-F-004
+    requires: [security_model_ADR_answers, sandbox_primitive]
+    type: [ARCHITECTURE, RUNTIME]
+    status: MISSING
+
+  - eval_id: EV-F-005
+    requires: [stuck_semantics_definition]
+    type: [ARCHITECTURE]
+    status: MISSING
+
+  - eval_id: EV-F-006
+    requires: [ownership_ADR, compaction_pipeline]
+    type: [ARCHITECTURE, RUNTIME]
+    status: MISSING

@@ -1,0 +1,57 @@
+eval:
+  id: EV-002
+  name: Capability and Provider Resolution
+  category: CAPABILITY
+  version: 1
+  question: "Does Capability resolution select an expected Provider and emit selection evidence for known IR nodes?"
+  property: capability_provider_resolution
+  baseline_id: baseline-v1-2026-09-18
+  source: { experiments: [], claims: [], evidence: [BASELINE_ONLY] }
+  readiness: READY
+  scope:
+    includes: [selectWithEvidence, ProviderSelected_events]
+    excludes: [task_success]
+  setup: { cwd: orchestrator/ }
+  control: null
+  treatment: null
+  fixtures: [existing_registry_contract_fixtures]
+  metrics:
+    - id: EV002-M-selection_correct
+      name: selection_correct
+      definition: registry/contract tests asserting expected provider selection
+      unit: bool_suite
+      collection_method: vitest
+      source: tests/unit/registry*.ts + contracts
+      type: DIRECT
+      interpretation: correct_provider_selected
+      limitations: [≠_task_success]
+    - id: EV002-M-selection_evidence_present
+      name: selection_evidence_present
+      definition: selection evidence emitted/validated in contract cases
+      unit: bool_suite
+      collection_method: vitest
+      source: contract-prototype
+      type: DIRECT
+      interpretation: evidence_linkage_for_selection
+      limitations: []
+  success_criteria: ["registry and related contract cases PASS"]
+  failure_criteria: [provider_mismatch, missing_evidence, suite_FAIL]
+  repetitions: { minimum: 1, recommended: 1, reason: deterministic }
+  isolation: local_test_process
+  cleanup: none
+  reproducibility:
+    commands:
+      - "npx vitest run tests/unit/registry.test.ts tests/unit/registry-contract.test.ts"
+      - "npx vitest run tests/contracts/contract-prototype.test.ts"
+  limitations: [REUSE_EXISTING_TEST_COVERAGE, correct_provider_≠_task_success]
+  regression_reference: baseline-v1-2026-09-18
+  safety_constraints: [read_only]
+  eval_contract:
+    inputs: [IR_fixtures]
+    preconditions: []
+    action: run_registry_contract_tests
+    observations: [pass_fail]
+    metrics: [EV002-M-selection_correct, EV002-M-selection_evidence_present]
+    oracle: { type: suite_pass }
+    cleanup: []
+    artifacts: [vitest_stdout]

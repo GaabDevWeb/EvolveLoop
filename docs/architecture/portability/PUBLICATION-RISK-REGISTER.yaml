@@ -1,0 +1,132 @@
+# Publication risk register — diagnostic only
+
+risks:
+  - id: R-001
+    title: Hardcoded /home/gaab RAG defaults in runtime
+    severity: CRITICAL
+    component: knowledge.ts + ground.sh + mem.py
+    publication: GENERALIZE_FIRST
+    impact: "Clone on another user/machine fails grounding silently or wrong vault"
+
+  - id: R-002
+    title: Dual divergent vault path defaults
+    severity: CRITICAL
+    component: Rules vs ground.sh vs mem.py
+    publication: GENERALIZE_FIRST
+    impact: "Even on author machine, hooks/rules may point to wrong vault"
+
+  - id: R-003
+    title: HARD-GATE requires GaabWiki by name
+    severity: HIGH
+    component: orquestrar + gaabwiki-agent.mdc
+    publication: EXTRACT_TO_PROFILE
+    impact: "Public users cannot satisfy gate without personal wiki brand/stack"
+
+  - id: R-004
+    title: Personal corpus not in repo
+    severity: HIGH
+    component: karpathyWiki external
+    publication: EXTRACT_TO_PROFILE
+    impact: "README promises portable setup but RAG corpus missing"
+
+  - id: R-005
+    title: Always-on personal hooks
+    severity: HIGH
+    component: .cursor/hooks.json gaabwiki-mem
+    publication: EXTRACT_TO_PROFILE
+    impact: "Every session writes episodic data expecting personal vault"
+
+  - id: R-006
+    title: Absolute paths in environment rebuild manifests
+    severity: MEDIUM
+    component: docs/architecture/skills/environment/*
+    publication: GENERALIZE_FIRST
+    impact: "Docs/automation non-portable"
+
+  - id: R-007
+    title: Working-tree artifacts (memory, prune-snapshots, node_modules, dist)
+    severity: MEDIUM
+    component: repo hygiene
+    publication: REMOVE_FROM_PUBLIC_CORE
+    impact: "Bloat / leakage of session evidence"
+
+  - id: R-008
+    title: Personal project routing baked into skill
+    severity: MEDIUM
+    component: pack tables
+    publication: EXTRACT_TO_PROFILE
+    impact: "Confuses external users"
+
+  - id: R-009
+    title: Brand rename before seam extraction
+    severity: HIGH
+    component: process risk
+    publication: UNKNOWN
+    impact: "Renaming GaabWiki before adapter seams causes widespread breakage"
+    mitigation: "Do seams+profile FIRST; rename LAST"
+
+  - id: R-010
+    title: MCP secrets on host
+    severity: MEDIUM
+    component: ~/.cursor/mcp.env
+    publication: READY_AS_IS
+    impact: "Ensure never committed — example file OK"
+
+  - id: R-011
+    title: Portuguese UX as unmarked default
+    severity: LOW
+    component: commands
+    publication: EXTRACT_TO_PROFILE
+    impact: "Locale preference, not architecture"
+
+  - id: R-012
+    title: INVENTORY.md incomplete vs reality
+    severity: LOW
+    component: docs
+    publication: GENERALIZE_FIRST
+    impact: "Onboarding drift"
+
+  - id: R-013
+    title: agent-setup AGENTS_ROOT default points to missing path
+    severity: HIGH
+    component: agent-setup bootstrap/install/paths.py
+    publication: GENERALIZE_FIRST
+    impact: >
+      Default $HOME/Documentos/GitHub/CursorSKILLS MISSING on author host;
+      live runtime uses Downloads via agents.env — bootstrap without override fails
+    evidence_followup: "identity/path subagent 2026-09-19"
+
+  - id: R-014
+    title: Dual vault directories are distinct inodes (not aliases)
+    severity: CRITICAL
+    component: Documentos/karpathyWiki vs Documentos/gitHub/karpathyWiki
+    publication: GENERALIZE_FIRST
+    impact: "mem.py/rules vs knowledge.ts/ground.sh can silently bifurcate SSOT"
+    evidence_followup: "identity/path subagent disk_truth_vaults"
+
+readiness_summary:
+  READY_AS_IS:
+    - megabrain.mdc generic rules
+    - orchestrator core modules (engine, IR, evidence, evolveloop) sans knowledge default
+    - install-agents-global.sh REPO_ROOT pattern
+    - grill-me / image-to-code hard gates
+    - most worker/gate skills
+  GENERALIZE_FIRST:
+    - all /home/gaab defaults
+    - dual vault path unification
+    - knowledge provider default
+    - environment YAML absolute paths
+  EXTRACT_TO_PROFILE:
+    - gaabwiki + gaabwiki-mem + /wiki + /mem
+    - gaabwiki-agent.mdc
+    - pack project map
+    - gaabwiki hooks
+    - ADR binding as profile choice
+  REMOVE_FROM_PUBLIC_CORE:
+    - memory/* sessions
+    - .prune-snapshots
+    - agent-*-workspace eval dumps
+    - reverseEnginering path docs (or quarantine)
+  UNKNOWN:
+    - whether public needs any default knowledge provider at all
+    - final product brand (MegaBrain vs CursorSKILLS)

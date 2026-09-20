@@ -1,0 +1,14 @@
+timestamp: "20260920T005842Z"
+host: "gaab"
+cursor_skill_root: "/home/gaab/.cursor/skills"
+skills_before: 24
+files_before: 24
+symlinks_before: 24
+backup:
+  path: "/home/gaab/Downloads/CursorSKILLS/.prune-snapshots/cursor-skills-rebuild-20260920T005842Z"
+  archive: "/home/gaab/Downloads/CursorSKILLS/.prune-snapshots/cursor-skills-rebuild-20260920T005842Z/cursor-skills.tar.gz"
+  restore_script: "/home/gaab/Downloads/CursorSKILLS/.prune-snapshots/cursor-skills-rebuild-20260920T005842Z/RESTORE.sh"
+  inventory: "/home/gaab/Downloads/CursorSKILLS/.prune-snapshots/cursor-skills-rebuild-20260920T005842Z/symlink-inventory.yaml"
+agents_skills_untouched: true
+skills_cursor_untouched: true
+commands_untouched: true

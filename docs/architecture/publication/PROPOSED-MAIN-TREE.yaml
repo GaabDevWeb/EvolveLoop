@@ -1,0 +1,43 @@
+# Derived from CURRENT repo — not an assumed greenfield layout
+# Prefer minimal moves: keep orchestrator/ .cursor/ Agents/ global-skills/ profiles/
+
+proposed_main_tree:
+  reasoning: Derive from existing layout; avoid inventing core/ adapters/ unless extraction phase proves need
+  tree: |
+    <public-repo>/
+    ├── orchestrator/          # PUBLIC_CORE runtime
+    ├── profiles/
+    │   └── default.yaml       # PUBLIC_CONFIG
+    ├── .cursor/
+    │   ├── skills/            # pipeline + wiki (+ wiki-mem optional)
+    │   ├── commands/          # public entrypoints
+    │   ├── rules/             # architecture/workflow only
+    │   └── hooks/             # core hooks; mem optional
+    ├── Agents/                # mirrors
+    ├── global-skills/         # pruned pack
+    ├── agent-setup/           # install mechanism
+    ├── scripts/
+    ├── mcp/                   # examples only
+    ├── contracts/             # if present at root or under orchestrator
+    ├── docs/
+    │   ├── user/              # future quickstart
+    │   └── architecture/      # curated
+    ├── tests/                 # via orchestrator/tests
+    ├── AGENT.md               # future
+    ├── README.md
+    ├── LICENSE                # future
+    ├── CONTRIBUTING.md        # future
+    └── SECURITY.md            # future
+
+  gaabtype_overlay_same_repo:
+    tree: |
+      profiles/gaabtype/
+        knowledge.yaml
+        paths.example.yaml
+        projects.yaml
+        preferences.yaml
+      # optional: docs/profiles/gaabtype.md (private fork may omit from public main)
+
+  not_recommended:
+    - duplicate orchestrator under GaabType/
+    - full-copy branch as long-term model

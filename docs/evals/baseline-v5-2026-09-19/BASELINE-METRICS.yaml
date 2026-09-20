@@ -1,0 +1,6 @@
+metrics:
+  tests_total: 170
+  tests_passed: 170
+  contracts: 7
+  full_cycle: 5
+  evolveloop_live_evals: 8

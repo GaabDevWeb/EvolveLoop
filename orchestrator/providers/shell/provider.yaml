@@ -1,0 +1,19 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Provider
+metadata:
+  name: shell
+  version: "1.0.0"
+  description: "Deterministic shell execution (authority-gated)"
+  owner: agents-team
+spec:
+  plugin:
+    type: deterministic
+    entrypoint: "src/providers/deterministic/index.ts"
+  capabilities:
+    - id: shell.execute
+      contract: contracts/shell.execute@1.0.0
+      type: worker
+  runtime:
+    cost: low
+  availability: active
+  priority: 40

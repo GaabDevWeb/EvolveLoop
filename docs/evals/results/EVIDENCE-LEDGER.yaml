@@ -1,0 +1,140 @@
+baseline_id: baseline-v1-2026-09-18
+consolidated_at: "2026-09-19"
+rule: "Normalize only; do not strengthen original evidence; do not modify raw"
+
+integrity:
+
+  - artifact: docs/evals/experiments/E-001/raw/battery/battery-summary.json
+    sha256: 49343e5bdf6a534414db8eb56d59a47858f5adeab9df666b4f262959668f040c
+  - artifact: docs/evals/experiments/E-001/raw/battery/all-runs.json
+    sha256: e4e8bb0ee511153b1818c174a356dbbec884dc86048df4128690be6a7ae7be8b
+  - artifact: docs/evals/experiments/E-001/E-001-RESULTS.yaml
+    sha256: ce72999d8c660d689bcde3275c6d63ff6e3c2f54d5aa0266d5324b78a36faf40
+  - artifact: docs/evals/experiments/E-001/E-001-RESULT.md
+    sha256: 210e38310ddca83fcfbbf7ad7c971bb8dd62d55b0646b2648252c743438d0006
+  - artifact: docs/evals/experiments/E-005/raw/dup-mutate/summary-metrics.json
+    sha256: 12cda1ff4597aaed236b80ff38ce8e354907f683ac59958d1e335e6e56596b3d
+  - artifact: docs/evals/experiments/E-005/raw/dup-mutate/execution-matrix.json
+    sha256: af2068bb62aa229b9a0db11641a515915c218d439daeddbded18a97666cb44ca
+  - artifact: docs/evals/experiments/E-005/E-005-RESULT.md
+    sha256: 7b525df9ea7c492f784fda67eb6b2417da0253f58f35b3bb8477760658c1b03e
+  - artifact: docs/architecture/decision-review/E-001-TOKEN-RECONCILIATION.md
+    sha256: e370738cf7d62da92319e7538216e3e74a3dc3172f8cb0b05a463c51eb5a1302
+
+evidence:
+
+  - id: E001-EV-001
+    experiment: E-001
+    run_id: battery-aggregate
+    condition: ALL
+    source_artifact: battery-summary.json
+    source_path: docs/evals/experiments/E-001/raw/battery/battery-summary.json
+    source_type: RAW_EVIDENCE
+    observation: "20 runs across CONTROL, T_SKILLS_5, T_SKILLS_10, T_TOKENS_40; n_tasks=176; seed e001-v1-2026-09-18"
+    metric_ids: [E001-M-001, E001-M-002, E001-M-003, E001-M-004, E001-M-005, E001-M-006, E001-M-007]
+    scope:
+      runtime: offline_catalog_harness
+      workload: skill-eval-trigger-corpus
+      environment: offline_python_harness
+      sample: "control n=5; treatment n=15; total=20"
+    confidence: HIGH
+    aliases: [E001-BAT-01]
+
+  - id: E001-EV-002
+    experiment: E-001
+    run_id: all-runs
+    condition: ALL
+    source_artifact: all-runs.json
+    source_path: docs/evals/experiments/E-001/raw/battery/all-runs.json
+    source_type: RAW_EVIDENCE
+    observation: "Per-run records with catalog fingerprints, metrics classifications, task_success NOT_MEASURED"
+    metric_ids: [E001-M-001, E001-M-002, E001-M-003, E001-M-004, E001-M-005, E001-M-006, E001-M-007, E001-M-008]
+    scope:
+      runtime: offline_catalog_harness
+      workload: skill-eval-trigger-corpus
+      environment: offline_python_harness
+      sample: 20
+    confidence: HIGH
+
+  - id: E001-EV-003
+    experiment: E-001
+    run_id: machine-result
+    condition: ALL
+    source_artifact: E-001-RESULTS.yaml
+    source_path: docs/evals/experiments/E-001/E-001-RESULTS.yaml
+    source_type: EXPERIMENT_RESULT
+    observation: "Machine-readable aggregates and comparisons vs CONTROL"
+    metric_ids: [E001-M-004, E001-M-005, E001-M-007]
+    scope:
+      runtime: offline_catalog_harness
+      workload: skill-eval-trigger-corpus
+      environment: offline
+      sample: 20
+    confidence: HIGH
+
+  - id: E001-EV-004
+    experiment: E-001
+    run_id: n/a
+    condition: T_TOKENS_40
+    source_artifact: E-001-TOKEN-RECONCILIATION.md
+    source_path: docs/architecture/decision-review/E-001-TOKEN-RECONCILIATION.md
+    source_type: INTERPRETATION
+    observation: "~40% token_estimate reduction applies only to T_TOKENS_40 vs CONTROL (1010 vs 1673); T5/T10 are size-budget axis"
+    metric_ids: [E001-M-007]
+    scope:
+      runtime: consolidation_clarification
+      workload: n/a
+      environment: n/a
+      sample: n/a
+    confidence: HIGH
+    note: CORRECTED_IN_CONSOLIDATION — raw values never wrong; prose ambiguity clarified
+
+  - id: E005-EV-001
+    experiment: E-005
+    run_id: summary
+    condition: ALL
+    source_artifact: summary-metrics.json
+    source_path: docs/evals/experiments/E-005/raw/dup-mutate/summary-metrics.json
+    source_type: RAW_EVIDENCE
+    observation: "resume_success=1; duplicate_mutate_any=false; runs=15; OS kill NOT_MEASURED; STATE_WRITE scoped"
+    metric_ids: [E005-M-001, E005-M-002, E005-M-003, E005-M-004, E005-M-005]
+    scope:
+      runtime: ExecutionEngine_jobs
+      workload: e005-dup-mutate_STATE_WRITE
+      environment: same_Node_process
+      sample: "control=5; SAME_ENGINE=5; NEW_ENGINE=5"
+    confidence: HIGH
+    aliases: [E005-DM-01]
+
+  - id: E005-EV-002
+    experiment: E-005
+    run_id: matrix
+    condition: ALL
+    source_artifact: execution-matrix.json
+    source_path: docs/evals/experiments/E-005/raw/dup-mutate/execution-matrix.json
+    source_type: RAW_EVIDENCE
+    observation: "15 matrix entries; NEW_ENGINE notes same_process true — not OS kill"
+    metric_ids: [E005-M-001, E005-M-002]
+    scope:
+      runtime: ExecutionEngine_jobs
+      workload: e005-dup-mutate_STATE_WRITE
+      environment: same_Node_process
+      sample: 15
+    confidence: HIGH
+    aliases: [E005-DM-02]
+
+  - id: E005-EV-003
+    experiment: E-005
+    run_id: report
+    condition: ALL
+    source_artifact: E-005-RESULT.md
+    source_path: docs/evals/experiments/E-005/E-005-RESULT.md
+    source_type: EXPERIMENT_RESULT
+    observation: "SUPPORTED scoped; HITL not full product; exactly-once not claimed"
+    metric_ids: [E005-M-001, E005-M-002, E005-M-003]
+    scope:
+      runtime: ExecutionEngine_jobs
+      workload: job-path_STATE_WRITE
+      environment: in-process_interrupt
+      sample: 15
+    confidence: HIGH

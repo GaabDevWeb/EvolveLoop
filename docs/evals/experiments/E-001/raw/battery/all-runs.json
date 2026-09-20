@@ -1,0 +1,3147 @@
+[
+  {
+    "experiment_id": "E-001",
+    "baseline_id": "baseline-v1-2026-09-18",
+    "run_id": "E001-CONTROL-r01-2c7a0e6d",
+    "condition_id": "CONTROL",
+    "sequence": 1,
+    "timestamp": "2026-09-19T13:11:01.193351+00:00",
+    "catalog": {
+      "requested_size": 23,
+      "actual_size": 23,
+      "skill_ids": [
+        "adr",
+        "backend",
+        "researcher",
+        "frontend-pro",
+        "architect",
+        "agent-architecture-mining",
+        "agent-authoring",
+        "gaabwiki",
+        "code-reviewer",
+        "planner",
+        "po-review",
+        "testing",
+        "debugger",
+        "prd",
+        "database",
+        "documentation",
+        "gaabwiki-mem",
+        "devops",
+        "orquestrar",
+        "security",
+        "skill-authoring",
+        "failure-analyst",
+        "validator"
+      ],
+      "fingerprint": "a91e10d36db69c0a5f1ee1168982d9b1caac44bacd51add279986608b67ad1e6"
+    },
+    "task": {
+      "id": "skill-eval-trigger-corpus",
+      "input_fingerprint": "5f237e7abc9a435121647fba0b12b1162200239b9025703f7c04af3a78d8bdfa",
+      "n_tasks": 176
+    },
+    "metrics": [
+      {
+        "name": "catalog_size",
+        "value": 23,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_available",
+        "value": 23,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_activated_count",
+        "value": 176,
+        "unit": "predictions",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "one top-1 prediction per scored task; AVAILABLE\u2260ACTIVATED"
+      },
+      {
+        "name": "skills_activated_unique",
+        "value": [
+          "adr",
+          "agent-architecture-mining",
+          "agent-authoring",
+          "architect",
+          "backend",
+          "code-reviewer",
+          "devops",
+          "documentation",
+          "failure-analyst",
+          "frontend-pro",
+          "gaabwiki",
+          "gaabwiki-mem",
+          "orquestrar",
+          "planner",
+          "po-review",
+          "prd",
+          "researcher",
+          "security",
+          "testing",
+          "validator"
+        ],
+        "unit": "skill_ids",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_precision",
+        "value": 0.3352272727272727,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_recall",
+        "value": 0.3352272727272727,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "token_estimate",
+        "value": 1673,
+        "method": "whitespace",
+        "unit": "tokens_est",
+        "source": "estimate_tokens",
+        "classification": "PROXY",
+        "limitation": "vendor tokenizer unavailable"
+      },
+      {
+        "name": "wall_clock_duration",
+        "value": 0.0629162190000443,
+        "unit": "seconds",
+        "source": "perf_counter",
+        "classification": "DIRECT",
+        "note": "OBSERVED LATENCY not performance benchmark"
+      },
+      {
+        "name": "task_success",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "live task_success unavailable"
+      },
+      {
+        "name": "activation_match_rate",
+        "value": 0.3352272727272727,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "NOT live task_success; equals activation_precision in this harness"
+      },
+      {
+        "name": "skills_invoked",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "no live skill invocation"
+      },
+      {
+        "name": "skills_loaded",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "offline materialization only; not host load"
+      }
+    ],
+    "environment": {
+      "os": "Linux-6.12.88+deb13-amd64-x86_64-with-glibc2.41",
+      "python": "3.13.5",
+      "node": "v24.15.0",
+      "npm": "11.12.1",
+      "harness": "catalog_harness.py",
+      "seed": "e001-v1-2026-09-18",
+      "source_revision": "unknown",
+      "cwd": "/home/gaab/Downloads/CursorSKILLS"
+    },
+    "result": "OK",
+    "n_tasks_scored": 176,
+    "seed": "e001-v1-2026-09-18"
+  },
+  {
+    "experiment_id": "E-001",
+    "baseline_id": "baseline-v1-2026-09-18",
+    "run_id": "E001-CONTROL-r02-67d2191e",
+    "condition_id": "CONTROL",
+    "sequence": 2,
+    "timestamp": "2026-09-19T13:11:01.326818+00:00",
+    "catalog": {
+      "requested_size": 23,
+      "actual_size": 23,
+      "skill_ids": [
+        "adr",
+        "backend",
+        "researcher",
+        "frontend-pro",
+        "architect",
+        "agent-architecture-mining",
+        "agent-authoring",
+        "gaabwiki",
+        "code-reviewer",
+        "planner",
+        "po-review",
+        "testing",
+        "debugger",
+        "prd",
+        "database",
+        "documentation",
+        "gaabwiki-mem",
+        "devops",
+        "orquestrar",
+        "security",
+        "skill-authoring",
+        "failure-analyst",
+        "validator"
+      ],
+      "fingerprint": "a91e10d36db69c0a5f1ee1168982d9b1caac44bacd51add279986608b67ad1e6"
+    },
+    "task": {
+      "id": "skill-eval-trigger-corpus",
+      "input_fingerprint": "5f237e7abc9a435121647fba0b12b1162200239b9025703f7c04af3a78d8bdfa",
+      "n_tasks": 176
+    },
+    "metrics": [
+      {
+        "name": "catalog_size",
+        "value": 23,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_available",
+        "value": 23,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_activated_count",
+        "value": 176,
+        "unit": "predictions",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "one top-1 prediction per scored task; AVAILABLE\u2260ACTIVATED"
+      },
+      {
+        "name": "skills_activated_unique",
+        "value": [
+          "adr",
+          "agent-architecture-mining",
+          "agent-authoring",
+          "architect",
+          "backend",
+          "code-reviewer",
+          "devops",
+          "documentation",
+          "failure-analyst",
+          "frontend-pro",
+          "gaabwiki",
+          "gaabwiki-mem",
+          "orquestrar",
+          "planner",
+          "po-review",
+          "prd",
+          "researcher",
+          "security",
+          "testing",
+          "validator"
+        ],
+        "unit": "skill_ids",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_precision",
+        "value": 0.3352272727272727,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_recall",
+        "value": 0.3352272727272727,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "token_estimate",
+        "value": 1673,
+        "method": "whitespace",
+        "unit": "tokens_est",
+        "source": "estimate_tokens",
+        "classification": "PROXY",
+        "limitation": "vendor tokenizer unavailable"
+      },
+      {
+        "name": "wall_clock_duration",
+        "value": 0.06717946300000222,
+        "unit": "seconds",
+        "source": "perf_counter",
+        "classification": "DIRECT",
+        "note": "OBSERVED LATENCY not performance benchmark"
+      },
+      {
+        "name": "task_success",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "live task_success unavailable"
+      },
+      {
+        "name": "activation_match_rate",
+        "value": 0.3352272727272727,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "NOT live task_success; equals activation_precision in this harness"
+      },
+      {
+        "name": "skills_invoked",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "no live skill invocation"
+      },
+      {
+        "name": "skills_loaded",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "offline materialization only; not host load"
+      }
+    ],
+    "environment": {
+      "os": "Linux-6.12.88+deb13-amd64-x86_64-with-glibc2.41",
+      "python": "3.13.5",
+      "node": "v24.15.0",
+      "npm": "11.12.1",
+      "harness": "catalog_harness.py",
+      "seed": "e001-v1-2026-09-18",
+      "source_revision": "unknown",
+      "cwd": "/home/gaab/Downloads/CursorSKILLS"
+    },
+    "result": "OK",
+    "n_tasks_scored": 176,
+    "seed": "e001-v1-2026-09-18"
+  },
+  {
+    "experiment_id": "E-001",
+    "baseline_id": "baseline-v1-2026-09-18",
+    "run_id": "E001-CONTROL-r03-22df5e1f",
+    "condition_id": "CONTROL",
+    "sequence": 3,
+    "timestamp": "2026-09-19T13:11:01.467906+00:00",
+    "catalog": {
+      "requested_size": 23,
+      "actual_size": 23,
+      "skill_ids": [
+        "adr",
+        "backend",
+        "researcher",
+        "frontend-pro",
+        "architect",
+        "agent-architecture-mining",
+        "agent-authoring",
+        "gaabwiki",
+        "code-reviewer",
+        "planner",
+        "po-review",
+        "testing",
+        "debugger",
+        "prd",
+        "database",
+        "documentation",
+        "gaabwiki-mem",
+        "devops",
+        "orquestrar",
+        "security",
+        "skill-authoring",
+        "failure-analyst",
+        "validator"
+      ],
+      "fingerprint": "a91e10d36db69c0a5f1ee1168982d9b1caac44bacd51add279986608b67ad1e6"
+    },
+    "task": {
+      "id": "skill-eval-trigger-corpus",
+      "input_fingerprint": "5f237e7abc9a435121647fba0b12b1162200239b9025703f7c04af3a78d8bdfa",
+      "n_tasks": 176
+    },
+    "metrics": [
+      {
+        "name": "catalog_size",
+        "value": 23,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_available",
+        "value": 23,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_activated_count",
+        "value": 176,
+        "unit": "predictions",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "one top-1 prediction per scored task; AVAILABLE\u2260ACTIVATED"
+      },
+      {
+        "name": "skills_activated_unique",
+        "value": [
+          "adr",
+          "agent-architecture-mining",
+          "agent-authoring",
+          "architect",
+          "backend",
+          "code-reviewer",
+          "devops",
+          "documentation",
+          "failure-analyst",
+          "frontend-pro",
+          "gaabwiki",
+          "gaabwiki-mem",
+          "orquestrar",
+          "planner",
+          "po-review",
+          "prd",
+          "researcher",
+          "security",
+          "testing",
+          "validator"
+        ],
+        "unit": "skill_ids",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_precision",
+        "value": 0.3352272727272727,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_recall",
+        "value": 0.3352272727272727,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "token_estimate",
+        "value": 1673,
+        "method": "whitespace",
+        "unit": "tokens_est",
+        "source": "estimate_tokens",
+        "classification": "PROXY",
+        "limitation": "vendor tokenizer unavailable"
+      },
+      {
+        "name": "wall_clock_duration",
+        "value": 0.07111317499993675,
+        "unit": "seconds",
+        "source": "perf_counter",
+        "classification": "DIRECT",
+        "note": "OBSERVED LATENCY not performance benchmark"
+      },
+      {
+        "name": "task_success",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "live task_success unavailable"
+      },
+      {
+        "name": "activation_match_rate",
+        "value": 0.3352272727272727,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "NOT live task_success; equals activation_precision in this harness"
+      },
+      {
+        "name": "skills_invoked",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "no live skill invocation"
+      },
+      {
+        "name": "skills_loaded",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "offline materialization only; not host load"
+      }
+    ],
+    "environment": {
+      "os": "Linux-6.12.88+deb13-amd64-x86_64-with-glibc2.41",
+      "python": "3.13.5",
+      "node": "v24.15.0",
+      "npm": "11.12.1",
+      "harness": "catalog_harness.py",
+      "seed": "e001-v1-2026-09-18",
+      "source_revision": "unknown",
+      "cwd": "/home/gaab/Downloads/CursorSKILLS"
+    },
+    "result": "OK",
+    "n_tasks_scored": 176,
+    "seed": "e001-v1-2026-09-18"
+  },
+  {
+    "experiment_id": "E-001",
+    "baseline_id": "baseline-v1-2026-09-18",
+    "run_id": "E001-CONTROL-r04-81a73439",
+    "condition_id": "CONTROL",
+    "sequence": 4,
+    "timestamp": "2026-09-19T13:11:01.603720+00:00",
+    "catalog": {
+      "requested_size": 23,
+      "actual_size": 23,
+      "skill_ids": [
+        "adr",
+        "backend",
+        "researcher",
+        "frontend-pro",
+        "architect",
+        "agent-architecture-mining",
+        "agent-authoring",
+        "gaabwiki",
+        "code-reviewer",
+        "planner",
+        "po-review",
+        "testing",
+        "debugger",
+        "prd",
+        "database",
+        "documentation",
+        "gaabwiki-mem",
+        "devops",
+        "orquestrar",
+        "security",
+        "skill-authoring",
+        "failure-analyst",
+        "validator"
+      ],
+      "fingerprint": "a91e10d36db69c0a5f1ee1168982d9b1caac44bacd51add279986608b67ad1e6"
+    },
+    "task": {
+      "id": "skill-eval-trigger-corpus",
+      "input_fingerprint": "5f237e7abc9a435121647fba0b12b1162200239b9025703f7c04af3a78d8bdfa",
+      "n_tasks": 176
+    },
+    "metrics": [
+      {
+        "name": "catalog_size",
+        "value": 23,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_available",
+        "value": 23,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_activated_count",
+        "value": 176,
+        "unit": "predictions",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "one top-1 prediction per scored task; AVAILABLE\u2260ACTIVATED"
+      },
+      {
+        "name": "skills_activated_unique",
+        "value": [
+          "adr",
+          "agent-architecture-mining",
+          "agent-authoring",
+          "architect",
+          "backend",
+          "code-reviewer",
+          "devops",
+          "documentation",
+          "failure-analyst",
+          "frontend-pro",
+          "gaabwiki",
+          "gaabwiki-mem",
+          "orquestrar",
+          "planner",
+          "po-review",
+          "prd",
+          "researcher",
+          "security",
+          "testing",
+          "validator"
+        ],
+        "unit": "skill_ids",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_precision",
+        "value": 0.3352272727272727,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_recall",
+        "value": 0.3352272727272727,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "token_estimate",
+        "value": 1673,
+        "method": "whitespace",
+        "unit": "tokens_est",
+        "source": "estimate_tokens",
+        "classification": "PROXY",
+        "limitation": "vendor tokenizer unavailable"
+      },
+      {
+        "name": "wall_clock_duration",
+        "value": 0.06639042000006157,
+        "unit": "seconds",
+        "source": "perf_counter",
+        "classification": "DIRECT",
+        "note": "OBSERVED LATENCY not performance benchmark"
+      },
+      {
+        "name": "task_success",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "live task_success unavailable"
+      },
+      {
+        "name": "activation_match_rate",
+        "value": 0.3352272727272727,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "NOT live task_success; equals activation_precision in this harness"
+      },
+      {
+        "name": "skills_invoked",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "no live skill invocation"
+      },
+      {
+        "name": "skills_loaded",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "offline materialization only; not host load"
+      }
+    ],
+    "environment": {
+      "os": "Linux-6.12.88+deb13-amd64-x86_64-with-glibc2.41",
+      "python": "3.13.5",
+      "node": "v24.15.0",
+      "npm": "11.12.1",
+      "harness": "catalog_harness.py",
+      "seed": "e001-v1-2026-09-18",
+      "source_revision": "unknown",
+      "cwd": "/home/gaab/Downloads/CursorSKILLS"
+    },
+    "result": "OK",
+    "n_tasks_scored": 176,
+    "seed": "e001-v1-2026-09-18"
+  },
+  {
+    "experiment_id": "E-001",
+    "baseline_id": "baseline-v1-2026-09-18",
+    "run_id": "E001-CONTROL-r05-6390a499",
+    "condition_id": "CONTROL",
+    "sequence": 5,
+    "timestamp": "2026-09-19T13:11:01.741086+00:00",
+    "catalog": {
+      "requested_size": 23,
+      "actual_size": 23,
+      "skill_ids": [
+        "adr",
+        "backend",
+        "researcher",
+        "frontend-pro",
+        "architect",
+        "agent-architecture-mining",
+        "agent-authoring",
+        "gaabwiki",
+        "code-reviewer",
+        "planner",
+        "po-review",
+        "testing",
+        "debugger",
+        "prd",
+        "database",
+        "documentation",
+        "gaabwiki-mem",
+        "devops",
+        "orquestrar",
+        "security",
+        "skill-authoring",
+        "failure-analyst",
+        "validator"
+      ],
+      "fingerprint": "a91e10d36db69c0a5f1ee1168982d9b1caac44bacd51add279986608b67ad1e6"
+    },
+    "task": {
+      "id": "skill-eval-trigger-corpus",
+      "input_fingerprint": "5f237e7abc9a435121647fba0b12b1162200239b9025703f7c04af3a78d8bdfa",
+      "n_tasks": 176
+    },
+    "metrics": [
+      {
+        "name": "catalog_size",
+        "value": 23,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_available",
+        "value": 23,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_activated_count",
+        "value": 176,
+        "unit": "predictions",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "one top-1 prediction per scored task; AVAILABLE\u2260ACTIVATED"
+      },
+      {
+        "name": "skills_activated_unique",
+        "value": [
+          "adr",
+          "agent-architecture-mining",
+          "agent-authoring",
+          "architect",
+          "backend",
+          "code-reviewer",
+          "devops",
+          "documentation",
+          "failure-analyst",
+          "frontend-pro",
+          "gaabwiki",
+          "gaabwiki-mem",
+          "orquestrar",
+          "planner",
+          "po-review",
+          "prd",
+          "researcher",
+          "security",
+          "testing",
+          "validator"
+        ],
+        "unit": "skill_ids",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_precision",
+        "value": 0.3352272727272727,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_recall",
+        "value": 0.3352272727272727,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "token_estimate",
+        "value": 1673,
+        "method": "whitespace",
+        "unit": "tokens_est",
+        "source": "estimate_tokens",
+        "classification": "PROXY",
+        "limitation": "vendor tokenizer unavailable"
+      },
+      {
+        "name": "wall_clock_duration",
+        "value": 0.06974027600017507,
+        "unit": "seconds",
+        "source": "perf_counter",
+        "classification": "DIRECT",
+        "note": "OBSERVED LATENCY not performance benchmark"
+      },
+      {
+        "name": "task_success",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "live task_success unavailable"
+      },
+      {
+        "name": "activation_match_rate",
+        "value": 0.3352272727272727,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "NOT live task_success; equals activation_precision in this harness"
+      },
+      {
+        "name": "skills_invoked",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "no live skill invocation"
+      },
+      {
+        "name": "skills_loaded",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "offline materialization only; not host load"
+      }
+    ],
+    "environment": {
+      "os": "Linux-6.12.88+deb13-amd64-x86_64-with-glibc2.41",
+      "python": "3.13.5",
+      "node": "v24.15.0",
+      "npm": "11.12.1",
+      "harness": "catalog_harness.py",
+      "seed": "e001-v1-2026-09-18",
+      "source_revision": "unknown",
+      "cwd": "/home/gaab/Downloads/CursorSKILLS"
+    },
+    "result": "OK",
+    "n_tasks_scored": 176,
+    "seed": "e001-v1-2026-09-18"
+  },
+  {
+    "experiment_id": "E-001",
+    "baseline_id": "baseline-v1-2026-09-18",
+    "run_id": "E001-T_SKILLS_5-r01-5c99a1f1",
+    "condition_id": "T_SKILLS_5",
+    "sequence": 1,
+    "timestamp": "2026-09-19T13:11:01.777648+00:00",
+    "catalog": {
+      "requested_size": 5,
+      "actual_size": 5,
+      "skill_ids": [
+        "adr",
+        "backend",
+        "researcher",
+        "frontend-pro",
+        "architect"
+      ],
+      "fingerprint": "8e3c06fdda3dfdb9a14c9f4b7bf2f722d718563cfdc549be849123c599521ebb"
+    },
+    "task": {
+      "id": "skill-eval-trigger-corpus",
+      "input_fingerprint": "5f237e7abc9a435121647fba0b12b1162200239b9025703f7c04af3a78d8bdfa",
+      "n_tasks": 176
+    },
+    "metrics": [
+      {
+        "name": "catalog_size",
+        "value": 5,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_available",
+        "value": 5,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_activated_count",
+        "value": 176,
+        "unit": "predictions",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "one top-1 prediction per scored task; AVAILABLE\u2260ACTIVATED"
+      },
+      {
+        "name": "skills_activated_unique",
+        "value": [
+          "adr",
+          "agent-architecture-mining",
+          "agent-authoring",
+          "architect",
+          "backend",
+          "code-reviewer",
+          "database",
+          "devops",
+          "documentation",
+          "failure-analyst",
+          "frontend-pro",
+          "gaabwiki",
+          "gaabwiki-mem",
+          "po-review",
+          "prd",
+          "researcher",
+          "security",
+          "testing",
+          "validator"
+        ],
+        "unit": "skill_ids",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_precision",
+        "value": 0.5113636363636364,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_recall",
+        "value": 0.5113636363636364,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "token_estimate",
+        "value": 382,
+        "method": "whitespace",
+        "unit": "tokens_est",
+        "source": "estimate_tokens",
+        "classification": "PROXY",
+        "limitation": "vendor tokenizer unavailable"
+      },
+      {
+        "name": "wall_clock_duration",
+        "value": 0.017996405000076265,
+        "unit": "seconds",
+        "source": "perf_counter",
+        "classification": "DIRECT",
+        "note": "OBSERVED LATENCY not performance benchmark"
+      },
+      {
+        "name": "task_success",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "live task_success unavailable"
+      },
+      {
+        "name": "activation_match_rate",
+        "value": 0.5113636363636364,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "NOT live task_success; equals activation_precision in this harness"
+      },
+      {
+        "name": "skills_invoked",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "no live skill invocation"
+      },
+      {
+        "name": "skills_loaded",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "offline materialization only; not host load"
+      }
+    ],
+    "environment": {
+      "os": "Linux-6.12.88+deb13-amd64-x86_64-with-glibc2.41",
+      "python": "3.13.5",
+      "node": "v24.15.0",
+      "npm": "11.12.1",
+      "harness": "catalog_harness.py",
+      "seed": "e001-v1-2026-09-18",
+      "source_revision": "unknown",
+      "cwd": "/home/gaab/Downloads/CursorSKILLS"
+    },
+    "result": "OK",
+    "n_tasks_scored": 176,
+    "seed": "e001-v1-2026-09-18"
+  },
+  {
+    "experiment_id": "E-001",
+    "baseline_id": "baseline-v1-2026-09-18",
+    "run_id": "E001-T_SKILLS_5-r02-44a5ca3a",
+    "condition_id": "T_SKILLS_5",
+    "sequence": 2,
+    "timestamp": "2026-09-19T13:11:01.813329+00:00",
+    "catalog": {
+      "requested_size": 5,
+      "actual_size": 5,
+      "skill_ids": [
+        "adr",
+        "backend",
+        "researcher",
+        "frontend-pro",
+        "architect"
+      ],
+      "fingerprint": "8e3c06fdda3dfdb9a14c9f4b7bf2f722d718563cfdc549be849123c599521ebb"
+    },
+    "task": {
+      "id": "skill-eval-trigger-corpus",
+      "input_fingerprint": "5f237e7abc9a435121647fba0b12b1162200239b9025703f7c04af3a78d8bdfa",
+      "n_tasks": 176
+    },
+    "metrics": [
+      {
+        "name": "catalog_size",
+        "value": 5,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_available",
+        "value": 5,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_activated_count",
+        "value": 176,
+        "unit": "predictions",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "one top-1 prediction per scored task; AVAILABLE\u2260ACTIVATED"
+      },
+      {
+        "name": "skills_activated_unique",
+        "value": [
+          "adr",
+          "agent-architecture-mining",
+          "agent-authoring",
+          "architect",
+          "backend",
+          "code-reviewer",
+          "database",
+          "devops",
+          "documentation",
+          "failure-analyst",
+          "frontend-pro",
+          "gaabwiki",
+          "gaabwiki-mem",
+          "po-review",
+          "prd",
+          "researcher",
+          "security",
+          "testing",
+          "validator"
+        ],
+        "unit": "skill_ids",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_precision",
+        "value": 0.5113636363636364,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_recall",
+        "value": 0.5113636363636364,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "token_estimate",
+        "value": 382,
+        "method": "whitespace",
+        "unit": "tokens_est",
+        "source": "estimate_tokens",
+        "classification": "PROXY",
+        "limitation": "vendor tokenizer unavailable"
+      },
+      {
+        "name": "wall_clock_duration",
+        "value": 0.01753277799980424,
+        "unit": "seconds",
+        "source": "perf_counter",
+        "classification": "DIRECT",
+        "note": "OBSERVED LATENCY not performance benchmark"
+      },
+      {
+        "name": "task_success",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "live task_success unavailable"
+      },
+      {
+        "name": "activation_match_rate",
+        "value": 0.5113636363636364,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "NOT live task_success; equals activation_precision in this harness"
+      },
+      {
+        "name": "skills_invoked",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "no live skill invocation"
+      },
+      {
+        "name": "skills_loaded",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "offline materialization only; not host load"
+      }
+    ],
+    "environment": {
+      "os": "Linux-6.12.88+deb13-amd64-x86_64-with-glibc2.41",
+      "python": "3.13.5",
+      "node": "v24.15.0",
+      "npm": "11.12.1",
+      "harness": "catalog_harness.py",
+      "seed": "e001-v1-2026-09-18",
+      "source_revision": "unknown",
+      "cwd": "/home/gaab/Downloads/CursorSKILLS"
+    },
+    "result": "OK",
+    "n_tasks_scored": 176,
+    "seed": "e001-v1-2026-09-18"
+  },
+  {
+    "experiment_id": "E-001",
+    "baseline_id": "baseline-v1-2026-09-18",
+    "run_id": "E001-T_SKILLS_5-r03-84bb41da",
+    "condition_id": "T_SKILLS_5",
+    "sequence": 3,
+    "timestamp": "2026-09-19T13:11:01.848941+00:00",
+    "catalog": {
+      "requested_size": 5,
+      "actual_size": 5,
+      "skill_ids": [
+        "adr",
+        "backend",
+        "researcher",
+        "frontend-pro",
+        "architect"
+      ],
+      "fingerprint": "8e3c06fdda3dfdb9a14c9f4b7bf2f722d718563cfdc549be849123c599521ebb"
+    },
+    "task": {
+      "id": "skill-eval-trigger-corpus",
+      "input_fingerprint": "5f237e7abc9a435121647fba0b12b1162200239b9025703f7c04af3a78d8bdfa",
+      "n_tasks": 176
+    },
+    "metrics": [
+      {
+        "name": "catalog_size",
+        "value": 5,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_available",
+        "value": 5,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_activated_count",
+        "value": 176,
+        "unit": "predictions",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "one top-1 prediction per scored task; AVAILABLE\u2260ACTIVATED"
+      },
+      {
+        "name": "skills_activated_unique",
+        "value": [
+          "adr",
+          "agent-architecture-mining",
+          "agent-authoring",
+          "architect",
+          "backend",
+          "code-reviewer",
+          "database",
+          "devops",
+          "documentation",
+          "failure-analyst",
+          "frontend-pro",
+          "gaabwiki",
+          "gaabwiki-mem",
+          "po-review",
+          "prd",
+          "researcher",
+          "security",
+          "testing",
+          "validator"
+        ],
+        "unit": "skill_ids",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_precision",
+        "value": 0.5113636363636364,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_recall",
+        "value": 0.5113636363636364,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "token_estimate",
+        "value": 382,
+        "method": "whitespace",
+        "unit": "tokens_est",
+        "source": "estimate_tokens",
+        "classification": "PROXY",
+        "limitation": "vendor tokenizer unavailable"
+      },
+      {
+        "name": "wall_clock_duration",
+        "value": 0.017998138999928415,
+        "unit": "seconds",
+        "source": "perf_counter",
+        "classification": "DIRECT",
+        "note": "OBSERVED LATENCY not performance benchmark"
+      },
+      {
+        "name": "task_success",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "live task_success unavailable"
+      },
+      {
+        "name": "activation_match_rate",
+        "value": 0.5113636363636364,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "NOT live task_success; equals activation_precision in this harness"
+      },
+      {
+        "name": "skills_invoked",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "no live skill invocation"
+      },
+      {
+        "name": "skills_loaded",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "offline materialization only; not host load"
+      }
+    ],
+    "environment": {
+      "os": "Linux-6.12.88+deb13-amd64-x86_64-with-glibc2.41",
+      "python": "3.13.5",
+      "node": "v24.15.0",
+      "npm": "11.12.1",
+      "harness": "catalog_harness.py",
+      "seed": "e001-v1-2026-09-18",
+      "source_revision": "unknown",
+      "cwd": "/home/gaab/Downloads/CursorSKILLS"
+    },
+    "result": "OK",
+    "n_tasks_scored": 176,
+    "seed": "e001-v1-2026-09-18"
+  },
+  {
+    "experiment_id": "E-001",
+    "baseline_id": "baseline-v1-2026-09-18",
+    "run_id": "E001-T_SKILLS_5-r04-4e222f95",
+    "condition_id": "T_SKILLS_5",
+    "sequence": 4,
+    "timestamp": "2026-09-19T13:11:01.884342+00:00",
+    "catalog": {
+      "requested_size": 5,
+      "actual_size": 5,
+      "skill_ids": [
+        "adr",
+        "backend",
+        "researcher",
+        "frontend-pro",
+        "architect"
+      ],
+      "fingerprint": "8e3c06fdda3dfdb9a14c9f4b7bf2f722d718563cfdc549be849123c599521ebb"
+    },
+    "task": {
+      "id": "skill-eval-trigger-corpus",
+      "input_fingerprint": "5f237e7abc9a435121647fba0b12b1162200239b9025703f7c04af3a78d8bdfa",
+      "n_tasks": 176
+    },
+    "metrics": [
+      {
+        "name": "catalog_size",
+        "value": 5,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_available",
+        "value": 5,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_activated_count",
+        "value": 176,
+        "unit": "predictions",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "one top-1 prediction per scored task; AVAILABLE\u2260ACTIVATED"
+      },
+      {
+        "name": "skills_activated_unique",
+        "value": [
+          "adr",
+          "agent-architecture-mining",
+          "agent-authoring",
+          "architect",
+          "backend",
+          "code-reviewer",
+          "database",
+          "devops",
+          "documentation",
+          "failure-analyst",
+          "frontend-pro",
+          "gaabwiki",
+          "gaabwiki-mem",
+          "po-review",
+          "prd",
+          "researcher",
+          "security",
+          "testing",
+          "validator"
+        ],
+        "unit": "skill_ids",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_precision",
+        "value": 0.5113636363636364,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_recall",
+        "value": 0.5113636363636364,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "token_estimate",
+        "value": 382,
+        "method": "whitespace",
+        "unit": "tokens_est",
+        "source": "estimate_tokens",
+        "classification": "PROXY",
+        "limitation": "vendor tokenizer unavailable"
+      },
+      {
+        "name": "wall_clock_duration",
+        "value": 0.0177287950000391,
+        "unit": "seconds",
+        "source": "perf_counter",
+        "classification": "DIRECT",
+        "note": "OBSERVED LATENCY not performance benchmark"
+      },
+      {
+        "name": "task_success",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "live task_success unavailable"
+      },
+      {
+        "name": "activation_match_rate",
+        "value": 0.5113636363636364,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "NOT live task_success; equals activation_precision in this harness"
+      },
+      {
+        "name": "skills_invoked",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "no live skill invocation"
+      },
+      {
+        "name": "skills_loaded",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "offline materialization only; not host load"
+      }
+    ],
+    "environment": {
+      "os": "Linux-6.12.88+deb13-amd64-x86_64-with-glibc2.41",
+      "python": "3.13.5",
+      "node": "v24.15.0",
+      "npm": "11.12.1",
+      "harness": "catalog_harness.py",
+      "seed": "e001-v1-2026-09-18",
+      "source_revision": "unknown",
+      "cwd": "/home/gaab/Downloads/CursorSKILLS"
+    },
+    "result": "OK",
+    "n_tasks_scored": 176,
+    "seed": "e001-v1-2026-09-18"
+  },
+  {
+    "experiment_id": "E-001",
+    "baseline_id": "baseline-v1-2026-09-18",
+    "run_id": "E001-T_SKILLS_5-r05-3ca455e2",
+    "condition_id": "T_SKILLS_5",
+    "sequence": 5,
+    "timestamp": "2026-09-19T13:11:01.920400+00:00",
+    "catalog": {
+      "requested_size": 5,
+      "actual_size": 5,
+      "skill_ids": [
+        "adr",
+        "backend",
+        "researcher",
+        "frontend-pro",
+        "architect"
+      ],
+      "fingerprint": "8e3c06fdda3dfdb9a14c9f4b7bf2f722d718563cfdc549be849123c599521ebb"
+    },
+    "task": {
+      "id": "skill-eval-trigger-corpus",
+      "input_fingerprint": "5f237e7abc9a435121647fba0b12b1162200239b9025703f7c04af3a78d8bdfa",
+      "n_tasks": 176
+    },
+    "metrics": [
+      {
+        "name": "catalog_size",
+        "value": 5,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_available",
+        "value": 5,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_activated_count",
+        "value": 176,
+        "unit": "predictions",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "one top-1 prediction per scored task; AVAILABLE\u2260ACTIVATED"
+      },
+      {
+        "name": "skills_activated_unique",
+        "value": [
+          "adr",
+          "agent-architecture-mining",
+          "agent-authoring",
+          "architect",
+          "backend",
+          "code-reviewer",
+          "database",
+          "devops",
+          "documentation",
+          "failure-analyst",
+          "frontend-pro",
+          "gaabwiki",
+          "gaabwiki-mem",
+          "po-review",
+          "prd",
+          "researcher",
+          "security",
+          "testing",
+          "validator"
+        ],
+        "unit": "skill_ids",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_precision",
+        "value": 0.5113636363636364,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_recall",
+        "value": 0.5113636363636364,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "token_estimate",
+        "value": 382,
+        "method": "whitespace",
+        "unit": "tokens_est",
+        "source": "estimate_tokens",
+        "classification": "PROXY",
+        "limitation": "vendor tokenizer unavailable"
+      },
+      {
+        "name": "wall_clock_duration",
+        "value": 0.017770462000044063,
+        "unit": "seconds",
+        "source": "perf_counter",
+        "classification": "DIRECT",
+        "note": "OBSERVED LATENCY not performance benchmark"
+      },
+      {
+        "name": "task_success",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "live task_success unavailable"
+      },
+      {
+        "name": "activation_match_rate",
+        "value": 0.5113636363636364,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "NOT live task_success; equals activation_precision in this harness"
+      },
+      {
+        "name": "skills_invoked",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "no live skill invocation"
+      },
+      {
+        "name": "skills_loaded",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "offline materialization only; not host load"
+      }
+    ],
+    "environment": {
+      "os": "Linux-6.12.88+deb13-amd64-x86_64-with-glibc2.41",
+      "python": "3.13.5",
+      "node": "v24.15.0",
+      "npm": "11.12.1",
+      "harness": "catalog_harness.py",
+      "seed": "e001-v1-2026-09-18",
+      "source_revision": "unknown",
+      "cwd": "/home/gaab/Downloads/CursorSKILLS"
+    },
+    "result": "OK",
+    "n_tasks_scored": 176,
+    "seed": "e001-v1-2026-09-18"
+  },
+  {
+    "experiment_id": "E-001",
+    "baseline_id": "baseline-v1-2026-09-18",
+    "run_id": "E001-T_SKILLS_10-r01-9fec7016",
+    "condition_id": "T_SKILLS_10",
+    "sequence": 1,
+    "timestamp": "2026-09-19T13:11:01.987069+00:00",
+    "catalog": {
+      "requested_size": 10,
+      "actual_size": 10,
+      "skill_ids": [
+        "adr",
+        "backend",
+        "researcher",
+        "frontend-pro",
+        "architect",
+        "agent-architecture-mining",
+        "agent-authoring",
+        "gaabwiki",
+        "code-reviewer",
+        "planner"
+      ],
+      "fingerprint": "d7d55ac8898df448fa2f23a13f1847651378c835095bc89819250d93a5347933"
+    },
+    "task": {
+      "id": "skill-eval-trigger-corpus",
+      "input_fingerprint": "5f237e7abc9a435121647fba0b12b1162200239b9025703f7c04af3a78d8bdfa",
+      "n_tasks": 176
+    },
+    "metrics": [
+      {
+        "name": "catalog_size",
+        "value": 10,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_available",
+        "value": 10,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_activated_count",
+        "value": 176,
+        "unit": "predictions",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "one top-1 prediction per scored task; AVAILABLE\u2260ACTIVATED"
+      },
+      {
+        "name": "skills_activated_unique",
+        "value": [
+          "adr",
+          "agent-architecture-mining",
+          "agent-authoring",
+          "architect",
+          "backend",
+          "code-reviewer",
+          "devops",
+          "documentation",
+          "failure-analyst",
+          "frontend-pro",
+          "gaabwiki",
+          "gaabwiki-mem",
+          "planner",
+          "po-review",
+          "prd",
+          "researcher",
+          "security",
+          "testing",
+          "validator"
+        ],
+        "unit": "skill_ids",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_precision",
+        "value": 0.42045454545454547,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_recall",
+        "value": 0.42045454545454547,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "token_estimate",
+        "value": 789,
+        "method": "whitespace",
+        "unit": "tokens_est",
+        "source": "estimate_tokens",
+        "classification": "PROXY",
+        "limitation": "vendor tokenizer unavailable"
+      },
+      {
+        "name": "wall_clock_duration",
+        "value": 0.03287894699997196,
+        "unit": "seconds",
+        "source": "perf_counter",
+        "classification": "DIRECT",
+        "note": "OBSERVED LATENCY not performance benchmark"
+      },
+      {
+        "name": "task_success",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "live task_success unavailable"
+      },
+      {
+        "name": "activation_match_rate",
+        "value": 0.42045454545454547,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "NOT live task_success; equals activation_precision in this harness"
+      },
+      {
+        "name": "skills_invoked",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "no live skill invocation"
+      },
+      {
+        "name": "skills_loaded",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "offline materialization only; not host load"
+      }
+    ],
+    "environment": {
+      "os": "Linux-6.12.88+deb13-amd64-x86_64-with-glibc2.41",
+      "python": "3.13.5",
+      "node": "v24.15.0",
+      "npm": "11.12.1",
+      "harness": "catalog_harness.py",
+      "seed": "e001-v1-2026-09-18",
+      "source_revision": "unknown",
+      "cwd": "/home/gaab/Downloads/CursorSKILLS"
+    },
+    "result": "OK",
+    "n_tasks_scored": 176,
+    "seed": "e001-v1-2026-09-18"
+  },
+  {
+    "experiment_id": "E-001",
+    "baseline_id": "baseline-v1-2026-09-18",
+    "run_id": "E001-T_SKILLS_10-r02-530943ce",
+    "condition_id": "T_SKILLS_10",
+    "sequence": 2,
+    "timestamp": "2026-09-19T13:11:02.053556+00:00",
+    "catalog": {
+      "requested_size": 10,
+      "actual_size": 10,
+      "skill_ids": [
+        "adr",
+        "backend",
+        "researcher",
+        "frontend-pro",
+        "architect",
+        "agent-architecture-mining",
+        "agent-authoring",
+        "gaabwiki",
+        "code-reviewer",
+        "planner"
+      ],
+      "fingerprint": "d7d55ac8898df448fa2f23a13f1847651378c835095bc89819250d93a5347933"
+    },
+    "task": {
+      "id": "skill-eval-trigger-corpus",
+      "input_fingerprint": "5f237e7abc9a435121647fba0b12b1162200239b9025703f7c04af3a78d8bdfa",
+      "n_tasks": 176
+    },
+    "metrics": [
+      {
+        "name": "catalog_size",
+        "value": 10,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_available",
+        "value": 10,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_activated_count",
+        "value": 176,
+        "unit": "predictions",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "one top-1 prediction per scored task; AVAILABLE\u2260ACTIVATED"
+      },
+      {
+        "name": "skills_activated_unique",
+        "value": [
+          "adr",
+          "agent-architecture-mining",
+          "agent-authoring",
+          "architect",
+          "backend",
+          "code-reviewer",
+          "devops",
+          "documentation",
+          "failure-analyst",
+          "frontend-pro",
+          "gaabwiki",
+          "gaabwiki-mem",
+          "planner",
+          "po-review",
+          "prd",
+          "researcher",
+          "security",
+          "testing",
+          "validator"
+        ],
+        "unit": "skill_ids",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_precision",
+        "value": 0.42045454545454547,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_recall",
+        "value": 0.42045454545454547,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "token_estimate",
+        "value": 789,
+        "method": "whitespace",
+        "unit": "tokens_est",
+        "source": "estimate_tokens",
+        "classification": "PROXY",
+        "limitation": "vendor tokenizer unavailable"
+      },
+      {
+        "name": "wall_clock_duration",
+        "value": 0.03333007999981419,
+        "unit": "seconds",
+        "source": "perf_counter",
+        "classification": "DIRECT",
+        "note": "OBSERVED LATENCY not performance benchmark"
+      },
+      {
+        "name": "task_success",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "live task_success unavailable"
+      },
+      {
+        "name": "activation_match_rate",
+        "value": 0.42045454545454547,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "NOT live task_success; equals activation_precision in this harness"
+      },
+      {
+        "name": "skills_invoked",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "no live skill invocation"
+      },
+      {
+        "name": "skills_loaded",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "offline materialization only; not host load"
+      }
+    ],
+    "environment": {
+      "os": "Linux-6.12.88+deb13-amd64-x86_64-with-glibc2.41",
+      "python": "3.13.5",
+      "node": "v24.15.0",
+      "npm": "11.12.1",
+      "harness": "catalog_harness.py",
+      "seed": "e001-v1-2026-09-18",
+      "source_revision": "unknown",
+      "cwd": "/home/gaab/Downloads/CursorSKILLS"
+    },
+    "result": "OK",
+    "n_tasks_scored": 176,
+    "seed": "e001-v1-2026-09-18"
+  },
+  {
+    "experiment_id": "E-001",
+    "baseline_id": "baseline-v1-2026-09-18",
+    "run_id": "E001-T_SKILLS_10-r03-32256f04",
+    "condition_id": "T_SKILLS_10",
+    "sequence": 3,
+    "timestamp": "2026-09-19T13:11:02.121731+00:00",
+    "catalog": {
+      "requested_size": 10,
+      "actual_size": 10,
+      "skill_ids": [
+        "adr",
+        "backend",
+        "researcher",
+        "frontend-pro",
+        "architect",
+        "agent-architecture-mining",
+        "agent-authoring",
+        "gaabwiki",
+        "code-reviewer",
+        "planner"
+      ],
+      "fingerprint": "d7d55ac8898df448fa2f23a13f1847651378c835095bc89819250d93a5347933"
+    },
+    "task": {
+      "id": "skill-eval-trigger-corpus",
+      "input_fingerprint": "5f237e7abc9a435121647fba0b12b1162200239b9025703f7c04af3a78d8bdfa",
+      "n_tasks": 176
+    },
+    "metrics": [
+      {
+        "name": "catalog_size",
+        "value": 10,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_available",
+        "value": 10,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_activated_count",
+        "value": 176,
+        "unit": "predictions",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "one top-1 prediction per scored task; AVAILABLE\u2260ACTIVATED"
+      },
+      {
+        "name": "skills_activated_unique",
+        "value": [
+          "adr",
+          "agent-architecture-mining",
+          "agent-authoring",
+          "architect",
+          "backend",
+          "code-reviewer",
+          "devops",
+          "documentation",
+          "failure-analyst",
+          "frontend-pro",
+          "gaabwiki",
+          "gaabwiki-mem",
+          "planner",
+          "po-review",
+          "prd",
+          "researcher",
+          "security",
+          "testing",
+          "validator"
+        ],
+        "unit": "skill_ids",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_precision",
+        "value": 0.42045454545454547,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_recall",
+        "value": 0.42045454545454547,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "token_estimate",
+        "value": 789,
+        "method": "whitespace",
+        "unit": "tokens_est",
+        "source": "estimate_tokens",
+        "classification": "PROXY",
+        "limitation": "vendor tokenizer unavailable"
+      },
+      {
+        "name": "wall_clock_duration",
+        "value": 0.03456128999982866,
+        "unit": "seconds",
+        "source": "perf_counter",
+        "classification": "DIRECT",
+        "note": "OBSERVED LATENCY not performance benchmark"
+      },
+      {
+        "name": "task_success",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "live task_success unavailable"
+      },
+      {
+        "name": "activation_match_rate",
+        "value": 0.42045454545454547,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "NOT live task_success; equals activation_precision in this harness"
+      },
+      {
+        "name": "skills_invoked",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "no live skill invocation"
+      },
+      {
+        "name": "skills_loaded",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "offline materialization only; not host load"
+      }
+    ],
+    "environment": {
+      "os": "Linux-6.12.88+deb13-amd64-x86_64-with-glibc2.41",
+      "python": "3.13.5",
+      "node": "v24.15.0",
+      "npm": "11.12.1",
+      "harness": "catalog_harness.py",
+      "seed": "e001-v1-2026-09-18",
+      "source_revision": "unknown",
+      "cwd": "/home/gaab/Downloads/CursorSKILLS"
+    },
+    "result": "OK",
+    "n_tasks_scored": 176,
+    "seed": "e001-v1-2026-09-18"
+  },
+  {
+    "experiment_id": "E-001",
+    "baseline_id": "baseline-v1-2026-09-18",
+    "run_id": "E001-T_SKILLS_10-r04-b06ce4cd",
+    "condition_id": "T_SKILLS_10",
+    "sequence": 4,
+    "timestamp": "2026-09-19T13:11:02.191385+00:00",
+    "catalog": {
+      "requested_size": 10,
+      "actual_size": 10,
+      "skill_ids": [
+        "adr",
+        "backend",
+        "researcher",
+        "frontend-pro",
+        "architect",
+        "agent-architecture-mining",
+        "agent-authoring",
+        "gaabwiki",
+        "code-reviewer",
+        "planner"
+      ],
+      "fingerprint": "d7d55ac8898df448fa2f23a13f1847651378c835095bc89819250d93a5347933"
+    },
+    "task": {
+      "id": "skill-eval-trigger-corpus",
+      "input_fingerprint": "5f237e7abc9a435121647fba0b12b1162200239b9025703f7c04af3a78d8bdfa",
+      "n_tasks": 176
+    },
+    "metrics": [
+      {
+        "name": "catalog_size",
+        "value": 10,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_available",
+        "value": 10,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_activated_count",
+        "value": 176,
+        "unit": "predictions",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "one top-1 prediction per scored task; AVAILABLE\u2260ACTIVATED"
+      },
+      {
+        "name": "skills_activated_unique",
+        "value": [
+          "adr",
+          "agent-architecture-mining",
+          "agent-authoring",
+          "architect",
+          "backend",
+          "code-reviewer",
+          "devops",
+          "documentation",
+          "failure-analyst",
+          "frontend-pro",
+          "gaabwiki",
+          "gaabwiki-mem",
+          "planner",
+          "po-review",
+          "prd",
+          "researcher",
+          "security",
+          "testing",
+          "validator"
+        ],
+        "unit": "skill_ids",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_precision",
+        "value": 0.42045454545454547,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_recall",
+        "value": 0.42045454545454547,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "token_estimate",
+        "value": 789,
+        "method": "whitespace",
+        "unit": "tokens_est",
+        "source": "estimate_tokens",
+        "classification": "PROXY",
+        "limitation": "vendor tokenizer unavailable"
+      },
+      {
+        "name": "wall_clock_duration",
+        "value": 0.03355312500002583,
+        "unit": "seconds",
+        "source": "perf_counter",
+        "classification": "DIRECT",
+        "note": "OBSERVED LATENCY not performance benchmark"
+      },
+      {
+        "name": "task_success",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "live task_success unavailable"
+      },
+      {
+        "name": "activation_match_rate",
+        "value": 0.42045454545454547,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "NOT live task_success; equals activation_precision in this harness"
+      },
+      {
+        "name": "skills_invoked",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "no live skill invocation"
+      },
+      {
+        "name": "skills_loaded",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "offline materialization only; not host load"
+      }
+    ],
+    "environment": {
+      "os": "Linux-6.12.88+deb13-amd64-x86_64-with-glibc2.41",
+      "python": "3.13.5",
+      "node": "v24.15.0",
+      "npm": "11.12.1",
+      "harness": "catalog_harness.py",
+      "seed": "e001-v1-2026-09-18",
+      "source_revision": "unknown",
+      "cwd": "/home/gaab/Downloads/CursorSKILLS"
+    },
+    "result": "OK",
+    "n_tasks_scored": 176,
+    "seed": "e001-v1-2026-09-18"
+  },
+  {
+    "experiment_id": "E-001",
+    "baseline_id": "baseline-v1-2026-09-18",
+    "run_id": "E001-T_SKILLS_10-r05-4d2deb7f",
+    "condition_id": "T_SKILLS_10",
+    "sequence": 5,
+    "timestamp": "2026-09-19T13:11:02.260007+00:00",
+    "catalog": {
+      "requested_size": 10,
+      "actual_size": 10,
+      "skill_ids": [
+        "adr",
+        "backend",
+        "researcher",
+        "frontend-pro",
+        "architect",
+        "agent-architecture-mining",
+        "agent-authoring",
+        "gaabwiki",
+        "code-reviewer",
+        "planner"
+      ],
+      "fingerprint": "d7d55ac8898df448fa2f23a13f1847651378c835095bc89819250d93a5347933"
+    },
+    "task": {
+      "id": "skill-eval-trigger-corpus",
+      "input_fingerprint": "5f237e7abc9a435121647fba0b12b1162200239b9025703f7c04af3a78d8bdfa",
+      "n_tasks": 176
+    },
+    "metrics": [
+      {
+        "name": "catalog_size",
+        "value": 10,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_available",
+        "value": 10,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_activated_count",
+        "value": 176,
+        "unit": "predictions",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "one top-1 prediction per scored task; AVAILABLE\u2260ACTIVATED"
+      },
+      {
+        "name": "skills_activated_unique",
+        "value": [
+          "adr",
+          "agent-architecture-mining",
+          "agent-authoring",
+          "architect",
+          "backend",
+          "code-reviewer",
+          "devops",
+          "documentation",
+          "failure-analyst",
+          "frontend-pro",
+          "gaabwiki",
+          "gaabwiki-mem",
+          "planner",
+          "po-review",
+          "prd",
+          "researcher",
+          "security",
+          "testing",
+          "validator"
+        ],
+        "unit": "skill_ids",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_precision",
+        "value": 0.42045454545454547,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_recall",
+        "value": 0.42045454545454547,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "token_estimate",
+        "value": 789,
+        "method": "whitespace",
+        "unit": "tokens_est",
+        "source": "estimate_tokens",
+        "classification": "PROXY",
+        "limitation": "vendor tokenizer unavailable"
+      },
+      {
+        "name": "wall_clock_duration",
+        "value": 0.03487388999997165,
+        "unit": "seconds",
+        "source": "perf_counter",
+        "classification": "DIRECT",
+        "note": "OBSERVED LATENCY not performance benchmark"
+      },
+      {
+        "name": "task_success",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "live task_success unavailable"
+      },
+      {
+        "name": "activation_match_rate",
+        "value": 0.42045454545454547,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "NOT live task_success; equals activation_precision in this harness"
+      },
+      {
+        "name": "skills_invoked",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "no live skill invocation"
+      },
+      {
+        "name": "skills_loaded",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "offline materialization only; not host load"
+      }
+    ],
+    "environment": {
+      "os": "Linux-6.12.88+deb13-amd64-x86_64-with-glibc2.41",
+      "python": "3.13.5",
+      "node": "v24.15.0",
+      "npm": "11.12.1",
+      "harness": "catalog_harness.py",
+      "seed": "e001-v1-2026-09-18",
+      "source_revision": "unknown",
+      "cwd": "/home/gaab/Downloads/CursorSKILLS"
+    },
+    "result": "OK",
+    "n_tasks_scored": 176,
+    "seed": "e001-v1-2026-09-18"
+  },
+  {
+    "experiment_id": "E-001",
+    "baseline_id": "baseline-v1-2026-09-18",
+    "run_id": "E001-T_TOKENS_40-r01-b518c458",
+    "condition_id": "T_TOKENS_40",
+    "sequence": 1,
+    "timestamp": "2026-09-19T13:11:02.377185+00:00",
+    "catalog": {
+      "requested_size": 23,
+      "actual_size": 23,
+      "skill_ids": [
+        "adr",
+        "backend",
+        "researcher",
+        "frontend-pro",
+        "architect",
+        "agent-architecture-mining",
+        "agent-authoring",
+        "gaabwiki",
+        "code-reviewer",
+        "planner",
+        "po-review",
+        "testing",
+        "debugger",
+        "prd",
+        "database",
+        "documentation",
+        "gaabwiki-mem",
+        "devops",
+        "orquestrar",
+        "security",
+        "skill-authoring",
+        "failure-analyst",
+        "validator"
+      ],
+      "fingerprint": "aa662c3c3b8d19d846d3d02b51938cc6ce8bf924f1efb0185c71423776e6fb1c"
+    },
+    "task": {
+      "id": "skill-eval-trigger-corpus",
+      "input_fingerprint": "5f237e7abc9a435121647fba0b12b1162200239b9025703f7c04af3a78d8bdfa",
+      "n_tasks": 176
+    },
+    "metrics": [
+      {
+        "name": "catalog_size",
+        "value": 23,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_available",
+        "value": 23,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_activated_count",
+        "value": 176,
+        "unit": "predictions",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "one top-1 prediction per scored task; AVAILABLE\u2260ACTIVATED"
+      },
+      {
+        "name": "skills_activated_unique",
+        "value": [
+          "adr",
+          "agent-architecture-mining",
+          "agent-authoring",
+          "architect",
+          "backend",
+          "code-reviewer",
+          "database",
+          "devops",
+          "documentation",
+          "failure-analyst",
+          "frontend-pro",
+          "gaabwiki",
+          "gaabwiki-mem",
+          "orquestrar",
+          "planner",
+          "po-review",
+          "prd",
+          "researcher",
+          "security",
+          "skill-authoring",
+          "testing",
+          "validator"
+        ],
+        "unit": "skill_ids",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_precision",
+        "value": 0.3409090909090909,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_recall",
+        "value": 0.3409090909090909,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "token_estimate",
+        "value": 1010,
+        "method": "whitespace",
+        "unit": "tokens_est",
+        "source": "estimate_tokens",
+        "classification": "PROXY",
+        "limitation": "vendor tokenizer unavailable"
+      },
+      {
+        "name": "wall_clock_duration",
+        "value": 0.05716199099992991,
+        "unit": "seconds",
+        "source": "perf_counter",
+        "classification": "DIRECT",
+        "note": "OBSERVED LATENCY not performance benchmark"
+      },
+      {
+        "name": "task_success",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "live task_success unavailable"
+      },
+      {
+        "name": "activation_match_rate",
+        "value": 0.3409090909090909,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "NOT live task_success; equals activation_precision in this harness"
+      },
+      {
+        "name": "skills_invoked",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "no live skill invocation"
+      },
+      {
+        "name": "skills_loaded",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "offline materialization only; not host load"
+      }
+    ],
+    "environment": {
+      "os": "Linux-6.12.88+deb13-amd64-x86_64-with-glibc2.41",
+      "python": "3.13.5",
+      "node": "v24.15.0",
+      "npm": "11.12.1",
+      "harness": "catalog_harness.py",
+      "seed": "e001-v1-2026-09-18",
+      "source_revision": "unknown",
+      "cwd": "/home/gaab/Downloads/CursorSKILLS"
+    },
+    "result": "OK",
+    "n_tasks_scored": 176,
+    "seed": "e001-v1-2026-09-18"
+  },
+  {
+    "experiment_id": "E-001",
+    "baseline_id": "baseline-v1-2026-09-18",
+    "run_id": "E001-T_TOKENS_40-r02-92310bee",
+    "condition_id": "T_TOKENS_40",
+    "sequence": 2,
+    "timestamp": "2026-09-19T13:11:02.494612+00:00",
+    "catalog": {
+      "requested_size": 23,
+      "actual_size": 23,
+      "skill_ids": [
+        "adr",
+        "backend",
+        "researcher",
+        "frontend-pro",
+        "architect",
+        "agent-architecture-mining",
+        "agent-authoring",
+        "gaabwiki",
+        "code-reviewer",
+        "planner",
+        "po-review",
+        "testing",
+        "debugger",
+        "prd",
+        "database",
+        "documentation",
+        "gaabwiki-mem",
+        "devops",
+        "orquestrar",
+        "security",
+        "skill-authoring",
+        "failure-analyst",
+        "validator"
+      ],
+      "fingerprint": "aa662c3c3b8d19d846d3d02b51938cc6ce8bf924f1efb0185c71423776e6fb1c"
+    },
+    "task": {
+      "id": "skill-eval-trigger-corpus",
+      "input_fingerprint": "5f237e7abc9a435121647fba0b12b1162200239b9025703f7c04af3a78d8bdfa",
+      "n_tasks": 176
+    },
+    "metrics": [
+      {
+        "name": "catalog_size",
+        "value": 23,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_available",
+        "value": 23,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_activated_count",
+        "value": 176,
+        "unit": "predictions",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "one top-1 prediction per scored task; AVAILABLE\u2260ACTIVATED"
+      },
+      {
+        "name": "skills_activated_unique",
+        "value": [
+          "adr",
+          "agent-architecture-mining",
+          "agent-authoring",
+          "architect",
+          "backend",
+          "code-reviewer",
+          "database",
+          "devops",
+          "documentation",
+          "failure-analyst",
+          "frontend-pro",
+          "gaabwiki",
+          "gaabwiki-mem",
+          "orquestrar",
+          "planner",
+          "po-review",
+          "prd",
+          "researcher",
+          "security",
+          "skill-authoring",
+          "testing",
+          "validator"
+        ],
+        "unit": "skill_ids",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_precision",
+        "value": 0.3409090909090909,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_recall",
+        "value": 0.3409090909090909,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "token_estimate",
+        "value": 1010,
+        "method": "whitespace",
+        "unit": "tokens_est",
+        "source": "estimate_tokens",
+        "classification": "PROXY",
+        "limitation": "vendor tokenizer unavailable"
+      },
+      {
+        "name": "wall_clock_duration",
+        "value": 0.05895766399999047,
+        "unit": "seconds",
+        "source": "perf_counter",
+        "classification": "DIRECT",
+        "note": "OBSERVED LATENCY not performance benchmark"
+      },
+      {
+        "name": "task_success",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "live task_success unavailable"
+      },
+      {
+        "name": "activation_match_rate",
+        "value": 0.3409090909090909,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "NOT live task_success; equals activation_precision in this harness"
+      },
+      {
+        "name": "skills_invoked",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "no live skill invocation"
+      },
+      {
+        "name": "skills_loaded",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "offline materialization only; not host load"
+      }
+    ],
+    "environment": {
+      "os": "Linux-6.12.88+deb13-amd64-x86_64-with-glibc2.41",
+      "python": "3.13.5",
+      "node": "v24.15.0",
+      "npm": "11.12.1",
+      "harness": "catalog_harness.py",
+      "seed": "e001-v1-2026-09-18",
+      "source_revision": "unknown",
+      "cwd": "/home/gaab/Downloads/CursorSKILLS"
+    },
+    "result": "OK",
+    "n_tasks_scored": 176,
+    "seed": "e001-v1-2026-09-18"
+  },
+  {
+    "experiment_id": "E-001",
+    "baseline_id": "baseline-v1-2026-09-18",
+    "run_id": "E001-T_TOKENS_40-r03-911f31d7",
+    "condition_id": "T_TOKENS_40",
+    "sequence": 3,
+    "timestamp": "2026-09-19T13:11:02.612013+00:00",
+    "catalog": {
+      "requested_size": 23,
+      "actual_size": 23,
+      "skill_ids": [
+        "adr",
+        "backend",
+        "researcher",
+        "frontend-pro",
+        "architect",
+        "agent-architecture-mining",
+        "agent-authoring",
+        "gaabwiki",
+        "code-reviewer",
+        "planner",
+        "po-review",
+        "testing",
+        "debugger",
+        "prd",
+        "database",
+        "documentation",
+        "gaabwiki-mem",
+        "devops",
+        "orquestrar",
+        "security",
+        "skill-authoring",
+        "failure-analyst",
+        "validator"
+      ],
+      "fingerprint": "aa662c3c3b8d19d846d3d02b51938cc6ce8bf924f1efb0185c71423776e6fb1c"
+    },
+    "task": {
+      "id": "skill-eval-trigger-corpus",
+      "input_fingerprint": "5f237e7abc9a435121647fba0b12b1162200239b9025703f7c04af3a78d8bdfa",
+      "n_tasks": 176
+    },
+    "metrics": [
+      {
+        "name": "catalog_size",
+        "value": 23,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_available",
+        "value": 23,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_activated_count",
+        "value": 176,
+        "unit": "predictions",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "one top-1 prediction per scored task; AVAILABLE\u2260ACTIVATED"
+      },
+      {
+        "name": "skills_activated_unique",
+        "value": [
+          "adr",
+          "agent-architecture-mining",
+          "agent-authoring",
+          "architect",
+          "backend",
+          "code-reviewer",
+          "database",
+          "devops",
+          "documentation",
+          "failure-analyst",
+          "frontend-pro",
+          "gaabwiki",
+          "gaabwiki-mem",
+          "orquestrar",
+          "planner",
+          "po-review",
+          "prd",
+          "researcher",
+          "security",
+          "skill-authoring",
+          "testing",
+          "validator"
+        ],
+        "unit": "skill_ids",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_precision",
+        "value": 0.3409090909090909,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_recall",
+        "value": 0.3409090909090909,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "token_estimate",
+        "value": 1010,
+        "method": "whitespace",
+        "unit": "tokens_est",
+        "source": "estimate_tokens",
+        "classification": "PROXY",
+        "limitation": "vendor tokenizer unavailable"
+      },
+      {
+        "name": "wall_clock_duration",
+        "value": 0.05881135499998891,
+        "unit": "seconds",
+        "source": "perf_counter",
+        "classification": "DIRECT",
+        "note": "OBSERVED LATENCY not performance benchmark"
+      },
+      {
+        "name": "task_success",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "live task_success unavailable"
+      },
+      {
+        "name": "activation_match_rate",
+        "value": 0.3409090909090909,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "NOT live task_success; equals activation_precision in this harness"
+      },
+      {
+        "name": "skills_invoked",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "no live skill invocation"
+      },
+      {
+        "name": "skills_loaded",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "offline materialization only; not host load"
+      }
+    ],
+    "environment": {
+      "os": "Linux-6.12.88+deb13-amd64-x86_64-with-glibc2.41",
+      "python": "3.13.5",
+      "node": "v24.15.0",
+      "npm": "11.12.1",
+      "harness": "catalog_harness.py",
+      "seed": "e001-v1-2026-09-18",
+      "source_revision": "unknown",
+      "cwd": "/home/gaab/Downloads/CursorSKILLS"
+    },
+    "result": "OK",
+    "n_tasks_scored": 176,
+    "seed": "e001-v1-2026-09-18"
+  },
+  {
+    "experiment_id": "E-001",
+    "baseline_id": "baseline-v1-2026-09-18",
+    "run_id": "E001-T_TOKENS_40-r04-1dca16ad",
+    "condition_id": "T_TOKENS_40",
+    "sequence": 4,
+    "timestamp": "2026-09-19T13:11:02.728628+00:00",
+    "catalog": {
+      "requested_size": 23,
+      "actual_size": 23,
+      "skill_ids": [
+        "adr",
+        "backend",
+        "researcher",
+        "frontend-pro",
+        "architect",
+        "agent-architecture-mining",
+        "agent-authoring",
+        "gaabwiki",
+        "code-reviewer",
+        "planner",
+        "po-review",
+        "testing",
+        "debugger",
+        "prd",
+        "database",
+        "documentation",
+        "gaabwiki-mem",
+        "devops",
+        "orquestrar",
+        "security",
+        "skill-authoring",
+        "failure-analyst",
+        "validator"
+      ],
+      "fingerprint": "aa662c3c3b8d19d846d3d02b51938cc6ce8bf924f1efb0185c71423776e6fb1c"
+    },
+    "task": {
+      "id": "skill-eval-trigger-corpus",
+      "input_fingerprint": "5f237e7abc9a435121647fba0b12b1162200239b9025703f7c04af3a78d8bdfa",
+      "n_tasks": 176
+    },
+    "metrics": [
+      {
+        "name": "catalog_size",
+        "value": 23,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_available",
+        "value": 23,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_activated_count",
+        "value": 176,
+        "unit": "predictions",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "one top-1 prediction per scored task; AVAILABLE\u2260ACTIVATED"
+      },
+      {
+        "name": "skills_activated_unique",
+        "value": [
+          "adr",
+          "agent-architecture-mining",
+          "agent-authoring",
+          "architect",
+          "backend",
+          "code-reviewer",
+          "database",
+          "devops",
+          "documentation",
+          "failure-analyst",
+          "frontend-pro",
+          "gaabwiki",
+          "gaabwiki-mem",
+          "orquestrar",
+          "planner",
+          "po-review",
+          "prd",
+          "researcher",
+          "security",
+          "skill-authoring",
+          "testing",
+          "validator"
+        ],
+        "unit": "skill_ids",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_precision",
+        "value": 0.3409090909090909,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_recall",
+        "value": 0.3409090909090909,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "token_estimate",
+        "value": 1010,
+        "method": "whitespace",
+        "unit": "tokens_est",
+        "source": "estimate_tokens",
+        "classification": "PROXY",
+        "limitation": "vendor tokenizer unavailable"
+      },
+      {
+        "name": "wall_clock_duration",
+        "value": 0.05733838299988747,
+        "unit": "seconds",
+        "source": "perf_counter",
+        "classification": "DIRECT",
+        "note": "OBSERVED LATENCY not performance benchmark"
+      },
+      {
+        "name": "task_success",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "live task_success unavailable"
+      },
+      {
+        "name": "activation_match_rate",
+        "value": 0.3409090909090909,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "NOT live task_success; equals activation_precision in this harness"
+      },
+      {
+        "name": "skills_invoked",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "no live skill invocation"
+      },
+      {
+        "name": "skills_loaded",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "offline materialization only; not host load"
+      }
+    ],
+    "environment": {
+      "os": "Linux-6.12.88+deb13-amd64-x86_64-with-glibc2.41",
+      "python": "3.13.5",
+      "node": "v24.15.0",
+      "npm": "11.12.1",
+      "harness": "catalog_harness.py",
+      "seed": "e001-v1-2026-09-18",
+      "source_revision": "unknown",
+      "cwd": "/home/gaab/Downloads/CursorSKILLS"
+    },
+    "result": "OK",
+    "n_tasks_scored": 176,
+    "seed": "e001-v1-2026-09-18"
+  },
+  {
+    "experiment_id": "E-001",
+    "baseline_id": "baseline-v1-2026-09-18",
+    "run_id": "E001-T_TOKENS_40-r05-adbc7510",
+    "condition_id": "T_TOKENS_40",
+    "sequence": 5,
+    "timestamp": "2026-09-19T13:11:02.845026+00:00",
+    "catalog": {
+      "requested_size": 23,
+      "actual_size": 23,
+      "skill_ids": [
+        "adr",
+        "backend",
+        "researcher",
+        "frontend-pro",
+        "architect",
+        "agent-architecture-mining",
+        "agent-authoring",
+        "gaabwiki",
+        "code-reviewer",
+        "planner",
+        "po-review",
+        "testing",
+        "debugger",
+        "prd",
+        "database",
+        "documentation",
+        "gaabwiki-mem",
+        "devops",
+        "orquestrar",
+        "security",
+        "skill-authoring",
+        "failure-analyst",
+        "validator"
+      ],
+      "fingerprint": "aa662c3c3b8d19d846d3d02b51938cc6ce8bf924f1efb0185c71423776e6fb1c"
+    },
+    "task": {
+      "id": "skill-eval-trigger-corpus",
+      "input_fingerprint": "5f237e7abc9a435121647fba0b12b1162200239b9025703f7c04af3a78d8bdfa",
+      "n_tasks": 176
+    },
+    "metrics": [
+      {
+        "name": "catalog_size",
+        "value": 23,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_available",
+        "value": 23,
+        "unit": "skills",
+        "source": "harness",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "skills_activated_count",
+        "value": 176,
+        "unit": "predictions",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "one top-1 prediction per scored task; AVAILABLE\u2260ACTIVATED"
+      },
+      {
+        "name": "skills_activated_unique",
+        "value": [
+          "adr",
+          "agent-architecture-mining",
+          "agent-authoring",
+          "architect",
+          "backend",
+          "code-reviewer",
+          "database",
+          "devops",
+          "documentation",
+          "failure-analyst",
+          "frontend-pro",
+          "gaabwiki",
+          "gaabwiki-mem",
+          "orquestrar",
+          "planner",
+          "po-review",
+          "prd",
+          "researcher",
+          "security",
+          "skill-authoring",
+          "testing",
+          "validator"
+        ],
+        "unit": "skill_ids",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_precision",
+        "value": 0.3409090909090909,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "activation_recall",
+        "value": 0.3409090909090909,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT"
+      },
+      {
+        "name": "token_estimate",
+        "value": 1010,
+        "method": "whitespace",
+        "unit": "tokens_est",
+        "source": "estimate_tokens",
+        "classification": "PROXY",
+        "limitation": "vendor tokenizer unavailable"
+      },
+      {
+        "name": "wall_clock_duration",
+        "value": 0.05781052499992256,
+        "unit": "seconds",
+        "source": "perf_counter",
+        "classification": "DIRECT",
+        "note": "OBSERVED LATENCY not performance benchmark"
+      },
+      {
+        "name": "task_success",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "live task_success unavailable"
+      },
+      {
+        "name": "activation_match_rate",
+        "value": 0.3409090909090909,
+        "unit": "ratio",
+        "source": "offline_overlap_ranker",
+        "classification": "DIRECT",
+        "note": "NOT live task_success; equals activation_precision in this harness"
+      },
+      {
+        "name": "skills_invoked",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "no live skill invocation"
+      },
+      {
+        "name": "skills_loaded",
+        "value": null,
+        "classification": "NOT_MEASURED",
+        "reason": "offline materialization only; not host load"
+      }
+    ],
+    "environment": {
+      "os": "Linux-6.12.88+deb13-amd64-x86_64-with-glibc2.41",
+      "python": "3.13.5",
+      "node": "v24.15.0",
+      "npm": "11.12.1",
+      "harness": "catalog_harness.py",
+      "seed": "e001-v1-2026-09-18",
+      "source_revision": "unknown",
+      "cwd": "/home/gaab/Downloads/CursorSKILLS"
+    },
+    "result": "OK",
+    "n_tasks_scored": 176,
+    "seed": "e001-v1-2026-09-18"
+  }
+]

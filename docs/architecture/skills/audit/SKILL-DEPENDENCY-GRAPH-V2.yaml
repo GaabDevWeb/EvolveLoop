@@ -1,0 +1,33 @@
+# Skill Dependency Graph V2 (machine-readable)
+generated: 2026-09-19T21:30:00Z
+
+graph:
+  nodes:
+    - { id: orquestrar, type: skill, location: .cursor/skills/orquestrar }
+    - { id: grill-me, type: skill, location: global-skills/grill-me }
+    - { id: image-to-code, type: skill, location: global-skills/image-to-code }
+    - { id: planner, type: skill, location: .cursor/skills/planner }
+    - { id: prd, type: skill, location: .cursor/skills/prd }
+    - { id: debugger, type: skill, location: .cursor/skills/debugger }
+    - { id: systematic-debugging, type: skill, location: global-skills/systematic-debugging }
+    - { id: find-skills, type: skill, location: global-skills/find-skills }
+    - { id: agent-browser, type: skill, location: global-skills/agent-browser }
+    - { id: technical-library-dossier, type: skill, location: global-skills/technical-library-dossier }
+    - { id: provider-discovery-ts, type: runtime, location: orchestrator/src/discovery/provider-discovery.ts }
+    - { id: descobrir-cmd, type: command, location: .cursor/commands/descobrir.md }
+    - { id: grill-me-cmd, type: command, location: .cursor/commands/grill-me.md }
+    - { id: library-dossier-cmd, type: command, location: .cursor/commands/library-dossier.md }
+
+  edges:
+    - { source: orquestrar, target: grill-me, relationship: GATES, strength: HARD, evidence: grill-me-gate.md }
+    - { source: orquestrar, target: image-to-code, relationship: GATES, strength: HARD, evidence: image-attachment-gate.md }
+    - { source: grill-me-cmd, target: grill-me, relationship: ROUTES_TO, strength: HARD, evidence: grill-me.md }
+    - { source: planner, target: grill-me, relationship: REQUIRES, strength: CONDITIONAL, evidence: planner SKILL refuse without evidence }
+    - { source: prd, target: grill-me, relationship: ROUTES_TO, strength: HARD, evidence: prd flow }
+    - { source: debugger, target: systematic-debugging, relationship: ABSORBS, strength: HARD, evidence: PACKAGE-NOTE }
+    - { source: descobrir-cmd, target: find-skills, relationship: DISCOVERS, strength: SOFT, evidence: descobrir.md }
+    - { source: provider-discovery-ts, target: find-skills, relationship: NONE, strength: DOCUMENTED_FALSE, evidence: DRIFT-REPAIR D1 }
+    - { source: library-dossier-cmd, target: technical-library-dossier, relationship: CALLS, strength: HARD, evidence: library-dossier.md }
+    - { source: technical-library-dossier, target: agent-browser, relationship: REQUIRES, strength: HARD, evidence: dossier SKILL }
+    - { source: frontend-pro, target: agent-browser, relationship: FALLS_BACK_TO, strength: FALLBACK, evidence: browser-tools.md }
+    - { source: frontend-pro, target: image-to-code, relationship: GATES, strength: HARD, evidence: Vision }

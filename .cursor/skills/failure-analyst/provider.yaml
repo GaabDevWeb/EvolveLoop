@@ -1,0 +1,50 @@
+apiVersion: capability-orchestrator.io/v2
+kind: Provider
+metadata:
+  name: failure-analyst
+  version: "1.0.0"
+  description: "Classify Agent System failures — not Debugger, not product fix"
+  owner: agents-team
+
+spec:
+  plugin:
+    type: cursor-skill
+    entrypoint: ".cursor/skills/failure-analyst/SKILL.md"
+
+  capabilities:
+    - id: failure-analysis
+      contract: contracts/failure-analysis@1.0.0
+      type: worker
+
+  interfaces:
+    inputs:
+      - name: symptom
+        required: true
+      - name: evidence-paths
+        required: false
+    outputs:
+      - name: failure-classification
+        note: "Taxonomy class + confidence + evidence"
+      - name: next-actions
+        note: "Typed owners — no patches applied"
+
+  runtime:
+    cost: low
+    subagent_type: explore
+    pda_role: critic
+
+  telemetry:
+    key: provider.failure-analyst
+
+  availability: active
+  priority: 74
+
+  constraints:
+    - signal: classify_not_fix
+      note: "Never implement product or package patches"
+    - signal: not_debugger
+      note: "Product code root-cause/fix → Debugger (separate package)"
+    - signal: not_gate_substitute
+      note: "Does not replace testing / security-review / po-acceptance"
+    - signal: taxonomy_required
+      note: "Must use failure-degradation classes"

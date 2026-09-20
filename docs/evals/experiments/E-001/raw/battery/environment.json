@@ -1,0 +1,10 @@
+{
+  "os": "Linux-6.12.88+deb13-amd64-x86_64-with-glibc2.41",
+  "python": "3.13.5",
+  "node": "v24.15.0",
+  "npm": "11.12.1",
+  "harness": "catalog_harness.py",
+  "seed": "e001-v1-2026-09-18",
+  "source_revision": "unknown",
+  "cwd": "/home/gaab/Downloads/CursorSKILLS"
+}

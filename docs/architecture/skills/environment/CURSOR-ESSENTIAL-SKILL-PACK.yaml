@@ -1,0 +1,73 @@
+pack:
+  name: megabrain-essential
+  version: "1.0.0-post-prune"
+  generated_at: "20260920T005842Z"
+  authority:
+    - docs/architecture/skills/audit/DO-NOT-REMOVE-V2.yaml
+    - docs/architecture/skills/pruning/POST-PRUNE-SKILL-INVENTORY.yaml
+    - docs/architecture/skills/pruning/PRUNING-MANIFEST.yaml
+  cursor_skill_target: "/home/gaab/.cursor/skills"
+  note: >
+    Cursor target installs local MegaBrain skills as symlinks into ~/.cursor/skills.
+    Hard gates grill-me/image-to-code live under ~/.agents/skills → global-skills (untouched).
+
+skills:
+  # --- CORE / FLOW (repo .cursor/skills) ---
+  - { id: orquestrar, source: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/orquestrar, target: /home/gaab/.cursor/skills/orquestrar, role: orchestration, hard_gate: false, critical: true }
+  - { id: MegaBrain, source: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/orquestrar, target: /home/gaab/.cursor/skills/MegaBrain, role: orchestration-alias, hard_gate: false, critical: true }
+  - { id: wiki, source: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/wiki, target: /home/gaab/.cursor/skills/wiki, role: knowledge-rag, hard_gate: true, critical: true }
+  - { id: wiki-mem, source: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/wiki-mem, target: /home/gaab/.cursor/skills/wiki-mem, role: knowledge-episodic, hard_gate: false, critical: true }
+  - { id: prd, source: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/prd, target: /home/gaab/.cursor/skills/prd, role: upstream, hard_gate: false, critical: true }
+  - { id: planner, source: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/planner, target: /home/gaab/.cursor/skills/planner, role: planning, hard_gate: false, critical: true }
+  - { id: backend, source: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/backend, target: /home/gaab/.cursor/skills/backend, role: backend, hard_gate: false, critical: true }
+  - { id: frontend-pro, source: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/frontend-pro, target: /home/gaab/.cursor/skills/frontend-pro, role: frontend, hard_gate: false, critical: true }
+  - { id: database, source: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/database, target: /home/gaab/.cursor/skills/database, role: database, hard_gate: false, critical: true }
+  - { id: security, source: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/security, target: /home/gaab/.cursor/skills/security, role: security, hard_gate: false, critical: true }
+  - { id: testing, source: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/testing, target: /home/gaab/.cursor/skills/testing, role: testing, hard_gate: true, critical: true }
+  - { id: debugger, source: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/debugger, target: /home/gaab/.cursor/skills/debugger, role: debugging, hard_gate: true, critical: true }
+  - { id: documentation, source: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/documentation, target: /home/gaab/.cursor/skills/documentation, role: documentation, hard_gate: false, critical: true }
+  - { id: po-review, source: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/po-review, target: /home/gaab/.cursor/skills/po-review, role: validation, hard_gate: false, critical: true }
+  - { id: validator, source: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/validator, target: /home/gaab/.cursor/skills/validator, role: validation, hard_gate: false, critical: true }
+  - { id: code-reviewer, source: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/code-reviewer, target: /home/gaab/.cursor/skills/code-reviewer, role: validation, hard_gate: false, critical: true }
+  - { id: architect, source: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/architect, target: /home/gaab/.cursor/skills/architect, role: architecture, hard_gate: false, critical: true }
+  - { id: adr, source: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/adr, target: /home/gaab/.cursor/skills/adr, role: architecture, hard_gate: false, critical: true }
+  - { id: researcher, source: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/researcher, target: /home/gaab/.cursor/skills/researcher, role: research, hard_gate: false, critical: true }
+  - { id: devops, source: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/devops, target: /home/gaab/.cursor/skills/devops, role: devops, hard_gate: false, critical: true }
+  - { id: failure-analyst, source: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/failure-analyst, target: /home/gaab/.cursor/skills/failure-analyst, role: debugging, hard_gate: false, critical: true }
+  - { id: agent-authoring, source: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/agent-authoring, target: /home/gaab/.cursor/skills/agent-authoring, role: agents, hard_gate: false, critical: true }
+  - { id: skill-authoring, source: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/skill-authoring, target: /home/gaab/.cursor/skills/skill-authoring, role: skill-authoring, hard_gate: false, critical: true }
+  - { id: agent-architecture-mining, source: /home/gaab/Downloads/CursorSKILLS/.cursor/skills/agent-architecture-mining, target: /home/gaab/.cursor/skills/agent-architecture-mining, role: agents, hard_gate: false, critical: true }
+  # host exposure (not owned by wipe of agents)
+  - { id: wiki-carpaccio, source: /home/gaab/.agents/skills/wiki-carpaccio, target: /home/gaab/.cursor/skills/wiki-carpaccio, role: knowledge-optional, hard_gate: false, critical: false }
+
+excluded:
+  - { id: linkedin-posts, reason: PRUNE_CANDIDATE }
+  - { id: gsap, reason: PACK_REMOVAL_MOTION }
+  - { id: framer-motion, reason: PACK_REMOVAL_MOTION }
+  - { id: lenis, reason: PACK_REMOVAL_MOTION }
+  - { id: hover-effects, reason: PACK_REMOVAL_MOTION }
+  - { id: particles, reason: PACK_REMOVAL_MOTION }
+  - { id: r3f-shaders, reason: PACK_REMOVAL_MOTION }
+
+external_untouched:
+  - { id: grill-me, path: /home/gaab/.agents/skills/grill-me, reason: HARD_GATE; lives outside Cursor skill root }
+  - { id: image-to-code, path: /home/gaab/.agents/skills/image-to-code, reason: HARD_GATE; lives outside Cursor skill root }
+  - { id: agent-browser, path: /home/gaab/.agents/skills/agent-browser, reason: dossier/FE dependency via ~/.agents }
+  - { id: technical-library-dossier, path: /home/gaab/.agents/skills/technical-library-dossier, reason: /library-dossier via ~/.agents }
+  - { id: systematic-debugging, path: /home/gaab/.agents/skills/systematic-debugging, reason: ABSORBED source DO for debugger; keep as reference }
+  - { id: brainstorming, path: /home/gaab/.agents/skills/brainstorming, reason: optional upstream via ~/.agents }
+  - { id: find-skills, path: /home/gaab/.agents/skills/find-skills, reason: user discovery only }
+  - { id: writing-plans, path: /home/gaab/.agents/skills/writing-plans, reason: review-tier kept in global-skills }
+  - { id: executing-plans, path: /home/gaab/.agents/skills/executing-plans, reason: review-tier }
+  - { id: subagent-driven-development, path: /home/gaab/.agents/skills/subagent-driven-development, reason: review-tier }
+  - { id: finishing-a-development-branch, path: /home/gaab/.agents/skills/finishing-a-development-branch, reason: review-tier }
+  - { id: frontend-design, path: /home/gaab/.agents/skills/frontend-design, reason: review-tier }
+  - { id: ui-ux-pro-max, path: /home/gaab/.agents/skills/ui-ux-pro-max, reason: review-tier }
+  - { id: ip-as-logo, path: /home/gaab/.agents/skills/ip-as-logo, reason: host_only_untouched }
+  - { id: ip-as-logo-workspace, path: /home/gaab/.agents/skills/ip-as-logo-workspace, reason: host_only_untouched }
+  - { id: skills-cursor, path: /home/gaab/.cursor/skills-cursor, reason: Cursor product built-in pack; never wipe }
+
+divergences_from_prompt_list:
+  - note: "agent-architecture-mining present in DO-NOT-REMOVE-V2; was missing from ~/.cursor/skills — ADDED"
+  - note: "grill-me/image-to-code not installed into ~/.cursor/skills; remain external_untouched (HARD-GATES-V2 paths)"
+  - note: "wiki-carpaccio retained as host exposure symlink per POST-PRUNE host_only_untouched"

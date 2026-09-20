@@ -1,0 +1,45 @@
+# Conceptual boundary MAIN vs GAABTYPE
+# NO BRANCH CREATED — proposal only
+
+proposal:
+  MAIN:
+    equals:
+      - generic architecture (engine, IR, capabilities, providers interface, evidence, evolveloop, policy, PDA)
+      - generic defaults (no /home/gaab; RAG_REPO_ROOT required or null-provider)
+      - portable adapters (filesystem, shell, git, system, mock knowledge)
+      - public skills (pipeline workers/gates + grill-me + image-to-code + selected tier3)
+      - public commands (EN or locale-pack; without Gaab-branded wiki gate)
+      - megabrain.mdc generic rules
+      - installer with profiles
+    excludes:
+      - GaabWiki corpus
+      - hardcoded personal paths
+      - KernelBot/OrbitBot pack tables as defaults
+      - gaabwiki-mem always-on hooks as mandatory
+      - GaabDevWeb-only clone assumptions
+      - memory/* session artifacts
+      - reverseEnginering research dumps
+
+  GAABTYPE:
+    equals:
+      - MAIN
+      - Gaab-specific profile overlay
+      - GaabWiki skill + CLI adapter + vault path
+      - gaabwiki-mem hooks + promote queue
+      - Rules/gaabwiki-agent.mdc
+      - personal defaults (Documentos/gitHub/karpathyWiki)
+      - personal project pack registry
+      - personal commands /wiki /mem
+      - optional systemd gaabwiki units
+      - essential pack marking gaabwiki critical
+    status: conceptual_only
+    note: "Name GaabType not present in repo today"
+
+  migration_order_suggested:
+    - 1_unify_vault_path_defaults_via_env_only
+    - 2_extract_knowledge_backend_interface
+    - 3_rename_hard_gate_to_knowledge_grounding_conceptually
+    - 4_move_gaabwiki_artifacts_to_profile_pack
+    - 5_strip_personal_paths_from_main_defaults
+    - 6_only_then_consider_brand_renames
+  forbidden_in_this_phase: [rename, move, branch, AGENT.md]
