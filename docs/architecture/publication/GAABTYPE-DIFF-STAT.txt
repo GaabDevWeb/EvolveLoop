@@ -1,0 +1,15 @@
+ .cursor/commands/MegaBrain.md                      | 14 +++++
+ .cursor/hooks.json                                 | 22 +++++++
+ Rules/wiki-agent.mdc                               | 71 +++++-----------------
+ agent-setup/cursor/commands/MegaBrain.md           | 14 +++++
+ agent-setup/cursor/rules/wiki-agent.mdc            | 71 +++++-----------------
+ .../publication/FINAL-GAABTYPE-MANIFEST.yaml       | 29 +++++++++
+ .../publication/FINAL-MAIN-GAABTYPE-GRAPH.yaml     | 19 ++++++
+ .../publication/GAABTYPE-DIFF-SUMMARY.md           | 23 +++++++
+ profiles/gaabtype/README.md                        | 18 ++++++
+ profiles/gaabtype/hooks/hooks.gaabtype.json        |  5 ++
+ profiles/gaabtype/paths.example.yaml               |  5 ++
+ profiles/gaabtype/preferences.yaml                 |  3 +
+ profiles/gaabtype/profile.yaml                     | 19 ++++++
+ profiles/gaabtype/projects.yaml                    | 20 ++++++
+ 14 files changed, 223 insertions(+), 110 deletions(-)

@@ -1,0 +1,19 @@
+graph: |
+  main (EvolveLoop)
+    │
+    ├── core (orchestrator, IR, policy, evidence)
+    ├── knowledge (KnowledgeBackend)
+    ├── wiki (default backend + /wiki)
+    ├── agents / skills / providers
+    ├── evolveloop V1
+    └── default profile (memory off)
+            ▲
+            │ inherits (same tree; overlay only)
+        GaabType
+            │
+            ├── personal Wiki (WIKI_ROOT)
+            ├── memory defaults on
+            ├── personal hooks (wiki-mem)
+            ├── project mappings
+            ├── /MegaBrain legacy alias
+            └── host config (env)
