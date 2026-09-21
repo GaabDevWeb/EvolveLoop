@@ -14,62 +14,39 @@ HARD-GATE
 TESTED — source path inspected / registry relevance noted.
 
 ## Activation
-See classification (hard-gate / conditional / LLM / deterministic).
+Hard-gate / knowledge grounding via Runtime PRE_EXECUTE.
 
 ## Preconditions / Dependencies
-See SKILL.md / provider.yaml at path above. Declared deps not re-executed unless deterministic.
+See SKILL.md. TS engine enforces grounding via on-disk attestation artifact (not caller status).
 
 ## Inputs / Outputs / Capabilities
-Contract from SKILL.md / provider.yaml. Not re-authored here.
+Contract from SKILL.md. Gate input: `gateContext.grounding` with `artifact_path` + bindings.
 
 ## Side Effects
-Agent/LLM mediated — not fully observed in this campaign
+Agent/LLM vault CLI live — not fully observed in this campaign (limitation).
 
 ## Authority / Scope
-- Authority: TESTED
-- Scope: NOT_TESTED
+- Authority: TESTED (artifact-verified grounding)
+- Scope: NOT_TESTED (agent vault)
 
-## Happy Path
-NOT_TESTED
+## Happy / Negative / Adversarial
+- Happy: TESTED — valid `knowledge-grounding` artifact + non-empty `source_ids` → ALLOW
+- Negative: TESTED — missing artifact / absent bindings → DENY
+- Adversarial: TESTED — `grounding.status=satisfied` alone → DENY (RT-SKILL-WIKI-01 closed)
 
-## Negative Tests
-TESTED
-
-## Adversarial Tests
-TESTED
-
-## Failure Injection
-NOT_TESTED
-
-## Crash/Recovery
-N/A
-
-## Replay / Idempotency
-N/A or Engine-level
-
-## Evidence
-NOT_TESTED
-
-## Telemetry
-NOT_TESTED
-
-## Composition
-NOT_TESTED
-
-## Live LLM requirement
-NOT_TESTED — CURSOR_API_KEY MISSING; Ollama is not a workspace coding agent for most skills.
-
-## Observed Result
-**FAILED**
+## Evidence / Telemetry / Recovery / Composition / Live
+- Evidence: NOT_TESTED (agent evidence files)
+- Telemetry: NOT_TESTED
+- Recovery: N/A (gate)
+- Composition: NOT_TESTED (orquestrar)
+- Live: NOT_TESTED (no vault CLI live backend in harness)
 
 ## Limitations
-- Hard-gate largely AGENT/POLICY attested; TS engine enforced=false for most (wiki/grill-me/image docs)
+- Behavioral wiki vault CLI live may still be NOT_MEASURED
+- Attestation plantable by workspace writer (no HMAC) — residual shared with grill-me model
 
 ## Findings
-- FINDING: grounding.status caller-attested similarly to pre-fix grill-me pattern when supplied in gateContext
-- FINDING: grounding.status=satisfied accepted without artifact verification (caller attestation)
+(none open for caller-attested grounding bypass)
 
-## Final Certification
-`FAILED`
-
-Validated dimensions: discovery, negative, adversarial, authority
+## Final status
+`CERTIFIED_WITH_LIMITATIONS`

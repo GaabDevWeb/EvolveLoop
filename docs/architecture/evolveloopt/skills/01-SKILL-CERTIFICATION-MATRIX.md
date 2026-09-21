@@ -1,5 +1,5 @@
 # 01 — Skill Certification Matrix
-**Commit:** `5edab1ae334a54f4fb2b823209afd7532f8626d6`
+**Commit:** `4aadf899707ef7d58bd59b7a60039208760b4d39`
 
 | Skill | Type | Happy | Negative | Adversarial | Authority | Scope | Recovery | Evidence | Telemetry | Live | Final |
 | ----- | ---- | ----- | -------- | ----------- | --------- | ----- | -------- | -------- | --------- | ---- | ----- |
