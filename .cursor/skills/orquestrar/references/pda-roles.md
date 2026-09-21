@@ -92,7 +92,7 @@ recommended_action: continuar | corrigir | replanejar
 
 **Fecho (hook vs papel):** o hook `stop`/`sessionEnd` (`wiki-mem`) **só enfileira** `.ai/sessions/promote-queue.md` quando há `promote_candidates` ou edits de código. **Não** escreve `{Projeto}/wiki/` nem `raw/`. O spawn `librarian` (ou o Agent) **promove** a fila para `{Projeto}/log.md` ± `wiki/`.
 
-**Vault:** `/home/gaab/Documentos/karpathyWiki`. **NUNCA** `raw/`.
+**Vault:** `$WIKI_ROOT` (alias `$RAG_REPO_ROOT`) — required when grounding applies; **never** hardcode a personal absolute path. **NUNCA** `raw/`.
 
 ---
 

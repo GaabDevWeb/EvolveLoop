@@ -31,7 +31,7 @@ outer_loop: cycle_id=… outer_cycle=…/… last_decision=… reentry=…
 anti_vibe: coding via Agent tools — NÃO wiki vibe / Composer CLI
 wiki_register: se editar código → append {Projeto}/log.md (± wiki/); NUNCA raw/; executor: librarian se spawnado, senão exec/raiz
 mem_episodic: complementar LATEST.md / wiki-mem — NÃO substitui contratos
-vault: /home/gaab/Documentos/karpathyWiki
+vault: $WIKI_ROOT   # never hardcode a personal absolute path; required when grounding applies
 ```
 
 ### Campos — regras

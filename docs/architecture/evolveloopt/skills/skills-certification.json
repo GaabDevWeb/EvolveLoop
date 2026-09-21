@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-21T11:04:19.684Z",
+  "generated_at": "2026-09-21T11:16:02.850Z",
   "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6",
   "branch": "evolve-v2",
   "skills": [
@@ -44,7 +44,7 @@
         "deferred to batch",
         "fs chain"
       ],
-      "timestamp": "2026-09-21T11:04:19.617Z",
+      "timestamp": "2026-09-21T11:16:02.733Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -83,7 +83,7 @@
         "deterministic",
         "batch"
       ],
-      "timestamp": "2026-09-21T11:04:19.617Z",
+      "timestamp": "2026-09-21T11:16:02.733Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -125,7 +125,7 @@
         "deterministic",
         "batch"
       ],
-      "timestamp": "2026-09-21T11:04:19.617Z",
+      "timestamp": "2026-09-21T11:16:02.733Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -163,7 +163,7 @@
         "deterministic",
         "batch"
       ],
-      "timestamp": "2026-09-21T11:04:19.617Z",
+      "timestamp": "2026-09-21T11:16:02.733Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -200,7 +200,7 @@
         "deterministic",
         "batch"
       ],
-      "timestamp": "2026-09-21T11:04:19.617Z",
+      "timestamp": "2026-09-21T11:16:02.733Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -240,7 +240,7 @@
         "deterministic",
         "batch"
       ],
-      "timestamp": "2026-09-21T11:04:19.617Z",
+      "timestamp": "2026-09-21T11:16:02.733Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -268,7 +268,7 @@
       "tests": [
         "discoverAllManifests"
       ],
-      "timestamp": "2026-09-21T11:04:19.617Z",
+      "timestamp": "2026-09-21T11:16:02.733Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -313,7 +313,7 @@
         "interactive HITL not automated",
         "batch"
       ],
-      "timestamp": "2026-09-21T11:04:19.669Z",
+      "timestamp": "2026-09-21T11:16:02.826Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -354,7 +354,7 @@
         "unit",
         "vision backend"
       ],
-      "timestamp": "2026-09-21T11:04:19.679Z",
+      "timestamp": "2026-09-21T11:16:02.841Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -396,7 +396,7 @@
         "deterministic",
         "a02 e2e"
       ],
-      "timestamp": "2026-09-21T11:04:19.680Z",
+      "timestamp": "2026-09-21T11:16:02.842Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -438,7 +438,7 @@
         "orquestrar",
         "partial"
       ],
-      "timestamp": "2026-09-21T11:04:19.680Z",
+      "timestamp": "2026-09-21T11:16:02.844Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -481,7 +481,7 @@
         "partial",
         "inventory"
       ],
-      "timestamp": "2026-09-21T11:04:19.681Z",
+      "timestamp": "2026-09-21T11:16:02.845Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -524,7 +524,7 @@
         "partial",
         "inventory"
       ],
-      "timestamp": "2026-09-21T11:04:19.681Z",
+      "timestamp": "2026-09-21T11:16:02.845Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -567,7 +567,7 @@
         "partial",
         "inventory"
       ],
-      "timestamp": "2026-09-21T11:04:19.681Z",
+      "timestamp": "2026-09-21T11:16:02.845Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -610,7 +610,7 @@
         "partial",
         "inventory"
       ],
-      "timestamp": "2026-09-21T11:04:19.681Z",
+      "timestamp": "2026-09-21T11:16:02.846Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -653,7 +653,7 @@
         "partial",
         "inventory"
       ],
-      "timestamp": "2026-09-21T11:04:19.682Z",
+      "timestamp": "2026-09-21T11:16:02.846Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -685,7 +685,7 @@
         "CURSOR_API_KEY missing; Ollama not a workspace agent",
         "evals present ≠ certification"
       ],
-      "timestamp": "2026-09-21T11:04:19.682Z",
+      "timestamp": "2026-09-21T11:16:02.847Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -717,7 +717,7 @@
         "agent-orchestrated",
         "CURSOR_API_KEY missing"
       ],
-      "timestamp": "2026-09-21T11:04:19.682Z",
+      "timestamp": "2026-09-21T11:16:02.847Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -749,7 +749,7 @@
         "agent-orchestrated",
         "CURSOR_API_KEY missing"
       ],
-      "timestamp": "2026-09-21T11:04:19.682Z",
+      "timestamp": "2026-09-21T11:16:02.847Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -781,7 +781,7 @@
         "CURSOR_API_KEY missing; Ollama not a workspace agent",
         "evals present ≠ certification"
       ],
-      "timestamp": "2026-09-21T11:04:19.682Z",
+      "timestamp": "2026-09-21T11:16:02.847Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -813,7 +813,7 @@
         "CURSOR_API_KEY missing; Ollama not a workspace agent",
         "evals present ≠ certification"
       ],
-      "timestamp": "2026-09-21T11:04:19.682Z",
+      "timestamp": "2026-09-21T11:16:02.847Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -845,7 +845,7 @@
         "CURSOR_API_KEY missing; Ollama not a workspace agent",
         "evals present ≠ certification"
       ],
-      "timestamp": "2026-09-21T11:04:19.682Z",
+      "timestamp": "2026-09-21T11:16:02.847Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -877,7 +877,7 @@
         "CURSOR_API_KEY missing; Ollama not a workspace agent",
         "evals present ≠ certification"
       ],
-      "timestamp": "2026-09-21T11:04:19.682Z",
+      "timestamp": "2026-09-21T11:16:02.847Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -909,7 +909,7 @@
         "CURSOR_API_KEY missing; Ollama not a workspace agent",
         "evals present ≠ certification"
       ],
-      "timestamp": "2026-09-21T11:04:19.682Z",
+      "timestamp": "2026-09-21T11:16:02.847Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -941,7 +941,7 @@
         "CURSOR_API_KEY missing; Ollama not a workspace agent",
         "evals present ≠ certification"
       ],
-      "timestamp": "2026-09-21T11:04:19.682Z",
+      "timestamp": "2026-09-21T11:16:02.847Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -973,7 +973,7 @@
         "CURSOR_API_KEY missing; Ollama not a workspace agent",
         "evals present ≠ certification"
       ],
-      "timestamp": "2026-09-21T11:04:19.682Z",
+      "timestamp": "2026-09-21T11:16:02.848Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -1005,7 +1005,7 @@
         "CURSOR_API_KEY missing; Ollama not a workspace agent",
         "evals present ≠ certification"
       ],
-      "timestamp": "2026-09-21T11:04:19.682Z",
+      "timestamp": "2026-09-21T11:16:02.848Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -1037,7 +1037,7 @@
         "agent-orchestrated",
         "CURSOR_API_KEY missing"
       ],
-      "timestamp": "2026-09-21T11:04:19.682Z",
+      "timestamp": "2026-09-21T11:16:02.848Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -1069,7 +1069,7 @@
         "CURSOR_API_KEY missing; Ollama not a workspace agent",
         "evals present ≠ certification"
       ],
-      "timestamp": "2026-09-21T11:04:19.682Z",
+      "timestamp": "2026-09-21T11:16:02.848Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -1101,7 +1101,7 @@
         "CURSOR_API_KEY missing; Ollama not a workspace agent",
         "evals present ≠ certification"
       ],
-      "timestamp": "2026-09-21T11:04:19.682Z",
+      "timestamp": "2026-09-21T11:16:02.848Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -1133,7 +1133,7 @@
         "agent-orchestrated",
         "CURSOR_API_KEY missing"
       ],
-      "timestamp": "2026-09-21T11:04:19.682Z",
+      "timestamp": "2026-09-21T11:16:02.848Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -1165,7 +1165,7 @@
         "CURSOR_API_KEY missing; Ollama not a workspace agent",
         "evals present ≠ certification"
       ],
-      "timestamp": "2026-09-21T11:04:19.682Z",
+      "timestamp": "2026-09-21T11:16:02.848Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -1197,7 +1197,7 @@
         "CURSOR_API_KEY missing; Ollama not a workspace agent",
         "evals present ≠ certification"
       ],
-      "timestamp": "2026-09-21T11:04:19.682Z",
+      "timestamp": "2026-09-21T11:16:02.848Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -1228,7 +1228,7 @@
         "needs live LLM/agent",
         "CURSOR_API_KEY missing; Ollama not a workspace agent"
       ],
-      "timestamp": "2026-09-21T11:04:19.682Z",
+      "timestamp": "2026-09-21T11:16:02.848Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -1260,7 +1260,7 @@
         "inventory",
         "superpowers parallel path"
       ],
-      "timestamp": "2026-09-21T11:04:19.682Z",
+      "timestamp": "2026-09-21T11:16:02.848Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -1292,7 +1292,7 @@
         "inventory",
         "superpowers parallel path"
       ],
-      "timestamp": "2026-09-21T11:04:19.682Z",
+      "timestamp": "2026-09-21T11:16:02.848Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -1324,7 +1324,7 @@
         "inventory",
         "superpowers parallel path"
       ],
-      "timestamp": "2026-09-21T11:04:19.682Z",
+      "timestamp": "2026-09-21T11:16:02.848Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -1354,7 +1354,7 @@
         "needs live LLM/agent",
         "CURSOR_API_KEY missing; Ollama not a workspace agent"
       ],
-      "timestamp": "2026-09-21T11:04:19.682Z",
+      "timestamp": "2026-09-21T11:16:02.848Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -1386,7 +1386,7 @@
         "inventory",
         "superpowers parallel path"
       ],
-      "timestamp": "2026-09-21T11:04:19.682Z",
+      "timestamp": "2026-09-21T11:16:02.848Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -1416,7 +1416,7 @@
         "needs live LLM/agent",
         "CURSOR_API_KEY missing; Ollama not a workspace agent"
       ],
-      "timestamp": "2026-09-21T11:04:19.682Z",
+      "timestamp": "2026-09-21T11:16:02.848Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -1447,7 +1447,7 @@
         "CURSOR_API_KEY missing; Ollama not a workspace agent",
         "evals present ≠ certification"
       ],
-      "timestamp": "2026-09-21T11:04:19.682Z",
+      "timestamp": "2026-09-21T11:16:02.848Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -1477,7 +1477,7 @@
         "needs live LLM/agent",
         "CURSOR_API_KEY missing; Ollama not a workspace agent"
       ],
-      "timestamp": "2026-09-21T11:04:19.682Z",
+      "timestamp": "2026-09-21T11:16:02.848Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -1509,7 +1509,7 @@
         "inventory",
         "superpowers parallel path"
       ],
-      "timestamp": "2026-09-21T11:04:19.682Z",
+      "timestamp": "2026-09-21T11:16:02.848Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -1540,7 +1540,7 @@
         "inventory",
         "host-only"
       ],
-      "timestamp": "2026-09-21T11:04:19.682Z",
+      "timestamp": "2026-09-21T11:16:02.848Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -1571,7 +1571,7 @@
         "inventory",
         "host-only"
       ],
-      "timestamp": "2026-09-21T11:04:19.682Z",
+      "timestamp": "2026-09-21T11:16:02.848Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     },
     {
@@ -1602,7 +1602,7 @@
         "inventory",
         "host-only"
       ],
-      "timestamp": "2026-09-21T11:04:19.682Z",
+      "timestamp": "2026-09-21T11:16:02.848Z",
       "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
     }
   ],
