@@ -10,6 +10,7 @@ import {
   JobFileExecutor,
 } from "../../src/index.js";
 import { JobStore } from "../../src/jobs/job-store.js";
+import { jobResultToExecuteResult } from "../../src/jobs/job-resume.js";
 import { buildSuccessEvidence } from "../../src/evidence/validator.js";
 import type { CapabilityIR, GraphNode } from "../../src/types/index.js";
 import { loadCheckpoint } from "../../src/jobs/checkpoint.js";
@@ -35,6 +36,32 @@ const testingIR: CapabilityIR = {
 };
 
 describe("Job pickup resume", () => {
+  it("fail-closed when success without evidence_path (no invented PASS)", () => {
+    const er = jobResultToExecuteResult(
+      {
+        run_id: "r1",
+        provider_id: "testing",
+        skill_path: "/x",
+        capability: "testing",
+        node_id: "n1",
+        created_at: new Date().toISOString(),
+        status: "completed",
+      } as never,
+      { success: true } as never,
+      {
+        id: "n1",
+        capability: "testing",
+        type: "gate",
+        dependencies: [],
+        definition_of_done: [{ id: "d1", check: "x", verification: "automated" }],
+        status: "running",
+        retry_count: 0,
+      },
+    );
+    expect(er.success).toBe(false);
+    expect(er.error?.code).toBe("EVIDENCE_MISSING");
+  });
+
   it("completes waiting node when job result arrives (--wait-for-jobs)", async () => {
     const base = mkdtempSync(join(tmpdir(), "job-resume-"));
     const jobsDir = join(base, "jobs");

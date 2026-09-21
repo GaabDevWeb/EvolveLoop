@@ -1,11 +1,33 @@
 #!/usr/bin/env bash
-# Canonical EvolveLoop test accounting — unambiguous V1 / V2 / validator counts.
+# Canonical EvolveLoop test accounting — unambiguous buckets.
 # Usage: bash scripts/test-accounting.sh
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
-V1_GLOBS=(
+count_pack() {
+  local label="$1"; shift
+  local out
+  out="$(npx vitest run "$@" --reporter=dot 2>&1)" || true
+  local line
+  line="$(echo "$out" | rg -n "Tests " | tail -1 || true)"
+  local files
+  files="$(echo "$out" | rg -n "Test Files" | tail -1 || true)"
+  echo "=== $label ==="
+  echo "$files"
+  echo "$line"
+  # Extract passed/total if present
+  if echo "$line" | rg -q "([0-9]+) passed"; then
+    local passed failed skipped
+    passed="$(echo "$line" | sed -n 's/.*\([0-9][0-9]*\) passed.*/\1/p' | head -1)"
+    failed="$(echo "$line" | sed -n 's/.*\([0-9][0-9]*\) failed.*/\1/p' | head -1 || true)"
+    skipped="$(echo "$line" | sed -n 's/.*\([0-9][0-9]*\) skipped.*/\1/p' | head -1 || true)"
+    echo "PARSED passed=${passed:-0} failed=${failed:-0} skipped=${skipped:-0}"
+  fi
+  echo
+}
+
+V1=(
   tests/evals/evolveloop-v1-adversarial-audit.test.ts
   tests/evals/evolveloop-final-evals.test.ts
   tests/evals/evolveloop-longitudinal-evals.test.ts
@@ -39,29 +61,28 @@ V2_INTEGRATION=(
   tests/integration/b04-checkpoint-recovery.test.ts
   tests/integration/v2-intent-execution.test.ts
   tests/integration/agent-executor.test.ts
+  tests/integration/job-resume.test.ts
 )
 
 VALIDATOR=(
   tests/evals/redteam-adversarial-campaign.test.ts
   tests/evals/post-prune-mass-scenarios.test.ts
   tests/evals/engine-scenarios.test.ts
+  tests/evals/grounding-attestation-remediation.test.ts
+  tests/evals/autonomous-loader-security.test.ts
+  tests/evals/v2-final-integrity-campaign.test.ts
 )
 
-run_count() {
-  local label="$1"; shift
-  local out
-  out="$(npx vitest run "$@" --reporter=json 2>/dev/null | tail -1 || true)"
-  # Fallback: dot reporter parse
-  local summary
-  summary="$(npx vitest run "$@" --reporter=dot 2>&1 | tail -20)"
-  echo "=== $label ==="
-  echo "$summary" | rg "Test Files|Tests " || echo "$summary" | tail -5
-}
+SKILL_CERT=(
+  tests/evals/skill-certification-campaign.test.ts
+)
 
 echo "EvolveLoop canonical test accounting"
 echo "cwd=$ROOT"
-run_count "V1" "${V1_GLOBS[@]}"
-run_count "V2_UNIT" "${V2_UNIT[@]}"
-run_count "V2_INTEGRATION" "${V2_INTEGRATION[@]}"
-run_count "VALIDATOR" "${VALIDATOR[@]}"
-run_count "FULL" 
+echo "date=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+count_pack "V1_CANONICAL" "${V1[@]}"
+count_pack "V2_UNIT" "${V2_UNIT[@]}"
+count_pack "V2_INTEGRATION" "${V2_INTEGRATION[@]}"
+count_pack "VALIDATOR_REDTEAM_INTEGRITY" "${VALIDATOR[@]}"
+count_pack "SKILL_CERTIFICATION" "${SKILL_CERT[@]}"
+count_pack "FULL_ORCHESTRATOR"
