@@ -182,6 +182,8 @@ export {
 export {
   AutonomousSkillExecutor,
   canExecuteAutonomously,
+  resolveAutonomousModule,
+  AUTONOMOUS_SANDBOX_STATUS,
   type SkillExecutorKind,
   type AutonomousSkillExecutorOptions,
 } from "./plugins/autonomous-skill-executor.js";
@@ -208,6 +210,7 @@ export {
   releaseExecutionRecovery,
   reconcileInFlightGraph,
   validateCheckpoint,
+  validateCheckpointSemantics,
   CHECKPOINT_SCHEMA_VERSION,
   type EngineCheckpoint,
   type CheckpointValidation,

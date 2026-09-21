@@ -1,0 +1,137 @@
+[
+  {
+    "id": "RT-A03-01",
+    "severity": "CRITICAL",
+    "component": "runtime-gates",
+    "attack": "forge grill_me.evidence_status=satisfied without artifact",
+    "expected": "DENY",
+    "observed": "decision=DENY reason=grill_me_required_but_evidence_absent",
+    "broken": false
+  },
+  {
+    "id": "RT-A03-02",
+    "severity": "HIGH",
+    "component": "runtime-gates",
+    "attack": "fail_closed_missing_attestation=true with missing grill_me",
+    "expected": "DENY",
+    "observed": "decision=DENY reason=grill_me_attestation_missing",
+    "broken": false
+  },
+  {
+    "id": "RT-A03-03",
+    "severity": "CRITICAL",
+    "component": "capability-authority",
+    "attack": "path escape check with undefined workspaceRoot",
+    "expected": "escapes=true",
+    "observed": "pathEscapesWorkspace=true",
+    "broken": false
+  },
+  {
+    "id": "RT-A03-04",
+    "severity": "CRITICAL",
+    "component": "capability-authority",
+    "attack": "write with allowWrite:true and no workspaceRoot",
+    "expected": "deny",
+    "observed": "decision=deny reason=workspace_root_required",
+    "broken": false
+  },
+  {
+    "id": "RT-A03-05",
+    "severity": "INFO",
+    "component": "filesystem",
+    "attack": "../ traversal",
+    "expected": "blocked",
+    "observed": "blocked=true",
+    "broken": false
+  },
+  {
+    "id": "RT-A03-06",
+    "severity": "HIGH",
+    "component": "deterministic/filesystem",
+    "attack": "symlink to absolute outside path then read",
+    "expected": "DENY symlink escape",
+    "observed": "threw=true leaked=false",
+    "broken": false
+  },
+  {
+    "id": "RT-B04-01",
+    "severity": "INFO",
+    "component": "checkpoint",
+    "attack": "truncated JSON",
+    "expected": "ok:false",
+    "observed": "ok=false",
+    "broken": false
+  },
+  {
+    "id": "RT-B04-02",
+    "severity": "CRITICAL",
+    "component": "checkpoint",
+    "attack": "negative/inflated accounting",
+    "expected": "reject",
+    "observed": "ok=false",
+    "broken": false
+  },
+  {
+    "id": "RT-B04-03",
+    "severity": "CRITICAL",
+    "component": "checkpoint",
+    "attack": "FS tamper inflated nodes_completed",
+    "expected": "reject CORRUPT",
+    "observed": "ok=false code=CORRUPT",
+    "broken": false
+  },
+  {
+    "id": "RT-B04-04",
+    "severity": "INFO",
+    "component": "lease",
+    "attack": "dual claim",
+    "expected": "one owner",
+    "observed": "a=true b=false",
+    "broken": false
+  },
+  {
+    "id": "RT-EV-01",
+    "severity": "CRITICAL",
+    "component": "evidence/builders",
+    "attack": "auto DoD pass without verification",
+    "expected": "partial/skip not complete pass",
+    "observed": "status=partial forgedPass=false",
+    "broken": false
+  },
+  {
+    "id": "RT-EV-02",
+    "severity": "HIGH",
+    "component": "evidence/validator",
+    "attack": "tamper run_id/agent_id",
+    "expected": "invalid lineage",
+    "observed": "valid=false reason=lineage_run_id_mismatch",
+    "broken": false
+  },
+  {
+    "id": "RT-SEC-01",
+    "severity": "MEDIUM",
+    "component": "filesystem",
+    "attack": "read .env",
+    "expected": "denied",
+    "observed": "denied=true",
+    "broken": false
+  },
+  {
+    "id": "RT-SEC-03",
+    "severity": "HIGH",
+    "component": "scope-vs-filesystem",
+    "attack": "isForbiddenPath + filesystemRead",
+    "expected": "consistent deny",
+    "observed": "denied=true",
+    "broken": false
+  },
+  {
+    "id": "RT-SEC-02",
+    "severity": "INFO",
+    "component": "filesystem",
+    "attack": "readonly",
+    "expected": "fail",
+    "observed": "failed=true",
+    "broken": false
+  }
+]

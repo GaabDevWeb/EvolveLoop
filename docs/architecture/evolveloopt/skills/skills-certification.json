@@ -1,0 +1,1617 @@
+{
+  "generated_at": "2026-09-21T11:04:19.684Z",
+  "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6",
+  "branch": "evolve-v2",
+  "skills": [
+    {
+      "skill_id": "filesystem",
+      "classification": [
+        "DETERMINISTIC"
+      ],
+      "status": "CERTIFIED_WITH_LIMITATIONS",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "TESTED",
+        "negative": "TESTED",
+        "adversarial": "TESTED",
+        "authority": "TESTED",
+        "scope": "TESTED",
+        "failure": "TESTED",
+        "recovery": "N/A",
+        "evidence": "TESTED",
+        "telemetry": "N/A",
+        "composition": "TESTED",
+        "live": "N/A"
+      },
+      "limitations": [
+        "filesystem primitives have no skill-level checkpoint; Engine B04 covers run recovery",
+        "telemetry emitted by Engine/DeterministicProvider wrapper, not bare helpers"
+      ],
+      "findings": [],
+      "tests": [
+        "fs happy",
+        "fs happy",
+        "fs traversal",
+        "fs traversal",
+        "symlink",
+        "env forbid",
+        "env forbid",
+        "missing read",
+        "no auto pass",
+        "primitive",
+        "primitive",
+        "deterministic",
+        "deferred to batch",
+        "fs chain"
+      ],
+      "timestamp": "2026-09-21T11:04:19.617Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "git",
+      "classification": [
+        "DETERMINISTIC"
+      ],
+      "status": "CERTIFIED_WITH_LIMITATIONS",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "TESTED",
+        "negative": "TESTED",
+        "adversarial": "TESTED",
+        "authority": "TESTED",
+        "scope": "TESTED",
+        "failure": "TESTED",
+        "recovery": "N/A",
+        "evidence": "TESTED",
+        "telemetry": "N/A",
+        "composition": "NOT_TESTED",
+        "live": "N/A"
+      },
+      "limitations": [],
+      "findings": [],
+      "tests": [
+        "createDeterministicProvider",
+        "git.status success=true",
+        "git non-repo",
+        "git evidence",
+        "auth/scope shared",
+        "pathEscape shared",
+        "authorize",
+        "workspace",
+        "engine-level",
+        "engine-level",
+        "deterministic",
+        "batch"
+      ],
+      "timestamp": "2026-09-21T11:04:19.617Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "shell",
+      "classification": [
+        "DETERMINISTIC"
+      ],
+      "status": "CERTIFIED_WITH_LIMITATIONS",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "TESTED",
+        "negative": "TESTED",
+        "adversarial": "TESTED",
+        "authority": "TESTED",
+        "scope": "TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "N/A",
+        "evidence": "TESTED",
+        "telemetry": "N/A",
+        "composition": "NOT_TESTED",
+        "live": "N/A"
+      },
+      "limitations": [
+        "shell.execute requires allowShell/confirm — happy path gated by design"
+      ],
+      "findings": [],
+      "tests": [
+        "createDeterministicProvider",
+        "shell auth",
+        "shell blocked without allow",
+        "shell echo",
+        "shell evidence",
+        "auth/scope shared",
+        "pathEscape shared",
+        "authorize",
+        "workspace",
+        "engine-level",
+        "engine-level",
+        "deterministic",
+        "batch"
+      ],
+      "timestamp": "2026-09-21T11:04:19.617Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "project",
+      "classification": [
+        "DETERMINISTIC"
+      ],
+      "status": "CERTIFIED_WITH_LIMITATIONS",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "TESTED",
+        "negative": "TESTED",
+        "adversarial": "TESTED",
+        "authority": "TESTED",
+        "scope": "TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "N/A",
+        "evidence": "TESTED",
+        "telemetry": "N/A",
+        "composition": "NOT_TESTED",
+        "live": "N/A"
+      },
+      "limitations": [],
+      "findings": [],
+      "tests": [
+        "createDeterministicProvider",
+        "project.inspect",
+        "project evidence",
+        "auth/scope shared",
+        "pathEscape shared",
+        "authorize",
+        "workspace",
+        "engine-level",
+        "engine-level",
+        "deterministic",
+        "batch"
+      ],
+      "timestamp": "2026-09-21T11:04:19.617Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "system",
+      "classification": [
+        "DETERMINISTIC"
+      ],
+      "status": "CERTIFIED_WITH_LIMITATIONS",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "TESTED",
+        "negative": "TESTED",
+        "adversarial": "TESTED",
+        "authority": "TESTED",
+        "scope": "TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "N/A",
+        "evidence": "NOT_TESTED",
+        "telemetry": "N/A",
+        "composition": "NOT_TESTED",
+        "live": "N/A"
+      },
+      "limitations": [],
+      "findings": [],
+      "tests": [
+        "createDeterministicProvider",
+        "system success=true",
+        "auth/scope shared",
+        "pathEscape shared",
+        "authorize",
+        "workspace",
+        "engine-level",
+        "engine-level",
+        "deterministic",
+        "batch"
+      ],
+      "timestamp": "2026-09-21T11:04:19.617Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "knowledge",
+      "classification": [
+        "DETERMINISTIC"
+      ],
+      "status": "CERTIFIED_WITH_LIMITATIONS",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "TESTED",
+        "negative": "TESTED",
+        "adversarial": "TESTED",
+        "authority": "TESTED",
+        "scope": "TESTED",
+        "failure": "TESTED",
+        "recovery": "N/A",
+        "evidence": "NOT_TESTED",
+        "telemetry": "N/A",
+        "composition": "NOT_TESTED",
+        "live": "N/A"
+      },
+      "limitations": [
+        "WIKI_ROOT may be unset — degraded/empty results acceptable"
+      ],
+      "findings": [],
+      "tests": [
+        "createDeterministicProvider",
+        "knowledge success=true",
+        "knowledge without vault",
+        "auth/scope shared",
+        "pathEscape shared",
+        "authorize",
+        "workspace",
+        "engine-level",
+        "engine-level",
+        "deterministic",
+        "batch"
+      ],
+      "timestamp": "2026-09-21T11:04:19.617Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "find-skills",
+      "classification": [],
+      "status": "CERTIFIED_WITH_LIMITATIONS",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "NOT_TESTED",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [
+        "find-skills (skills.sh) is NOT Engine discovery — documented false equivalence"
+      ],
+      "findings": [],
+      "tests": [
+        "discoverAllManifests"
+      ],
+      "timestamp": "2026-09-21T11:04:19.617Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "grill-me",
+      "classification": [
+        "HARD-GATE",
+        "CONDITIONAL"
+      ],
+      "status": "CERTIFIED_WITH_LIMITATIONS",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "TESTED",
+        "negative": "TESTED",
+        "adversarial": "TESTED",
+        "authority": "TESTED",
+        "scope": "TESTED",
+        "failure": "TESTED",
+        "recovery": "N/A",
+        "evidence": "TESTED",
+        "telemetry": "TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [
+        "Full interactive grill-me HITL session NOT_MEASURED in harness"
+      ],
+      "findings": [],
+      "tests": [
+        "path exists",
+        "not required",
+        "absent",
+        "forge status",
+        "runtime sanitize",
+        "artifact verified",
+        "wrong binding",
+        "stale replay",
+        "no side effect",
+        "authority evidence on deny",
+        "gate deny",
+        "gate",
+        "engine events",
+        "interactive HITL not automated",
+        "batch"
+      ],
+      "timestamp": "2026-09-21T11:04:19.669Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "image-to-code",
+      "classification": [
+        "HARD-GATE",
+        "CONDITIONAL"
+      ],
+      "status": "CERTIFIED_WITH_LIMITATIONS",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "TESTED",
+        "negative": "TESTED",
+        "adversarial": "TESTED",
+        "authority": "TESTED",
+        "scope": "TESTED",
+        "failure": "TESTED",
+        "recovery": "N/A",
+        "evidence": "TESTED",
+        "telemetry": "N/A",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [
+        "Live Vision/image-to-code agent execution BLOCKED without multimodal live agent"
+      ],
+      "findings": [],
+      "tests": [
+        "no image",
+        "exists",
+        "absent",
+        "forge",
+        "runtime",
+        "deny effect",
+        "deny",
+        "deny evidence",
+        "gate",
+        "unit",
+        "vision backend"
+      ],
+      "timestamp": "2026-09-21T11:04:19.679Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "test-autonomous-write",
+      "classification": [
+        "DETERMINISTIC",
+        "PROVIDER-DEPENDENT"
+      ],
+      "status": "CERTIFIED_WITH_LIMITATIONS",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "TESTED",
+        "negative": "TESTED",
+        "adversarial": "TESTED",
+        "authority": "TESTED",
+        "scope": "TESTED",
+        "failure": "TESTED",
+        "recovery": "N/A",
+        "evidence": "TESTED",
+        "telemetry": "N/A",
+        "composition": "TESTED",
+        "live": "N/A"
+      },
+      "limitations": [
+        "SANDBOX_NOT_IMPLEMENTED: confined import still runs in-process with process privileges; OS sandbox not claimed"
+      ],
+      "findings": [],
+      "tests": [
+        "provider.yaml",
+        "covered by a02 integration suite externally",
+        "a02",
+        "module path confinement",
+        "workspace confine in handler context",
+        "a02",
+        "a02",
+        "a02",
+        "a02",
+        "engine",
+        "deterministic",
+        "a02 e2e"
+      ],
+      "timestamp": "2026-09-21T11:04:19.680Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "wiki",
+      "classification": [
+        "HARD-GATE"
+      ],
+      "status": "CERTIFIED_WITH_LIMITATIONS",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "TESTED",
+        "negative": "TESTED",
+        "adversarial": "TESTED",
+        "authority": "TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "N/A",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [
+        "Behavioral wiki vault CLI live may still be NOT_MEASURED; TS grounding gate is artifact-verified"
+      ],
+      "findings": [],
+      "tests": [
+        "SKILL.md",
+        "artifact grounding",
+        "grounding forge pattern",
+        "artifact grounding",
+        "caller status denied",
+        "agent",
+        "agent",
+        "gate",
+        "agent evidence files",
+        "agent",
+        "no CURSOR_API_KEY",
+        "orquestrar",
+        "partial"
+      ],
+      "timestamp": "2026-09-21T11:04:19.680Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "testing",
+      "classification": [
+        "HARD-GATE"
+      ],
+      "status": "NOT_MEASURED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "N/A",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [
+        "Hard-gate largely AGENT/POLICY attested; TS engine enforced=false for most"
+      ],
+      "findings": [],
+      "tests": [
+        "SKILL.md",
+        "LLM/agent mediated",
+        "grounding forge pattern",
+        "policy-agent",
+        "needs agent",
+        "agent",
+        "agent",
+        "gate",
+        "agent evidence files",
+        "agent",
+        "no CURSOR_API_KEY",
+        "orquestrar",
+        "partial",
+        "inventory"
+      ],
+      "timestamp": "2026-09-21T11:04:19.681Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "security",
+      "classification": [
+        "HARD-GATE"
+      ],
+      "status": "NOT_MEASURED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "N/A",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [
+        "Hard-gate largely AGENT/POLICY attested; TS engine enforced=false for most"
+      ],
+      "findings": [],
+      "tests": [
+        "SKILL.md",
+        "LLM/agent mediated",
+        "grounding forge pattern",
+        "policy-agent",
+        "needs agent",
+        "agent",
+        "agent",
+        "gate",
+        "agent evidence files",
+        "agent",
+        "no CURSOR_API_KEY",
+        "orquestrar",
+        "partial",
+        "inventory"
+      ],
+      "timestamp": "2026-09-21T11:04:19.681Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "prd",
+      "classification": [
+        "HARD-GATE"
+      ],
+      "status": "NOT_MEASURED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "N/A",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [
+        "Hard-gate largely AGENT/POLICY attested; TS engine enforced=false for most"
+      ],
+      "findings": [],
+      "tests": [
+        "SKILL.md",
+        "LLM/agent mediated",
+        "grounding forge pattern",
+        "policy-agent",
+        "needs agent",
+        "agent",
+        "agent",
+        "gate",
+        "agent evidence files",
+        "agent",
+        "no CURSOR_API_KEY",
+        "orquestrar",
+        "partial",
+        "inventory"
+      ],
+      "timestamp": "2026-09-21T11:04:19.681Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "po-review",
+      "classification": [
+        "HARD-GATE"
+      ],
+      "status": "NOT_MEASURED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "N/A",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [
+        "Hard-gate largely AGENT/POLICY attested; TS engine enforced=false for most"
+      ],
+      "findings": [],
+      "tests": [
+        "SKILL.md",
+        "LLM/agent mediated",
+        "grounding forge pattern",
+        "policy-agent",
+        "needs agent",
+        "agent",
+        "agent",
+        "gate",
+        "agent evidence files",
+        "agent",
+        "no CURSOR_API_KEY",
+        "orquestrar",
+        "partial",
+        "inventory"
+      ],
+      "timestamp": "2026-09-21T11:04:19.681Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "debugger",
+      "classification": [
+        "HARD-GATE"
+      ],
+      "status": "NOT_MEASURED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "N/A",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [
+        "Hard-gate largely AGENT/POLICY attested; TS engine enforced=false for most"
+      ],
+      "findings": [],
+      "tests": [
+        "SKILL.md",
+        "LLM/agent mediated",
+        "grounding forge pattern",
+        "policy-agent",
+        "needs agent",
+        "agent",
+        "agent",
+        "gate",
+        "agent evidence files",
+        "agent",
+        "no CURSOR_API_KEY",
+        "orquestrar",
+        "partial",
+        "inventory"
+      ],
+      "timestamp": "2026-09-21T11:04:19.682Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "adr",
+      "classification": [
+        "LLM-DEPENDENT",
+        "PROVIDER-DEPENDENT"
+      ],
+      "status": "NOT_MEASURED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "NOT_TESTED",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [],
+      "findings": [],
+      "tests": [
+        "inventory",
+        "needs live LLM/agent",
+        "CURSOR_API_KEY missing; Ollama not a workspace agent",
+        "evals present ≠ certification"
+      ],
+      "timestamp": "2026-09-21T11:04:19.682Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "agent-architecture-mining",
+      "classification": [
+        "META/ORCHESTRATION"
+      ],
+      "status": "NOT_MEASURED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "NOT_TESTED",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [
+        "Meta/orchestration skills require live Agent Cursor session"
+      ],
+      "findings": [],
+      "tests": [
+        "inventory",
+        "agent-orchestrated",
+        "CURSOR_API_KEY missing"
+      ],
+      "timestamp": "2026-09-21T11:04:19.682Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "agent-authoring",
+      "classification": [
+        "META/ORCHESTRATION"
+      ],
+      "status": "NOT_MEASURED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "NOT_TESTED",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [
+        "Meta/orchestration skills require live Agent Cursor session"
+      ],
+      "findings": [],
+      "tests": [
+        "inventory",
+        "agent-orchestrated",
+        "CURSOR_API_KEY missing"
+      ],
+      "timestamp": "2026-09-21T11:04:19.682Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "architect",
+      "classification": [
+        "LLM-DEPENDENT",
+        "PROVIDER-DEPENDENT"
+      ],
+      "status": "NOT_MEASURED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "NOT_TESTED",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [],
+      "findings": [],
+      "tests": [
+        "inventory",
+        "needs live LLM/agent",
+        "CURSOR_API_KEY missing; Ollama not a workspace agent",
+        "evals present ≠ certification"
+      ],
+      "timestamp": "2026-09-21T11:04:19.682Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "backend",
+      "classification": [
+        "LLM-DEPENDENT",
+        "PROVIDER-DEPENDENT"
+      ],
+      "status": "NOT_MEASURED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "NOT_TESTED",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [],
+      "findings": [],
+      "tests": [
+        "inventory",
+        "needs live LLM/agent",
+        "CURSOR_API_KEY missing; Ollama not a workspace agent",
+        "evals present ≠ certification"
+      ],
+      "timestamp": "2026-09-21T11:04:19.682Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "code-reviewer",
+      "classification": [
+        "LLM-DEPENDENT",
+        "PROVIDER-DEPENDENT"
+      ],
+      "status": "NOT_MEASURED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "NOT_TESTED",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [],
+      "findings": [],
+      "tests": [
+        "inventory",
+        "needs live LLM/agent",
+        "CURSOR_API_KEY missing; Ollama not a workspace agent",
+        "evals present ≠ certification"
+      ],
+      "timestamp": "2026-09-21T11:04:19.682Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "database",
+      "classification": [
+        "LLM-DEPENDENT",
+        "PROVIDER-DEPENDENT"
+      ],
+      "status": "NOT_MEASURED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "NOT_TESTED",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [],
+      "findings": [],
+      "tests": [
+        "inventory",
+        "needs live LLM/agent",
+        "CURSOR_API_KEY missing; Ollama not a workspace agent",
+        "evals present ≠ certification"
+      ],
+      "timestamp": "2026-09-21T11:04:19.682Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "devops",
+      "classification": [
+        "LLM-DEPENDENT",
+        "PROVIDER-DEPENDENT"
+      ],
+      "status": "NOT_MEASURED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "NOT_TESTED",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [],
+      "findings": [],
+      "tests": [
+        "inventory",
+        "needs live LLM/agent",
+        "CURSOR_API_KEY missing; Ollama not a workspace agent",
+        "evals present ≠ certification"
+      ],
+      "timestamp": "2026-09-21T11:04:19.682Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "documentation",
+      "classification": [
+        "LLM-DEPENDENT",
+        "PROVIDER-DEPENDENT"
+      ],
+      "status": "NOT_MEASURED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "NOT_TESTED",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [],
+      "findings": [],
+      "tests": [
+        "inventory",
+        "needs live LLM/agent",
+        "CURSOR_API_KEY missing; Ollama not a workspace agent",
+        "evals present ≠ certification"
+      ],
+      "timestamp": "2026-09-21T11:04:19.682Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "failure-analyst",
+      "classification": [
+        "LLM-DEPENDENT",
+        "PROVIDER-DEPENDENT"
+      ],
+      "status": "NOT_MEASURED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "NOT_TESTED",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [],
+      "findings": [],
+      "tests": [
+        "inventory",
+        "needs live LLM/agent",
+        "CURSOR_API_KEY missing; Ollama not a workspace agent",
+        "evals present ≠ certification"
+      ],
+      "timestamp": "2026-09-21T11:04:19.682Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "frontend-pro",
+      "classification": [
+        "LLM-DEPENDENT",
+        "PROVIDER-DEPENDENT"
+      ],
+      "status": "NOT_MEASURED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "NOT_TESTED",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [],
+      "findings": [],
+      "tests": [
+        "inventory",
+        "needs live LLM/agent",
+        "CURSOR_API_KEY missing; Ollama not a workspace agent",
+        "evals present ≠ certification"
+      ],
+      "timestamp": "2026-09-21T11:04:19.682Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "orquestrar",
+      "classification": [
+        "META/ORCHESTRATION"
+      ],
+      "status": "NOT_MEASURED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "NOT_TESTED",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [
+        "Meta/orchestration skills require live Agent Cursor session"
+      ],
+      "findings": [],
+      "tests": [
+        "inventory",
+        "agent-orchestrated",
+        "CURSOR_API_KEY missing"
+      ],
+      "timestamp": "2026-09-21T11:04:19.682Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "planner",
+      "classification": [
+        "LLM-DEPENDENT",
+        "PROVIDER-DEPENDENT"
+      ],
+      "status": "NOT_MEASURED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "NOT_TESTED",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [],
+      "findings": [],
+      "tests": [
+        "inventory",
+        "needs live LLM/agent",
+        "CURSOR_API_KEY missing; Ollama not a workspace agent",
+        "evals present ≠ certification"
+      ],
+      "timestamp": "2026-09-21T11:04:19.682Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "researcher",
+      "classification": [
+        "LLM-DEPENDENT",
+        "PROVIDER-DEPENDENT"
+      ],
+      "status": "NOT_MEASURED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "NOT_TESTED",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [],
+      "findings": [],
+      "tests": [
+        "inventory",
+        "needs live LLM/agent",
+        "CURSOR_API_KEY missing; Ollama not a workspace agent",
+        "evals present ≠ certification"
+      ],
+      "timestamp": "2026-09-21T11:04:19.682Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "skill-authoring",
+      "classification": [
+        "META/ORCHESTRATION"
+      ],
+      "status": "NOT_MEASURED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "NOT_TESTED",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [
+        "Meta/orchestration skills require live Agent Cursor session"
+      ],
+      "findings": [],
+      "tests": [
+        "inventory",
+        "agent-orchestrated",
+        "CURSOR_API_KEY missing"
+      ],
+      "timestamp": "2026-09-21T11:04:19.682Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "validator",
+      "classification": [
+        "LLM-DEPENDENT",
+        "PROVIDER-DEPENDENT"
+      ],
+      "status": "NOT_MEASURED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "NOT_TESTED",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [],
+      "findings": [],
+      "tests": [
+        "inventory",
+        "needs live LLM/agent",
+        "CURSOR_API_KEY missing; Ollama not a workspace agent",
+        "evals present ≠ certification"
+      ],
+      "timestamp": "2026-09-21T11:04:19.682Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "wiki-mem",
+      "classification": [
+        "LLM-DEPENDENT",
+        "PROVIDER-DEPENDENT"
+      ],
+      "status": "NOT_MEASURED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "NOT_TESTED",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [],
+      "findings": [],
+      "tests": [
+        "inventory",
+        "needs live LLM/agent",
+        "CURSOR_API_KEY missing; Ollama not a workspace agent",
+        "evals present ≠ certification"
+      ],
+      "timestamp": "2026-09-21T11:04:19.682Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "agent-browser",
+      "classification": [
+        "CONDITIONAL",
+        "LLM-DEPENDENT"
+      ],
+      "status": "NOT_MEASURED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "NOT_TESTED",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [],
+      "findings": [],
+      "tests": [
+        "inventory",
+        "needs live LLM/agent",
+        "CURSOR_API_KEY missing; Ollama not a workspace agent"
+      ],
+      "timestamp": "2026-09-21T11:04:19.682Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "brainstorming",
+      "classification": [
+        "HOST-DEPENDENT",
+        "META/ORCHESTRATION"
+      ],
+      "status": "BLOCKED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "NOT_TESTED",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [
+        "Superpowers path is parallel to canonical /evolve — not Engine-executed"
+      ],
+      "findings": [],
+      "tests": [
+        "inventory",
+        "superpowers parallel path"
+      ],
+      "timestamp": "2026-09-21T11:04:19.682Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "executing-plans",
+      "classification": [
+        "HOST-DEPENDENT",
+        "META/ORCHESTRATION"
+      ],
+      "status": "BLOCKED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "NOT_TESTED",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [
+        "Superpowers path is parallel to canonical /evolve — not Engine-executed"
+      ],
+      "findings": [],
+      "tests": [
+        "inventory",
+        "superpowers parallel path"
+      ],
+      "timestamp": "2026-09-21T11:04:19.682Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "finishing-a-development-branch",
+      "classification": [
+        "HOST-DEPENDENT",
+        "META/ORCHESTRATION"
+      ],
+      "status": "BLOCKED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "NOT_TESTED",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [
+        "Superpowers path is parallel to canonical /evolve — not Engine-executed"
+      ],
+      "findings": [],
+      "tests": [
+        "inventory",
+        "superpowers parallel path"
+      ],
+      "timestamp": "2026-09-21T11:04:19.682Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "frontend-design",
+      "classification": [
+        "LLM-DEPENDENT"
+      ],
+      "status": "NOT_MEASURED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "NOT_TESTED",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [],
+      "findings": [],
+      "tests": [
+        "inventory",
+        "needs live LLM/agent",
+        "CURSOR_API_KEY missing; Ollama not a workspace agent"
+      ],
+      "timestamp": "2026-09-21T11:04:19.682Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "subagent-driven-development",
+      "classification": [
+        "HOST-DEPENDENT",
+        "META/ORCHESTRATION"
+      ],
+      "status": "BLOCKED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "NOT_TESTED",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [
+        "Superpowers path is parallel to canonical /evolve — not Engine-executed"
+      ],
+      "findings": [],
+      "tests": [
+        "inventory",
+        "superpowers parallel path"
+      ],
+      "timestamp": "2026-09-21T11:04:19.682Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "systematic-debugging",
+      "classification": [
+        "LLM-DEPENDENT"
+      ],
+      "status": "NOT_MEASURED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "NOT_TESTED",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [],
+      "findings": [],
+      "tests": [
+        "inventory",
+        "needs live LLM/agent",
+        "CURSOR_API_KEY missing; Ollama not a workspace agent"
+      ],
+      "timestamp": "2026-09-21T11:04:19.682Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "technical-library-dossier",
+      "classification": [
+        "LLM-DEPENDENT"
+      ],
+      "status": "NOT_MEASURED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "NOT_TESTED",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [],
+      "findings": [],
+      "tests": [
+        "inventory",
+        "needs live LLM/agent",
+        "CURSOR_API_KEY missing; Ollama not a workspace agent",
+        "evals present ≠ certification"
+      ],
+      "timestamp": "2026-09-21T11:04:19.682Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "ui-ux-pro-max",
+      "classification": [
+        "LLM-DEPENDENT"
+      ],
+      "status": "NOT_MEASURED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "NOT_TESTED",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [],
+      "findings": [],
+      "tests": [
+        "inventory",
+        "needs live LLM/agent",
+        "CURSOR_API_KEY missing; Ollama not a workspace agent"
+      ],
+      "timestamp": "2026-09-21T11:04:19.682Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "writing-plans",
+      "classification": [
+        "HOST-DEPENDENT",
+        "META/ORCHESTRATION"
+      ],
+      "status": "BLOCKED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "NOT_TESTED",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [
+        "Superpowers path is parallel to canonical /evolve — not Engine-executed"
+      ],
+      "findings": [],
+      "tests": [
+        "inventory",
+        "superpowers parallel path"
+      ],
+      "timestamp": "2026-09-21T11:04:19.682Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "MegaBrain",
+      "classification": [
+        "HOST-DEPENDENT"
+      ],
+      "status": "BLOCKED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "NOT_TESTED",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [
+        "Host-only skill — not in Engine pack; no harness executor"
+      ],
+      "findings": [],
+      "tests": [
+        "inventory",
+        "host-only"
+      ],
+      "timestamp": "2026-09-21T11:04:19.682Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "ip-as-logo",
+      "classification": [
+        "HOST-DEPENDENT"
+      ],
+      "status": "BLOCKED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "NOT_TESTED",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [
+        "Host-only skill — not in Engine pack; no harness executor"
+      ],
+      "findings": [],
+      "tests": [
+        "inventory",
+        "host-only"
+      ],
+      "timestamp": "2026-09-21T11:04:19.682Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    },
+    {
+      "skill_id": "wiki-carpaccio",
+      "classification": [
+        "HOST-DEPENDENT"
+      ],
+      "status": "BLOCKED",
+      "dimensions": {
+        "discovery": "TESTED",
+        "happy": "NOT_TESTED",
+        "negative": "NOT_TESTED",
+        "adversarial": "NOT_TESTED",
+        "authority": "NOT_TESTED",
+        "scope": "NOT_TESTED",
+        "failure": "NOT_TESTED",
+        "recovery": "NOT_TESTED",
+        "evidence": "NOT_TESTED",
+        "telemetry": "NOT_TESTED",
+        "composition": "NOT_TESTED",
+        "live": "NOT_TESTED"
+      },
+      "limitations": [
+        "Host-only skill — not in Engine pack; no harness executor"
+      ],
+      "findings": [],
+      "tests": [
+        "inventory",
+        "host-only"
+      ],
+      "timestamp": "2026-09-21T11:04:19.682Z",
+      "commit": "5edab1ae334a54f4fb2b823209afd7532f8626d6"
+    }
+  ],
+  "summary": {
+    "discovered": 46,
+    "by_status": {
+      "CERTIFIED_WITH_LIMITATIONS": 11,
+      "NOT_MEASURED": 27,
+      "BLOCKED": 8
+    }
+  }
+}

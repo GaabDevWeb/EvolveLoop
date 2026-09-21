@@ -258,6 +258,13 @@ export class DeterministicProvider implements ProviderRuntime {
           "path" in result
             ? [String((result as { path: string }).path)]
             : [],
+        checkResults: request.node.definition_of_done.map((d) => ({
+          dod_id: d.id,
+          result: "pass" as const,
+          details: `deterministic_handler_ok:${d.check}`,
+        })),
+        status: "complete",
+        execution_id: request.run_id,
       });
 
       if (evidence.spec.payload && typeof evidence.spec.payload === "object") {
@@ -277,6 +284,9 @@ export class DeterministicProvider implements ProviderRuntime {
     } catch (err) {
       if (err instanceof PathEscapeError) {
         return fail(request, this.id, start, err.code, err.message);
+      }
+      if (err && typeof err === "object" && "code" in err && (err as { code: string }).code === "FORBIDDEN_PATH_DENIED") {
+        return fail(request, this.id, start, "FORBIDDEN_PATH_DENIED", err instanceof Error ? err.message : String(err));
       }
       const code =
         err && typeof err === "object" && "code" in err

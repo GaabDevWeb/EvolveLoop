@@ -80,9 +80,21 @@ describe("skill-gates — grill-me", () => {
       phase05_active: true,
       docs_approved: true,
       evidence_status: "satisfied",
+      runtime_verified: true,
     });
     expect(d.allow_transition).toBe(true);
     expect(d.status).toBe("satisfied");
+  });
+
+  it("grill-me satisfied sem runtime_verified → BLOCKED", () => {
+    const d = evaluateGrillMeTransition({
+      risk_tier: "standard",
+      phase05_active: true,
+      docs_approved: true,
+      evidence_status: "satisfied",
+    });
+    expect(d.allow_transition).toBe(false);
+    expect(d.reason).toBe("grill_me_attestation_unverified");
   });
 
   it("exemption explícita válida → EXEMPT + transição", () => {
@@ -92,6 +104,7 @@ describe("skill-gates — grill-me", () => {
       docs_approved: true,
       explicit_exempt: true,
       exempt_reason: "user_skip_grill_me",
+      runtime_verified: true,
     });
     expect(d.required).toBe(false);
     expect(d.allow_transition).toBe(true);
@@ -110,6 +123,7 @@ describe("skill-gates — image-to-code", () => {
     const d = evaluateImageToCodeGate({
       image_attachment: true,
       evidence_status: "satisfied",
+      runtime_verified: true,
     });
     expect(d.allow_transition).toBe(true);
   });

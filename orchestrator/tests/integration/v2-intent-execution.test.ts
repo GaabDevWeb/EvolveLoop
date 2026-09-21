@@ -61,6 +61,12 @@ describe("V2 foundation — intent → real execution", () => {
     const engine = new ExecutionEngine({
       registry: boot.registry,
       providers: boot.router,
+      authorityContext: {
+        workspaceRoot,
+        allowWrite: true,
+        allowShell: true,
+        allowNetwork: false,
+      },
     });
 
     const result = await engine.run({

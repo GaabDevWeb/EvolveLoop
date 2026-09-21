@@ -204,6 +204,96 @@ export function deserializeAccounting(s: SerializedAccounting): {
   };
 }
 
+function nonNegInt(n: unknown, field: string): string | null {
+  if (typeof n !== "number" || !Number.isFinite(n) || !Number.isInteger(n) || n < 0) {
+    return `invalid_accounting:${field}`;
+  }
+  return null;
+}
+
+/**
+ * Semantic checkpoint validation — schema-valid is not enough.
+ * Rejects impossible counters, inflated completion, policy-exceeding replans/retries.
+ * Residual: without HMAC secret, a sophisticated FS attacker can rewrite a
+ * semantically-consistent forged checkpoint (LIMITED — documented).
+ */
+export function validateCheckpointSemantics(cp: EngineCheckpoint): CheckpointValidation {
+  const a = cp.accounting;
+  for (const [field, val] of [
+    ["iterations", a.iterations],
+    ["replans", a.replans],
+    ["total_retries", a.total_retries],
+    ["provider_attempts", a.provider_attempts],
+    ["fallback_switches", a.fallback_switches],
+    ["nodes_completed", a.nodes_completed],
+    ["tokens_used", a.tokens_used],
+    ["tokens_unknown_events", a.tokens_unknown_events],
+  ] as const) {
+    const err = nonNegInt(val, field);
+    if (err) return { ok: false, code: "CORRUPT", reason: err };
+  }
+  if (typeof a.started_at_ms !== "number" || !Number.isFinite(a.started_at_ms) || a.started_at_ms < 0) {
+    return { ok: false, code: "CORRUPT", reason: "invalid_accounting:started_at_ms" };
+  }
+  if (typeof cp.replan_count !== "number" || cp.replan_count < 0) {
+    return { ok: false, code: "CORRUPT", reason: "invalid_replan_count" };
+  }
+
+  const graphNodes = Array.isArray(cp.graph?.nodes) ? cp.graph.nodes : null;
+  if (!graphNodes) {
+    return { ok: false, code: "CORRUPT", reason: "invalid_graph_nodes" };
+  }
+  if (a.nodes_completed > graphNodes.length) {
+    return {
+      ok: false,
+      code: "CORRUPT",
+      reason: `nodes_completed_exceeds_graph:${a.nodes_completed}>${graphNodes.length}`,
+    };
+  }
+
+  const irNodes = cp.current_ir?.spec?.nodes;
+  if (Array.isArray(irNodes) && graphNodes.length > irNodes.length) {
+    return {
+      ok: false,
+      code: "CORRUPT",
+      reason: "graph_nodes_exceed_ir_nodes",
+    };
+  }
+
+  const policy = cp.policy_snapshot;
+  const spec = policy?.spec;
+  if (spec) {
+    const maxReplans =
+      typeof (spec as { max_replans?: number }).max_replans === "number"
+        ? (spec as { max_replans: number }).max_replans
+        : undefined;
+    // ExecutionPolicySpec uses retries.default; some snapshots may carry max_replans in extensions
+    const retryDefault = spec.retries?.default;
+    if (typeof retryDefault === "number" && a.total_retries > retryDefault * Math.max(graphNodes.length, 1) + 100) {
+      // soft upper bound: absurd inflation
+      return { ok: false, code: "CORRUPT", reason: "total_retries_absurd" };
+    }
+    if (typeof maxReplans === "number" && cp.replan_count > maxReplans) {
+      return { ok: false, code: "CORRUPT", reason: "replan_count_exceeds_policy" };
+    }
+    if (typeof maxReplans === "number" && a.replans > maxReplans) {
+      return { ok: false, code: "CORRUPT", reason: "accounting_replans_exceed_policy" };
+    }
+  }
+
+  if (cp.plan_version < 1 || !Number.isInteger(cp.plan_version)) {
+    return { ok: false, code: "CORRUPT", reason: "invalid_plan_version" };
+  }
+  if (cp.ir_id && cp.current_ir?.metadata?.id && cp.ir_id !== cp.current_ir.metadata.id) {
+    return { ok: false, code: "CORRUPT", reason: "ir_id_lineage_mismatch" };
+  }
+  if (cp.policy_id && policy?.metadata?.id && cp.policy_id !== policy.metadata.id) {
+    return { ok: false, code: "CORRUPT", reason: "policy_id_lineage_mismatch" };
+  }
+
+  return { ok: true, checkpoint: cp };
+}
+
 export function validateCheckpoint(raw: unknown): CheckpointValidation {
   if (raw == null || typeof raw !== "object") {
     return { ok: false, code: "CORRUPT", reason: "checkpoint is not an object" };
@@ -239,7 +329,7 @@ export function validateCheckpoint(raw: unknown): CheckpointValidation {
   if (!doc.accounting || typeof doc.accounting !== "object") {
     return { ok: false, code: "PARTIAL", reason: "missing accounting" };
   }
-  return { ok: true, checkpoint: doc as unknown as EngineCheckpoint };
+  return validateCheckpointSemantics(doc as unknown as EngineCheckpoint);
 }
 
 export function loadCheckpointRaw(jobsDir: string, featureId: string): unknown | null {

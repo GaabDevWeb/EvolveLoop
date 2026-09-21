@@ -73,7 +73,10 @@ describe("contracts v2.1 prototype", () => {
       status: "running",
       retry_count: 0,
     };
-    const ev = buildWorkerEvidence(node, "run-4", "backend", 100);
+    const ev = buildWorkerEvidence(node, "run-4", "backend", 100, {
+      checkResults: [{ dod_id: "d1", result: "pass", details: "ok" }],
+      status: "complete",
+    });
     expect(validateEvidenceV21(ev, node.definition_of_done, node, 0.5).valid).toBe(true);
   });
 

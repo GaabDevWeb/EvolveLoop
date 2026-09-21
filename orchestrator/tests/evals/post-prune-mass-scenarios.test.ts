@@ -56,6 +56,8 @@ for (const tier of tiers) {
           docs_approved: tier !== "hotfix",
           evidence_status: ev,
           trivial_non_design: false,
+          runtime_verified: ev === "satisfied" || ev === "exempt",
+          explicit_exempt: ev === "exempt",
         });
         if (tier === "hotfix" && ev !== "failed") {
           // hotfix without phase05 → often not required

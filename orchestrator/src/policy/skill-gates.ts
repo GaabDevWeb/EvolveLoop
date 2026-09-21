@@ -24,13 +24,25 @@ export interface GrillMeGateInput {
   trivial_non_design?: boolean;
   /** Significant scope / architecture change mid-cycle */
   significant_scope_change?: boolean;
-  /** Current evidence status if any */
+  /**
+   * Declared status — NOT authoritative alone.
+   * Runtime must set `runtime_verified=true` after artifact verification.
+   */
   evidence_status?: GateStatus;
+  /** Workspace-relative path to gate.grill-me.json (verified by Runtime) */
+  artifact_path?: string;
+  /**
+   * Set ONLY by Runtime after independent artifact verification.
+   * Caller-forged true without verification must be stripped before evaluate.
+   */
+  runtime_verified?: boolean;
 }
 
 export interface ImageToCodeGateInput {
   image_attachment: boolean;
   evidence_status?: GateStatus;
+  artifact_path?: string;
+  runtime_verified?: boolean;
 }
 
 export interface SkillGateDecision {
@@ -64,10 +76,28 @@ export function evaluateGrillMeRequired(input: GrillMeGateInput): boolean {
 
 /** Fail-closed transition to planner */
 export function evaluateGrillMeTransition(input: GrillMeGateInput): SkillGateDecision {
+  // Forged exempt without runtime verification is not trusted when gate would otherwise apply.
+  if (input.explicit_exempt && !input.runtime_verified) {
+    const otherwiseRequired = evaluateGrillMeRequired({
+      ...input,
+      explicit_exempt: false,
+    });
+    if (otherwiseRequired) {
+      return {
+        gate: "grill-me",
+        required: true,
+        allow_transition: false,
+        status: "blocked",
+        reason: "grill_me_exempt_unverified",
+        fail_closed: true,
+      };
+    }
+  }
+
   const required = evaluateGrillMeRequired(input);
 
   if (!required) {
-    if (input.explicit_exempt) {
+    if (input.explicit_exempt && input.runtime_verified) {
       return {
         gate: "grill-me",
         required: false,
@@ -90,6 +120,16 @@ export function evaluateGrillMeTransition(input: GrillMeGateInput): SkillGateDec
   const st = input.evidence_status ?? "absent";
 
   if (st === "satisfied" || st === "exempt") {
+    if (!input.runtime_verified) {
+      return {
+        gate: "grill-me",
+        required: true,
+        allow_transition: false,
+        status: "blocked",
+        reason: "grill_me_attestation_unverified",
+        fail_closed: true,
+      };
+    }
     return {
       gate: "grill-me",
       required: true,
@@ -130,6 +170,16 @@ export function evaluateImageToCodeGate(input: ImageToCodeGateInput): SkillGateD
 
   const st = input.evidence_status ?? "absent";
   if (st === "satisfied") {
+    if (!input.runtime_verified) {
+      return {
+        gate: "image-to-code",
+        required: true,
+        allow_transition: false,
+        status: "blocked",
+        reason: "image_to_code_attestation_unverified",
+        fail_closed: true,
+      };
+    }
     return {
       gate: "image-to-code",
       required: true,

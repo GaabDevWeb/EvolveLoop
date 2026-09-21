@@ -111,6 +111,7 @@ describe("post-prune hard gates preserved", () => {
       phase05_active: true,
       docs_approved: true,
       evidence_status: "satisfied",
+      runtime_verified: true,
     });
     expect(d.allow_transition).toBe(true);
   });

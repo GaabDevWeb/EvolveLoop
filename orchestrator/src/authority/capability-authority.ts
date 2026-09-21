@@ -3,7 +3,7 @@
  * Distinct from PolicyEngine (retries, gates, provider strategy).
  */
 
-import { resolve } from "node:path";
+import { isAbsolute, resolve } from "node:path";
 
 export type AuthorityDecision = "allow" | "deny" | "confirm";
 
@@ -48,13 +48,20 @@ export interface AuthorityResult {
   };
 }
 
+/**
+ * Returns true when targetPath escapes workspaceRoot.
+ *
+ * Invariant: filesystem path checks require a workspaceRoot.
+ * If targetPath is set and workspaceRoot is missing → treated as escape (fail-closed).
+ */
 export function pathEscapesWorkspace(
   targetPath: string | undefined,
   workspaceRoot: string | undefined,
 ): boolean {
-  if (!targetPath || !workspaceRoot) return false;
+  if (!targetPath) return false;
+  if (!workspaceRoot) return true;
   const root = resolve(workspaceRoot);
-  const resolved = resolve(root, targetPath);
+  const resolved = isAbsolute(targetPath) ? resolve(targetPath) : resolve(root, targetPath);
   return !(resolved === root || resolved.startsWith(root + "/"));
 }
 
@@ -82,6 +89,14 @@ function isReadOnly(req: AuthorityRequest): boolean {
   return fs === "none" || fs === "read";
 }
 
+function requiresWorkspace(req: AuthorityRequest): boolean {
+  // Write/shell always need a concrete workspace boundary.
+  if (isShell(req) || isWrite(req)) return true;
+  // Any explicit target path requires a root to evaluate escape.
+  if (req.targetPath) return true;
+  return false;
+}
+
 export function authorize(request: AuthorityRequest): AuthorityResult {
   const ctx = request.context ?? {};
   const flags = {
@@ -105,6 +120,10 @@ export function authorize(request: AuthorityRequest): AuthorityResult {
       context_flags: flags,
     },
   });
+
+  if (requiresWorkspace(request) && !ctx.workspaceRoot) {
+    return build("deny", "workspace_root_required");
+  }
 
   if (pathEscapesWorkspace(request.targetPath, ctx.workspaceRoot)) {
     return build("deny", "path_escape_denied");

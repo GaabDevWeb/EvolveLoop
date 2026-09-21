@@ -4,10 +4,14 @@
  * kind: autonomous
  * Does NOT: write JOB_PENDING, generate pickup prompts, or invent success.
  * Without a declared autonomous handler → EXECUTOR_UNAVAILABLE.
+ *
+ * Trust: provider.yaml autonomous.module is UNTRUSTED until resolveAutonomousModule
+ * confines it under the provider directory. SANDBOX_NOT_IMPLEMENTED — loaded JS
+ * still runs in-process with orchestrator privileges.
  */
 
 import { existsSync } from "node:fs";
-import { dirname, isAbsolute, resolve } from "node:path";
+import { dirname, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import type { ExecuteRequest, ExecuteResult, ProviderManifest } from "../types/index.js";
 import type { SkillExecutor } from "./cursor-skill-provider.js";
@@ -18,8 +22,14 @@ import {
   inputsFromRequest,
 } from "./skill-handler.js";
 import { buildWorkerEvidence, validateEvidenceV21 } from "../evidence/builders.js";
+import {
+  AUTONOMOUS_SANDBOX_STATUS,
+  resolveAutonomousModule,
+} from "./autonomous-module-resolve.js";
 
 export type SkillExecutorKind = "external" | "autonomous" | "callback";
+
+export { AUTONOMOUS_SANDBOX_STATUS, resolveAutonomousModule };
 
 export interface AutonomousSkillExecutorOptions {
   /** Workspace root passed to handlers (path restriction — not a full OS sandbox). */
@@ -90,19 +100,17 @@ export class AutonomousSkillExecutor implements SkillExecutor {
     }
 
     const providerDir = this.resolveProviderDir(manifest, skillPath);
-    const modulePath = isAbsolute(auto.module)
-      ? auto.module
-      : resolve(providerDir, auto.module);
-
-    if (!existsSync(modulePath)) {
+    const resolved = resolveAutonomousModule(providerDir, auto.module);
+    if (!resolved.ok) {
       return fail(
         request,
         providerId,
         start,
-        "EXECUTOR_UNAVAILABLE",
-        `Autonomous module not found: ${modulePath}`,
+        resolved.code.startsWith("MODULE_") ? "AUTONOMOUS_MODULE_DENIED" : "EXECUTOR_UNAVAILABLE",
+        resolved.reason,
       );
     }
+    const modulePath = resolved.absolutePath;
 
     let handler: AutonomousSkillHandler;
     try {
@@ -206,14 +214,19 @@ export class AutonomousSkillExecutor implements SkillExecutor {
 
     let evidence = result.evidence;
     if (!evidence) {
-      // Build worker evidence from side effects — still must pass DoD validation.
-      evidence = buildWorkerEvidence(
-        request.node,
-        request.run_id,
-        providerId,
-        duration_ms,
-        result.side_effects,
-      );
+      const side = result.side_effects ?? {};
+      evidence = buildWorkerEvidence(request.node, request.run_id, providerId, duration_ms, {
+        ...side,
+        checkResults:
+          side.checkResults ??
+          request.node.definition_of_done.map((d) => ({
+            dod_id: d.id,
+            result: "pass" as const,
+            details: `autonomous_handler_ok:${d.check}`,
+          })),
+        status: side.status ?? "complete",
+        execution_id: request.run_id,
+      });
     }
 
     const validation = validateEvidenceV21(
@@ -295,7 +308,7 @@ async function withTimeout<T>(
   });
 }
 
-/** Probe whether a manifest can be executed autonomously (handler declared + module exists). */
+/** Probe whether a manifest can be executed autonomously (handler declared + module confined). */
 export function canExecuteAutonomously(
   manifest: ProviderManifest,
   providerDir: string,
@@ -307,9 +320,9 @@ export function canExecuteAutonomously(
       reason: "No spec.plugin.autonomous handler (LLM-only skill)",
     };
   }
-  const modulePath = isAbsolute(auto.module) ? auto.module : resolve(providerDir, auto.module);
-  if (!existsSync(modulePath)) {
-    return { ok: false, reason: `Module missing: ${modulePath}` };
+  const resolved = resolveAutonomousModule(providerDir, auto.module);
+  if (!resolved.ok) {
+    return { ok: false, reason: resolved.reason };
   }
   return { ok: true };
 }

@@ -3,11 +3,10 @@
  *
  * Distinguishes:
  * - DETERMINISTIC: CapabilityAuthority, deny-lists, path checks
- * - AGENT-ATTESTED: grill-me / image-to-code evidence status (attestation artifacts)
+ * - AGENT_ATTESTED: grill-me / image-to-code — artifact-verified only
  * - HUMAN: CONFIRMATION_REQUIRED structured pause
  *
- * Skill-gate helpers were eval-only; this module applies them on the hot path
- * when RuntimeGateContext declares requirements.
+ * Caller-declared evidence_status is never authoritative alone.
  */
 
 import type { GraphNode, ProviderEntry } from "../types/index.js";
@@ -24,6 +23,7 @@ import {
   type ImageToCodeGateInput,
   type SkillGateDecision,
 } from "../policy/skill-gates.js";
+import { verifyGateAttestationArtifact } from "./attestation.js";
 import { buildAuthorityEvidence } from "../evidence/builders.js";
 import type { Evidence } from "../types/index.js";
 
@@ -36,19 +36,26 @@ export type PreExecuteDecision =
 export type GateKind = "DETERMINISTIC" | "AGENT_ATTESTED" | "HUMAN_CONFIRMATION";
 
 export interface RuntimeGateContext {
-  /** Grill-me attestation (AGENT_ATTESTED). Absent ⇒ gate not evaluated (n/a). */
+  /** Grill-me attestation input (status forged by caller is ignored until artifact verified). */
   grill_me?: GrillMeGateInput;
   /** Image-to-code attestation. */
   image_to_code?: ImageToCodeGateInput;
   /**
    * Knowledge grounding requirement.
-   * required=true + status absent/failed ⇒ DENY (fail-closed).
+   * Caller-declared `status` is IGNORED — only on-disk artifact verification counts.
    */
   grounding?: {
     required: boolean;
-    status: GateStatus;
-    /** Observed retrieval hit count (optional telemetry). */
+    /**
+     * @deprecated Declarative caller status — never authoritative.
+     * Kept for telemetry/debug; Runtime ignores for ALLOW decisions.
+     */
+    status?: GateStatus;
     hit_count?: number;
+    /** Workspace-relative path to gate.knowledge-grounding.json */
+    artifact_path?: string;
+    project_id?: string;
+    task_id?: string;
   };
   /**
    * Explicit capability deny-list (policy profile / test / risk).
@@ -56,10 +63,16 @@ export interface RuntimeGateContext {
    */
   denied_capabilities?: string[];
   /**
-   * If true and a skill gate input is missing while IR metadata requires it → DENY.
-   * Default false for V1 compatibility (gates only when context supplied).
+   * If true and a skill gate input is missing while IR/node metadata requires it → DENY.
    */
   fail_closed_missing_attestation?: boolean;
+  /** Optional binding for attestation artifact verification */
+  attestation_binding?: {
+    feature_id?: string;
+    project_id?: string;
+  };
+  /** Workspace used to verify attestation artifacts when authority.workspaceRoot absent */
+  attestation_workspace?: string;
 }
 
 export interface PreExecuteInput {
@@ -125,6 +138,74 @@ function targetPathFromNode(node: GraphNode): string | undefined {
   return typeof p === "string" ? p : undefined;
 }
 
+function requireFlags(node: GraphNode): string[] {
+  const meta = node.metadata as Record<string, unknown> | undefined;
+  const constraints = node.constraints as Record<string, unknown> | undefined;
+  const out: string[] = [];
+  for (const src of [meta?.require, constraints?.require]) {
+    if (Array.isArray(src)) {
+      for (const x of src) if (typeof x === "string") out.push(x);
+    }
+  }
+  return out;
+}
+
+function sanitizeGrillMe(
+  caller: GrillMeGateInput,
+  executionId: string,
+  gateContext: RuntimeGateContext | undefined,
+  authority: AuthorityContext,
+): GrillMeGateInput {
+  const workspaceRoot = authority.workspaceRoot ?? gateContext?.attestation_workspace;
+  const verification = verifyGateAttestationArtifact({
+    workspaceRoot,
+    artifactPath: caller.artifact_path,
+    expectedGate: "grill-me",
+    expectedFeatureId: gateContext?.attestation_binding?.feature_id,
+    expectedExecutionId: executionId,
+  });
+
+  return {
+    risk_tier: caller.risk_tier,
+    phase05_active: caller.phase05_active,
+    docs_approved: caller.docs_approved,
+    fully_specified_execution: caller.fully_specified_execution,
+    trivial_non_design: caller.trivial_non_design,
+    significant_scope_change: caller.significant_scope_change,
+    artifact_path: caller.artifact_path,
+    // Ignore caller evidence_status / explicit_exempt — only verified artifact decides.
+    evidence_status: verification.ok ? verification.status : "absent",
+    explicit_exempt: verification.ok && verification.status === "exempt",
+    exempt_reason: verification.ok ? verification.exempt_reason : undefined,
+    runtime_verified: verification.ok,
+  };
+}
+
+function sanitizeImageToCode(
+  caller: ImageToCodeGateInput,
+  executionId: string,
+  gateContext: RuntimeGateContext | undefined,
+  authority: AuthorityContext,
+): ImageToCodeGateInput {
+  if (!caller.image_attachment) {
+    return { image_attachment: false };
+  }
+  const workspaceRoot = authority.workspaceRoot ?? gateContext?.attestation_workspace;
+  const verification = verifyGateAttestationArtifact({
+    workspaceRoot,
+    artifactPath: caller.artifact_path,
+    expectedGate: "image-to-code",
+    expectedFeatureId: gateContext?.attestation_binding?.feature_id,
+    expectedExecutionId: executionId,
+  });
+  return {
+    image_attachment: true,
+    artifact_path: caller.artifact_path,
+    evidence_status: verification.ok ? verification.status : "absent",
+    runtime_verified: verification.ok,
+  };
+}
+
 /**
  * PRE_EXECUTE authorization + required gates.
  * MUST be called before ProviderRuntime.execute on the public engine path.
@@ -147,6 +228,31 @@ export function evaluatePreExecute(input: PreExecuteInput): PreExecuteResult {
       ...(auth?.evidence ?? {}),
     });
 
+  // 0) fail_closed_missing_attestation — wired (was dead)
+  if (gateContext?.fail_closed_missing_attestation) {
+    const req = requireFlags(node);
+    if (req.includes("grill-me") && !gateContext.grill_me) {
+      return {
+        decision: "DENY",
+        gate_id: "grill-me",
+        gate_kind: "AGENT_ATTESTED",
+        reason: "grill_me_attestation_missing",
+        evidence: mkEvidence("deny", "grill_me_attestation_missing"),
+        code: "GATE_DENIED",
+      };
+    }
+    if (req.includes("image-to-code") && !gateContext.image_to_code) {
+      return {
+        decision: "DENY",
+        gate_id: "image-to-code",
+        gate_kind: "AGENT_ATTESTED",
+        reason: "image_to_code_attestation_missing",
+        evidence: mkEvidence("deny", "image_to_code_attestation_missing"),
+        code: "GATE_DENIED",
+      };
+    }
+  }
+
   // 1) Explicit deny-list (DETERMINISTIC)
   const denied = gateContext?.denied_capabilities ?? [];
   if (denied.includes(node.capability)) {
@@ -168,24 +274,35 @@ export function evaluatePreExecute(input: PreExecuteInput): PreExecuteResult {
     };
   }
 
-  // 2) Knowledge grounding (DETERMINISTIC observation of attestation status)
+  // 2) Knowledge grounding — artifact-verified only (caller status ignored)
   if (gateContext?.grounding?.required) {
-    const st = gateContext.grounding.status;
-    if (st !== "satisfied" && st !== "exempt") {
+    const workspaceRoot = input.authority.workspaceRoot ?? gateContext.attestation_workspace;
+    const g = gateContext.grounding;
+    const verification = verifyGateAttestationArtifact({
+      workspaceRoot,
+      artifactPath: g.artifact_path,
+      expectedGate: "knowledge-grounding",
+      expectedFeatureId: gateContext.attestation_binding?.feature_id,
+      expectedExecutionId: execution_id,
+      expectedProjectId: g.project_id ?? gateContext.attestation_binding?.project_id,
+      expectedTaskId: g.task_id ?? node.id,
+    });
+    if (!verification.ok || (verification.status !== "satisfied" && verification.status !== "exempt")) {
       return {
         decision: "DENY",
         gate_id: "knowledge-grounding",
         gate_kind: "DETERMINISTIC",
-        reason: `Grounding required but status=${st}`,
-        evidence: mkEvidence("deny", `grounding_${st}`),
+        reason: `Grounding required but verification failed: ${verification.reason}`,
+        evidence: mkEvidence("deny", `grounding_${verification.reason}`),
         code: "GROUNDING_REQUIRED",
       };
     }
   }
 
-  // 3) AGENT_ATTESTED skill gates (when context provided)
+  // 3) AGENT_ATTESTED skill gates — sanitize caller claims via artifact verification
   if (gateContext?.grill_me) {
-    const d = evaluateGrillMeTransition(gateContext.grill_me);
+    const sanitized = sanitizeGrillMe(gateContext.grill_me, execution_id, gateContext, input.authority);
+    const d = evaluateGrillMeTransition(sanitized);
     skill_gates.push(d);
     if (d.required && !d.allow_transition && d.fail_closed) {
       return {
@@ -201,7 +318,13 @@ export function evaluatePreExecute(input: PreExecuteInput): PreExecuteResult {
   }
 
   if (gateContext?.image_to_code) {
-    const d = evaluateImageToCodeGate(gateContext.image_to_code);
+    const sanitized = sanitizeImageToCode(
+      gateContext.image_to_code,
+      execution_id,
+      gateContext,
+      input.authority,
+    );
+    const d = evaluateImageToCodeGate(sanitized);
     skill_gates.push(d);
     if (d.required && !d.allow_transition && d.fail_closed) {
       return {
@@ -217,7 +340,6 @@ export function evaluatePreExecute(input: PreExecuteInput): PreExecuteResult {
   }
 
   // 4) CapabilityAuthority (DETERMINISTIC / HUMAN confirm)
-  // Confirmation is bound to plan_hash when present — replan invalidates unless re-bound.
   const confirmed = (() => {
     if (!input.authority.confirmed) return false;
     if (!input.plan_hash) return true;

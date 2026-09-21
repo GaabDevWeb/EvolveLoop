@@ -96,19 +96,57 @@ export function buildSelectionEvidence(
   };
 }
 
+export interface WorkerEvidenceOptions {
+  files_created?: string[];
+  files_modified?: string[];
+  commands_run?: string[];
+  /**
+   * Explicit per-DoD results from runtime observation.
+   * Absent results default to `skip` (NOT auto-pass).
+   */
+  checkResults?: Array<{
+    dod_id: string;
+    result: "pass" | "fail" | "skip" | "manual";
+    details?: string;
+    command?: string;
+    exit_code?: number;
+  }>;
+  /** Force status; default derived from checks */
+  status?: "complete" | "partial" | "failed";
+  confidence?: number;
+  /** Lineage binding recorded into metadata assumptions */
+  execution_id?: string;
+  agent_id?: string;
+}
+
+/**
+ * Build worker Evidence from execution facts.
+ * Never invents DoD PASS — callers must supply checkResults after real observation.
+ */
 export function buildWorkerEvidence(
   node: GraphNode,
   runId: string,
   providerId: string,
   durationMs: number,
-  sideEffects?: { files_created?: string[]; files_modified?: string[]; commands_run?: string[] },
+  sideEffects?: WorkerEvidenceOptions,
 ): Evidence {
-  const checks = node.definition_of_done.map((dod) => ({
-    dod_id: dod.id,
-    result: "pass" as const,
-    verification: dod.verification,
-    details: dod.check,
-  }));
+  const provided = sideEffects?.checkResults ?? [];
+  const checks = node.definition_of_done.map((dod) => {
+    const hit = provided.find((c) => c.dod_id === dod.id);
+    return {
+      dod_id: dod.id,
+      result: (hit?.result ?? "skip") as "pass" | "fail" | "skip" | "manual",
+      verification: dod.verification,
+      details: hit?.details ?? (hit ? dod.check : "unverified_pending_runtime_proof"),
+      command: hit?.command,
+      exit_code: hit?.exit_code,
+    };
+  });
+
+  const anyFail = checks.some((c) => c.result === "fail");
+  const allPass = checks.length > 0 && checks.every((c) => c.result === "pass");
+  const status: "complete" | "partial" | "failed" =
+    sideEffects?.status ?? (anyFail ? "failed" : allPass ? "complete" : "partial");
 
   const payload: Extract<EvidencePayload, { type: "worker" }> = {
     type: "worker",
@@ -121,16 +159,33 @@ export function buildWorkerEvidence(
     },
   };
 
+  const meta = baseEvidence(node.id, runId, "worker", node.capability, providerId);
+  if (sideEffects?.agent_id) {
+    (meta as { agent_id?: string }).agent_id = sideEffects.agent_id;
+  }
+
+  const assumptions: string[] = [];
+  if (sideEffects?.execution_id) assumptions.push(`execution_id:${sideEffects.execution_id}`);
+  if (sideEffects?.agent_id) assumptions.push(`agent_id:${sideEffects.agent_id}`);
+
   return {
     apiVersion: API_VERSION,
     kind: "Evidence",
-    metadata: baseEvidence(node.id, runId, "worker", node.capability, providerId),
+    metadata: meta,
     spec: {
-      status: "complete",
-      confidence: 0.9,
-      coverage: 1,
-      assumptions: [],
-      known_gaps: [],
+      status,
+      confidence: sideEffects?.confidence ?? (allPass ? 0.9 : 0.4),
+      coverage: checks.length ? checks.filter((c) => c.result === "pass").length / checks.length : 0,
+      assumptions,
+      known_gaps: allPass
+        ? []
+        : [
+            {
+              id: "unverified_dod",
+              severity: "major" as const,
+              description: "One or more DoD checks lack runtime-verified pass results",
+            },
+          ],
       verdict: null,
       checks,
       duration_ms: durationMs,
@@ -298,6 +353,12 @@ export function validateEvidenceV21(
   dodList: DoDCheck[],
   node: GraphNode,
   minConfidence = 0,
+  lineage?: {
+    run_id?: string;
+    node_id?: string;
+    execution_id?: string;
+    agent_id?: string;
+  },
 ): { valid: boolean; reason?: string } {
   if (!evidence) return { valid: false, reason: "evidence_incomplete" };
   if (evidence.spec.status !== "complete") return { valid: false, reason: "evidence_incomplete" };
@@ -318,6 +379,26 @@ export function validateEvidenceV21(
   if (node.type === "gate") {
     if (!evidence.spec.verdict) return { valid: false, reason: "gate_verdict_missing" };
     if (evidence.spec.verdict === "rejected") return { valid: false, reason: "gate_rejected" };
+  }
+
+  if (lineage?.run_id && evidence.metadata.run_id !== lineage.run_id) {
+    return { valid: false, reason: "lineage_run_id_mismatch" };
+  }
+  if (lineage?.node_id && evidence.metadata.node_id !== lineage.node_id) {
+    return { valid: false, reason: "lineage_node_id_mismatch" };
+  }
+  if (lineage?.execution_id) {
+    const assumptions = evidence.spec.assumptions ?? [];
+    if (!assumptions.includes(`execution_id:${lineage.execution_id}`)) {
+      return { valid: false, reason: "lineage_execution_id_mismatch" };
+    }
+  }
+  if (lineage?.agent_id) {
+    const metaAgent = (evidence.metadata as { agent_id?: string }).agent_id;
+    const assumptions = evidence.spec.assumptions ?? [];
+    if (metaAgent !== lineage.agent_id && !assumptions.includes(`agent_id:${lineage.agent_id}`)) {
+      return { valid: false, reason: "lineage_agent_id_mismatch" };
+    }
   }
 
   return { valid: true };

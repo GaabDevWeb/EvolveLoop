@@ -124,12 +124,71 @@ describe("evaluatePreExecute (unit)", () => {
     const r = evaluatePreExecute({
       node,
       provider: { id: "p", priority: 1, cost: "low", quality_score: 1, availability: "active", version: "1" },
-      authority: {},
+      authority: { workspaceRoot: "/tmp/ws" },
       run_id: "r1",
       execution_id: "e1",
       policy_id: "p1",
     });
     expect(r.decision).toBe("CONFIRMATION_REQUIRED");
+  });
+
+  it("denies write when workspaceRoot missing", () => {
+    const ir = makeIR("filesystem.write");
+    const node = { ...ir.spec.nodes[0]!, status: "pending" as const, retry_count: 0 };
+    const r = evaluatePreExecute({
+      node,
+      provider: { id: "p", priority: 1, cost: "low", quality_score: 1, availability: "active", version: "1" },
+      authority: { allowWrite: true },
+      run_id: "r1",
+      execution_id: "e1",
+      policy_id: "p1",
+    });
+    expect(r.decision).toBe("DENY");
+    expect(r.reason).toMatch(/workspace_root_required/);
+  });
+
+  it("forged grill-me satisfied without artifact → DENY", () => {
+    const ir = makeIR();
+    const node = { ...ir.spec.nodes[0]!, status: "pending" as const, retry_count: 0 };
+    const r = evaluatePreExecute({
+      node,
+      provider: { id: "p", priority: 1, cost: "low", quality_score: 1, availability: "active", version: "1" },
+      authority: { allowWrite: true, workspaceRoot: "/tmp/ws" },
+      gateContext: {
+        grill_me: {
+          risk_tier: "sensitive",
+          phase05_active: true,
+          docs_approved: true,
+          evidence_status: "satisfied",
+        },
+      },
+      run_id: "r1",
+      execution_id: "e1",
+      policy_id: "p1",
+    });
+    expect(r.decision).toBe("DENY");
+    expect(r.gate_id).toBe("grill-me");
+  });
+
+  it("fail_closed_missing_attestation denies missing grill-me when required in metadata", () => {
+    const ir = makeIR("demo.work", { metadata: { require: ["grill-me"] } });
+    const node = {
+      ...ir.spec.nodes[0]!,
+      status: "pending" as const,
+      retry_count: 0,
+      metadata: { require: ["grill-me"] },
+    };
+    const r = evaluatePreExecute({
+      node,
+      provider: { id: "p", priority: 1, cost: "low", quality_score: 1, availability: "active", version: "1" },
+      authority: { allowWrite: true },
+      gateContext: { fail_closed_missing_attestation: true },
+      run_id: "r1",
+      execution_id: "e1",
+      policy_id: "p1",
+    });
+    expect(r.decision).toBe("DENY");
+    expect(r.reason).toBe("grill_me_attestation_missing");
   });
 
   it("denies path escape outside workspace", () => {
@@ -201,7 +260,7 @@ describe("A03 engine enforcement", () => {
     const engine = new ExecutionEngine({
       registry,
       providers: router,
-      authorityContext: {}, // no allowWrite, no confirmed
+      authorityContext: { workspaceRoot: "/tmp/ws" }, // no allowWrite, no confirmed
     });
     const result = await engine.run({ ir: makeIR("filesystem.write") });
     expect(mock.getExecuteCount()).toBe(0);
@@ -477,7 +536,7 @@ describe("A04 × A03 combination", () => {
     const allowed = evaluatePreExecute({
       node,
       provider,
-      authority: { confirmed: true },
+      authority: { confirmed: true, workspaceRoot: "/tmp/ws" },
       plan_hash: "plan-v1",
       confirmed_for_plan_hash: "plan-v1",
       run_id: "r1",
@@ -489,7 +548,7 @@ describe("A04 × A03 combination", () => {
     const afterReplan = evaluatePreExecute({
       node,
       provider,
-      authority: { confirmed: true }, // flag still set
+      authority: { confirmed: true, workspaceRoot: "/tmp/ws" }, // flag still set
       plan_hash: "plan-v2",
       confirmed_for_plan_hash: undefined, // invalidated
       run_id: "r2",

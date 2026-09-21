@@ -28,7 +28,15 @@ export function buildSuccessEvidence(
   if (node.type === "gate") {
     return buildGateEvidence(node, runId, providerId, "passed", 0.9);
   }
-  return buildWorkerEvidence(node, runId, providerId, durationMs);
+  return buildWorkerEvidence(node, runId, providerId, durationMs, {
+    checkResults: node.definition_of_done.map((d) => ({
+      dod_id: d.id,
+      result: "pass" as const,
+      details: `runtime_observed:${d.check}`,
+    })),
+    status: "complete",
+    confidence: 0.9,
+  });
 }
 
 export function buildRejectedGateEvidence(

@@ -290,6 +290,12 @@ describe("A02 e2e — Intent → autonomous cursor-skill → evidence", () => {
     const engine = new ExecutionEngine({
       registry: boot.registry,
       providers: boot.router,
+      authorityContext: {
+        workspaceRoot: ws,
+        allowWrite: true,
+        allowShell: false,
+        allowNetwork: false,
+      },
     });
 
     const result = await engine.run({
