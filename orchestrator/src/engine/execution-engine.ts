@@ -95,6 +95,7 @@ export class ExecutionEngine {
 
   private orchestratorDecision: OrchestratorDecision | null = null;
   private blockedReason: string | null = null;
+  private reconciliationRequired = false;
   private replanIr: CapabilityIR | null = null;
   private runState: FeatureRunState = "created";
   private paused = false;
@@ -171,12 +172,28 @@ export class ExecutionEngine {
       featureId,
     );
     this.activeScheduler = scheduler;
+    this.reconciliationRequired = false;
 
     let graph: GraphStore;
     if (input.resume && this.jobsDir) {
-      const checkpoint = loadCheckpoint(this.jobsDir, featureId);
+      const checkpoint = loadCheckpoint(this.jobsDir, featureId, {
+        ir_id: input.ir.metadata.id,
+        policy_id: policy.metadata.id,
+      });
       if (checkpoint) {
         graph = GraphStore.fromSnapshot(checkpoint.graph);
+        for (const node of graph.getAllNodes()) {
+          const interrupted = node.metadata?.reconciliation === "interrupted_running";
+          if (node.status !== "running" && !interrupted) continue;
+          if (node.status === "running") {
+            graph.setNodeStatus(node.id, "blocked");
+            const current = graph.getNode(node.id);
+            if (current) {
+              current.metadata = { ...(current.metadata ?? {}), reconciliation: "interrupted_running" };
+            }
+          }
+          this.reconciliationRequired = true;
+        }
         this.blockedReason = null;
       } else {
         graph = new GraphStore(input.ir);
@@ -228,7 +245,11 @@ export class ExecutionEngine {
       }
 
       if (this.orchestratorDecision === "corrigir") {
-        const failed = graph.getAllNodes().find((n) => n.status === "failed" || n.status === "blocked");
+        const failed = graph.getAllNodes().find(
+          (n) =>
+            (n.status === "failed" || n.status === "blocked") &&
+            n.metadata?.reconciliation !== "interrupted_running",
+        );
         if (failed) {
           graph.setNodeStatus(failed.id, "pending");
           scheduler.invalidateDownstream(graph, failed.id);
@@ -274,6 +295,10 @@ export class ExecutionEngine {
         }
 
         const hasWaiting = graph.getAllNodes().some((n) => n.status === "waiting");
+        if (this.reconciliationRequired && !hasWaiting) {
+          this.blockedReason = "reconciliation_required";
+          break;
+        }
         if (hasWaiting && this.jobsDir) {
           if (waitForJobsMs > 0 && Date.now() - waitStartedAt < waitForJobsMs) {
             await new Promise((r) => setTimeout(r, this.jobPollIntervalMs));

@@ -193,4 +193,4 @@ export * from "./capabilities/results.js";
 export { JobStore, type SkillJob, type SkillJobResult } from "./jobs/job-store.js";
 export { invokePickup, buildPickupPrompt, type PickupPlan } from "./jobs/job-pickup.js";
 export { jobResultToExecuteResult, loadEvidenceFile } from "./jobs/job-resume.js";
-export { saveCheckpoint, loadCheckpoint, clearCheckpoint, type EngineCheckpoint } from "./jobs/checkpoint.js";
+export { saveCheckpoint, loadCheckpoint, clearCheckpoint, CheckpointError, type EngineCheckpoint } from "./jobs/checkpoint.js";

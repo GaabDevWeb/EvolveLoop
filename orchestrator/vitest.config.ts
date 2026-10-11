@@ -5,5 +5,6 @@ export default defineConfig({
     include: ["tests/**/*.test.ts"],
     globals: false,
     testTimeout: 30000,
+    setupFiles: ["tests/setup-checkpoint-key.ts"],
   },
 });
