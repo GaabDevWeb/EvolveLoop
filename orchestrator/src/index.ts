@@ -133,7 +133,7 @@ export {
   type SkillTelemetryRecord,
   type SkillTelemetryEventType,
   type SkillUsageAggregate,
-  type ObservationWindow,
+  type ObservationWindow as SkillTelemetryObservationWindow,
 } from "./telemetry/skill-telemetry.js";
 export {
   evaluateGrillMeRequired,

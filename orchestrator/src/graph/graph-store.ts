@@ -24,8 +24,12 @@ export class GraphStore {
   }
 
   static fromSnapshot(snapshot: GraphSnapshot): GraphStore {
-    const store = Object.create(GraphStore.prototype) as GraphStore;
-    store.featureId = snapshot.feature_id;
+    const store = new GraphStore({
+      apiVersion: "capability-orchestrator.io/v2",
+      kind: "CapabilityGraph",
+      metadata: { id: snapshot.feature_id, ir_version: "snapshot" },
+      spec: { nodes: [] },
+    });
     store.nodes = new Map(snapshot.nodes.map((n) => [n.id, structuredClone(n)]));
     return store;
   }

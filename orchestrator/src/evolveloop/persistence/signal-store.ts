@@ -23,7 +23,7 @@ export class PersistentSignalStore {
 
   private fingerprints = new Set<string>();
 
-  constructor(private readonly evolutionDir: string) {
+  constructor(evolutionDir: string) {
     mkdirSync(evolutionDir, { recursive: true });
     this.signalsPath = join(evolutionDir, "signals.jsonl");
     this.needsPath = join(evolutionDir, "needs.json");

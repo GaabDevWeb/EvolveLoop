@@ -106,23 +106,6 @@ export class SmartMockExecutor implements ProviderRuntime {
           ? buildGateEvidence(request.node, request.run_id, this.id, "passed", 0.95)
           : buildWorkerEvidence(request.node, request.run_id, this.id, durationMs);
 
-      const execEvidence = buildExecutionEvidence(
-        request.node_id,
-        request.run_id,
-        this.id,
-        request.capability,
-        {
-          type: "execution",
-          executor_id: this.id,
-          executor_type: "mock",
-          duration_ms: durationMs,
-          retry_count: 0,
-          timeout_hit: false,
-          cancelled: false,
-          logs: [],
-        },
-      );
-
       return {
         run_id: request.run_id,
         success: true,

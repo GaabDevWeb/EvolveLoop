@@ -1,6 +1,5 @@
 import type {
   CapabilityRegistry,
-  Evidence,
   ExecuteResult,
   ProviderEntry,
   ProviderStrategy,

@@ -39,7 +39,7 @@ export class PatternAggregator {
     }
   }
 
-  ingest(events: EventEnvelope[]): void {
+  ingest(events: readonly EventEnvelope[]): void {
     for (const e of events) this.record(e);
   }
 

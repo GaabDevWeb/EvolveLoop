@@ -44,7 +44,7 @@ export class EvolutionCandidateGenerator {
           "NO_CHANGE",
           "none",
           "Insufficient evidence — do not evolve",
-          ["insufficient_evidence"],
+          [],
         ),
       ];
     }

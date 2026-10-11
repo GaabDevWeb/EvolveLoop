@@ -36,7 +36,7 @@ export class ObservationWindowManager {
   private windows: ObservationWindow[] = [];
 
   constructor(
-    private readonly evolutionDir: string,
+    evolutionDir: string,
     private readonly defaults: {
       minimum_samples?: number;
       max_duration_ms?: number;

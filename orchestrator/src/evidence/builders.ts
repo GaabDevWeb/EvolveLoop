@@ -45,7 +45,7 @@ export function buildPlanningEvidence(
       assumptions,
       known_gaps: payload.unresolved_dependencies.map((d) => ({
         id: `dep-${d}`,
-        severity: "info" as const,
+        severity: "minor",
         description: `Unresolved dependency: ${d}`,
       })),
       checks: [],

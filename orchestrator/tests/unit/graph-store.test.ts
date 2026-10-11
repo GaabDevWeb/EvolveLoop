@@ -26,6 +26,17 @@ describe("GraphStore", () => {
     expect(graph.getNode("b")!.status).toBe("pending");
   });
 
+  it("restores snapshot status without resetting nodes to pending", () => {
+    const graph = new GraphStore(buildMinimalIR());
+    graph.setNodeStatus("a", "satisfied");
+    graph.incrementRetry("b");
+    const restored = GraphStore.fromSnapshot(graph.snapshot());
+    expect(restored.featureId).toBe(graph.featureId);
+    expect(restored.getNode("a")?.status).toBe("satisfied");
+    expect(restored.getNode("b")?.status).toBe("pending");
+    expect(restored.getNode("b")?.retry_count).toBe(1);
+  });
+
   it("isFinished when all satisfied or skipped", () => {
     const graph = new GraphStore(buildMinimalIR());
     expect(graph.isFinished()).toBe(false);

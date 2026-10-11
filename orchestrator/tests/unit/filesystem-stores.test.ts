@@ -5,6 +5,7 @@ import { tmpdir } from "node:os";
 import { parse as parseYaml } from "yaml";
 import { FilesystemKnowledgeStore } from "../../src/knowledge/filesystem-knowledge-store.js";
 import { FilesystemMemoryStore } from "../../src/memory/filesystem-memory-store.js";
+import { PathEscapeError } from "../../src/providers/deterministic/paths.js";
 
 describe("FilesystemKnowledgeStore", () => {
   it("persists proposed entries to disk", () => {
@@ -51,5 +52,14 @@ describe("FilesystemMemoryStore", () => {
 
     const reloaded = new FilesystemMemoryStore(dir);
     expect(reloaded.getPreferences("2026-login")).toHaveLength(1);
+  });
+
+  it("rejects a feature id that would escape the memory root", () => {
+    const dir = mkdtempSync(join(tmpdir(), "orch-mem-"));
+    const mem = new FilesystemMemoryStore(dir);
+    expect(() =>
+      mem.initFeature("../outside", { ir_id: "outside", policy: "rapid-prototype" }),
+    ).toThrow(PathEscapeError);
+    expect(existsSync(join(dir, "..", "outside", "context.yaml"))).toBe(false);
   });
 });
