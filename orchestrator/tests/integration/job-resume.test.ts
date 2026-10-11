@@ -10,9 +10,36 @@ import {
   JobFileExecutor,
 } from "../../src/index.js";
 import { JobStore } from "../../src/jobs/job-store.js";
-import { buildSuccessEvidence } from "../../src/evidence/validator.js";
-import type { CapabilityIR, GraphNode } from "../../src/types/index.js";
+import type { CapabilityIR, Evidence, GraphNode } from "../../src/types/index.js";
 import { loadCheckpoint } from "../../src/jobs/checkpoint.js";
+
+function observedEvidence(node: GraphNode, runId: string, providerId: string): Evidence {
+  return {
+    apiVersion: "capability-orchestrator.io/v2",
+    kind: "Evidence",
+    metadata: {
+      node_id: node.id,
+      run_id: runId,
+      emitter: "gate",
+      provider_id: providerId,
+      capability: node.capability,
+      submitted_at: new Date().toISOString(),
+    },
+    spec: {
+      status: "complete",
+      confidence: 1,
+      coverage: 1,
+      assumptions: [],
+      checks: node.definition_of_done.map((dod) => ({
+        dod_id: dod.id,
+        result: "pass" as const,
+        verification: dod.verification,
+        details: "observed",
+      })),
+      verdict: "passed",
+    },
+  };
+}
 
 const testingIR: CapabilityIR = {
   apiVersion: "capability-orchestrator.io/v2",
@@ -94,7 +121,7 @@ describe("Job pickup resume", () => {
       status: "running",
       retry_count: 0,
     };
-    const evidence = buildSuccessEvidence(node, runId, "testing", 10);
+    const evidence = observedEvidence(node, runId, "testing");
     const evidencePath = join(base, "evidence.json");
     writeFileSync(evidencePath, JSON.stringify(evidence));
 
@@ -158,7 +185,7 @@ describe("Job pickup resume", () => {
     const job = store.listPending()[0];
     const node: GraphNode = { ...testingIR.spec.nodes[0], status: "running", retry_count: 0 };
     const evidencePath = join(base, "evidence.json");
-    writeFileSync(evidencePath, JSON.stringify(buildSuccessEvidence(node, job.run_id, "testing", 5)));
+    writeFileSync(evidencePath, JSON.stringify(observedEvidence(node, job.run_id, "testing")));
     store.completeJob(job.run_id, { success: true, evidence_path: evidencePath });
 
     const engine2 = new ExecutionEngine(engineOpts);

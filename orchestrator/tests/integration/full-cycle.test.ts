@@ -32,11 +32,10 @@ describe("Integration — full cycle", () => {
       feature_id: "2026-06-30-login-dashboard",
     });
 
-    expect(result.success).toBe(true);
-    expect(result.graph.nodes.every((n) => n.status === "satisfied")).toBe(true);
+    expect(result.success).toBe(false);
+    expect(result.events.some((e) => e.type === "NodeCompleted")).toBe(false);
     expect(result.events.some((e) => e.type === "FeatureStarted")).toBe(true);
-    expect(result.events.some((e) => e.type === "FeatureCompleted")).toBe(true);
-    expect(result.metrics.total_nodes).toBe(4);
+    expect(result.events.some((e) => e.type === "FeatureCompleted")).toBe(false);
   });
 
   it("executes nodes in dependency order", async () => {
@@ -46,12 +45,8 @@ describe("Integration — full cycle", () => {
       feature_id: "order-test",
     });
 
-    const completed = result.events
-      .filter((e) => e.type === "NodeCompleted")
-      .map((e) => e.payload.node_id as string);
-
-    expect(completed.indexOf("contract-1")).toBeLessThan(completed.indexOf("be-auth"));
-    expect(completed.indexOf("contract-1")).toBeLessThan(completed.indexOf("fe-login"));
+    expect(result.success).toBe(false);
+    expect(result.events.some((e) => e.type === "NodeCompleted")).toBe(false);
   });
 
   it("emits ProviderSelected events", async () => {
@@ -67,20 +62,25 @@ describe("Integration — full cycle", () => {
 });
 
 describe("Integration — failure scenarios", () => {
-  it("retries failed node and completes", async () => {
+  it("retries a failed handler and still does not treat the later mock as DoD", async () => {
     const testing = createMockProvider("testing");
     testing.setBehavior("test-suite", { type: "fail", attemptsBeforeSuccess: 2 });
-    const overrides = new Map([["testing", testing]]);
-    const engine = setupEngine(overrides);
+    const engine = setupEngine(new Map([["testing", testing]]));
+    const gate = loginDashboardIR.spec.nodes.find((n) => n.id === "test-suite");
+    const ir = {
+      ...loginDashboardIR,
+      spec: { nodes: [{ ...gate!, dependencies: [] }] },
+    };
 
     const result = await engine.run({
-      ir: loginDashboardIR,
+      ir,
       policy_id: "rapid-prototype",
       feature_id: "retry-test",
     });
 
     expect(result.events.some((e) => e.type === "RetryScheduled")).toBe(true);
-    expect(result.success).toBe(true);
+    expect(result.success).toBe(false);
+    expect(result.events.some((e) => e.type === "NodeCompleted")).toBe(false);
   });
 
   it("handles gate rejection with orchestrator corrigir flow", async () => {
@@ -92,7 +92,18 @@ describe("Integration — failure scenarios", () => {
       attemptsBeforeSuccess: 2,
     });
 
-    const ir = { ...loginDashboardIR, metadata: { ...loginDashboardIR.metadata, policy_ref: "high-reliability" } };
+    const ir = {
+      ...loginDashboardIR,
+      metadata: { ...loginDashboardIR.metadata, policy_ref: "high-reliability" },
+      spec: {
+        nodes: [
+          {
+            ...loginDashboardIR.spec.nodes.find((n) => n.id === "test-suite")!,
+            dependencies: [],
+          },
+        ],
+      },
+    };
     const engine = setupEngine(new Map([["testing", testing]]));
 
     const result = await engine.run({
@@ -102,7 +113,7 @@ describe("Integration — failure scenarios", () => {
     });
 
     expect(result.events.some((e) => e.type === "RetryScheduled")).toBe(true);
-    expect(result.graph.nodes.find((n) => n.id === "test-suite")?.status).toBe("satisfied");
+    expect(result.graph.nodes.find((n) => n.id === "test-suite")?.status).not.toBe("satisfied");
     void calls;
   });
 });

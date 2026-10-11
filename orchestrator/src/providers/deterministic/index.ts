@@ -10,8 +10,10 @@ import type {
   ProviderRuntime,
 } from "../../types/index.js";
 import { buildAuthorityEvidence, buildWorkerEvidence } from "../../evidence/builders.js";
+import { evidenceFromShellResult } from "../../plugins/cursor-skill-provider.js";
 import {
   authorize,
+  effectiveAuthority,
   type AuthorityContext,
 } from "../../authority/capability-authority.js";
 import { PathEscapeError } from "./paths.js";
@@ -175,8 +177,7 @@ export class DeterministicProvider implements ProviderRuntime {
     }
 
     const authCtx: AuthorityContext = {
-      ...this.authorityContext,
-      ...request.authority_context,
+      ...effectiveAuthority(this.authorityContext, request.authority_context),
       workspaceRoot: this.workspaceRoot,
     };
     const inputs = requestInputs(request);
@@ -209,6 +210,13 @@ export class DeterministicProvider implements ProviderRuntime {
         workspaceRoot: this.workspaceRoot,
         authority: authCtx,
       });
+      if (request.capability === "shell.execute") {
+        const interpreted = evidenceFromShellResult(request, this.id, result);
+        if (interpreted.evidence) {
+          (interpreted.evidence.spec as { normalized?: unknown }).normalized = result;
+        }
+        return interpreted;
+      }
       const duration = Date.now() - start;
       const evidence = buildWorkerEvidence(request.node, request.run_id, this.id, duration, {
         commands_run:

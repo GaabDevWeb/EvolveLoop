@@ -99,7 +99,7 @@ describe("DeterministicProvider", () => {
     const p = createDeterministicProvider("filesystem", tmp);
     const res = await p.execute(makeRequest("filesystem.write", { path: "x.txt", content: "x" }));
     expect(res.success).toBe(false);
-    expect(res.error?.code).toBe("CONFIRMATION_REQUIRED");
+    expect(res.error?.code).toBe("AUTHORITY_DENIED");
   });
 
   it("filesystem.write works with allowWrite", async () => {
@@ -142,8 +142,15 @@ describe("DeterministicProvider", () => {
     ).toBe(true);
   });
 
-  it("system.inspect returns metrics", async () => {
+  it("system.inspect is denied without an explicit host grant", async () => {
     const p = createDeterministicProvider("system", tmp);
+    const res = await p.execute(makeRequest("system.inspect"));
+    expect(res.success).toBe(false);
+    expect(res.error?.code).toBe("AUTHORITY_DENIED");
+  });
+
+  it("system.inspect returns metrics when host inspect is granted", async () => {
+    const p = createDeterministicProvider("system", tmp, { allowHostInspect: true });
     const res = await p.execute(makeRequest("system.inspect"));
     expect(res.success).toBe(true);
     expect(resultOf(res)).toBeTruthy();
@@ -164,7 +171,7 @@ describe("DeterministicProvider", () => {
     process.env.WIKI_ROOT = missing;
     process.env.RAG_REPO_ROOT = missing;
     try {
-      const p = createDeterministicProvider("knowledge", tmp);
+      const p = createDeterministicProvider("knowledge", tmp, { allowHostInspect: true });
       const res = await p.execute(makeRequest("knowledge.search", { query: "anything" }));
       expect(res.success).toBe(true);
       const data = resultOf(res) as {

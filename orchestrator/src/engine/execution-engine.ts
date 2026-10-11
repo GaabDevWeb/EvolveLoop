@@ -20,6 +20,7 @@ import { Orchestrator } from "../orchestrator/orchestrator.js";
 import { Scheduler } from "../scheduler/scheduler.js";
 import { ProviderRouter } from "../providers/mock-provider.js";
 import { validateEvidence } from "../evidence/validator.js";
+import { SIMULATED_EXECUTION_MARK } from "../evidence/builders.js";
 import type { ContractRegistry } from "../contracts/contract-registry.js";
 import { loadContractsFromDir } from "../contracts/contract-registry.js";
 import { PluginLoader } from "../plugins/plugin-loader.js";
@@ -66,6 +67,11 @@ export interface ExecutionEngineOptions {
    * cadence → automatic scoped analyze (non-blocking).
    */
   evolveCoordinator?: LiveAnalysisCoordinator;
+  /**
+   * Harness-only. Accepts evidence marked SIMULATED_EXECUTION.
+   * RunInput and agent requests cannot set this.
+   */
+  acceptSimulatedEvidence?: boolean;
 }
 
 export class ExecutionEngine {
@@ -85,6 +91,7 @@ export class ExecutionEngine {
   private evolveLoop?: LongitudinalEvolveLoop;
   private evolveScope?: AnalysisScope;
   private evolveCoordinator?: LiveAnalysisCoordinator;
+  private acceptSimulatedEvidence: boolean;
 
   private orchestratorDecision: OrchestratorDecision | null = null;
   private blockedReason: string | null = null;
@@ -112,6 +119,7 @@ export class ExecutionEngine {
     this.evolveLoop = options.evolveLoop;
     this.evolveScope = options.evolveScope;
     this.evolveCoordinator = options.evolveCoordinator;
+    this.acceptSimulatedEvidence = options.acceptSimulatedEvidence === true;
     this.registry = new RegistryClient(options.registry, this.contracts);
   }
 
@@ -566,6 +574,10 @@ export class ExecutionEngine {
       node.definition_of_done,
       node,
       minConfidence,
+      {
+        allowSimulated: this.acceptSimulatedEvidence,
+        lineage: { run_id: run.run_id, node_id: node.id },
+      },
     );
 
     if (run.evidence) this.allEvidence.push(run.evidence);
@@ -607,12 +619,14 @@ export class ExecutionEngine {
     graph.setNodeEvidence(nodeId, run.evidence);
     this.registry.recordSuccess(run.provider_id, run);
 
+    const simulated = run.evidence?.spec.assumptions?.includes(SIMULATED_EXECUTION_MARK) === true;
     eventBus.emit("NodeCompleted", featureId, "scheduler", {
       run_id: run.run_id,
       node_id: nodeId,
       provider_id: run.provider_id,
       capability: node.capability,
       duration_ms: run.duration_ms,
+      verification: simulated ? "simulated" : "observed",
     }, run.run_id);
 
     if (node.type === "gate") {

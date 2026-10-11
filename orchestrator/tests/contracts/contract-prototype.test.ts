@@ -74,7 +74,8 @@ describe("contracts v2.1 prototype", () => {
       retry_count: 0,
     };
     const ev = buildWorkerEvidence(node, "run-4", "backend", 100);
-    expect(validateEvidenceV21(ev, node.definition_of_done, node, 0.5).valid).toBe(true);
+    expect(ev.spec.checks[0]?.result).toBe("skip");
+    expect(validateEvidenceV21(ev, node.definition_of_done, node, 0.5).valid).toBe(false);
   });
 
   it("smart mock executor supports cancel", async () => {

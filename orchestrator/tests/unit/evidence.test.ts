@@ -13,9 +13,10 @@ describe("Evidence validator", () => {
     retry_count: 0,
   };
 
-  it("validates complete worker evidence", () => {
+  it("does not accept handler success as complete worker evidence", () => {
     const evidence = buildSuccessEvidence(workerNode, "run-1", "backend", 100);
-    expect(validateEvidence(evidence, workerNode.definition_of_done, workerNode).valid).toBe(true);
+    expect(evidence.spec.checks.every((c) => c.result !== "pass")).toBe(true);
+    expect(validateEvidence(evidence, workerNode.definition_of_done, workerNode).valid).toBe(false);
   });
 
   it("rejects missing evidence", () => {

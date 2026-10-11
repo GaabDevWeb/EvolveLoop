@@ -34,13 +34,14 @@ describe("Integration — persistence", () => {
       feature_id: "2026-06-30-login-dashboard",
     });
 
-    expect(result.success).toBe(true);
+    expect(result.success).toBe(false);
 
     const eventsPath = join(paths.eventsDir, "2026-06-30-login-dashboard.jsonl");
     expect(existsSync(eventsPath)).toBe(true);
     const lines = readFileSync(eventsPath, "utf-8").trim().split("\n");
-    expect(lines.length).toBeGreaterThan(5);
-    expect(lines.some((l) => JSON.parse(l).type === "FeatureCompleted")).toBe(true);
+    expect(lines.length).toBeGreaterThan(1);
+    expect(lines.some((l) => JSON.parse(l).type === "FeatureStarted")).toBe(true);
+    expect(lines.some((l) => JSON.parse(l).type === "FeatureCompleted")).toBe(false);
 
     const contextPath = join(paths.memoryDir, "2026-06-30-login-dashboard", "context.yaml");
     expect(existsSync(contextPath)).toBe(true);

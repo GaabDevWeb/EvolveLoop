@@ -3,12 +3,16 @@
 import type {
   DoDCheck,
   Evidence,
+  EvidenceCheck,
   EvidenceEmitter,
   EvidencePayload,
   GraphNode,
   ProviderEntry,
   ProviderStrategy,
 } from "../types/index.js";
+
+/** Marks evidence produced by a mock or fixture. Real validation rejects it. */
+export const SIMULATED_EXECUTION_MARK = "SIMULATED_EXECUTION";
 
 const API_VERSION = "capability-orchestrator.io/v2";
 
@@ -96,6 +100,23 @@ export function buildSelectionEvidence(
   };
 }
 
+export function unverifiedDodChecks(definitionOfDone: DoDCheck[]): EvidenceCheck[] {
+  return definitionOfDone.map((dod) => ({
+    dod_id: dod.id,
+    result: dod.verification === "manual" ? "manual" : "skip",
+    verification: dod.verification,
+    details: dod.verification === "manual" ? "manual_not_observed" : "not_observed",
+  }));
+}
+
+export function markSimulatedEvidence(evidence: Evidence): Evidence {
+  const assumptions = evidence.spec.assumptions ?? [];
+  if (!assumptions.includes(SIMULATED_EXECUTION_MARK)) {
+    evidence.spec.assumptions = [...assumptions, SIMULATED_EXECUTION_MARK];
+  }
+  return evidence;
+}
+
 export function buildWorkerEvidence(
   node: GraphNode,
   runId: string,
@@ -103,12 +124,8 @@ export function buildWorkerEvidence(
   durationMs: number,
   sideEffects?: { files_created?: string[]; files_modified?: string[]; commands_run?: string[] },
 ): Evidence {
-  const checks = node.definition_of_done.map((dod) => ({
-    dod_id: dod.id,
-    result: "pass" as const,
-    verification: dod.verification,
-    details: dod.check,
-  }));
+  const checks = unverifiedDodChecks(node.definition_of_done);
+  const observed = checks.length === 0;
 
   const payload: Extract<EvidencePayload, { type: "worker" }> = {
     type: "worker",
@@ -126,9 +143,9 @@ export function buildWorkerEvidence(
     kind: "Evidence",
     metadata: baseEvidence(node.id, runId, "worker", node.capability, providerId),
     spec: {
-      status: "complete",
-      confidence: 0.9,
-      coverage: 1,
+      status: observed ? "complete" : "partial",
+      confidence: observed ? 0.9 : 0.2,
+      coverage: observed ? 1 : 0,
       assumptions: [],
       known_gaps: [],
       verdict: null,
@@ -148,11 +165,15 @@ export function buildGateEvidence(
   confidence: number,
   findings?: import("../types/index.js").EvidenceFinding[],
 ): Evidence {
-  const checks = node.definition_of_done.map((dod) => ({
-    dod_id: dod.id,
-    result: (verdict === "passed" ? "pass" : "fail") as "pass" | "fail",
-    verification: dod.verification,
-  }));
+  const checks =
+    verdict === "rejected"
+      ? node.definition_of_done.map((dod) => ({
+          dod_id: dod.id,
+          result: "fail" as const,
+          verification: dod.verification,
+        }))
+      : unverifiedDodChecks(node.definition_of_done);
+  const verified = verdict === "rejected" || checks.length === 0;
 
   const payload: Extract<EvidencePayload, { type: "gate" }> = {
     type: "gate",
@@ -166,9 +187,9 @@ export function buildGateEvidence(
     kind: "Evidence",
     metadata: baseEvidence(node.id, runId, "gate", node.capability, providerId),
     spec: {
-      status: "complete",
+      status: verified ? "complete" : "partial",
       confidence,
-      coverage: verdict === "passed" ? 1 : 0.5,
+      coverage: verified && verdict !== "rejected" ? 1 : 0,
       assumptions: [],
       known_gaps: [],
       verdict,
@@ -293,13 +314,46 @@ export function buildSelectionPayload(
   };
 }
 
+export interface EvidenceValidationOptions {
+  /** Test harness only. Not read from agent inputs or capability requests. */
+  allowSimulated?: boolean;
+  lineage?: { run_id: string; node_id: string };
+}
+
+function isSimulatedEvidence(evidence: Evidence): boolean {
+  return evidence.spec.assumptions?.includes(SIMULATED_EXECUTION_MARK) === true;
+}
+
 export function validateEvidenceV21(
   evidence: Evidence | undefined,
   dodList: DoDCheck[],
   node: GraphNode,
   minConfidence = 0,
+  options?: EvidenceValidationOptions,
 ): { valid: boolean; reason?: string } {
   if (!evidence) return { valid: false, reason: "evidence_incomplete" };
+
+  if (options?.lineage) {
+    if (!evidence.metadata.run_id || evidence.metadata.run_id !== options.lineage.run_id) {
+      return { valid: false, reason: "lineage_run_id_mismatch" };
+    }
+    if (!evidence.metadata.node_id || evidence.metadata.node_id !== options.lineage.node_id) {
+      return { valid: false, reason: "lineage_node_id_mismatch" };
+    }
+  }
+
+  if (isSimulatedEvidence(evidence) && options?.allowSimulated !== true) {
+    return { valid: false, reason: "simulated_evidence" };
+  }
+
+  if (node.type === "gate" && evidence.spec.verdict === "rejected") {
+    return { valid: false, reason: "gate_rejected" };
+  }
+
+  if (isSimulatedEvidence(evidence) && options?.allowSimulated === true) {
+    return { valid: true };
+  }
+
   if (evidence.spec.status !== "complete") return { valid: false, reason: "evidence_incomplete" };
 
   const confidence = evidence.spec.confidence ?? 0;
@@ -317,7 +371,6 @@ export function validateEvidenceV21(
 
   if (node.type === "gate") {
     if (!evidence.spec.verdict) return { valid: false, reason: "gate_verdict_missing" };
-    if (evidence.spec.verdict === "rejected") return { valid: false, reason: "gate_rejected" };
   }
 
   return { valid: true };

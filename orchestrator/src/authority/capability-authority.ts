@@ -12,7 +12,28 @@ export interface AuthorityContext {
   allowShell?: boolean;
   allowWrite?: boolean;
   allowNetwork?: boolean;
+  allowHostInspect?: boolean;
   workspaceRoot?: string;
+}
+
+/**
+ * Policy grants are the ceiling. A request may narrow them.
+ * It cannot add shell, write, network, host inspect, or confirmation.
+ */
+export function effectiveAuthority(
+  policy: AuthorityContext,
+  requested?: AuthorityContext,
+): AuthorityContext {
+  const keep = (granted: boolean | undefined, requestedFlag: boolean | undefined): boolean =>
+    granted === true && requestedFlag !== false;
+  return {
+    workspaceRoot: policy.workspaceRoot,
+    allowShell: keep(policy.allowShell, requested?.allowShell),
+    allowWrite: keep(policy.allowWrite, requested?.allowWrite),
+    allowNetwork: keep(policy.allowNetwork, requested?.allowNetwork),
+    allowHostInspect: keep(policy.allowHostInspect, requested?.allowHostInspect),
+    confirmed: policy.confirmed === true && requested?.confirmed !== false,
+  };
 }
 
 export interface AuthorityRequest {
@@ -44,6 +65,7 @@ export interface AuthorityResult {
       allowShell: boolean;
       allowWrite: boolean;
       allowNetwork: boolean;
+      allowHostInspect: boolean;
     };
   };
 }
@@ -75,6 +97,10 @@ function isNetwork(req: AuthorityRequest): boolean {
   return !!req.permissions?.network || req.capability.startsWith("browser.");
 }
 
+function isHostInspect(req: AuthorityRequest): boolean {
+  return req.capability.startsWith("system.") || req.capability.startsWith("knowledge.");
+}
+
 function isReadOnly(req: AuthorityRequest): boolean {
   if (isShell(req) || isWrite(req) || isNetwork(req)) return false;
   if (req.side_effects) return false;
@@ -85,10 +111,11 @@ function isReadOnly(req: AuthorityRequest): boolean {
 export function authorize(request: AuthorityRequest): AuthorityResult {
   const ctx = request.context ?? {};
   const flags = {
-    confirmed: !!ctx.confirmed,
-    allowShell: !!ctx.allowShell,
-    allowWrite: !!ctx.allowWrite,
-    allowNetwork: !!ctx.allowNetwork,
+    confirmed: ctx.confirmed === true,
+    allowShell: ctx.allowShell === true,
+    allowWrite: ctx.allowWrite === true,
+    allowNetwork: ctx.allowNetwork === true,
+    allowHostInspect: ctx.allowHostInspect === true,
   };
   const checked_at = new Date().toISOString();
 
@@ -115,41 +142,32 @@ export function authorize(request: AuthorityRequest): AuthorityResult {
   }
 
   if (isShell(request)) {
-    if (ctx.allowShell === false && !flags.confirmed) {
-      return build("deny", "shell_denied_by_context");
-    }
-    if (flags.allowShell || flags.confirmed) {
-      return build("allow", "shell_allowed_by_context");
-    }
-    return build("confirm", "shell_requires_confirmation");
+    if (!flags.allowShell) return build("deny", "shell_denied_by_context");
+    return build("allow", "shell_allowed_by_context");
   }
 
   if (isWrite(request)) {
-    if (ctx.allowWrite === false && !flags.confirmed) {
-      return build("deny", "write_denied_by_context");
-    }
-    if (flags.allowWrite || flags.confirmed) {
-      return build("allow", "write_allowed_by_context");
-    }
-    return build("confirm", "write_requires_confirmation");
+    if (!flags.allowWrite) return build("deny", "write_denied_by_context");
+    return build("allow", "write_allowed_by_context");
   }
 
   if (isNetwork(request)) {
-    if (ctx.allowNetwork === false && !flags.confirmed) {
-      return build("deny", "network_denied_by_context");
-    }
-    if (flags.allowNetwork || flags.confirmed) {
-      return build("allow", "network_allowed_by_context");
-    }
-    return build("confirm", "network_requires_confirmation");
+    if (!flags.allowNetwork) return build("deny", "network_denied_by_context");
+    return build("allow", "network_allowed_by_context");
+  }
+
+  if (isHostInspect(request)) {
+    if (!flags.allowHostInspect) return build("deny", "host_inspect_denied");
+    return build("allow", "host_inspect_allowed_by_context");
   }
 
   if (isReadOnly(request)) {
     return build("allow", "deterministic_read_only");
   }
 
-  if (request.side_effects && !flags.confirmed && !flags.allowWrite) {
-    return build("confirm", "side_effects_require_confirmation");
+  if (request.side_effects) {
+    if (!flags.allowWrite) return build("deny", "side_effects_denied");
+    return build("allow", "side_effects_allowed_by_context");
   }
 
   return build("allow", "default_allow");

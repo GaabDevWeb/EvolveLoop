@@ -3,6 +3,7 @@ import {
   validateEvidenceV21,
   buildWorkerEvidence,
   buildGateEvidence,
+  type EvidenceValidationOptions,
 } from "./builders.js";
 
 export interface ValidationResult {
@@ -15,8 +16,9 @@ export function validateEvidence(
   dodList: DoDCheck[],
   node: GraphNode,
   minConfidence = 0,
+  options?: EvidenceValidationOptions,
 ): ValidationResult {
-  return validateEvidenceV21(evidence, dodList, node, minConfidence);
+  return validateEvidenceV21(evidence, dodList, node, minConfidence, options);
 }
 
 export function buildSuccessEvidence(

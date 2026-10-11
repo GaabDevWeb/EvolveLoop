@@ -406,6 +406,7 @@ export interface AuthorityRuntimeContext {
   allowShell?: boolean;
   allowWrite?: boolean;
   allowNetwork?: boolean;
+  allowHostInspect?: boolean;
   workspaceRoot?: string;
 }
 

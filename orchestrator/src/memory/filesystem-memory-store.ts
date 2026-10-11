@@ -34,16 +34,53 @@ interface ContextFile {
   user_request?: string;
 }
 
+export class MemoryFormatError extends Error {
+  readonly code = "MEMORY_FORMAT_INVALID";
+  constructor(message: string) {
+    super(message);
+    this.name = "MemoryFormatError";
+  }
+}
+
 function readEntriesFile(path: string): MemoryEntry[] {
   if (!existsSync(path)) return [];
-  const raw = parseYaml(readFileSync(path, "utf-8")) as EntriesFile | null;
-  if (!raw || !Array.isArray(raw.entries)) return [];
-  return raw.entries.map((e) => ({
-    timestamp: String(e.timestamp ?? ""),
-    source: String(e.source ?? ""),
-    type: String(e.type ?? ""),
-    content: String(e.content ?? ""),
-  }));
+  const text = readFileSync(path, "utf-8");
+  if (text.trim().length === 0) {
+    throw new MemoryFormatError(`${path}: empty file`);
+  }
+  let raw: unknown;
+  try {
+    raw = parseYaml(text);
+  } catch (err) {
+    throw new MemoryFormatError(`${path}: invalid yaml: ${err instanceof Error ? err.message : String(err)}`);
+  }
+  if (raw === null || typeof raw !== "object" || Array.isArray(raw)) {
+    throw new MemoryFormatError(`${path}: expected a mapping with entries`);
+  }
+  if (!("entries" in raw)) {
+    throw new MemoryFormatError(`${path}: missing entries`);
+  }
+  const entries = (raw as { entries: unknown }).entries;
+  if (!Array.isArray(entries)) {
+    throw new MemoryFormatError(`${path}: entries must be an array`);
+  }
+  return entries.map((entry, index) => {
+    if (entry === null || typeof entry !== "object" || Array.isArray(entry)) {
+      throw new MemoryFormatError(`${path}: entries[${index}] must be a mapping`);
+    }
+    const record = entry as Record<string, unknown>;
+    for (const field of ["timestamp", "source", "type", "content"] as const) {
+      if (typeof record[field] !== "string") {
+        throw new MemoryFormatError(`${path}: entries[${index}].${field} must be a string`);
+      }
+    }
+    return {
+      timestamp: record.timestamp as string,
+      source: record.source as string,
+      type: record.type as string,
+      content: record.content as string,
+    };
+  });
 }
 
 function writeEntriesFile(path: string, entries: MemoryEntry[]): void {

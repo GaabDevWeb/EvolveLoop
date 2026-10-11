@@ -8,8 +8,8 @@ import type {
 } from "../types/index.js";
 import {
   buildExecutionEvidence,
-  buildGateEvidence,
   buildWorkerEvidence,
+  markSimulatedEvidence,
 } from "../evidence/builders.js";
 
 export interface SmartMockOptions {
@@ -101,10 +101,9 @@ export class SmartMockExecutor implements ProviderRuntime {
       }
 
       const durationMs = Date.now() - start;
-      const workerEvidence =
-        request.node.type === "gate"
-          ? buildGateEvidence(request.node, request.run_id, this.id, "passed", 0.95)
-          : buildWorkerEvidence(request.node, request.run_id, this.id, durationMs);
+      const workerEvidence = markSimulatedEvidence(
+        buildWorkerEvidence(request.node, request.run_id, this.id, durationMs),
+      );
 
       return {
         run_id: request.run_id,

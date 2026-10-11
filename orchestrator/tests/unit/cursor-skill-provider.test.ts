@@ -60,7 +60,9 @@ describe("CursorSkillProvider", () => {
     });
 
     expect(result.success).toBe(true);
-    expect(result.evidence?.spec.verdict).toBe("passed");
+    expect(result.evidence?.spec.verdict).not.toBe("passed");
+    expect(result.evidence?.spec.checks[0]?.result).not.toBe("pass");
+    expect(result.evidence?.spec.checks[0]?.exit_code).toBe(0);
   });
 
   it("returns SKILL_NOT_FOUND for invalid path", async () => {

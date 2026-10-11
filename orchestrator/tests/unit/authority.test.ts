@@ -13,14 +13,15 @@ describe("CapabilityAuthority", () => {
     expect(r.decision).toBe("allow");
   });
 
-  it("requires confirm for shell without flags", () => {
+  it("denies shell when no grant is present", () => {
     const r = authority.authorize({
       capability: "shell.execute",
       permissions: { shell: true },
       side_effects: true,
       requires_confirmation: true,
     });
-    expect(r.decision).toBe("confirm");
+    expect(r.decision).toBe("deny");
+    expect(r.reason).toBe("shell_denied_by_context");
   });
 
   it("allows shell when allowShell=true", () => {

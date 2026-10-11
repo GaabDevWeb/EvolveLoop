@@ -1,5 +1,6 @@
 import type { ExecuteRequest, ExecuteResult, ProviderRuntime } from "../types/index.js";
 import { buildSuccessEvidence } from "../evidence/validator.js";
+import { markSimulatedEvidence } from "../evidence/builders.js";
 import { newRunId } from "../ir/validator.js";
 
 export type MockBehavior =
@@ -76,7 +77,9 @@ export class MockProvider implements ProviderRuntime {
       };
     }
 
-    const evidence = buildSuccessEvidence(request.node, request.run_id, this.id, Date.now() - start);
+    const evidence = markSimulatedEvidence(
+      buildSuccessEvidence(request.node, request.run_id, this.id, Date.now() - start),
+    );
 
     return {
       run_id: request.run_id,
