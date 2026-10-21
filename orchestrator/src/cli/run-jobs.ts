@@ -7,6 +7,7 @@
  *   run-jobs pickup --jobs-dir ./jobs [--run-id <uuid>]
  *   run-jobs invoke --jobs-dir ./jobs [--prompt-dir .cursor/pickup] [--run-id <uuid>]
  *   run-jobs complete --jobs-dir ./jobs --run-id <uuid> --success --evidence path/to/evidence.json
+ *   run-jobs reopen --jobs-dir ./jobs --run-id <uuid>
  */
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
@@ -97,6 +98,34 @@ function main() {
     return;
   }
 
+  if (args.command === "reopen") {
+    const runId = args["run-id"];
+    if (!runId) {
+      console.error("Required: --run-id");
+      process.exit(1);
+    }
+    try {
+      const job = store.reopenJob(runId);
+      console.log(
+        JSON.stringify(
+          {
+            run_id: runId,
+            status: "pending",
+            capability: job.capability,
+            node_id: job.node_id,
+            hint: "Re-submit evidence via complete after fixing lineage or evidence content",
+          },
+          null,
+          2,
+        ),
+      );
+    } catch (err) {
+      console.error(err instanceof Error ? err.message : String(err));
+      process.exit(1);
+    }
+    return;
+  }
+
   if (args.command === "complete") {
     const runId = args["run-id"];
     if (!runId) {
@@ -131,7 +160,9 @@ function main() {
     return;
   }
 
-  console.error("Usage: run-jobs list|show|pickup|invoke|complete --jobs-dir <path> [--prompt-dir path] [--run-id <id>] [--success] [--evidence <path>]");
+  console.error(
+    "Usage: run-jobs list|show|pickup|invoke|complete|reopen --jobs-dir <path> [--prompt-dir path] [--run-id <id>] [--success] [--evidence <path>]",
+  );
   process.exit(1);
 }
 
