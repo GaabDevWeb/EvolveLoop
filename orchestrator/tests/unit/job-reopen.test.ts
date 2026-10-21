@@ -36,4 +36,31 @@ describe("JobStore.reopenJob", () => {
     expect(existsSync(join(jobsDir, `${runId}.result.json`))).toBe(false);
     expect(store.listPending()).toHaveLength(1);
   });
+
+  it("reopenJob rejects already-pending jobs", () => {
+    const base = mkdtempSync(join(tmpdir(), "job-reopen-pending-"));
+    const jobsDir = join(base, "jobs");
+    mkdirSync(jobsDir, { recursive: true });
+    const store = new JobStore(jobsDir);
+    const runId = "run-pending";
+
+    writeFileSync(
+      join(jobsDir, `${runId}.json`),
+      JSON.stringify({
+        apiVersion: "capability-orchestrator.io/v2",
+        kind: "SkillJob",
+        run_id: runId,
+        provider_id: "testing",
+        skill_path: ".cursor/skills/testing/SKILL.md",
+        capability: "testing",
+        node_id: "n1",
+        briefing: "x",
+        definition_of_done: [],
+        inputs: [],
+        status: "pending",
+      }),
+    );
+
+    expect(() => store.reopenJob(runId)).toThrow(/REOPEN_NOT_ALLOWED/);
+  });
 });

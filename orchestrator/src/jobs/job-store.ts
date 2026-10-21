@@ -76,6 +76,11 @@ export class JobStore {
   reopenJob(runId: string): SkillJob {
     const job = this.readJob(runId);
     if (!job) throw new Error(`Job not found: ${runId}`);
+    if (job.status === "pending") {
+      throw new Error(
+        `REOPEN_NOT_ALLOWED: job ${runId} is already pending; reopen only applies to completed or failed jobs`,
+      );
+    }
     this.deleteResult(runId);
     job.status = "pending";
     writeFileSync(join(this.jobsDir, `${runId}.json`), JSON.stringify(job, null, 2));

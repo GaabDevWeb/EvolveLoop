@@ -8,6 +8,8 @@
  *   run-jobs invoke --jobs-dir ./jobs [--prompt-dir .cursor/pickup] [--run-id <uuid>]
  *   run-jobs complete --jobs-dir ./jobs --run-id <uuid> --success --evidence path/to/evidence.json
  *   run-jobs reopen --jobs-dir ./jobs --run-id <uuid>
+ *
+ * Exit codes (reopen): 0 = reopened; 2 = REOPEN_NOT_ALLOWED (job already pending); 1 = other error.
  */
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
@@ -122,7 +124,12 @@ function main() {
         ),
       );
     } catch (err) {
-      console.error(err instanceof Error ? err.message : String(err));
+      const message = err instanceof Error ? err.message : String(err);
+      if (message.startsWith("REOPEN_NOT_ALLOWED:")) {
+        console.error(`run-jobs reopen: ${message}`);
+        process.exit(2);
+      }
+      console.error(message);
       process.exit(1);
     }
     return;
