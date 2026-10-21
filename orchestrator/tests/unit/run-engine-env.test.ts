@@ -2,7 +2,11 @@ import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { mkdtempSync, writeFileSync, rmSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
-import { loadAgentsEnvFile, resolveOrchestratorCliPaths } from "../../src/cli/run-engine-env.js";
+import {
+  loadAgentsEnvFile,
+  resolveOrchestratorCliPaths,
+  resolveOrchestratorRoot,
+} from "../../src/cli/run-engine-env.js";
 
 describe("run-engine env defaults", () => {
   let tempDir: string;
@@ -15,6 +19,12 @@ describe("run-engine env defaults", () => {
     rmSync(tempDir, { recursive: true, force: true });
     delete process.env.ORCHESTRATOR_JOBS_DIR;
     delete process.env.ORCHESTRATOR_AGENTS_ENV;
+    delete process.env.ORCHESTRATOR_ROOT;
+  });
+
+  it("resolveOrchestratorRoot prefers ORCHESTRATOR_ROOT over cwd", () => {
+    process.env.ORCHESTRATOR_ROOT = "/opt/orchestrator";
+    expect(resolveOrchestratorRoot()).toBe("/opt/orchestrator");
   });
 
   it("loads ORCHESTRATOR_JOBS_DIR from agents.env when flag omitted", () => {

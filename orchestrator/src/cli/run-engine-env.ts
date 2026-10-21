@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from "node:fs";
 import { homedir } from "node:os";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 
 /** Load export KEY=value lines from agents.env without overriding existing process.env */
 export function loadAgentsEnvFile(path?: string): void {
@@ -29,6 +29,13 @@ export function loadAgentsEnvFile(path?: string): void {
       process.env[key] = value;
     }
   }
+}
+
+/** Directory containing package.json / run-jobs CLI (ORCHESTRATOR_ROOT or process.cwd()). */
+export function resolveOrchestratorRoot(): string {
+  const fromEnv = process.env.ORCHESTRATOR_ROOT;
+  if (fromEnv) return resolve(fromEnv);
+  return resolve(process.cwd());
 }
 
 export function resolveOrchestratorCliPaths(args: Record<string, string>, enableDiscovery: boolean) {

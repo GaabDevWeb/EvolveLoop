@@ -13,6 +13,7 @@ import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 import { JobStore } from "../jobs/job-store.js";
 import { invokePickup } from "../jobs/job-pickup.js";
+import { resolveOrchestratorRoot } from "./run-engine-env.js";
 
 function parseArgs(argv: string[]) {
   const args: Record<string, string> = { command: argv[2] ?? "list" };
@@ -68,6 +69,7 @@ function main() {
       console.error(`Job ${job.run_id} is not pending (status: ${job.status})`);
       process.exit(1);
     }
+    const orchRoot = resolveOrchestratorRoot();
     const pickup = {
       status: "ready",
       jobs_dir: jobsDir,
@@ -80,7 +82,7 @@ function main() {
       agent_instructions: [
         `1. Read skill: ${job.skill_path}`,
         `2. Execute briefing below; produce evidence per DoD`,
-        `3. Complete job: npm run run-jobs -- complete --jobs-dir ${jobsDir} --run-id ${job.run_id} --success --evidence <path-to-evidence.json>`,
+        `3. Complete job: cd ${orchRoot} && npm run run-jobs -- complete --jobs-dir ${jobsDir} --run-id ${job.run_id} --success --evidence <path-to-evidence.json>`,
       ],
     };
     console.log(JSON.stringify(pickup, null, 2));
