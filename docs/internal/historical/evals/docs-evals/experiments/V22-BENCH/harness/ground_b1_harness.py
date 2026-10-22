@@ -17,7 +17,8 @@ from typing import Any, Callable
 
 EXP_DIR = Path(__file__).resolve().parents[1]
 TASKS_HELD = EXP_DIR / "tasks-held-out-frozen.json"
-HARNESS_VERSION = "v22-ground-b1-harness-1.0.0"
+HARNESS_VERSION = "v22-ground-b1-harness-1.1.0"
+B1_EVIDENCE_CLASS = "FIXTURE_WIKI_GROUND"
 B0_CAP = 45
 RG_GLOBS = [
     "!node_modules",
@@ -152,9 +153,8 @@ def run_b1_ground(root: Path, task: dict[str, Any], counter, env: dict[str, str]
     t0 = time.perf_counter()
     paths: list[str] = []
     buf: list[str] = []
-    patterns = task.get("rg_patterns") or []
-    composite = task["query"] + (" " + patterns[0] if patterns else "")
-    data = run_ground_json(composite, env)
+    # B1 must use natural-language task query only — rg_patterns are B0 gabarito (no leakage).
+    data = run_ground_json(task["query"], env)
     stale = 0
     for hit in data.get("selected") or []:
         src = hit.get("source") or {}
@@ -214,8 +214,8 @@ def run_battery(out_dir: Path) -> dict[str, Any]:
                 res = run_b1_ground(repo, task, counter, env)
             rec = {
                 "experiment_id": "V22-BENCH-HELD-OUT",
-                "evidence_class": "OFFICIAL_BASELINE" if arm == "B0" else "OFFICIAL_WIKI_GROUND",
-                "baseline_id": "v22-held-out-b0b1-ground-2026-10-22",
+                "evidence_class": "OFFICIAL_BASELINE" if arm == "B0" else B1_EVIDENCE_CLASS,
+                "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-review",
                 "run_id": f"V22H-{task['id']}-{arm}-{hashlib.sha256((tree_sha+task['id']+arm).encode()).hexdigest()[:12]}",
                 "arm": arm,
                 "task_id": task["id"],
@@ -251,9 +251,13 @@ def run_battery(out_dir: Path) -> dict[str, Any]:
         "experiment": "V22-BENCH-HELD-OUT",
         "classification_by_arm": {
             "B0": "OFFICIAL_BASELINE",
-            "B1": "OFFICIAL_WIKI_GROUND",
+            "B1": B1_EVIDENCE_CLASS,
         },
-        "baseline_id": "v22-held-out-b0b1-ground-2026-10-22",
+        "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-review",
+        "harness_notes": {
+            "b1_query": "task.query only (rg_patterns reserved for B0)",
+            "wiki_cli": "fixtures/evolveloop-wiki-vault gaabwiki (minimal in-repo fixture)",
+        },
         "freeze_tree_sha": tree_sha,
         "tasks_frozen": str(TASKS_HELD.relative_to(EXP_DIR)),
         "aggregates": summary_aggs,

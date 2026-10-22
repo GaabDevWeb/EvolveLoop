@@ -1,13 +1,13 @@
 {
   "experiment_id": "V22-BENCH-HELD-OUT",
-  "evidence_class": "OFFICIAL_WIKI_GROUND",
-  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22",
-  "run_id": "V22H-H05-B1-7f65a70f25b0",
+  "evidence_class": "FIXTURE_WIKI_GROUND",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-review",
+  "run_id": "V22H-H05-B1-677dd8b7f106",
   "arm": "B1",
   "task_id": "H05",
-  "timestamp": "2026-10-22T00:55:26.615261+00:00",
-  "tree_sha": "1dc11ea9e293ce5d63809a575b0f4eb132f1a0a1",
-  "harness": "v22-ground-b1-harness-1.0.0",
+  "timestamp": "2026-10-22T00:58:03.845481+00:00",
+  "tree_sha": "141dec563681fee04340244abf239175baff191f",
+  "harness": "v22-ground-b1-harness-1.1.0",
   "tokenizer": "PROXY:whitespace_split",
   "metrics": {
     "task_id": "H05",
@@ -16,7 +16,7 @@
       "orchestrator/src/capabilities/results.ts"
     ],
     "input_tokens": 333,
-    "latency_ms": 37,
+    "latency_ms": 36,
     "recall": 1.0,
     "recall_notes": [],
     "ground_exit": 0,

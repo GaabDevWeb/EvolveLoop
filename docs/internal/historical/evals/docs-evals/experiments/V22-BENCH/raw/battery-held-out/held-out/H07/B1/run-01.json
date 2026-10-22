@@ -1,0 +1,34 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "FIXTURE_WIKI_GROUND",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-review",
+  "run_id": "V22H-H07-B1-e187d612636b",
+  "arm": "B1",
+  "task_id": "H07",
+  "timestamp": "2026-10-22T00:58:03.961060+00:00",
+  "tree_sha": "141dec563681fee04340244abf239175baff191f",
+  "harness": "v22-ground-b1-harness-1.1.0",
+  "tokenizer": "PROXY:whitespace_split",
+  "metrics": {
+    "task_id": "H07",
+    "arm": "B1",
+    "paths_read": [
+      "orchestrator/src/knowledge/backend/resolve.ts"
+    ],
+    "input_tokens": 180,
+    "latency_ms": 35,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: profiles/default.yaml"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: profiles/default.yaml"
+    ]
+  }
+}

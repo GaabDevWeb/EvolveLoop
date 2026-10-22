@@ -2,75 +2,79 @@
   "experiment": "V22-BENCH-HELD-OUT",
   "classification_by_arm": {
     "B0": "OFFICIAL_BASELINE",
-    "B1": "OFFICIAL_WIKI_GROUND"
+    "B1": "FIXTURE_WIKI_GROUND"
   },
-  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22",
-  "freeze_tree_sha": "1dc11ea9e293ce5d63809a575b0f4eb132f1a0a1",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-review",
+  "harness_notes": {
+    "b1_query": "task.query only (rg_patterns reserved for B0)",
+    "wiki_cli": "fixtures/evolveloop-wiki-vault gaabwiki (minimal in-repo fixture)"
+  },
+  "freeze_tree_sha": "141dec563681fee04340244abf239175baff191f",
   "tasks_frozen": "tasks-held-out-frozen.json",
   "aggregates": {
     "H01:B0": {
       "median_paths": 16.0,
-      "median_input_tokens": 6148.0,
-      "median_latency_ms": 16.0,
+      "median_input_tokens": 6381.0,
+      "median_latency_ms": 22.0,
       "recall": 1.0
     },
     "H01:B1": {
       "median_paths": 1.0,
       "median_input_tokens": 180.0,
-      "median_latency_ms": 36.0,
+      "median_latency_ms": 39.0,
       "recall": 1.0
     },
     "H02:B0": {
       "median_paths": 7.0,
-      "median_input_tokens": 2030.0,
-      "median_latency_ms": 14.0,
+      "median_input_tokens": 2263.0,
+      "median_latency_ms": 16.0,
       "recall": 1.0
     },
     "H02:B1": {
       "median_paths": 2.0,
       "median_input_tokens": 572.0,
-      "median_latency_ms": 36.0,
+      "median_latency_ms": 37.0,
       "recall": 1.0
     },
     "H03:B0": {
       "median_paths": 23.0,
-      "median_input_tokens": 5582.0,
-      "median_latency_ms": 14.0,
+      "median_input_tokens": 5815.0,
+      "median_latency_ms": 15.0,
       "recall": 1.0
     },
     "H03:B1": {
       "median_paths": 3.0,
       "median_input_tokens": 678.0,
-      "median_latency_ms": 36.0,
+      "median_latency_ms": 35.0,
       "recall": 1.0
     },
     "H04:B0": {
       "median_paths": 45.0,
       "median_input_tokens": 12397.0,
-      "median_latency_ms": 19.0,
+      "median_latency_ms": 20.0,
       "recall": 1.0
     },
     "H04:B1": {
-      "median_paths": 3.0,
-      "median_input_tokens": 671.0,
-      "median_latency_ms": 39.0,
+      "median_paths": 2.0,
+      "median_input_tokens": 279.0,
+      "median_latency_ms": 37.0,
       "recall": 1.0
     },
     "H05:B0": {
       "median_paths": 30.0,
-      "median_input_tokens": 60426.0,
-      "median_latency_ms": 22.0,
+      "median_input_tokens": 60659.0,
+      "median_latency_ms": 21.0,
       "recall": 1.0
     },
     "H05:B1": {
       "median_paths": 1.0,
       "median_input_tokens": 333.0,
-      "median_latency_ms": 37.0,
+      "median_latency_ms": 36.0,
       "recall": 1.0
     },
     "H06:B0": {
       "median_paths": 10.0,
-      "median_input_tokens": 2303.0,
+      "median_input_tokens": 2536.0,
       "median_latency_ms": 15.0,
       "recall": 1.0
     },
@@ -79,14 +83,86 @@
       "median_input_tokens": 360.0,
       "median_latency_ms": 36.0,
       "recall": 1.0
+    },
+    "H07:B0": {
+      "median_paths": 45.0,
+      "median_input_tokens": 14011.0,
+      "median_latency_ms": 27.0,
+      "recall": 0.0
+    },
+    "H07:B1": {
+      "median_paths": 1.0,
+      "median_input_tokens": 180.0,
+      "median_latency_ms": 35.0,
+      "recall": 0.0
+    },
+    "H08:B0": {
+      "median_paths": 16.0,
+      "median_input_tokens": 12859.0,
+      "median_latency_ms": 15.0,
+      "recall": 1.0
+    },
+    "H08:B1": {
+      "median_paths": 1.0,
+      "median_input_tokens": 99.0,
+      "median_latency_ms": 35.0,
+      "recall": 0.0
+    },
+    "H09:B0": {
+      "median_paths": 45.0,
+      "median_input_tokens": 14038.0,
+      "median_latency_ms": 20.0,
+      "recall": 1.0
+    },
+    "H09:B1": {
+      "median_paths": 1.0,
+      "median_input_tokens": 99.0,
+      "median_latency_ms": 35.0,
+      "recall": 0.0
+    },
+    "H10:B0": {
+      "median_paths": 24.0,
+      "median_input_tokens": 21120.0,
+      "median_latency_ms": 16.0,
+      "recall": 1.0
+    },
+    "H10:B1": {
+      "median_paths": 1.0,
+      "median_input_tokens": 180.0,
+      "median_latency_ms": 38.0,
+      "recall": 0.0
+    },
+    "H11:B0": {
+      "median_paths": 45.0,
+      "median_input_tokens": 10725.0,
+      "median_latency_ms": 32.0,
+      "recall": 0.0
+    },
+    "H11:B1": {
+      "median_paths": 1.0,
+      "median_input_tokens": 180.0,
+      "median_latency_ms": 35.0,
+      "recall": 0.0
+    },
+    "H12:B0": {
+      "median_paths": 9.0,
+      "median_input_tokens": 6248.0,
+      "median_latency_ms": 21.0,
+      "recall": 1.0
+    },
+    "H12:B1": {
+      "median_paths": 2.0,
+      "median_input_tokens": 491.0,
+      "median_latency_ms": 36.0,
+      "recall": 0.0
     }
   },
   "rollups": {
-    "held_out_B0_median_paths": 19.5,
-    "held_out_B1_median_paths": 2.0,
-    "held_out_B0_median_tokens": 5865.0,
-    "held_out_B1_median_tokens": 466.0,
-    "held_out_B0_median_latency_ms": 15.5,
+    "held_out_B0_median_paths": 23.5,
+    "held_out_B1_median_paths": 1.0,
+    "held_out_B0_median_tokens": 11561.0,
+    "held_out_B1_median_tokens": 229.5,
+    "held_out_B0_median_latency_ms": 20.0,
     "held_out_B1_median_latency_ms": 36.0
   },
   "environment": {
@@ -96,17 +172,29 @@
     "contamination_guard": "generate-evolveloop-wiki-knowledge.sh allowlist; no V22-BENCH reads"
   },
   "runs": [
-    "V22H-H01-B0-f5cc24dc4b8c",
-    "V22H-H01-B1-8d28580be52b",
-    "V22H-H02-B0-1780824337ee",
-    "V22H-H02-B1-a4973b764e0c",
-    "V22H-H03-B0-46d30a1553be",
-    "V22H-H03-B1-ff5023da8e47",
-    "V22H-H04-B0-8761e57641be",
-    "V22H-H04-B1-6e420eab42a9",
-    "V22H-H05-B0-612a04be5837",
-    "V22H-H05-B1-7f65a70f25b0",
-    "V22H-H06-B0-7a6e24463cb2",
-    "V22H-H06-B1-13b42f6f902f"
+    "V22H-H01-B0-cabf57a5f98a",
+    "V22H-H01-B1-dc87ad59727f",
+    "V22H-H02-B0-755e4dfb3bba",
+    "V22H-H02-B1-939b767d29d7",
+    "V22H-H03-B0-8e384c196974",
+    "V22H-H03-B1-fdbf85cd0370",
+    "V22H-H04-B0-e4761b202746",
+    "V22H-H04-B1-d2265c90fa8e",
+    "V22H-H05-B0-98b6f9e101c2",
+    "V22H-H05-B1-677dd8b7f106",
+    "V22H-H06-B0-2700dba9beb5",
+    "V22H-H06-B1-82f4f1fd3e73",
+    "V22H-H07-B0-4a926adec0cd",
+    "V22H-H07-B1-e187d612636b",
+    "V22H-H08-B0-e7f59325d9bb",
+    "V22H-H08-B1-00f2b831b18b",
+    "V22H-H09-B0-9d0d1865fce3",
+    "V22H-H09-B1-ce353c76f015",
+    "V22H-H10-B0-113ef4964a66",
+    "V22H-H10-B1-e0e66a541452",
+    "V22H-H11-B0-d5a061b167bc",
+    "V22H-H11-B1-2f3d41b00704",
+    "V22H-H12-B0-ab12db64e255",
+    "V22H-H12-B1-fad3d7b5b6f5"
   ]
 }

@@ -1,0 +1,34 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "FIXTURE_WIKI_GROUND",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-review",
+  "run_id": "V22H-H09-B1-ce353c76f015",
+  "arm": "B1",
+  "task_id": "H09",
+  "timestamp": "2026-10-22T00:58:04.068984+00:00",
+  "tree_sha": "141dec563681fee04340244abf239175baff191f",
+  "harness": "v22-ground-b1-harness-1.1.0",
+  "tokenizer": "PROXY:whitespace_split",
+  "metrics": {
+    "task_id": "H09",
+    "arm": "B1",
+    "paths_read": [
+      "docs/adr/0012-wiki-default-knowledge-backend.md"
+    ],
+    "input_tokens": 99,
+    "latency_ms": 35,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: docs/architecture/knowledge/KNOWLEDGE-BACKEND-CONTRACT.md"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: docs/architecture/knowledge/KNOWLEDGE-BACKEND-CONTRACT.md"
+    ]
+  }
+}

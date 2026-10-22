@@ -1,13 +1,13 @@
 {
   "experiment_id": "V22-BENCH-HELD-OUT",
   "evidence_class": "OFFICIAL_BASELINE",
-  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22",
-  "run_id": "V22H-H06-B0-7a6e24463cb2",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-review",
+  "run_id": "V22H-H06-B0-2700dba9beb5",
   "arm": "B0",
   "task_id": "H06",
-  "timestamp": "2026-10-22T00:55:26.631189+00:00",
-  "tree_sha": "1dc11ea9e293ce5d63809a575b0f4eb132f1a0a1",
-  "harness": "v22-ground-b1-harness-1.0.0",
+  "timestamp": "2026-10-22T00:58:03.860828+00:00",
+  "tree_sha": "141dec563681fee04340244abf239175baff191f",
+  "harness": "v22-ground-b1-harness-1.1.0",
   "tokenizer": "PROXY:whitespace_split",
   "metrics": {
     "task_id": "H06",
@@ -24,7 +24,7 @@
       "orchestrator/src/knowledge/backend/resolve.ts",
       "orchestrator/tests/unit/knowledge-backend.test.ts"
     ],
-    "input_tokens": 2303,
+    "input_tokens": 2536,
     "latency_ms": 15,
     "recall": 1.0,
     "recall_notes": [],

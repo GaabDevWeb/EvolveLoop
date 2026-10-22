@@ -1,0 +1,38 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_BASELINE",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-review",
+  "run_id": "V22H-H12-B0-ab12db64e255",
+  "arm": "B0",
+  "task_id": "H12",
+  "timestamp": "2026-10-22T00:58:04.214914+00:00",
+  "tree_sha": "141dec563681fee04340244abf239175baff191f",
+  "harness": "v22-ground-b1-harness-1.1.0",
+  "tokenizer": "PROXY:whitespace_split",
+  "metrics": {
+    "task_id": "H12",
+    "arm": "B0",
+    "paths_read": [
+      "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-held-out-frozen.json",
+      "docs/research/evolveloop-v2.2/01-current-state-audit.md",
+      "global-skills/systematic-debugging/condition-based-waiting-example.ts",
+      "global-skills/systematic-debugging/condition-based-waiting.md",
+      "orchestrator/src/events/event-bus.ts",
+      "orchestrator/src/executors/smart-mock-executor.ts",
+      "orchestrator/src/knowledge/backend/wiki-backend.ts",
+      "orchestrator/src/providers/deterministic/index.ts",
+      "orchestrator/src/providers/deterministic/shell.ts"
+    ],
+    "input_tokens": 6248,
+    "latency_ms": 21,
+    "recall": 1.0,
+    "recall_notes": [],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": true,
+    "recall": 1.0,
+    "notes": []
+  }
+}

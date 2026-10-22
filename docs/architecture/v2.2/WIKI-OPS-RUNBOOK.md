@@ -25,12 +25,12 @@ bash "$AGENTS_ROOT/.cursor/skills/wiki/scripts/ground.sh" search "KNOWLEDGE_BACK
 
 Geração de conhecimento: script com **allowlist**; não lê `docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/`. Log: `memory/V22-GOAL-005-wiki/evidence/knowledge-generate.log`.
 
-## B1 oficial (held-out)
+## B1 held-out (`FIXTURE_WIKI_GROUND`)
 
 1. Congelar `tasks-held-out-frozen.json` (commit separado antes do harness).
-2. Gerar `.ai/` + sync vault.
-3. `python3 docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/harness/ground_b1_harness.py`
-4. Raw: `V22-BENCH/raw/battery-held-out/`
+2. Gerar `.ai/` + sync vault (`fixtures/evolveloop-wiki-vault` — CLI mínimo no repo).
+3. `python3 docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/harness/ground_b1_harness.py` (B1: **só** `task.query`).
+4. Raw: `V22-BENCH/raw/battery-held-out/` — classe `FIXTURE_WIKI_GROUND` até wiki externo + held-out independente completo (`BENCHMARK-PLAN.md`).
 
 ## Obsolescência
 
