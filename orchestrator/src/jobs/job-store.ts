@@ -6,6 +6,8 @@ import {
   writeSanitizedJsonFile,
 } from "../evidence/evidence-bus.js";
 
+import type { GateBundleFields, ContextRetrievalEntry } from "../context/types.js";
+
 export interface SkillJob {
   apiVersion: string;
   kind: "SkillJob";
@@ -18,6 +20,12 @@ export interface SkillJob {
   definition_of_done: unknown[];
   inputs: unknown[];
   status: "pending" | "completed" | "failed";
+  /** PDA spawn — ADR-0013 / V22-GOAL-006 */
+  feature_id?: string;
+  gate_bundle?: GateBundleFields;
+  context_retrieval?: ContextRetrievalEntry[];
+  evidence_paths?: string[];
+  spawn_metadata?: Record<string, unknown>;
 }
 
 export interface SkillJobResult {

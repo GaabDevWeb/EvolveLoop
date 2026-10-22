@@ -1,0 +1,12 @@
+{
+  "task_id": "V22-GOAL-001-006",
+  "ranking": "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/RETRIEVAL-RANKING.md",
+  "algorithm": "score(query+rg_patterns+citation_hints) then selectTopRankedPaths(score/log1p(tokens), max_paths=15)",
+  "anti_circular": "anchors/substrings never used in ranking",
+  "held_out_note": "tasks-held-out-frozen.json has H01-H12 only; H13-H18 NOT_IN_FIXTURE",
+  "criteria": "recall(budget)>=recall(B0) per task; tokens(budget)<=tokens(B0)+slack(0.5%|64)",
+  "suites": {
+    "R01_R06": "PASS integration bench-r01-r06-budget.test.ts",
+    "H07_H12": "PASS (H13-H18 absent)"
+  }
+}

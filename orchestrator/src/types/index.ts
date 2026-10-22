@@ -67,6 +67,7 @@ export type EventType =
   | "ProviderDiscoveryStarted"
   | "ProviderDiscoveryCompleted"
   | "SkillLifecycle"
+  | "ContextBudget"
   | "KnowledgeHit"
   | "KnowledgeProposed"
   | "MemoryWritten"
@@ -426,6 +427,14 @@ export interface ExecuteRequest {
   node: GraphNode;
   /** Optional authority flags passed by scheduler/engine */
   authority_context?: AuthorityRuntimeContext;
+  /** PDA / context budget (V22-GOAL-001/006) — aditivo */
+  gate_bundle?: import("../context/types.js").GateBundleFields;
+  context_retrieval?: Array<{
+    path: string;
+    content: string;
+    kind?: import("../context/types.js").ContextSliceKind;
+    priority?: number;
+  }>;
 }
 
 export interface ExecuteResult {

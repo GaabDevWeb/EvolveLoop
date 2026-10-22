@@ -82,6 +82,26 @@ export type {
   EventCoverageMode,
 } from "./evolveloop/index.js";
 
+export {
+  deriveContextOwnerId,
+  validateSpawnContext,
+  parseGateBundle,
+  prepareSpawnContext,
+  prepareSpawnContextWithTelemetry,
+  applyContextBudget,
+  getCompactionReinjectContract,
+  assertReinjectAllowed,
+  countTokens,
+  resolveTokenizer,
+  sliceFromFile,
+  appendContextBudgetEvidenceFields,
+  emitContextBudgetTelemetry,
+  type GateBundleFields,
+  type ContextBudgetLimits,
+  type ContextSlice,
+  type ContextBudgetTelemetry,
+  type SpawnContextValidation,
+} from "./context/index.js";
 export { PolicyEngine } from "./policies/policy-engine.js";
 export { RegistryClient, buildRegistryFromManifests } from "./registry/registry-client.js";
 export {
@@ -240,7 +260,17 @@ export {
 } from "./evidence/builders.js";
 export * from "./capabilities/results.js";
 export { JobStore, type SkillJob, type SkillJobResult } from "./jobs/job-store.js";
-export { invokePickup, buildPickupPrompt, type PickupPlan } from "./jobs/job-pickup.js";
+export {
+  invokePickup,
+  buildPickupPrompt,
+  type PickupPlan,
+} from "./jobs/job-pickup.js";
+export {
+  preparePickupSpawnContext,
+  extractGateBundleFromRequest,
+  extractContextRetrievalFromRequest,
+} from "./jobs/spawn-pickup-context.js";
+export { runB0Retrieval, anchorRecall, runRg, type BenchTask } from "./context/bench-retrieval.js";
 export { jobResultToExecuteResult, loadEvidenceFile } from "./jobs/job-resume.js";
 export { saveCheckpoint, loadCheckpoint, clearCheckpoint, CheckpointError, type EngineCheckpoint } from "./jobs/checkpoint.js";
 export {

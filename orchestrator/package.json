@@ -11,6 +11,7 @@
   "scripts": {
     "build": "tsc",
     "test": "vitest run",
+    "test:bench": "vitest run --config vitest.bench.config.ts",
     "test:watch": "vitest",
     "test:unit": "vitest run tests/unit",
     "test:integration": "vitest run tests/integration",

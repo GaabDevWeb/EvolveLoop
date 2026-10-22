@@ -43,11 +43,11 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Prioridade:** P0
 - **Título:** ADR de ownership do contexto de trabalho
 - **Problema:** ADR-DR-0005 bloqueia compaction/reinject; ownership entre contexto compactado, Memory, Knowledge e Checkpoint permanece em checklist aberto (`docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md`).
-- **Estado atual:** Compaction `NOT_IMPLEMENTED`; nenhum ADR de ownership aceito em `docs/adr/` além dos DRs em finalization.
+- **Estado atual:** Compaction `NOT_IMPLEMENTED`; ADR `docs/adr/0013-context-ownership-working-context.md` **accepted**; owner + contrato em `orchestrator/src/context/`; **SkillJob pickup** (`job-pickup.ts` / `spawn-pickup-context.ts`) grava `ContextBudgetEvidence` e sidecar checkpoint.
 - **Resultado:** ADR novo em `docs/adr/` respondendo às 9 perguntas do escopo proposto (conteúdo candidato em `docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md` § P0-1), sem criar store permanente para working context.
 - **Solução:** Documento ADR apenas; desbloqueia desenho futuro de compaction e interpretação de ADR-DR-0002 (budget) sem fundir stores.
 - **Dependências:** Nenhuma ferramenta externa.
-- **Impacto arquitetural:** Nenhuma mudança no runtime V2; tipos `KnowledgeBackend` / `MemoryStore` / checkpoint inalterados (`orchestrator/src/knowledge/backend/types.ts`, `orchestrator/src/memory/memory-store.ts`).
+- **Impacto arquitetural:** Aditivo em `orchestrator/src/context/` (owner por spawn, contrato compaction); tipos `KnowledgeBackend` / `MemoryStore` / checkpoint inalterados (`orchestrator/src/knowledge/backend/types.ts`, `orchestrator/src/memory/memory-store.ts`).
 - **Critérios de aceite:** As 9 perguntas com resposta explícita; Knowledge ≠ Memory ≠ Checkpoint; working context declarado descartável na fronteira da chamada ao modelo.
 - **Métricas:** N/A (decisão documental); sem alvo numérico.
 - **Validação / testes:** Revisão cruzada com ADR-DR-0005 e ADR-DR-0002; quando `evolve-v3` existir, confrontar com `WORLD-MODEL.md` (**hipótese pendente** — branch ausente no remoto).
@@ -150,7 +150,7 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Prioridade:** P1
 - **Título:** Orçamento de contexto por spawn / GATE_BUNDLE
 - **Problema:** Nada impede reler repo inteiro ou injetar vault completa; sem dedup de paths (`docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md` § P1-2).
-- **Estado atual:** Orquestrador herda `GATE_BUNDLE` (`.cursor/skills/orquestrar/references/gate-bundle.md`); sem contadores de budget na evidence bus.
+- **Estado atual:** ranking **query-only** (sem `rg_patterns` no score; candidatos = união rg como B0); `npm run test:bench` cobre R01–R06 + H07–H18; pickup grava `ContextBudgetEvidence`.
 - **Resultado:** Procedimento normativo: índice `.ai/`, até N páginas, até M paths `rg`; N/M calibrados pós-baseline ou parametrizados no fixture (N=5, M=15 proposta inicial **não é gate** — `PENDING_BASELINE`).
 - **Solução:** Checklist em skill / briefing PDA; campos opcionais em JSON de evidência (aditivos); não quebrar `knowledge.search` v1 (`orchestrator/contracts/knowledge.search.yaml`).
 - **Dependências:** V22-GOAL-005; V22-GOAL-003 para alvos numéricos de token.
