@@ -2,9 +2,9 @@
 
 | Campo | Valor |
 |-------|-------|
-| **task_id** | `V22-FINAL-verify` |
-| **status** | `completed` (metas 001–010 na release; verificação CI pós-merge) |
-| **release tip** | `release/v2.1-freeze-preparation` @ `4d3e21c` |
+| **task_id** | `V22-FINAL-verify-2` |
+| **status** | `completed` (metas 001–010 na release; verificação pós-merge #14–#15) |
+| **release tip** | `release/v2.1-freeze-preparation` @ `b127bae` |
 | **verificação** | 2026-10-22 (agent VM) |
 
 ## Entrega na release (PRs #1–#11)
@@ -22,8 +22,10 @@
 | [#9](https://github.com/GaabDevWeb/EvolveLoop/pull/9) | Flags P2: Graphify, Caveman, prompt-cache | 008, 009, 010 |
 | [#10](https://github.com/GaabDevWeb/EvolveLoop/pull/10) | Diagnóstico recall B1 oficial (H19–H24) | 005, 003 |
 | [#11](https://github.com/GaabDevWeb/EvolveLoop/pull/11) | Medição honesta GOAL-009/010 (pickup completo + prefixo) | 009, 010 |
+| [#14](https://github.com/GaabDevWeb/EvolveLoop/pull/14) | Graphify B3 harness + ADR-0014 | 008 |
+| [#15](https://github.com/GaabDevWeb/EvolveLoop/pull/15) | Reconciliação B3 / tokenizer tiktoken vs PROXY | 008, 003 |
 
-Merge final das metas de contexto/brevity: **#6** sobre tip que já inclui **#9** e **#11** (`4d3e21c`).
+Merge final das metas de contexto/brevity: **#6** sobre tip que já inclui **#9** e **#11** (`4d3e21c`). Pós-freeze: **#14** (Graphify B3 + ADR-0014), **#15** (continuidade release) → tip **`b127bae`**.
 
 ## Status final por meta (rótulos honestos)
 
@@ -38,33 +40,42 @@ Legenda: **`ENTREGUE_CI`** = critérios automatizados verdes na release; **`FIXT
 | **V22-GOAL-005** | P1 | `ENTREGUE_CI` | Runbook + bootstrap (`CORPUS_SET=evolveloop` no index) + corrida oficial híbrida reprodutível; relatório `GOAL-003-005-official-report.md`. |
 | **V22-GOAL-006** | P1 | `ENTREGUE_CI` | Budget no spawn/pickup, ranking query-only (sem score circular `rg_patterns`), `bench-budget-nocirc` + `context-budget-pickup.test.ts`. |
 | **V22-GOAL-007** | P1 | `ENTREGUE_CI` | Redação/sanitização evidence + canário + wire integration. |
-| **V22-GOAL-008** | P2 | `FLAG_OPT_IN` + `GRAPHIFY_CODE_GRAPH` | B3 medido (`battery-b3-graphify/`, ADR-0014); adapter CLI real; não é `KnowledgeBackendId`. |
+| **V22-GOAL-008** | P2 | `FLAG_OPT_IN` + `GRAPHIFY_CODE_GRAPH` | B3 re-bench oficial unificado (`unified_official_table`: dev 7/9/9, teste 4/5/6 recall=1 B0/B1/B3); scorer `v22-anchor-scorer-1.0.0` + tiktoken; ADR-0014. |
 | **V22-GOAL-009** | P2 | `FLAG_OPT_IN` + `FIXTURE_PROVA` | `EVOLVELOOP_BREVITY_CAVEMAN`; medição `FIXTURE_PICKUP_INVOKE` (R01–R06, H07–H12); flags **OFF** = pickup inalterado (teste integração P2). |
-| **V22-GOAL-010** | P2 | `FIXTURE_PROVA` | Prefixo cacheável estável em fixture (`measure-prompt-cache-prefix.ts`); **`vendor_http_cache_hit: NOT_MEASURED`** (sem HTTP vendor). |
+| **V22-GOAL-010** | P2 | `FIXTURE_PROVA` | Prefixo cacheável estável em fixture (`measure-prompt-cache-prefix.ts`); **`vendor_http_cache_hit: NOT_MEASURED`** — requer **API key** do vendor para medir cache HTTP real. |
 
 ## Pendências explícitas (não bloqueiam freeze documental/runtime CI)
 
 | Pendência | Rótulo | Notas |
 |-----------|--------|-------|
-| Ganho B1 vs B0 no motor wiki **real** | `OFFICIAL_WIKI_GROUND` (manifest) | Held-out teste **5/6** vs B0 **4/6** (2×, scorer `v22-anchor-scorer-1.0.0` + tiktoken budget); CI local sem Ollama continua `FIXTURE`/degraded. |
-| Cache LLM vendor | `NOT_MEASURED` | GOAL-010 mede % prefixo em fixture; hit rate HTTP não instrumentado. |
-| Graphify em produção | `STUB` | Flag + adapter; não altera `KnowledgeBackendId` default. |
-| Host Cursor IDE | `projeto` | Pickup/`context_retrieval` no host **não reporta paths** ao engine — fora do contrato TS testado. |
+| Ganho B1 vs B0 no motor wiki **real** | `OFFICIAL_WIKI_GROUND` (manifest) | Held-out teste **5/6** vs B0 **4/6** (scorer `v22-anchor-scorer-1.0.0` + tiktoken); **Ollama obrigatório** para re-executar B1 live (CI mínimo usa paths congelados do manifest). |
+| Cache LLM vendor | `NOT_MEASURED` | GOAL-010: prefixo em fixture OK; **hit rate HTTP** pendente de credencial/API key do provider. |
+| Graphify em produção | `FLAG_OPT_IN` | Medição B3 em `battery-b3-graphify/`; default OFF; não altera `KnowledgeBackendId`. |
+| Host Cursor IDE | `projeto` | Pickup/`context_retrieval` no **host Cursor** sem report de paths — fora do contrato TS/orchestrator testado. |
 | Branch `evolve-v3` | `hipótese` | Confronto World Model ainda pendente. |
 | `wiki` / `wiki-mem` no `install.sh` | `projeto` | CONFLICT esperado quando skills já existem no monorepo (idempotência OK). |
 
-## Verificação `V22-FINAL-verify` (tip `4d3e21c`)
+## Verificação `V22-FINAL-verify-2` (tip `b127bae`)
 
 | Comando | Exit |
 |---------|------|
 | `orchestrator`: `npm ci` | 0 |
 | `orchestrator`: `npm run build` | 0 |
-| `orchestrator`: `npm test` | 0 (316 tests) |
+| `orchestrator`: `npm test` | 0 (323 tests) |
 | `orchestrator`: `npm run test:bench` | 0 (18 nocirc) |
-| `agent-setup`: `pytest` | 0 (7) |
-| `agent-setup`: `./install.sh standard` (×2) | 0 / 0 |
+| `agent-setup`: `python3 -m pytest` | 0 (7) |
 | `validate-v22-artifacts.sh` | 0 |
-| Smoke `/evolve` bootstrap: `run-engine` + `v22-p2-mini.ir.yaml` (`ORCHESTRATOR_ROOT`) | 0 (engine JSON; nó simulado `blocked_reason: simulated_evidence`) |
+| `integrity_test.py --official` (`OFFICIAL-MANIFEST.json`) | 0 (`ALL_OFFICIAL_INTEGRITY_OK`) |
+| `run-graphify-b3-bench.sh` (`official-held-out`, scorer + tiktoken) | 0 |
+
+### B3 — tabela única B0 / B1 (oficial híbrido) / B3
+
+| Split | B0 recall=1 | B1 recall=1 | B3 recall=1 |
+|-------|------------:|------------:|------------:|
+| H07–H18 (dev) | 7/12 | 9/12 | 9/12 |
+| H19–H24 (teste) | 4/6 | 5/6 | 6/6 |
+
+Detalhe (medianas): `raw/battery-b3-graphify/b3-summary.json` → `unified_official_table`; ADR-0014.
 
 ## Materiais consolidados (V22-T2)
 

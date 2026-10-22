@@ -2,12 +2,12 @@
   "experiment_id": "V22-BENCH-GRAPHIFY-B3",
   "evidence_class": "OFFICIAL_BASELINE",
   "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-  "run_id": "V22G-H14-B0-c37f753b4dad",
+  "run_id": "V22G-H14-B0-8bbd95c871ed",
   "arm": "B0",
   "task_id": "H14",
   "split": "H07_H18_dev",
-  "timestamp": "2026-10-22T02:06:01.728351+00:00",
-  "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+  "timestamp": "2026-10-22T03:37:53.415933+00:00",
+  "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
   "harness": "v22-graphify-b3-harness-1.5.0",
   "ground_harness": "v22-ground-b1-harness-1.5.0",
   "tokenizer": "tiktoken:cl100k_base",
@@ -24,22 +24,27 @@
       "docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md",
       "docs/audit/EVIDENCE-CATALOG.md",
       "docs/audit/IMPLEMENTATION-MATRIX.yaml",
-      "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/GOAL-005e-recall-report.md"
+      "orchestrator/src/index.ts",
+      "orchestrator/src/providers/deterministic/index.ts",
+      "orchestrator/src/providers/deterministic/knowledge.ts"
     ],
-    "input_tokens": 17593,
-    "latency_ms": 78,
-    "recall": 0.0,
+    "graph_paths_ranked": [],
+    "input_tokens": 21925,
+    "latency_ms": 65,
+    "recall": 1.0,
     "recall_notes": [
-      "miss path not read: orchestrator/src/providers/deterministic/knowledge.ts"
+      "anchor line drift (file evidence): orchestrator/src/providers/deterministic/knowledge.ts:16"
     ],
-    "ground_exit": 0,
-    "stale_hits": 0
+    "graphify_exit": 0,
+    "graph_path": ""
   },
   "verifier": {
-    "pass": false,
-    "recall": 0.0,
+    "pass": true,
+    "recall": 1.0,
     "notes": [
-      "miss path not read: orchestrator/src/providers/deterministic/knowledge.ts"
+      "anchor line drift (file evidence): orchestrator/src/providers/deterministic/knowledge.ts:16"
     ]
-  }
+  },
+  "official_reference": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H14/B0/run-01.json",
+  "scorer_version": "v22-anchor-scorer-1.0.0"
 }

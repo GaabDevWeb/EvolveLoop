@@ -5,7 +5,9 @@ REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../../.." && git rev-parse --show-
 export PATH="${HOME}/.local/bin:${PATH}"
 HARNESS="$REPO/docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/harness"
 cd "$HARNESS"
-export V22_ANCHOR_RECALL=file
+export V22_ANCHOR_SCORER_MODE=file_evidence
+export V22_BENCH_TOKENIZER=tiktoken
 export V22_BENCH_MAX_PATHS=45
 export V22_BENCH_MAX_INPUT_TOKENS=22000
+export V22_B3_SUITE=official-held-out
 python3 graphify_b3_harness.py "$REPO/docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery-b3-graphify"

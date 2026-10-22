@@ -2,12 +2,12 @@
   "experiment_id": "V22-BENCH-GRAPHIFY-B3",
   "evidence_class": "OFFICIAL_BASELINE",
   "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-  "run_id": "V22G-H19-B0-90cf3c51e975",
+  "run_id": "V22G-H19-B0-3f85c6d1de69",
   "arm": "B0",
   "task_id": "H19",
   "split": "H19_H24_test",
-  "timestamp": "2026-10-22T02:06:06.144826+00:00",
-  "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+  "timestamp": "2026-10-22T03:37:57.163235+00:00",
+  "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
   "harness": "v22-graphify-b3-harness-1.5.0",
   "ground_harness": "v22-ground-b1-harness-1.5.0",
   "tokenizer": "tiktoken:cl100k_base",
@@ -34,16 +34,19 @@
       "docs/audit/RESEARCH-RECONCILIATION.md",
       "docs/execution-replay-model.md"
     ],
+    "graph_paths_ranked": [],
     "input_tokens": 18509,
-    "latency_ms": 91,
+    "latency_ms": 85,
     "recall": 1.0,
     "recall_notes": [],
-    "ground_exit": 0,
-    "stale_hits": 0
+    "graphify_exit": 0,
+    "graph_path": ""
   },
   "verifier": {
     "pass": true,
     "recall": 1.0,
     "notes": []
-  }
+  },
+  "official_reference": "raw/battery-held-out-official-hybrid/run-01/test/held-out/H19/B0/run-01.json",
+  "scorer_version": "v22-anchor-scorer-1.0.0"
 }

@@ -1,13 +1,13 @@
 {
   "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-  "evidence_class": "FIXTURE_WIKI_GROUND",
+  "evidence_class": "OFFICIAL_WIKI_GROUND",
   "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-  "run_id": "V22G-H16-B1-7c473c353474",
+  "run_id": "V22G-H16-B1-fd970778138e",
   "arm": "B1",
   "task_id": "H16",
   "split": "H07_H18_dev",
-  "timestamp": "2026-10-22T02:04:37.106930+00:00",
-  "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+  "timestamp": "2026-10-22T03:37:55.010147+00:00",
+  "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
   "harness": "v22-graphify-b3-harness-1.5.0",
   "ground_harness": "v22-ground-b1-harness-1.5.0",
   "tokenizer": "tiktoken:cl100k_base",
@@ -15,51 +15,28 @@
     "task_id": "H16",
     "arm": "B1",
     "paths_read": [
-      "orchestrator/src/knowledge/backend/resolve.ts",
-      "docs/adr/0012-wiki-default-knowledge-backend.md",
-      "AGENT.md",
-      "Agents/backend.md",
-      "CHANGELOG.md",
-      "GLOBAL-SETUP.md",
-      "README.md",
-      "Rules/wiki-agent.mdc",
-      "agent-setup/README.md",
-      "agent-setup/bootstrap.sh",
-      "agent-setup/cursor/commands/evolve.md",
-      "agent-setup/cursor/hooks/wiki-mem/mem.py",
-      "agent-setup/cursor/rules/wiki-agent.mdc",
-      "agent-setup/docs/architecture.md",
-      "agent-setup/docs/manifest.md",
-      "agent-setup/docs/security.md",
-      "agent-setup/manifest/manifest.yaml",
-      "agent-setup/skills/wiki/SKILL.md",
-      "agent-setup/skills/wiki/references/cli.md",
-      "agent-setup/skills/wiki/scripts/ground.sh",
-      "agent-setup/src/agent_setup/cli.py",
-      "agent-setup/src/agent_setup/detect.py"
+      "docs/research/evolveloop-v2.2/07-compatibility-matrix.md",
+      "orchestrator/src/v22/bench-h-tasks.ts",
+      "docs/architecture/public/OVERVIEW.md",
+      "docs/internal/historical/cursor-megabrain-rag-stack.md",
+      "profiles/default.yaml",
+      "docs/research/evolveloop-v2.2/04-community-findings.md",
+      ".cursor/skills/security/capability-registry.yaml",
+      "docs/research/evolveloop-v2.2/01-current-state-audit.md"
     ],
-    "input_tokens": 17280,
-    "latency_ms": 177,
-    "recall": 0.0,
-    "recall_notes": [
-      "miss path not read: profiles/default.yaml"
-    ],
-    "ground_exit": 0,
-    "stale_hits": 0
+    "graph_paths_ranked": [],
+    "input_tokens": 19651,
+    "latency_ms": 1657,
+    "recall": 1.0,
+    "recall_notes": [],
+    "graphify_exit": 0,
+    "graph_path": ""
   },
   "verifier": {
-    "pass": false,
-    "recall": 0.0,
-    "notes": [
-      "miss path not read: profiles/default.yaml"
-    ]
+    "pass": true,
+    "recall": 1.0,
+    "notes": []
   },
-  "b1_engine": {
-    "engine_requested": "auto",
-    "karpathy_wiki_dir": "/opt/karpathyWiki",
-    "karpathy_wiki_sha_expected": "cd3cf08",
-    "wiki_engine": "fixtures/evolveloop-wiki-vault",
-    "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
-    "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
-  }
+  "official_reference": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H16/B1/run-01.json",
+  "scorer_version": "v22-anchor-scorer-1.0.0"
 }

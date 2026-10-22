@@ -3,881 +3,12 @@
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "OFFICIAL_BASELINE",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-R01-B0-615bab16f0f8",
-    "arm": "B0",
-    "task_id": "R01",
-    "split": "R01_R06",
-    "timestamp": "2026-10-22T02:04:22.466658+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
-    "harness": "v22-graphify-b3-harness-1.5.0",
-    "ground_harness": "v22-ground-b1-harness-1.5.0",
-    "tokenizer": "tiktoken:cl100k_base",
-    "metrics": {
-      "task_id": "R01",
-      "arm": "B0",
-      "paths_read": [
-        "CHANGELOG.md",
-        "docs/CEO-controller.md",
-        "docs/adr/0013-context-ownership-working-context.md",
-        "docs/architecture/decision-review/ARCHITECTURE-DECISION-REVIEW.md",
-        "docs/architecture/decision-review/DECISION-LEDGER.md",
-        "docs/architecture/decision-review/DECISION-MATRIX.yaml",
-        "docs/architecture/decision-review/FUTURE-EXPERIMENTS.yaml",
-        "docs/architecture/decision-review/TRACEABILITY.md",
-        "docs/architecture/decision-review/adr-drafts/ADR-DR-0001-keep-job-path-resume.md",
-        "docs/architecture/evolution/FINAL-STATE.yaml",
-        "docs/architecture/evolution/UNSUPPORTED-CLAIMS.yaml",
-        "docs/architecture/finalization/adrs/ADR-DR-0001-keep-job-path-resume.md",
-        "docs/architecture/finalization/adrs/ADR-DR-0003-security-model-before-sandbox.md",
-        "docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md",
-        "docs/architecture/finalization/prototypes/PT-002-os-kill-job-resume.md",
-        "docs/architecture/gate/DECISION-GATE.yaml",
-        "docs/architecture/gate/FUTURE-EXPERIMENT-GATE.yaml",
-        "docs/architecture/prototype-gate/PREFLIGHT-EVIDENCE.yaml",
-        "docs/architecture/prototype-gate/PROTOTYPE-GATE.yaml"
-      ],
-      "input_tokens": 21790,
-      "latency_ms": 115,
-      "recall": 0.0,
-      "recall_notes": [
-        "miss path not read: orchestrator/src/jobs/checkpoint.ts"
-      ],
-      "ground_exit": 0,
-      "stale_hits": 0
-    },
-    "verifier": {
-      "pass": false,
-      "recall": 0.0,
-      "notes": [
-        "miss path not read: orchestrator/src/jobs/checkpoint.ts"
-      ]
-    }
-  },
-  {
-    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-    "evidence_class": "GRAPHIFY_CODE_GRAPH",
-    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-R01-B3-5dd22ae3d9ca",
-    "arm": "B3",
-    "task_id": "R01",
-    "split": "R01_R06",
-    "timestamp": "2026-10-22T02:04:23.187369+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
-    "harness": "v22-graphify-b3-harness-1.5.0",
-    "ground_harness": "v22-ground-b1-harness-1.5.0",
-    "tokenizer": "tiktoken:cl100k_base",
-    "metrics": {
-      "task_id": "R01",
-      "arm": "B3",
-      "paths_read": [
-        ".cursor/skills/security/references/auto-planning.md",
-        "docs/reconciliation/runtime-sync/backup/jobs.AG.reference/checkpoint.ts",
-        "global-skills/systematic-debugging/CREATION-LOG.md",
-        "orchestrator/tests/unit/checkpoint-integrity.test.ts",
-        "orchestrator/tests/unit/engine-evolve-hook.test.ts",
-        "docs/architecture/release-audit-2026-10-11/V2.1-FREEZE-SCOPE-REPORT.md",
-        "orchestrator/src/index.ts",
-        "orchestrator/src/evolveloop/index.ts",
-        "orchestrator/src/types/index.ts"
-      ],
-      "graph_paths_ranked": [
-        ".cursor/skills/security/references/auto-planning.md",
-        "docs/reconciliation/runtime-sync/backup/jobs.AG.reference/checkpoint.ts",
-        "global-skills/systematic-debugging/CREATION-LOG.md",
-        "orchestrator/tests/unit/checkpoint-integrity.test.ts",
-        "orchestrator/tests/unit/engine-evolve-hook.test.ts",
-        "docs/architecture/release-audit-2026-10-11/V2.1-FREEZE-SCOPE-REPORT.md",
-        "orchestrator/src/index.ts",
-        "orchestrator/src/evolveloop/index.ts",
-        "orchestrator/src/types/index.ts",
-        "orchestrator/src/engine/execution-engine.ts",
-        "orchestrator/package.json",
-        "orchestrator/src/evolveloop/longitudinal-controller.ts",
-        "orchestrator/src/jobs/checkpoint.ts",
-        "orchestrator/src/providers/mock-provider.ts",
-        "orchestrator/src/executors/smart-mock-executor.ts",
-        "orchestrator/tests/fixtures/login-dashboard.ts",
-        "orchestrator/src/cli/run-engine.ts",
-        "orchestrator/src/evidence/builders.ts",
-        "orchestrator/tests/evals/evolveloop-v1-adversarial-audit.test.ts",
-        ".cursor/skills/security/evals/run-iteration-3-codeql.mjs",
-        "orchestrator/src/evolveloop/persistence/signal-store.ts",
-        "orchestrator/src/registry/manifest-loader.ts",
-        "orchestrator/src/events/event-bus.ts",
-        "orchestrator/src/evidence/evidence-bus.ts",
-        "orchestrator/src/evolveloop/adapters/runtime-observer.ts",
-        "orchestrator/src/evolveloop/live/live-coordinator.ts",
-        "orchestrator/src/graph/graph-store.ts",
-        "orchestrator/tests/integration/v22-wire.integration.test.ts",
-        "orchestrator/tests/integration/v22-session-continuity.integration.test.ts",
-        "orchestrator/src/evolveloop/controller.ts",
-        "orchestrator/src/registry/registry-builder.ts",
-        "orchestrator/src/registry/registry-client.ts",
-        "orchestrator/src/scheduler/scheduler.ts",
-        "orchestrator/src/v22/measure-prompt-cache-prefix.ts",
-        ".cursor/skills/security/evals/run-iteration-2-semgrep.mjs",
-        ".cursor/skills/security/evals/run-iteration-4-combinations.mjs",
-        "orchestrator/tests/unit/evolveloop/longitudinal.test.ts",
-        ".cursor/skills/security/evals/run-iteration-6-gitleaks.mjs",
-        "orchestrator/src/evolveloop/live/observation-window.ts",
-        "orchestrator/tests/evals/evolveloop-longitudinal-evals.test.ts",
-        "orchestrator/tests/integration/job-resume.test.ts",
-        "orchestrator/tests/unit/evolveloop/live-registry-observer.test.ts",
-        "orchestrator/tests/unit/evolveloop/outcome-auto-analyze.test.ts",
-        "orchestrator/tests/unit/execution-contract.test.ts",
-        "orchestrator/src/plugins/plugin-loader.ts",
-        "orchestrator/tests/integration/context-budget-pickup.test.ts",
-        "orchestrator/tests/evals/evolveloop-final-evals.test.ts",
-        ".cursor/skills/security/evals/run-iteration-1.mjs",
-        "orchestrator/src/evidence/validator.ts",
-        "orchestrator/tests/integration/discovery-skilljobs.test.ts"
-      ],
-      "input_tokens": 19469,
-      "latency_ms": 720,
-      "recall": 0.0,
-      "recall_notes": [
-        "miss path not read: orchestrator/src/jobs/checkpoint.ts"
-      ],
-      "graphify_exit": 0,
-      "graph_path": "/workspace/graphify-out/graph.json"
-    },
-    "verifier": {
-      "pass": false,
-      "recall": 0.0,
-      "notes": [
-        "miss path not read: orchestrator/src/jobs/checkpoint.ts"
-      ]
-    },
-    "graphify": {
-      "cli_version": "graphify 0.9.93"
-    }
-  },
-  {
-    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-    "evidence_class": "OFFICIAL_BASELINE",
-    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-R02-B0-ef18e934d358",
-    "arm": "B0",
-    "task_id": "R02",
-    "split": "R01_R06",
-    "timestamp": "2026-10-22T02:04:23.300045+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
-    "harness": "v22-graphify-b3-harness-1.5.0",
-    "ground_harness": "v22-ground-b1-harness-1.5.0",
-    "tokenizer": "tiktoken:cl100k_base",
-    "metrics": {
-      "task_id": "R02",
-      "arm": "B0",
-      "paths_read": [
-        "CHANGELOG.md",
-        "docs/CEO-controller.md",
-        "docs/adr/0013-context-ownership-working-context.md",
-        "docs/architecture/decision-review/ARCHITECTURE-DECISION-REVIEW.md",
-        "docs/architecture/decision-review/DECISION-LEDGER.md",
-        "docs/architecture/decision-review/DECISION-MATRIX.yaml",
-        "docs/architecture/decision-review/FUTURE-EXPERIMENTS.yaml",
-        "docs/architecture/decision-review/TRACEABILITY.md",
-        "docs/architecture/decision-review/adr-drafts/ADR-DR-0001-keep-job-path-resume.md",
-        "docs/architecture/evolution/FINAL-STATE.yaml",
-        "docs/architecture/evolution/UNSUPPORTED-CLAIMS.yaml",
-        "docs/architecture/finalization/adrs/ADR-DR-0001-keep-job-path-resume.md",
-        "docs/architecture/finalization/adrs/ADR-DR-0003-security-model-before-sandbox.md",
-        "docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md",
-        "docs/architecture/finalization/prototypes/PT-002-os-kill-job-resume.md",
-        "docs/architecture/gate/DECISION-GATE.yaml",
-        "docs/architecture/gate/FUTURE-EXPERIMENT-GATE.yaml",
-        "docs/architecture/prototype-gate/PREFLIGHT-EVIDENCE.yaml",
-        "docs/architecture/prototype-gate/PROTOTYPE-GATE.yaml"
-      ],
-      "input_tokens": 21790,
-      "latency_ms": 112,
-      "recall": 0.0,
-      "recall_notes": [
-        "miss path not read: orchestrator/src/jobs/checkpoint.ts"
-      ],
-      "ground_exit": 0,
-      "stale_hits": 0
-    },
-    "verifier": {
-      "pass": false,
-      "recall": 0.0,
-      "notes": [
-        "miss path not read: orchestrator/src/jobs/checkpoint.ts"
-      ]
-    }
-  },
-  {
-    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-    "evidence_class": "GRAPHIFY_CODE_GRAPH",
-    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-R02-B3-ba6b8511d38e",
-    "arm": "B3",
-    "task_id": "R02",
-    "split": "R01_R06",
-    "timestamp": "2026-10-22T02:04:23.986863+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
-    "harness": "v22-graphify-b3-harness-1.5.0",
-    "ground_harness": "v22-ground-b1-harness-1.5.0",
-    "tokenizer": "tiktoken:cl100k_base",
-    "metrics": {
-      "task_id": "R02",
-      "arm": "B3",
-      "paths_read": [
-        "docs/architecture/release-audit-2026-10-11/V2.1-FREEZE-SCOPE-REPORT.md",
-        "docs/architecture/v2.2/WIKI-OPS-RUNBOOK.md",
-        "orchestrator/tests/unit/checkpoint-integrity.test.ts"
-      ],
-      "graph_paths_ranked": [
-        "docs/architecture/release-audit-2026-10-11/V2.1-FREEZE-SCOPE-REPORT.md",
-        "docs/architecture/v2.2/WIKI-OPS-RUNBOOK.md",
-        "orchestrator/tests/unit/checkpoint-integrity.test.ts",
-        ".cursor/skills/orquestrar/references/ecosystem-v2.md",
-        "orchestrator/src/index.ts",
-        "orchestrator/src/types/index.ts",
-        "orchestrator/package.json",
-        "orchestrator/src/engine/execution-engine.ts",
-        "orchestrator/src/jobs/checkpoint.ts",
-        "orchestrator/src/providers/mock-provider.ts",
-        "orchestrator/src/evolveloop/longitudinal-controller.ts",
-        "orchestrator/src/cli/run-engine.ts",
-        "orchestrator/src/evidence/builders.ts",
-        "orchestrator/tests/evals/evolveloop-v1-adversarial-audit.test.ts",
-        ".cursor/skills/security/evals/run-iteration-3-codeql.mjs",
-        "orchestrator/src/registry/manifest-loader.ts",
-        "orchestrator/src/events/event-bus.ts",
-        "orchestrator/src/evidence/evidence-bus.ts",
-        "orchestrator/src/graph/graph-store.ts",
-        "orchestrator/tests/integration/v22-wire.integration.test.ts",
-        "orchestrator/tests/integration/v22-session-continuity.integration.test.ts",
-        "orchestrator/src/evolveloop/controller.ts",
-        "orchestrator/src/registry/registry-builder.ts",
-        "orchestrator/src/registry/registry-client.ts",
-        "orchestrator/src/scheduler/scheduler.ts",
-        "orchestrator/src/v22/measure-prompt-cache-prefix.ts",
-        ".cursor/skills/security/evals/run-iteration-2-semgrep.mjs",
-        ".cursor/skills/security/evals/run-iteration-4-combinations.mjs",
-        "orchestrator/tests/unit/evolveloop/longitudinal.test.ts",
-        ".cursor/skills/security/evals/run-iteration-6-gitleaks.mjs",
-        "orchestrator/src/evolveloop/live/observation-window.ts",
-        "orchestrator/tests/evals/evolveloop-longitudinal-evals.test.ts",
-        "orchestrator/tests/integration/job-resume.test.ts",
-        "orchestrator/tests/unit/evolveloop/live-registry-observer.test.ts",
-        "orchestrator/tests/unit/evolveloop/outcome-auto-analyze.test.ts",
-        "orchestrator/tests/unit/execution-contract.test.ts",
-        "orchestrator/tests/integration/context-budget-pickup.test.ts",
-        "orchestrator/tests/evals/evolveloop-final-evals.test.ts",
-        ".cursor/skills/security/evals/run-iteration-1.mjs",
-        "orchestrator/src/evidence/validator.ts",
-        "orchestrator/tests/integration/discovery-skilljobs.test.ts",
-        "orchestrator/tests/unit/deterministic-capabilities.test.ts",
-        "orchestrator/src/evolveloop/aggregation/cross-run.ts",
-        "orchestrator/src/evolveloop/diagnosis/live-inventory.ts",
-        "orchestrator/src/evolveloop/lifecycle/need-lifecycle.ts",
-        "orchestrator/src/evolveloop/pattern-detector.ts",
-        "orchestrator/src/knowledge/truth-source/isolation.ts",
-        "orchestrator/tests/evals/evolveloop-live-evals.test.ts",
-        "orchestrator/tests/integration/v22-p2-goals.integration.test.ts",
-        "orchestrator/tests/unit/cursor-skill-provider.test.ts"
-      ],
-      "input_tokens": 11514,
-      "latency_ms": 686,
-      "recall": 0.0,
-      "recall_notes": [
-        "miss path not read: orchestrator/src/jobs/checkpoint.ts"
-      ],
-      "graphify_exit": 0,
-      "graph_path": "/workspace/graphify-out/graph.json"
-    },
-    "verifier": {
-      "pass": false,
-      "recall": 0.0,
-      "notes": [
-        "miss path not read: orchestrator/src/jobs/checkpoint.ts"
-      ]
-    },
-    "graphify": {
-      "cli_version": "graphify 0.9.93"
-    }
-  },
-  {
-    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-    "evidence_class": "OFFICIAL_BASELINE",
-    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-R03-B0-1f1c3aaf4f23",
-    "arm": "B0",
-    "task_id": "R03",
-    "split": "R01_R06",
-    "timestamp": "2026-10-22T02:04:24.070051+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
-    "harness": "v22-graphify-b3-harness-1.5.0",
-    "ground_harness": "v22-ground-b1-harness-1.5.0",
-    "tokenizer": "tiktoken:cl100k_base",
-    "metrics": {
-      "task_id": "R03",
-      "arm": "B0",
-      "paths_read": [
-        "docs/adr/0005-hybrid-retrieval-degraded-mode.md",
-        "docs/architecture/knowledge/CORE-PERSONAL-BOUNDARY-V2.yaml",
-        "docs/architecture/knowledge/KNOWLEDGE-ARCHITECTURE.md",
-        "docs/architecture/knowledge/KNOWLEDGE-BACKEND-CONTRACT.md",
-        "docs/architecture/knowledge/KNOWLEDGE-BACKEND-MANIFEST.yaml",
-        "docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md",
-        "docs/architecture/publication/STRUCTURAL-PRECHECK-MAIN.yaml",
-        "docs/architecture/v2.2/EVIDENCE-SECRET-CANARY.md",
-        "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
-        "docs/architecture/v2.2/TECH-DECISIONS-MATRIX.md",
-        "docs/architecture/v2.2/TRACEABILITY-MATRIX.md",
-        "docs/architecture/v2.2/scripts/generate-evolveloop-wiki-knowledge.sh",
-        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/GOAL-005-review-report.md"
-      ],
-      "input_tokens": 14585,
-      "latency_ms": 82,
-      "recall": 0.0,
-      "recall_notes": [
-        "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
-      ],
-      "ground_exit": 0,
-      "stale_hits": 0
-    },
-    "verifier": {
-      "pass": false,
-      "recall": 0.0,
-      "notes": [
-        "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
-      ]
-    }
-  },
-  {
-    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-    "evidence_class": "GRAPHIFY_CODE_GRAPH",
-    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-R03-B3-d5af8c201cd3",
-    "arm": "B3",
-    "task_id": "R03",
-    "split": "R01_R06",
-    "timestamp": "2026-10-22T02:04:24.887890+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
-    "harness": "v22-graphify-b3-harness-1.5.0",
-    "ground_harness": "v22-ground-b1-harness-1.5.0",
-    "tokenizer": "tiktoken:cl100k_base",
-    "metrics": {
-      "task_id": "R03",
-      "arm": "B3",
-      "paths_read": [
-        ".cursor/skills/orquestrar/SKILL.md",
-        "docs/research/evolveloop-v2.2/07-compatibility-matrix.md"
-      ],
-      "graph_paths_ranked": [
-        ".cursor/skills/orquestrar/SKILL.md",
-        "docs/research/evolveloop-v2.2/07-compatibility-matrix.md",
-        "docs/internal/historical/MegaBrain-Ecosystem.md",
-        "AGENT.md",
-        "fixtures/evolveloop-wiki-vault/gaabwiki/cli.py",
-        "orchestrator/src/context/gate-bundle.ts",
-        ".cursor/skills/security/evals/manifest.json",
-        ".cursor/skills/security/references/specialists/report-consolidator.md",
-        "orchestrator/src/config/profile.ts",
-        "orchestrator/src/index.ts",
-        ".cursor/skills/security/references/output-contract.md",
-        ".cursor/skills/security/references/specialists/README.md",
-        "orchestrator/src/knowledge/backend/wiki-backend.ts",
-        ".cursor/skills/security/references/risk-scoring.md",
-        ".cursor/skills/security/references/ci-artifacts.md",
-        ".cursor/skills/security/references/audit-memory.md",
-        ".cursor/skills/security/references/verdict-trace.md",
-        ".cursor/skills/security/references/attack-chains.md",
-        ".cursor/skills/security/references/prioritization.md",
-        ".cursor/skills/security/references/taxonomy-mapping.md",
-        ".cursor/skills/security/references/framework-safety.md",
-        ".cursor/skills/security/references/threat-coverage.md",
-        "orchestrator/src/jobs/spawn-pickup-context.ts",
-        "agent-setup/cursor/hooks/wiki-mem/mem.py",
-        ".cursor/hooks/wiki-mem/mem.py",
-        "orchestrator/src/context/index.ts",
-        "orchestrator/src/capabilities/results.ts",
-        "orchestrator/src/context/pda-spawn.ts",
-        "agent-setup/src/agent_setup/cli.py",
-        "orchestrator/src/context/types.ts",
-        ".cursor/skills/wiki-carpaccio/scripts/carpaccio.py",
-        "agent-setup/src/agent_setup/detect.py",
-        "docs/architecture/v2.2/scripts/diagnose-official-b1-recall.py",
-        "fixtures/evolveloop-wiki-vault/gaabwiki/indexing.py",
-        "docs/architecture/v2.2/scripts/ingest-evolveloop-corpus-automatic.py",
-        "orchestrator/src/plugins/cursor-skill-provider.ts",
-        ".cursor/skills/security/SKILL.md",
-        "orchestrator/src/providers/deterministic/index.ts",
-        "orchestrator/src/knowledge/backend/resolve.ts",
-        "orchestrator/src/knowledge/backend/types.ts",
-        "orchestrator/tests/unit/knowledge-backend.test.ts",
-        "orchestrator/src/context/ownership.ts",
-        "orchestrator/src/telemetry/execution-trace.ts",
-        "orchestrator/src/authority/capability-authority.ts",
-        "orchestrator/tests/unit/context-ownership.test.ts",
-        ".cursor/skills/frontend-pro/scripts/search.py",
-        ".cursor/skills/security/references/auto-planning.md",
-        ".cursor/skills/security/references/exploitation-checklist.md",
-        ".cursor/skills/security/references/threat-modeling.md",
-        "fixtures/evolveloop-wiki-vault/tests/test_index.py"
-      ],
-      "input_tokens": 13318,
-      "latency_ms": 817,
-      "recall": 0.0,
-      "recall_notes": [
-        "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
-      ],
-      "graphify_exit": 0,
-      "graph_path": "/workspace/graphify-out/graph.json"
-    },
-    "verifier": {
-      "pass": false,
-      "recall": 0.0,
-      "notes": [
-        "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
-      ]
-    },
-    "graphify": {
-      "cli_version": "graphify 0.9.93"
-    }
-  },
-  {
-    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-    "evidence_class": "OFFICIAL_BASELINE",
-    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-R04-B0-930f9641f686",
-    "arm": "B0",
-    "task_id": "R04",
-    "split": "R01_R06",
-    "timestamp": "2026-10-22T02:04:25.055591+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
-    "harness": "v22-graphify-b3-harness-1.5.0",
-    "ground_harness": "v22-ground-b1-harness-1.5.0",
-    "tokenizer": "tiktoken:cl100k_base",
-    "metrics": {
-      "task_id": "R04",
-      "arm": "B0",
-      "paths_read": [
-        "Agents/Agent-architecture-mining.md",
-        "agent-setup/bootstrap.sh",
-        "agent-setup/src/agent_setup/paths.py",
-        "docs/adr/0013-context-ownership-working-context.md",
-        "docs/architecture-mining/targets/mcp/REPORT.md",
-        "docs/architecture-mining/validation/pre-authoring-audit.md",
-        "docs/architecture-mining/validation/skill-validation-2026-09-18.md",
-        "docs/architecture/decision-review/ARCHITECTURE-DECISION-REVIEW.md",
-        "docs/architecture/decision-review/DECISION-LEDGER.md",
-        "docs/architecture/decision-review/DECISION-MATRIX.yaml",
-        "docs/architecture/decision-review/TRACEABILITY.md",
-        "docs/architecture/decision-review/adr-drafts/ADR-DR-0001-keep-job-path-resume.md",
-        "docs/architecture/decision-review/adr-drafts/ADR-DR-0002-defer-production-skill-budget.md",
-        "docs/architecture/decision-review/adr-drafts/ADR-DR-0003-security-model-before-sandbox.md",
-        "docs/architecture/decision-review/adr-drafts/ADR-DR-0004-define-stuck-semantics-first.md",
-        "docs/architecture/decision-review/adr-drafts/ADR-DR-0005-context-ownership-before-compaction.md",
-        "docs/architecture/evolution/ADR-REVIEW-MATRIX.yaml",
-        "docs/architecture/evolution/FINAL-ARCHITECTURE-EVOLUTION-REPORT.md",
-        "docs/architecture/evolution/FINAL-ARCHITECTURE-REVIEW.md",
-        "docs/architecture/evolution/FINAL-STATE.md",
-        "docs/architecture/evolution/FINAL-STATE.yaml",
-        "docs/architecture/evolution/IMPLEMENTATION-DECISION.yaml",
-        "docs/architecture/evolution/INTEGRITY-AUDIT.yaml",
-        "docs/architecture/evolution/OPEN-QUESTIONS.yaml",
-        "docs/architecture/evolution/STATE-AT-START.yaml",
-        "docs/architecture/evolution/TRACEABILITY.yaml",
-        "docs/architecture/evolution/UNSUPPORTED-CLAIMS.yaml",
-        "docs/architecture/finalization/ADR-FINALIZATION-REPORT.md",
-        "docs/architecture/finalization/ADR-INDEX.md",
-        "docs/architecture/finalization/FINALIZATION-MATRIX.yaml",
-        "docs/architecture/finalization/FINALIZATION-STATUS.yaml"
-      ],
-      "input_tokens": 21207,
-      "latency_ms": 167,
-      "recall": 0.0,
-      "recall_notes": [
-        "miss path not read: docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md"
-      ],
-      "ground_exit": 0,
-      "stale_hits": 0
-    },
-    "verifier": {
-      "pass": false,
-      "recall": 0.0,
-      "notes": [
-        "miss path not read: docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md"
-      ]
-    }
-  },
-  {
-    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-    "evidence_class": "GRAPHIFY_CODE_GRAPH",
-    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-R04-B3-595762ac6f3e",
-    "arm": "B3",
-    "task_id": "R04",
-    "split": "R01_R06",
-    "timestamp": "2026-10-22T02:04:25.889965+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
-    "harness": "v22-graphify-b3-harness-1.5.0",
-    "ground_harness": "v22-ground-b1-harness-1.5.0",
-    "tokenizer": "tiktoken:cl100k_base",
-    "metrics": {
-      "task_id": "R04",
-      "arm": "B3",
-      "paths_read": [
-        "docs/architecture/decision-review/adr-drafts/ADR-DR-0005-context-ownership-before-compaction.md",
-        "docs/adr/0013-context-ownership-working-context.md",
-        "docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md",
-        "docs/internal/historical/MegaBrain-Ecosystem.md",
-        ".cursor/skills/security/evals/roadmap.md",
-        "orchestrator/src/context/ownership.ts",
-        "orchestrator/src/context/compaction-contract.ts",
-        "docs/research/experiments/E-004-compaction-reinject.md",
-        "orchestrator/src/evolveloop/handoff/gate-result.ts",
-        "orchestrator/src/evolveloop/index.ts"
-      ],
-      "graph_paths_ranked": [
-        "docs/architecture/decision-review/adr-drafts/ADR-DR-0005-context-ownership-before-compaction.md",
-        "docs/adr/0013-context-ownership-working-context.md",
-        "docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md",
-        "docs/internal/historical/MegaBrain-Ecosystem.md",
-        ".cursor/skills/security/evals/roadmap.md",
-        "orchestrator/src/context/ownership.ts",
-        "orchestrator/src/context/compaction-contract.ts",
-        "docs/research/experiments/E-004-compaction-reinject.md",
-        "orchestrator/src/evolveloop/handoff/gate-result.ts",
-        "orchestrator/src/evolveloop/index.ts",
-        "orchestrator/src/evolveloop/types.ts",
-        "orchestrator/src/evolveloop/longitudinal-types.ts",
-        "orchestrator/src/evolveloop/live/live-coordinator.ts",
-        "orchestrator/src/context/index.ts",
-        "orchestrator/src/evolveloop/live/observation-window.ts",
-        "orchestrator/src/context/types.ts",
-        "orchestrator/src/context/gate-bundle.ts",
-        "docs/research/experiments/README.md",
-        "orchestrator/src/index.ts",
-        "orchestrator/src/types/index.ts",
-        "orchestrator/src/engine/execution-engine.ts",
-        "orchestrator/src/evolveloop/longitudinal-controller.ts",
-        "orchestrator/src/cli/run-engine.ts",
-        "orchestrator/src/jobs/spawn-pickup-context.ts",
-        "orchestrator/tests/evals/evolveloop-v1-adversarial-audit.test.ts",
-        "orchestrator/src/evolveloop/adapters/runtime-observer.ts",
-        "orchestrator/src/context/bench-retrieval.ts",
-        "orchestrator/src/evolveloop/controller.ts",
-        "orchestrator/src/jobs/job-store.ts",
-        "orchestrator/src/context/pda-spawn.ts",
-        "orchestrator/tests/unit/evolveloop/outcome-auto-analyze.test.ts",
-        "orchestrator/tests/evals/evolveloop-final-evals.test.ts",
-        "orchestrator/src/context/budget.ts",
-        "orchestrator/src/evolveloop/live/scoped-cadence.ts",
-        "orchestrator/src/evolveloop/aggregation/cross-run.ts",
-        "orchestrator/src/evolveloop/lifecycle/need-lifecycle.ts",
-        "orchestrator/src/evolveloop/pattern-detector.ts",
-        "orchestrator/tests/evals/evolveloop-live-evals.test.ts",
-        "orchestrator/src/evolveloop/adapters/synthetic-fixtures.ts",
-        "orchestrator/src/evolveloop/persistence/signal-store.ts",
-        "orchestrator/src/evolveloop/store.ts",
-        "orchestrator/src/context/retrieval-ranking.ts",
-        "orchestrator/src/evolveloop/adapters/jsonl-events.ts",
-        "orchestrator/src/evolveloop/live/live-config.ts",
-        "orchestrator/src/evolveloop/signal-miner.ts",
-        "orchestrator/src/evolveloop/candidate-generator.ts",
-        "orchestrator/src/evolveloop/outcome/outcome-tracker.ts",
-        "orchestrator/src/context/telemetry.ts",
-        "orchestrator/src/evolveloop/candidate-validator.ts",
-        "orchestrator/src/evolveloop/need-detector.ts"
-      ],
-      "input_tokens": 21763,
-      "latency_ms": 833,
-      "recall": 1.0,
-      "recall_notes": [],
-      "graphify_exit": 0,
-      "graph_path": "/workspace/graphify-out/graph.json"
-    },
-    "verifier": {
-      "pass": true,
-      "recall": 1.0,
-      "notes": []
-    },
-    "graphify": {
-      "cli_version": "graphify 0.9.93"
-    }
-  },
-  {
-    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-    "evidence_class": "OFFICIAL_BASELINE",
-    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-R05-B0-b1b3a54f4899",
-    "arm": "B0",
-    "task_id": "R05",
-    "split": "R01_R06",
-    "timestamp": "2026-10-22T02:04:26.012258+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
-    "harness": "v22-graphify-b3-harness-1.5.0",
-    "ground_harness": "v22-ground-b1-harness-1.5.0",
-    "tokenizer": "tiktoken:cl100k_base",
-    "metrics": {
-      "task_id": "R05",
-      "arm": "B0",
-      "paths_read": [
-        "AGENT.md",
-        "Agents/Planner.md",
-        "CHANGELOG.md",
-        "INVENTORY.md",
-        "README.md",
-        "Rules/wiki-agent.mdc",
-        "agent-setup/README.md",
-        "agent-setup/cursor/commands/evolve.md",
-        "agent-setup/cursor/hooks/wiki-mem/mem.py",
-        "agent-setup/cursor/rules/wiki-agent.mdc",
-        "agent-setup/docs/components.md",
-        "agent-setup/manifest/manifest.yaml",
-        "agent-setup/manifest/profiles.yaml",
-        "docs/CEO-controller.md",
-        "docs/adr/0010-public-core-vs-gaabtype-profile.md",
-        "docs/adr/0012-wiki-default-knowledge-backend.md",
-        "docs/adr/0013-context-ownership-working-context.md",
-        "docs/architecture/decision-review/ARCHITECTURE-DECISION-REVIEW.md",
-        "docs/architecture/decision-review/TRACEABILITY.md",
-        "docs/architecture/decision-review/adr-drafts/ADR-DR-0005-context-ownership-before-compaction.md",
-        "docs/architecture/evolveloopt/EVOLVELOOP-LONGITUDINAL-IMPLEMENTATION-REPORT.md",
-        "docs/architecture/evolveloopt/final/EVOLVELOOP-FINAL-OPERATIONALIZATION-REPORT.md"
-      ],
-      "input_tokens": 21469,
-      "latency_ms": 121,
-      "recall": 0.0,
-      "recall_notes": [
-        "miss path not read: profiles/default.yaml"
-      ],
-      "ground_exit": 0,
-      "stale_hits": 0
-    },
-    "verifier": {
-      "pass": false,
-      "recall": 0.0,
-      "notes": [
-        "miss path not read: profiles/default.yaml"
-      ]
-    }
-  },
-  {
-    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-    "evidence_class": "GRAPHIFY_CODE_GRAPH",
-    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-R05-B3-f767cf362ca8",
-    "arm": "B3",
-    "task_id": "R05",
-    "split": "R01_R06",
-    "timestamp": "2026-10-22T02:04:26.807355+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
-    "harness": "v22-graphify-b3-harness-1.5.0",
-    "ground_harness": "v22-ground-b1-harness-1.5.0",
-    "tokenizer": "tiktoken:cl100k_base",
-    "metrics": {
-      "task_id": "R05",
-      "arm": "B3",
-      "paths_read": [
-        "orchestrator/src/config/profile.ts",
-        "docs/research/evolveloop-v2.2/04-community-findings.md",
-        "orchestrator/src/index.ts",
-        "orchestrator/src/memory/filesystem-memory-store.ts",
-        "orchestrator/tests/unit/knowledge-backend.test.ts",
-        "orchestrator/package.json",
-        "orchestrator/src/cli/run-engine.ts",
-        "orchestrator/tests/integration/v22-wire.integration.test.ts",
-        "orchestrator/src/memory/memory-store.ts",
-        "orchestrator/tests/integration/v22-session-continuity.integration.test.ts",
-        "orchestrator/tests/unit/execution-contract.test.ts",
-        "orchestrator/src/knowledge/backend/resolve.ts",
-        "orchestrator/src/knowledge/backend/types.ts",
-        "orchestrator/src/knowledge/backend/wiki-backend.ts",
-        "orchestrator/tests/integration/persistence.test.ts"
-      ],
-      "graph_paths_ranked": [
-        "orchestrator/src/config/profile.ts",
-        "docs/research/evolveloop-v2.2/04-community-findings.md",
-        "orchestrator/src/index.ts",
-        "orchestrator/src/memory/filesystem-memory-store.ts",
-        "orchestrator/tests/unit/knowledge-backend.test.ts",
-        "orchestrator/package.json",
-        "orchestrator/src/cli/run-engine.ts",
-        "orchestrator/tests/integration/v22-wire.integration.test.ts",
-        "orchestrator/src/memory/memory-store.ts",
-        "orchestrator/tests/integration/v22-session-continuity.integration.test.ts",
-        "orchestrator/tests/unit/execution-contract.test.ts",
-        "orchestrator/src/knowledge/backend/resolve.ts",
-        "orchestrator/src/knowledge/backend/types.ts",
-        "orchestrator/src/knowledge/backend/wiki-backend.ts",
-        "orchestrator/tests/integration/persistence.test.ts",
-        "orchestrator/tests/unit/session-continuity.test.ts",
-        "docs/research/evolveloop-v2.2/README.md",
-        "orchestrator/src/knowledge/backend/fake-backend.ts",
-        "orchestrator/tests/unit/filesystem-stores.test.ts",
-        "docs/research/evolveloop-v2.2/sources.md"
-      ],
-      "input_tokens": 21888,
-      "latency_ms": 794,
-      "recall": 0.0,
-      "recall_notes": [
-        "miss path not read: profiles/default.yaml"
-      ],
-      "graphify_exit": 0,
-      "graph_path": "/workspace/graphify-out/graph.json"
-    },
-    "verifier": {
-      "pass": false,
-      "recall": 0.0,
-      "notes": [
-        "miss path not read: profiles/default.yaml"
-      ]
-    },
-    "graphify": {
-      "cli_version": "graphify 0.9.93"
-    }
-  },
-  {
-    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-    "evidence_class": "OFFICIAL_BASELINE",
-    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-R06-B0-9cf2473abef5",
-    "arm": "B0",
-    "task_id": "R06",
-    "split": "R01_R06",
-    "timestamp": "2026-10-22T02:04:26.869146+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
-    "harness": "v22-graphify-b3-harness-1.5.0",
-    "ground_harness": "v22-ground-b1-harness-1.5.0",
-    "tokenizer": "tiktoken:cl100k_base",
-    "metrics": {
-      "task_id": "R06",
-      "arm": "B0",
-      "paths_read": [
-        "agent-setup/cursor/commands/evolve.md",
-        "docs/CEO-controller.md",
-        "docs/adr/0013-context-ownership-working-context.md",
-        "docs/architecture/portability/CORE-ARCHITECTURE.yaml",
-        "docs/architecture/release-audit-2026-10-11/V2.1-FREEZE-SCOPE-REPORT.md",
-        "docs/architecture/skills/audit/FLOW-SKILL-CATALOG.md",
-        "docs/architecture/skills/audit/HARD-GATES-V2.yaml"
-      ],
-      "input_tokens": 14620,
-      "latency_ms": 61,
-      "recall": 0.0,
-      "recall_notes": [
-        "miss path not read: .cursor/skills/orquestrar/references/gate-bundle.md"
-      ],
-      "ground_exit": 0,
-      "stale_hits": 0
-    },
-    "verifier": {
-      "pass": false,
-      "recall": 0.0,
-      "notes": [
-        "miss path not read: .cursor/skills/orquestrar/references/gate-bundle.md"
-      ]
-    }
-  },
-  {
-    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-    "evidence_class": "GRAPHIFY_CODE_GRAPH",
-    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-R06-B3-c1bc5ca90d99",
-    "arm": "B3",
-    "task_id": "R06",
-    "split": "R01_R06",
-    "timestamp": "2026-10-22T02:04:27.715346+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
-    "harness": "v22-graphify-b3-harness-1.5.0",
-    "ground_harness": "v22-ground-b1-harness-1.5.0",
-    "tokenizer": "tiktoken:cl100k_base",
-    "metrics": {
-      "task_id": "R06",
-      "arm": "B3",
-      "paths_read": [
-        ".cursor/skills/orquestrar/references/gate-bundle.md",
-        ".cursor/skills/orquestrar/references/specs/evidence.md",
-        "orchestrator/src/context/pda-spawn.ts",
-        "orchestrator/src/jobs/spawn-pickup-context.ts",
-        "orchestrator/src/context/gate-bundle.ts",
-        "docs/internal/historical/MegaBrain-Ecosystem.md",
-        ".cursor/skills/security/references/output-contract.md"
-      ],
-      "graph_paths_ranked": [
-        ".cursor/skills/orquestrar/references/gate-bundle.md",
-        ".cursor/skills/orquestrar/references/specs/evidence.md",
-        "orchestrator/src/context/pda-spawn.ts",
-        "orchestrator/src/jobs/spawn-pickup-context.ts",
-        "orchestrator/src/context/gate-bundle.ts",
-        "docs/internal/historical/MegaBrain-Ecosystem.md",
-        ".cursor/skills/security/references/output-contract.md",
-        "orchestrator/src/index.ts",
-        "orchestrator/src/types/index.ts",
-        "orchestrator/src/events/event-bus.ts",
-        "orchestrator/src/plugins/cursor-skill-provider.ts",
-        "orchestrator/src/jobs/job-pickup.ts",
-        "orchestrator/src/context/index.ts",
-        "orchestrator/src/jobs/job-store.ts",
-        "orchestrator/src/context/types.ts",
-        "orchestrator/src/context/budget.ts",
-        "orchestrator/src/context/ownership.ts",
-        "orchestrator/src/context/telemetry.ts",
-        "orchestrator/src/context/compaction-contract.ts",
-        "orchestrator/src/context/retrieval-ranking.ts",
-        "orchestrator/src/engine/execution-engine.ts",
-        "orchestrator/src/cli/run-engine.ts",
-        "orchestrator/src/providers/deterministic/index.ts",
-        "orchestrator/src/evidence/builders.ts",
-        "orchestrator/tests/evals/evolveloop-v1-adversarial-audit.test.ts",
-        "orchestrator/src/registry/manifest-loader.ts",
-        "orchestrator/src/evidence/evidence-bus.ts",
-        "orchestrator/src/evolveloop/adapters/runtime-observer.ts",
-        "orchestrator/tests/integration/v22-session-continuity.integration.test.ts",
-        "orchestrator/src/context/bench-retrieval.ts",
-        ".cursor/skills/orquestrar/references/ecosystem-v2.md",
-        "orchestrator/src/registry/registry-builder.ts",
-        "orchestrator/src/registry/registry-client.ts",
-        "orchestrator/src/scheduler/scheduler.ts",
-        "orchestrator/src/v22/measure-prompt-cache-prefix.ts",
-        "orchestrator/src/v22/measure-pickup-prompts.ts",
-        "orchestrator/tests/evals/evolveloop-longitudinal-evals.test.ts",
-        "orchestrator/tests/integration/job-resume.test.ts",
-        "orchestrator/tests/unit/evolveloop/live-registry-observer.test.ts",
-        "orchestrator/tests/unit/evolveloop/outcome-auto-analyze.test.ts",
-        "orchestrator/tests/unit/execution-contract.test.ts",
-        "orchestrator/src/plugins/plugin-loader.ts",
-        "orchestrator/tests/integration/context-budget-pickup.test.ts",
-        ".cursor/skills/orquestrar/SKILL.md",
-        "orchestrator/src/evidence/secret-redaction.ts",
-        "orchestrator/src/providers/mock-provider.ts",
-        "orchestrator/tests/evals/evolveloop-final-evals.test.ts",
-        "orchestrator/src/telemetry/skill-telemetry.ts",
-        "orchestrator/src/v22/brevity-caveman.ts",
-        "orchestrator/tests/integration/discovery-skilljobs.test.ts"
-      ],
-      "input_tokens": 21620,
-      "latency_ms": 845,
-      "recall": 1.0,
-      "recall_notes": [],
-      "graphify_exit": 0,
-      "graph_path": "/workspace/graphify-out/graph.json"
-    },
-    "verifier": {
-      "pass": true,
-      "recall": 1.0,
-      "notes": []
-    },
-    "graphify": {
-      "cli_version": "graphify 0.9.93"
-    }
-  },
-  {
-    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-    "evidence_class": "OFFICIAL_BASELINE",
-    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H07-B0-a7c40edc0162",
+    "run_id": "V22G-H07-B0-9372529973e7",
     "arm": "B0",
     "task_id": "H07",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:27.896897+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:48.125135+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -924,14 +55,15 @@
         "docs/architecture/portability/MAIN-VS-GAABTYPE-PROPOSAL.yaml",
         "docs/architecture/portability/PATH-REFERENCE-MAP.yaml"
       ],
+      "graph_paths_ranked": [],
       "input_tokens": 21795,
-      "latency_ms": 181,
+      "latency_ms": 161,
       "recall": 0.0,
       "recall_notes": [
         "miss path not read: profiles/default.yaml"
       ],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
       "pass": false,
@@ -939,18 +71,20 @@
       "notes": [
         "miss path not read: profiles/default.yaml"
       ]
-    }
+    },
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H07/B0/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "evidence_class": "OFFICIAL_WIKI_GROUND",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H07-B1-24c844306c0f",
+    "run_id": "V22G-H07-B1-6ad2bf58021e",
     "arm": "B1",
     "task_id": "H07",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:28.091571+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:48.125643+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -958,64 +92,42 @@
       "task_id": "H07",
       "arm": "B1",
       "paths_read": [
-        "orchestrator/src/knowledge/backend/resolve.ts",
-        "docs/adr/0012-wiki-default-knowledge-backend.md",
-        "AGENT.md",
-        "Agents/Researcher.md",
-        "Agents/Wiki-mem.md",
-        "Agents/Wiki.md",
-        "Agents/backend.md",
-        "CHANGELOG.md",
-        "GLOBAL-SETUP.md",
-        "INVENTORY.md",
-        "README.md",
-        "Rules/wiki-agent.mdc",
-        "SECURITY.md",
-        "agent-setup/README.md",
-        "agent-setup/bootstrap.sh",
-        "agent-setup/cursor/commands/evolve.md",
-        "agent-setup/cursor/commands/mem.md",
-        "agent-setup/cursor/hooks/wiki-mem/after-edit.sh",
-        "agent-setup/cursor/hooks/wiki-mem/mem.py",
-        "agent-setup/cursor/hooks/wiki-mem/session-end.sh",
-        "agent-setup/cursor/hooks/wiki-mem/session-start.sh",
-        "agent-setup/cursor/hooks/wiki-mem/stop.sh"
+        "docs/research/evolveloop-v2.2/01-current-state-audit.md",
+        ".cursor/skills/orquestrar/references/knowledge-grounding-gate.md",
+        "docs/research/evolveloop-v2.2/07-compatibility-matrix.md",
+        "profiles/default.yaml",
+        "docs/internal/historical/cursor-megabrain-rag-stack.md",
+        "docs/architecture/public/OVERVIEW.md",
+        "orchestrator/src/v22/bench-h-tasks.ts",
+        "docs/architecture/knowledge/KNOWLEDGE-PROFILE-BOUNDARY.md",
+        "docs/research/evolveloop-v2.2/README.md"
       ],
-      "input_tokens": 13272,
-      "latency_ms": 194,
-      "recall": 0.0,
-      "recall_notes": [
-        "miss path not read: profiles/default.yaml"
-      ],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graph_paths_ranked": [],
+      "input_tokens": 21530,
+      "latency_ms": 1672,
+      "recall": 1.0,
+      "recall_notes": [],
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
-      "pass": false,
-      "recall": 0.0,
-      "notes": [
-        "miss path not read: profiles/default.yaml"
-      ]
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
     },
-    "b1_engine": {
-      "engine_requested": "auto",
-      "karpathy_wiki_dir": "/opt/karpathyWiki",
-      "karpathy_wiki_sha_expected": "cd3cf08",
-      "wiki_engine": "fixtures/evolveloop-wiki-vault",
-      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
-      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
-    }
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H07/B1/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H07-B3-0a2d960c3237",
+    "run_id": "V22G-H07-B3-7046af8bb1e6",
     "arm": "B3",
     "task_id": "H07",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:28.842849+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:48.871067+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -1033,8 +145,7 @@
         "orchestrator/src/config/profile.ts",
         "orchestrator/src/memory/memory-store.ts",
         "orchestrator/src/v22/brevity-caveman.ts",
-        "orchestrator/src/index.ts",
-        "orchestrator/src/engine/execution-engine.ts"
+        "orchestrator/src/index.ts"
       ],
       "graph_paths_ranked": [
         "docs/research/evolveloop-v2.2/07-compatibility-matrix.md",
@@ -1088,8 +199,8 @@
         "orchestrator/src/providers/mock-provider.ts",
         "orchestrator/src/authority/capability-authority.ts"
       ],
-      "input_tokens": 21892,
-      "latency_ms": 750,
+      "input_tokens": 16039,
+      "latency_ms": 745,
       "recall": 0.0,
       "recall_notes": [
         "miss path not read: profiles/default.yaml"
@@ -1106,18 +217,19 @@
     },
     "graphify": {
       "cli_version": "graphify 0.9.93"
-    }
+    },
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "OFFICIAL_BASELINE",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H08-B0-10d7387591ca",
+    "run_id": "V22G-H08-B0-67456f1f6584",
     "arm": "B0",
     "task_id": "H08",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:28.883069+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:48.871633+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -1129,16 +241,21 @@
         "docs/architecture/knowledge/KNOWLEDGE-ARCHITECTURE.md",
         "docs/architecture/knowledge/KNOWLEDGE-BACKEND-CONTRACT.md",
         "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
-        "docs/architecture/v2.2/TRACEABILITY-MATRIX.md"
+        "docs/architecture/v2.2/TRACEABILITY-MATRIX.md",
+        "docs/research/evolveloop-v2.2/01-current-state-audit.md",
+        "docs/research/evolveloop-v2.2/06-token-optimization.md",
+        "docs/research/evolveloop-v2.2/07-compatibility-matrix.md",
+        "docs/research/evolveloop-v2.2/README.md"
       ],
-      "input_tokens": 10083,
-      "latency_ms": 39,
+      "graph_paths_ranked": [],
+      "input_tokens": 20531,
+      "latency_ms": 49,
       "recall": 0.0,
       "recall_notes": [
         "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
       ],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
       "pass": false,
@@ -1146,18 +263,20 @@
       "notes": [
         "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
       ]
-    }
+    },
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H08/B0/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "evidence_class": "OFFICIAL_WIKI_GROUND",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H08-B1-3aacf3e012a8",
+    "run_id": "V22G-H08-B1-eee787672460",
     "arm": "B1",
     "task_id": "H08",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:29.043622+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:48.871908+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -1165,35 +284,21 @@
       "task_id": "H08",
       "arm": "B1",
       "paths_read": [
-        "docs/adr/0012-wiki-default-knowledge-backend.md",
-        "AGENT.md",
-        "CHANGELOG.md",
-        "GLOBAL-SETUP.md",
-        "README.md",
-        "Rules/wiki-agent.mdc",
-        "agent-setup/bootstrap.sh",
-        "agent-setup/cursor/commands/evolve.md",
-        "agent-setup/cursor/commands/mem.md",
-        "agent-setup/cursor/hooks/wiki-mem/mem.py",
-        "agent-setup/cursor/rules/wiki-agent.mdc",
-        "agent-setup/install.sh",
-        "agent-setup/skills/wiki-mem/SKILL.md",
-        "agent-setup/skills/wiki/SKILL.md",
-        "agent-setup/skills/wiki/references/cli.md",
-        "agent-setup/skills/wiki/scripts/ground.sh",
-        "agent-setup/src/agent_setup/paths.py",
-        "docs/architecture/knowledge/KNOWLEDGE-ARCHITECTURE.md",
-        "docs/architecture/knowledge/KNOWLEDGE-BACKEND-CONTRACT.md",
-        "docs/architecture/knowledge/KNOWLEDGE-BACKEND-MANIFEST.yaml"
+        "docs/research/evolveloop-v2.2/05-knowledge-wiki-architecture.md",
+        "docs/research/evolveloop-v2.2/01-current-state-audit.md",
+        "orchestrator/src/v22/bench-h-tasks.ts",
+        "docs/research/evolveloop-v2.2/README.md",
+        "docs/architecture/release-audit-2026-10-11/V2.1-FREEZE-SCOPE-REPORT.md"
       ],
-      "input_tokens": 16145,
-      "latency_ms": 160,
+      "graph_paths_ranked": [],
+      "input_tokens": 18555,
+      "latency_ms": 1631,
       "recall": 0.0,
       "recall_notes": [
         "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
       ],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
       "pass": false,
@@ -1202,25 +307,19 @@
         "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
       ]
     },
-    "b1_engine": {
-      "engine_requested": "auto",
-      "karpathy_wiki_dir": "/opt/karpathyWiki",
-      "karpathy_wiki_sha_expected": "cd3cf08",
-      "wiki_engine": "fixtures/evolveloop-wiki-vault",
-      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
-      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
-    }
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H08/B1/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H08-B3-73c584ffa074",
+    "run_id": "V22G-H08-B3-e0e2de939b37",
     "arm": "B3",
     "task_id": "H08",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:29.855994+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:49.725591+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -1293,11 +392,11 @@
         "orchestrator/src/providers/deterministic/knowledge.ts",
         "orchestrator/src/telemetry/skill-telemetry.ts"
       ],
-      "input_tokens": 21114,
-      "latency_ms": 812,
+      "input_tokens": 21278,
+      "latency_ms": 853,
       "recall": 1.0,
       "recall_notes": [
-        "anchor line drift (file hit): orchestrator/src/knowledge/backend/wiki-backend.ts:183"
+        "anchor line drift (file evidence): orchestrator/src/knowledge/backend/wiki-backend.ts:183"
       ],
       "graphify_exit": 0,
       "graph_path": "/workspace/graphify-out/graph.json"
@@ -1306,23 +405,24 @@
       "pass": true,
       "recall": 1.0,
       "notes": [
-        "anchor line drift (file hit): orchestrator/src/knowledge/backend/wiki-backend.ts:183"
+        "anchor line drift (file evidence): orchestrator/src/knowledge/backend/wiki-backend.ts:183"
       ]
     },
     "graphify": {
       "cli_version": "graphify 0.9.93"
-    }
+    },
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "OFFICIAL_BASELINE",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H09-B0-c8da40036483",
+    "run_id": "V22G-H09-B0-6b70a319057f",
     "arm": "B0",
     "task_id": "H09",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:29.951624+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:49.726177+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -1355,29 +455,32 @@
         "docs/architecture/portability/PORTABILITY-FORENSIC-AUDIT.md",
         "docs/architecture/portability/PORTABILITY-INVENTORY.yaml"
       ],
+      "graph_paths_ranked": [],
       "input_tokens": 20986,
-      "latency_ms": 95,
+      "latency_ms": 78,
       "recall": 1.0,
       "recall_notes": [],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
       "pass": true,
       "recall": 1.0,
       "notes": []
-    }
+    },
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H09/B0/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "evidence_class": "OFFICIAL_WIKI_GROUND",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H09-B1-abd6c7f56098",
+    "run_id": "V22G-H09-B1-441e9e4287aa",
     "arm": "B1",
     "task_id": "H09",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:30.120526+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:49.726454+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -1385,59 +488,42 @@
       "task_id": "H09",
       "arm": "B1",
       "paths_read": [
-        "docs/adr/0012-wiki-default-knowledge-backend.md",
-        "orchestrator/src/knowledge/backend/fake-backend.ts",
-        "LICENSE",
-        "README.md",
-        "agent-setup/skills/wiki/references/cli.md",
-        "agent-setup/skills/wiki/scripts/ground.sh",
-        "docs/architecture/evolution/EVOLVELOOP-IMPLEMENTATION-REPORT.md",
-        "docs/architecture/evolveloopt/EVOLUTION-CANDIDATES.md",
-        "docs/architecture/evolveloopt/ROOT-CAUSE.md",
-        "docs/architecture/evolveloopt/validation/AUDIT-START-STATE.yaml",
-        "docs/architecture/knowledge/CORE-PERSONAL-BOUNDARY-V2.yaml",
-        "docs/architecture/knowledge/KNOWLEDGE-ARCHITECTURE.md",
+        "orchestrator/src/v22/bench-h-tasks.ts",
         "docs/architecture/knowledge/KNOWLEDGE-BACKEND-CONTRACT.md",
-        "docs/architecture/knowledge/KNOWLEDGE-BACKEND-MANIFEST.yaml",
-        "docs/architecture/knowledge/KNOWLEDGE-BACKEND-MATRIX.yaml",
-        "docs/architecture/knowledge/KNOWLEDGE-BEFORE-AFTER.md",
-        "docs/architecture/knowledge/KNOWLEDGE-GENERALIZATION-VALIDATION.yaml",
-        "docs/architecture/knowledge/KNOWLEDGE-PROFILE-BOUNDARY.md",
-        "docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md",
-        "docs/architecture/knowledge/PERSONAL-COUPLING-AFTER.yaml",
-        "docs/architecture/knowledge/PROFILE-BOUNDARY-MANIFEST.yaml"
+        "docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md",
+        "docs/adr/0012-wiki-default-knowledge-backend.md",
+        ".cursor/skills/planner/SKILL.md",
+        "docs/research/evolveloop-v2.2/README.md",
+        "docs/research/evolveloop-v2.2/04-community-findings.md",
+        "docs/architecture/public/OVERVIEW.md",
+        "docs/research/evolveloop-v2.2/01-current-state-audit.md"
       ],
-      "input_tokens": 7972,
-      "latency_ms": 168,
+      "graph_paths_ranked": [],
+      "input_tokens": 21425,
+      "latency_ms": 1590,
       "recall": 1.0,
       "recall_notes": [],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
       "pass": true,
       "recall": 1.0,
       "notes": []
     },
-    "b1_engine": {
-      "engine_requested": "auto",
-      "karpathy_wiki_dir": "/opt/karpathyWiki",
-      "karpathy_wiki_sha_expected": "cd3cf08",
-      "wiki_engine": "fixtures/evolveloop-wiki-vault",
-      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
-      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
-    }
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H09/B1/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H09-B3-9bd260422d99",
+    "run_id": "V22G-H09-B3-6d58da3176c1",
     "arm": "B3",
     "task_id": "H09",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:30.820623+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:50.449766+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -1506,7 +592,7 @@
         ".cursor/skills/security/references/verdict-trace.md"
       ],
       "input_tokens": 19995,
-      "latency_ms": 699,
+      "latency_ms": 723,
       "recall": 1.0,
       "recall_notes": [],
       "graphify_exit": 0,
@@ -1519,18 +605,19 @@
     },
     "graphify": {
       "cli_version": "graphify 0.9.93"
-    }
+    },
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "OFFICIAL_BASELINE",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H10-B0-5dcc6733293f",
+    "run_id": "V22G-H10-B0-86d61e5c4048",
     "arm": "B0",
     "task_id": "H10",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:30.881588+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:50.450311+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -1552,29 +639,32 @@
         "docs/architecture/portability/PORTABILITY-INVENTORY.yaml",
         "docs/architecture/portability/WIKI-RENAME-MANIFEST.yaml"
       ],
+      "graph_paths_ranked": [],
       "input_tokens": 16643,
-      "latency_ms": 60,
+      "latency_ms": 49,
       "recall": 1.0,
       "recall_notes": [],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
       "pass": true,
       "recall": 1.0,
       "notes": []
-    }
+    },
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H10/B0/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "evidence_class": "OFFICIAL_WIKI_GROUND",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H10-B1-b074b25585b7",
+    "run_id": "V22G-H10-B1-a5006b85fd77",
     "arm": "B1",
     "task_id": "H10",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:31.010139+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:50.450609+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -1582,49 +672,40 @@
       "task_id": "H10",
       "arm": "B1",
       "paths_read": [
-        "orchestrator/src/knowledge/backend/resolve.ts",
+        "orchestrator/src/v22/bench-h-tasks.ts",
         "docs/adr/0004-project-knowledge-contract.md",
-        "docs/adr/0005-hybrid-retrieval-degraded-mode.md",
-        "docs/adr/0013-context-ownership-working-context.md",
-        "docs/architecture/portability/CORE-VS-PERSONAL-GRAPH.yaml",
-        "docs/architecture/portability/ENVIRONMENT-ASSUMPTIONS.yaml",
-        "docs/architecture/portability/KNOWLEDGE-PERSONALIZATION-MAP.yaml",
-        "docs/architecture/portability/PERSONAL-CONNECTIONS.yaml",
-        "docs/architecture/portability/PORTABILITY-FORENSIC-AUDIT.md",
-        "docs/architecture/portability/PORTABILITY-INVENTORY.yaml",
-        "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md"
+        "docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md",
+        ".cursor/skills/planner/SKILL.md",
+        ".cursor/skills/po-review/SKILL.md",
+        ".cursor/skills/wiki/scripts/ground.sh",
+        "docs/research/evolveloop-v2.2/04-community-findings.md"
       ],
-      "input_tokens": 20095,
-      "latency_ms": 128,
+      "graph_paths_ranked": [],
+      "input_tokens": 20570,
+      "latency_ms": 1630,
       "recall": 1.0,
       "recall_notes": [],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
       "pass": true,
       "recall": 1.0,
       "notes": []
     },
-    "b1_engine": {
-      "engine_requested": "auto",
-      "karpathy_wiki_dir": "/opt/karpathyWiki",
-      "karpathy_wiki_sha_expected": "cd3cf08",
-      "wiki_engine": "fixtures/evolveloop-wiki-vault",
-      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
-      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
-    }
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H10/B1/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H10-B3-ad9243706322",
+    "run_id": "V22G-H10-B3-3ea59dc2bc9f",
     "arm": "B3",
     "task_id": "H10",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:31.798484+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:51.206046+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -1686,7 +767,7 @@
         "orchestrator/src/evolveloop/adapters/longitudinal-fixtures.ts"
       ],
       "input_tokens": 21449,
-      "latency_ms": 788,
+      "latency_ms": 755,
       "recall": 1.0,
       "recall_notes": [],
       "graphify_exit": 0,
@@ -1699,18 +780,19 @@
     },
     "graphify": {
       "cli_version": "graphify 0.9.93"
-    }
+    },
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "OFFICIAL_BASELINE",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H11-B0-675d78678fd5",
+    "run_id": "V22G-H11-B0-5207c5dd6894",
     "arm": "B0",
     "task_id": "H11",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:31.996353+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:51.206646+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -1760,14 +842,15 @@
         "agent-setup/skills/wiki/references/ritual.md",
         "agent-setup/skills/wiki/scripts/format_hits.py"
       ],
+      "graph_paths_ranked": [],
       "input_tokens": 21370,
-      "latency_ms": 197,
+      "latency_ms": 164,
       "recall": 0.0,
       "recall_notes": [
         "miss path not read: orchestrator/src/knowledge/backend/types.ts"
       ],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
       "pass": false,
@@ -1775,18 +858,20 @@
       "notes": [
         "miss path not read: orchestrator/src/knowledge/backend/types.ts"
       ]
-    }
+    },
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H11/B0/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "evidence_class": "OFFICIAL_WIKI_GROUND",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H11-B1-a4ce7e3697b4",
+    "run_id": "V22G-H11-B1-b4ef69c7281c",
     "arm": "B1",
     "task_id": "H11",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:32.125387+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:51.206911+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -1794,24 +879,23 @@
       "task_id": "H11",
       "arm": "B1",
       "paths_read": [
-        "orchestrator/src/knowledge/backend/resolve.ts",
-        "docs/adr/0014-graphify-b3-benchmark-decision.md",
-        "docs/architecture/v2.2/CONSOLIDATION-REPORT.md",
-        "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
-        "docs/architecture/v2.2/TECH-DECISIONS-MATRIX.md",
-        "docs/architecture/v2.2/TRACEABILITY-MATRIX.md",
-        "docs/architecture/v2.2/scripts/generate-evolveloop-wiki-knowledge.sh",
-        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-held-out-frozen.json",
-        "docs/research/evolveloop-v2.2/01-current-state-audit.md"
+        "orchestrator/src/v22/bench-h-tasks.ts",
+        "docs/research/evolveloop-v2.2/README.md",
+        "docs/research/evolveloop-v2.2/03-repositories-and-tools.md",
+        "docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md",
+        "docs/research/evolveloop-v2.2/01-current-state-audit.md",
+        ".cursor/skills/security/references/trust-boundaries.md",
+        ".cursor/skills/orquestrar/references/knowledge-grounding-gate.md"
       ],
-      "input_tokens": 20493,
-      "latency_ms": 128,
+      "graph_paths_ranked": [],
+      "input_tokens": 20241,
+      "latency_ms": 1574,
       "recall": 0.0,
       "recall_notes": [
         "miss path not read: orchestrator/src/knowledge/backend/types.ts"
       ],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
       "pass": false,
@@ -1820,25 +904,19 @@
         "miss path not read: orchestrator/src/knowledge/backend/types.ts"
       ]
     },
-    "b1_engine": {
-      "engine_requested": "auto",
-      "karpathy_wiki_dir": "/opt/karpathyWiki",
-      "karpathy_wiki_sha_expected": "cd3cf08",
-      "wiki_engine": "fixtures/evolveloop-wiki-vault",
-      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
-      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
-    }
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H11/B1/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H11-B3-658f45fe8766",
+    "run_id": "V22G-H11-B3-f514809bc809",
     "arm": "B3",
     "task_id": "H11",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:32.809501+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:51.916885+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -1879,8 +957,8 @@
         "orchestrator/src/knowledge/backend/fake-backend.ts",
         "orchestrator/package.json"
       ],
-      "input_tokens": 20895,
-      "latency_ms": 683,
+      "input_tokens": 21369,
+      "latency_ms": 709,
       "recall": 1.0,
       "recall_notes": [],
       "graphify_exit": 0,
@@ -1893,18 +971,19 @@
     },
     "graphify": {
       "cli_version": "graphify 0.9.93"
-    }
+    },
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "OFFICIAL_BASELINE",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H12-B0-ce464f19cbeb",
+    "run_id": "V22G-H12-B0-01bae867c048",
     "arm": "B0",
     "task_id": "H12",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:32.878452+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:51.917462+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -1912,7 +991,6 @@
       "task_id": "H12",
       "arm": "B0",
       "paths_read": [
-        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-held-out-frozen.json",
         "docs/research/evolveloop-v2.2/01-current-state-audit.md",
         "global-skills/systematic-debugging/condition-based-waiting-example.ts",
         "global-skills/systematic-debugging/condition-based-waiting.md",
@@ -1923,33 +1001,36 @@
         "orchestrator/src/providers/deterministic/shell.ts",
         "orchestrator/src/v22/bench-h-tasks.ts"
       ],
-      "input_tokens": 15606,
-      "latency_ms": 68,
+      "graph_paths_ranked": [],
+      "input_tokens": 12652,
+      "latency_ms": 46,
       "recall": 1.0,
       "recall_notes": [
-        "anchor line drift (file hit): orchestrator/src/knowledge/backend/wiki-backend.ts:36"
+        "anchor line drift (file evidence): orchestrator/src/knowledge/backend/wiki-backend.ts:36"
       ],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
       "pass": true,
       "recall": 1.0,
       "notes": [
-        "anchor line drift (file hit): orchestrator/src/knowledge/backend/wiki-backend.ts:36"
+        "anchor line drift (file evidence): orchestrator/src/knowledge/backend/wiki-backend.ts:36"
       ]
-    }
+    },
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H12/B0/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "evidence_class": "OFFICIAL_WIKI_GROUND",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H12-B1-1fe86b2afb0d",
+    "run_id": "V22G-H12-B1-99cbd831d36c",
     "arm": "B1",
     "task_id": "H12",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:32.923934+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:51.917732+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -1957,17 +1038,26 @@
       "task_id": "H12",
       "arm": "B1",
       "paths_read": [
-        "orchestrator/src/config/profile.ts",
-        "docs/adr/0012-wiki-default-knowledge-backend.md"
+        "orchestrator/src/v22/bench-h-tasks.ts",
+        ".cursor/skills/orquestrar/references/dev-intelligence.md",
+        ".cursor/skills/wiki/evals/trigger-eval-set.json",
+        "docs/research/evolveloop-v2.2/README.md",
+        "docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md",
+        ".cursor/skills/security/references/exploitation-checklist.md",
+        "docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md",
+        ".cursor/skills/orquestrar/references/contracts/runtime.md",
+        "docs/research/evolveloop-v2.2/04-community-findings.md",
+        ".cursor/skills/orquestrar/references/specs/runtime.md"
       ],
-      "input_tokens": 1027,
-      "latency_ms": 45,
+      "graph_paths_ranked": [],
+      "input_tokens": 20417,
+      "latency_ms": 1613,
       "recall": 0.0,
       "recall_notes": [
         "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
       ],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
       "pass": false,
@@ -1976,25 +1066,19 @@
         "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
       ]
     },
-    "b1_engine": {
-      "engine_requested": "auto",
-      "karpathy_wiki_dir": "/opt/karpathyWiki",
-      "karpathy_wiki_sha_expected": "cd3cf08",
-      "wiki_engine": "fixtures/evolveloop-wiki-vault",
-      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
-      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
-    }
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H12/B1/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H12-B3-b43efbbc7901",
+    "run_id": "V22G-H12-B3-97b5705cc3ee",
     "arm": "B3",
     "task_id": "H12",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:33.674564+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:52.707420+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -2042,11 +1126,11 @@
         ".cursor/skills/orquestrar/references/contracts/versioning.md",
         "docs/reconciliation/JOBS-RECONCILIATION.md"
       ],
-      "input_tokens": 21614,
-      "latency_ms": 750,
+      "input_tokens": 21778,
+      "latency_ms": 789,
       "recall": 1.0,
       "recall_notes": [
-        "anchor line drift (file hit): orchestrator/src/knowledge/backend/wiki-backend.ts:36"
+        "anchor line drift (file evidence): orchestrator/src/knowledge/backend/wiki-backend.ts:36"
       ],
       "graphify_exit": 0,
       "graph_path": "/workspace/graphify-out/graph.json"
@@ -2055,23 +1139,24 @@
       "pass": true,
       "recall": 1.0,
       "notes": [
-        "anchor line drift (file hit): orchestrator/src/knowledge/backend/wiki-backend.ts:36"
+        "anchor line drift (file evidence): orchestrator/src/knowledge/backend/wiki-backend.ts:36"
       ]
     },
     "graphify": {
       "cli_version": "graphify 0.9.93"
-    }
+    },
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "OFFICIAL_BASELINE",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H13-B0-86c2b91e4a0b",
+    "run_id": "V22G-H13-B0-d78079334592",
     "arm": "B0",
     "task_id": "H13",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:33.795634+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:52.708196+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -2096,32 +1181,35 @@
         "docs/internal/historical/audits/architecture-audit-2026-09-17.md",
         "docs/internal/historical/audits/architecture-current.md",
         "docs/internal/historical/audits/architecture-plan-platform-evolution.md",
-        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/GOAL-005b-real-engine-report.md",
-        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/GOAL-005c-official-run-report.md"
+        "docs/research/DECISION-MATRIX.md",
+        "docs/research/OUR-SYSTEM-BASELINE.md"
       ],
-      "input_tokens": 21826,
-      "latency_ms": 120,
+      "graph_paths_ranked": [],
+      "input_tokens": 21197,
+      "latency_ms": 90,
       "recall": 1.0,
       "recall_notes": [],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
       "pass": true,
       "recall": 1.0,
       "notes": []
-    }
+    },
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H13/B0/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "evidence_class": "OFFICIAL_WIKI_GROUND",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H13-B1-c26f46bece0d",
+    "run_id": "V22G-H13-B1-0a12d723ed8b",
     "arm": "B1",
     "task_id": "H13",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:33.975669+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:52.708554+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -2129,59 +1217,42 @@
       "task_id": "H13",
       "arm": "B1",
       "paths_read": [
-        "orchestrator/src/knowledge/backend/resolve.ts",
-        "agent-setup/cursor/commands/evolve.md",
-        "agent-setup/skills/wiki-mem/SKILL.md",
-        "agent-setup/skills/wiki/SKILL.md",
-        "agent-setup/skills/wiki/evals/evals.json",
-        "agent-setup/skills/wiki/evals/manual-chat-pack.md",
-        "agent-setup/skills/wiki/evals/trigger-eval-set.json",
-        "agent-setup/skills/wiki/evals/trigger-review.md",
-        "agent-setup/skills/wiki/references/packs.md",
-        "docs/adr/0004-project-knowledge-contract.md",
+        ".cursor/skills/orquestrar/evals/evals-v25-blind.json",
         "docs/adr/0005-hybrid-retrieval-degraded-mode.md",
-        "docs/architecture/portability/ENVIRONMENT-ASSUMPTIONS.yaml",
-        "docs/architecture/portability/KNOWLEDGE-PERSONALIZATION-MAP.yaml",
-        "docs/architecture/portability/PORTABILITY-FORENSIC-AUDIT.md",
-        "docs/architecture/v2.2/scripts/bootstrap-karpathywiki-official-bench.sh",
-        "docs/architecture/v2.2/scripts/diagnose-official-b1-recall.py",
-        "docs/architecture/v2.2/scripts/index-evolveloop-bm25-degraded.py",
-        "docs/architecture/v2.2/scripts/test-official-wiki-stale.sh",
-        "docs/internal/historical/audits/IMPLEMENTATION-STATUS.md",
-        "docs/internal/historical/audits/architecture-audit-2026-09-17.md",
-        "docs/internal/historical/audits/architecture-current.md"
+        "docs/research/evolveloop-v2.2/05-knowledge-wiki-architecture.md",
+        ".cursor/skills/po-review/SKILL.md",
+        "docs/adr/0002-capability-model-deterministic-providers.md",
+        "docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md",
+        "docs/research/evolveloop-v2.2/README.md",
+        "docs/architecture/finalization/ADR-INDEX.md",
+        ".cursor/skills/orquestrar/evals/evals-v26-blind.json"
       ],
-      "input_tokens": 21490,
-      "latency_ms": 179,
+      "graph_paths_ranked": [],
+      "input_tokens": 21706,
+      "latency_ms": 1748,
       "recall": 1.0,
       "recall_notes": [],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
       "pass": true,
       "recall": 1.0,
       "notes": []
     },
-    "b1_engine": {
-      "engine_requested": "auto",
-      "karpathy_wiki_dir": "/opt/karpathyWiki",
-      "karpathy_wiki_sha_expected": "cd3cf08",
-      "wiki_engine": "fixtures/evolveloop-wiki-vault",
-      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
-      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
-    }
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H13/B1/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H13-B3-1bc8230b0945",
+    "run_id": "V22G-H13-B3-6e0e2931db41",
     "arm": "B3",
     "task_id": "H13",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:34.715322+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:53.415330+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -2238,7 +1309,7 @@
         ".cursor/skills/security/evals/auth/mass-assignment/vulnerable/server.js"
       ],
       "input_tokens": 15879,
-      "latency_ms": 739,
+      "latency_ms": 706,
       "recall": 1.0,
       "recall_notes": [],
       "graphify_exit": 0,
@@ -2251,18 +1322,19 @@
     },
     "graphify": {
       "cli_version": "graphify 0.9.93"
-    }
+    },
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "OFFICIAL_BASELINE",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H14-B0-c37f753b4dad",
+    "run_id": "V22G-H14-B0-8bbd95c871ed",
     "arm": "B0",
     "task_id": "H14",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:34.793111+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:53.415933+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -2279,35 +1351,40 @@
         "docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md",
         "docs/audit/EVIDENCE-CATALOG.md",
         "docs/audit/IMPLEMENTATION-MATRIX.yaml",
-        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/GOAL-005e-recall-report.md"
+        "orchestrator/src/index.ts",
+        "orchestrator/src/providers/deterministic/index.ts",
+        "orchestrator/src/providers/deterministic/knowledge.ts"
       ],
-      "input_tokens": 17593,
-      "latency_ms": 77,
-      "recall": 0.0,
+      "graph_paths_ranked": [],
+      "input_tokens": 21925,
+      "latency_ms": 65,
+      "recall": 1.0,
       "recall_notes": [
-        "miss path not read: orchestrator/src/providers/deterministic/knowledge.ts"
+        "anchor line drift (file evidence): orchestrator/src/providers/deterministic/knowledge.ts:16"
       ],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
-      "pass": false,
-      "recall": 0.0,
+      "pass": true,
+      "recall": 1.0,
       "notes": [
-        "miss path not read: orchestrator/src/providers/deterministic/knowledge.ts"
+        "anchor line drift (file evidence): orchestrator/src/providers/deterministic/knowledge.ts:16"
       ]
-    }
+    },
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H14/B0/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "evidence_class": "OFFICIAL_WIKI_GROUND",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H14-B1-51193bd8fd96",
+    "run_id": "V22G-H14-B1-ddd4e8c0a881",
     "arm": "B1",
     "task_id": "H14",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:34.837237+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:53.416285+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -2315,43 +1392,44 @@
       "task_id": "H14",
       "arm": "B1",
       "paths_read": [
-        "orchestrator/src/knowledge/backend/resolve.ts"
+        "docs/research/evolveloop-v2.2/01-current-state-audit.md",
+        "orchestrator/src/v22/bench-h-tasks.ts",
+        ".cursor/skills/orquestrar/references/ecosystem-v2.md",
+        "docs/adr/0002-capability-model-deterministic-providers.md",
+        ".cursor/skills/orquestrar/references/specs/runtime.md",
+        ".cursor/skills/orquestrar/references/specs/README.md",
+        "orchestrator/src/providers/deterministic/knowledge.ts"
       ],
-      "input_tokens": 362,
-      "latency_ms": 43,
-      "recall": 0.0,
+      "graph_paths_ranked": [],
+      "input_tokens": 21874,
+      "latency_ms": 1647,
+      "recall": 1.0,
       "recall_notes": [
-        "miss path not read: orchestrator/src/providers/deterministic/knowledge.ts"
+        "anchor line drift (file evidence): orchestrator/src/providers/deterministic/knowledge.ts:16"
       ],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
-      "pass": false,
-      "recall": 0.0,
+      "pass": true,
+      "recall": 1.0,
       "notes": [
-        "miss path not read: orchestrator/src/providers/deterministic/knowledge.ts"
+        "anchor line drift (file evidence): orchestrator/src/providers/deterministic/knowledge.ts:16"
       ]
     },
-    "b1_engine": {
-      "engine_requested": "auto",
-      "karpathy_wiki_dir": "/opt/karpathyWiki",
-      "karpathy_wiki_sha_expected": "cd3cf08",
-      "wiki_engine": "fixtures/evolveloop-wiki-vault",
-      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
-      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
-    }
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H14/B1/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H14-B3-d079054b1dcf",
+    "run_id": "V22G-H14-B3-f5c43cb33e9c",
     "arm": "B3",
     "task_id": "H14",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:35.606721+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:54.192552+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -2420,11 +1498,11 @@
         "orchestrator/src/evidence/validator.ts",
         "orchestrator/tests/unit/deterministic-capabilities.test.ts"
       ],
-      "input_tokens": 20426,
-      "latency_ms": 769,
+      "input_tokens": 20590,
+      "latency_ms": 776,
       "recall": 1.0,
       "recall_notes": [
-        "anchor line drift (file hit): orchestrator/src/providers/deterministic/knowledge.ts:16"
+        "anchor line drift (file evidence): orchestrator/src/providers/deterministic/knowledge.ts:16"
       ],
       "graphify_exit": 0,
       "graph_path": "/workspace/graphify-out/graph.json"
@@ -2433,23 +1511,24 @@
       "pass": true,
       "recall": 1.0,
       "notes": [
-        "anchor line drift (file hit): orchestrator/src/providers/deterministic/knowledge.ts:16"
+        "anchor line drift (file evidence): orchestrator/src/providers/deterministic/knowledge.ts:16"
       ]
     },
     "graphify": {
       "cli_version": "graphify 0.9.93"
-    }
+    },
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "OFFICIAL_BASELINE",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H15-B0-a2791b0fe0e1",
+    "run_id": "V22G-H15-B0-8a4e3447c39a",
     "arm": "B0",
     "task_id": "H15",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:35.799489+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:54.193078+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -2499,14 +1578,15 @@
         "agent-setup/skills/wiki/references/ritual.md",
         "agent-setup/skills/wiki/scripts/format_hits.py"
       ],
+      "graph_paths_ranked": [],
       "input_tokens": 21370,
-      "latency_ms": 192,
+      "latency_ms": 155,
       "recall": 0.0,
       "recall_notes": [
         "miss path not read: docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md"
       ],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
       "pass": false,
@@ -2514,18 +1594,20 @@
       "notes": [
         "miss path not read: docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md"
       ]
-    }
+    },
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H15/B0/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "evidence_class": "OFFICIAL_WIKI_GROUND",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H15-B1-6526fdc36e1e",
+    "run_id": "V22G-H15-B1-5af0b11923bc",
     "arm": "B1",
     "task_id": "H15",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:36.020092+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:54.193376+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -2533,64 +1615,43 @@
       "task_id": "H15",
       "arm": "B1",
       "paths_read": [
-        "orchestrator/src/config/profile.ts",
-        "orchestrator/src/knowledge/backend/fake-backend.ts",
+        "docs/architecture/v2.2/scripts/generate-evolveloop-wiki-knowledge.sh",
+        ".cursor/skills/po-review/SKILL.md",
         "docs/adr/0012-wiki-default-knowledge-backend.md",
-        "AGENT.md",
-        "CHANGELOG.md",
-        "GLOBAL-SETUP.md",
-        "README.md",
-        "Rules/wiki-agent.mdc",
-        "agent-setup/bootstrap.sh",
-        "agent-setup/cursor/commands/evolve.md",
-        "agent-setup/cursor/commands/mem.md",
-        "agent-setup/cursor/hooks/wiki-mem/mem.py",
-        "agent-setup/cursor/rules/wiki-agent.mdc",
-        "agent-setup/install.sh",
-        "agent-setup/skills/wiki-mem/SKILL.md",
-        "agent-setup/skills/wiki/SKILL.md",
-        "agent-setup/skills/wiki/references/cli.md",
-        "agent-setup/skills/wiki/scripts/ground.sh",
-        "agent-setup/src/agent_setup/paths.py",
-        "docs/adr/0005-hybrid-retrieval-degraded-mode.md",
-        "docs/architecture/evolution/EVOLVELOOP-IMPLEMENTATION-REPORT.md",
-        "docs/architecture/evolveloopt/EVOLUTION-CANDIDATES.md"
+        "docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md",
+        "orchestrator/src/v22/bench-h-tasks.ts",
+        ".cursor/skills/orquestrar/references/specs/README.md",
+        "docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md",
+        "docs/research/evolveloop-v2.2/06-token-optimization.md",
+        "docs/architecture/publication/PUBLIC-EXTRACTION-PLAN.md",
+        "docs/research/evolveloop-v2.2/README.md"
       ],
-      "input_tokens": 17819,
-      "latency_ms": 220,
-      "recall": 0.0,
-      "recall_notes": [
-        "miss path not read: docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md"
-      ],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graph_paths_ranked": [],
+      "input_tokens": 19471,
+      "latency_ms": 1663,
+      "recall": 1.0,
+      "recall_notes": [],
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
-      "pass": false,
-      "recall": 0.0,
-      "notes": [
-        "miss path not read: docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md"
-      ]
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
     },
-    "b1_engine": {
-      "engine_requested": "auto",
-      "karpathy_wiki_dir": "/opt/karpathyWiki",
-      "karpathy_wiki_sha_expected": "cd3cf08",
-      "wiki_engine": "fixtures/evolveloop-wiki-vault",
-      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
-      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
-    }
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H15/B1/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H15-B3-fbdbaff4f1b4",
+    "run_id": "V22G-H15-B3-571b3422f2a7",
     "arm": "B3",
     "task_id": "H15",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:36.842908+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:55.009328+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -2660,7 +1721,7 @@
         "orchestrator/src/evolveloop/adapters/longitudinal-fixtures.ts"
       ],
       "input_tokens": 19802,
-      "latency_ms": 822,
+      "latency_ms": 815,
       "recall": 1.0,
       "recall_notes": [],
       "graphify_exit": 0,
@@ -2673,18 +1734,19 @@
     },
     "graphify": {
       "cli_version": "graphify 0.9.93"
-    }
+    },
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "OFFICIAL_BASELINE",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H16-B0-e38580b50d22",
+    "run_id": "V22G-H16-B0-318f711b76f4",
     "arm": "B0",
     "task_id": "H16",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:36.929450+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:55.009862+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -2696,8 +1758,6 @@
         "agent-setup/manifest/profiles.yaml",
         "docs/architecture/publication/AGENT-MD-REQUIREMENTS.yaml",
         "docs/architecture/publication/FINAL-GAABTYPE-MANIFEST.yaml",
-        "docs/internal/historical/evals/docs-evals/experiments/E-005/harness/e005-duplicate-mutate.test.ts",
-        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-held-out-frozen.json",
         "orchestrator/policies/high-reliability.yaml",
         "orchestrator/src/capabilities/results.ts",
         "orchestrator/src/cli/run-engine.ts",
@@ -2706,35 +1766,37 @@
         "orchestrator/src/policies/policy-engine.ts",
         "orchestrator/src/providers/deterministic/system.ts",
         "orchestrator/src/session/session-continuity.ts",
-        "orchestrator/tests/integration/persistence.test.ts"
+        "orchestrator/tests/integration/persistence.test.ts",
+        "orchestrator/tests/integration/v22-session-continuity.integration.test.ts",
+        "orchestrator/tests/integration/v22-wire.integration.test.ts",
+        "profiles/default.yaml"
       ],
-      "input_tokens": 21689,
-      "latency_ms": 86,
-      "recall": 0.0,
-      "recall_notes": [
-        "miss path not read: profiles/default.yaml"
-      ],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graph_paths_ranked": [],
+      "input_tokens": 19804,
+      "latency_ms": 62,
+      "recall": 1.0,
+      "recall_notes": [],
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
-      "pass": false,
-      "recall": 0.0,
-      "notes": [
-        "miss path not read: profiles/default.yaml"
-      ]
-    }
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    },
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H16/B0/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "evidence_class": "OFFICIAL_WIKI_GROUND",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H16-B1-7c473c353474",
+    "run_id": "V22G-H16-B1-fd970778138e",
     "arm": "B1",
     "task_id": "H16",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:37.106930+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:55.010147+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -2742,64 +1804,41 @@
       "task_id": "H16",
       "arm": "B1",
       "paths_read": [
-        "orchestrator/src/knowledge/backend/resolve.ts",
-        "docs/adr/0012-wiki-default-knowledge-backend.md",
-        "AGENT.md",
-        "Agents/backend.md",
-        "CHANGELOG.md",
-        "GLOBAL-SETUP.md",
-        "README.md",
-        "Rules/wiki-agent.mdc",
-        "agent-setup/README.md",
-        "agent-setup/bootstrap.sh",
-        "agent-setup/cursor/commands/evolve.md",
-        "agent-setup/cursor/hooks/wiki-mem/mem.py",
-        "agent-setup/cursor/rules/wiki-agent.mdc",
-        "agent-setup/docs/architecture.md",
-        "agent-setup/docs/manifest.md",
-        "agent-setup/docs/security.md",
-        "agent-setup/manifest/manifest.yaml",
-        "agent-setup/skills/wiki/SKILL.md",
-        "agent-setup/skills/wiki/references/cli.md",
-        "agent-setup/skills/wiki/scripts/ground.sh",
-        "agent-setup/src/agent_setup/cli.py",
-        "agent-setup/src/agent_setup/detect.py"
+        "docs/research/evolveloop-v2.2/07-compatibility-matrix.md",
+        "orchestrator/src/v22/bench-h-tasks.ts",
+        "docs/architecture/public/OVERVIEW.md",
+        "docs/internal/historical/cursor-megabrain-rag-stack.md",
+        "profiles/default.yaml",
+        "docs/research/evolveloop-v2.2/04-community-findings.md",
+        ".cursor/skills/security/capability-registry.yaml",
+        "docs/research/evolveloop-v2.2/01-current-state-audit.md"
       ],
-      "input_tokens": 17280,
-      "latency_ms": 177,
-      "recall": 0.0,
-      "recall_notes": [
-        "miss path not read: profiles/default.yaml"
-      ],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graph_paths_ranked": [],
+      "input_tokens": 19651,
+      "latency_ms": 1657,
+      "recall": 1.0,
+      "recall_notes": [],
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
-      "pass": false,
-      "recall": 0.0,
-      "notes": [
-        "miss path not read: profiles/default.yaml"
-      ]
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
     },
-    "b1_engine": {
-      "engine_requested": "auto",
-      "karpathy_wiki_dir": "/opt/karpathyWiki",
-      "karpathy_wiki_sha_expected": "cd3cf08",
-      "wiki_engine": "fixtures/evolveloop-wiki-vault",
-      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
-      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
-    }
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H16/B1/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H16-B3-ff1a53296b74",
+    "run_id": "V22G-H16-B3-6ee0790889ad",
     "arm": "B3",
     "task_id": "H16",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:37.815244+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:55.698304+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -2872,8 +1911,8 @@
         "orchestrator/src/evidence/publish-sanitize.ts",
         "orchestrator/src/knowledge/backend/types.ts"
       ],
-      "input_tokens": 20289,
-      "latency_ms": 707,
+      "input_tokens": 20453,
+      "latency_ms": 687,
       "recall": 0.0,
       "recall_notes": [
         "miss path not read: profiles/default.yaml"
@@ -2890,18 +1929,19 @@
     },
     "graphify": {
       "cli_version": "graphify 0.9.93"
-    }
+    },
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "OFFICIAL_BASELINE",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H17-B0-ae0d0bc8f0c8",
+    "run_id": "V22G-H17-B0-7628c9f8a729",
     "arm": "B0",
     "task_id": "H17",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:37.909477+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:55.698973+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -2928,29 +1968,32 @@
         "docs/architecture/portability/PORTABILITY-INVENTORY.yaml",
         "docs/architecture/portability/WIKI-GENERALIZATION-REPORT.md"
       ],
+      "graph_paths_ranked": [],
       "input_tokens": 21674,
-      "latency_ms": 93,
+      "latency_ms": 73,
       "recall": 1.0,
       "recall_notes": [],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
       "pass": true,
       "recall": 1.0,
       "notes": []
-    }
+    },
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H17/B0/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "evidence_class": "OFFICIAL_WIKI_GROUND",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H17-B1-08eec6d8d2ac",
+    "run_id": "V22G-H17-B1-45f5ae3a62f5",
     "arm": "B1",
     "task_id": "H17",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:38.010976+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:55.699336+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -2958,43 +2001,49 @@
       "task_id": "H17",
       "arm": "B1",
       "paths_read": [
-        "orchestrator/src/knowledge/backend/resolve.ts",
+        ".cursor/skills/orquestrar/references/specs/plugins.md",
         "docs/adr/0002-capability-model-deterministic-providers.md",
-        "docs/adr/0003-capability-authority-vs-execution-policy.md",
-        "docs/internal/historical/audits/IMPLEMENTATION-STATUS.md",
-        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-held-out-frozen.json"
+        "orchestrator/src/v22/bench-h-tasks.ts",
+        ".cursor/skills/security/references/ai-code-antipatterns.md",
+        ".cursor/skills/security/references/capability-matrix.md",
+        ".cursor/skills/security/references/specialists/llm-security-reviewer.md",
+        "docs/architecture/skills/pruning/POST-PRUNE-CONTRACT-AUDIT.md",
+        "orchestrator/src/events/event-bus.ts",
+        "orchestrator/src/v22/bench-r-tasks.ts",
+        "docs/architecture/finalization/PROTOTYPE-HARDENING-REPORT.md",
+        "orchestrator/src/providers/deterministic/index.ts",
+        "docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md",
+        ".cursor/skills/orquestrar/references/specs/README.md",
+        "docs/architecture/evolveloopt/SECURITY.md",
+        "docs/architecture/finalization/prototypes/PT-002-os-kill-job-resume.md",
+        "docs/architecture/evolution/IMPLEMENTATION-DECISION.yaml"
       ],
-      "input_tokens": 5318,
-      "latency_ms": 101,
+      "graph_paths_ranked": [],
+      "input_tokens": 19155,
+      "latency_ms": 3234,
       "recall": 1.0,
       "recall_notes": [],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
       "pass": true,
       "recall": 1.0,
       "notes": []
     },
-    "b1_engine": {
-      "engine_requested": "auto",
-      "karpathy_wiki_dir": "/opt/karpathyWiki",
-      "karpathy_wiki_sha_expected": "cd3cf08",
-      "wiki_engine": "fixtures/evolveloop-wiki-vault",
-      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
-      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
-    }
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H17/B1/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H17-B3-17b3c10969a3",
+    "run_id": "V22G-H17-B3-9a045d204bce",
     "arm": "B3",
     "task_id": "H17",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:38.745874+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:56.394625+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -3064,7 +2113,7 @@
         "orchestrator/src/cli/registry-builder.ts"
       ],
       "input_tokens": 21780,
-      "latency_ms": 734,
+      "latency_ms": 695,
       "recall": 1.0,
       "recall_notes": [],
       "graphify_exit": 0,
@@ -3077,18 +2126,19 @@
     },
     "graphify": {
       "cli_version": "graphify 0.9.93"
-    }
+    },
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "OFFICIAL_BASELINE",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H18-B0-4f659032ab0e",
+    "run_id": "V22G-H18-B0-2ccd9f5762c6",
     "arm": "B0",
     "task_id": "H18",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:38.907092+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:56.395195+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -3134,14 +2184,15 @@
         "docs/architecture/portability/MAIN-VS-GAABTYPE-PROPOSAL.yaml",
         "docs/architecture/portability/PATH-REFERENCE-MAP.yaml"
       ],
+      "graph_paths_ranked": [],
       "input_tokens": 21610,
-      "latency_ms": 160,
+      "latency_ms": 139,
       "recall": 0.0,
       "recall_notes": [
         "miss path not read: .cursor/skills/wiki/SKILL.md"
       ],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
       "pass": false,
@@ -3149,18 +2200,20 @@
       "notes": [
         "miss path not read: .cursor/skills/wiki/SKILL.md"
       ]
-    }
+    },
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H18/B0/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "evidence_class": "OFFICIAL_WIKI_GROUND",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H18-B1-6f2cda82769e",
+    "run_id": "V22G-H18-B1-0fe772ced9bc",
     "arm": "B1",
     "task_id": "H18",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:39.056725+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:56.395814+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -3168,64 +2221,37 @@
       "task_id": "H18",
       "arm": "B1",
       "paths_read": [
-        "orchestrator/src/config/profile.ts",
-        "docs/adr/0012-wiki-default-knowledge-backend.md",
-        "AGENT.md",
-        "Agents/Researcher.md",
-        "Agents/Wiki-mem.md",
-        "Agents/Wiki.md",
-        "GLOBAL-SETUP.md",
-        "INVENTORY.md",
-        "README.md",
-        "Rules/wiki-agent.mdc",
-        "SECURITY.md",
-        "agent-setup/cursor/commands/evolve.md",
-        "agent-setup/cursor/commands/mem.md",
-        "agent-setup/cursor/hooks/wiki-mem/after-edit.sh",
-        "agent-setup/cursor/hooks/wiki-mem/mem.py",
-        "agent-setup/cursor/hooks/wiki-mem/session-end.sh",
-        "agent-setup/cursor/hooks/wiki-mem/session-start.sh",
-        "agent-setup/cursor/hooks/wiki-mem/stop.sh",
-        "agent-setup/cursor/rules/wiki-agent.mdc",
-        "agent-setup/docs/components.md",
-        "agent-setup/docs/wiki-skill-install.md",
-        "agent-setup/manifest/components.yaml"
+        "docs/internal/historical/cursor-megabrain-rag-stack.md",
+        ".cursor/skills/wiki/SKILL.md",
+        ".cursor/skills/orquestrar/references/knowledge-grounding-gate.md",
+        "docs/research/evolveloop-v2.2/03-repositories-and-tools.md"
       ],
-      "input_tokens": 13927,
-      "latency_ms": 149,
-      "recall": 0.0,
-      "recall_notes": [
-        "miss path not read: .cursor/skills/wiki/SKILL.md"
-      ],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graph_paths_ranked": [],
+      "input_tokens": 20508,
+      "latency_ms": 1605,
+      "recall": 1.0,
+      "recall_notes": [],
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
-      "pass": false,
-      "recall": 0.0,
-      "notes": [
-        "miss path not read: .cursor/skills/wiki/SKILL.md"
-      ]
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
     },
-    "b1_engine": {
-      "engine_requested": "auto",
-      "karpathy_wiki_dir": "/opt/karpathyWiki",
-      "karpathy_wiki_sha_expected": "cd3cf08",
-      "wiki_engine": "fixtures/evolveloop-wiki-vault",
-      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
-      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
-    }
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H18/B1/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H18-B3-948757e90c58",
+    "run_id": "V22G-H18-B3-a522879af47f",
     "arm": "B3",
     "task_id": "H18",
     "split": "H07_H18_dev",
-    "timestamp": "2026-10-22T02:04:39.830237+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:57.162702+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -3276,7 +2302,7 @@
         "orchestrator/src/policies/policy-engine.ts"
       ],
       "input_tokens": 17069,
-      "latency_ms": 773,
+      "latency_ms": 766,
       "recall": 0.0,
       "recall_notes": [
         "miss path not read: .cursor/skills/wiki/SKILL.md"
@@ -3293,18 +2319,19 @@
     },
     "graphify": {
       "cli_version": "graphify 0.9.93"
-    }
+    },
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "OFFICIAL_BASELINE",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H19-B0-90cf3c51e975",
+    "run_id": "V22G-H19-B0-3f85c6d1de69",
     "arm": "B0",
     "task_id": "H19",
     "split": "H19_H24_test",
-    "timestamp": "2026-10-22T02:04:39.931704+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:57.163235+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -3331,29 +2358,32 @@
         "docs/audit/RESEARCH-RECONCILIATION.md",
         "docs/execution-replay-model.md"
       ],
+      "graph_paths_ranked": [],
       "input_tokens": 18509,
-      "latency_ms": 101,
+      "latency_ms": 85,
       "recall": 1.0,
       "recall_notes": [],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
       "pass": true,
       "recall": 1.0,
       "notes": []
-    }
+    },
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/test/held-out/H19/B0/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "evidence_class": "OFFICIAL_WIKI_GROUND",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H19-B1-1b6eb1efc9bd",
+    "run_id": "V22G-H19-B1-925b95da1d01",
     "arm": "B1",
     "task_id": "H19",
     "split": "H19_H24_test",
-    "timestamp": "2026-10-22T02:04:40.032444+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:57.163488+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -3361,44 +2391,44 @@
       "task_id": "H19",
       "arm": "B1",
       "paths_read": [
-        "orchestrator/src/knowledge/backend/resolve.ts",
+        "docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md",
+        "docs/architecture/finalization/ADR-FINALIZATION-REPORT.md",
+        "docs/research/evolveloop-v2.2/01-current-state-audit.md",
         "docs/adr/0002-capability-model-deterministic-providers.md",
-        "docs/adr/0003-capability-authority-vs-execution-policy.md",
-        "docs/internal/historical/audits/IMPLEMENTATION-STATUS.md",
-        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/GOAL-005d-recall-report.md",
-        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-held-out-frozen.json"
+        ".cursor/skills/planner/SKILL.md",
+        ".cursor/skills/orquestrar/references/policy-engine.md",
+        "docs/research/evolveloop-v2.2/04-community-findings.md"
       ],
-      "input_tokens": 7508,
-      "latency_ms": 100,
-      "recall": 1.0,
-      "recall_notes": [],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graph_paths_ranked": [],
+      "input_tokens": 21461,
+      "latency_ms": 1627,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: docs/adr/0003-capability-authority-vs-execution-policy.md"
+      ],
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
-      "pass": true,
-      "recall": 1.0,
-      "notes": []
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: docs/adr/0003-capability-authority-vs-execution-policy.md"
+      ]
     },
-    "b1_engine": {
-      "engine_requested": "auto",
-      "karpathy_wiki_dir": "/opt/karpathyWiki",
-      "karpathy_wiki_sha_expected": "cd3cf08",
-      "wiki_engine": "fixtures/evolveloop-wiki-vault",
-      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
-      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
-    }
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/test/held-out/H19/B1/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H19-B3-c3b5e0901208",
+    "run_id": "V22G-H19-B3-a27fe07d30ca",
     "arm": "B3",
     "task_id": "H19",
     "split": "H19_H24_test",
-    "timestamp": "2026-10-22T02:04:40.740155+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:57.838099+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -3424,7 +2454,7 @@
         "orchestrator/src/evidence/builders.ts"
       ],
       "input_tokens": 16751,
-      "latency_ms": 707,
+      "latency_ms": 674,
       "recall": 1.0,
       "recall_notes": [],
       "graphify_exit": 0,
@@ -3437,18 +2467,19 @@
     },
     "graphify": {
       "cli_version": "graphify 0.9.93"
-    }
+    },
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "OFFICIAL_BASELINE",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H20-B0-756127149737",
+    "run_id": "V22G-H20-B0-51edc655eed1",
     "arm": "B0",
     "task_id": "H20",
     "split": "H19_H24_test",
-    "timestamp": "2026-10-22T02:04:40.795775+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:57.838714+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -3459,35 +2490,40 @@
         "docs/architecture/v2.2/CONSOLIDATION-REPORT.md",
         "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
         "docs/architecture/v2.2/TRACEABILITY-MATRIX.md",
-        "docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md"
+        "docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md",
+        "orchestrator/src/index.ts",
+        "orchestrator/src/knowledge/truth-source/fence.ts",
+        "orchestrator/src/knowledge/truth-source/runtime.ts",
+        "orchestrator/src/knowledge/truth-source/types.ts",
+        "orchestrator/src/providers/deterministic/knowledge.ts",
+        "orchestrator/tests/unit/knowledge/truth-source-fence.test.ts"
       ],
-      "input_tokens": 11378,
-      "latency_ms": 55,
-      "recall": 0.0,
-      "recall_notes": [
-        "miss path not read: orchestrator/src/knowledge/truth-source/fence.ts"
-      ],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graph_paths_ranked": [],
+      "input_tokens": 17831,
+      "latency_ms": 56,
+      "recall": 1.0,
+      "recall_notes": [],
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
-      "pass": false,
-      "recall": 0.0,
-      "notes": [
-        "miss path not read: orchestrator/src/knowledge/truth-source/fence.ts"
-      ]
-    }
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    },
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/test/held-out/H20/B0/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "evidence_class": "OFFICIAL_WIKI_GROUND",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H20-B1-85ed95f05b09",
+    "run_id": "V22G-H20-B1-15c72bc0ad5a",
     "arm": "B1",
     "task_id": "H20",
     "split": "H19_H24_test",
-    "timestamp": "2026-10-22T02:04:40.950394+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:57.839234+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -3495,48 +2531,41 @@
       "task_id": "H20",
       "arm": "B1",
       "paths_read": [
-        "orchestrator/src/knowledge/backend/resolve.ts",
-        "docs/architecture/v2.2/CONSOLIDATION-REPORT.md",
-        "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
-        "docs/architecture/v2.2/TRACEABILITY-MATRIX.md",
         "docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md",
-        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/GOAL-005d-recall-report.md"
+        "docs/research/evolveloop-v2.2/04-community-findings.md",
+        "docs/research/evolveloop-v2.2/README.md",
+        "docs/research/evolveloop-v2.2/01-current-state-audit.md",
+        "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+        "docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md",
+        "orchestrator/src/knowledge/truth-source/fence.ts",
+        "docs/research/evolveloop-v2.2/07-compatibility-matrix.md"
       ],
-      "input_tokens": 13931,
-      "latency_ms": 154,
-      "recall": 0.0,
-      "recall_notes": [
-        "miss path not read: orchestrator/src/knowledge/truth-source/fence.ts"
-      ],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graph_paths_ranked": [],
+      "input_tokens": 21952,
+      "latency_ms": 1737,
+      "recall": 1.0,
+      "recall_notes": [],
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
-      "pass": false,
-      "recall": 0.0,
-      "notes": [
-        "miss path not read: orchestrator/src/knowledge/truth-source/fence.ts"
-      ]
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
     },
-    "b1_engine": {
-      "engine_requested": "auto",
-      "karpathy_wiki_dir": "/opt/karpathyWiki",
-      "karpathy_wiki_sha_expected": "cd3cf08",
-      "wiki_engine": "fixtures/evolveloop-wiki-vault",
-      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
-      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
-    }
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/test/held-out/H20/B1/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H20-B3-a88d1d205b89",
+    "run_id": "V22G-H20-B3-cef5f00a3d24",
     "arm": "B3",
     "task_id": "H20",
     "split": "H19_H24_test",
-    "timestamp": "2026-10-22T02:04:41.677353+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:58.576270+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -3614,8 +2643,8 @@
         "orchestrator/tests/unit/evolveloop/evolveloop.test.ts",
         "orchestrator/src/knowledge/backend/resolve.ts"
       ],
-      "input_tokens": 20112,
-      "latency_ms": 726,
+      "input_tokens": 20276,
+      "latency_ms": 736,
       "recall": 1.0,
       "recall_notes": [],
       "graphify_exit": 0,
@@ -3628,18 +2657,19 @@
     },
     "graphify": {
       "cli_version": "graphify 0.9.93"
-    }
+    },
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "OFFICIAL_BASELINE",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H21-B0-5af0600881dc",
+    "run_id": "V22G-H21-B0-c5ec3dc947c3",
     "arm": "B0",
     "task_id": "H21",
     "split": "H19_H24_test",
-    "timestamp": "2026-10-22T02:04:41.836565+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:58.576789+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -3680,29 +2710,32 @@
         "docs/architecture/evolveloopt/live/LIVE-STATUS.yaml",
         "docs/architecture/evolveloopt/live/TRACEABILITY.yaml"
       ],
+      "graph_paths_ranked": [],
       "input_tokens": 21308,
-      "latency_ms": 158,
+      "latency_ms": 130,
       "recall": 1.0,
       "recall_notes": [],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
       "pass": true,
       "recall": 1.0,
       "notes": []
-    }
+    },
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/test/held-out/H21/B0/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "evidence_class": "OFFICIAL_WIKI_GROUND",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H21-B1-2aedb4038081",
+    "run_id": "V22G-H21-B1-8594b9019ac7",
     "arm": "B1",
     "task_id": "H21",
     "split": "H19_H24_test",
-    "timestamp": "2026-10-22T02:04:41.882217+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:58.577061+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -3710,43 +2743,38 @@
       "task_id": "H21",
       "arm": "B1",
       "paths_read": [
-        "orchestrator/src/knowledge/backend/resolve.ts"
+        "docs/architecture/publication/ALIAS-MIGRATION.yaml",
+        ".cursor/skills/po-review/SKILL.md",
+        "docs/adr/0011-evolve-alias.md",
+        "docs/internal/historical/MegaBrain-Ecosystem.md",
+        "orchestrator/src/v22/bench-h-tasks.ts"
       ],
-      "input_tokens": 362,
-      "latency_ms": 45,
-      "recall": 0.0,
-      "recall_notes": [
-        "miss path not read: docs/adr/0011-evolve-alias.md"
-      ],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graph_paths_ranked": [],
+      "input_tokens": 21601,
+      "latency_ms": 1654,
+      "recall": 1.0,
+      "recall_notes": [],
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
-      "pass": false,
-      "recall": 0.0,
-      "notes": [
-        "miss path not read: docs/adr/0011-evolve-alias.md"
-      ]
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
     },
-    "b1_engine": {
-      "engine_requested": "auto",
-      "karpathy_wiki_dir": "/opt/karpathyWiki",
-      "karpathy_wiki_sha_expected": "cd3cf08",
-      "wiki_engine": "fixtures/evolveloop-wiki-vault",
-      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
-      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
-    }
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/test/held-out/H21/B1/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H21-B3-0303aa5293a4",
+    "run_id": "V22G-H21-B3-63adeb9ffe16",
     "arm": "B3",
     "task_id": "H21",
     "split": "H19_H24_test",
-    "timestamp": "2026-10-22T02:04:42.670909+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:59.362587+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -3815,7 +2843,7 @@
         "orchestrator/src/evolveloop/cadence.ts"
       ],
       "input_tokens": 21122,
-      "latency_ms": 788,
+      "latency_ms": 785,
       "recall": 1.0,
       "recall_notes": [],
       "graphify_exit": 0,
@@ -3828,18 +2856,19 @@
     },
     "graphify": {
       "cli_version": "graphify 0.9.93"
-    }
+    },
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "OFFICIAL_BASELINE",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H22-B0-47420d3c876f",
+    "run_id": "V22G-H22-B0-08b6cb6b56d3",
     "arm": "B0",
     "task_id": "H22",
     "split": "H19_H24_test",
-    "timestamp": "2026-10-22T02:04:42.742482+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:59.363086+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -3851,16 +2880,17 @@
         "docs/architecture/v2.2/EVIDENCE-SECRET-CANARY.md",
         "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
         "docs/architecture/v2.2/TRACEABILITY-MATRIX.md",
-        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/GOAL-005d-recall-report.md"
+        "docs/research/evolveloop-v2.2/05-knowledge-wiki-architecture.md"
       ],
-      "input_tokens": 19133,
-      "latency_ms": 71,
+      "graph_paths_ranked": [],
+      "input_tokens": 19734,
+      "latency_ms": 46,
       "recall": 0.0,
       "recall_notes": [
         "miss path not read: orchestrator/src/evidence/secret-redaction.ts"
       ],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
       "pass": false,
@@ -3868,18 +2898,20 @@
       "notes": [
         "miss path not read: orchestrator/src/evidence/secret-redaction.ts"
       ]
-    }
+    },
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/test/held-out/H22/B0/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "evidence_class": "OFFICIAL_WIKI_GROUND",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H22-B1-5df3df847ae8",
+    "run_id": "V22G-H22-B1-4e68a1867330",
     "arm": "B1",
     "task_id": "H22",
     "split": "H19_H24_test",
-    "timestamp": "2026-10-22T02:04:42.893672+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:37:59.363382+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -3887,48 +2919,40 @@
       "task_id": "H22",
       "arm": "B1",
       "paths_read": [
-        "orchestrator/src/knowledge/backend/resolve.ts",
-        "docs/architecture/release-audit-2026-10-11/V2.1-FREEZE-SCOPE-REPORT.md",
         "docs/architecture/v2.2/EVIDENCE-SECRET-CANARY.md",
+        "docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md",
+        "orchestrator/src/evidence/secret-redaction.ts",
+        "docs/research/evolveloop-v2.2/01-current-state-audit.md",
         "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
-        "docs/architecture/v2.2/TRACEABILITY-MATRIX.md",
-        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/GOAL-005d-recall-report.md"
+        "docs/research/evolveloop-v2.2/04-community-findings.md",
+        "orchestrator/src/v22/bench-h-tasks.ts"
       ],
-      "input_tokens": 19495,
-      "latency_ms": 150,
-      "recall": 0.0,
-      "recall_notes": [
-        "miss path not read: orchestrator/src/evidence/secret-redaction.ts"
-      ],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graph_paths_ranked": [],
+      "input_tokens": 20357,
+      "latency_ms": 1737,
+      "recall": 1.0,
+      "recall_notes": [],
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
-      "pass": false,
-      "recall": 0.0,
-      "notes": [
-        "miss path not read: orchestrator/src/evidence/secret-redaction.ts"
-      ]
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
     },
-    "b1_engine": {
-      "engine_requested": "auto",
-      "karpathy_wiki_dir": "/opt/karpathyWiki",
-      "karpathy_wiki_sha_expected": "cd3cf08",
-      "wiki_engine": "fixtures/evolveloop-wiki-vault",
-      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
-      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
-    }
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/test/held-out/H22/B1/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H22-B3-7159a764b8cc",
+    "run_id": "V22G-H22-B3-d6aa16beb518",
     "arm": "B3",
     "task_id": "H22",
     "split": "H19_H24_test",
-    "timestamp": "2026-10-22T02:04:43.603521+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:38:00.068298+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -3998,8 +3022,8 @@
         "orchestrator/tests/unit/evidence/secret-redaction.test.ts",
         "orchestrator/src/v22/bench-pickup-fixture.ts"
       ],
-      "input_tokens": 21007,
-      "latency_ms": 709,
+      "input_tokens": 21171,
+      "latency_ms": 704,
       "recall": 1.0,
       "recall_notes": [],
       "graphify_exit": 0,
@@ -4012,18 +3036,19 @@
     },
     "graphify": {
       "cli_version": "graphify 0.9.93"
-    }
+    },
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "OFFICIAL_BASELINE",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H23-B0-48a874e66dc6",
+    "run_id": "V22G-H23-B0-5ca6e39f0272",
     "arm": "B0",
     "task_id": "H23",
     "split": "H19_H24_test",
-    "timestamp": "2026-10-22T02:04:43.709814+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:38:00.068913+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -4053,29 +3078,32 @@
         "docs/internal/historical/audits/architecture-audit-2026-09-17.md",
         "docs/internal/historical/audits/architecture-current.md"
       ],
+      "graph_paths_ranked": [],
       "input_tokens": 21564,
-      "latency_ms": 105,
+      "latency_ms": 88,
       "recall": 1.0,
       "recall_notes": [],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
       "pass": true,
       "recall": 1.0,
       "notes": []
-    }
+    },
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/test/held-out/H23/B0/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "evidence_class": "OFFICIAL_WIKI_GROUND",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H23-B1-fc58a5616542",
+    "run_id": "V22G-H23-B1-40ebafd968b1",
     "arm": "B1",
     "task_id": "H23",
     "split": "H19_H24_test",
-    "timestamp": "2026-10-22T02:04:43.829629+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:38:00.069229+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -4083,48 +3111,49 @@
       "task_id": "H23",
       "arm": "B1",
       "paths_read": [
-        "orchestrator/src/knowledge/backend/resolve.ts",
         "docs/adr/0001-agent-package-composition.md",
+        "orchestrator/src/registry/registry-client.ts",
+        ".cursor/skills/adr/references/adr-criteria.md",
+        ".cursor/skills/agent-authoring/evals/evals.json",
         "docs/adr/0002-capability-model-deterministic-providers.md",
-        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/fixtures/synth-repo/docs/adr/0001-alpha-gateway.md",
-        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/harness/bench_harness.py",
-        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery/S01/B0/run-01.json",
-        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery/all-runs.json",
-        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery/task-set.json",
-        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-held-out-frozen.json",
-        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks.json"
+        ".cursor/skills/failure-analyst/SKILL.md",
+        ".cursor/skills/security/references/auto-planning.md",
+        ".cursor/skills/researcher/SKILL.md",
+        ".cursor/skills/code-reviewer/SKILL.md",
+        ".cursor/skills/architect/SKILL.md",
+        "docs/architecture/finalization/ADR-INDEX.md",
+        "docs/architecture/finalization/PROTOTYPE-HARDENING-REPORT.md",
+        "docs/architecture/finalization/prototypes/PT-001-live-catalog-budget.md",
+        "docs/architecture/evolveloopt/SECURITY.md",
+        ".cursor/skills/prd/SKILL.md",
+        "orchestrator/src/policies/policy-engine.ts"
       ],
-      "input_tokens": 13373,
-      "latency_ms": 119,
+      "graph_paths_ranked": [],
+      "input_tokens": 21364,
+      "latency_ms": 1653,
       "recall": 1.0,
       "recall_notes": [],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
       "pass": true,
       "recall": 1.0,
       "notes": []
     },
-    "b1_engine": {
-      "engine_requested": "auto",
-      "karpathy_wiki_dir": "/opt/karpathyWiki",
-      "karpathy_wiki_sha_expected": "cd3cf08",
-      "wiki_engine": "fixtures/evolveloop-wiki-vault",
-      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
-      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
-    }
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/test/held-out/H23/B1/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H23-B3-7462dc4ac36c",
+    "run_id": "V22G-H23-B3-1fc28f3c4d88",
     "arm": "B3",
     "task_id": "H23",
     "split": "H19_H24_test",
-    "timestamp": "2026-10-22T02:04:44.510098+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:38:00.781004+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -4181,7 +3210,7 @@
         ".cursor/skills/agent-authoring/references/lifecycle.md"
       ],
       "input_tokens": 18588,
-      "latency_ms": 680,
+      "latency_ms": 711,
       "recall": 1.0,
       "recall_notes": [],
       "graphify_exit": 0,
@@ -4194,18 +3223,19 @@
     },
     "graphify": {
       "cli_version": "graphify 0.9.93"
-    }
+    },
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "OFFICIAL_BASELINE",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H24-B0-a995c1892a4e",
+    "run_id": "V22G-H24-B0-347d5ea9417b",
     "arm": "B0",
     "task_id": "H24",
     "split": "H19_H24_test",
-    "timestamp": "2026-10-22T02:04:44.639576+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:38:00.781489+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -4241,14 +3271,15 @@
         "agent-setup/src/agent_setup/diff.py",
         "agent-setup/src/agent_setup/paths.py"
       ],
+      "graph_paths_ranked": [],
       "input_tokens": 20463,
-      "latency_ms": 129,
+      "latency_ms": 103,
       "recall": 0.0,
       "recall_notes": [
         "miss path not read: docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md"
       ],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
       "pass": false,
@@ -4256,18 +3287,20 @@
       "notes": [
         "miss path not read: docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md"
       ]
-    }
+    },
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/test/held-out/H24/B0/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "evidence_class": "OFFICIAL_WIKI_GROUND",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H24-B1-de04b54891b0",
+    "run_id": "V22G-H24-B1-9a3d8f6a0598",
     "arm": "B1",
     "task_id": "H24",
     "split": "H19_H24_test",
-    "timestamp": "2026-10-22T02:04:44.870165+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:38:00.781783+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -4275,59 +3308,44 @@
       "task_id": "H24",
       "arm": "B1",
       "paths_read": [
-        "orchestrator/src/knowledge/backend/resolve.ts",
-        "agent-setup/bootstrap.sh",
-        "agent-setup/install.sh",
-        "agent-setup/skills/wiki/SKILL.md",
-        "agent-setup/skills/wiki/references/ritual.md",
-        "agent-setup/skills/wiki/scripts/ground.sh",
-        "agent-setup/uninstall.sh",
-        "docs/architecture/portability/KNOWLEDGE-PERSONALIZATION-MAP.yaml",
-        "docs/architecture/prototype-gate/PROTOTYPE-GATE.yaml",
-        "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+        ".cursor/skills/agent-architecture-mining/references/evidence.md",
+        ".cursor/skills/security/references/trust-boundaries.md",
+        ".cursor/skills/skill-authoring/references/post-ship-recommendations.md",
         "docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md",
-        "docs/architecture/v2.2/scripts/bootstrap-karpathywiki-official-bench.sh",
-        "docs/architecture/v2.2/scripts/generate-evolveloop-wiki-knowledge.sh",
-        "docs/architecture/v2.2/scripts/run-graphify-b3-bench.sh",
-        "docs/architecture/v2.2/scripts/sync-carpaccio-to-vault.sh",
-        "docs/architecture/v2.2/scripts/test-official-wiki-stale.sh",
-        "docs/architecture/v2.2/scripts/validate-v22-artifacts.sh",
-        "docs/audit/EVIDENCE-CATALOG.md",
-        "docs/internal/historical/evals/docs-evals/baseline-v2-2026-09-19/BASELINE-CHECKSUMS.sha256",
-        "docs/internal/historical/evals/docs-evals/baseline-v3-2026-09-19/BASELINE-CHECKSUMS.sha256",
-        "docs/internal/historical/evals/docs-evals/baseline-v4-2026-09-19/BASELINE-CHECKSUMS.sha256"
+        "docs/reconciliation/TEST-RECONCILIATION.md",
+        "orchestrator/src/v22/bench-h-tasks.ts",
+        ".cursor/skills/security/references/business-logic.md",
+        "docs/architecture/v2.2/CONSOLIDATION-REPORT.md",
+        "orchestrator/src/knowledge/truth-source/fence.ts",
+        "docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md",
+        "docs/research/evolveloop-v2.2/03-repositories-and-tools.md"
       ],
-      "input_tokens": 21870,
-      "latency_ms": 230,
+      "graph_paths_ranked": [],
+      "input_tokens": 21645,
+      "latency_ms": 1627,
       "recall": 1.0,
       "recall_notes": [],
-      "ground_exit": 0,
-      "stale_hits": 0
+      "graphify_exit": 0,
+      "graph_path": ""
     },
     "verifier": {
       "pass": true,
       "recall": 1.0,
       "notes": []
     },
-    "b1_engine": {
-      "engine_requested": "auto",
-      "karpathy_wiki_dir": "/opt/karpathyWiki",
-      "karpathy_wiki_sha_expected": "cd3cf08",
-      "wiki_engine": "fixtures/evolveloop-wiki-vault",
-      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
-      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
-    }
+    "official_reference": "raw/battery-held-out-official-hybrid/run-01/test/held-out/H24/B1/run-01.json",
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
     "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-    "run_id": "V22G-H24-B3-8d4609df0001",
+    "run_id": "V22G-H24-B3-1ba0e69d0976",
     "arm": "B3",
     "task_id": "H24",
     "split": "H19_H24_test",
-    "timestamp": "2026-10-22T02:04:45.692186+00:00",
-    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "timestamp": "2026-10-22T03:38:01.623166+00:00",
+    "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -4407,8 +3425,8 @@
         "orchestrator/tests/integration/v22-p2-goals.integration.test.ts",
         "orchestrator/tests/unit/cursor-skill-provider.test.ts"
       ],
-      "input_tokens": 21252,
-      "latency_ms": 821,
+      "input_tokens": 21416,
+      "latency_ms": 841,
       "recall": 1.0,
       "recall_notes": [],
       "graphify_exit": 0,
@@ -4421,6 +3439,7 @@
     },
     "graphify": {
       "cli_version": "graphify 0.9.93"
-    }
+    },
+    "scorer_version": "v22-anchor-scorer-1.0.0"
   }
 ]

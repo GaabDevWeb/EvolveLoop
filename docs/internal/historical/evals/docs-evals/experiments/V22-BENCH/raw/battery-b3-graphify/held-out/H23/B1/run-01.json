@@ -1,13 +1,13 @@
 {
   "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-  "evidence_class": "FIXTURE_WIKI_GROUND",
+  "evidence_class": "OFFICIAL_WIKI_GROUND",
   "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-  "run_id": "V22G-H23-B1-fc58a5616542",
+  "run_id": "V22G-H23-B1-40ebafd968b1",
   "arm": "B1",
   "task_id": "H23",
   "split": "H19_H24_test",
-  "timestamp": "2026-10-22T02:04:43.829629+00:00",
-  "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+  "timestamp": "2026-10-22T03:38:00.069229+00:00",
+  "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
   "harness": "v22-graphify-b3-harness-1.5.0",
   "ground_harness": "v22-ground-b1-harness-1.5.0",
   "tokenizer": "tiktoken:cl100k_base",
@@ -15,35 +15,36 @@
     "task_id": "H23",
     "arm": "B1",
     "paths_read": [
-      "orchestrator/src/knowledge/backend/resolve.ts",
       "docs/adr/0001-agent-package-composition.md",
+      "orchestrator/src/registry/registry-client.ts",
+      ".cursor/skills/adr/references/adr-criteria.md",
+      ".cursor/skills/agent-authoring/evals/evals.json",
       "docs/adr/0002-capability-model-deterministic-providers.md",
-      "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/fixtures/synth-repo/docs/adr/0001-alpha-gateway.md",
-      "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/harness/bench_harness.py",
-      "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery/S01/B0/run-01.json",
-      "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery/all-runs.json",
-      "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery/task-set.json",
-      "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-held-out-frozen.json",
-      "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks.json"
+      ".cursor/skills/failure-analyst/SKILL.md",
+      ".cursor/skills/security/references/auto-planning.md",
+      ".cursor/skills/researcher/SKILL.md",
+      ".cursor/skills/code-reviewer/SKILL.md",
+      ".cursor/skills/architect/SKILL.md",
+      "docs/architecture/finalization/ADR-INDEX.md",
+      "docs/architecture/finalization/PROTOTYPE-HARDENING-REPORT.md",
+      "docs/architecture/finalization/prototypes/PT-001-live-catalog-budget.md",
+      "docs/architecture/evolveloopt/SECURITY.md",
+      ".cursor/skills/prd/SKILL.md",
+      "orchestrator/src/policies/policy-engine.ts"
     ],
-    "input_tokens": 13373,
-    "latency_ms": 119,
+    "graph_paths_ranked": [],
+    "input_tokens": 21364,
+    "latency_ms": 1653,
     "recall": 1.0,
     "recall_notes": [],
-    "ground_exit": 0,
-    "stale_hits": 0
+    "graphify_exit": 0,
+    "graph_path": ""
   },
   "verifier": {
     "pass": true,
     "recall": 1.0,
     "notes": []
   },
-  "b1_engine": {
-    "engine_requested": "auto",
-    "karpathy_wiki_dir": "/opt/karpathyWiki",
-    "karpathy_wiki_sha_expected": "cd3cf08",
-    "wiki_engine": "fixtures/evolveloop-wiki-vault",
-    "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
-    "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
-  }
+  "official_reference": "raw/battery-held-out-official-hybrid/run-01/test/held-out/H23/B1/run-01.json",
+  "scorer_version": "v22-anchor-scorer-1.0.0"
 }

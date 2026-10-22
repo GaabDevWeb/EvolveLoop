@@ -1,13 +1,13 @@
 {
   "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-  "evidence_class": "FIXTURE_WIKI_GROUND",
+  "evidence_class": "OFFICIAL_WIKI_GROUND",
   "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-  "run_id": "V22G-H14-B1-51193bd8fd96",
+  "run_id": "V22G-H14-B1-ddd4e8c0a881",
   "arm": "B1",
   "task_id": "H14",
   "split": "H07_H18_dev",
-  "timestamp": "2026-10-22T02:04:34.837237+00:00",
-  "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+  "timestamp": "2026-10-22T03:37:53.416285+00:00",
+  "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
   "harness": "v22-graphify-b3-harness-1.5.0",
   "ground_harness": "v22-ground-b1-harness-1.5.0",
   "tokenizer": "tiktoken:cl100k_base",
@@ -15,30 +15,31 @@
     "task_id": "H14",
     "arm": "B1",
     "paths_read": [
-      "orchestrator/src/knowledge/backend/resolve.ts"
+      "docs/research/evolveloop-v2.2/01-current-state-audit.md",
+      "orchestrator/src/v22/bench-h-tasks.ts",
+      ".cursor/skills/orquestrar/references/ecosystem-v2.md",
+      "docs/adr/0002-capability-model-deterministic-providers.md",
+      ".cursor/skills/orquestrar/references/specs/runtime.md",
+      ".cursor/skills/orquestrar/references/specs/README.md",
+      "orchestrator/src/providers/deterministic/knowledge.ts"
     ],
-    "input_tokens": 362,
-    "latency_ms": 43,
-    "recall": 0.0,
+    "graph_paths_ranked": [],
+    "input_tokens": 21874,
+    "latency_ms": 1647,
+    "recall": 1.0,
     "recall_notes": [
-      "miss path not read: orchestrator/src/providers/deterministic/knowledge.ts"
+      "anchor line drift (file evidence): orchestrator/src/providers/deterministic/knowledge.ts:16"
     ],
-    "ground_exit": 0,
-    "stale_hits": 0
+    "graphify_exit": 0,
+    "graph_path": ""
   },
   "verifier": {
-    "pass": false,
-    "recall": 0.0,
+    "pass": true,
+    "recall": 1.0,
     "notes": [
-      "miss path not read: orchestrator/src/providers/deterministic/knowledge.ts"
+      "anchor line drift (file evidence): orchestrator/src/providers/deterministic/knowledge.ts:16"
     ]
   },
-  "b1_engine": {
-    "engine_requested": "auto",
-    "karpathy_wiki_dir": "/opt/karpathyWiki",
-    "karpathy_wiki_sha_expected": "cd3cf08",
-    "wiki_engine": "fixtures/evolveloop-wiki-vault",
-    "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
-    "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
-  }
+  "official_reference": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H14/B1/run-01.json",
+  "scorer_version": "v22-anchor-scorer-1.0.0"
 }

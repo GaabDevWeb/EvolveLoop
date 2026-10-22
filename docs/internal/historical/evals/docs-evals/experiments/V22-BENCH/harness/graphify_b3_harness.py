@@ -38,9 +38,8 @@ TASKS_REAL = EXP_DIR / "tasks-real-frozen.json"
 TASKS_HELD = EXP_DIR / "tasks-held-out-frozen.json"
 HARNESS_VERSION = "v22-graphify-b3-harness-1.5.0"
 
-# Held-out B1 fallback when official motor cannot run (documented in summary).
-B1_FROZEN_H07_H18 = EXP_DIR / "raw" / "battery-held-out-real-engine-005e-hybrid-dev"
-B1_FROZEN_H19_H24 = EXP_DIR / "raw" / "battery-held-out-real-engine-005e-hybrid-test"
+OFFICIAL_HYBRID_RUN = EXP_DIR / "raw" / "battery-held-out-official-hybrid" / "run-01"
+OFFICIAL_MANIFEST = EXP_DIR / "raw" / "battery-held-out-official-hybrid" / "OFFICIAL-MANIFEST.json"
 
 GRAPHIFY_PIP_PACKAGE = "graphifyy"
 GRAPHIFY_UPSTREAM = "https://github.com/Graphify-Labs/graphify"
@@ -174,7 +173,11 @@ def run_b3(repo: Path, task: dict[str, Any], counter: Callable[[str], int]) -> R
     for rel in ranked:
         if not read_rel(repo, rel, paths, buf, counter, max_paths, max_tokens):
             break
-    recall, rnotes = anchor_recall(repo, paths, task["anchors"])
+    from v22_anchor_scorer import SCORER_VERSION, rescore_run_metrics
+
+    scored = rescore_run_metrics(repo, paths, task["anchors"])
+    recall = float(scored["recall"])
+    rnotes = list(scored["recall_notes"])
     notes.extend(rnotes)
     tok_in = counter("\n".join(buf))
     elapsed = int((time.perf_counter() - t0) * 1000)
@@ -193,12 +196,51 @@ def run_b3(repo: Path, task: dict[str, Any], counter: Callable[[str], int]) -> R
 
 
 def load_tasks() -> list[dict[str, Any]]:
+    held_ids = {f"H{n:02d}" for n in range(7, 25)}
+    if os.environ.get("V22_B3_SUITE", "official-held-out").strip() == "official-held-out":
+        held = json.loads(TASKS_HELD.read_text(encoding="utf-8"))
+        return [t for t in held["tasks"] if t["id"] in held_ids]
     real = json.loads(TASKS_REAL.read_text(encoding="utf-8"))
     held = json.loads(TASKS_HELD.read_text(encoding="utf-8"))
-    held_ids = {f"H{n:02d}" for n in range(7, 25)}
     tasks: list[dict[str, Any]] = list(real["tasks"])
     tasks.extend([t for t in held["tasks"] if t["id"] in held_ids])
     return tasks
+
+
+def official_split_dir(task_id: str) -> str:
+    n = int(task_id[1:])
+    return "dev" if 7 <= n <= 18 else "test"
+
+
+def official_arm_run_path(task_id: str, arm: str) -> Path:
+    root = Path(os.environ.get("V22_OFFICIAL_HYBRID_RUN", str(OFFICIAL_HYBRID_RUN)))
+    return root / official_split_dir(task_id) / "held-out" / task_id / arm / "run-01.json"
+
+
+def run_result_from_official_json(
+    task: dict[str, Any], arm: str, repo: Path
+) -> tuple[RunResult, str]:
+    from v22_anchor_scorer import rescore_run_metrics
+
+    path = official_arm_run_path(task["id"], arm)
+    if not path.is_file():
+        raise FileNotFoundError(path)
+    rec = json.loads(path.read_text(encoding="utf-8"))
+    m = rec["metrics"]
+    paths = list(m.get("paths_read") or [])
+    scored = rescore_run_metrics(repo, paths, task["anchors"])
+    return (
+        RunResult(
+            task_id=task["id"],
+            arm=arm,
+            paths_read=paths,
+            input_tokens=int(m.get("input_tokens", 0)),
+            latency_ms=int(m.get("latency_ms", 0)),
+            recall=float(scored["recall"]),
+            recall_notes=scored["recall_notes"],
+        ),
+        str(path.relative_to(EXP_DIR)),
+    )
 
 
 def task_split(task_id: str) -> str:
@@ -210,37 +252,6 @@ def task_split(task_id: str) -> str:
     if 19 <= n <= 24:
         return "H19_H24_test"
     return "other"
-
-
-def frozen_b1_run_path(task_id: str) -> Path | None:
-    n = int(task_id[1:])
-    if 7 <= n <= 18:
-        base = B1_FROZEN_H07_H18
-    elif 19 <= n <= 24:
-        base = B1_FROZEN_H19_H24
-    else:
-        return None
-    p = base / "held-out" / task_id / "B1" / "run-01.json"
-    return p if p.is_file() else None
-
-
-def metrics_from_frozen_b1(task_id: str) -> dict[str, Any] | None:
-    p = frozen_b1_run_path(task_id)
-    if not p:
-        return None
-    rec = json.loads(p.read_text(encoding="utf-8"))
-    m = rec["metrics"]
-    return {
-        "task_id": task_id,
-        "split": task_split(task_id),
-        "arm": "B1",
-        "recall": float(m["recall"]),
-        "paths": len(m["paths_read"]),
-        "tokens": int(m["input_tokens"]),
-        "latency_ms": int(m["latency_ms"]),
-        "source": str(p.relative_to(EXP_DIR)),
-        "harness": rec.get("harness"),
-    }
 
 
 def metrics_row(task_id: str, arm: str, res: RunResult) -> dict[str, Any]:
@@ -271,20 +282,24 @@ def summarize_arm(rows: list[dict[str, Any]], arm: str) -> dict[str, Any]:
 
 def build_split_tables(flat: list[dict[str, Any]]) -> dict[str, Any]:
     splits = {
-        "R01_R06": {
-            "label": "real repo tasks (no B1 — curated pack is CIRCULAR)",
-            "compare_arms": ["B0", "B3"],
-            "b1_note": "PROVISIONAL_CURATED_PACK excluded from comparison",
-        },
         "H07_H18_dev": {
-            "label": "held-out dev (independent reviewer)",
+            "label": "held-out dev — OFFICIAL_WIKI_GROUND hybrid (run-01)",
             "compare_arms": ["B0", "B1", "B3"],
         },
         "H19_H24_test": {
-            "label": "held-out test (recall holdout)",
+            "label": "held-out test — OFFICIAL_WIKI_GROUND hybrid (run-01)",
             "compare_arms": ["B0", "B1", "B3"],
         },
     }
+    if any(r["split"] == "R01_R06" for r in flat):
+        splits = {
+            "R01_R06": {
+                "label": "real repo tasks (no B1 — curated pack is CIRCULAR)",
+                "compare_arms": ["B0", "B3"],
+                "b1_note": "PROVISIONAL_CURATED_PACK excluded from comparison",
+            },
+            **splits,
+        }
     out: dict[str, Any] = {}
     for key, meta in splits.items():
         rows = [r for r in flat if r["split"] == key]
@@ -352,70 +367,59 @@ def run_battery(out_dir: Path) -> dict[str, Any]:
     except (subprocess.CalledProcessError, FileNotFoundError):
         cli_version = "NOT_INSTALLED"
 
-    b1_class, b1_env, b1_engine_meta = resolve_b1_class_and_env(repo)
-    b1_official_unavailable = b1_class != "OFFICIAL_WIKI_GROUND"
-    b1_fallback_note: str | None = None
-    if b1_official_unavailable:
-        b1_fallback_note = (
-            "Held-out B1 rows use frozen runs (harness 1.5.0, PR #10 lineage): "
-            f"H07–H18 → {B1_FROZEN_H07_H18.relative_to(EXP_DIR)}; "
-            f"H19–H24 → {B1_FROZEN_H19_H24.relative_to(EXP_DIR)}. "
-            "B0 and B3 measured live on this VM in the same pass."
-        )
+    use_official_b0b1 = os.environ.get("V22_B3_SUITE", "official-held-out") == "official-held-out"
+    from v22_anchor_scorer import SCORER_VERSION
 
     all_runs: list[dict[str, Any]] = []
     flat_metrics: list[dict[str, Any]] = []
     for task in tasks:
         tid = task["id"]
         suite = "real" if tid.startswith("R") else "held-out"
-        b0 = run_b0(repo, task, counter)
-        rec_b0 = write_arm_run(
-            out_dir,
-            suite,
-            tid,
-            "B0",
-            tree_sha,
-            tok_label,
-            b0,
-            "OFFICIAL_BASELINE",
-        )
-        all_runs.append(rec_b0)
-        flat_metrics.append(metrics_row(tid, "B0", b0))
+        if use_official_b0b1 and not tid.startswith("R"):
+            b0, b0_src = run_result_from_official_json(task, "B0", repo)
+            rec_b0 = write_arm_run(
+                out_dir,
+                suite,
+                tid,
+                "B0",
+                tree_sha,
+                tok_label,
+                b0,
+                "OFFICIAL_BASELINE",
+                extra={"official_reference": b0_src, "scorer_version": SCORER_VERSION},
+            )
+            all_runs.append(rec_b0)
+            flat_metrics.append(metrics_row(tid, "B0", b0))
 
-        if not tid.startswith("R"):
-            frozen_b1 = metrics_from_frozen_b1(tid) if b1_official_unavailable else None
-            if frozen_b1:
-                flat_metrics.append(frozen_b1)
-                rec_b1 = {
-                    "arm": "B1",
-                    "task_id": tid,
-                    "evidence_class": "OFFICIAL_WIKI_GROUND",
-                    "frozen_reference": frozen_b1["source"],
-                    "harness": frozen_b1.get("harness"),
-                    "metrics": {
-                        "recall": frozen_b1["recall"],
-                        "paths_read": [""] * frozen_b1["paths"],
-                        "input_tokens": frozen_b1["tokens"],
-                        "latency_ms": frozen_b1["latency_ms"],
-                    },
-                    "note": "B1 from frozen PR #10 lineage (harness 1.5.0); not re-run on this VM (no karpathyWiki).",
-                }
-                all_runs.append(rec_b1)
-            else:
-                b1 = run_b1_ground(repo, task, counter, b1_env)
-                rec_b1 = write_arm_run(
-                    out_dir,
-                    suite,
-                    tid,
-                    "B1",
-                    tree_sha,
-                    tok_label,
-                    b1,
-                    b1_class,
-                    extra={"b1_engine": b1_engine_meta},
-                )
-                all_runs.append(rec_b1)
-                flat_metrics.append(metrics_row(tid, "B1", b1))
+            b1, b1_src = run_result_from_official_json(task, "B1", repo)
+            rec_b1 = write_arm_run(
+                out_dir,
+                suite,
+                tid,
+                "B1",
+                tree_sha,
+                tok_label,
+                b1,
+                "OFFICIAL_WIKI_GROUND",
+                extra={"official_reference": b1_src, "scorer_version": SCORER_VERSION},
+            )
+            all_runs.append(rec_b1)
+            flat_metrics.append(metrics_row(tid, "B1", b1))
+        else:
+            b0 = run_b0(repo, task, counter)
+            rec_b0 = write_arm_run(
+                out_dir,
+                suite,
+                tid,
+                "B0",
+                tree_sha,
+                tok_label,
+                b0,
+                "OFFICIAL_BASELINE",
+                extra={"scorer_version": SCORER_VERSION},
+            )
+            all_runs.append(rec_b0)
+            flat_metrics.append(metrics_row(tid, "B0", b0))
 
         b3 = run_b3(repo, task, counter)
         rec_b3 = write_arm_run(
@@ -427,10 +431,18 @@ def run_battery(out_dir: Path) -> dict[str, Any]:
             tok_label,
             b3,
             "GRAPHIFY_CODE_GRAPH",
-            extra={"graphify": {"cli_version": cli_version}},
+            extra={
+                "graphify": {"cli_version": cli_version},
+                "scorer_version": SCORER_VERSION,
+            },
         )
         all_runs.append(rec_b3)
         flat_metrics.append(metrics_row(tid, "B3", b3))
+
+    unified = {
+        "dev": build_split_tables(flat_metrics).get("H07_H18_dev", {}).get("by_arm", {}),
+        "test": build_split_tables(flat_metrics).get("H19_H24_test", {}).get("by_arm", {}),
+    }
 
     aggs: dict[str, dict[str, Any]] = {}
     for r in all_runs:
@@ -447,20 +459,27 @@ def run_battery(out_dir: Path) -> dict[str, Any]:
         "experiment": "V22-BENCH-GRAPHIFY-B3",
         "classification_by_arm": {
             "B0": "OFFICIAL_BASELINE",
-            "B1": b1_class,
+            "B1": "OFFICIAL_WIKI_GROUND",
             "B3": "GRAPHIFY_CODE_GRAPH",
         },
-        "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+        "baseline_id": "v22-graphify-b3-official-unified-2026-10-22",
         "freeze_tree_sha": tree_sha,
         "harness": HARNESS_VERSION,
         "ground_harness": GROUND_HARNESS_VERSION,
         "anchor_recall_mode": anchor_recall_mode(),
+        "canonical_scorer": SCORER_VERSION,
         "bench_max_paths": bench_max_paths(),
         "bench_max_input_tokens": bench_max_input_tokens(),
         "coherent_suite_note": (
-            "B0 and B3 (and held-out B1 when motor available) measured in one pass with "
-            "ground harness 1.5.0 budgets. R01–R06: compare B0 vs B3 only."
+            "Held-out: B0/B1 paths+tokens from OFFICIAL-MANIFEST run-01 hybrid; recall re-scored with "
+            f"{SCORER_VERSION} on current tree. B3 re-measured live (graphify). "
+            "Tokenizer tiktoken:cl100k_base when V22_BENCH_TOKENIZER=tiktoken."
         ),
+        "official_manifest": str(OFFICIAL_MANIFEST.relative_to(EXP_DIR)),
+        "official_hybrid_run": str(
+            Path(os.environ.get("V22_OFFICIAL_HYBRID_RUN", str(OFFICIAL_HYBRID_RUN))).relative_to(EXP_DIR)
+        ),
+        "unified_official_table": unified,
         "graphify_package": {
             "pip_name": GRAPHIFY_PIP_PACKAGE,
             "pip_version": cli_version.replace("graphify ", "").strip() if cli_version else None,
@@ -475,14 +494,6 @@ def run_battery(out_dir: Path) -> dict[str, Any]:
             "graph_path": str(graph_path(repo)),
             "query_token_budget": graph_query_token_budget(),
             "mode": "local AST (--no-cluster), no --wiki, no LLM",
-        },
-        "b1_measurement": {
-            "live_class": b1_class,
-            "engine_meta": b1_engine_meta,
-            "official_motor_on_vm": not b1_official_unavailable,
-            "frozen_h07_h18": str(B1_FROZEN_H07_H18.relative_to(EXP_DIR)),
-            "frozen_h19_h24": str(B1_FROZEN_H19_H24.relative_to(EXP_DIR)),
-            "note": b1_fallback_note,
         },
         "aggregates": aggs,
         "split_tables": split_tables,

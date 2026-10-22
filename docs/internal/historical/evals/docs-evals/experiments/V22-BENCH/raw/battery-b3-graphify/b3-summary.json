@@ -2,17 +2,68 @@
   "experiment": "V22-BENCH-GRAPHIFY-B3",
   "classification_by_arm": {
     "B0": "OFFICIAL_BASELINE",
-    "B1": "FIXTURE_WIKI_GROUND",
+    "B1": "OFFICIAL_WIKI_GROUND",
     "B3": "GRAPHIFY_CODE_GRAPH"
   },
-  "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-  "freeze_tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+  "baseline_id": "v22-graphify-b3-official-unified-2026-10-22",
+  "freeze_tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
   "harness": "v22-graphify-b3-harness-1.5.0",
   "ground_harness": "v22-ground-b1-harness-1.5.0",
-  "anchor_recall_mode": "file",
+  "anchor_recall_mode": "v22-anchor-scorer-1.0.0:file_evidence",
+  "canonical_scorer": "v22-anchor-scorer-1.0.0",
   "bench_max_paths": 45,
   "bench_max_input_tokens": 22000,
-  "coherent_suite_note": "B0 and B3 (and held-out B1 when motor available) measured in one pass with ground harness 1.5.0 budgets. R01\u2013R06: compare B0 vs B3 only.",
+  "coherent_suite_note": "Held-out: B0/B1 paths+tokens from OFFICIAL-MANIFEST run-01 hybrid; recall re-scored with v22-anchor-scorer-1.0.0 on current tree. B3 re-measured live (graphify). Tokenizer tiktoken:cl100k_base when V22_BENCH_TOKENIZER=tiktoken.",
+  "official_manifest": "raw/battery-held-out-official-hybrid/OFFICIAL-MANIFEST.json",
+  "official_hybrid_run": "raw/battery-held-out-official-hybrid/run-01",
+  "unified_official_table": {
+    "dev": {
+      "B0": {
+        "tasks": 12,
+        "recall_eq_1": 7,
+        "median_paths": 18.5,
+        "median_tokens": 21283.5,
+        "median_latency_ms": 75.5
+      },
+      "B1": {
+        "tasks": 12,
+        "recall_eq_1": 9,
+        "median_paths": 8.5,
+        "median_tokens": 20462.5,
+        "median_latency_ms": 1639.0
+      },
+      "B3": {
+        "tasks": 12,
+        "recall_eq_1": 9,
+        "median_paths": 9.0,
+        "median_tokens": 20521.5,
+        "median_latency_ms": 750.0
+      }
+    },
+    "test": {
+      "B0": {
+        "tasks": 6,
+        "recall_eq_1": 4,
+        "median_paths": 19.5,
+        "median_tokens": 20098.5,
+        "median_latency_ms": 86.5
+      },
+      "B1": {
+        "tasks": 6,
+        "recall_eq_1": 5,
+        "median_paths": 7.5,
+        "median_tokens": 21531.0,
+        "median_latency_ms": 1653.5
+      },
+      "B3": {
+        "tasks": 6,
+        "recall_eq_1": 6,
+        "median_paths": 10.5,
+        "median_tokens": 20699.0,
+        "median_latency_ms": 723.5
+      }
+    }
+  },
   "graphify_package": {
     "pip_name": "graphifyy",
     "pip_version": "0.9.93",
@@ -28,564 +79,335 @@
     "query_token_budget": 4000,
     "mode": "local AST (--no-cluster), no --wiki, no LLM"
   },
-  "b1_measurement": {
-    "live_class": "FIXTURE_WIKI_GROUND",
-    "engine_meta": {
-      "engine_requested": "auto",
-      "karpathy_wiki_dir": "/opt/karpathyWiki",
-      "karpathy_wiki_sha_expected": "cd3cf08",
-      "wiki_engine": "fixtures/evolveloop-wiki-vault",
-      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
-      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
-    },
-    "official_motor_on_vm": false,
-    "frozen_hybrid_reference": "raw/battery-held-out-real-engine-005e-hybrid-test/held-out-summary.json",
-    "note": "B1 re-run on this VM uses FIXTURE_WIKI_GROUND (karpathyWiki absent). Held-out B1 aggregates in split tables also cite frozen raw/battery-held-out-real-engine-005e-hybrid-test/held-out-summary.json (PR #10 hybrid lineage, harness 1.5.0)."
-  },
   "aggregates": {
-    "R01:B0": {
-      "median_paths": 19.0,
-      "median_input_tokens": 21790.0,
-      "median_latency_ms": 115.0,
-      "recall": 0.0
-    },
-    "R01:B3": {
-      "median_paths": 9.0,
-      "median_input_tokens": 19469.0,
-      "median_latency_ms": 720.0,
-      "recall": 0.0
-    },
-    "R02:B0": {
-      "median_paths": 19.0,
-      "median_input_tokens": 21790.0,
-      "median_latency_ms": 112.0,
-      "recall": 0.0
-    },
-    "R02:B3": {
-      "median_paths": 3.0,
-      "median_input_tokens": 11514.0,
-      "median_latency_ms": 686.0,
-      "recall": 0.0
-    },
-    "R03:B0": {
-      "median_paths": 13.0,
-      "median_input_tokens": 14585.0,
-      "median_latency_ms": 82.0,
-      "recall": 0.0
-    },
-    "R03:B3": {
-      "median_paths": 2.0,
-      "median_input_tokens": 13318.0,
-      "median_latency_ms": 817.0,
-      "recall": 0.0
-    },
-    "R04:B0": {
-      "median_paths": 31.0,
-      "median_input_tokens": 21207.0,
-      "median_latency_ms": 167.0,
-      "recall": 0.0
-    },
-    "R04:B3": {
-      "median_paths": 10.0,
-      "median_input_tokens": 21763.0,
-      "median_latency_ms": 833.0,
-      "recall": 1.0
-    },
-    "R05:B0": {
-      "median_paths": 22.0,
-      "median_input_tokens": 21469.0,
-      "median_latency_ms": 121.0,
-      "recall": 0.0
-    },
-    "R05:B3": {
-      "median_paths": 15.0,
-      "median_input_tokens": 21888.0,
-      "median_latency_ms": 794.0,
-      "recall": 0.0
-    },
-    "R06:B0": {
-      "median_paths": 7.0,
-      "median_input_tokens": 14620.0,
-      "median_latency_ms": 61.0,
-      "recall": 0.0
-    },
-    "R06:B3": {
-      "median_paths": 7.0,
-      "median_input_tokens": 21620.0,
-      "median_latency_ms": 845.0,
-      "recall": 1.0
-    },
     "H07:B0": {
       "median_paths": 38.0,
       "median_input_tokens": 21795.0,
-      "median_latency_ms": 181.0,
+      "median_latency_ms": 161.0,
       "recall": 0.0
     },
     "H07:B1": {
-      "median_paths": 22.0,
-      "median_input_tokens": 13272.0,
-      "median_latency_ms": 194.0,
-      "recall": 0.0
+      "median_paths": 9.0,
+      "median_input_tokens": 21530.0,
+      "median_latency_ms": 1672.0,
+      "recall": 1.0
     },
     "H07:B3": {
-      "median_paths": 12.0,
-      "median_input_tokens": 21892.0,
-      "median_latency_ms": 750.0,
+      "median_paths": 11.0,
+      "median_input_tokens": 16039.0,
+      "median_latency_ms": 745.0,
       "recall": 0.0
     },
     "H08:B0": {
-      "median_paths": 5.0,
-      "median_input_tokens": 10083.0,
-      "median_latency_ms": 39.0,
+      "median_paths": 9.0,
+      "median_input_tokens": 20531.0,
+      "median_latency_ms": 49.0,
       "recall": 0.0
     },
     "H08:B1": {
-      "median_paths": 20.0,
-      "median_input_tokens": 16145.0,
-      "median_latency_ms": 160.0,
+      "median_paths": 5.0,
+      "median_input_tokens": 18555.0,
+      "median_latency_ms": 1631.0,
       "recall": 0.0
     },
     "H08:B3": {
       "median_paths": 12.0,
-      "median_input_tokens": 21114.0,
-      "median_latency_ms": 812.0,
+      "median_input_tokens": 21278.0,
+      "median_latency_ms": 853.0,
       "recall": 1.0
     },
     "H09:B0": {
       "median_paths": 24.0,
       "median_input_tokens": 20986.0,
-      "median_latency_ms": 95.0,
+      "median_latency_ms": 78.0,
       "recall": 1.0
     },
     "H09:B1": {
-      "median_paths": 21.0,
-      "median_input_tokens": 7972.0,
-      "median_latency_ms": 168.0,
+      "median_paths": 9.0,
+      "median_input_tokens": 21425.0,
+      "median_latency_ms": 1590.0,
       "recall": 1.0
     },
     "H09:B3": {
       "median_paths": 9.0,
       "median_input_tokens": 19995.0,
-      "median_latency_ms": 699.0,
+      "median_latency_ms": 723.0,
       "recall": 1.0
     },
     "H10:B0": {
       "median_paths": 13.0,
       "median_input_tokens": 16643.0,
-      "median_latency_ms": 60.0,
+      "median_latency_ms": 49.0,
       "recall": 1.0
     },
     "H10:B1": {
-      "median_paths": 11.0,
-      "median_input_tokens": 20095.0,
-      "median_latency_ms": 128.0,
+      "median_paths": 7.0,
+      "median_input_tokens": 20570.0,
+      "median_latency_ms": 1630.0,
       "recall": 1.0
     },
     "H10:B3": {
       "median_paths": 4.0,
       "median_input_tokens": 21449.0,
-      "median_latency_ms": 788.0,
+      "median_latency_ms": 755.0,
       "recall": 1.0
     },
     "H11:B0": {
       "median_paths": 41.0,
       "median_input_tokens": 21370.0,
-      "median_latency_ms": 197.0,
+      "median_latency_ms": 164.0,
       "recall": 0.0
     },
     "H11:B1": {
-      "median_paths": 9.0,
-      "median_input_tokens": 20493.0,
-      "median_latency_ms": 128.0,
+      "median_paths": 7.0,
+      "median_input_tokens": 20241.0,
+      "median_latency_ms": 1574.0,
       "recall": 0.0
     },
     "H11:B3": {
       "median_paths": 10.0,
-      "median_input_tokens": 20895.0,
-      "median_latency_ms": 683.0,
+      "median_input_tokens": 21369.0,
+      "median_latency_ms": 709.0,
       "recall": 1.0
     },
     "H12:B0": {
-      "median_paths": 10.0,
-      "median_input_tokens": 15606.0,
-      "median_latency_ms": 68.0,
+      "median_paths": 9.0,
+      "median_input_tokens": 12652.0,
+      "median_latency_ms": 46.0,
       "recall": 1.0
     },
     "H12:B1": {
-      "median_paths": 2.0,
-      "median_input_tokens": 1027.0,
-      "median_latency_ms": 45.0,
+      "median_paths": 10.0,
+      "median_input_tokens": 20417.0,
+      "median_latency_ms": 1613.0,
       "recall": 0.0
     },
     "H12:B3": {
       "median_paths": 9.0,
-      "median_input_tokens": 21614.0,
-      "median_latency_ms": 750.0,
+      "median_input_tokens": 21778.0,
+      "median_latency_ms": 789.0,
       "recall": 1.0
     },
     "H13:B0": {
       "median_paths": 19.0,
-      "median_input_tokens": 21826.0,
-      "median_latency_ms": 120.0,
+      "median_input_tokens": 21197.0,
+      "median_latency_ms": 90.0,
       "recall": 1.0
     },
     "H13:B1": {
-      "median_paths": 21.0,
-      "median_input_tokens": 21490.0,
-      "median_latency_ms": 179.0,
+      "median_paths": 9.0,
+      "median_input_tokens": 21706.0,
+      "median_latency_ms": 1748.0,
       "recall": 1.0
     },
     "H13:B3": {
       "median_paths": 3.0,
       "median_input_tokens": 15879.0,
-      "median_latency_ms": 739.0,
+      "median_latency_ms": 706.0,
       "recall": 1.0
     },
     "H14:B0": {
-      "median_paths": 10.0,
-      "median_input_tokens": 17593.0,
-      "median_latency_ms": 77.0,
-      "recall": 0.0
+      "median_paths": 12.0,
+      "median_input_tokens": 21925.0,
+      "median_latency_ms": 65.0,
+      "recall": 1.0
     },
     "H14:B1": {
-      "median_paths": 1.0,
-      "median_input_tokens": 362.0,
-      "median_latency_ms": 43.0,
-      "recall": 0.0
+      "median_paths": 7.0,
+      "median_input_tokens": 21874.0,
+      "median_latency_ms": 1647.0,
+      "recall": 1.0
     },
     "H14:B3": {
       "median_paths": 8.0,
-      "median_input_tokens": 20426.0,
-      "median_latency_ms": 769.0,
+      "median_input_tokens": 20590.0,
+      "median_latency_ms": 776.0,
       "recall": 1.0
     },
     "H15:B0": {
       "median_paths": 41.0,
       "median_input_tokens": 21370.0,
-      "median_latency_ms": 192.0,
+      "median_latency_ms": 155.0,
       "recall": 0.0
     },
     "H15:B1": {
-      "median_paths": 22.0,
-      "median_input_tokens": 17819.0,
-      "median_latency_ms": 220.0,
-      "recall": 0.0
+      "median_paths": 10.0,
+      "median_input_tokens": 19471.0,
+      "median_latency_ms": 1663.0,
+      "recall": 1.0
     },
     "H15:B3": {
       "median_paths": 9.0,
       "median_input_tokens": 19802.0,
-      "median_latency_ms": 822.0,
+      "median_latency_ms": 815.0,
       "recall": 1.0
     },
     "H16:B0": {
-      "median_paths": 15.0,
-      "median_input_tokens": 21689.0,
-      "median_latency_ms": 86.0,
-      "recall": 0.0
+      "median_paths": 16.0,
+      "median_input_tokens": 19804.0,
+      "median_latency_ms": 62.0,
+      "recall": 1.0
     },
     "H16:B1": {
-      "median_paths": 22.0,
-      "median_input_tokens": 17280.0,
-      "median_latency_ms": 177.0,
-      "recall": 0.0
+      "median_paths": 8.0,
+      "median_input_tokens": 19651.0,
+      "median_latency_ms": 1657.0,
+      "recall": 1.0
     },
     "H16:B3": {
       "median_paths": 12.0,
-      "median_input_tokens": 20289.0,
-      "median_latency_ms": 707.0,
+      "median_input_tokens": 20453.0,
+      "median_latency_ms": 687.0,
       "recall": 0.0
     },
     "H17:B0": {
       "median_paths": 18.0,
       "median_input_tokens": 21674.0,
-      "median_latency_ms": 93.0,
+      "median_latency_ms": 73.0,
       "recall": 1.0
     },
     "H17:B1": {
-      "median_paths": 5.0,
-      "median_input_tokens": 5318.0,
-      "median_latency_ms": 101.0,
+      "median_paths": 16.0,
+      "median_input_tokens": 19155.0,
+      "median_latency_ms": 3234.0,
       "recall": 1.0
     },
     "H17:B3": {
       "median_paths": 8.0,
       "median_input_tokens": 21780.0,
-      "median_latency_ms": 734.0,
+      "median_latency_ms": 695.0,
       "recall": 1.0
     },
     "H18:B0": {
       "median_paths": 37.0,
       "median_input_tokens": 21610.0,
-      "median_latency_ms": 160.0,
+      "median_latency_ms": 139.0,
       "recall": 0.0
     },
     "H18:B1": {
-      "median_paths": 22.0,
-      "median_input_tokens": 13927.0,
-      "median_latency_ms": 149.0,
-      "recall": 0.0
+      "median_paths": 4.0,
+      "median_input_tokens": 20508.0,
+      "median_latency_ms": 1605.0,
+      "recall": 1.0
     },
     "H18:B3": {
       "median_paths": 7.0,
       "median_input_tokens": 17069.0,
-      "median_latency_ms": 773.0,
+      "median_latency_ms": 766.0,
       "recall": 0.0
     },
     "H19:B0": {
       "median_paths": 18.0,
       "median_input_tokens": 18509.0,
-      "median_latency_ms": 101.0,
+      "median_latency_ms": 85.0,
       "recall": 1.0
     },
     "H19:B1": {
-      "median_paths": 6.0,
-      "median_input_tokens": 7508.0,
-      "median_latency_ms": 100.0,
-      "recall": 1.0
+      "median_paths": 7.0,
+      "median_input_tokens": 21461.0,
+      "median_latency_ms": 1627.0,
+      "recall": 0.0
     },
     "H19:B3": {
       "median_paths": 4.0,
       "median_input_tokens": 16751.0,
-      "median_latency_ms": 707.0,
+      "median_latency_ms": 674.0,
       "recall": 1.0
     },
     "H20:B0": {
-      "median_paths": 4.0,
-      "median_input_tokens": 11378.0,
-      "median_latency_ms": 55.0,
-      "recall": 0.0
+      "median_paths": 10.0,
+      "median_input_tokens": 17831.0,
+      "median_latency_ms": 56.0,
+      "recall": 1.0
     },
     "H20:B1": {
-      "median_paths": 6.0,
-      "median_input_tokens": 13931.0,
-      "median_latency_ms": 154.0,
-      "recall": 0.0
+      "median_paths": 8.0,
+      "median_input_tokens": 21952.0,
+      "median_latency_ms": 1737.0,
+      "recall": 1.0
     },
     "H20:B3": {
       "median_paths": 17.0,
-      "median_input_tokens": 20112.0,
-      "median_latency_ms": 726.0,
+      "median_input_tokens": 20276.0,
+      "median_latency_ms": 736.0,
       "recall": 1.0
     },
     "H21:B0": {
       "median_paths": 32.0,
       "median_input_tokens": 21308.0,
-      "median_latency_ms": 158.0,
+      "median_latency_ms": 130.0,
       "recall": 1.0
     },
     "H21:B1": {
-      "median_paths": 1.0,
-      "median_input_tokens": 362.0,
-      "median_latency_ms": 45.0,
-      "recall": 0.0
+      "median_paths": 5.0,
+      "median_input_tokens": 21601.0,
+      "median_latency_ms": 1654.0,
+      "recall": 1.0
     },
     "H21:B3": {
       "median_paths": 7.0,
       "median_input_tokens": 21122.0,
-      "median_latency_ms": 788.0,
+      "median_latency_ms": 785.0,
       "recall": 1.0
     },
     "H22:B0": {
       "median_paths": 5.0,
-      "median_input_tokens": 19133.0,
-      "median_latency_ms": 71.0,
+      "median_input_tokens": 19734.0,
+      "median_latency_ms": 46.0,
       "recall": 0.0
     },
     "H22:B1": {
-      "median_paths": 6.0,
-      "median_input_tokens": 19495.0,
-      "median_latency_ms": 150.0,
-      "recall": 0.0
+      "median_paths": 7.0,
+      "median_input_tokens": 20357.0,
+      "median_latency_ms": 1737.0,
+      "recall": 1.0
     },
     "H22:B3": {
       "median_paths": 14.0,
-      "median_input_tokens": 21007.0,
-      "median_latency_ms": 709.0,
+      "median_input_tokens": 21171.0,
+      "median_latency_ms": 704.0,
       "recall": 1.0
     },
     "H23:B0": {
       "median_paths": 21.0,
       "median_input_tokens": 21564.0,
-      "median_latency_ms": 105.0,
+      "median_latency_ms": 88.0,
       "recall": 1.0
     },
     "H23:B1": {
-      "median_paths": 10.0,
-      "median_input_tokens": 13373.0,
-      "median_latency_ms": 119.0,
+      "median_paths": 16.0,
+      "median_input_tokens": 21364.0,
+      "median_latency_ms": 1653.0,
       "recall": 1.0
     },
     "H23:B3": {
       "median_paths": 5.0,
       "median_input_tokens": 18588.0,
-      "median_latency_ms": 680.0,
+      "median_latency_ms": 711.0,
       "recall": 1.0
     },
     "H24:B0": {
       "median_paths": 27.0,
       "median_input_tokens": 20463.0,
-      "median_latency_ms": 129.0,
+      "median_latency_ms": 103.0,
       "recall": 0.0
     },
     "H24:B1": {
-      "median_paths": 21.0,
-      "median_input_tokens": 21870.0,
-      "median_latency_ms": 230.0,
+      "median_paths": 11.0,
+      "median_input_tokens": 21645.0,
+      "median_latency_ms": 1627.0,
       "recall": 1.0
     },
     "H24:B3": {
       "median_paths": 19.0,
-      "median_input_tokens": 21252.0,
-      "median_latency_ms": 821.0,
+      "median_input_tokens": 21416.0,
+      "median_latency_ms": 841.0,
       "recall": 1.0
     }
   },
   "split_tables": {
-    "R01_R06": {
-      "label": "real repo tasks (no B1 \u2014 curated pack is CIRCULAR)",
-      "compare_arms": [
-        "B0",
-        "B3"
-      ],
-      "b1_note": "PROVISIONAL_CURATED_PACK excluded from comparison",
-      "by_arm": {
-        "B0": {
-          "tasks": 6,
-          "recall_eq_1": 0,
-          "median_paths": 19.0,
-          "median_tokens": 21338.0,
-          "median_latency_ms": 113.5
-        },
-        "B3": {
-          "tasks": 6,
-          "recall_eq_1": 2,
-          "median_paths": 8.0,
-          "median_tokens": 20544.5,
-          "median_latency_ms": 805.5
-        },
-        "B1_CIRCULAR": {
-          "tasks": 6,
-          "recall_eq_1": "N/A",
-          "median_paths": "N/A",
-          "median_tokens": "N/A",
-          "median_latency_ms": "N/A",
-          "evidence_class": "PROVISIONAL_CURATED_PACK",
-          "excluded": true
-        }
-      },
-      "per_task": [
-        {
-          "task_id": "R01",
-          "split": "R01_R06",
-          "arm": "B0",
-          "recall": 0.0,
-          "paths": 19,
-          "tokens": 21790,
-          "latency_ms": 115
-        },
-        {
-          "task_id": "R01",
-          "split": "R01_R06",
-          "arm": "B3",
-          "recall": 0.0,
-          "paths": 9,
-          "tokens": 19469,
-          "latency_ms": 720
-        },
-        {
-          "task_id": "R02",
-          "split": "R01_R06",
-          "arm": "B0",
-          "recall": 0.0,
-          "paths": 19,
-          "tokens": 21790,
-          "latency_ms": 112
-        },
-        {
-          "task_id": "R02",
-          "split": "R01_R06",
-          "arm": "B3",
-          "recall": 0.0,
-          "paths": 3,
-          "tokens": 11514,
-          "latency_ms": 686
-        },
-        {
-          "task_id": "R03",
-          "split": "R01_R06",
-          "arm": "B0",
-          "recall": 0.0,
-          "paths": 13,
-          "tokens": 14585,
-          "latency_ms": 82
-        },
-        {
-          "task_id": "R03",
-          "split": "R01_R06",
-          "arm": "B3",
-          "recall": 0.0,
-          "paths": 2,
-          "tokens": 13318,
-          "latency_ms": 817
-        },
-        {
-          "task_id": "R04",
-          "split": "R01_R06",
-          "arm": "B0",
-          "recall": 0.0,
-          "paths": 31,
-          "tokens": 21207,
-          "latency_ms": 167
-        },
-        {
-          "task_id": "R04",
-          "split": "R01_R06",
-          "arm": "B3",
-          "recall": 1.0,
-          "paths": 10,
-          "tokens": 21763,
-          "latency_ms": 833
-        },
-        {
-          "task_id": "R05",
-          "split": "R01_R06",
-          "arm": "B0",
-          "recall": 0.0,
-          "paths": 22,
-          "tokens": 21469,
-          "latency_ms": 121
-        },
-        {
-          "task_id": "R05",
-          "split": "R01_R06",
-          "arm": "B3",
-          "recall": 0.0,
-          "paths": 15,
-          "tokens": 21888,
-          "latency_ms": 794
-        },
-        {
-          "task_id": "R06",
-          "split": "R01_R06",
-          "arm": "B0",
-          "recall": 0.0,
-          "paths": 7,
-          "tokens": 14620,
-          "latency_ms": 61
-        },
-        {
-          "task_id": "R06",
-          "split": "R01_R06",
-          "arm": "B3",
-          "recall": 1.0,
-          "paths": 7,
-          "tokens": 21620,
-          "latency_ms": 845
-        }
-      ]
-    },
     "H07_H18_dev": {
-      "label": "held-out dev (independent reviewer)",
+      "label": "held-out dev \u2014 OFFICIAL_WIKI_GROUND hybrid (run-01)",
       "compare_arms": [
         "B0",
         "B1",
@@ -594,23 +416,23 @@
       "by_arm": {
         "B0": {
           "tasks": 12,
-          "recall_eq_1": 5,
+          "recall_eq_1": 7,
           "median_paths": 18.5,
-          "median_tokens": 21370.0,
-          "median_latency_ms": 94.0
+          "median_tokens": 21283.5,
+          "median_latency_ms": 75.5
         },
         "B1": {
           "tasks": 12,
-          "recall_eq_1": 4,
-          "median_paths": 20.5,
-          "median_tokens": 15036.0,
-          "median_latency_ms": 154.5
+          "recall_eq_1": 9,
+          "median_paths": 8.5,
+          "median_tokens": 20462.5,
+          "median_latency_ms": 1639.0
         },
         "B3": {
           "tasks": 12,
           "recall_eq_1": 9,
           "median_paths": 9.0,
-          "median_tokens": 20660.5,
+          "median_tokens": 20521.5,
           "median_latency_ms": 750.0
         }
       },
@@ -622,43 +444,43 @@
           "recall": 0.0,
           "paths": 38,
           "tokens": 21795,
-          "latency_ms": 181
+          "latency_ms": 161
         },
         {
           "task_id": "H07",
           "split": "H07_H18_dev",
           "arm": "B1",
-          "recall": 0.0,
-          "paths": 22,
-          "tokens": 13272,
-          "latency_ms": 194
+          "recall": 1.0,
+          "paths": 9,
+          "tokens": 21530,
+          "latency_ms": 1672
         },
         {
           "task_id": "H07",
           "split": "H07_H18_dev",
           "arm": "B3",
           "recall": 0.0,
-          "paths": 12,
-          "tokens": 21892,
-          "latency_ms": 750
+          "paths": 11,
+          "tokens": 16039,
+          "latency_ms": 745
         },
         {
           "task_id": "H08",
           "split": "H07_H18_dev",
           "arm": "B0",
           "recall": 0.0,
-          "paths": 5,
-          "tokens": 10083,
-          "latency_ms": 39
+          "paths": 9,
+          "tokens": 20531,
+          "latency_ms": 49
         },
         {
           "task_id": "H08",
           "split": "H07_H18_dev",
           "arm": "B1",
           "recall": 0.0,
-          "paths": 20,
-          "tokens": 16145,
-          "latency_ms": 160
+          "paths": 5,
+          "tokens": 18555,
+          "latency_ms": 1631
         },
         {
           "task_id": "H08",
@@ -666,8 +488,8 @@
           "arm": "B3",
           "recall": 1.0,
           "paths": 12,
-          "tokens": 21114,
-          "latency_ms": 812
+          "tokens": 21278,
+          "latency_ms": 853
         },
         {
           "task_id": "H09",
@@ -676,16 +498,16 @@
           "recall": 1.0,
           "paths": 24,
           "tokens": 20986,
-          "latency_ms": 95
+          "latency_ms": 78
         },
         {
           "task_id": "H09",
           "split": "H07_H18_dev",
           "arm": "B1",
           "recall": 1.0,
-          "paths": 21,
-          "tokens": 7972,
-          "latency_ms": 168
+          "paths": 9,
+          "tokens": 21425,
+          "latency_ms": 1590
         },
         {
           "task_id": "H09",
@@ -694,7 +516,7 @@
           "recall": 1.0,
           "paths": 9,
           "tokens": 19995,
-          "latency_ms": 699
+          "latency_ms": 723
         },
         {
           "task_id": "H10",
@@ -703,16 +525,16 @@
           "recall": 1.0,
           "paths": 13,
           "tokens": 16643,
-          "latency_ms": 60
+          "latency_ms": 49
         },
         {
           "task_id": "H10",
           "split": "H07_H18_dev",
           "arm": "B1",
           "recall": 1.0,
-          "paths": 11,
-          "tokens": 20095,
-          "latency_ms": 128
+          "paths": 7,
+          "tokens": 20570,
+          "latency_ms": 1630
         },
         {
           "task_id": "H10",
@@ -721,7 +543,7 @@
           "recall": 1.0,
           "paths": 4,
           "tokens": 21449,
-          "latency_ms": 788
+          "latency_ms": 755
         },
         {
           "task_id": "H11",
@@ -730,16 +552,16 @@
           "recall": 0.0,
           "paths": 41,
           "tokens": 21370,
-          "latency_ms": 197
+          "latency_ms": 164
         },
         {
           "task_id": "H11",
           "split": "H07_H18_dev",
           "arm": "B1",
           "recall": 0.0,
-          "paths": 9,
-          "tokens": 20493,
-          "latency_ms": 128
+          "paths": 7,
+          "tokens": 20241,
+          "latency_ms": 1574
         },
         {
           "task_id": "H11",
@@ -747,26 +569,26 @@
           "arm": "B3",
           "recall": 1.0,
           "paths": 10,
-          "tokens": 20895,
-          "latency_ms": 683
+          "tokens": 21369,
+          "latency_ms": 709
         },
         {
           "task_id": "H12",
           "split": "H07_H18_dev",
           "arm": "B0",
           "recall": 1.0,
-          "paths": 10,
-          "tokens": 15606,
-          "latency_ms": 68
+          "paths": 9,
+          "tokens": 12652,
+          "latency_ms": 46
         },
         {
           "task_id": "H12",
           "split": "H07_H18_dev",
           "arm": "B1",
           "recall": 0.0,
-          "paths": 2,
-          "tokens": 1027,
-          "latency_ms": 45
+          "paths": 10,
+          "tokens": 20417,
+          "latency_ms": 1613
         },
         {
           "task_id": "H12",
@@ -774,8 +596,8 @@
           "arm": "B3",
           "recall": 1.0,
           "paths": 9,
-          "tokens": 21614,
-          "latency_ms": 750
+          "tokens": 21778,
+          "latency_ms": 789
         },
         {
           "task_id": "H13",
@@ -783,17 +605,17 @@
           "arm": "B0",
           "recall": 1.0,
           "paths": 19,
-          "tokens": 21826,
-          "latency_ms": 120
+          "tokens": 21197,
+          "latency_ms": 90
         },
         {
           "task_id": "H13",
           "split": "H07_H18_dev",
           "arm": "B1",
           "recall": 1.0,
-          "paths": 21,
-          "tokens": 21490,
-          "latency_ms": 179
+          "paths": 9,
+          "tokens": 21706,
+          "latency_ms": 1748
         },
         {
           "task_id": "H13",
@@ -802,25 +624,25 @@
           "recall": 1.0,
           "paths": 3,
           "tokens": 15879,
-          "latency_ms": 739
+          "latency_ms": 706
         },
         {
           "task_id": "H14",
           "split": "H07_H18_dev",
           "arm": "B0",
-          "recall": 0.0,
-          "paths": 10,
-          "tokens": 17593,
-          "latency_ms": 77
+          "recall": 1.0,
+          "paths": 12,
+          "tokens": 21925,
+          "latency_ms": 65
         },
         {
           "task_id": "H14",
           "split": "H07_H18_dev",
           "arm": "B1",
-          "recall": 0.0,
-          "paths": 1,
-          "tokens": 362,
-          "latency_ms": 43
+          "recall": 1.0,
+          "paths": 7,
+          "tokens": 21874,
+          "latency_ms": 1647
         },
         {
           "task_id": "H14",
@@ -828,8 +650,8 @@
           "arm": "B3",
           "recall": 1.0,
           "paths": 8,
-          "tokens": 20426,
-          "latency_ms": 769
+          "tokens": 20590,
+          "latency_ms": 776
         },
         {
           "task_id": "H15",
@@ -838,16 +660,16 @@
           "recall": 0.0,
           "paths": 41,
           "tokens": 21370,
-          "latency_ms": 192
+          "latency_ms": 155
         },
         {
           "task_id": "H15",
           "split": "H07_H18_dev",
           "arm": "B1",
-          "recall": 0.0,
-          "paths": 22,
-          "tokens": 17819,
-          "latency_ms": 220
+          "recall": 1.0,
+          "paths": 10,
+          "tokens": 19471,
+          "latency_ms": 1663
         },
         {
           "task_id": "H15",
@@ -856,25 +678,25 @@
           "recall": 1.0,
           "paths": 9,
           "tokens": 19802,
-          "latency_ms": 822
+          "latency_ms": 815
         },
         {
           "task_id": "H16",
           "split": "H07_H18_dev",
           "arm": "B0",
-          "recall": 0.0,
-          "paths": 15,
-          "tokens": 21689,
-          "latency_ms": 86
+          "recall": 1.0,
+          "paths": 16,
+          "tokens": 19804,
+          "latency_ms": 62
         },
         {
           "task_id": "H16",
           "split": "H07_H18_dev",
           "arm": "B1",
-          "recall": 0.0,
-          "paths": 22,
-          "tokens": 17280,
-          "latency_ms": 177
+          "recall": 1.0,
+          "paths": 8,
+          "tokens": 19651,
+          "latency_ms": 1657
         },
         {
           "task_id": "H16",
@@ -882,8 +704,8 @@
           "arm": "B3",
           "recall": 0.0,
           "paths": 12,
-          "tokens": 20289,
-          "latency_ms": 707
+          "tokens": 20453,
+          "latency_ms": 687
         },
         {
           "task_id": "H17",
@@ -892,16 +714,16 @@
           "recall": 1.0,
           "paths": 18,
           "tokens": 21674,
-          "latency_ms": 93
+          "latency_ms": 73
         },
         {
           "task_id": "H17",
           "split": "H07_H18_dev",
           "arm": "B1",
           "recall": 1.0,
-          "paths": 5,
-          "tokens": 5318,
-          "latency_ms": 101
+          "paths": 16,
+          "tokens": 19155,
+          "latency_ms": 3234
         },
         {
           "task_id": "H17",
@@ -910,7 +732,7 @@
           "recall": 1.0,
           "paths": 8,
           "tokens": 21780,
-          "latency_ms": 734
+          "latency_ms": 695
         },
         {
           "task_id": "H18",
@@ -919,16 +741,16 @@
           "recall": 0.0,
           "paths": 37,
           "tokens": 21610,
-          "latency_ms": 160
+          "latency_ms": 139
         },
         {
           "task_id": "H18",
           "split": "H07_H18_dev",
           "arm": "B1",
-          "recall": 0.0,
-          "paths": 22,
-          "tokens": 13927,
-          "latency_ms": 149
+          "recall": 1.0,
+          "paths": 4,
+          "tokens": 20508,
+          "latency_ms": 1605
         },
         {
           "task_id": "H18",
@@ -937,12 +759,12 @@
           "recall": 0.0,
           "paths": 7,
           "tokens": 17069,
-          "latency_ms": 773
+          "latency_ms": 766
         }
       ]
     },
     "H19_H24_test": {
-      "label": "held-out test (recall holdout)",
+      "label": "held-out test \u2014 OFFICIAL_WIKI_GROUND hybrid (run-01)",
       "compare_arms": [
         "B0",
         "B1",
@@ -951,24 +773,24 @@
       "by_arm": {
         "B0": {
           "tasks": 6,
-          "recall_eq_1": 3,
+          "recall_eq_1": 4,
           "median_paths": 19.5,
-          "median_tokens": 19798.0,
-          "median_latency_ms": 103.0
+          "median_tokens": 20098.5,
+          "median_latency_ms": 86.5
         },
         "B1": {
           "tasks": 6,
-          "recall_eq_1": 3,
-          "median_paths": 6.0,
-          "median_tokens": 13652.0,
-          "median_latency_ms": 134.5
+          "recall_eq_1": 5,
+          "median_paths": 7.5,
+          "median_tokens": 21531.0,
+          "median_latency_ms": 1653.5
         },
         "B3": {
           "tasks": 6,
           "recall_eq_1": 6,
           "median_paths": 10.5,
-          "median_tokens": 20559.5,
-          "median_latency_ms": 717.5
+          "median_tokens": 20699.0,
+          "median_latency_ms": 723.5
         }
       },
       "per_task": [
@@ -979,16 +801,16 @@
           "recall": 1.0,
           "paths": 18,
           "tokens": 18509,
-          "latency_ms": 101
+          "latency_ms": 85
         },
         {
           "task_id": "H19",
           "split": "H19_H24_test",
           "arm": "B1",
-          "recall": 1.0,
-          "paths": 6,
-          "tokens": 7508,
-          "latency_ms": 100
+          "recall": 0.0,
+          "paths": 7,
+          "tokens": 21461,
+          "latency_ms": 1627
         },
         {
           "task_id": "H19",
@@ -997,25 +819,25 @@
           "recall": 1.0,
           "paths": 4,
           "tokens": 16751,
-          "latency_ms": 707
+          "latency_ms": 674
         },
         {
           "task_id": "H20",
           "split": "H19_H24_test",
           "arm": "B0",
-          "recall": 0.0,
-          "paths": 4,
-          "tokens": 11378,
-          "latency_ms": 55
+          "recall": 1.0,
+          "paths": 10,
+          "tokens": 17831,
+          "latency_ms": 56
         },
         {
           "task_id": "H20",
           "split": "H19_H24_test",
           "arm": "B1",
-          "recall": 0.0,
-          "paths": 6,
-          "tokens": 13931,
-          "latency_ms": 154
+          "recall": 1.0,
+          "paths": 8,
+          "tokens": 21952,
+          "latency_ms": 1737
         },
         {
           "task_id": "H20",
@@ -1023,8 +845,8 @@
           "arm": "B3",
           "recall": 1.0,
           "paths": 17,
-          "tokens": 20112,
-          "latency_ms": 726
+          "tokens": 20276,
+          "latency_ms": 736
         },
         {
           "task_id": "H21",
@@ -1033,16 +855,16 @@
           "recall": 1.0,
           "paths": 32,
           "tokens": 21308,
-          "latency_ms": 158
+          "latency_ms": 130
         },
         {
           "task_id": "H21",
           "split": "H19_H24_test",
           "arm": "B1",
-          "recall": 0.0,
-          "paths": 1,
-          "tokens": 362,
-          "latency_ms": 45
+          "recall": 1.0,
+          "paths": 5,
+          "tokens": 21601,
+          "latency_ms": 1654
         },
         {
           "task_id": "H21",
@@ -1051,7 +873,7 @@
           "recall": 1.0,
           "paths": 7,
           "tokens": 21122,
-          "latency_ms": 788
+          "latency_ms": 785
         },
         {
           "task_id": "H22",
@@ -1059,17 +881,17 @@
           "arm": "B0",
           "recall": 0.0,
           "paths": 5,
-          "tokens": 19133,
-          "latency_ms": 71
+          "tokens": 19734,
+          "latency_ms": 46
         },
         {
           "task_id": "H22",
           "split": "H19_H24_test",
           "arm": "B1",
-          "recall": 0.0,
-          "paths": 6,
-          "tokens": 19495,
-          "latency_ms": 150
+          "recall": 1.0,
+          "paths": 7,
+          "tokens": 20357,
+          "latency_ms": 1737
         },
         {
           "task_id": "H22",
@@ -1077,8 +899,8 @@
           "arm": "B3",
           "recall": 1.0,
           "paths": 14,
-          "tokens": 21007,
-          "latency_ms": 709
+          "tokens": 21171,
+          "latency_ms": 704
         },
         {
           "task_id": "H23",
@@ -1087,16 +909,16 @@
           "recall": 1.0,
           "paths": 21,
           "tokens": 21564,
-          "latency_ms": 105
+          "latency_ms": 88
         },
         {
           "task_id": "H23",
           "split": "H19_H24_test",
           "arm": "B1",
           "recall": 1.0,
-          "paths": 10,
-          "tokens": 13373,
-          "latency_ms": 119
+          "paths": 16,
+          "tokens": 21364,
+          "latency_ms": 1653
         },
         {
           "task_id": "H23",
@@ -1105,7 +927,7 @@
           "recall": 1.0,
           "paths": 5,
           "tokens": 18588,
-          "latency_ms": 680
+          "latency_ms": 711
         },
         {
           "task_id": "H24",
@@ -1114,16 +936,16 @@
           "recall": 0.0,
           "paths": 27,
           "tokens": 20463,
-          "latency_ms": 129
+          "latency_ms": 103
         },
         {
           "task_id": "H24",
           "split": "H19_H24_test",
           "arm": "B1",
           "recall": 1.0,
-          "paths": 21,
-          "tokens": 21870,
-          "latency_ms": 230
+          "paths": 11,
+          "tokens": 21645,
+          "latency_ms": 1627
         },
         {
           "task_id": "H24",
@@ -1131,121 +953,13 @@
           "arm": "B3",
           "recall": 1.0,
           "paths": 19,
-          "tokens": 21252,
-          "latency_ms": 821
+          "tokens": 21416,
+          "latency_ms": 841
         }
       ]
     }
   },
   "flat_metrics": [
-    {
-      "task_id": "R01",
-      "split": "R01_R06",
-      "arm": "B0",
-      "recall": 0.0,
-      "paths": 19,
-      "tokens": 21790,
-      "latency_ms": 115
-    },
-    {
-      "task_id": "R01",
-      "split": "R01_R06",
-      "arm": "B3",
-      "recall": 0.0,
-      "paths": 9,
-      "tokens": 19469,
-      "latency_ms": 720
-    },
-    {
-      "task_id": "R02",
-      "split": "R01_R06",
-      "arm": "B0",
-      "recall": 0.0,
-      "paths": 19,
-      "tokens": 21790,
-      "latency_ms": 112
-    },
-    {
-      "task_id": "R02",
-      "split": "R01_R06",
-      "arm": "B3",
-      "recall": 0.0,
-      "paths": 3,
-      "tokens": 11514,
-      "latency_ms": 686
-    },
-    {
-      "task_id": "R03",
-      "split": "R01_R06",
-      "arm": "B0",
-      "recall": 0.0,
-      "paths": 13,
-      "tokens": 14585,
-      "latency_ms": 82
-    },
-    {
-      "task_id": "R03",
-      "split": "R01_R06",
-      "arm": "B3",
-      "recall": 0.0,
-      "paths": 2,
-      "tokens": 13318,
-      "latency_ms": 817
-    },
-    {
-      "task_id": "R04",
-      "split": "R01_R06",
-      "arm": "B0",
-      "recall": 0.0,
-      "paths": 31,
-      "tokens": 21207,
-      "latency_ms": 167
-    },
-    {
-      "task_id": "R04",
-      "split": "R01_R06",
-      "arm": "B3",
-      "recall": 1.0,
-      "paths": 10,
-      "tokens": 21763,
-      "latency_ms": 833
-    },
-    {
-      "task_id": "R05",
-      "split": "R01_R06",
-      "arm": "B0",
-      "recall": 0.0,
-      "paths": 22,
-      "tokens": 21469,
-      "latency_ms": 121
-    },
-    {
-      "task_id": "R05",
-      "split": "R01_R06",
-      "arm": "B3",
-      "recall": 0.0,
-      "paths": 15,
-      "tokens": 21888,
-      "latency_ms": 794
-    },
-    {
-      "task_id": "R06",
-      "split": "R01_R06",
-      "arm": "B0",
-      "recall": 0.0,
-      "paths": 7,
-      "tokens": 14620,
-      "latency_ms": 61
-    },
-    {
-      "task_id": "R06",
-      "split": "R01_R06",
-      "arm": "B3",
-      "recall": 1.0,
-      "paths": 7,
-      "tokens": 21620,
-      "latency_ms": 845
-    },
     {
       "task_id": "H07",
       "split": "H07_H18_dev",
@@ -1253,43 +967,43 @@
       "recall": 0.0,
       "paths": 38,
       "tokens": 21795,
-      "latency_ms": 181
+      "latency_ms": 161
     },
     {
       "task_id": "H07",
       "split": "H07_H18_dev",
       "arm": "B1",
-      "recall": 0.0,
-      "paths": 22,
-      "tokens": 13272,
-      "latency_ms": 194
+      "recall": 1.0,
+      "paths": 9,
+      "tokens": 21530,
+      "latency_ms": 1672
     },
     {
       "task_id": "H07",
       "split": "H07_H18_dev",
       "arm": "B3",
       "recall": 0.0,
-      "paths": 12,
-      "tokens": 21892,
-      "latency_ms": 750
+      "paths": 11,
+      "tokens": 16039,
+      "latency_ms": 745
     },
     {
       "task_id": "H08",
       "split": "H07_H18_dev",
       "arm": "B0",
       "recall": 0.0,
-      "paths": 5,
-      "tokens": 10083,
-      "latency_ms": 39
+      "paths": 9,
+      "tokens": 20531,
+      "latency_ms": 49
     },
     {
       "task_id": "H08",
       "split": "H07_H18_dev",
       "arm": "B1",
       "recall": 0.0,
-      "paths": 20,
-      "tokens": 16145,
-      "latency_ms": 160
+      "paths": 5,
+      "tokens": 18555,
+      "latency_ms": 1631
     },
     {
       "task_id": "H08",
@@ -1297,8 +1011,8 @@
       "arm": "B3",
       "recall": 1.0,
       "paths": 12,
-      "tokens": 21114,
-      "latency_ms": 812
+      "tokens": 21278,
+      "latency_ms": 853
     },
     {
       "task_id": "H09",
@@ -1307,16 +1021,16 @@
       "recall": 1.0,
       "paths": 24,
       "tokens": 20986,
-      "latency_ms": 95
+      "latency_ms": 78
     },
     {
       "task_id": "H09",
       "split": "H07_H18_dev",
       "arm": "B1",
       "recall": 1.0,
-      "paths": 21,
-      "tokens": 7972,
-      "latency_ms": 168
+      "paths": 9,
+      "tokens": 21425,
+      "latency_ms": 1590
     },
     {
       "task_id": "H09",
@@ -1325,7 +1039,7 @@
       "recall": 1.0,
       "paths": 9,
       "tokens": 19995,
-      "latency_ms": 699
+      "latency_ms": 723
     },
     {
       "task_id": "H10",
@@ -1334,16 +1048,16 @@
       "recall": 1.0,
       "paths": 13,
       "tokens": 16643,
-      "latency_ms": 60
+      "latency_ms": 49
     },
     {
       "task_id": "H10",
       "split": "H07_H18_dev",
       "arm": "B1",
       "recall": 1.0,
-      "paths": 11,
-      "tokens": 20095,
-      "latency_ms": 128
+      "paths": 7,
+      "tokens": 20570,
+      "latency_ms": 1630
     },
     {
       "task_id": "H10",
@@ -1352,7 +1066,7 @@
       "recall": 1.0,
       "paths": 4,
       "tokens": 21449,
-      "latency_ms": 788
+      "latency_ms": 755
     },
     {
       "task_id": "H11",
@@ -1361,16 +1075,16 @@
       "recall": 0.0,
       "paths": 41,
       "tokens": 21370,
-      "latency_ms": 197
+      "latency_ms": 164
     },
     {
       "task_id": "H11",
       "split": "H07_H18_dev",
       "arm": "B1",
       "recall": 0.0,
-      "paths": 9,
-      "tokens": 20493,
-      "latency_ms": 128
+      "paths": 7,
+      "tokens": 20241,
+      "latency_ms": 1574
     },
     {
       "task_id": "H11",
@@ -1378,26 +1092,26 @@
       "arm": "B3",
       "recall": 1.0,
       "paths": 10,
-      "tokens": 20895,
-      "latency_ms": 683
+      "tokens": 21369,
+      "latency_ms": 709
     },
     {
       "task_id": "H12",
       "split": "H07_H18_dev",
       "arm": "B0",
       "recall": 1.0,
-      "paths": 10,
-      "tokens": 15606,
-      "latency_ms": 68
+      "paths": 9,
+      "tokens": 12652,
+      "latency_ms": 46
     },
     {
       "task_id": "H12",
       "split": "H07_H18_dev",
       "arm": "B1",
       "recall": 0.0,
-      "paths": 2,
-      "tokens": 1027,
-      "latency_ms": 45
+      "paths": 10,
+      "tokens": 20417,
+      "latency_ms": 1613
     },
     {
       "task_id": "H12",
@@ -1405,8 +1119,8 @@
       "arm": "B3",
       "recall": 1.0,
       "paths": 9,
-      "tokens": 21614,
-      "latency_ms": 750
+      "tokens": 21778,
+      "latency_ms": 789
     },
     {
       "task_id": "H13",
@@ -1414,17 +1128,17 @@
       "arm": "B0",
       "recall": 1.0,
       "paths": 19,
-      "tokens": 21826,
-      "latency_ms": 120
+      "tokens": 21197,
+      "latency_ms": 90
     },
     {
       "task_id": "H13",
       "split": "H07_H18_dev",
       "arm": "B1",
       "recall": 1.0,
-      "paths": 21,
-      "tokens": 21490,
-      "latency_ms": 179
+      "paths": 9,
+      "tokens": 21706,
+      "latency_ms": 1748
     },
     {
       "task_id": "H13",
@@ -1433,25 +1147,25 @@
       "recall": 1.0,
       "paths": 3,
       "tokens": 15879,
-      "latency_ms": 739
+      "latency_ms": 706
     },
     {
       "task_id": "H14",
       "split": "H07_H18_dev",
       "arm": "B0",
-      "recall": 0.0,
-      "paths": 10,
-      "tokens": 17593,
-      "latency_ms": 77
+      "recall": 1.0,
+      "paths": 12,
+      "tokens": 21925,
+      "latency_ms": 65
     },
     {
       "task_id": "H14",
       "split": "H07_H18_dev",
       "arm": "B1",
-      "recall": 0.0,
-      "paths": 1,
-      "tokens": 362,
-      "latency_ms": 43
+      "recall": 1.0,
+      "paths": 7,
+      "tokens": 21874,
+      "latency_ms": 1647
     },
     {
       "task_id": "H14",
@@ -1459,8 +1173,8 @@
       "arm": "B3",
       "recall": 1.0,
       "paths": 8,
-      "tokens": 20426,
-      "latency_ms": 769
+      "tokens": 20590,
+      "latency_ms": 776
     },
     {
       "task_id": "H15",
@@ -1469,16 +1183,16 @@
       "recall": 0.0,
       "paths": 41,
       "tokens": 21370,
-      "latency_ms": 192
+      "latency_ms": 155
     },
     {
       "task_id": "H15",
       "split": "H07_H18_dev",
       "arm": "B1",
-      "recall": 0.0,
-      "paths": 22,
-      "tokens": 17819,
-      "latency_ms": 220
+      "recall": 1.0,
+      "paths": 10,
+      "tokens": 19471,
+      "latency_ms": 1663
     },
     {
       "task_id": "H15",
@@ -1487,25 +1201,25 @@
       "recall": 1.0,
       "paths": 9,
       "tokens": 19802,
-      "latency_ms": 822
+      "latency_ms": 815
     },
     {
       "task_id": "H16",
       "split": "H07_H18_dev",
       "arm": "B0",
-      "recall": 0.0,
-      "paths": 15,
-      "tokens": 21689,
-      "latency_ms": 86
+      "recall": 1.0,
+      "paths": 16,
+      "tokens": 19804,
+      "latency_ms": 62
     },
     {
       "task_id": "H16",
       "split": "H07_H18_dev",
       "arm": "B1",
-      "recall": 0.0,
-      "paths": 22,
-      "tokens": 17280,
-      "latency_ms": 177
+      "recall": 1.0,
+      "paths": 8,
+      "tokens": 19651,
+      "latency_ms": 1657
     },
     {
       "task_id": "H16",
@@ -1513,8 +1227,8 @@
       "arm": "B3",
       "recall": 0.0,
       "paths": 12,
-      "tokens": 20289,
-      "latency_ms": 707
+      "tokens": 20453,
+      "latency_ms": 687
     },
     {
       "task_id": "H17",
@@ -1523,16 +1237,16 @@
       "recall": 1.0,
       "paths": 18,
       "tokens": 21674,
-      "latency_ms": 93
+      "latency_ms": 73
     },
     {
       "task_id": "H17",
       "split": "H07_H18_dev",
       "arm": "B1",
       "recall": 1.0,
-      "paths": 5,
-      "tokens": 5318,
-      "latency_ms": 101
+      "paths": 16,
+      "tokens": 19155,
+      "latency_ms": 3234
     },
     {
       "task_id": "H17",
@@ -1541,7 +1255,7 @@
       "recall": 1.0,
       "paths": 8,
       "tokens": 21780,
-      "latency_ms": 734
+      "latency_ms": 695
     },
     {
       "task_id": "H18",
@@ -1550,16 +1264,16 @@
       "recall": 0.0,
       "paths": 37,
       "tokens": 21610,
-      "latency_ms": 160
+      "latency_ms": 139
     },
     {
       "task_id": "H18",
       "split": "H07_H18_dev",
       "arm": "B1",
-      "recall": 0.0,
-      "paths": 22,
-      "tokens": 13927,
-      "latency_ms": 149
+      "recall": 1.0,
+      "paths": 4,
+      "tokens": 20508,
+      "latency_ms": 1605
     },
     {
       "task_id": "H18",
@@ -1568,7 +1282,7 @@
       "recall": 0.0,
       "paths": 7,
       "tokens": 17069,
-      "latency_ms": 773
+      "latency_ms": 766
     },
     {
       "task_id": "H19",
@@ -1577,16 +1291,16 @@
       "recall": 1.0,
       "paths": 18,
       "tokens": 18509,
-      "latency_ms": 101
+      "latency_ms": 85
     },
     {
       "task_id": "H19",
       "split": "H19_H24_test",
       "arm": "B1",
-      "recall": 1.0,
-      "paths": 6,
-      "tokens": 7508,
-      "latency_ms": 100
+      "recall": 0.0,
+      "paths": 7,
+      "tokens": 21461,
+      "latency_ms": 1627
     },
     {
       "task_id": "H19",
@@ -1595,25 +1309,25 @@
       "recall": 1.0,
       "paths": 4,
       "tokens": 16751,
-      "latency_ms": 707
+      "latency_ms": 674
     },
     {
       "task_id": "H20",
       "split": "H19_H24_test",
       "arm": "B0",
-      "recall": 0.0,
-      "paths": 4,
-      "tokens": 11378,
-      "latency_ms": 55
+      "recall": 1.0,
+      "paths": 10,
+      "tokens": 17831,
+      "latency_ms": 56
     },
     {
       "task_id": "H20",
       "split": "H19_H24_test",
       "arm": "B1",
-      "recall": 0.0,
-      "paths": 6,
-      "tokens": 13931,
-      "latency_ms": 154
+      "recall": 1.0,
+      "paths": 8,
+      "tokens": 21952,
+      "latency_ms": 1737
     },
     {
       "task_id": "H20",
@@ -1621,8 +1335,8 @@
       "arm": "B3",
       "recall": 1.0,
       "paths": 17,
-      "tokens": 20112,
-      "latency_ms": 726
+      "tokens": 20276,
+      "latency_ms": 736
     },
     {
       "task_id": "H21",
@@ -1631,16 +1345,16 @@
       "recall": 1.0,
       "paths": 32,
       "tokens": 21308,
-      "latency_ms": 158
+      "latency_ms": 130
     },
     {
       "task_id": "H21",
       "split": "H19_H24_test",
       "arm": "B1",
-      "recall": 0.0,
-      "paths": 1,
-      "tokens": 362,
-      "latency_ms": 45
+      "recall": 1.0,
+      "paths": 5,
+      "tokens": 21601,
+      "latency_ms": 1654
     },
     {
       "task_id": "H21",
@@ -1649,7 +1363,7 @@
       "recall": 1.0,
       "paths": 7,
       "tokens": 21122,
-      "latency_ms": 788
+      "latency_ms": 785
     },
     {
       "task_id": "H22",
@@ -1657,17 +1371,17 @@
       "arm": "B0",
       "recall": 0.0,
       "paths": 5,
-      "tokens": 19133,
-      "latency_ms": 71
+      "tokens": 19734,
+      "latency_ms": 46
     },
     {
       "task_id": "H22",
       "split": "H19_H24_test",
       "arm": "B1",
-      "recall": 0.0,
-      "paths": 6,
-      "tokens": 19495,
-      "latency_ms": 150
+      "recall": 1.0,
+      "paths": 7,
+      "tokens": 20357,
+      "latency_ms": 1737
     },
     {
       "task_id": "H22",
@@ -1675,8 +1389,8 @@
       "arm": "B3",
       "recall": 1.0,
       "paths": 14,
-      "tokens": 21007,
-      "latency_ms": 709
+      "tokens": 21171,
+      "latency_ms": 704
     },
     {
       "task_id": "H23",
@@ -1685,16 +1399,16 @@
       "recall": 1.0,
       "paths": 21,
       "tokens": 21564,
-      "latency_ms": 105
+      "latency_ms": 88
     },
     {
       "task_id": "H23",
       "split": "H19_H24_test",
       "arm": "B1",
       "recall": 1.0,
-      "paths": 10,
-      "tokens": 13373,
-      "latency_ms": 119
+      "paths": 16,
+      "tokens": 21364,
+      "latency_ms": 1653
     },
     {
       "task_id": "H23",
@@ -1703,7 +1417,7 @@
       "recall": 1.0,
       "paths": 5,
       "tokens": 18588,
-      "latency_ms": 680
+      "latency_ms": 711
     },
     {
       "task_id": "H24",
@@ -1712,16 +1426,16 @@
       "recall": 0.0,
       "paths": 27,
       "tokens": 20463,
-      "latency_ms": 129
+      "latency_ms": 103
     },
     {
       "task_id": "H24",
       "split": "H19_H24_test",
       "arm": "B1",
       "recall": 1.0,
-      "paths": 21,
-      "tokens": 21870,
-      "latency_ms": 230
+      "paths": 11,
+      "tokens": 21645,
+      "latency_ms": 1627
     },
     {
       "task_id": "H24",
@@ -1729,8 +1443,8 @@
       "arm": "B3",
       "recall": 1.0,
       "paths": 19,
-      "tokens": 21252,
-      "latency_ms": 821
+      "tokens": 21416,
+      "latency_ms": 841
     }
   ],
   "environment": {
@@ -1738,71 +1452,59 @@
     "python": "3.12.3"
   },
   "runs": [
-    "V22G-R01-B0-615bab16f0f8",
-    "V22G-R01-B3-5dd22ae3d9ca",
-    "V22G-R02-B0-ef18e934d358",
-    "V22G-R02-B3-ba6b8511d38e",
-    "V22G-R03-B0-1f1c3aaf4f23",
-    "V22G-R03-B3-d5af8c201cd3",
-    "V22G-R04-B0-930f9641f686",
-    "V22G-R04-B3-595762ac6f3e",
-    "V22G-R05-B0-b1b3a54f4899",
-    "V22G-R05-B3-f767cf362ca8",
-    "V22G-R06-B0-9cf2473abef5",
-    "V22G-R06-B3-c1bc5ca90d99",
-    "V22G-H07-B0-a7c40edc0162",
-    "V22G-H07-B1-24c844306c0f",
-    "V22G-H07-B3-0a2d960c3237",
-    "V22G-H08-B0-10d7387591ca",
-    "V22G-H08-B1-3aacf3e012a8",
-    "V22G-H08-B3-73c584ffa074",
-    "V22G-H09-B0-c8da40036483",
-    "V22G-H09-B1-abd6c7f56098",
-    "V22G-H09-B3-9bd260422d99",
-    "V22G-H10-B0-5dcc6733293f",
-    "V22G-H10-B1-b074b25585b7",
-    "V22G-H10-B3-ad9243706322",
-    "V22G-H11-B0-675d78678fd5",
-    "V22G-H11-B1-a4ce7e3697b4",
-    "V22G-H11-B3-658f45fe8766",
-    "V22G-H12-B0-ce464f19cbeb",
-    "V22G-H12-B1-1fe86b2afb0d",
-    "V22G-H12-B3-b43efbbc7901",
-    "V22G-H13-B0-86c2b91e4a0b",
-    "V22G-H13-B1-c26f46bece0d",
-    "V22G-H13-B3-1bc8230b0945",
-    "V22G-H14-B0-c37f753b4dad",
-    "V22G-H14-B1-51193bd8fd96",
-    "V22G-H14-B3-d079054b1dcf",
-    "V22G-H15-B0-a2791b0fe0e1",
-    "V22G-H15-B1-6526fdc36e1e",
-    "V22G-H15-B3-fbdbaff4f1b4",
-    "V22G-H16-B0-e38580b50d22",
-    "V22G-H16-B1-7c473c353474",
-    "V22G-H16-B3-ff1a53296b74",
-    "V22G-H17-B0-ae0d0bc8f0c8",
-    "V22G-H17-B1-08eec6d8d2ac",
-    "V22G-H17-B3-17b3c10969a3",
-    "V22G-H18-B0-4f659032ab0e",
-    "V22G-H18-B1-6f2cda82769e",
-    "V22G-H18-B3-948757e90c58",
-    "V22G-H19-B0-90cf3c51e975",
-    "V22G-H19-B1-1b6eb1efc9bd",
-    "V22G-H19-B3-c3b5e0901208",
-    "V22G-H20-B0-756127149737",
-    "V22G-H20-B1-85ed95f05b09",
-    "V22G-H20-B3-a88d1d205b89",
-    "V22G-H21-B0-5af0600881dc",
-    "V22G-H21-B1-2aedb4038081",
-    "V22G-H21-B3-0303aa5293a4",
-    "V22G-H22-B0-47420d3c876f",
-    "V22G-H22-B1-5df3df847ae8",
-    "V22G-H22-B3-7159a764b8cc",
-    "V22G-H23-B0-48a874e66dc6",
-    "V22G-H23-B1-fc58a5616542",
-    "V22G-H23-B3-7462dc4ac36c",
-    "V22G-H24-B0-a995c1892a4e",
-    "V22G-H24-B1-de04b54891b0",
-    "V22G-H24-B3-8d4609df0001"
+    "V22G-H07-B0-9372529973e7",
+    "V22G-H07-B1-6ad2bf58021e",
+    "V22G-H07-B3-7046af8bb1e6",
+    "V22G-H08-B0-67456f1f6584",
+    "V22G-H08-B1-eee787672460",
+    "V22G-H08-B3-e0e2de939b37",
+    "V22G-H09-B0-6b70a319057f",
+    "V22G-H09-B1-441e9e4287aa",
+    "V22G-H09-B3-6d58da3176c1",
+    "V22G-H10-B0-86d61e5c4048",
+    "V22G-H10-B1-a5006b85fd77",
+    "V22G-H10-B3-3ea59dc2bc9f",
+    "V22G-H11-B0-5207c5dd6894",
+    "V22G-H11-B1-b4ef69c7281c",
+    "V22G-H11-B3-f514809bc809",
+    "V22G-H12-B0-01bae867c048",
+    "V22G-H12-B1-99cbd831d36c",
+    "V22G-H12-B3-97b5705cc3ee",
+    "V22G-H13-B0-d78079334592",
+    "V22G-H13-B1-0a12d723ed8b",
+    "V22G-H13-B3-6e0e2931db41",
+    "V22G-H14-B0-8bbd95c871ed",
+    "V22G-H14-B1-ddd4e8c0a881",
+    "V22G-H14-B3-f5c43cb33e9c",
+    "V22G-H15-B0-8a4e3447c39a",
+    "V22G-H15-B1-5af0b11923bc",
+    "V22G-H15-B3-571b3422f2a7",
+    "V22G-H16-B0-318f711b76f4",
+    "V22G-H16-B1-fd970778138e",
+    "V22G-H16-B3-6ee0790889ad",
+    "V22G-H17-B0-7628c9f8a729",
+    "V22G-H17-B1-45f5ae3a62f5",
+    "V22G-H17-B3-9a045d204bce",
+    "V22G-H18-B0-2ccd9f5762c6",
+    "V22G-H18-B1-0fe772ced9bc",
+    "V22G-H18-B3-a522879af47f",
+    "V22G-H19-B0-3f85c6d1de69",
+    "V22G-H19-B1-925b95da1d01",
+    "V22G-H19-B3-a27fe07d30ca",
+    "V22G-H20-B0-51edc655eed1",
+    "V22G-H20-B1-15c72bc0ad5a",
+    "V22G-H20-B3-cef5f00a3d24",
+    "V22G-H21-B0-c5ec3dc947c3",
+    "V22G-H21-B1-8594b9019ac7",
+    "V22G-H21-B3-63adeb9ffe16",
+    "V22G-H22-B0-08b6cb6b56d3",
+    "V22G-H22-B1-4e68a1867330",
+    "V22G-H22-B3-d6aa16beb518",
+    "V22G-H23-B0-5ca6e39f0272",
+    "V22G-H23-B1-40ebafd968b1",
+    "V22G-H23-B3-1fc28f3c4d88",
+    "V22G-H24-B0-347d5ea9417b",
+    "V22G-H24-B1-9a3d8f6a0598",
+    "V22G-H24-B3-1ba0e69d0976"
   ]
 }
