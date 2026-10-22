@@ -195,7 +195,7 @@ def _expand_b1_query(query: str, env: dict[str, str]) -> str:
     scripts = repo_root() / "docs/architecture/v2.2/scripts"
     if str(scripts) not in sys.path:
         sys.path.insert(0, str(scripts))
-    from evolveloop_recall_support import expand_query, lexical_rg_patterns
+    from evolveloop_recall_support import expand_query
 
     glossary = _load_query_glossary(env)
     return expand_query(query, glossary)
