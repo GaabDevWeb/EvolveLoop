@@ -1,12 +1,13 @@
 {
   "experiment_id": "V22-BENCH-GRAPHIFY-B3",
   "evidence_class": "GRAPHIFY_CODE_GRAPH",
-  "baseline_id": "v22-graphify-b3-2026-10-22",
-  "run_id": "V22G-R04-B3-a5d6776dda85",
+  "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+  "run_id": "V22G-R04-B3-595762ac6f3e",
   "arm": "B3",
   "task_id": "R04",
-  "timestamp": "2026-10-22T01:55:07.483123+00:00",
-  "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+  "split": "R01_R06",
+  "timestamp": "2026-10-22T02:05:54.230674+00:00",
+  "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
   "harness": "v22-graphify-b3-harness-1.5.0",
   "ground_harness": "v22-ground-b1-harness-1.5.0",
   "tokenizer": "tiktoken:cl100k_base",
@@ -78,7 +79,7 @@
       "orchestrator/src/evolveloop/need-detector.ts"
     ],
     "input_tokens": 21763,
-    "latency_ms": 809,
+    "latency_ms": 792,
     "recall": 1.0,
     "recall_notes": [],
     "graphify_exit": 0,
@@ -88,5 +89,8 @@
     "pass": true,
     "recall": 1.0,
     "notes": []
+  },
+  "graphify": {
+    "cli_version": "graphify 0.9.93"
   }
 }

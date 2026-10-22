@@ -1,13 +1,68 @@
 [
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "OFFICIAL_BASELINE",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-R01-B0-615bab16f0f8",
+    "arm": "B0",
+    "task_id": "R01",
+    "split": "R01_R06",
+    "timestamp": "2026-10-22T02:04:22.466658+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "R01",
+      "arm": "B0",
+      "paths_read": [
+        "CHANGELOG.md",
+        "docs/CEO-controller.md",
+        "docs/adr/0013-context-ownership-working-context.md",
+        "docs/architecture/decision-review/ARCHITECTURE-DECISION-REVIEW.md",
+        "docs/architecture/decision-review/DECISION-LEDGER.md",
+        "docs/architecture/decision-review/DECISION-MATRIX.yaml",
+        "docs/architecture/decision-review/FUTURE-EXPERIMENTS.yaml",
+        "docs/architecture/decision-review/TRACEABILITY.md",
+        "docs/architecture/decision-review/adr-drafts/ADR-DR-0001-keep-job-path-resume.md",
+        "docs/architecture/evolution/FINAL-STATE.yaml",
+        "docs/architecture/evolution/UNSUPPORTED-CLAIMS.yaml",
+        "docs/architecture/finalization/adrs/ADR-DR-0001-keep-job-path-resume.md",
+        "docs/architecture/finalization/adrs/ADR-DR-0003-security-model-before-sandbox.md",
+        "docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md",
+        "docs/architecture/finalization/prototypes/PT-002-os-kill-job-resume.md",
+        "docs/architecture/gate/DECISION-GATE.yaml",
+        "docs/architecture/gate/FUTURE-EXPERIMENT-GATE.yaml",
+        "docs/architecture/prototype-gate/PREFLIGHT-EVIDENCE.yaml",
+        "docs/architecture/prototype-gate/PROTOTYPE-GATE.yaml"
+      ],
+      "input_tokens": 21790,
+      "latency_ms": 115,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: orchestrator/src/jobs/checkpoint.ts"
+      ],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: orchestrator/src/jobs/checkpoint.ts"
+      ]
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
-    "baseline_id": "v22-graphify-b3-2026-10-22",
-    "run_id": "V22G-R01-B3-0d0f9bb3c3ba",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-R01-B3-5dd22ae3d9ca",
     "arm": "B3",
     "task_id": "R01",
-    "timestamp": "2026-10-22T01:55:05.199233+00:00",
-    "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+    "split": "R01_R06",
+    "timestamp": "2026-10-22T02:04:23.187369+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -78,7 +133,7 @@
         "orchestrator/tests/integration/discovery-skilljobs.test.ts"
       ],
       "input_tokens": 19469,
-      "latency_ms": 690,
+      "latency_ms": 720,
       "recall": 0.0,
       "recall_notes": [
         "miss path not read: orchestrator/src/jobs/checkpoint.ts"
@@ -92,17 +147,75 @@
       "notes": [
         "miss path not read: orchestrator/src/jobs/checkpoint.ts"
       ]
+    },
+    "graphify": {
+      "cli_version": "graphify 0.9.93"
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "OFFICIAL_BASELINE",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-R02-B0-ef18e934d358",
+    "arm": "B0",
+    "task_id": "R02",
+    "split": "R01_R06",
+    "timestamp": "2026-10-22T02:04:23.300045+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "R02",
+      "arm": "B0",
+      "paths_read": [
+        "CHANGELOG.md",
+        "docs/CEO-controller.md",
+        "docs/adr/0013-context-ownership-working-context.md",
+        "docs/architecture/decision-review/ARCHITECTURE-DECISION-REVIEW.md",
+        "docs/architecture/decision-review/DECISION-LEDGER.md",
+        "docs/architecture/decision-review/DECISION-MATRIX.yaml",
+        "docs/architecture/decision-review/FUTURE-EXPERIMENTS.yaml",
+        "docs/architecture/decision-review/TRACEABILITY.md",
+        "docs/architecture/decision-review/adr-drafts/ADR-DR-0001-keep-job-path-resume.md",
+        "docs/architecture/evolution/FINAL-STATE.yaml",
+        "docs/architecture/evolution/UNSUPPORTED-CLAIMS.yaml",
+        "docs/architecture/finalization/adrs/ADR-DR-0001-keep-job-path-resume.md",
+        "docs/architecture/finalization/adrs/ADR-DR-0003-security-model-before-sandbox.md",
+        "docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md",
+        "docs/architecture/finalization/prototypes/PT-002-os-kill-job-resume.md",
+        "docs/architecture/gate/DECISION-GATE.yaml",
+        "docs/architecture/gate/FUTURE-EXPERIMENT-GATE.yaml",
+        "docs/architecture/prototype-gate/PREFLIGHT-EVIDENCE.yaml",
+        "docs/architecture/prototype-gate/PROTOTYPE-GATE.yaml"
+      ],
+      "input_tokens": 21790,
+      "latency_ms": 112,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: orchestrator/src/jobs/checkpoint.ts"
+      ],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: orchestrator/src/jobs/checkpoint.ts"
+      ]
     }
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
-    "baseline_id": "v22-graphify-b3-2026-10-22",
-    "run_id": "V22G-R02-B3-fd06c5fbce72",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-R02-B3-ba6b8511d38e",
     "arm": "B3",
     "task_id": "R02",
-    "timestamp": "2026-10-22T01:55:05.884085+00:00",
-    "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+    "split": "R01_R06",
+    "timestamp": "2026-10-22T02:04:23.986863+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -167,7 +280,7 @@
         "orchestrator/tests/unit/cursor-skill-provider.test.ts"
       ],
       "input_tokens": 11514,
-      "latency_ms": 684,
+      "latency_ms": 686,
       "recall": 0.0,
       "recall_notes": [
         "miss path not read: orchestrator/src/jobs/checkpoint.ts"
@@ -181,17 +294,69 @@
       "notes": [
         "miss path not read: orchestrator/src/jobs/checkpoint.ts"
       ]
+    },
+    "graphify": {
+      "cli_version": "graphify 0.9.93"
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "OFFICIAL_BASELINE",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-R03-B0-1f1c3aaf4f23",
+    "arm": "B0",
+    "task_id": "R03",
+    "split": "R01_R06",
+    "timestamp": "2026-10-22T02:04:24.070051+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "R03",
+      "arm": "B0",
+      "paths_read": [
+        "docs/adr/0005-hybrid-retrieval-degraded-mode.md",
+        "docs/architecture/knowledge/CORE-PERSONAL-BOUNDARY-V2.yaml",
+        "docs/architecture/knowledge/KNOWLEDGE-ARCHITECTURE.md",
+        "docs/architecture/knowledge/KNOWLEDGE-BACKEND-CONTRACT.md",
+        "docs/architecture/knowledge/KNOWLEDGE-BACKEND-MANIFEST.yaml",
+        "docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md",
+        "docs/architecture/publication/STRUCTURAL-PRECHECK-MAIN.yaml",
+        "docs/architecture/v2.2/EVIDENCE-SECRET-CANARY.md",
+        "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+        "docs/architecture/v2.2/TECH-DECISIONS-MATRIX.md",
+        "docs/architecture/v2.2/TRACEABILITY-MATRIX.md",
+        "docs/architecture/v2.2/scripts/generate-evolveloop-wiki-knowledge.sh",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/GOAL-005-review-report.md"
+      ],
+      "input_tokens": 14585,
+      "latency_ms": 82,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
+      ],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
+      ]
     }
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
-    "baseline_id": "v22-graphify-b3-2026-10-22",
-    "run_id": "V22G-R03-B3-e0ca29959a79",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-R03-B3-d5af8c201cd3",
     "arm": "B3",
     "task_id": "R03",
-    "timestamp": "2026-10-22T01:55:06.673227+00:00",
-    "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+    "split": "R01_R06",
+    "timestamp": "2026-10-22T02:04:24.887890+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -255,7 +420,7 @@
         "fixtures/evolveloop-wiki-vault/tests/test_index.py"
       ],
       "input_tokens": 13318,
-      "latency_ms": 788,
+      "latency_ms": 817,
       "recall": 0.0,
       "recall_notes": [
         "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
@@ -269,17 +434,87 @@
       "notes": [
         "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
       ]
+    },
+    "graphify": {
+      "cli_version": "graphify 0.9.93"
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "OFFICIAL_BASELINE",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-R04-B0-930f9641f686",
+    "arm": "B0",
+    "task_id": "R04",
+    "split": "R01_R06",
+    "timestamp": "2026-10-22T02:04:25.055591+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "R04",
+      "arm": "B0",
+      "paths_read": [
+        "Agents/Agent-architecture-mining.md",
+        "agent-setup/bootstrap.sh",
+        "agent-setup/src/agent_setup/paths.py",
+        "docs/adr/0013-context-ownership-working-context.md",
+        "docs/architecture-mining/targets/mcp/REPORT.md",
+        "docs/architecture-mining/validation/pre-authoring-audit.md",
+        "docs/architecture-mining/validation/skill-validation-2026-09-18.md",
+        "docs/architecture/decision-review/ARCHITECTURE-DECISION-REVIEW.md",
+        "docs/architecture/decision-review/DECISION-LEDGER.md",
+        "docs/architecture/decision-review/DECISION-MATRIX.yaml",
+        "docs/architecture/decision-review/TRACEABILITY.md",
+        "docs/architecture/decision-review/adr-drafts/ADR-DR-0001-keep-job-path-resume.md",
+        "docs/architecture/decision-review/adr-drafts/ADR-DR-0002-defer-production-skill-budget.md",
+        "docs/architecture/decision-review/adr-drafts/ADR-DR-0003-security-model-before-sandbox.md",
+        "docs/architecture/decision-review/adr-drafts/ADR-DR-0004-define-stuck-semantics-first.md",
+        "docs/architecture/decision-review/adr-drafts/ADR-DR-0005-context-ownership-before-compaction.md",
+        "docs/architecture/evolution/ADR-REVIEW-MATRIX.yaml",
+        "docs/architecture/evolution/FINAL-ARCHITECTURE-EVOLUTION-REPORT.md",
+        "docs/architecture/evolution/FINAL-ARCHITECTURE-REVIEW.md",
+        "docs/architecture/evolution/FINAL-STATE.md",
+        "docs/architecture/evolution/FINAL-STATE.yaml",
+        "docs/architecture/evolution/IMPLEMENTATION-DECISION.yaml",
+        "docs/architecture/evolution/INTEGRITY-AUDIT.yaml",
+        "docs/architecture/evolution/OPEN-QUESTIONS.yaml",
+        "docs/architecture/evolution/STATE-AT-START.yaml",
+        "docs/architecture/evolution/TRACEABILITY.yaml",
+        "docs/architecture/evolution/UNSUPPORTED-CLAIMS.yaml",
+        "docs/architecture/finalization/ADR-FINALIZATION-REPORT.md",
+        "docs/architecture/finalization/ADR-INDEX.md",
+        "docs/architecture/finalization/FINALIZATION-MATRIX.yaml",
+        "docs/architecture/finalization/FINALIZATION-STATUS.yaml"
+      ],
+      "input_tokens": 21207,
+      "latency_ms": 167,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md"
+      ],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md"
+      ]
     }
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
-    "baseline_id": "v22-graphify-b3-2026-10-22",
-    "run_id": "V22G-R04-B3-a5d6776dda85",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-R04-B3-595762ac6f3e",
     "arm": "B3",
     "task_id": "R04",
-    "timestamp": "2026-10-22T01:55:07.483123+00:00",
-    "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+    "split": "R01_R06",
+    "timestamp": "2026-10-22T02:04:25.889965+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -351,7 +586,7 @@
         "orchestrator/src/evolveloop/need-detector.ts"
       ],
       "input_tokens": 21763,
-      "latency_ms": 809,
+      "latency_ms": 833,
       "recall": 1.0,
       "recall_notes": [],
       "graphify_exit": 0,
@@ -361,17 +596,78 @@
       "pass": true,
       "recall": 1.0,
       "notes": []
+    },
+    "graphify": {
+      "cli_version": "graphify 0.9.93"
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "OFFICIAL_BASELINE",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-R05-B0-b1b3a54f4899",
+    "arm": "B0",
+    "task_id": "R05",
+    "split": "R01_R06",
+    "timestamp": "2026-10-22T02:04:26.012258+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "R05",
+      "arm": "B0",
+      "paths_read": [
+        "AGENT.md",
+        "Agents/Planner.md",
+        "CHANGELOG.md",
+        "INVENTORY.md",
+        "README.md",
+        "Rules/wiki-agent.mdc",
+        "agent-setup/README.md",
+        "agent-setup/cursor/commands/evolve.md",
+        "agent-setup/cursor/hooks/wiki-mem/mem.py",
+        "agent-setup/cursor/rules/wiki-agent.mdc",
+        "agent-setup/docs/components.md",
+        "agent-setup/manifest/manifest.yaml",
+        "agent-setup/manifest/profiles.yaml",
+        "docs/CEO-controller.md",
+        "docs/adr/0010-public-core-vs-gaabtype-profile.md",
+        "docs/adr/0012-wiki-default-knowledge-backend.md",
+        "docs/adr/0013-context-ownership-working-context.md",
+        "docs/architecture/decision-review/ARCHITECTURE-DECISION-REVIEW.md",
+        "docs/architecture/decision-review/TRACEABILITY.md",
+        "docs/architecture/decision-review/adr-drafts/ADR-DR-0005-context-ownership-before-compaction.md",
+        "docs/architecture/evolveloopt/EVOLVELOOP-LONGITUDINAL-IMPLEMENTATION-REPORT.md",
+        "docs/architecture/evolveloopt/final/EVOLVELOOP-FINAL-OPERATIONALIZATION-REPORT.md"
+      ],
+      "input_tokens": 21469,
+      "latency_ms": 121,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: profiles/default.yaml"
+      ],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: profiles/default.yaml"
+      ]
     }
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
-    "baseline_id": "v22-graphify-b3-2026-10-22",
-    "run_id": "V22G-R05-B3-fdd71d18628b",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-R05-B3-f767cf362ca8",
     "arm": "B3",
     "task_id": "R05",
-    "timestamp": "2026-10-22T01:55:08.202023+00:00",
-    "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+    "split": "R01_R06",
+    "timestamp": "2026-10-22T02:04:26.807355+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -418,7 +714,7 @@
         "docs/research/evolveloop-v2.2/sources.md"
       ],
       "input_tokens": 21888,
-      "latency_ms": 718,
+      "latency_ms": 794,
       "recall": 0.0,
       "recall_notes": [
         "miss path not read: profiles/default.yaml"
@@ -432,17 +728,63 @@
       "notes": [
         "miss path not read: profiles/default.yaml"
       ]
+    },
+    "graphify": {
+      "cli_version": "graphify 0.9.93"
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "OFFICIAL_BASELINE",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-R06-B0-9cf2473abef5",
+    "arm": "B0",
+    "task_id": "R06",
+    "split": "R01_R06",
+    "timestamp": "2026-10-22T02:04:26.869146+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "R06",
+      "arm": "B0",
+      "paths_read": [
+        "agent-setup/cursor/commands/evolve.md",
+        "docs/CEO-controller.md",
+        "docs/adr/0013-context-ownership-working-context.md",
+        "docs/architecture/portability/CORE-ARCHITECTURE.yaml",
+        "docs/architecture/release-audit-2026-10-11/V2.1-FREEZE-SCOPE-REPORT.md",
+        "docs/architecture/skills/audit/FLOW-SKILL-CATALOG.md",
+        "docs/architecture/skills/audit/HARD-GATES-V2.yaml"
+      ],
+      "input_tokens": 14620,
+      "latency_ms": 61,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: .cursor/skills/orquestrar/references/gate-bundle.md"
+      ],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: .cursor/skills/orquestrar/references/gate-bundle.md"
+      ]
     }
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
-    "baseline_id": "v22-graphify-b3-2026-10-22",
-    "run_id": "V22G-R06-B3-470b6f2ba93c",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-R06-B3-c1bc5ca90d99",
     "arm": "B3",
     "task_id": "R06",
-    "timestamp": "2026-10-22T01:55:08.881622+00:00",
-    "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+    "split": "R01_R06",
+    "timestamp": "2026-10-22T02:04:27.715346+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -511,7 +853,7 @@
         "orchestrator/tests/integration/discovery-skilljobs.test.ts"
       ],
       "input_tokens": 21620,
-      "latency_ms": 679,
+      "latency_ms": 845,
       "recall": 1.0,
       "recall_notes": [],
       "graphify_exit": 0,
@@ -521,17 +863,159 @@
       "pass": true,
       "recall": 1.0,
       "notes": []
+    },
+    "graphify": {
+      "cli_version": "graphify 0.9.93"
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "OFFICIAL_BASELINE",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H07-B0-a7c40edc0162",
+    "arm": "B0",
+    "task_id": "H07",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:27.896897+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H07",
+      "arm": "B0",
+      "paths_read": [
+        "AGENT.md",
+        "Agents/Researcher.md",
+        "Agents/Wiki-mem.md",
+        "Agents/Wiki.md",
+        "GLOBAL-SETUP.md",
+        "INVENTORY.md",
+        "README.md",
+        "Rules/wiki-agent.mdc",
+        "SECURITY.md",
+        "agent-setup/cursor/commands/evolve.md",
+        "agent-setup/cursor/commands/mem.md",
+        "agent-setup/cursor/hooks/wiki-mem/after-edit.sh",
+        "agent-setup/cursor/hooks/wiki-mem/mem.py",
+        "agent-setup/cursor/hooks/wiki-mem/session-end.sh",
+        "agent-setup/cursor/hooks/wiki-mem/session-start.sh",
+        "agent-setup/cursor/hooks/wiki-mem/stop.sh",
+        "agent-setup/cursor/rules/wiki-agent.mdc",
+        "agent-setup/docs/components.md",
+        "agent-setup/docs/wiki-skill-install.md",
+        "agent-setup/manifest/components.yaml",
+        "agent-setup/manifest/manifest.yaml",
+        "agent-setup/manifest/profiles.yaml",
+        "agent-setup/skills/wiki-mem/SKILL.md",
+        "agent-setup/src/agent_setup/diff.py",
+        "docs/adr/0004-project-knowledge-contract.md",
+        "docs/architecture/knowledge/KNOWLEDGE-ARCHITECTURE.md",
+        "docs/architecture/knowledge/KNOWLEDGE-BEFORE-AFTER.md",
+        "docs/architecture/knowledge/KNOWLEDGE-DEPENDENCY-GRAPH.yaml",
+        "docs/architecture/knowledge/KNOWLEDGE-PROFILE-BOUNDARY.md",
+        "docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md",
+        "docs/architecture/knowledge/PROFILE-BOUNDARY-MANIFEST.yaml",
+        "docs/architecture/portability/AGENT-PORTABILITY-MATRIX.yaml",
+        "docs/architecture/portability/CONFIG-PORTABILITY-MATRIX.yaml",
+        "docs/architecture/portability/CORE-VS-PERSONAL-GRAPH.yaml",
+        "docs/architecture/portability/IDENTITY-REFERENCE-MAP.yaml",
+        "docs/architecture/portability/KNOWLEDGE-PERSONALIZATION-MAP.yaml",
+        "docs/architecture/portability/MAIN-VS-GAABTYPE-PROPOSAL.yaml",
+        "docs/architecture/portability/PATH-REFERENCE-MAP.yaml"
+      ],
+      "input_tokens": 21795,
+      "latency_ms": 181,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: profiles/default.yaml"
+      ],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: profiles/default.yaml"
+      ]
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H07-B1-24c844306c0f",
+    "arm": "B1",
+    "task_id": "H07",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:28.091571+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H07",
+      "arm": "B1",
+      "paths_read": [
+        "orchestrator/src/knowledge/backend/resolve.ts",
+        "docs/adr/0012-wiki-default-knowledge-backend.md",
+        "AGENT.md",
+        "Agents/Researcher.md",
+        "Agents/Wiki-mem.md",
+        "Agents/Wiki.md",
+        "Agents/backend.md",
+        "CHANGELOG.md",
+        "GLOBAL-SETUP.md",
+        "INVENTORY.md",
+        "README.md",
+        "Rules/wiki-agent.mdc",
+        "SECURITY.md",
+        "agent-setup/README.md",
+        "agent-setup/bootstrap.sh",
+        "agent-setup/cursor/commands/evolve.md",
+        "agent-setup/cursor/commands/mem.md",
+        "agent-setup/cursor/hooks/wiki-mem/after-edit.sh",
+        "agent-setup/cursor/hooks/wiki-mem/mem.py",
+        "agent-setup/cursor/hooks/wiki-mem/session-end.sh",
+        "agent-setup/cursor/hooks/wiki-mem/session-start.sh",
+        "agent-setup/cursor/hooks/wiki-mem/stop.sh"
+      ],
+      "input_tokens": 13272,
+      "latency_ms": 194,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: profiles/default.yaml"
+      ],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: profiles/default.yaml"
+      ]
+    },
+    "b1_engine": {
+      "engine_requested": "auto",
+      "karpathy_wiki_dir": "/opt/karpathyWiki",
+      "karpathy_wiki_sha_expected": "cd3cf08",
+      "wiki_engine": "fixtures/evolveloop-wiki-vault",
+      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
+      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
     }
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
-    "baseline_id": "v22-graphify-b3-2026-10-22",
-    "run_id": "V22G-H07-B3-589b29b16905",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H07-B3-0a2d960c3237",
     "arm": "B3",
     "task_id": "H07",
-    "timestamp": "2026-10-22T01:55:09.579362+00:00",
-    "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:28.842849+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -605,7 +1089,7 @@
         "orchestrator/src/authority/capability-authority.ts"
       ],
       "input_tokens": 21892,
-      "latency_ms": 697,
+      "latency_ms": 750,
       "recall": 0.0,
       "recall_notes": [
         "miss path not read: profiles/default.yaml"
@@ -619,17 +1103,124 @@
       "notes": [
         "miss path not read: profiles/default.yaml"
       ]
+    },
+    "graphify": {
+      "cli_version": "graphify 0.9.93"
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "OFFICIAL_BASELINE",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H08-B0-10d7387591ca",
+    "arm": "B0",
+    "task_id": "H08",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:28.883069+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H08",
+      "arm": "B0",
+      "paths_read": [
+        "docs/adr/0005-hybrid-retrieval-degraded-mode.md",
+        "docs/architecture/knowledge/KNOWLEDGE-ARCHITECTURE.md",
+        "docs/architecture/knowledge/KNOWLEDGE-BACKEND-CONTRACT.md",
+        "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+        "docs/architecture/v2.2/TRACEABILITY-MATRIX.md"
+      ],
+      "input_tokens": 10083,
+      "latency_ms": 39,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
+      ],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
+      ]
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H08-B1-3aacf3e012a8",
+    "arm": "B1",
+    "task_id": "H08",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:29.043622+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H08",
+      "arm": "B1",
+      "paths_read": [
+        "docs/adr/0012-wiki-default-knowledge-backend.md",
+        "AGENT.md",
+        "CHANGELOG.md",
+        "GLOBAL-SETUP.md",
+        "README.md",
+        "Rules/wiki-agent.mdc",
+        "agent-setup/bootstrap.sh",
+        "agent-setup/cursor/commands/evolve.md",
+        "agent-setup/cursor/commands/mem.md",
+        "agent-setup/cursor/hooks/wiki-mem/mem.py",
+        "agent-setup/cursor/rules/wiki-agent.mdc",
+        "agent-setup/install.sh",
+        "agent-setup/skills/wiki-mem/SKILL.md",
+        "agent-setup/skills/wiki/SKILL.md",
+        "agent-setup/skills/wiki/references/cli.md",
+        "agent-setup/skills/wiki/scripts/ground.sh",
+        "agent-setup/src/agent_setup/paths.py",
+        "docs/architecture/knowledge/KNOWLEDGE-ARCHITECTURE.md",
+        "docs/architecture/knowledge/KNOWLEDGE-BACKEND-CONTRACT.md",
+        "docs/architecture/knowledge/KNOWLEDGE-BACKEND-MANIFEST.yaml"
+      ],
+      "input_tokens": 16145,
+      "latency_ms": 160,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
+      ],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
+      ]
+    },
+    "b1_engine": {
+      "engine_requested": "auto",
+      "karpathy_wiki_dir": "/opt/karpathyWiki",
+      "karpathy_wiki_sha_expected": "cd3cf08",
+      "wiki_engine": "fixtures/evolveloop-wiki-vault",
+      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
+      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
     }
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
-    "baseline_id": "v22-graphify-b3-2026-10-22",
-    "run_id": "V22G-H08-B3-77da6b4d4018",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H08-B3-73c584ffa074",
     "arm": "B3",
     "task_id": "H08",
-    "timestamp": "2026-10-22T01:55:10.375249+00:00",
-    "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:29.855994+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -703,7 +1294,7 @@
         "orchestrator/src/telemetry/skill-telemetry.ts"
       ],
       "input_tokens": 21114,
-      "latency_ms": 795,
+      "latency_ms": 812,
       "recall": 1.0,
       "recall_notes": [
         "anchor line drift (file hit): orchestrator/src/knowledge/backend/wiki-backend.ts:183"
@@ -717,17 +1308,136 @@
       "notes": [
         "anchor line drift (file hit): orchestrator/src/knowledge/backend/wiki-backend.ts:183"
       ]
+    },
+    "graphify": {
+      "cli_version": "graphify 0.9.93"
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "OFFICIAL_BASELINE",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H09-B0-c8da40036483",
+    "arm": "B0",
+    "task_id": "H09",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:29.951624+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H09",
+      "arm": "B0",
+      "paths_read": [
+        "README.md",
+        "agent-setup/skills/wiki/references/cli.md",
+        "agent-setup/skills/wiki/scripts/ground.sh",
+        "docs/adr/0004-project-knowledge-contract.md",
+        "docs/adr/0012-wiki-default-knowledge-backend.md",
+        "docs/architecture/evolveloopt/final/FINAL-START-STATE.yaml",
+        "docs/architecture/evolveloopt/v1-final/START-STATE.yaml",
+        "docs/architecture/knowledge/CORE-PERSONAL-BOUNDARY-V2.yaml",
+        "docs/architecture/knowledge/KNOWLEDGE-BACKEND-CONTRACT.md",
+        "docs/architecture/knowledge/KNOWLEDGE-BACKEND-MATRIX.yaml",
+        "docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md",
+        "docs/architecture/knowledge/PERSONAL-COUPLING-AFTER.yaml",
+        "docs/architecture/portability/AGENT-PORTABILITY-MATRIX.yaml",
+        "docs/architecture/portability/CONFIG-PORTABILITY-MATRIX.yaml",
+        "docs/architecture/portability/CORE-ARCHITECTURE.yaml",
+        "docs/architecture/portability/CORE-VS-PERSONAL-GRAPH.yaml",
+        "docs/architecture/portability/ENVIRONMENT-ASSUMPTIONS.yaml",
+        "docs/architecture/portability/IDENTITY-REFERENCE-MAP.yaml",
+        "docs/architecture/portability/KNOWLEDGE-PERSONALIZATION-MAP.yaml",
+        "docs/architecture/portability/MAIN-VS-GAABTYPE-PROPOSAL.yaml",
+        "docs/architecture/portability/PATH-REFERENCE-MAP.yaml",
+        "docs/architecture/portability/PERSONAL-CONNECTIONS.yaml",
+        "docs/architecture/portability/PORTABILITY-FORENSIC-AUDIT.md",
+        "docs/architecture/portability/PORTABILITY-INVENTORY.yaml"
+      ],
+      "input_tokens": 20986,
+      "latency_ms": 95,
+      "recall": 1.0,
+      "recall_notes": [],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H09-B1-abd6c7f56098",
+    "arm": "B1",
+    "task_id": "H09",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:30.120526+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H09",
+      "arm": "B1",
+      "paths_read": [
+        "docs/adr/0012-wiki-default-knowledge-backend.md",
+        "orchestrator/src/knowledge/backend/fake-backend.ts",
+        "LICENSE",
+        "README.md",
+        "agent-setup/skills/wiki/references/cli.md",
+        "agent-setup/skills/wiki/scripts/ground.sh",
+        "docs/architecture/evolution/EVOLVELOOP-IMPLEMENTATION-REPORT.md",
+        "docs/architecture/evolveloopt/EVOLUTION-CANDIDATES.md",
+        "docs/architecture/evolveloopt/ROOT-CAUSE.md",
+        "docs/architecture/evolveloopt/validation/AUDIT-START-STATE.yaml",
+        "docs/architecture/knowledge/CORE-PERSONAL-BOUNDARY-V2.yaml",
+        "docs/architecture/knowledge/KNOWLEDGE-ARCHITECTURE.md",
+        "docs/architecture/knowledge/KNOWLEDGE-BACKEND-CONTRACT.md",
+        "docs/architecture/knowledge/KNOWLEDGE-BACKEND-MANIFEST.yaml",
+        "docs/architecture/knowledge/KNOWLEDGE-BACKEND-MATRIX.yaml",
+        "docs/architecture/knowledge/KNOWLEDGE-BEFORE-AFTER.md",
+        "docs/architecture/knowledge/KNOWLEDGE-GENERALIZATION-VALIDATION.yaml",
+        "docs/architecture/knowledge/KNOWLEDGE-PROFILE-BOUNDARY.md",
+        "docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md",
+        "docs/architecture/knowledge/PERSONAL-COUPLING-AFTER.yaml",
+        "docs/architecture/knowledge/PROFILE-BOUNDARY-MANIFEST.yaml"
+      ],
+      "input_tokens": 7972,
+      "latency_ms": 168,
+      "recall": 1.0,
+      "recall_notes": [],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    },
+    "b1_engine": {
+      "engine_requested": "auto",
+      "karpathy_wiki_dir": "/opt/karpathyWiki",
+      "karpathy_wiki_sha_expected": "cd3cf08",
+      "wiki_engine": "fixtures/evolveloop-wiki-vault",
+      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
+      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
     }
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
-    "baseline_id": "v22-graphify-b3-2026-10-22",
-    "run_id": "V22G-H09-B3-26cb0f7c0277",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H09-B3-9bd260422d99",
     "arm": "B3",
     "task_id": "H09",
-    "timestamp": "2026-10-22T01:55:11.066760+00:00",
-    "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:30.820623+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -796,7 +1506,7 @@
         ".cursor/skills/security/references/verdict-trace.md"
       ],
       "input_tokens": 19995,
-      "latency_ms": 690,
+      "latency_ms": 699,
       "recall": 1.0,
       "recall_notes": [],
       "graphify_exit": 0,
@@ -806,17 +1516,115 @@
       "pass": true,
       "recall": 1.0,
       "notes": []
+    },
+    "graphify": {
+      "cli_version": "graphify 0.9.93"
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "OFFICIAL_BASELINE",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H10-B0-5dcc6733293f",
+    "arm": "B0",
+    "task_id": "H10",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:30.881588+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H10",
+      "arm": "B0",
+      "paths_read": [
+        "agent-setup/skills/wiki/references/cli.md",
+        "agent-setup/skills/wiki/scripts/ground.sh",
+        "docs/adr/0004-project-knowledge-contract.md",
+        "docs/adr/0005-hybrid-retrieval-degraded-mode.md",
+        "docs/adr/0013-context-ownership-working-context.md",
+        "docs/architecture/portability/CORE-VS-PERSONAL-GRAPH.yaml",
+        "docs/architecture/portability/ENVIRONMENT-ASSUMPTIONS.yaml",
+        "docs/architecture/portability/IDENTITY-REFERENCE-MAP.yaml",
+        "docs/architecture/portability/KNOWLEDGE-PERSONALIZATION-MAP.yaml",
+        "docs/architecture/portability/PERSONAL-CONNECTIONS.yaml",
+        "docs/architecture/portability/PORTABILITY-FORENSIC-AUDIT.md",
+        "docs/architecture/portability/PORTABILITY-INVENTORY.yaml",
+        "docs/architecture/portability/WIKI-RENAME-MANIFEST.yaml"
+      ],
+      "input_tokens": 16643,
+      "latency_ms": 60,
+      "recall": 1.0,
+      "recall_notes": [],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H10-B1-b074b25585b7",
+    "arm": "B1",
+    "task_id": "H10",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:31.010139+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H10",
+      "arm": "B1",
+      "paths_read": [
+        "orchestrator/src/knowledge/backend/resolve.ts",
+        "docs/adr/0004-project-knowledge-contract.md",
+        "docs/adr/0005-hybrid-retrieval-degraded-mode.md",
+        "docs/adr/0013-context-ownership-working-context.md",
+        "docs/architecture/portability/CORE-VS-PERSONAL-GRAPH.yaml",
+        "docs/architecture/portability/ENVIRONMENT-ASSUMPTIONS.yaml",
+        "docs/architecture/portability/KNOWLEDGE-PERSONALIZATION-MAP.yaml",
+        "docs/architecture/portability/PERSONAL-CONNECTIONS.yaml",
+        "docs/architecture/portability/PORTABILITY-FORENSIC-AUDIT.md",
+        "docs/architecture/portability/PORTABILITY-INVENTORY.yaml",
+        "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md"
+      ],
+      "input_tokens": 20095,
+      "latency_ms": 128,
+      "recall": 1.0,
+      "recall_notes": [],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    },
+    "b1_engine": {
+      "engine_requested": "auto",
+      "karpathy_wiki_dir": "/opt/karpathyWiki",
+      "karpathy_wiki_sha_expected": "cd3cf08",
+      "wiki_engine": "fixtures/evolveloop-wiki-vault",
+      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
+      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
     }
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
-    "baseline_id": "v22-graphify-b3-2026-10-22",
-    "run_id": "V22G-H10-B3-d28d77771fdd",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H10-B3-ad9243706322",
     "arm": "B3",
     "task_id": "H10",
-    "timestamp": "2026-10-22T01:55:11.835118+00:00",
-    "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:31.798484+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -878,7 +1686,7 @@
         "orchestrator/src/evolveloop/adapters/longitudinal-fixtures.ts"
       ],
       "input_tokens": 21449,
-      "latency_ms": 767,
+      "latency_ms": 788,
       "recall": 1.0,
       "recall_notes": [],
       "graphify_exit": 0,
@@ -888,17 +1696,149 @@
       "pass": true,
       "recall": 1.0,
       "notes": []
+    },
+    "graphify": {
+      "cli_version": "graphify 0.9.93"
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "OFFICIAL_BASELINE",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H11-B0-675d78678fd5",
+    "arm": "B0",
+    "task_id": "H11",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:31.996353+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H11",
+      "arm": "B0",
+      "paths_read": [
+        "AGENT.md",
+        "Agents/Researcher.md",
+        "Agents/Wiki-mem.md",
+        "Agents/Wiki.md",
+        "GLOBAL-SETUP.md",
+        "INVENTORY.md",
+        "README.md",
+        "Rules/wiki-agent.mdc",
+        "SECURITY.md",
+        "agent-setup/README.md",
+        "agent-setup/bootstrap.sh",
+        "agent-setup/cursor/commands/evolve.md",
+        "agent-setup/cursor/commands/mem.md",
+        "agent-setup/cursor/commands/wiki.md",
+        "agent-setup/cursor/hooks/wiki-mem/after-edit.sh",
+        "agent-setup/cursor/hooks/wiki-mem/mem.py",
+        "agent-setup/cursor/hooks/wiki-mem/session-end.sh",
+        "agent-setup/cursor/hooks/wiki-mem/session-start.sh",
+        "agent-setup/cursor/hooks/wiki-mem/stop.sh",
+        "agent-setup/cursor/rules/wiki-agent.mdc",
+        "agent-setup/docs/components.md",
+        "agent-setup/docs/project-init.md",
+        "agent-setup/docs/wiki-skill-install.md",
+        "agent-setup/manifest/components.yaml",
+        "agent-setup/manifest/manifest.yaml",
+        "agent-setup/manifest/profiles.yaml",
+        "agent-setup/prompts/analyze-project.md",
+        "agent-setup/prompts/bootstrap-project.md",
+        "agent-setup/prompts/migrate-project.md",
+        "agent-setup/skills/wiki-mem/SKILL.md",
+        "agent-setup/skills/wiki/CHANGELOG.md",
+        "agent-setup/skills/wiki/SKILL.md",
+        "agent-setup/skills/wiki/agents/README.md",
+        "agent-setup/skills/wiki/evals/evals.json",
+        "agent-setup/skills/wiki/evals/manual-chat-pack.md",
+        "agent-setup/skills/wiki/evals/trigger-eval-set.json",
+        "agent-setup/skills/wiki/evals/trigger-review.md",
+        "agent-setup/skills/wiki/references/cli.md",
+        "agent-setup/skills/wiki/references/packs.md",
+        "agent-setup/skills/wiki/references/ritual.md",
+        "agent-setup/skills/wiki/scripts/format_hits.py"
+      ],
+      "input_tokens": 21370,
+      "latency_ms": 197,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: orchestrator/src/knowledge/backend/types.ts"
+      ],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: orchestrator/src/knowledge/backend/types.ts"
+      ]
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H11-B1-a4ce7e3697b4",
+    "arm": "B1",
+    "task_id": "H11",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:32.125387+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H11",
+      "arm": "B1",
+      "paths_read": [
+        "orchestrator/src/knowledge/backend/resolve.ts",
+        "docs/adr/0014-graphify-b3-benchmark-decision.md",
+        "docs/architecture/v2.2/CONSOLIDATION-REPORT.md",
+        "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+        "docs/architecture/v2.2/TECH-DECISIONS-MATRIX.md",
+        "docs/architecture/v2.2/TRACEABILITY-MATRIX.md",
+        "docs/architecture/v2.2/scripts/generate-evolveloop-wiki-knowledge.sh",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-held-out-frozen.json",
+        "docs/research/evolveloop-v2.2/01-current-state-audit.md"
+      ],
+      "input_tokens": 20493,
+      "latency_ms": 128,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: orchestrator/src/knowledge/backend/types.ts"
+      ],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: orchestrator/src/knowledge/backend/types.ts"
+      ]
+    },
+    "b1_engine": {
+      "engine_requested": "auto",
+      "karpathy_wiki_dir": "/opt/karpathyWiki",
+      "karpathy_wiki_sha_expected": "cd3cf08",
+      "wiki_engine": "fixtures/evolveloop-wiki-vault",
+      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
+      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
     }
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
-    "baseline_id": "v22-graphify-b3-2026-10-22",
-    "run_id": "V22G-H11-B3-cc2004b043c6",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H11-B3-658f45fe8766",
     "arm": "B3",
     "task_id": "H11",
-    "timestamp": "2026-10-22T01:55:12.525645+00:00",
-    "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:32.809501+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -939,8 +1879,8 @@
         "orchestrator/src/knowledge/backend/fake-backend.ts",
         "orchestrator/package.json"
       ],
-      "input_tokens": 20856,
-      "latency_ms": 689,
+      "input_tokens": 20895,
+      "latency_ms": 683,
       "recall": 1.0,
       "recall_notes": [],
       "graphify_exit": 0,
@@ -950,17 +1890,111 @@
       "pass": true,
       "recall": 1.0,
       "notes": []
+    },
+    "graphify": {
+      "cli_version": "graphify 0.9.93"
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "OFFICIAL_BASELINE",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H12-B0-ce464f19cbeb",
+    "arm": "B0",
+    "task_id": "H12",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:32.878452+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H12",
+      "arm": "B0",
+      "paths_read": [
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-held-out-frozen.json",
+        "docs/research/evolveloop-v2.2/01-current-state-audit.md",
+        "global-skills/systematic-debugging/condition-based-waiting-example.ts",
+        "global-skills/systematic-debugging/condition-based-waiting.md",
+        "orchestrator/src/events/event-bus.ts",
+        "orchestrator/src/executors/smart-mock-executor.ts",
+        "orchestrator/src/knowledge/backend/wiki-backend.ts",
+        "orchestrator/src/providers/deterministic/index.ts",
+        "orchestrator/src/providers/deterministic/shell.ts",
+        "orchestrator/src/v22/bench-h-tasks.ts"
+      ],
+      "input_tokens": 15606,
+      "latency_ms": 68,
+      "recall": 1.0,
+      "recall_notes": [
+        "anchor line drift (file hit): orchestrator/src/knowledge/backend/wiki-backend.ts:36"
+      ],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": [
+        "anchor line drift (file hit): orchestrator/src/knowledge/backend/wiki-backend.ts:36"
+      ]
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H12-B1-1fe86b2afb0d",
+    "arm": "B1",
+    "task_id": "H12",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:32.923934+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H12",
+      "arm": "B1",
+      "paths_read": [
+        "orchestrator/src/config/profile.ts",
+        "docs/adr/0012-wiki-default-knowledge-backend.md"
+      ],
+      "input_tokens": 1027,
+      "latency_ms": 45,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
+      ],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
+      ]
+    },
+    "b1_engine": {
+      "engine_requested": "auto",
+      "karpathy_wiki_dir": "/opt/karpathyWiki",
+      "karpathy_wiki_sha_expected": "cd3cf08",
+      "wiki_engine": "fixtures/evolveloop-wiki-vault",
+      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
+      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
     }
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
-    "baseline_id": "v22-graphify-b3-2026-10-22",
-    "run_id": "V22G-H12-B3-309dfd9d6429",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H12-B3-b43efbbc7901",
     "arm": "B3",
     "task_id": "H12",
-    "timestamp": "2026-10-22T01:55:13.213368+00:00",
-    "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:33.674564+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -1009,7 +2043,7 @@
         "docs/reconciliation/JOBS-RECONCILIATION.md"
       ],
       "input_tokens": 21614,
-      "latency_ms": 687,
+      "latency_ms": 750,
       "recall": 1.0,
       "recall_notes": [
         "anchor line drift (file hit): orchestrator/src/knowledge/backend/wiki-backend.ts:36"
@@ -1023,17 +2057,131 @@
       "notes": [
         "anchor line drift (file hit): orchestrator/src/knowledge/backend/wiki-backend.ts:36"
       ]
+    },
+    "graphify": {
+      "cli_version": "graphify 0.9.93"
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "OFFICIAL_BASELINE",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H13-B0-86c2b91e4a0b",
+    "arm": "B0",
+    "task_id": "H13",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:33.795634+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H13",
+      "arm": "B0",
+      "paths_read": [
+        "agent-setup/src/agent_setup/doctor.py",
+        "agent-setup/tests/test_doctor.py",
+        "docs/adr/0004-project-knowledge-contract.md",
+        "docs/adr/0005-hybrid-retrieval-degraded-mode.md",
+        "docs/architecture/knowledge/KNOWLEDGE-BACKEND-CONTRACT.md",
+        "docs/architecture/portability/ENVIRONMENT-ASSUMPTIONS.yaml",
+        "docs/architecture/portability/PORTABILITY-FORENSIC-AUDIT.md",
+        "docs/architecture/v2.2/CONSOLIDATION-REPORT.md",
+        "docs/architecture/v2.2/scripts/bootstrap-karpathywiki-official-bench.sh",
+        "docs/architecture/v2.2/scripts/index-evolveloop-bm25-degraded.py",
+        "docs/architecture/v2.2/scripts/test-official-wiki-stale.sh",
+        "docs/audit/RESEARCH-RECONCILIATION.md",
+        "docs/execution-replay-model.md",
+        "docs/internal/historical/audits/IMPLEMENTATION-STATUS.md",
+        "docs/internal/historical/audits/architecture-audit-2026-09-17.md",
+        "docs/internal/historical/audits/architecture-current.md",
+        "docs/internal/historical/audits/architecture-plan-platform-evolution.md",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/GOAL-005b-real-engine-report.md",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/GOAL-005c-official-run-report.md"
+      ],
+      "input_tokens": 21826,
+      "latency_ms": 120,
+      "recall": 1.0,
+      "recall_notes": [],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H13-B1-c26f46bece0d",
+    "arm": "B1",
+    "task_id": "H13",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:33.975669+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H13",
+      "arm": "B1",
+      "paths_read": [
+        "orchestrator/src/knowledge/backend/resolve.ts",
+        "agent-setup/cursor/commands/evolve.md",
+        "agent-setup/skills/wiki-mem/SKILL.md",
+        "agent-setup/skills/wiki/SKILL.md",
+        "agent-setup/skills/wiki/evals/evals.json",
+        "agent-setup/skills/wiki/evals/manual-chat-pack.md",
+        "agent-setup/skills/wiki/evals/trigger-eval-set.json",
+        "agent-setup/skills/wiki/evals/trigger-review.md",
+        "agent-setup/skills/wiki/references/packs.md",
+        "docs/adr/0004-project-knowledge-contract.md",
+        "docs/adr/0005-hybrid-retrieval-degraded-mode.md",
+        "docs/architecture/portability/ENVIRONMENT-ASSUMPTIONS.yaml",
+        "docs/architecture/portability/KNOWLEDGE-PERSONALIZATION-MAP.yaml",
+        "docs/architecture/portability/PORTABILITY-FORENSIC-AUDIT.md",
+        "docs/architecture/v2.2/scripts/bootstrap-karpathywiki-official-bench.sh",
+        "docs/architecture/v2.2/scripts/diagnose-official-b1-recall.py",
+        "docs/architecture/v2.2/scripts/index-evolveloop-bm25-degraded.py",
+        "docs/architecture/v2.2/scripts/test-official-wiki-stale.sh",
+        "docs/internal/historical/audits/IMPLEMENTATION-STATUS.md",
+        "docs/internal/historical/audits/architecture-audit-2026-09-17.md",
+        "docs/internal/historical/audits/architecture-current.md"
+      ],
+      "input_tokens": 21490,
+      "latency_ms": 179,
+      "recall": 1.0,
+      "recall_notes": [],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    },
+    "b1_engine": {
+      "engine_requested": "auto",
+      "karpathy_wiki_dir": "/opt/karpathyWiki",
+      "karpathy_wiki_sha_expected": "cd3cf08",
+      "wiki_engine": "fixtures/evolveloop-wiki-vault",
+      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
+      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
     }
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
-    "baseline_id": "v22-graphify-b3-2026-10-22",
-    "run_id": "V22G-H13-B3-0efd074f1ba7",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H13-B3-1bc8230b0945",
     "arm": "B3",
     "task_id": "H13",
-    "timestamp": "2026-10-22T01:55:13.889317+00:00",
-    "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:34.715322+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -1090,7 +2238,7 @@
         ".cursor/skills/security/evals/auth/mass-assignment/vulnerable/server.js"
       ],
       "input_tokens": 15879,
-      "latency_ms": 675,
+      "latency_ms": 739,
       "recall": 1.0,
       "recall_notes": [],
       "graphify_exit": 0,
@@ -1100,17 +2248,110 @@
       "pass": true,
       "recall": 1.0,
       "notes": []
+    },
+    "graphify": {
+      "cli_version": "graphify 0.9.93"
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "OFFICIAL_BASELINE",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H14-B0-c37f753b4dad",
+    "arm": "B0",
+    "task_id": "H14",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:34.793111+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H14",
+      "arm": "B0",
+      "paths_read": [
+        "docs/architecture/knowledge/CORE-PERSONAL-BOUNDARY-V2.yaml",
+        "docs/architecture/portability/PATH-REFERENCE-MAP.yaml",
+        "docs/architecture/portability/PERSONAL-CONNECTIONS.yaml",
+        "docs/architecture/portability/PORTABILITY-FORENSIC-AUDIT.md",
+        "docs/architecture/portability/PORTABILITY-INVENTORY.yaml",
+        "docs/architecture/portability/WIKI-REFERENCE-AUDIT.yaml",
+        "docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md",
+        "docs/audit/EVIDENCE-CATALOG.md",
+        "docs/audit/IMPLEMENTATION-MATRIX.yaml",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/GOAL-005e-recall-report.md"
+      ],
+      "input_tokens": 17593,
+      "latency_ms": 77,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: orchestrator/src/providers/deterministic/knowledge.ts"
+      ],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: orchestrator/src/providers/deterministic/knowledge.ts"
+      ]
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H14-B1-51193bd8fd96",
+    "arm": "B1",
+    "task_id": "H14",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:34.837237+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H14",
+      "arm": "B1",
+      "paths_read": [
+        "orchestrator/src/knowledge/backend/resolve.ts"
+      ],
+      "input_tokens": 362,
+      "latency_ms": 43,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: orchestrator/src/providers/deterministic/knowledge.ts"
+      ],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: orchestrator/src/providers/deterministic/knowledge.ts"
+      ]
+    },
+    "b1_engine": {
+      "engine_requested": "auto",
+      "karpathy_wiki_dir": "/opt/karpathyWiki",
+      "karpathy_wiki_sha_expected": "cd3cf08",
+      "wiki_engine": "fixtures/evolveloop-wiki-vault",
+      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
+      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
     }
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
-    "baseline_id": "v22-graphify-b3-2026-10-22",
-    "run_id": "V22G-H14-B3-61a0ad120384",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H14-B3-d079054b1dcf",
     "arm": "B3",
     "task_id": "H14",
-    "timestamp": "2026-10-22T01:55:14.655150+00:00",
-    "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:35.606721+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -1180,7 +2421,7 @@
         "orchestrator/tests/unit/deterministic-capabilities.test.ts"
       ],
       "input_tokens": 20426,
-      "latency_ms": 765,
+      "latency_ms": 769,
       "recall": 1.0,
       "recall_notes": [
         "anchor line drift (file hit): orchestrator/src/providers/deterministic/knowledge.ts:16"
@@ -1194,17 +2435,162 @@
       "notes": [
         "anchor line drift (file hit): orchestrator/src/providers/deterministic/knowledge.ts:16"
       ]
+    },
+    "graphify": {
+      "cli_version": "graphify 0.9.93"
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "OFFICIAL_BASELINE",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H15-B0-a2791b0fe0e1",
+    "arm": "B0",
+    "task_id": "H15",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:35.799489+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H15",
+      "arm": "B0",
+      "paths_read": [
+        "AGENT.md",
+        "Agents/Researcher.md",
+        "Agents/Wiki-mem.md",
+        "Agents/Wiki.md",
+        "GLOBAL-SETUP.md",
+        "INVENTORY.md",
+        "README.md",
+        "Rules/wiki-agent.mdc",
+        "SECURITY.md",
+        "agent-setup/README.md",
+        "agent-setup/bootstrap.sh",
+        "agent-setup/cursor/commands/evolve.md",
+        "agent-setup/cursor/commands/mem.md",
+        "agent-setup/cursor/commands/wiki.md",
+        "agent-setup/cursor/hooks/wiki-mem/after-edit.sh",
+        "agent-setup/cursor/hooks/wiki-mem/mem.py",
+        "agent-setup/cursor/hooks/wiki-mem/session-end.sh",
+        "agent-setup/cursor/hooks/wiki-mem/session-start.sh",
+        "agent-setup/cursor/hooks/wiki-mem/stop.sh",
+        "agent-setup/cursor/rules/wiki-agent.mdc",
+        "agent-setup/docs/components.md",
+        "agent-setup/docs/project-init.md",
+        "agent-setup/docs/wiki-skill-install.md",
+        "agent-setup/manifest/components.yaml",
+        "agent-setup/manifest/manifest.yaml",
+        "agent-setup/manifest/profiles.yaml",
+        "agent-setup/prompts/analyze-project.md",
+        "agent-setup/prompts/bootstrap-project.md",
+        "agent-setup/prompts/migrate-project.md",
+        "agent-setup/skills/wiki-mem/SKILL.md",
+        "agent-setup/skills/wiki/CHANGELOG.md",
+        "agent-setup/skills/wiki/SKILL.md",
+        "agent-setup/skills/wiki/agents/README.md",
+        "agent-setup/skills/wiki/evals/evals.json",
+        "agent-setup/skills/wiki/evals/manual-chat-pack.md",
+        "agent-setup/skills/wiki/evals/trigger-eval-set.json",
+        "agent-setup/skills/wiki/evals/trigger-review.md",
+        "agent-setup/skills/wiki/references/cli.md",
+        "agent-setup/skills/wiki/references/packs.md",
+        "agent-setup/skills/wiki/references/ritual.md",
+        "agent-setup/skills/wiki/scripts/format_hits.py"
+      ],
+      "input_tokens": 21370,
+      "latency_ms": 192,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md"
+      ],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md"
+      ]
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H15-B1-6526fdc36e1e",
+    "arm": "B1",
+    "task_id": "H15",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:36.020092+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H15",
+      "arm": "B1",
+      "paths_read": [
+        "orchestrator/src/config/profile.ts",
+        "orchestrator/src/knowledge/backend/fake-backend.ts",
+        "docs/adr/0012-wiki-default-knowledge-backend.md",
+        "AGENT.md",
+        "CHANGELOG.md",
+        "GLOBAL-SETUP.md",
+        "README.md",
+        "Rules/wiki-agent.mdc",
+        "agent-setup/bootstrap.sh",
+        "agent-setup/cursor/commands/evolve.md",
+        "agent-setup/cursor/commands/mem.md",
+        "agent-setup/cursor/hooks/wiki-mem/mem.py",
+        "agent-setup/cursor/rules/wiki-agent.mdc",
+        "agent-setup/install.sh",
+        "agent-setup/skills/wiki-mem/SKILL.md",
+        "agent-setup/skills/wiki/SKILL.md",
+        "agent-setup/skills/wiki/references/cli.md",
+        "agent-setup/skills/wiki/scripts/ground.sh",
+        "agent-setup/src/agent_setup/paths.py",
+        "docs/adr/0005-hybrid-retrieval-degraded-mode.md",
+        "docs/architecture/evolution/EVOLVELOOP-IMPLEMENTATION-REPORT.md",
+        "docs/architecture/evolveloopt/EVOLUTION-CANDIDATES.md"
+      ],
+      "input_tokens": 17819,
+      "latency_ms": 220,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md"
+      ],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md"
+      ]
+    },
+    "b1_engine": {
+      "engine_requested": "auto",
+      "karpathy_wiki_dir": "/opt/karpathyWiki",
+      "karpathy_wiki_sha_expected": "cd3cf08",
+      "wiki_engine": "fixtures/evolveloop-wiki-vault",
+      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
+      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
     }
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
-    "baseline_id": "v22-graphify-b3-2026-10-22",
-    "run_id": "V22G-H15-B3-2052fe242e25",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H15-B3-fbdbaff4f1b4",
     "arm": "B3",
     "task_id": "H15",
-    "timestamp": "2026-10-22T01:55:15.439822+00:00",
-    "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:36.842908+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -1274,7 +2660,7 @@
         "orchestrator/src/evolveloop/adapters/longitudinal-fixtures.ts"
       ],
       "input_tokens": 19802,
-      "latency_ms": 784,
+      "latency_ms": 822,
       "recall": 1.0,
       "recall_notes": [],
       "graphify_exit": 0,
@@ -1284,17 +2670,136 @@
       "pass": true,
       "recall": 1.0,
       "notes": []
+    },
+    "graphify": {
+      "cli_version": "graphify 0.9.93"
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "OFFICIAL_BASELINE",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H16-B0-e38580b50d22",
+    "arm": "B0",
+    "task_id": "H16",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:36.929450+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H16",
+      "arm": "B0",
+      "paths_read": [
+        "agent-setup/manifest/manifest.yaml",
+        "agent-setup/manifest/profiles.yaml",
+        "docs/architecture/publication/AGENT-MD-REQUIREMENTS.yaml",
+        "docs/architecture/publication/FINAL-GAABTYPE-MANIFEST.yaml",
+        "docs/internal/historical/evals/docs-evals/experiments/E-005/harness/e005-duplicate-mutate.test.ts",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-held-out-frozen.json",
+        "orchestrator/policies/high-reliability.yaml",
+        "orchestrator/src/capabilities/results.ts",
+        "orchestrator/src/cli/run-engine.ts",
+        "orchestrator/src/config/profile.ts",
+        "orchestrator/src/engine/execution-engine.ts",
+        "orchestrator/src/policies/policy-engine.ts",
+        "orchestrator/src/providers/deterministic/system.ts",
+        "orchestrator/src/session/session-continuity.ts",
+        "orchestrator/tests/integration/persistence.test.ts"
+      ],
+      "input_tokens": 21689,
+      "latency_ms": 86,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: profiles/default.yaml"
+      ],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: profiles/default.yaml"
+      ]
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H16-B1-7c473c353474",
+    "arm": "B1",
+    "task_id": "H16",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:37.106930+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H16",
+      "arm": "B1",
+      "paths_read": [
+        "orchestrator/src/knowledge/backend/resolve.ts",
+        "docs/adr/0012-wiki-default-knowledge-backend.md",
+        "AGENT.md",
+        "Agents/backend.md",
+        "CHANGELOG.md",
+        "GLOBAL-SETUP.md",
+        "README.md",
+        "Rules/wiki-agent.mdc",
+        "agent-setup/README.md",
+        "agent-setup/bootstrap.sh",
+        "agent-setup/cursor/commands/evolve.md",
+        "agent-setup/cursor/hooks/wiki-mem/mem.py",
+        "agent-setup/cursor/rules/wiki-agent.mdc",
+        "agent-setup/docs/architecture.md",
+        "agent-setup/docs/manifest.md",
+        "agent-setup/docs/security.md",
+        "agent-setup/manifest/manifest.yaml",
+        "agent-setup/skills/wiki/SKILL.md",
+        "agent-setup/skills/wiki/references/cli.md",
+        "agent-setup/skills/wiki/scripts/ground.sh",
+        "agent-setup/src/agent_setup/cli.py",
+        "agent-setup/src/agent_setup/detect.py"
+      ],
+      "input_tokens": 17280,
+      "latency_ms": 177,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: profiles/default.yaml"
+      ],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: profiles/default.yaml"
+      ]
+    },
+    "b1_engine": {
+      "engine_requested": "auto",
+      "karpathy_wiki_dir": "/opt/karpathyWiki",
+      "karpathy_wiki_sha_expected": "cd3cf08",
+      "wiki_engine": "fixtures/evolveloop-wiki-vault",
+      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
+      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
     }
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
-    "baseline_id": "v22-graphify-b3-2026-10-22",
-    "run_id": "V22G-H16-B3-427c0ed680e7",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H16-B3-ff1a53296b74",
     "arm": "B3",
     "task_id": "H16",
-    "timestamp": "2026-10-22T01:55:16.129293+00:00",
-    "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:37.815244+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -1368,7 +2873,7 @@
         "orchestrator/src/knowledge/backend/types.ts"
       ],
       "input_tokens": 20289,
-      "latency_ms": 688,
+      "latency_ms": 707,
       "recall": 0.0,
       "recall_notes": [
         "miss path not read: profiles/default.yaml"
@@ -1382,17 +2887,114 @@
       "notes": [
         "miss path not read: profiles/default.yaml"
       ]
+    },
+    "graphify": {
+      "cli_version": "graphify 0.9.93"
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "OFFICIAL_BASELINE",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H17-B0-ae0d0bc8f0c8",
+    "arm": "B0",
+    "task_id": "H17",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:37.909477+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H17",
+      "arm": "B0",
+      "paths_read": [
+        "docs/adr/0002-capability-model-deterministic-providers.md",
+        "docs/adr/0003-capability-authority-vs-execution-policy.md",
+        "docs/adr/0004-project-knowledge-contract.md",
+        "docs/architecture/decision-review/DECISION-MATRIX.yaml",
+        "docs/architecture/evolution/EVOLVELOOP-IMPLEMENTATION-REPORT.md",
+        "docs/architecture/evolution/FINAL-STATE.yaml",
+        "docs/architecture/evolution/UNSUPPORTED-CLAIMS.yaml",
+        "docs/architecture/finalization/adrs/ADR-DR-0002-defer-production-skill-budget.md",
+        "docs/architecture/finalization/prototypes/PT-001-live-catalog-budget.md",
+        "docs/architecture/knowledge/CORE-PERSONAL-BOUNDARY-V2.yaml",
+        "docs/architecture/knowledge/KNOWLEDGE-DEPENDENCY-GRAPH.yaml",
+        "docs/architecture/portability/CORE-ARCHITECTURE.yaml",
+        "docs/architecture/portability/KNOWLEDGE-PERSONALIZATION-MAP.yaml",
+        "docs/architecture/portability/PATH-REFERENCE-MAP.yaml",
+        "docs/architecture/portability/PERSONAL-CONNECTIONS.yaml",
+        "docs/architecture/portability/PORTABILITY-FORENSIC-AUDIT.md",
+        "docs/architecture/portability/PORTABILITY-INVENTORY.yaml",
+        "docs/architecture/portability/WIKI-GENERALIZATION-REPORT.md"
+      ],
+      "input_tokens": 21674,
+      "latency_ms": 93,
+      "recall": 1.0,
+      "recall_notes": [],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H17-B1-08eec6d8d2ac",
+    "arm": "B1",
+    "task_id": "H17",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:38.010976+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H17",
+      "arm": "B1",
+      "paths_read": [
+        "orchestrator/src/knowledge/backend/resolve.ts",
+        "docs/adr/0002-capability-model-deterministic-providers.md",
+        "docs/adr/0003-capability-authority-vs-execution-policy.md",
+        "docs/internal/historical/audits/IMPLEMENTATION-STATUS.md",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-held-out-frozen.json"
+      ],
+      "input_tokens": 5318,
+      "latency_ms": 101,
+      "recall": 1.0,
+      "recall_notes": [],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    },
+    "b1_engine": {
+      "engine_requested": "auto",
+      "karpathy_wiki_dir": "/opt/karpathyWiki",
+      "karpathy_wiki_sha_expected": "cd3cf08",
+      "wiki_engine": "fixtures/evolveloop-wiki-vault",
+      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
+      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
     }
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
-    "baseline_id": "v22-graphify-b3-2026-10-22",
-    "run_id": "V22G-H17-B3-f4bedf573061",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H17-B3-17b3c10969a3",
     "arm": "B3",
     "task_id": "H17",
-    "timestamp": "2026-10-22T01:55:16.846662+00:00",
-    "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:38.745874+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -1462,7 +3064,7 @@
         "orchestrator/src/cli/registry-builder.ts"
       ],
       "input_tokens": 21780,
-      "latency_ms": 716,
+      "latency_ms": 734,
       "recall": 1.0,
       "recall_notes": [],
       "graphify_exit": 0,
@@ -1472,17 +3074,158 @@
       "pass": true,
       "recall": 1.0,
       "notes": []
+    },
+    "graphify": {
+      "cli_version": "graphify 0.9.93"
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "OFFICIAL_BASELINE",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H18-B0-4f659032ab0e",
+    "arm": "B0",
+    "task_id": "H18",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:38.907092+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H18",
+      "arm": "B0",
+      "paths_read": [
+        "AGENT.md",
+        "Agents/Researcher.md",
+        "Agents/Wiki-mem.md",
+        "Agents/Wiki.md",
+        "GLOBAL-SETUP.md",
+        "INVENTORY.md",
+        "README.md",
+        "Rules/wiki-agent.mdc",
+        "SECURITY.md",
+        "agent-setup/cursor/commands/evolve.md",
+        "agent-setup/cursor/commands/mem.md",
+        "agent-setup/cursor/hooks/wiki-mem/after-edit.sh",
+        "agent-setup/cursor/hooks/wiki-mem/mem.py",
+        "agent-setup/cursor/hooks/wiki-mem/session-end.sh",
+        "agent-setup/cursor/hooks/wiki-mem/session-start.sh",
+        "agent-setup/cursor/hooks/wiki-mem/stop.sh",
+        "agent-setup/cursor/rules/wiki-agent.mdc",
+        "agent-setup/docs/components.md",
+        "agent-setup/docs/wiki-skill-install.md",
+        "agent-setup/manifest/components.yaml",
+        "agent-setup/manifest/profiles.yaml",
+        "agent-setup/skills/wiki-mem/SKILL.md",
+        "agent-setup/src/agent_setup/diff.py",
+        "docs/adr/0004-project-knowledge-contract.md",
+        "docs/architecture/knowledge/KNOWLEDGE-ARCHITECTURE.md",
+        "docs/architecture/knowledge/KNOWLEDGE-BEFORE-AFTER.md",
+        "docs/architecture/knowledge/KNOWLEDGE-DEPENDENCY-GRAPH.yaml",
+        "docs/architecture/knowledge/KNOWLEDGE-PROFILE-BOUNDARY.md",
+        "docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md",
+        "docs/architecture/knowledge/PROFILE-BOUNDARY-MANIFEST.yaml",
+        "docs/architecture/portability/AGENT-PORTABILITY-MATRIX.yaml",
+        "docs/architecture/portability/CONFIG-PORTABILITY-MATRIX.yaml",
+        "docs/architecture/portability/CORE-VS-PERSONAL-GRAPH.yaml",
+        "docs/architecture/portability/IDENTITY-REFERENCE-MAP.yaml",
+        "docs/architecture/portability/KNOWLEDGE-PERSONALIZATION-MAP.yaml",
+        "docs/architecture/portability/MAIN-VS-GAABTYPE-PROPOSAL.yaml",
+        "docs/architecture/portability/PATH-REFERENCE-MAP.yaml"
+      ],
+      "input_tokens": 21610,
+      "latency_ms": 160,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: .cursor/skills/wiki/SKILL.md"
+      ],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: .cursor/skills/wiki/SKILL.md"
+      ]
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H18-B1-6f2cda82769e",
+    "arm": "B1",
+    "task_id": "H18",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:39.056725+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H18",
+      "arm": "B1",
+      "paths_read": [
+        "orchestrator/src/config/profile.ts",
+        "docs/adr/0012-wiki-default-knowledge-backend.md",
+        "AGENT.md",
+        "Agents/Researcher.md",
+        "Agents/Wiki-mem.md",
+        "Agents/Wiki.md",
+        "GLOBAL-SETUP.md",
+        "INVENTORY.md",
+        "README.md",
+        "Rules/wiki-agent.mdc",
+        "SECURITY.md",
+        "agent-setup/cursor/commands/evolve.md",
+        "agent-setup/cursor/commands/mem.md",
+        "agent-setup/cursor/hooks/wiki-mem/after-edit.sh",
+        "agent-setup/cursor/hooks/wiki-mem/mem.py",
+        "agent-setup/cursor/hooks/wiki-mem/session-end.sh",
+        "agent-setup/cursor/hooks/wiki-mem/session-start.sh",
+        "agent-setup/cursor/hooks/wiki-mem/stop.sh",
+        "agent-setup/cursor/rules/wiki-agent.mdc",
+        "agent-setup/docs/components.md",
+        "agent-setup/docs/wiki-skill-install.md",
+        "agent-setup/manifest/components.yaml"
+      ],
+      "input_tokens": 13927,
+      "latency_ms": 149,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: .cursor/skills/wiki/SKILL.md"
+      ],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: .cursor/skills/wiki/SKILL.md"
+      ]
+    },
+    "b1_engine": {
+      "engine_requested": "auto",
+      "karpathy_wiki_dir": "/opt/karpathyWiki",
+      "karpathy_wiki_sha_expected": "cd3cf08",
+      "wiki_engine": "fixtures/evolveloop-wiki-vault",
+      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
+      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
     }
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
-    "baseline_id": "v22-graphify-b3-2026-10-22",
-    "run_id": "V22G-H18-B3-1cc82302ace6",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H18-B3-948757e90c58",
     "arm": "B3",
     "task_id": "H18",
-    "timestamp": "2026-10-22T01:55:17.636884+00:00",
-    "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+    "split": "H07_H18_dev",
+    "timestamp": "2026-10-22T02:04:39.830237+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -1533,7 +3276,7 @@
         "orchestrator/src/policies/policy-engine.ts"
       ],
       "input_tokens": 17069,
-      "latency_ms": 789,
+      "latency_ms": 773,
       "recall": 0.0,
       "recall_notes": [
         "miss path not read: .cursor/skills/wiki/SKILL.md"
@@ -1547,17 +3290,115 @@
       "notes": [
         "miss path not read: .cursor/skills/wiki/SKILL.md"
       ]
+    },
+    "graphify": {
+      "cli_version": "graphify 0.9.93"
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "OFFICIAL_BASELINE",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H19-B0-90cf3c51e975",
+    "arm": "B0",
+    "task_id": "H19",
+    "split": "H19_H24_test",
+    "timestamp": "2026-10-22T02:04:39.931704+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H19",
+      "arm": "B0",
+      "paths_read": [
+        "docs/adr/0001-agent-package-composition.md",
+        "docs/adr/0003-capability-authority-vs-execution-policy.md",
+        "docs/architecture-mining/targets/mcp/REPORT.md",
+        "docs/architecture/decision-review/adr-drafts/ADR-DR-0003-security-model-before-sandbox.md",
+        "docs/architecture/finalization/adrs/ADR-DR-0003-security-model-before-sandbox.md",
+        "docs/audit/ACTUAL-ARCHITECTURE.md",
+        "docs/audit/DOCUMENTATION-DRIFT.md",
+        "docs/audit/DUPLICATION-ANALYSIS.md",
+        "docs/audit/EVIDENCE-CATALOG.md",
+        "docs/audit/EXECUTION-TRACES.md",
+        "docs/audit/EXPERIMENT-READINESS.md",
+        "docs/audit/FINAL-STATE-MODEL.md",
+        "docs/audit/FRAGILE-ALREADY-PRESENT.md",
+        "docs/audit/IMPLEMENTATION-AUDIT-EXECUTIVE.md",
+        "docs/audit/IMPLEMENTATION-GAPS.md",
+        "docs/audit/IMPLEMENTATION-MATRIX.yaml",
+        "docs/audit/RESEARCH-RECONCILIATION.md",
+        "docs/execution-replay-model.md"
+      ],
+      "input_tokens": 18509,
+      "latency_ms": 101,
+      "recall": 1.0,
+      "recall_notes": [],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H19-B1-1b6eb1efc9bd",
+    "arm": "B1",
+    "task_id": "H19",
+    "split": "H19_H24_test",
+    "timestamp": "2026-10-22T02:04:40.032444+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H19",
+      "arm": "B1",
+      "paths_read": [
+        "orchestrator/src/knowledge/backend/resolve.ts",
+        "docs/adr/0002-capability-model-deterministic-providers.md",
+        "docs/adr/0003-capability-authority-vs-execution-policy.md",
+        "docs/internal/historical/audits/IMPLEMENTATION-STATUS.md",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/GOAL-005d-recall-report.md",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-held-out-frozen.json"
+      ],
+      "input_tokens": 7508,
+      "latency_ms": 100,
+      "recall": 1.0,
+      "recall_notes": [],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    },
+    "b1_engine": {
+      "engine_requested": "auto",
+      "karpathy_wiki_dir": "/opt/karpathyWiki",
+      "karpathy_wiki_sha_expected": "cd3cf08",
+      "wiki_engine": "fixtures/evolveloop-wiki-vault",
+      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
+      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
     }
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
-    "baseline_id": "v22-graphify-b3-2026-10-22",
-    "run_id": "V22G-H19-B3-86bb77556762",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H19-B3-c3b5e0901208",
     "arm": "B3",
     "task_id": "H19",
-    "timestamp": "2026-10-22T01:55:18.347078+00:00",
-    "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+    "split": "H19_H24_test",
+    "timestamp": "2026-10-22T02:04:40.740155+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -1583,7 +3424,7 @@
         "orchestrator/src/evidence/builders.ts"
       ],
       "input_tokens": 16751,
-      "latency_ms": 709,
+      "latency_ms": 707,
       "recall": 1.0,
       "recall_notes": [],
       "graphify_exit": 0,
@@ -1593,17 +3434,109 @@
       "pass": true,
       "recall": 1.0,
       "notes": []
+    },
+    "graphify": {
+      "cli_version": "graphify 0.9.93"
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "OFFICIAL_BASELINE",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H20-B0-756127149737",
+    "arm": "B0",
+    "task_id": "H20",
+    "split": "H19_H24_test",
+    "timestamp": "2026-10-22T02:04:40.795775+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H20",
+      "arm": "B0",
+      "paths_read": [
+        "docs/architecture/v2.2/CONSOLIDATION-REPORT.md",
+        "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+        "docs/architecture/v2.2/TRACEABILITY-MATRIX.md",
+        "docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md"
+      ],
+      "input_tokens": 11378,
+      "latency_ms": 55,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: orchestrator/src/knowledge/truth-source/fence.ts"
+      ],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: orchestrator/src/knowledge/truth-source/fence.ts"
+      ]
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H20-B1-85ed95f05b09",
+    "arm": "B1",
+    "task_id": "H20",
+    "split": "H19_H24_test",
+    "timestamp": "2026-10-22T02:04:40.950394+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H20",
+      "arm": "B1",
+      "paths_read": [
+        "orchestrator/src/knowledge/backend/resolve.ts",
+        "docs/architecture/v2.2/CONSOLIDATION-REPORT.md",
+        "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+        "docs/architecture/v2.2/TRACEABILITY-MATRIX.md",
+        "docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/GOAL-005d-recall-report.md"
+      ],
+      "input_tokens": 13931,
+      "latency_ms": 154,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: orchestrator/src/knowledge/truth-source/fence.ts"
+      ],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: orchestrator/src/knowledge/truth-source/fence.ts"
+      ]
+    },
+    "b1_engine": {
+      "engine_requested": "auto",
+      "karpathy_wiki_dir": "/opt/karpathyWiki",
+      "karpathy_wiki_sha_expected": "cd3cf08",
+      "wiki_engine": "fixtures/evolveloop-wiki-vault",
+      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
+      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
     }
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
-    "baseline_id": "v22-graphify-b3-2026-10-22",
-    "run_id": "V22G-H20-B3-66f0c28392a3",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H20-B3-a88d1d205b89",
     "arm": "B3",
     "task_id": "H20",
-    "timestamp": "2026-10-22T01:55:19.120020+00:00",
-    "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+    "split": "H19_H24_test",
+    "timestamp": "2026-10-22T02:04:41.677353+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -1682,7 +3615,7 @@
         "orchestrator/src/knowledge/backend/resolve.ts"
       ],
       "input_tokens": 20112,
-      "latency_ms": 772,
+      "latency_ms": 726,
       "recall": 1.0,
       "recall_notes": [],
       "graphify_exit": 0,
@@ -1692,17 +3625,128 @@
       "pass": true,
       "recall": 1.0,
       "notes": []
+    },
+    "graphify": {
+      "cli_version": "graphify 0.9.93"
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "OFFICIAL_BASELINE",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H21-B0-5af0600881dc",
+    "arm": "B0",
+    "task_id": "H21",
+    "split": "H19_H24_test",
+    "timestamp": "2026-10-22T02:04:41.836565+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H21",
+      "arm": "B0",
+      "paths_read": [
+        "AGENT.md",
+        "CHANGELOG.md",
+        "GLOBAL-SETUP.md",
+        "README.md",
+        "agent-setup/cursor/commands/evolve.md",
+        "docs/CEO-controller.md",
+        "docs/adr/0005-hybrid-retrieval-degraded-mode.md",
+        "docs/adr/0010-public-core-vs-gaabtype-profile.md",
+        "docs/adr/0011-evolve-alias.md",
+        "docs/adr/0013-context-ownership-working-context.md",
+        "docs/architecture/evolution/EVOLVELOOP-IMPLEMENTATION-REPORT.md",
+        "docs/architecture/evolution/EVOLVELOOP-STATUS.yaml",
+        "docs/architecture/evolution/OPEN-QUESTIONS.yaml",
+        "docs/architecture/evolveloopt/EVALS.md",
+        "docs/architecture/evolveloopt/LONGITUDINAL-STATE-RECONCILIATION.md",
+        "docs/architecture/evolveloopt/LONGITUDINAL-STATE-RECONCILIATION.yaml",
+        "docs/architecture/evolveloopt/LONGITUDINAL-STATUS.yaml",
+        "docs/architecture/evolveloopt/SCOPE-RUNTIME.md",
+        "docs/architecture/evolveloopt/final/CLAIM-VERIFICATION.yaml",
+        "docs/architecture/evolveloopt/final/EVOLVELOOP-FINAL-OPERATIONALIZATION-REPORT.md",
+        "docs/architecture/evolveloopt/final/FINAL-AUDIT-MATRIX.yaml",
+        "docs/architecture/evolveloopt/final/FINAL-START-STATE.md",
+        "docs/architecture/evolveloopt/final/FINAL-START-STATE.yaml",
+        "docs/architecture/evolveloopt/final/FINAL-STATUS.yaml",
+        "docs/architecture/evolveloopt/final/FINDINGS.yaml",
+        "docs/architecture/evolveloopt/final/TRACEABILITY.yaml",
+        "docs/architecture/evolveloopt/live/ARCHITECTURE.md",
+        "docs/architecture/evolveloopt/live/CLAIM-VERIFICATION.yaml",
+        "docs/architecture/evolveloopt/live/EVOLVELOOP-LIVE-INTEGRATION-REPORT.md",
+        "docs/architecture/evolveloopt/live/FINDINGS.yaml",
+        "docs/architecture/evolveloopt/live/LIVE-STATUS.yaml",
+        "docs/architecture/evolveloopt/live/TRACEABILITY.yaml"
+      ],
+      "input_tokens": 21308,
+      "latency_ms": 158,
+      "recall": 1.0,
+      "recall_notes": [],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H21-B1-2aedb4038081",
+    "arm": "B1",
+    "task_id": "H21",
+    "split": "H19_H24_test",
+    "timestamp": "2026-10-22T02:04:41.882217+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H21",
+      "arm": "B1",
+      "paths_read": [
+        "orchestrator/src/knowledge/backend/resolve.ts"
+      ],
+      "input_tokens": 362,
+      "latency_ms": 45,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: docs/adr/0011-evolve-alias.md"
+      ],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: docs/adr/0011-evolve-alias.md"
+      ]
+    },
+    "b1_engine": {
+      "engine_requested": "auto",
+      "karpathy_wiki_dir": "/opt/karpathyWiki",
+      "karpathy_wiki_sha_expected": "cd3cf08",
+      "wiki_engine": "fixtures/evolveloop-wiki-vault",
+      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
+      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
     }
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
-    "baseline_id": "v22-graphify-b3-2026-10-22",
-    "run_id": "V22G-H21-B3-b61ac394d69c",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H21-B3-0303aa5293a4",
     "arm": "B3",
     "task_id": "H21",
-    "timestamp": "2026-10-22T01:55:19.992948+00:00",
-    "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+    "split": "H19_H24_test",
+    "timestamp": "2026-10-22T02:04:42.670909+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -1771,7 +3815,7 @@
         "orchestrator/src/evolveloop/cadence.ts"
       ],
       "input_tokens": 21122,
-      "latency_ms": 872,
+      "latency_ms": 788,
       "recall": 1.0,
       "recall_notes": [],
       "graphify_exit": 0,
@@ -1781,17 +3825,110 @@
       "pass": true,
       "recall": 1.0,
       "notes": []
+    },
+    "graphify": {
+      "cli_version": "graphify 0.9.93"
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "OFFICIAL_BASELINE",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H22-B0-47420d3c876f",
+    "arm": "B0",
+    "task_id": "H22",
+    "split": "H19_H24_test",
+    "timestamp": "2026-10-22T02:04:42.742482+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H22",
+      "arm": "B0",
+      "paths_read": [
+        "docs/architecture/release-audit-2026-10-11/V2.1-FREEZE-SCOPE-REPORT.md",
+        "docs/architecture/v2.2/EVIDENCE-SECRET-CANARY.md",
+        "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+        "docs/architecture/v2.2/TRACEABILITY-MATRIX.md",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/GOAL-005d-recall-report.md"
+      ],
+      "input_tokens": 19133,
+      "latency_ms": 71,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: orchestrator/src/evidence/secret-redaction.ts"
+      ],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: orchestrator/src/evidence/secret-redaction.ts"
+      ]
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H22-B1-5df3df847ae8",
+    "arm": "B1",
+    "task_id": "H22",
+    "split": "H19_H24_test",
+    "timestamp": "2026-10-22T02:04:42.893672+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H22",
+      "arm": "B1",
+      "paths_read": [
+        "orchestrator/src/knowledge/backend/resolve.ts",
+        "docs/architecture/release-audit-2026-10-11/V2.1-FREEZE-SCOPE-REPORT.md",
+        "docs/architecture/v2.2/EVIDENCE-SECRET-CANARY.md",
+        "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+        "docs/architecture/v2.2/TRACEABILITY-MATRIX.md",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/GOAL-005d-recall-report.md"
+      ],
+      "input_tokens": 19495,
+      "latency_ms": 150,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: orchestrator/src/evidence/secret-redaction.ts"
+      ],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: orchestrator/src/evidence/secret-redaction.ts"
+      ]
+    },
+    "b1_engine": {
+      "engine_requested": "auto",
+      "karpathy_wiki_dir": "/opt/karpathyWiki",
+      "karpathy_wiki_sha_expected": "cd3cf08",
+      "wiki_engine": "fixtures/evolveloop-wiki-vault",
+      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
+      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
     }
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
-    "baseline_id": "v22-graphify-b3-2026-10-22",
-    "run_id": "V22G-H22-B3-fbdd176cb17c",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H22-B3-7159a764b8cc",
     "arm": "B3",
     "task_id": "H22",
-    "timestamp": "2026-10-22T01:55:20.729720+00:00",
-    "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+    "split": "H19_H24_test",
+    "timestamp": "2026-10-22T02:04:43.603521+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -1862,7 +3999,7 @@
         "orchestrator/src/v22/bench-pickup-fixture.ts"
       ],
       "input_tokens": 21007,
-      "latency_ms": 736,
+      "latency_ms": 709,
       "recall": 1.0,
       "recall_notes": [],
       "graphify_exit": 0,
@@ -1872,17 +4009,122 @@
       "pass": true,
       "recall": 1.0,
       "notes": []
+    },
+    "graphify": {
+      "cli_version": "graphify 0.9.93"
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "OFFICIAL_BASELINE",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H23-B0-48a874e66dc6",
+    "arm": "B0",
+    "task_id": "H23",
+    "split": "H19_H24_test",
+    "timestamp": "2026-10-22T02:04:43.709814+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H23",
+      "arm": "B0",
+      "paths_read": [
+        "docs/adr/0001-agent-package-composition.md",
+        "docs/adr/0003-capability-authority-vs-execution-policy.md",
+        "docs/architecture-mining/targets/mcp/REPORT.md",
+        "docs/architecture/decision-review/adr-drafts/ADR-DR-0003-security-model-before-sandbox.md",
+        "docs/architecture/finalization/adrs/ADR-DR-0003-security-model-before-sandbox.md",
+        "docs/audit/ACTUAL-ARCHITECTURE.md",
+        "docs/audit/DOCUMENTATION-DRIFT.md",
+        "docs/audit/DUPLICATION-ANALYSIS.md",
+        "docs/audit/EVIDENCE-CATALOG.md",
+        "docs/audit/EXECUTION-TRACES.md",
+        "docs/audit/EXPERIMENT-READINESS.md",
+        "docs/audit/FINAL-STATE-MODEL.md",
+        "docs/audit/FRAGILE-ALREADY-PRESENT.md",
+        "docs/audit/IMPLEMENTATION-AUDIT-EXECUTIVE.md",
+        "docs/audit/IMPLEMENTATION-GAPS.md",
+        "docs/audit/IMPLEMENTATION-MATRIX.yaml",
+        "docs/audit/RESEARCH-RECONCILIATION.md",
+        "docs/execution-replay-model.md",
+        "docs/internal/historical/audits/IMPLEMENTATION-STATUS.md",
+        "docs/internal/historical/audits/architecture-audit-2026-09-17.md",
+        "docs/internal/historical/audits/architecture-current.md"
+      ],
+      "input_tokens": 21564,
+      "latency_ms": 105,
+      "recall": 1.0,
+      "recall_notes": [],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H23-B1-fc58a5616542",
+    "arm": "B1",
+    "task_id": "H23",
+    "split": "H19_H24_test",
+    "timestamp": "2026-10-22T02:04:43.829629+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H23",
+      "arm": "B1",
+      "paths_read": [
+        "orchestrator/src/knowledge/backend/resolve.ts",
+        "docs/adr/0001-agent-package-composition.md",
+        "docs/adr/0002-capability-model-deterministic-providers.md",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/fixtures/synth-repo/docs/adr/0001-alpha-gateway.md",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/harness/bench_harness.py",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery/S01/B0/run-01.json",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery/all-runs.json",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery/task-set.json",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-held-out-frozen.json",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks.json"
+      ],
+      "input_tokens": 13373,
+      "latency_ms": 119,
+      "recall": 1.0,
+      "recall_notes": [],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    },
+    "b1_engine": {
+      "engine_requested": "auto",
+      "karpathy_wiki_dir": "/opt/karpathyWiki",
+      "karpathy_wiki_sha_expected": "cd3cf08",
+      "wiki_engine": "fixtures/evolveloop-wiki-vault",
+      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
+      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
     }
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
-    "baseline_id": "v22-graphify-b3-2026-10-22",
-    "run_id": "V22G-H23-B3-eabd87449866",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H23-B3-7462dc4ac36c",
     "arm": "B3",
     "task_id": "H23",
-    "timestamp": "2026-10-22T01:55:21.429425+00:00",
-    "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+    "split": "H19_H24_test",
+    "timestamp": "2026-10-22T02:04:44.510098+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -1939,7 +4181,7 @@
         ".cursor/skills/agent-authoring/references/lifecycle.md"
       ],
       "input_tokens": 18588,
-      "latency_ms": 699,
+      "latency_ms": 680,
       "recall": 1.0,
       "recall_notes": [],
       "graphify_exit": 0,
@@ -1949,17 +4191,143 @@
       "pass": true,
       "recall": 1.0,
       "notes": []
+    },
+    "graphify": {
+      "cli_version": "graphify 0.9.93"
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "OFFICIAL_BASELINE",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H24-B0-a995c1892a4e",
+    "arm": "B0",
+    "task_id": "H24",
+    "split": "H19_H24_test",
+    "timestamp": "2026-10-22T02:04:44.639576+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H24",
+      "arm": "B0",
+      "paths_read": [
+        "AGENT.md",
+        "Agents/Code-reviewer.md",
+        "Agents/Frontend-pro.md",
+        "Agents/Orquestrador-v2.md",
+        "Agents/Po-review.md",
+        "Agents/Skill-authoring.md",
+        "Agents/Tester.md",
+        "Agents/Validator.md",
+        "CHANGELOG.md",
+        "CODE_OF_CONDUCT.md",
+        "CONTRIBUTING.md",
+        "INVENTORY.md",
+        "README.md",
+        "Rules/wiki-agent.mdc",
+        "SECURITY.md",
+        "agent-setup/bootstrap.sh",
+        "agent-setup/cursor/commands/evolve.md",
+        "agent-setup/cursor/hooks/wiki-mem/mem.py",
+        "agent-setup/cursor/rules/wiki-agent.mdc",
+        "agent-setup/manifest/components.yaml",
+        "agent-setup/prompts/bootstrap-project.md",
+        "agent-setup/skills/wiki/evals/evals.json",
+        "agent-setup/skills/wiki/scripts/format_hits.py",
+        "agent-setup/src/agent_setup/backup.py",
+        "agent-setup/src/agent_setup/detect.py",
+        "agent-setup/src/agent_setup/diff.py",
+        "agent-setup/src/agent_setup/paths.py"
+      ],
+      "input_tokens": 20463,
+      "latency_ms": 129,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md"
+      ],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md"
+      ]
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H24-B1-de04b54891b0",
+    "arm": "B1",
+    "task_id": "H24",
+    "split": "H19_H24_test",
+    "timestamp": "2026-10-22T02:04:44.870165+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+    "harness": "v22-graphify-b3-harness-1.5.0",
+    "ground_harness": "v22-ground-b1-harness-1.5.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "metrics": {
+      "task_id": "H24",
+      "arm": "B1",
+      "paths_read": [
+        "orchestrator/src/knowledge/backend/resolve.ts",
+        "agent-setup/bootstrap.sh",
+        "agent-setup/install.sh",
+        "agent-setup/skills/wiki/SKILL.md",
+        "agent-setup/skills/wiki/references/ritual.md",
+        "agent-setup/skills/wiki/scripts/ground.sh",
+        "agent-setup/uninstall.sh",
+        "docs/architecture/portability/KNOWLEDGE-PERSONALIZATION-MAP.yaml",
+        "docs/architecture/prototype-gate/PROTOTYPE-GATE.yaml",
+        "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+        "docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md",
+        "docs/architecture/v2.2/scripts/bootstrap-karpathywiki-official-bench.sh",
+        "docs/architecture/v2.2/scripts/generate-evolveloop-wiki-knowledge.sh",
+        "docs/architecture/v2.2/scripts/run-graphify-b3-bench.sh",
+        "docs/architecture/v2.2/scripts/sync-carpaccio-to-vault.sh",
+        "docs/architecture/v2.2/scripts/test-official-wiki-stale.sh",
+        "docs/architecture/v2.2/scripts/validate-v22-artifacts.sh",
+        "docs/audit/EVIDENCE-CATALOG.md",
+        "docs/internal/historical/evals/docs-evals/baseline-v2-2026-09-19/BASELINE-CHECKSUMS.sha256",
+        "docs/internal/historical/evals/docs-evals/baseline-v3-2026-09-19/BASELINE-CHECKSUMS.sha256",
+        "docs/internal/historical/evals/docs-evals/baseline-v4-2026-09-19/BASELINE-CHECKSUMS.sha256"
+      ],
+      "input_tokens": 21870,
+      "latency_ms": 230,
+      "recall": 1.0,
+      "recall_notes": [],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    },
+    "b1_engine": {
+      "engine_requested": "auto",
+      "karpathy_wiki_dir": "/opt/karpathyWiki",
+      "karpathy_wiki_sha_expected": "cd3cf08",
+      "wiki_engine": "fixtures/evolveloop-wiki-vault",
+      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
+      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
     }
   },
   {
     "experiment_id": "V22-BENCH-GRAPHIFY-B3",
     "evidence_class": "GRAPHIFY_CODE_GRAPH",
-    "baseline_id": "v22-graphify-b3-2026-10-22",
-    "run_id": "V22G-H24-B3-277125d3074e",
+    "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+    "run_id": "V22G-H24-B3-8d4609df0001",
     "arm": "B3",
     "task_id": "H24",
-    "timestamp": "2026-10-22T01:55:22.285661+00:00",
-    "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+    "split": "H19_H24_test",
+    "timestamp": "2026-10-22T02:04:45.692186+00:00",
+    "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
     "harness": "v22-graphify-b3-harness-1.5.0",
     "ground_harness": "v22-ground-b1-harness-1.5.0",
     "tokenizer": "tiktoken:cl100k_base",
@@ -2040,7 +4408,7 @@
         "orchestrator/tests/unit/cursor-skill-provider.test.ts"
       ],
       "input_tokens": 21252,
-      "latency_ms": 855,
+      "latency_ms": 821,
       "recall": 1.0,
       "recall_notes": [],
       "graphify_exit": 0,
@@ -2050,6 +4418,9 @@
       "pass": true,
       "recall": 1.0,
       "notes": []
+    },
+    "graphify": {
+      "cli_version": "graphify 0.9.93"
     }
   }
 ]

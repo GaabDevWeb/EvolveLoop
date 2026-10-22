@@ -9,35 +9,52 @@
 
 ## Contexto
 
-Medição do braço **B3** (retrieval via grafo de código Graphify OSS, AST local, sem `--wiki`/LLM/cloud) no harness V22-BENCH 1.5.0: mesmas tarefas **R01–R06**, **H07–H18**, **H19–H24**; orçamento **45 paths / 22k tokens**; recall **por arquivo** (`V22_ANCHOR_RECALL=file`). Raw: `experiments/V22-BENCH/raw/battery-b3-graphify/`. Grafo: `graphifyy` **0.9.93**, `graphify update . --no-cluster` → `graphify-out/graph.json` (gitignored).
+Medição **coerente** com `v22-ground-b1-harness-1.5.0`: recall **por arquivo**, orçamento **45 paths / 22 000 tokens**, `V22_ANCHOR_RECALL=file`. **B0** e **B3** medidos na mesma VM/passagem; raw em `experiments/V22-BENCH/raw/battery-b3-graphify/`.
 
-Comparação **B0/B1** usa manifests congelados (B1 held-out **PR #10** / motor oficial: `raw/battery-held-out-real-engine/`; H19–H24: `raw/battery-held-out-real-engine-005e-hybrid-test/`; R01–R06 B1 pack: `raw/battery-real/battery-summary.json`).
+**Graphify (pacote):** PyPI **`graphifyy`** 0.9.93 → binário CLI `graphify`; upstream **[Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify)** (Apache-2.0); site **[graphify.com](https://graphify.com)**. Modo bench: `graphify update . --no-cluster` (AST local, sem `--wiki`/LLM/cloud).
 
-## Números (rollup, tree `9b647f8`)
+**B1 held-out:** motor karpathyWiki **ausente** nesta VM → braços **B1** em H07–H24 vêm de runs **congelados** (mesmo harness 1.5.0, linhagem PR #10): `005e-hybrid-dev` (H07–H18), `005e-hybrid-test` (H19–H24). **R01–R06:** B1 **PROVISIONAL_CURATED_PACK** = **CIRCULAR** — **fora** da comparação (só B0 vs B3).
 
-| Braço | Mediana paths | Mediana tokens in | Recall=1 (tarefas / 24) | Notas |
-|-------|---------------|-------------------|-------------------------|-------|
-| **B0** (manifest) | ~45 (cap) | alto (40k–80k em R) | misto | `OFFICIAL_BASELINE` |
-| **B1** (manifest) | 3–16 | 0.4k–20k | maior no pack R (circular) | wiki / pack |
-| **B3** (medido) | **9** | **~20 641** | **17 / 24** | `GRAPHIFY_CODE_GRAPH` |
+## Tabelas por split (contagens exatas)
 
-B3 **supera B0 em recall** em várias held-out (ex.: H08–H12, H19–H24) onde B0=0; **não** supera B1 no pack **R01–R06** (B1 recall 1.0 com paths mínimos). Latência B3 ~**0,7 s**/tarefa (query + leitura). Critério comunitário “B3 vence B0 no cenário 5 **e** não perde para B1 em tokens” **não** satisfeito globalmente (tokens B3 ≫ B1 pack; recall R01–R03 = 0).
+### R01–R06 — B0 vs B3 (B1 excluído)
+
+| Braço | Tarefas | recall=1 | Mediana paths | Mediana tokens | Mediana latência (ms) |
+|-------|--------:|---------:|--------------:|---------------:|----------------------:|
+| **B0** | 6 | **0** | 19 | 21 338 | 114 |
+| **B3** | 6 | **2** | 8 | 20 545 | 806 |
+| B1 (CIRCULAR) | 6 | — | — | — | — |
+
+### H07–H18 (dev) — B0 vs B1 (frozen hybrid) vs B3
+
+| Braço | Tarefas | recall=1 | Mediana paths | Mediana tokens | Mediana latência (ms) |
+|-------|--------:|---------:|--------------:|---------------:|----------------------:|
+| **B0** | 12 | **5** | 18,5 | 21 370 | 94 |
+| **B1** | 12 | **4** | 20,5 | 15 036 | 155 |
+| **B3** | 12 | **9** | 9 | 20 661 | 750 |
+
+Fonte B1: `raw/battery-held-out-real-engine-005e-hybrid-dev/` (frozen).
+
+### H19–H24 (teste) — B0 vs B1 (frozen hybrid) vs B3
+
+| Braço | Tarefas | recall=1 | Mediana paths | Mediana tokens | Mediana latência (ms) |
+|-------|--------:|---------:|--------------:|---------------:|----------------------:|
+| **B0** | 6 | **3** | 19,5 | 19 798 | 103 |
+| **B1** | 6 | **3** | 6 | 13 652 | 135 |
+| **B3** | 6 | **6** | 10,5 | 20 560 | 718 |
+
+Fonte B1: `raw/battery-held-out-real-engine-005e-hybrid-test/` (frozen).
 
 ## Decisão
 
-**INTEGRAR atrás de `EVOLVELOOP_GRAPHIFY` (default OFF)** com adapter real (`orchestrator/src/v22/graphify-adapter.ts`) chamando o CLI quando `graphify-out/graph.json` existe; **não** adicionar `"graphify"` a `KnowledgeBackendId`. Graphify é **complemento opcional** de contexto de código no `run-engine`, não substituto de wiki/B1.
-
-**Não descartar** o experimento: evidência útil em held-out vs B0; manter bench reprodutível (`run-graphify-b3-bench.sh`).
+**INTEGRAR atrás de `EVOLVELOOP_GRAPHIFY` (default OFF)** — adapter CLI real; **não** `KnowledgeBackendId`. B3 melhora recall vs B0 em held-out/teste nesta medição, mas **não** substitui B1 wiki nem vence em tokens/latência; R01–R06 ainda fracos vs anchors.
 
 ## Riscos
 
-- **Build/size:** grafo monorepo ~6,9 MB JSON; rebuild em CI custoso — opt-in.
-- **Contaminação:** nós podem apontar para paths sob `docs/internal/.../fixtures/` se presentes no grafo; harness filtra leitura, mas o grafo pode incluir ruído.
-- **Latência:** query Graphify por spawn não é gratuita.
-- **Host Cursor:** paths do grafo não substituem report de `context_retrieval` do IDE.
+- Grafo grande + ~0,7–0,8 s/tarefa B3; rebuild opt-in.
+- B1 held-out depende de motor oficial fora da VM para replicar frozen.
+- Contaminação possível no grafo (paths de eval); filtro na leitura.
 
 ## Validação
 
-- `graphify_b3_harness.py` + raw commitado
-- `orchestrator` testes unitários/integração GOAL-008
-- `npm test`, `test:bench`, `validate-v22-artifacts.sh`
+`graphify_b3_harness.py`, `npm test`, `test:bench`, `validate-v22-artifacts.sh`.

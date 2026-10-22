@@ -1,0 +1,48 @@
+{
+  "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+  "evidence_class": "OFFICIAL_BASELINE",
+  "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+  "run_id": "V22G-R03-B0-1f1c3aaf4f23",
+  "arm": "B0",
+  "task_id": "R03",
+  "split": "R01_R06",
+  "timestamp": "2026-10-22T02:05:52.538551+00:00",
+  "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+  "harness": "v22-graphify-b3-harness-1.5.0",
+  "ground_harness": "v22-ground-b1-harness-1.5.0",
+  "tokenizer": "tiktoken:cl100k_base",
+  "metrics": {
+    "task_id": "R03",
+    "arm": "B0",
+    "paths_read": [
+      "docs/adr/0005-hybrid-retrieval-degraded-mode.md",
+      "docs/architecture/knowledge/CORE-PERSONAL-BOUNDARY-V2.yaml",
+      "docs/architecture/knowledge/KNOWLEDGE-ARCHITECTURE.md",
+      "docs/architecture/knowledge/KNOWLEDGE-BACKEND-CONTRACT.md",
+      "docs/architecture/knowledge/KNOWLEDGE-BACKEND-MANIFEST.yaml",
+      "docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md",
+      "docs/architecture/publication/STRUCTURAL-PRECHECK-MAIN.yaml",
+      "docs/architecture/v2.2/EVIDENCE-SECRET-CANARY.md",
+      "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+      "docs/architecture/v2.2/TECH-DECISIONS-MATRIX.md",
+      "docs/architecture/v2.2/TRACEABILITY-MATRIX.md",
+      "docs/architecture/v2.2/scripts/generate-evolveloop-wiki-knowledge.sh",
+      "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/GOAL-005-review-report.md"
+    ],
+    "input_tokens": 14585,
+    "latency_ms": 94,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
+    ]
+  }
+}

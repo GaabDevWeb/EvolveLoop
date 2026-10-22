@@ -1,12 +1,13 @@
 {
   "experiment_id": "V22-BENCH-GRAPHIFY-B3",
   "evidence_class": "GRAPHIFY_CODE_GRAPH",
-  "baseline_id": "v22-graphify-b3-2026-10-22",
-  "run_id": "V22G-H08-B3-77da6b4d4018",
+  "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+  "run_id": "V22G-H08-B3-73c584ffa074",
   "arm": "B3",
   "task_id": "H08",
-  "timestamp": "2026-10-22T01:55:10.375249+00:00",
-  "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+  "split": "H07_H18_dev",
+  "timestamp": "2026-10-22T02:05:57.521195+00:00",
+  "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
   "harness": "v22-graphify-b3-harness-1.5.0",
   "ground_harness": "v22-ground-b1-harness-1.5.0",
   "tokenizer": "tiktoken:cl100k_base",
@@ -80,7 +81,7 @@
       "orchestrator/src/telemetry/skill-telemetry.ts"
     ],
     "input_tokens": 21114,
-    "latency_ms": 795,
+    "latency_ms": 788,
     "recall": 1.0,
     "recall_notes": [
       "anchor line drift (file hit): orchestrator/src/knowledge/backend/wiki-backend.ts:183"
@@ -94,5 +95,8 @@
     "notes": [
       "anchor line drift (file hit): orchestrator/src/knowledge/backend/wiki-backend.ts:183"
     ]
+  },
+  "graphify": {
+    "cli_version": "graphify 0.9.93"
   }
 }

@@ -1,0 +1,54 @@
+{
+  "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+  "evidence_class": "OFFICIAL_BASELINE",
+  "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+  "run_id": "V22G-R02-B0-ef18e934d358",
+  "arm": "B0",
+  "task_id": "R02",
+  "split": "R01_R06",
+  "timestamp": "2026-10-22T02:05:51.778234+00:00",
+  "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+  "harness": "v22-graphify-b3-harness-1.5.0",
+  "ground_harness": "v22-ground-b1-harness-1.5.0",
+  "tokenizer": "tiktoken:cl100k_base",
+  "metrics": {
+    "task_id": "R02",
+    "arm": "B0",
+    "paths_read": [
+      "CHANGELOG.md",
+      "docs/CEO-controller.md",
+      "docs/adr/0013-context-ownership-working-context.md",
+      "docs/architecture/decision-review/ARCHITECTURE-DECISION-REVIEW.md",
+      "docs/architecture/decision-review/DECISION-LEDGER.md",
+      "docs/architecture/decision-review/DECISION-MATRIX.yaml",
+      "docs/architecture/decision-review/FUTURE-EXPERIMENTS.yaml",
+      "docs/architecture/decision-review/TRACEABILITY.md",
+      "docs/architecture/decision-review/adr-drafts/ADR-DR-0001-keep-job-path-resume.md",
+      "docs/architecture/evolution/FINAL-STATE.yaml",
+      "docs/architecture/evolution/UNSUPPORTED-CLAIMS.yaml",
+      "docs/architecture/finalization/adrs/ADR-DR-0001-keep-job-path-resume.md",
+      "docs/architecture/finalization/adrs/ADR-DR-0003-security-model-before-sandbox.md",
+      "docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md",
+      "docs/architecture/finalization/prototypes/PT-002-os-kill-job-resume.md",
+      "docs/architecture/gate/DECISION-GATE.yaml",
+      "docs/architecture/gate/FUTURE-EXPERIMENT-GATE.yaml",
+      "docs/architecture/prototype-gate/PREFLIGHT-EVIDENCE.yaml",
+      "docs/architecture/prototype-gate/PROTOTYPE-GATE.yaml"
+    ],
+    "input_tokens": 21790,
+    "latency_ms": 104,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: orchestrator/src/jobs/checkpoint.ts"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: orchestrator/src/jobs/checkpoint.ts"
+    ]
+  }
+}

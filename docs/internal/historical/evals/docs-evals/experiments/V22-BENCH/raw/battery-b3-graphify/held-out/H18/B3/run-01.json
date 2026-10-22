@@ -1,12 +1,13 @@
 {
   "experiment_id": "V22-BENCH-GRAPHIFY-B3",
   "evidence_class": "GRAPHIFY_CODE_GRAPH",
-  "baseline_id": "v22-graphify-b3-2026-10-22",
-  "run_id": "V22G-H18-B3-1cc82302ace6",
+  "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+  "run_id": "V22G-H18-B3-948757e90c58",
   "arm": "B3",
   "task_id": "H18",
-  "timestamp": "2026-10-22T01:55:17.636884+00:00",
-  "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+  "split": "H07_H18_dev",
+  "timestamp": "2026-10-22T02:06:06.053051+00:00",
+  "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
   "harness": "v22-graphify-b3-harness-1.5.0",
   "ground_harness": "v22-ground-b1-harness-1.5.0",
   "tokenizer": "tiktoken:cl100k_base",
@@ -57,7 +58,7 @@
       "orchestrator/src/policies/policy-engine.ts"
     ],
     "input_tokens": 17069,
-    "latency_ms": 789,
+    "latency_ms": 790,
     "recall": 0.0,
     "recall_notes": [
       "miss path not read: .cursor/skills/wiki/SKILL.md"
@@ -71,5 +72,8 @@
     "notes": [
       "miss path not read: .cursor/skills/wiki/SKILL.md"
     ]
+  },
+  "graphify": {
+    "cli_version": "graphify 0.9.93"
   }
 }

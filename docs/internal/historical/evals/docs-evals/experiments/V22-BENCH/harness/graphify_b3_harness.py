@@ -28,6 +28,9 @@ from ground_b1_harness import (  # type: ignore[import-not-found]
     median,
     read_rel,
     repo_root,
+    run_b0,
+    run_b1_ground,
+    resolve_b1_class_and_env,
 )
 
 EXP_DIR = Path(__file__).resolve().parents[1]
@@ -35,11 +38,13 @@ TASKS_REAL = EXP_DIR / "tasks-real-frozen.json"
 TASKS_HELD = EXP_DIR / "tasks-held-out-frozen.json"
 HARNESS_VERSION = "v22-graphify-b3-harness-1.5.0"
 
-B0_MANIFEST_REAL = EXP_DIR / "raw" / "battery-real" / "battery-summary.json"
-B1_MANIFEST_HELD_H07 = EXP_DIR / "raw" / "battery-held-out-real-engine" / "held-out-summary.json"
-B1_MANIFEST_HELD_H19 = (
-    EXP_DIR / "raw" / "battery-held-out-real-engine-005e-hybrid-test" / "held-out-summary.json"
-)
+# Held-out B1 fallback when official motor cannot run (documented in summary).
+B1_FROZEN_H07_H18 = EXP_DIR / "raw" / "battery-held-out-real-engine-005e-hybrid-dev"
+B1_FROZEN_H19_H24 = EXP_DIR / "raw" / "battery-held-out-real-engine-005e-hybrid-test"
+
+GRAPHIFY_PIP_PACKAGE = "graphifyy"
+GRAPHIFY_UPSTREAM = "https://github.com/Graphify-Labs/graphify"
+GRAPHIFY_VENDOR_SITE = "https://graphify.com"
 
 NODE_SRC_RE = re.compile(r"\bsrc=([^\s\]]+)")
 GRAPHIFY_OUT = "graphify-out"
@@ -196,52 +201,141 @@ def load_tasks() -> list[dict[str, Any]]:
     return tasks
 
 
-def load_baseline_aggregate(task_id: str, arm: str) -> dict[str, Any] | None:
-    key = f"{task_id}:{arm}"
+def task_split(task_id: str) -> str:
     if task_id.startswith("R"):
-        if not B0_MANIFEST_REAL.is_file():
-            return None
-        ag = json.loads(B0_MANIFEST_REAL.read_text(encoding="utf-8")).get("aggregates", {})
-        return ag.get(key)
+        return "R01_R06"
     n = int(task_id[1:])
     if 7 <= n <= 18:
-        manifest = B1_MANIFEST_HELD_H07
+        return "H07_H18_dev"
+    if 19 <= n <= 24:
+        return "H19_H24_test"
+    return "other"
+
+
+def frozen_b1_run_path(task_id: str) -> Path | None:
+    n = int(task_id[1:])
+    if 7 <= n <= 18:
+        base = B1_FROZEN_H07_H18
     elif 19 <= n <= 24:
-        manifest = B1_MANIFEST_HELD_H19
+        base = B1_FROZEN_H19_H24
     else:
         return None
-    if not manifest.is_file():
+    p = base / "held-out" / task_id / "B1" / "run-01.json"
+    return p if p.is_file() else None
+
+
+def metrics_from_frozen_b1(task_id: str) -> dict[str, Any] | None:
+    p = frozen_b1_run_path(task_id)
+    if not p:
         return None
-    ag = json.loads(manifest.read_text(encoding="utf-8")).get("aggregates", {})
-    return ag.get(key)
-
-
-def comparison_row(task_id: str, b3: RunResult) -> dict[str, Any]:
-    b0 = load_baseline_aggregate(task_id, "B0")
-    b1 = load_baseline_aggregate(task_id, "B1")
-    b1_source = None
-    if task_id.startswith("R"):
-        b1_source = str(B0_MANIFEST_REAL.relative_to(EXP_DIR))
-    elif task_id[1:].isdigit():
-        n = int(task_id[1:])
-        if 7 <= n <= 18:
-            b1_source = str(B1_MANIFEST_HELD_H07.relative_to(EXP_DIR))
-        elif 19 <= n <= 24:
-            b1_source = str(B1_MANIFEST_HELD_H19.relative_to(EXP_DIR))
+    rec = json.loads(p.read_text(encoding="utf-8"))
+    m = rec["metrics"]
     return {
         "task_id": task_id,
-        "B0_recall": b0.get("recall") if b0 else None,
-        "B0_paths": b0.get("median_paths") if b0 else None,
-        "B0_tokens": b0.get("median_input_tokens") if b0 else None,
-        "B1_recall": b1.get("recall") if b1 else None,
-        "B1_paths": b1.get("median_paths") if b1 else None,
-        "B1_tokens": b1.get("median_input_tokens") if b1 else None,
-        "B1_manifest_source": b1_source,
-        "B3_recall": b3.recall,
-        "B3_paths": len(b3.paths_read),
-        "B3_tokens": b3.input_tokens,
-        "B3_latency_ms": b3.latency_ms,
+        "split": task_split(task_id),
+        "arm": "B1",
+        "recall": float(m["recall"]),
+        "paths": len(m["paths_read"]),
+        "tokens": int(m["input_tokens"]),
+        "latency_ms": int(m["latency_ms"]),
+        "source": str(p.relative_to(EXP_DIR)),
+        "harness": rec.get("harness"),
     }
+
+
+def metrics_row(task_id: str, arm: str, res: RunResult) -> dict[str, Any]:
+    return {
+        "task_id": task_id,
+        "split": task_split(task_id),
+        "arm": arm,
+        "recall": res.recall,
+        "paths": len(res.paths_read),
+        "tokens": res.input_tokens,
+        "latency_ms": res.latency_ms,
+    }
+
+
+def summarize_arm(rows: list[dict[str, Any]], arm: str) -> dict[str, Any]:
+    subset = [r for r in rows if r["arm"] == arm]
+    if not subset:
+        return {"tasks": 0, "recall_eq_1": 0, "median_paths": 0.0, "median_tokens": 0.0, "median_latency_ms": 0.0}
+    recalls = [float(r["recall"]) for r in subset]
+    return {
+        "tasks": len(subset),
+        "recall_eq_1": sum(1 for x in recalls if x >= 1.0),
+        "median_paths": median([float(r["paths"]) for r in subset]),
+        "median_tokens": median([float(r["tokens"]) for r in subset]),
+        "median_latency_ms": median([float(r["latency_ms"]) for r in subset]),
+    }
+
+
+def build_split_tables(flat: list[dict[str, Any]]) -> dict[str, Any]:
+    splits = {
+        "R01_R06": {
+            "label": "real repo tasks (no B1 — curated pack is CIRCULAR)",
+            "compare_arms": ["B0", "B3"],
+            "b1_note": "PROVISIONAL_CURATED_PACK excluded from comparison",
+        },
+        "H07_H18_dev": {
+            "label": "held-out dev (independent reviewer)",
+            "compare_arms": ["B0", "B1", "B3"],
+        },
+        "H19_H24_test": {
+            "label": "held-out test (recall holdout)",
+            "compare_arms": ["B0", "B1", "B3"],
+        },
+    }
+    out: dict[str, Any] = {}
+    for key, meta in splits.items():
+        rows = [r for r in flat if r["split"] == key]
+        arms = {a: summarize_arm(rows, a) for a in meta["compare_arms"]}
+        if key == "R01_R06":
+            arms["B1_CIRCULAR"] = {
+                "tasks": 6,
+                "recall_eq_1": "N/A",
+                "median_paths": "N/A",
+                "median_tokens": "N/A",
+                "median_latency_ms": "N/A",
+                "evidence_class": "PROVISIONAL_CURATED_PACK",
+                "excluded": True,
+            }
+        out[key] = {**meta, "by_arm": arms, "per_task": rows}
+    return out
+
+
+def write_arm_run(
+    out_dir: Path,
+    suite: str,
+    task_id: str,
+    arm: str,
+    tree_sha: str,
+    tok_label: str,
+    res: RunResult,
+    evidence_class: str,
+    extra: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    rec = {
+        "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+        "evidence_class": evidence_class,
+        "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+        "run_id": f"V22G-{task_id}-{arm}-{hashlib.sha256((tree_sha + task_id + arm).encode()).hexdigest()[:12]}",
+        "arm": arm,
+        "task_id": task_id,
+        "split": task_split(task_id),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "tree_sha": tree_sha,
+        "harness": HARNESS_VERSION,
+        "ground_harness": GROUND_HARNESS_VERSION,
+        "tokenizer": tok_label,
+        "metrics": asdict(res),
+        "verifier": {"pass": res.recall >= 1.0, "recall": res.recall, "notes": res.recall_notes},
+    }
+    if extra:
+        rec.update(extra)
+    d = out_dir / suite / task_id / arm
+    d.mkdir(parents=True, exist_ok=True)
+    (d / "run-01.json").write_text(json.dumps(rec, indent=2), encoding="utf-8")
+    return rec
 
 
 def run_battery(out_dir: Path) -> dict[str, Any]:
@@ -258,52 +352,123 @@ def run_battery(out_dir: Path) -> dict[str, Any]:
     except (subprocess.CalledProcessError, FileNotFoundError):
         cli_version = "NOT_INSTALLED"
 
+    b1_class, b1_env, b1_engine_meta = resolve_b1_class_and_env(repo)
+    b1_official_unavailable = b1_class != "OFFICIAL_WIKI_GROUND"
+    b1_fallback_note: str | None = None
+    if b1_official_unavailable:
+        b1_fallback_note = (
+            "Held-out B1 rows use frozen runs (harness 1.5.0, PR #10 lineage): "
+            f"H07–H18 → {B1_FROZEN_H07_H18.relative_to(EXP_DIR)}; "
+            f"H19–H24 → {B1_FROZEN_H19_H24.relative_to(EXP_DIR)}. "
+            "B0 and B3 measured live on this VM in the same pass."
+        )
+
     all_runs: list[dict[str, Any]] = []
-    comparison: list[dict[str, Any]] = []
+    flat_metrics: list[dict[str, Any]] = []
     for task in tasks:
-        res = run_b3(repo, task, counter)
-        rec = {
-            "experiment_id": "V22-BENCH-GRAPHIFY-B3",
-            "evidence_class": "GRAPHIFY_CODE_GRAPH",
-            "baseline_id": "v22-graphify-b3-2026-10-22",
-            "run_id": f"V22G-{task['id']}-B3-{hashlib.sha256((tree_sha + task['id'] + 'B3').encode()).hexdigest()[:12]}",
-            "arm": "B3",
-            "task_id": task["id"],
-            "timestamp": datetime.now(timezone.utc).isoformat(),
-            "tree_sha": tree_sha,
-            "harness": HARNESS_VERSION,
-            "ground_harness": GROUND_HARNESS_VERSION,
-            "tokenizer": tok_label,
-            "metrics": asdict(res),
-            "verifier": {"pass": res.recall >= 1.0, "recall": res.recall, "notes": res.recall_notes},
-        }
-        all_runs.append(rec)
-        comparison.append(comparison_row(task["id"], res))
-        suite = "real" if task["id"].startswith("R") else "held-out"
-        d = out_dir / suite / task["id"] / "B3"
-        d.mkdir(parents=True, exist_ok=True)
-        (d / "run-01.json").write_text(json.dumps(rec, indent=2), encoding="utf-8")
+        tid = task["id"]
+        suite = "real" if tid.startswith("R") else "held-out"
+        b0 = run_b0(repo, task, counter)
+        rec_b0 = write_arm_run(
+            out_dir,
+            suite,
+            tid,
+            "B0",
+            tree_sha,
+            tok_label,
+            b0,
+            "OFFICIAL_BASELINE",
+        )
+        all_runs.append(rec_b0)
+        flat_metrics.append(metrics_row(tid, "B0", b0))
+
+        if not tid.startswith("R"):
+            frozen_b1 = metrics_from_frozen_b1(tid) if b1_official_unavailable else None
+            if frozen_b1:
+                flat_metrics.append(frozen_b1)
+                rec_b1 = {
+                    "arm": "B1",
+                    "task_id": tid,
+                    "evidence_class": "OFFICIAL_WIKI_GROUND",
+                    "frozen_reference": frozen_b1["source"],
+                    "harness": frozen_b1.get("harness"),
+                    "metrics": {
+                        "recall": frozen_b1["recall"],
+                        "paths_read": [""] * frozen_b1["paths"],
+                        "input_tokens": frozen_b1["tokens"],
+                        "latency_ms": frozen_b1["latency_ms"],
+                    },
+                    "note": "B1 from frozen PR #10 lineage (harness 1.5.0); not re-run on this VM (no karpathyWiki).",
+                }
+                all_runs.append(rec_b1)
+            else:
+                b1 = run_b1_ground(repo, task, counter, b1_env)
+                rec_b1 = write_arm_run(
+                    out_dir,
+                    suite,
+                    tid,
+                    "B1",
+                    tree_sha,
+                    tok_label,
+                    b1,
+                    b1_class,
+                    extra={"b1_engine": b1_engine_meta},
+                )
+                all_runs.append(rec_b1)
+                flat_metrics.append(metrics_row(tid, "B1", b1))
+
+        b3 = run_b3(repo, task, counter)
+        rec_b3 = write_arm_run(
+            out_dir,
+            suite,
+            tid,
+            "B3",
+            tree_sha,
+            tok_label,
+            b3,
+            "GRAPHIFY_CODE_GRAPH",
+            extra={"graphify": {"cli_version": cli_version}},
+        )
+        all_runs.append(rec_b3)
+        flat_metrics.append(metrics_row(tid, "B3", b3))
 
     aggs: dict[str, dict[str, Any]] = {}
     for r in all_runs:
         m = r["metrics"]
-        aggs[f"{r['task_id']}:B3"] = {
+        aggs[f"{r['task_id']}:{r['arm']}"] = {
             "median_paths": float(len(m["paths_read"])),
             "median_input_tokens": float(m["input_tokens"]),
             "median_latency_ms": float(m["latency_ms"]),
             "recall": m["recall"],
         }
 
-    b3_recalls = [c["B3_recall"] for c in comparison]
+    split_tables = build_split_tables(flat_metrics)
     summary = {
         "experiment": "V22-BENCH-GRAPHIFY-B3",
-        "classification_by_arm": {"B3": "GRAPHIFY_CODE_GRAPH"},
-        "baseline_id": "v22-graphify-b3-2026-10-22",
+        "classification_by_arm": {
+            "B0": "OFFICIAL_BASELINE",
+            "B1": b1_class,
+            "B3": "GRAPHIFY_CODE_GRAPH",
+        },
+        "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
         "freeze_tree_sha": tree_sha,
         "harness": HARNESS_VERSION,
+        "ground_harness": GROUND_HARNESS_VERSION,
         "anchor_recall_mode": anchor_recall_mode(),
         "bench_max_paths": bench_max_paths(),
         "bench_max_input_tokens": bench_max_input_tokens(),
+        "coherent_suite_note": (
+            "B0 and B3 (and held-out B1 when motor available) measured in one pass with "
+            "ground harness 1.5.0 budgets. R01–R06: compare B0 vs B3 only."
+        ),
+        "graphify_package": {
+            "pip_name": GRAPHIFY_PIP_PACKAGE,
+            "pip_version": cli_version.replace("graphify ", "").strip() if cli_version else None,
+            "upstream_repo": GRAPHIFY_UPSTREAM,
+            "vendor_site": GRAPHIFY_VENDOR_SITE,
+            "license": "Apache-2.0 (per upstream README)",
+            "note": "PyPI name is graphifyy; CLI binary is graphify (Graphify Labs).",
+        },
         "graphify": {
             "cli": cli,
             "cli_version": cli_version,
@@ -311,21 +476,17 @@ def run_battery(out_dir: Path) -> dict[str, Any]:
             "query_token_budget": graph_query_token_budget(),
             "mode": "local AST (--no-cluster), no --wiki, no LLM",
         },
-        "b0_b1_reference_manifests": {
-            "R01_R06": str(B0_MANIFEST_REAL.relative_to(EXP_DIR)),
-            "H07_H18_B1": str(B1_MANIFEST_HELD_H07.relative_to(EXP_DIR)),
-            "H19_H24_B1": str(B1_MANIFEST_HELD_H19.relative_to(EXP_DIR)),
-            "note": "B0/B1 not re-run in this VM; comparison pulls frozen aggregates (PR #10 lineage for held-out official wiki).",
+        "b1_measurement": {
+            "live_class": b1_class,
+            "engine_meta": b1_engine_meta,
+            "official_motor_on_vm": not b1_official_unavailable,
+            "frozen_h07_h18": str(B1_FROZEN_H07_H18.relative_to(EXP_DIR)),
+            "frozen_h19_h24": str(B1_FROZEN_H19_H24.relative_to(EXP_DIR)),
+            "note": b1_fallback_note,
         },
         "aggregates": aggs,
-        "comparison_b0_b1_b3": comparison,
-        "rollups": {
-            "B3_median_recall": median(b3_recalls),
-            "B3_median_paths": median([len(r["metrics"]["paths_read"]) for r in all_runs]),
-            "B3_median_tokens": median([r["metrics"]["input_tokens"] for r in all_runs]),
-            "B3_tasks_recall_1": sum(1 for x in b3_recalls if x >= 1.0),
-            "B3_task_count": len(b3_recalls),
-        },
+        "split_tables": split_tables,
+        "flat_metrics": flat_metrics,
         "environment": {
             "os": platform.platform(),
             "python": platform.python_version(),
@@ -335,7 +496,7 @@ def run_battery(out_dir: Path) -> dict[str, Any]:
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "b3-summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
     (out_dir / "b3-all-runs.json").write_text(json.dumps(all_runs, indent=2), encoding="utf-8")
-    (out_dir / "comparison-b0-b1-b3.json").write_text(json.dumps(comparison, indent=2), encoding="utf-8")
+    (out_dir / "comparison-b0-b1-b3.json").write_text(json.dumps(split_tables, indent=2), encoding="utf-8")
     return summary
 
 
@@ -349,7 +510,9 @@ if __name__ == "__main__":
             {
                 "verdict": "OK",
                 "graphify": s["graphify"]["cli_version"],
-                "rollups": s["rollups"],
+                "split_tables": {
+                    k: v["by_arm"] for k, v in s["split_tables"].items()
+                },
             },
             indent=2,
         )
