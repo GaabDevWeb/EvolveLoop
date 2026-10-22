@@ -1,0 +1,44 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_WIKI_GROUND",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H07-B1-9be1f8de79ef",
+  "arm": "B1",
+  "task_id": "H07",
+  "timestamp": "2026-10-22T01:38:40.782457+00:00",
+  "tree_sha": "c36ca0dff50cb24a5a180578a66bf8e4829afbcd",
+  "harness": "v22-ground-b1-harness-1.5.0",
+  "tokenizer": "PROXY:whitespace_split",
+  "metrics": {
+    "task_id": "H07",
+    "arm": "B1",
+    "paths_read": [
+      "docs/internal/historical/cursor-megabrain-rag-stack.md",
+      "docs/research/evolveloop-v2.2/07-compatibility-matrix.md",
+      ".cursor/skills/orquestrar/references/knowledge-grounding-gate.md",
+      "docs/research/evolveloop-v2.2/README.md",
+      "docs/research/evolveloop-v2.2/01-current-state-audit.md",
+      "docs/research/evolveloop-v2.2/05-knowledge-wiki-architecture.md",
+      ".cursor/skills/orquestrar/references/pda-roles.md",
+      "docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md",
+      "docs/research/evolveloop-v2.2/03-repositories-and-tools.md",
+      "docs/research/evolveloop-v2.2/04-community-findings.md",
+      "docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md"
+    ],
+    "input_tokens": 21435,
+    "latency_ms": 5699,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: profiles/default.yaml"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: profiles/default.yaml"
+    ]
+  }
+}

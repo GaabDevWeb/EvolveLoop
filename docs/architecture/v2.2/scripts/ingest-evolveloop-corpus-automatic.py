@@ -9,57 +9,19 @@ import re
 import sys
 from pathlib import Path
 
-BENCH_BLOCK = "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH"
-CORPUS_ROOTS = (
-    "docs",
-    "orchestrator/src",
-    "profiles",
-    ".cursor/skills",
+_SCRIPTS = Path(__file__).resolve().parent
+if str(_SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(_SCRIPTS))
+
+from evolveloop_recall_support import (
+    build_glossary,
+    build_index_preamble,
+    collect_corpus_files,
+    repo_root,
+    should_skip,
 )
-ALLOWED_SUFFIXES = {
-    ".md",
-    ".yaml",
-    ".yml",
-    ".ts",
-    ".tsx",
-    ".py",
-    ".json",
-    ".sh",
-}
-SKIP_DIR_NAMES = {
-    "node_modules",
-    ".git",
-    "dist",
-    ".venv",
-    "__pycache__",
-    "raw",
-}
+
 MAX_BODY_CHARS = 12_000
-MAX_FILES = 2000
-
-
-def repo_root(explicit: str | None) -> Path:
-    if explicit:
-        return Path(explicit).resolve()
-    import subprocess
-
-    out = subprocess.check_output(
-        ["git", "rev-parse", "--show-toplevel"],
-        text=True,
-    )
-    return Path(out.strip()).resolve()
-
-
-def should_skip(path: Path, repo: Path) -> bool:
-    rel = path.relative_to(repo).as_posix()
-    if BENCH_BLOCK in rel or "/V22-BENCH/" in rel:
-        return True
-    if "docs/internal/historical/evals" in rel:
-        return True
-    parts = set(path.parts)
-    if parts & SKIP_DIR_NAMES:
-        return True
-    return path.suffix.lower() not in ALLOWED_SUFFIXES
 
 
 def slugify(rel: str) -> str:
@@ -82,9 +44,28 @@ def keywords_from_text(text: str) -> list[str]:
     return out
 
 
+def sectionize_body(rel: str, body: str) -> str:
+    """Prefer chunk boundaries at markdown headings (motor chunker sees ## lines)."""
+    if not rel.endswith(".md"):
+        return body[:MAX_BODY_CHARS]
+    parts = re.split(r"(?=^#{1,3}\s+)", body, flags=re.MULTILINE)
+    if len(parts) <= 1:
+        return body[:MAX_BODY_CHARS]
+    out: list[str] = []
+    total = 0
+    for part in parts:
+        if total + len(part) > MAX_BODY_CHARS:
+            break
+        out.append(part)
+        total += len(part)
+    return "".join(out) if out else body[:MAX_BODY_CHARS]
+
+
 def write_page(dest: Path, rel: str, body: str) -> None:
     title = rel.split("/")[-1]
-    kw = keywords_from_text(body)
+    section_body = sectionize_body(rel, body)
+    preamble = build_index_preamble(rel, section_body)
+    kw = keywords_from_text(preamble + section_body)
     fm = [
         "---",
         f"title: {title}",
@@ -96,27 +77,11 @@ def write_page(dest: Path, rel: str, body: str) -> None:
         "",
         f"# Auto-ingested: {rel}",
         "",
-        body[:MAX_BODY_CHARS],
+        preamble,
+        section_body,
         "",
     ]
     dest.write_text("\n".join(fm), encoding="utf-8")
-
-
-def collect_files(repo: Path) -> list[Path]:
-    found: list[Path] = []
-    for root_name in CORPUS_ROOTS:
-        base = repo / root_name
-        if not base.exists():
-            continue
-        for p in sorted(base.rglob("*")):
-            if not p.is_file():
-                continue
-            if should_skip(p, repo):
-                continue
-            found.append(p)
-            if len(found) >= MAX_FILES:
-                return found
-    return found
 
 
 def main() -> int:
@@ -152,7 +117,7 @@ def main() -> int:
         if old.is_file():
             old.unlink()
 
-    files = collect_files(repo)
+    files = collect_corpus_files(repo)
     manifest: list[dict[str, str]] = []
     for fp in files:
         rel = fp.relative_to(repo).as_posix()
@@ -167,8 +132,9 @@ def main() -> int:
             }
         )
 
-    log_path = wiki / ".data" / "evolveloop-autogen-manifest.json"
-    log_path.parent.mkdir(parents=True, exist_ok=True)
+    data_dir = wiki / ".data"
+    data_dir.mkdir(parents=True, exist_ok=True)
+    log_path = data_dir / "evolveloop-autogen-manifest.json"
     log_path.write_text(
         json.dumps(
             {
@@ -176,12 +142,16 @@ def main() -> int:
                 "repo": str(repo),
                 "pages_dir": str(pages_dir),
                 "file_count": len(manifest),
-                "bench_block_excluded": BENCH_BLOCK,
-                "files": manifest[:50],
-                "truncated_list": len(manifest) > 50,
+                "bench_block_excluded": "docs/.../V22-BENCH",
+                "files": manifest,
             },
             indent=2,
         ),
+        encoding="utf-8",
+    )
+    glossary_path = data_dir / "evolveloop-query-glossary.json"
+    glossary_path.write_text(
+        json.dumps(build_glossary(repo), indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8",
     )
     print(json.dumps({"ok": True, "ingested": len(manifest), "pages_dir": str(pages_dir)}))

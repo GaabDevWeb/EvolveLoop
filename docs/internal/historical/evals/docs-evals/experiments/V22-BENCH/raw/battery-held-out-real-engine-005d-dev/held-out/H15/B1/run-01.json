@@ -1,0 +1,69 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_WIKI_GROUND",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H15-B1-90eb7261e8aa",
+  "arm": "B1",
+  "task_id": "H15",
+  "timestamp": "2026-10-22T01:14:49.061699+00:00",
+  "tree_sha": "7eef62f816b43fcb4454e8016943f6b3d5ef5cc0",
+  "harness": "v22-ground-b1-harness-1.4.0",
+  "tokenizer": "PROXY:whitespace_split",
+  "metrics": {
+    "task_id": "H15",
+    "arm": "B1",
+    "paths_read": [
+      ".cursor/skills/po-review/SKILL.md",
+      "docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md",
+      "docs/architecture/publication/PUBLIC-EXTRACTION-PLAN.md",
+      ".cursor/skills/orquestrar/references/specs/README.md",
+      "docs/research/evolveloop-v2.2/06-token-optimization.md",
+      ".cursor/skills/orquestrar/evals/evals-v25-blind.json",
+      "docs/research/evolveloop-v2.2/README.md",
+      "docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md",
+      "docs/architecture/v2.2/scripts/generate-evolveloop-wiki-knowledge.sh",
+      "docs/research/evolveloop-v2.2/01-current-state-audit.md",
+      ".cursor/skills/planner/SKILL.md",
+      "docs/research/evolveloop-v2.2/04-community-findings.md",
+      "docs/research/CROSS-SYSTEM-ANALYSIS.md",
+      ".cursor/skills/backend/SKILL.md",
+      ".cursor/skills/orquestrar/evals/evals-v24.json",
+      "orchestrator/src/knowledge/backend/resolve.ts",
+      "AGENT.md",
+      "CHANGELOG.md",
+      "GLOBAL-SETUP.md",
+      "README.md",
+      "Rules/wiki-agent.mdc",
+      "agent-setup/bootstrap.sh",
+      "agent-setup/cursor/commands/evolve.md",
+      "agent-setup/cursor/commands/mem.md",
+      "agent-setup/cursor/hooks/wiki-mem/mem.py",
+      "agent-setup/cursor/rules/wiki-agent.mdc",
+      "agent-setup/install.sh",
+      "agent-setup/skills/wiki-mem/SKILL.md",
+      "agent-setup/skills/wiki/SKILL.md",
+      "agent-setup/skills/wiki/references/cli.md",
+      "agent-setup/skills/wiki/scripts/ground.sh",
+      "agent-setup/src/agent_setup/paths.py",
+      "docs/adr/0004-project-knowledge-contract.md",
+      "docs/adr/0005-hybrid-retrieval-degraded-mode.md",
+      "docs/adr/0012-wiki-default-knowledge-backend.md",
+      "docs/architecture/evolution/EVOLVELOOP-IMPLEMENTATION-REPORT.md"
+    ],
+    "input_tokens": 34740,
+    "latency_ms": 5791,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md"
+    ]
+  }
+}

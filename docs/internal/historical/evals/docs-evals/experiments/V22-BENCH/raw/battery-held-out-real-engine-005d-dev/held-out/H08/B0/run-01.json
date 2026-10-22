@@ -1,0 +1,49 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_BASELINE",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H08-B0-88e622f6421d",
+  "arm": "B0",
+  "task_id": "H08",
+  "timestamp": "2026-10-22T01:14:03.624808+00:00",
+  "tree_sha": "7eef62f816b43fcb4454e8016943f6b3d5ef5cc0",
+  "harness": "v22-ground-b1-harness-1.4.0",
+  "tokenizer": "PROXY:whitespace_split",
+  "metrics": {
+    "task_id": "H08",
+    "arm": "B0",
+    "paths_read": [
+      "docs/adr/0005-hybrid-retrieval-degraded-mode.md",
+      "docs/architecture/knowledge/KNOWLEDGE-ARCHITECTURE.md",
+      "docs/architecture/knowledge/KNOWLEDGE-BACKEND-CONTRACT.md",
+      "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+      "docs/architecture/v2.2/TRACEABILITY-MATRIX.md",
+      "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-held-out-frozen.json",
+      "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-real-frozen.json",
+      "docs/research/evolveloop-v2.2/01-current-state-audit.md",
+      "docs/research/evolveloop-v2.2/06-token-optimization.md",
+      "docs/research/evolveloop-v2.2/07-compatibility-matrix.md",
+      "docs/research/evolveloop-v2.2/README.md",
+      "orchestrator/src/index.ts",
+      "orchestrator/src/knowledge/backend/wiki-backend.ts",
+      "orchestrator/src/providers/deterministic/knowledge.ts",
+      "orchestrator/tests/unit/deterministic-capabilities.test.ts",
+      "orchestrator/tests/unit/knowledge-backend.test.ts"
+    ],
+    "input_tokens": 13645,
+    "latency_ms": 15,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss substring @ orchestrator/src/knowledge/backend/wiki-backend.ts:183"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss substring @ orchestrator/src/knowledge/backend/wiki-backend.ts:183"
+    ]
+  }
+}

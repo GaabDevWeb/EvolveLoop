@@ -1,0 +1,68 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_WIKI_GROUND",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H21-B1-ff2c4b64bb99",
+  "arm": "B1",
+  "task_id": "H21",
+  "timestamp": "2026-10-22T01:15:23.308877+00:00",
+  "tree_sha": "7eef62f816b43fcb4454e8016943f6b3d5ef5cc0",
+  "harness": "v22-ground-b1-harness-1.4.0",
+  "tokenizer": "PROXY:whitespace_split",
+  "metrics": {
+    "task_id": "H21",
+    "arm": "B1",
+    "paths_read": [
+      ".cursor/skills/po-review/SKILL.md",
+      "docs/architecture/publication/ALIAS-MIGRATION.yaml",
+      ".cursor/skills/orquestrar/references/specs/README.md",
+      "docs/internal/historical/MegaBrain-Ecosystem.md",
+      "docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md",
+      "docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md",
+      "docs/research/evolveloop-v2.2/07-compatibility-matrix.md",
+      "docs/research/evolveloop-v2.2/10-risks-and-open-questions.md",
+      ".cursor/skills/documentation/SKILL.md",
+      ".cursor/skills/planner/SKILL.md",
+      ".cursor/skills/testing/SKILL.md",
+      "docs/research/evolveloop-v2.2/README.md",
+      "docs/research/CROSS-INVESTIGATION-REVIEW.md",
+      ".cursor/skills/orquestrar/evals/evals-v24.json",
+      ".cursor/skills/skill-authoring/SKILL.md",
+      "AGENT.md",
+      "Agents/Agent-architecture-mining.md",
+      "Agents/Agent-authoring.md",
+      "Agents/Orquestrador-v2.md",
+      "Agents/Planner.md",
+      "Agents/Prd.md",
+      "Agents/backend.md",
+      "CHANGELOG.md",
+      "INVENTORY.md",
+      "README.md",
+      "agent-setup/README.md",
+      "agent-setup/config/templates/agents.env.template",
+      "agent-setup/cursor/commands/evolve.md",
+      "agent-setup/cursor/hooks/wiki-mem/stop.sh",
+      "agent-setup/docs/architecture.md",
+      "agent-setup/docs/components.md",
+      "agent-setup/manifest/components.yaml",
+      "agent-setup/manifest/profiles.yaml",
+      "agent-setup/skills/wiki-mem/SKILL.md",
+      "docs/CEO-controller.md"
+    ],
+    "input_tokens": 37475,
+    "latency_ms": 5659,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: docs/adr/0011-evolve-alias.md"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: docs/adr/0011-evolve-alias.md"
+    ]
+  }
+}

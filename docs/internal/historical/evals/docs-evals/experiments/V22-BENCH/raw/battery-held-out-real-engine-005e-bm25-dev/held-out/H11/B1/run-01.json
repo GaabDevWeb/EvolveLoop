@@ -1,0 +1,44 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_WIKI_GROUND",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H11-B1-9819744cceb1",
+  "arm": "B1",
+  "task_id": "H11",
+  "timestamp": "2026-10-22T01:38:54.748164+00:00",
+  "tree_sha": "c36ca0dff50cb24a5a180578a66bf8e4829afbcd",
+  "harness": "v22-ground-b1-harness-1.5.0",
+  "tokenizer": "PROXY:whitespace_split",
+  "metrics": {
+    "task_id": "H11",
+    "arm": "B1",
+    "paths_read": [
+      "docs/research/evolveloop-v2.2/README.md",
+      "docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md",
+      ".cursor/skills/security/references/trust-boundaries.md",
+      "docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md",
+      ".cursor/skills/planner/SKILL.md",
+      ".cursor/skills/po-review/SKILL.md",
+      ".cursor/skills/orquestrar/evals/evals-v25-blind.json",
+      "docs/research/evolveloop-v2.2/05-knowledge-wiki-architecture.md",
+      "docs/research/evolveloop-v2.2/10-risks-and-open-questions.md",
+      "docs/research/evolveloop-v2.2/03-repositories-and-tools.md",
+      "docs/research/evolveloop-v2.2/06-token-optimization.md"
+    ],
+    "input_tokens": 21395,
+    "latency_ms": 2764,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: orchestrator/src/knowledge/backend/types.ts"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: orchestrator/src/knowledge/backend/types.ts"
+    ]
+  }
+}

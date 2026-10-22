@@ -1,0 +1,47 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_BASELINE",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H14-B0-1aac39a0867a",
+  "arm": "B0",
+  "task_id": "H14",
+  "timestamp": "2026-10-22T01:14:37.640279+00:00",
+  "tree_sha": "7eef62f816b43fcb4454e8016943f6b3d5ef5cc0",
+  "harness": "v22-ground-b1-harness-1.4.0",
+  "tokenizer": "PROXY:whitespace_split",
+  "metrics": {
+    "task_id": "H14",
+    "arm": "B0",
+    "paths_read": [
+      "docs/architecture/knowledge/CORE-PERSONAL-BOUNDARY-V2.yaml",
+      "docs/architecture/portability/PATH-REFERENCE-MAP.yaml",
+      "docs/architecture/portability/PERSONAL-CONNECTIONS.yaml",
+      "docs/architecture/portability/PORTABILITY-FORENSIC-AUDIT.md",
+      "docs/architecture/portability/PORTABILITY-INVENTORY.yaml",
+      "docs/architecture/portability/WIKI-REFERENCE-AUDIT.yaml",
+      "docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md",
+      "docs/audit/EVIDENCE-CATALOG.md",
+      "docs/audit/IMPLEMENTATION-MATRIX.yaml",
+      "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-held-out-frozen.json",
+      "orchestrator/src/index.ts",
+      "orchestrator/src/providers/deterministic/index.ts",
+      "orchestrator/src/providers/deterministic/knowledge.ts",
+      "orchestrator/tests/unit/knowledge-backend.test.ts"
+    ],
+    "input_tokens": 9370,
+    "latency_ms": 15,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss substring @ orchestrator/src/providers/deterministic/knowledge.ts:16"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss substring @ orchestrator/src/providers/deterministic/knowledge.ts:16"
+    ]
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "experiment": "V22-BENCH-HELD-OUT",
+  "classification_by_arm": {
+    "B0": "OFFICIAL_BASELINE",
+    "B1": "OFFICIAL_WIKI_GROUND"
+  },
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "harness_notes": {
+    "b1_query": "task.query + corpus glossary expansion (rg_patterns reserved for B0)",
+    "b1_hybrid_lexical": "1",
+    "b1_top_k": "16",
+    "wiki_engine": {
+      "engine_requested": "official",
+      "karpathy_wiki_dir": "/opt/karpathyWiki",
+      "karpathy_wiki_sha_expected": "cd3cf08",
+      "motor_origin": "snapshot_cd3cf08_local",
+      "tarball_sha256": "11160e77ad7c88885635ef2beeac1d8046b95c103952dbe1a90aba1bbb852377",
+      "wiki_engine": "karpathyWiki",
+      "wiki_root": "/opt/karpathyWiki",
+      "wiki_python": "/opt/karpathyWiki/.venv/bin/python"
+    }
+  },
+  "task_filter": "H19-H24",
+  "freeze_tree_sha": "7eef62f816b43fcb4454e8016943f6b3d5ef5cc0",
+  "tasks_frozen": "tasks-held-out-frozen.json",
+  "aggregates": {
+    "H19:B0": {
+      "median_paths": 45.0,
+      "median_input_tokens": 38949.0,
+      "median_latency_ms": 28.0,
+      "recall": 1.0
+    },
+    "H19:B1": {
+      "median_paths": 39.0,
+      "median_input_tokens": 35660.0,
+      "median_latency_ms": 5572.0,
+      "recall": 0.0
+    },
+    "H20:B0": {
+      "median_paths": 10.0,
+      "median_input_tokens": 6557.0,
+      "median_latency_ms": 16.0,
+      "recall": 1.0
+    },
+    "H20:B1": {
+      "median_paths": 33.0,
+      "median_input_tokens": 30314.0,
+      "median_latency_ms": 5728.0,
+      "recall": 0.0
+    },
+    "H21:B0": {
+      "median_paths": 45.0,
+      "median_input_tokens": 12746.0,
+      "median_latency_ms": 19.0,
+      "recall": 1.0
+    },
+    "H21:B1": {
+      "median_paths": 35.0,
+      "median_input_tokens": 37475.0,
+      "median_latency_ms": 5659.0,
+      "recall": 0.0
+    },
+    "H22:B0": {
+      "median_paths": 17.0,
+      "median_input_tokens": 18499.0,
+      "median_latency_ms": 15.0,
+      "recall": 1.0
+    },
+    "H22:B1": {
+      "median_paths": 36.0,
+      "median_input_tokens": 38242.0,
+      "median_latency_ms": 5634.0,
+      "recall": 0.0
+    },
+    "H23:B0": {
+      "median_paths": 34.0,
+      "median_input_tokens": 17701.0,
+      "median_latency_ms": 17.0,
+      "recall": 1.0
+    },
+    "H23:B1": {
+      "median_paths": 44.0,
+      "median_input_tokens": 28343.0,
+      "median_latency_ms": 5630.0,
+      "recall": 1.0
+    },
+    "H24:B0": {
+      "median_paths": 45.0,
+      "median_input_tokens": 16478.0,
+      "median_latency_ms": 27.0,
+      "recall": 0.0
+    },
+    "H24:B1": {
+      "median_paths": 34.0,
+      "median_input_tokens": 25494.0,
+      "median_latency_ms": 5690.0,
+      "recall": 1.0
+    }
+  },
+  "rollups": {
+    "held_out_B0_median_paths": 39.5,
+    "held_out_B1_median_paths": 35.5,
+    "held_out_B0_median_tokens": 17089.5,
+    "held_out_B1_median_tokens": 32987.0,
+    "held_out_B0_median_latency_ms": 18.0,
+    "held_out_B1_median_latency_ms": 5646.5
+  },
+  "environment": {
+    "os": "Linux-6.12.94+-x86_64-with-glibc2.39",
+    "wiki_root": "/opt/karpathyWiki",
+    "ground_sh": "/workspace/.cursor/skills/wiki/scripts/ground.sh",
+    "contamination_guard": "generate-evolveloop-wiki-knowledge.sh allowlist; no V22-BENCH reads"
+  },
+  "runs": [
+    "V22H-H19-B0-9ae697e79ea6",
+    "V22H-H19-B1-385cd6724df1",
+    "V22H-H20-B0-8dd5160b3577",
+    "V22H-H20-B1-c29d2d3ea497",
+    "V22H-H21-B0-8de2a4c749f7",
+    "V22H-H21-B1-ff2c4b64bb99",
+    "V22H-H22-B0-d0020bc9f331",
+    "V22H-H22-B1-d1b8097e9735",
+    "V22H-H23-B0-1de24deb856a",
+    "V22H-H23-B1-033536bbbe4b",
+    "V22H-H24-B0-c28a48922955",
+    "V22H-H24-B1-dcffd92ef6b8"
+  ]
+}

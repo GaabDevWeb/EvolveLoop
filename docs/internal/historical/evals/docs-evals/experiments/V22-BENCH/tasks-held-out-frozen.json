@@ -18,6 +18,12 @@
     "karpathy_wiki_sha": "cd3cf08",
     "note": "Congeladas antes da medição com motor karpathyWiki real"
   },
+  "recall_holdout_test_extension": {
+    "author": "V22-GOAL-005d-recall",
+    "frozen_at_utc": "2026-10-22T15:00:00Z",
+    "task_ids": ["H19", "H20", "H21", "H22", "H23", "H24"],
+    "note": "Congeladas antes de otimizações de recall; split teste (não dev H07-H18)"
+  },
   "b1_mechanism": {
     "primary": "FIXTURE_WIKI_GROUND — python -m gaabwiki no vault fixtures/evolveloop-wiki-vault (reimplementação mínima no repo, não karpathyWiki externo)",
     "vault_path": "fixtures/evolveloop-wiki-vault",
@@ -239,6 +245,78 @@
           "path": ".cursor/skills/wiki/SKILL.md",
           "line": 9,
           "substring": "Não use para memória episódica"
+        }
+      ]
+    },
+    {
+      "id": "H19",
+      "query": "No ADR-0003, quantos limites de política distintos o documento manda manter?",
+      "rg_patterns": ["CapabilityAuthority", "ExecutionPolicy", "três"],
+      "anchors": [
+        {
+          "path": "docs/adr/0003-capability-authority-vs-execution-policy.md",
+          "line": 17,
+          "substring": "Manter **três** limites distintos"
+        }
+      ]
+    },
+    {
+      "id": "H20",
+      "query": "Qual função exportada aplica a cerca de fonte de verdade em truth-source/fence.ts?",
+      "rg_patterns": ["applyTruthFence", "truth-source"],
+      "anchors": [
+        {
+          "path": "orchestrator/src/knowledge/truth-source/fence.ts",
+          "line": 23,
+          "substring": "export function applyTruthFence"
+        }
+      ]
+    },
+    {
+      "id": "H21",
+      "query": "No ADR do alias público /evolve, qual é o comando canónico do Cursor?",
+      "rg_patterns": ["evolve", "Canonical Cursor"],
+      "anchors": [
+        {
+          "path": "docs/adr/0011-evolve-alias.md",
+          "line": 14,
+          "substring": "Canonical Cursor command: **`/evolve`**"
+        }
+      ]
+    },
+    {
+      "id": "H22",
+      "query": "Qual constante canário de teste define secret-redaction.ts para evidência?",
+      "rg_patterns": ["EVIDENCE_SECRET_CANARY", "secret-redaction"],
+      "anchors": [
+        {
+          "path": "orchestrator/src/evidence/secret-redaction.ts",
+          "line": 7,
+          "substring": "export const EVIDENCE_SECRET_CANARY"
+        }
+      ]
+    },
+    {
+      "id": "H23",
+      "query": "No ADR-0001, listar capability implica autorização automática?",
+      "rg_patterns": ["Authority continua fora", "CapabilityAuthority"],
+      "anchors": [
+        {
+          "path": "docs/adr/0001-agent-package-composition.md",
+          "line": 21,
+          "substring": "Authority continua fora do prompt"
+        }
+      ]
+    },
+    {
+      "id": "H24",
+      "query": "Na cerca TRUTH-SOURCE-FENCE, qual nível tem prioridade 1 na hierarquia?",
+      "rg_patterns": ["TRUTH-SOURCE-FENCE", "code"],
+      "anchors": [
+        {
+          "path": "docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md",
+          "line": 14,
+          "substring": "1. **code**"
         }
       ]
     }

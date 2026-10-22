@@ -1,0 +1,69 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_WIKI_GROUND",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H22-B1-d1b8097e9735",
+  "arm": "B1",
+  "task_id": "H22",
+  "timestamp": "2026-10-22T01:15:28.959755+00:00",
+  "tree_sha": "7eef62f816b43fcb4454e8016943f6b3d5ef5cc0",
+  "harness": "v22-ground-b1-harness-1.4.0",
+  "tokenizer": "PROXY:whitespace_split",
+  "metrics": {
+    "task_id": "H22",
+    "arm": "B1",
+    "paths_read": [
+      "docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md",
+      "docs/architecture/v2.2/EVIDENCE-SECRET-CANARY.md",
+      "docs/research/evolveloop-v2.2/01-current-state-audit.md",
+      "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+      "docs/research/evolveloop-v2.2/04-community-findings.md",
+      "docs/architecture/release-audit-2026-10-11/V2.1-FREEZE-SCOPE-REPORT.md",
+      ".cursor/skills/planner/SKILL.md",
+      "docs/research/evolveloop-v2.2/05-knowledge-wiki-architecture.md",
+      "docs/research/evolveloop-v2.2/03-repositories-and-tools.md",
+      "docs/research/evolveloop-v2.2/06-token-optimization.md",
+      "docs/research/targets/external/aider/ADVERSARIAL-REVIEW.md",
+      "docs/research/findings/_aggregate_decisions.json",
+      "docs/research/CROSS-INVESTIGATION-REVIEW.md",
+      "docs/research/targets/external/anthropic-agent-skills/ADVERSARIAL-REVIEW.md",
+      "docs/architecture/portability/SKILL-PORTABILITY-MATRIX.yaml",
+      "docs/research/targets/local/security-audit-skill/MECHANISMS.yaml",
+      "Agents/Tester.md",
+      "agent-setup/cursor/commands/evolve.md",
+      "agent-setup/cursor/hooks/wiki-mem/mem.py",
+      "agent-setup/docs/components.md",
+      "agent-setup/docs/project-init.md",
+      "agent-setup/prompts/analyze-project.md",
+      "agent-setup/skills/wiki/scripts/format_hits.py",
+      "agent-setup/src/agent_setup/cli.py",
+      "agent-setup/templates/wiki/sessions-README.md",
+      "docs/adr/0002-capability-model-deterministic-providers.md",
+      "docs/adr/0004-project-knowledge-contract.md",
+      "docs/adr/0005-hybrid-retrieval-degraded-mode.md",
+      "docs/architecture-mining/findings/FINDING-MCP-01.md",
+      "docs/architecture-mining/targets/mcp/REPORT.md",
+      "docs/architecture/decision-review/EVIDENCE-LEDGER.yaml",
+      "docs/architecture/decision-review/FUTURE-EXPERIMENTS.yaml",
+      "docs/architecture/decision-review/adr-drafts/ADR-DR-0001-keep-job-path-resume.md",
+      "docs/architecture/evolution/EVOLVELOOP-IMPLEMENTATION-REPORT.md",
+      "docs/architecture/evolveloopt/EVOLVELOOP-LONGITUDINAL-IMPLEMENTATION-REPORT.md",
+      "docs/architecture/evolveloopt/LONGITUDINAL-STATE-RECONCILIATION.md"
+    ],
+    "input_tokens": 38242,
+    "latency_ms": 5634,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: orchestrator/src/evidence/secret-redaction.ts"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: orchestrator/src/evidence/secret-redaction.ts"
+    ]
+  }
+}

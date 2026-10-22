@@ -1,0 +1,43 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_WIKI_GROUND",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H13-B1-a575b6a22f4a",
+  "arm": "B1",
+  "task_id": "H13",
+  "timestamp": "2026-10-22T01:39:00.411451+00:00",
+  "tree_sha": "c36ca0dff50cb24a5a180578a66bf8e4829afbcd",
+  "harness": "v22-ground-b1-harness-1.5.0",
+  "tokenizer": "PROXY:whitespace_split",
+  "metrics": {
+    "task_id": "H13",
+    "arm": "B1",
+    "paths_read": [
+      ".cursor/skills/orquestrar/evals/evals-v25-blind.json",
+      "docs/research/evolveloop-v2.2/05-knowledge-wiki-architecture.md",
+      ".cursor/skills/po-review/SKILL.md",
+      "docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md",
+      "docs/research/evolveloop-v2.2/README.md",
+      ".cursor/skills/orquestrar/evals/evals-v26-blind.json",
+      "docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md",
+      ".cursor/skills/planner/SKILL.md",
+      "docs/research/evolveloop-v2.2/06-token-optimization.md",
+      "docs/research/evolveloop-v2.2/04-community-findings.md"
+    ],
+    "input_tokens": 18701,
+    "latency_ms": 2775,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: docs/adr/0005-hybrid-retrieval-degraded-mode.md"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: docs/adr/0005-hybrid-retrieval-degraded-mode.md"
+    ]
+  }
+}

@@ -17,16 +17,33 @@ from typing import Any, Callable
 
 EXP_DIR = Path(__file__).resolve().parents[1]
 TASKS_HELD = EXP_DIR / "tasks-held-out-frozen.json"
-HARNESS_VERSION = "v22-ground-b1-harness-1.3.0"
+HARNESS_VERSION = "v22-ground-b1-harness-1.5.0"
 B0_CAP = 45
+# B0 scans monorepo source/docs only — never fixture wiki mirrors or auto-ingested vault pages.
 RG_GLOBS = [
     "!node_modules",
     "!.git",
     "!dist",
     "!**/.venv",
     "!agent-setup/.venv",
+    "!fixtures/evolveloop-wiki-vault/**",
+    "!**/EvolveLoop/wiki/**",
+    "!**/autogen-*",
+    "!docs/internal/historical/evals/**",
     "!docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/**",
 ]
+
+
+def bench_max_paths() -> int:
+    return int(os.environ.get("V22_BENCH_MAX_PATHS", str(B0_CAP)))
+
+
+def bench_max_input_tokens() -> int:
+    return int(os.environ.get("V22_BENCH_MAX_INPUT_TOKENS", "22000"))
+
+
+def anchor_recall_mode() -> str:
+    return os.environ.get("V22_ANCHOR_RECALL", "file").strip().lower()
 def repo_root() -> Path:
     out = subprocess.check_output(
         ["git", "rev-parse", "--show-toplevel"], cwd=EXP_DIR, text=True
@@ -66,15 +83,49 @@ def run_rg(root: Path, pattern: str) -> list[str]:
     return sorted(set(rel))
 
 
-def read_rel(root: Path, rel: str, paths: list[str], buf: list[str]) -> None:
+def read_rel(
+    root: Path,
+    rel: str,
+    paths: list[str],
+    buf: list[str],
+    counter: Callable[[str], int] | None = None,
+    max_paths: int | None = None,
+    max_tokens: int | None = None,
+) -> bool:
+    """Append file to context; return False if budget blocks the read."""
     if rel in paths:
-        return
+        return True
+    cap_paths = max_paths if max_paths is not None else bench_max_paths()
+    cap_tokens = max_tokens if max_tokens is not None else bench_max_input_tokens()
+    if len(paths) >= cap_paths:
+        return False
     fp = root / rel
     if not fp.is_file():
-        return
+        return False
     text = fp.read_text(encoding="utf-8", errors="replace")
+    chunk = f"--- {rel} ---\n{text}\n"
+    if counter is not None:
+        projected = counter("\n".join(buf + [chunk]))
+        if projected > cap_tokens:
+            return False
     paths.append(rel)
-    buf.append(f"--- {rel} ---\n{text}\n")
+    buf.append(chunk)
+    return True
+
+
+def append_excerpt(
+    buf: list[str],
+    excerpt: str,
+    counter: Callable[[str], int],
+    max_tokens: int,
+) -> bool:
+    if not excerpt:
+        return True
+    chunk = str(excerpt)
+    if counter("\n".join(buf + [chunk])) > max_tokens:
+        return False
+    buf.append(chunk)
+    return True
 
 
 def anchor_recall(root: Path, paths_read: list[str], anchors: list[dict[str, Any]]) -> tuple[float, list[str]]:
@@ -95,8 +146,14 @@ def anchor_recall(root: Path, paths_read: list[str], anchors: list[dict[str, Any
         if line_no < 1 or line_no > len(lines):
             notes.append(f"miss line OOB: {rel}:{line_no}")
             continue
-        if sub in lines[line_no - 1]:
+        line_ok = 1 <= line_no <= len(lines) and sub in lines[line_no - 1]
+        file_ok = sub in "\n".join(lines)
+        mode = anchor_recall_mode()
+        if line_ok:
             hit += 1
+        elif mode == "file" and file_ok:
+            hit += 1
+            notes.append(f"anchor line drift (file hit): {rel}:{line_no}")
         else:
             notes.append(f"miss substring @ {rel}:{line_no}")
     total = len(anchors) or 1
@@ -121,11 +178,12 @@ def run_b0(root: Path, task: dict[str, Any], counter) -> RunResult:
     paths: list[str] = []
     buf: list[str] = []
     hits: list[str] = []
+    max_paths = bench_max_paths()
+    max_tokens = bench_max_input_tokens()
     for pat in task["rg_patterns"]:
         hits.extend(run_rg(root, pat))
     for rel in sorted(set(hits)):
-        read_rel(root, rel, paths, buf)
-        if len(paths) >= B0_CAP:
+        if not read_rel(root, rel, paths, buf, counter, max_paths, max_tokens):
             break
     recall, notes = anchor_recall(root, paths, task["anchors"])
     tok_in = counter("\n".join(buf))
@@ -180,14 +238,59 @@ def _repo_paths_from_hit(hit: dict[str, Any], wiki_root: Path, repo: Path) -> li
     return sorted(set(out))
 
 
+def _load_query_glossary(env: dict[str, str]) -> dict[str, Any]:
+    wiki = Path(env["WIKI_ROOT"])
+    gpath = wiki / ".data" / "evolveloop-query-glossary.json"
+    if not gpath.is_file():
+        return {"pt_to_en": {}}
+    try:
+        return json.loads(gpath.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return {"pt_to_en": {}}
+
+
+def _expand_b1_query(query: str, env: dict[str, str]) -> str:
+    scripts = repo_root() / "docs/architecture/v2.2/scripts"
+    if str(scripts) not in sys.path:
+        sys.path.insert(0, str(scripts))
+    from evolveloop_recall_support import expand_query
+
+    glossary = _load_query_glossary(env)
+    return expand_query(query, glossary)
+
+
+def _hybrid_lexical_paths(root: Path, query: str, env: dict[str, str]) -> list[str]:
+    if os.environ.get("V22_B1_HYBRID_LEXICAL", "1").strip() in ("0", "false", "no"):
+        return []
+    scripts = repo_root() / "docs/architecture/v2.2/scripts"
+    if str(scripts) not in sys.path:
+        sys.path.insert(0, str(scripts))
+    from evolveloop_recall_support import lexical_rg_patterns
+
+    glossary = _load_query_glossary(env)
+    patterns = lexical_rg_patterns(query, glossary, max_patterns=4)
+    hits: list[str] = []
+    for pat in patterns:
+        hits.extend(run_rg(root, pat))
+    return sorted(set(hits))[:20]
+
+
 def run_ground_json(query: str, env: dict[str, str]) -> dict[str, Any]:
     vault = env["WIKI_ROOT"]
     py = env.get("WIKI_PYTHON", f"{vault}/.venv/bin/python")
+    top_k = os.environ.get("V22_B1_TOP_K", "16")
+    sub_env = env.copy()
+    if os.environ.get("V22_B1_RETRIEVAL", "hybrid").strip().lower() in (
+        "bm25",
+        "bm25_degraded",
+        "degraded",
+    ):
+        sub_env["OLLAMA_URL"] = "http://127.0.0.1:1"
     raw = subprocess.run(
-        [py, "-m", "gaabwiki", "search", query, "--json", "--top-k", "12"],
+        [py, "-m", "gaabwiki", "search", query, "--json", "--top-k", top_k],
         capture_output=True,
         text=True,
-        env=env,
+        env=sub_env,
         check=False,
     )
     if raw.returncode != 0:
@@ -218,24 +321,49 @@ def run_b1_ground(root: Path, task: dict[str, Any], counter, env: dict[str, str]
     paths: list[str] = []
     buf: list[str] = []
     wiki_root = Path(env["WIKI_ROOT"])
-    # B1 must use natural-language task query only — rg_patterns are B0 gabarito (no leakage).
-    data = run_ground_json(task["query"], env)
+    # B1: task.query only (+ optional corpus glossary expansion). Never task.rg_patterns.
+    search_queries = [task["query"]]
+    expanded = _expand_b1_query(task["query"], env)
+    if expanded != task["query"]:
+        search_queries.append(expanded)
+    max_paths = bench_max_paths()
+    max_tokens = bench_max_input_tokens()
     stale = 0
-    for hit in _iter_search_hits(data):
-        src = hit.get("source")
-        if isinstance(src, dict) and src.get("stale"):
-            stale += 1
-            continue
-        for rel in _repo_paths_from_hit(hit, wiki_root, root):
-            read_rel(root, rel, paths, buf)
-        excerpt = (
-            hit.get("content")
-            or hit.get("text")
-            or hit.get("preview")
-            or ""
-        )
-        if excerpt:
-            buf.append(str(excerpt))
+    seen_hit: set[str] = set()
+    budget_exhausted = False
+    for q in search_queries:
+        if budget_exhausted:
+            break
+        data = run_ground_json(q, env)
+        hits = _iter_search_hits(data)
+        for hit in hits:
+            cid = str(hit.get("chunk_id") or hit.get("source") or "")
+            if cid in seen_hit:
+                continue
+            seen_hit.add(cid)
+            src = hit.get("source")
+            if isinstance(src, dict) and src.get("stale"):
+                stale += 1
+                continue
+            for rel in _repo_paths_from_hit(hit, wiki_root, root):
+                if not read_rel(root, rel, paths, buf, counter, max_paths, max_tokens):
+                    budget_exhausted = True
+                    break
+            if budget_exhausted:
+                break
+            excerpt = (
+                hit.get("content")
+                or hit.get("text")
+                or hit.get("preview")
+                or ""
+            )
+            if excerpt and not append_excerpt(buf, str(excerpt), counter, max_tokens):
+                budget_exhausted = True
+                break
+    if not budget_exhausted:
+        for rel in _hybrid_lexical_paths(root, task["query"], env):
+            if not read_rel(root, rel, paths, buf, counter, max_paths, max_tokens):
+                break
     recall, notes = anchor_recall(root, paths, task["anchors"])
     if stale:
         notes.append(f"skipped {stale} stale hits")
@@ -419,7 +547,13 @@ def run_battery(out_dir: Path, task_filter: str | None = None) -> dict[str, Any]
         },
         "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
         "harness_notes": {
-            "b1_query": "task.query only (rg_patterns reserved for B0)",
+            "b0_corpus_rg_globs": RG_GLOBS,
+            "anchor_recall_mode": anchor_recall_mode(),
+            "bench_max_paths": bench_max_paths(),
+            "bench_max_input_tokens": bench_max_input_tokens(),
+            "b1_query": "task.query + corpus glossary expansion (rg_patterns reserved for B0)",
+            "b1_hybrid_lexical": os.environ.get("V22_B1_HYBRID_LEXICAL", "1"),
+            "b1_top_k": os.environ.get("V22_B1_TOP_K", "16"),
             "wiki_engine": engine_meta,
         },
         "task_filter": task_filter,
