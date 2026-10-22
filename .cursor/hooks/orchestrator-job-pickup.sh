@@ -22,14 +22,20 @@ RUN_JOBS="$ORCH/dist/cli/run-jobs.js"
 RESULT="$(node "$RUN_JOBS" invoke --jobs-dir "$JOBS_DIR" --prompt-dir "$PROMPT_DIR" 2>/dev/null || echo '{"status":"idle"}')"
 
 node -e "
+const fs = require('fs');
 const plan = JSON.parse(process.argv[1]);
 if (plan.status !== 'ready') { console.log('{}'); process.exit(0); }
-const msg = [
-  'Pending SkillJob (Execution Engine).',
-  'Run ID: ' + plan.run_id,
-  '1. Read: ' + plan.prompt_path,
-  '2. Skill: ' + plan.skill_path,
-  '3. Complete: agents-orch jobs complete --jobs-dir ' + plan.jobs_dir + ' --run-id ' + plan.run_id + ' --success --evidence <path>',
-].join('\\n');
+let msg = '';
+if (plan.prompt_path && fs.existsSync(plan.prompt_path)) {
+  msg = fs.readFileSync(plan.prompt_path, 'utf8');
+} else {
+  msg = [
+    'Pending SkillJob (Execution Engine).',
+    'Run ID: ' + plan.run_id,
+    '1. Read: ' + plan.prompt_path,
+    '2. Skill: ' + plan.skill_path,
+    '3. Complete: agents-orch jobs complete --jobs-dir ' + plan.jobs_dir + ' --run-id ' + plan.run_id + ' --success --evidence <path>',
+  ].join('\\n');
+}
 console.log(JSON.stringify({ followup_message: msg }));
 " "$RESULT"

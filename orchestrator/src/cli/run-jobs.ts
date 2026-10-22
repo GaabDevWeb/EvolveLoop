@@ -7,11 +7,15 @@
  *   run-jobs pickup --jobs-dir ./jobs [--run-id <uuid>]
  *   run-jobs invoke --jobs-dir ./jobs [--prompt-dir .cursor/pickup] [--run-id <uuid>]
  *   run-jobs complete --jobs-dir ./jobs --run-id <uuid> --success --evidence path/to/evidence.json
+ *   run-jobs reopen --jobs-dir ./jobs --run-id <uuid>
+ *
+ * Exit codes (reopen): 0 = reopened; 2 = REOPEN_NOT_ALLOWED (job already pending); 1 = other error.
  */
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 import { JobStore } from "../jobs/job-store.js";
 import { invokePickup } from "../jobs/job-pickup.js";
+import { resolveOrchestratorRoot } from "./run-engine-env.js";
 
 function parseArgs(argv: string[]) {
   const args: Record<string, string> = { command: argv[2] ?? "list" };
@@ -67,6 +71,7 @@ function main() {
       console.error(`Job ${job.run_id} is not pending (status: ${job.status})`);
       process.exit(1);
     }
+    const orchRoot = resolveOrchestratorRoot();
     const pickup = {
       status: "ready",
       jobs_dir: jobsDir,
@@ -79,7 +84,7 @@ function main() {
       agent_instructions: [
         `1. Read skill: ${job.skill_path}`,
         `2. Execute briefing below; produce evidence per DoD`,
-        `3. Complete job: npm run run-jobs -- complete --jobs-dir ${jobsDir} --run-id ${job.run_id} --success --evidence <path-to-evidence.json>`,
+        `3. Complete job: cd ${orchRoot} && npm run run-jobs -- complete --jobs-dir ${jobsDir} --run-id ${job.run_id} --success --evidence <path-to-evidence.json>`,
       ],
     };
     console.log(JSON.stringify(pickup, null, 2));
@@ -94,6 +99,39 @@ function main() {
       runId: args["run-id"],
     });
     console.log(JSON.stringify(plan, null, 2));
+    return;
+  }
+
+  if (args.command === "reopen") {
+    const runId = args["run-id"];
+    if (!runId) {
+      console.error("Required: --run-id");
+      process.exit(1);
+    }
+    try {
+      const job = store.reopenJob(runId);
+      console.log(
+        JSON.stringify(
+          {
+            run_id: runId,
+            status: "pending",
+            capability: job.capability,
+            node_id: job.node_id,
+            hint: "Re-submit evidence via complete after fixing lineage or evidence content",
+          },
+          null,
+          2,
+        ),
+      );
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      if (message.startsWith("REOPEN_NOT_ALLOWED:")) {
+        console.error(`run-jobs reopen: ${message}`);
+        process.exit(2);
+      }
+      console.error(message);
+      process.exit(1);
+    }
     return;
   }
 
@@ -131,7 +169,9 @@ function main() {
     return;
   }
 
-  console.error("Usage: run-jobs list|show|pickup|invoke|complete --jobs-dir <path> [--prompt-dir path] [--run-id <id>] [--success] [--evidence <path>]");
+  console.error(
+    "Usage: run-jobs list|show|pickup|invoke|complete|reopen --jobs-dir <path> [--prompt-dir path] [--run-id <id>] [--success] [--evidence <path>]",
+  );
   process.exit(1);
 }
 

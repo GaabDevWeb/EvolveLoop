@@ -1,5 +1,6 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { resolveOrchestratorRoot } from "../cli/run-engine-env.js";
 import { JobStore, type SkillJob } from "./job-store.js";
 
 export interface PickupPlan {
@@ -24,9 +25,14 @@ export function resolvePendingJob(
   return store.listPending()[0] ?? null;
 }
 
-export function buildPickupPrompt(job: SkillJob, jobsDir: string): string {
-  const completeCmd = `cd Cursor/orchestrator && npm run run-jobs -- complete --jobs-dir ${jobsDir} --run-id ${job.run_id} --success --evidence <path-to-evidence.json>`;
-  const failCmd = `cd Cursor/orchestrator && npm run run-jobs -- complete --jobs-dir ${jobsDir} --run-id ${job.run_id} --error "reason"`;
+export function buildPickupPrompt(
+  job: SkillJob,
+  jobsDir: string,
+  orchestratorRoot?: string,
+): string {
+  const orchRoot = orchestratorRoot ?? resolveOrchestratorRoot();
+  const completeCmd = `cd ${orchRoot} && npm run run-jobs -- complete --jobs-dir ${jobsDir} --run-id ${job.run_id} --success --evidence <path-to-evidence.json>`;
+  const failCmd = `cd ${orchRoot} && npm run run-jobs -- complete --jobs-dir ${jobsDir} --run-id ${job.run_id} --error "reason"`;
 
   return `# SkillJob Pickup — ${job.run_id}
 

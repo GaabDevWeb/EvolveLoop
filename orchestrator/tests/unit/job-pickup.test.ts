@@ -21,10 +21,40 @@ describe("Job pickup", () => {
         status: "pending",
       },
       "/tmp/jobs",
+      "/custom/orch",
     );
     expect(prompt).toContain("testing/SKILL.md");
     expect(prompt).toContain("abc-123");
     expect(prompt).toContain("run-jobs -- complete");
+    expect(prompt).not.toContain("Cursor/orchestrator");
+    expect(prompt).toContain("cd /custom/orch &&");
+  });
+
+  it("buildPickupPrompt uses ORCHESTRATOR_ROOT when set", () => {
+    const prev = process.env.ORCHESTRATOR_ROOT;
+    process.env.ORCHESTRATOR_ROOT = "/env/orchestrator";
+    try {
+      const prompt = buildPickupPrompt(
+        {
+          apiVersion: "capability-orchestrator.io/v2",
+          kind: "SkillJob",
+          run_id: "x",
+          provider_id: "backend",
+          skill_path: ".cursor/skills/backend/SKILL.md",
+          capability: "backend-implementation",
+          node_id: "n",
+          briefing: "b",
+          definition_of_done: [],
+          inputs: [],
+          status: "pending",
+        },
+        "/tmp/jobs",
+      );
+      expect(prompt).toContain("cd /env/orchestrator &&");
+    } finally {
+      if (prev === undefined) delete process.env.ORCHESTRATOR_ROOT;
+      else process.env.ORCHESTRATOR_ROOT = prev;
+    }
   });
 
   it("invokePickup writes prompt artifacts", () => {

@@ -27,6 +27,8 @@ import {
 } from "../index.js";
 import type { AnalysisScope } from "../evolveloop/longitudinal-types.js";
 import type { CapabilityIR, ProviderManifest } from "../types/index.js";
+import { manifestToRegistryEntries } from "../registry/manifest-loader.js";
+import { loadAgentsEnvFile, resolveOrchestratorCliPaths } from "./run-engine-env.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -61,28 +63,49 @@ function loadProviderManifests(providersDir: string): ProviderManifest[] {
   return manifests;
 }
 
+function manifestByCapability(manifests: ProviderManifest[]): Map<string, ProviderManifest> {
+  const map = new Map<string, ProviderManifest>();
+  for (const manifest of manifests) {
+    for (const cap of manifest.spec.capabilities) {
+      if (!map.has(cap.id)) map.set(cap.id, manifest);
+    }
+  }
+  return map;
+}
+
 function supplementRegistry(
   registry: ReturnType<typeof buildRegistryFromManifestFiles>,
   ir: CapabilityIR,
+  bundledManifests: ProviderManifest[],
 ): ReturnType<typeof buildRegistryFromManifestFiles> {
   const caps = new Set(ir.spec.nodes.map((n) => n.capability));
   const capabilities = { ...registry.capabilities };
+  const byCap = manifestByCapability(bundledManifests);
 
   for (const cap of caps) {
-    if (!capabilities[cap]) {
-      capabilities[cap] = {
-        providers: [
-          {
-            id: cap,
-            priority: 100,
-            cost: "medium",
-            quality_score: 0.85,
-            availability: "active",
-            version: "1.0.0",
-          },
-        ],
-      };
+    if (capabilities[cap]) continue;
+
+    const manifest = byCap.get(cap);
+    if (manifest) {
+      const entry = manifestToRegistryEntries(manifest).find((e) => e.capability === cap);
+      if (entry) {
+        capabilities[cap] = { providers: [entry.provider] };
+        continue;
+      }
     }
+
+    capabilities[cap] = {
+      providers: [
+        {
+          id: cap,
+          priority: 100,
+          cost: "medium",
+          quality_score: 0.85,
+          availability: "active",
+          version: "1.0.0",
+        },
+      ],
+    };
   }
 
   return { ...registry, capabilities };
@@ -91,8 +114,9 @@ function supplementRegistry(
 function registryForMockRun(
   registry: ReturnType<typeof buildRegistryFromManifestFiles>,
   ir: CapabilityIR,
+  bundledManifests: ProviderManifest[],
 ): ReturnType<typeof buildRegistryFromManifestFiles> {
-  let result = supplementRegistry(registry, ir);
+  let result = supplementRegistry(registry, ir, bundledManifests);
   const capabilities = { ...result.capabilities };
 
   for (const [capId, cap] of Object.entries(capabilities)) {
@@ -170,6 +194,7 @@ function parseEvolveScope(args: Record<string, string>): AnalysisScope | null {
 }
 
 async function main() {
+  loadAgentsEnvFile();
   const args = parseArgs(process.argv);
 
   if (!args.ir) {
@@ -186,19 +211,22 @@ async function main() {
   const featureId = args["feature-id"] ?? ir.metadata.id;
 
   const orchestratorRoot = resolve(__dirname, "../..");
-  const agentsRoot = resolve(orchestratorRoot, "..");
+  const cliPaths = resolveOrchestratorCliPaths(args, enableDiscovery);
+  const agentsRoot = cliPaths.agentsRoot
+    ? resolve(cliPaths.agentsRoot)
+    : resolve(orchestratorRoot, "..");
   const providersDir = join(orchestratorRoot, "providers");
   const contractsDir = join(orchestratorRoot, "contracts");
   const policiesDir = join(orchestratorRoot, "policies");
-  const jobsDir = args["jobs-dir"] ?? (enableDiscovery ? "./jobs" : undefined);
+  const jobsDir = cliPaths.jobsDir;
   const resume = args.resume === "true";
   const waitForJobsMs = args["wait-for-jobs"] ? parseInt(args["wait-for-jobs"], 10) : 0;
   const manifests = loadProviderManifests(providersDir);
 
-  let registry = enableDiscovery
-    ? buildRegistryFromManifestFiles([])
-    : buildRegistryFromManifestFiles(manifests);
-  registry = jobsDir ? supplementRegistry(registry, ir) : registryForMockRun(registry, ir);
+  let registry = buildRegistryFromManifestFiles(manifests);
+  registry = jobsDir
+    ? supplementRegistry(registry, ir, manifests)
+    : registryForMockRun(registry, ir, manifests);
   const providers = setupProviders(registry, agentsRoot, jobsDir);
 
   const dataDir = args["data-dir"] ? resolve(args["data-dir"]) : undefined;
