@@ -28,6 +28,7 @@ security-workspace/
 .cursor/pickup/
 orchestrator/jobs/
 orchestrator/data/
+graphify-out/
 
 # Prune / scratch
 .prune-snapshots/

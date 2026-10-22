@@ -3,6 +3,7 @@ import { join, resolve } from "node:path";
 import { resolveOrchestratorRoot } from "../cli/run-engine-env.js";
 import { writeSanitizedJsonFile, writeSanitizedTextFile } from "../evidence/evidence-bus.js";
 import { redactSecrets } from "../evidence/secret-redaction.js";
+import { applyCavemanToBriefingSection } from "../v22/brevity-caveman.js";
 import { JobStore, type SkillJob } from "./job-store.js";
 
 export interface PickupPlan {
@@ -36,7 +37,7 @@ export function buildPickupPrompt(
   const completeCmd = `cd ${orchRoot} && npm run run-jobs -- complete --jobs-dir ${jobsDir} --run-id ${job.run_id} --success --evidence <path-to-evidence.json>`;
   const failCmd = `cd ${orchRoot} && npm run run-jobs -- complete --jobs-dir ${jobsDir} --run-id ${job.run_id} --error "reason"`;
 
-  return `# SkillJob Pickup — ${job.run_id}
+  const raw = `# SkillJob Pickup — ${job.run_id}
 
 **Capability:** ${job.capability}  
 **Provider:** ${job.provider_id}  
@@ -70,6 +71,7 @@ ${JSON.stringify(job.inputs, null, 2)}
 ---
 *Gerado por @agents/orchestrator run-jobs invoke*
 `;
+  return applyCavemanToBriefingSection(raw).text;
 }
 
 export function writePickupArtifacts(

@@ -1,0 +1,9 @@
+---
+description: MegaBrain rule placeholder (agent-setup bundled)
+globs: []
+alwaysApply: false
+---
+
+# MegaBrain
+
+Bundled stub for reproducible `agent-setup install`. Project-specific MegaBrain content lives under the repo `.cursor/` tree when present.
