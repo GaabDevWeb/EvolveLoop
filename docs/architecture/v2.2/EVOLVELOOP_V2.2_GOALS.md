@@ -133,7 +133,7 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Dependências:** V22-GOAL-002; desbloqueia **B1 OFFICIAL** em V22-GOAL-003 (bench pack é `PROVISIONAL_CURATED_PACK`).
 - **Impacto arquitetural:** Arquivos no projeto-alvo e config de ambiente; sem novo `KnowledgeBackendId`.
 - **Critérios de aceite:** Cenários 2, 3, 6, 7 do plano 08; excerpt cap 500 permanece até ADR que altere (`wiki-backend.ts`).
-- **Métricas:** Bench B1 pack: `PROVISIONAL_CURATED_PACK` (não gate). `ground.sh`+vault: pré-requisito B1 oficial — `NOT_MEASURED` no VM bench. Páginas `atual`+hash: `PENDING_BASELINE` até lint operacional.
+- **Métricas:** Bench B1 pack: `PROVISIONAL_CURATED_PACK` (não gate). Held-out fixture vault: `FIXTURE_WIKI_GROUND` em `raw/battery-held-out/` (harness 1.1.0, query-only B1). `OFFICIAL_WIKI_GROUND` permanece `PENDING_BASELINE` (wiki externo + held-out não circular).
 - **Validação / testes:** Fixture; opcional `knowledge-backend.test.ts` quando deps instaladas.
 - **Riscos:** Wiki gigante na primeira sessão — init mínima obrigatória no teste.
 - **Condição de conclusão:** Quatro workflows (init, query, update, lint) com corrida registrada.

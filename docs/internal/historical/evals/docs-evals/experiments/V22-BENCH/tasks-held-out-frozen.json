@@ -1,0 +1,167 @@
+{
+  "schema": "v22-bench-held-out-v1",
+  "frozen_at_utc": "2026-10-22T12:00:00Z",
+  "freeze_tree_sha": "PENDING_AT_RUN",
+  "corpus_root": "/workspace",
+  "corpus_label": "EvolveLoop monorepo held-out (independent of curated bench pack)",
+  "author": "held-out-freeze-v22-goal-005",
+  "independent_review_extension": {
+    "author": "V22-GOAL-005-review",
+    "frozen_at_utc": "2026-10-22T13:00:00Z",
+    "task_ids": ["H07", "H08", "H09", "H10", "H11", "H12"],
+    "note": "Tarefas escritas por revisor adversarial; commit de freeze separado antes do harness"
+  },
+  "b1_mechanism": {
+    "primary": "FIXTURE_WIKI_GROUND — python -m gaabwiki no vault fixtures/evolveloop-wiki-vault (reimplementação mínima no repo, não karpathyWiki externo)",
+    "vault_path": "fixtures/evolveloop-wiki-vault",
+    "evidence_class": "FIXTURE_WIKI_GROUND",
+    "wiki_ground_sh": "MEASURED",
+    "note": "Harness B1 usa só task.query (sem rg_patterns). OFFICIAL_WIKI_GROUND exige wiki externo + held-out independente + harness sem vazamento."
+  },
+  "tasks": [
+    {
+      "id": "H01",
+      "query": "Qual é o id do FakeKnowledgeBackend usado em testes?",
+      "rg_patterns": ["FakeKnowledgeBackend", "readonly id"],
+      "anchors": [
+        {
+          "path": "orchestrator/src/knowledge/backend/fake-backend.ts",
+          "line": 14,
+          "substring": "readonly id = \"fake\""
+        }
+      ]
+    },
+    {
+      "id": "H02",
+      "query": "No DEFAULT_PROFILE em código, qual backend de knowledge?",
+      "rg_patterns": ["DEFAULT_PROFILE", "backend: \"wiki\""],
+      "anchors": [
+        {
+          "path": "orchestrator/src/config/profile.ts",
+          "line": 41,
+          "substring": "backend: \"wiki\""
+        }
+      ]
+    },
+    {
+      "id": "H03",
+      "query": "KNOWLEDGE_BACKEND no ambiente vence o perfil YAML?",
+      "rg_patterns": ["KNOWLEDGE_BACKEND", "env wins"],
+      "anchors": [
+        {
+          "path": "orchestrator/src/config/profile.ts",
+          "line": 114,
+          "substring": "if (process.env.KNOWLEDGE_BACKEND?.trim())"
+        }
+      ]
+    },
+    {
+      "id": "H04",
+      "query": "ADR-0012 declara qual backend default no profiles/default.yaml?",
+      "rg_patterns": ["knowledge.backend: wiki", "ADR"],
+      "anchors": [
+        {
+          "path": "docs/adr/0012-wiki-default-knowledge-backend.md",
+          "line": 13,
+          "substring": "Default `knowledge.backend: wiki`"
+        }
+      ]
+    },
+    {
+      "id": "H05",
+      "query": "Qual função trunca stdout para capabilities determinísticas?",
+      "rg_patterns": ["cleanOutput", "truncate"],
+      "anchors": [
+        {
+          "path": "orchestrator/src/capabilities/results.ts",
+          "line": 14,
+          "substring": "export function cleanOutput"
+        }
+      ]
+    },
+    {
+      "id": "H06",
+      "query": "resolveKnowledgeBackend usa qual backend quando id é fake?",
+      "rg_patterns": ["case \"fake\"", "FakeKnowledgeBackend"],
+      "anchors": [
+        {
+          "path": "orchestrator/src/knowledge/backend/resolve.ts",
+          "line": 35,
+          "substring": "case \"fake\":"
+        }
+      ]
+    },
+    {
+      "id": "H07",
+      "query": "No profiles/default.yaml, a memória episódica (wiki-mem) vem habilitada por padrão?",
+      "rg_patterns": ["memory:", "enabled: false", "wiki-mem"],
+      "anchors": [
+        {
+          "path": "profiles/default.yaml",
+          "line": 12,
+          "substring": "enabled: false"
+        }
+      ]
+    },
+    {
+      "id": "H08",
+      "query": "Quando o diretório WIKI_ROOT não existe, qual error_code retorna WikiKnowledgeBackend.search?",
+      "rg_patterns": ["RAG_REPO_MISSING", "resolveWikiRoot"],
+      "anchors": [
+        {
+          "path": "orchestrator/src/knowledge/backend/wiki-backend.ts",
+          "line": 183,
+          "substring": "error_code: \"RAG_REPO_MISSING\""
+        }
+      ]
+    },
+    {
+      "id": "H09",
+      "query": "No contrato KNOWLEDGE-BACKEND-CONTRACT, qual o default de WIKI_CLI_MODULE?",
+      "rg_patterns": ["WIKI_CLI_MODULE", "gaabwiki"],
+      "anchors": [
+        {
+          "path": "docs/architecture/knowledge/KNOWLEDGE-BACKEND-CONTRACT.md",
+          "line": 37,
+          "substring": "default `gaabwiki`"
+        }
+      ]
+    },
+    {
+      "id": "H10",
+      "query": "No ADR-0004, qual módulo Python CLI é o RAG de projeto?",
+      "rg_patterns": ["ADR-0004", "python -m gaabwiki"],
+      "anchors": [
+        {
+          "path": "docs/adr/0004-project-knowledge-contract.md",
+          "line": 21,
+          "substring": "python -m gaabwiki"
+        }
+      ]
+    },
+    {
+      "id": "H11",
+      "query": "Quais valores o tipo KnowledgeBackendId aceita no código?",
+      "rg_patterns": ["KnowledgeBackendId", "wiki", "fake"],
+      "anchors": [
+        {
+          "path": "orchestrator/src/knowledge/backend/types.ts",
+          "line": 11,
+          "substring": "export type KnowledgeBackendId = \"wiki\" | \"fake\""
+        }
+      ]
+    },
+    {
+      "id": "H12",
+      "query": "Qual o timeout em milissegundos da chamada runWikiSearch ao CLI wiki?",
+      "rg_patterns": ["runWikiSearch", "timeoutMs", "20_000"],
+      "anchors": [
+        {
+          "path": "orchestrator/src/knowledge/backend/wiki-backend.ts",
+          "line": 36,
+          "substring": "timeoutMs = 20_000"
+        }
+      ]
+    }
+  ]
+}
