@@ -14,7 +14,7 @@ Legenda de rotulo: `pesquisa` = evidência da pesquisa versionada; `projeto` = e
 | B0 real monorepo | `V22-BENCH/EXPERIMENT-REAL.md` (projeto) | recall B0 informativo | V22-GOAL-003 | `OFFICIAL_BASELINE` B0 | `real_corpus_harness.py` |
 | B1 pack bench | `fixtures/evolveloop-project-knowledge/` (projeto) | recall circular | V22-GOAL-003 | `PROVISIONAL_CURATED_PACK` | aguarda V22-GOAL-005 |
 | Sintético F3 | `V22-BENCH/raw/battery/` (projeto) | tautologia | V22-GOAL-003 | `PROVISIONAL_SYNTHETIC` | `bench_harness.py` |
-| Continuidade S03/S07 | `fixtures/continuity-s37/` (projeto) | não `/mem` engine | V22-GOAL-004 | `PROVISIONAL_CURATED_PACK` B1 | `real_corpus_harness.py` |
+| Continuidade S03/S07 | `fixtures/continuity-s37/` (projeto) + engine `session-continuity` | não `/mem` engine default | V22-GOAL-004 | `PROVISIONAL_CURATED_PACK` B1 | `v22-session-continuity.integration.test.ts` |
 | B1→oficial | `BENCHMARK-PLAN.md` § B1→oficial (projeto) | ground.sh+held-out | V22-GOAL-005 → 003 | `PENDING_BASELINE` | F4 wiki ops |
 | Memória off no default | `profiles/default.yaml` L10–13 (projeto) | Sem continuidade | V22-GOAL-004 | Cenários 3, 7 | Fixture |
 | Hooks sem wiki-mem | `.cursor/hooks.json` (projeto) | Episódico não wired | V22-GOAL-004 | Procedimento opt-in | Skill wiki-mem |

@@ -243,3 +243,14 @@ export { JobStore, type SkillJob, type SkillJobResult } from "./jobs/job-store.j
 export { invokePickup, buildPickupPrompt, type PickupPlan } from "./jobs/job-pickup.js";
 export { jobResultToExecuteResult, loadEvidenceFile } from "./jobs/job-resume.js";
 export { saveCheckpoint, loadCheckpoint, clearCheckpoint, CheckpointError, type EngineCheckpoint } from "./jobs/checkpoint.js";
+export {
+  buildSessionContinuitySnapshot,
+  persistSessionContinuity,
+  loadSessionContinuity,
+  clearSessionContinuity,
+  applySessionContinuityToMemory,
+  continuityEvidencePath,
+  SESSION_CONTINUITY_VERSION,
+  type SessionContinuitySnapshot,
+  type SessionNextAction,
+} from "./session/session-continuity.js";

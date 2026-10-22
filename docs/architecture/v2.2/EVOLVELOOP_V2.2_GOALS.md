@@ -117,6 +117,7 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Validação / testes:** Fixture do plano 08; evidência em `memory/<feature_id>/evidence/` quando usar engine.
 - **Riscos:** Confundir episódico com SSOT de domínio (wiki skill já proíbe).
 - **Condição de conclusão:** Corrida registrada no fixture com verificador verde para cenários 3 e 7.
+- **Implementação (código):** `wired` — `orchestrator/src/session/session-continuity.ts` + checkpoint HMAC existente; hooks em `ExecutionEngine` (persist/load/clear, `satisfied_job_run_ids`); evidência via `evidence-bus`; doc `docs/architecture/v2.2/SESSION-CONTINUITY.md`; testes `orchestrator/tests/integration/v22-session-continuity.integration.test.ts` e `orchestrator/tests/unit/session-continuity.test.ts`.
 
 **Rotulo dominante:** meta + decisão de produto.
 
