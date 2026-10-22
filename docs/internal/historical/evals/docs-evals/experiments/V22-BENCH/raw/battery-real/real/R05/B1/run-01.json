@@ -1,11 +1,11 @@
 {
   "experiment_id": "V22-BENCH-REAL",
   "baseline_id": "v22-real-b0b1-2026-10-22",
-  "run_id": "V22R-R05-B1-fdd18f190b38",
+  "run_id": "V22R-R05-B1-b41a0e84489e",
   "arm": "B1",
   "task_id": "R05",
-  "timestamp": "2026-10-22T00:39:34.163183+00:00",
-  "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+  "timestamp": "2026-10-22T00:40:04.196906+00:00",
+  "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
   "harness": "v22-real-corpus-harness-1.0.0",
   "tokenizer": "tiktoken:cl100k_base",
   "model": {

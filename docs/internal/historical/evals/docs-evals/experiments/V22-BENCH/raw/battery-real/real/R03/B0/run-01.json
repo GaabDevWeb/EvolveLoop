@@ -1,11 +1,11 @@
 {
   "experiment_id": "V22-BENCH-REAL",
   "baseline_id": "v22-real-b0b1-2026-10-22",
-  "run_id": "V22R-R03-B0-9ac581c9e386",
+  "run_id": "V22R-R03-B0-8cd6439faecd",
   "arm": "B0",
   "task_id": "R03",
-  "timestamp": "2026-10-22T00:39:34.077373+00:00",
-  "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+  "timestamp": "2026-10-22T00:40:04.108790+00:00",
+  "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
   "harness": "v22-real-corpus-harness-1.0.0",
   "tokenizer": "tiktoken:cl100k_base",
   "model": {
@@ -68,9 +68,9 @@
         "path_count": 19
       }
     ],
-    "input_tokens": 52998,
+    "input_tokens": 53149,
     "output_tokens": 0,
-    "latency_ms": 38,
+    "latency_ms": 37,
     "recall": 1.0,
     "recall_notes": [],
     "page_cited": null,

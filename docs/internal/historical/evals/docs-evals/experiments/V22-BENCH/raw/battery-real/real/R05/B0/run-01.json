@@ -1,11 +1,11 @@
 {
   "experiment_id": "V22-BENCH-REAL",
   "baseline_id": "v22-real-b0b1-2026-10-22",
-  "run_id": "V22R-R05-B0-3bbb90ea4bdb",
+  "run_id": "V22R-R05-B0-c101d6e69f3b",
   "arm": "B0",
   "task_id": "R05",
-  "timestamp": "2026-10-22T00:39:34.162237+00:00",
-  "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+  "timestamp": "2026-10-22T00:40:04.195942+00:00",
+  "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
   "harness": "v22-real-corpus-harness-1.0.0",
   "tokenizer": "tiktoken:cl100k_base",
   "model": {
@@ -87,7 +87,7 @@
     ],
     "input_tokens": 45212,
     "output_tokens": 0,
-    "latency_ms": 42,
+    "latency_ms": 43,
     "recall": 0.0,
     "recall_notes": [
       "miss path not read: profiles/default.yaml"

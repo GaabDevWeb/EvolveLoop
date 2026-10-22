@@ -2,11 +2,11 @@
   {
     "experiment_id": "V22-BENCH-REAL",
     "baseline_id": "v22-real-b0b1-2026-10-22",
-    "run_id": "V22R-R01-B0-cb0656b1a376",
+    "run_id": "V22R-R01-B0-283b25bf890a",
     "arm": "B0",
     "task_id": "R01",
-    "timestamp": "2026-10-22T00:39:33.985732+00:00",
-    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "timestamp": "2026-10-22T00:40:04.017612+00:00",
+    "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
     "harness": "v22-real-corpus-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {
@@ -86,9 +86,9 @@
           "path_count": 5
         }
       ],
-      "input_tokens": 80382,
+      "input_tokens": 80344,
       "output_tokens": 0,
-      "latency_ms": 54,
+      "latency_ms": 56,
       "recall": 0.0,
       "recall_notes": [
         "miss path not read: orchestrator/src/jobs/checkpoint.ts"
@@ -107,11 +107,11 @@
   {
     "experiment_id": "V22-BENCH-REAL",
     "baseline_id": "v22-real-b0b1-2026-10-22",
-    "run_id": "V22R-R01-B1-accd7bf67b46",
+    "run_id": "V22R-R01-B1-8d10423aff05",
     "arm": "B1",
     "task_id": "R01",
-    "timestamp": "2026-10-22T00:39:33.987929+00:00",
-    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "timestamp": "2026-10-22T00:40:04.019886+00:00",
+    "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
     "harness": "v22-real-corpus-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {
@@ -155,11 +155,11 @@
   {
     "experiment_id": "V22-BENCH-REAL",
     "baseline_id": "v22-real-b0b1-2026-10-22",
-    "run_id": "V22R-R02-B0-d1f038f6b319",
+    "run_id": "V22R-R02-B0-8c2e737144d4",
     "arm": "B0",
     "task_id": "R02",
-    "timestamp": "2026-10-22T00:39:34.037279+00:00",
-    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "timestamp": "2026-10-22T00:40:04.069271+00:00",
+    "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
     "harness": "v22-real-corpus-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {
@@ -239,7 +239,7 @@
           "path_count": 158
         }
       ],
-      "input_tokens": 80382,
+      "input_tokens": 80344,
       "output_tokens": 0,
       "latency_ms": 49,
       "recall": 0.0,
@@ -260,11 +260,11 @@
   {
     "experiment_id": "V22-BENCH-REAL",
     "baseline_id": "v22-real-b0b1-2026-10-22",
-    "run_id": "V22R-R02-B1-6b2b3a9efd20",
+    "run_id": "V22R-R02-B1-71531f218f49",
     "arm": "B1",
     "task_id": "R02",
-    "timestamp": "2026-10-22T00:39:34.039155+00:00",
-    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "timestamp": "2026-10-22T00:40:04.071372+00:00",
+    "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
     "harness": "v22-real-corpus-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {
@@ -308,11 +308,11 @@
   {
     "experiment_id": "V22-BENCH-REAL",
     "baseline_id": "v22-real-b0b1-2026-10-22",
-    "run_id": "V22R-R03-B0-9ac581c9e386",
+    "run_id": "V22R-R03-B0-8cd6439faecd",
     "arm": "B0",
     "task_id": "R03",
-    "timestamp": "2026-10-22T00:39:34.077373+00:00",
-    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "timestamp": "2026-10-22T00:40:04.108790+00:00",
+    "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
     "harness": "v22-real-corpus-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {
@@ -375,9 +375,9 @@
           "path_count": 19
         }
       ],
-      "input_tokens": 52998,
+      "input_tokens": 53149,
       "output_tokens": 0,
-      "latency_ms": 38,
+      "latency_ms": 37,
       "recall": 1.0,
       "recall_notes": [],
       "page_cited": null,
@@ -392,11 +392,11 @@
   {
     "experiment_id": "V22-BENCH-REAL",
     "baseline_id": "v22-real-b0b1-2026-10-22",
-    "run_id": "V22R-R03-B1-ec84fdc97c5f",
+    "run_id": "V22R-R03-B1-51a50c5d7120",
     "arm": "B1",
     "task_id": "R03",
-    "timestamp": "2026-10-22T00:39:34.078768+00:00",
-    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "timestamp": "2026-10-22T00:40:04.110303+00:00",
+    "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
     "harness": "v22-real-corpus-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {
@@ -438,11 +438,11 @@
   {
     "experiment_id": "V22-BENCH-REAL",
     "baseline_id": "v22-real-b0b1-2026-10-22",
-    "run_id": "V22R-R04-B0-678d03260e1c",
+    "run_id": "V22R-R04-B0-175c305e88c2",
     "arm": "B0",
     "task_id": "R04",
-    "timestamp": "2026-10-22T00:39:34.118234+00:00",
-    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "timestamp": "2026-10-22T00:40:04.150956+00:00",
+    "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
     "harness": "v22-real-corpus-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {
@@ -522,9 +522,9 @@
           "path_count": 45
         }
       ],
-      "input_tokens": 44403,
+      "input_tokens": 44479,
       "output_tokens": 0,
-      "latency_ms": 39,
+      "latency_ms": 40,
       "recall": 1.0,
       "recall_notes": [],
       "page_cited": null,
@@ -539,11 +539,11 @@
   {
     "experiment_id": "V22-BENCH-REAL",
     "baseline_id": "v22-real-b0b1-2026-10-22",
-    "run_id": "V22R-R04-B1-c7402afffe74",
+    "run_id": "V22R-R04-B1-9a66f4d62a9b",
     "arm": "B1",
     "task_id": "R04",
-    "timestamp": "2026-10-22T00:39:34.119440+00:00",
-    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "timestamp": "2026-10-22T00:40:04.152165+00:00",
+    "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
     "harness": "v22-real-corpus-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {
@@ -585,11 +585,11 @@
   {
     "experiment_id": "V22-BENCH-REAL",
     "baseline_id": "v22-real-b0b1-2026-10-22",
-    "run_id": "V22R-R05-B0-3bbb90ea4bdb",
+    "run_id": "V22R-R05-B0-c101d6e69f3b",
     "arm": "B0",
     "task_id": "R05",
-    "timestamp": "2026-10-22T00:39:34.162237+00:00",
-    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "timestamp": "2026-10-22T00:40:04.195942+00:00",
+    "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
     "harness": "v22-real-corpus-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {
@@ -671,7 +671,7 @@
       ],
       "input_tokens": 45212,
       "output_tokens": 0,
-      "latency_ms": 42,
+      "latency_ms": 43,
       "recall": 0.0,
       "recall_notes": [
         "miss path not read: profiles/default.yaml"
@@ -690,11 +690,11 @@
   {
     "experiment_id": "V22-BENCH-REAL",
     "baseline_id": "v22-real-b0b1-2026-10-22",
-    "run_id": "V22R-R05-B1-fdd18f190b38",
+    "run_id": "V22R-R05-B1-b41a0e84489e",
     "arm": "B1",
     "task_id": "R05",
-    "timestamp": "2026-10-22T00:39:34.163183+00:00",
-    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "timestamp": "2026-10-22T00:40:04.196906+00:00",
+    "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
     "harness": "v22-real-corpus-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {
@@ -736,11 +736,11 @@
   {
     "experiment_id": "V22-BENCH-REAL",
     "baseline_id": "v22-real-b0b1-2026-10-22",
-    "run_id": "V22R-R06-B0-63798d5c3870",
+    "run_id": "V22R-R06-B0-660ecc6cbd61",
     "arm": "B0",
     "task_id": "R06",
-    "timestamp": "2026-10-22T00:39:34.211759+00:00",
-    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "timestamp": "2026-10-22T00:40:04.248333+00:00",
+    "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
     "harness": "v22-real-corpus-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {
@@ -801,9 +801,9 @@
           "path_count": 8
         }
       ],
-      "input_tokens": 95231,
+      "input_tokens": 95382,
       "output_tokens": 0,
-      "latency_ms": 48,
+      "latency_ms": 51,
       "recall": 0.0,
       "recall_notes": [
         "miss path not read: .cursor/skills/orquestrar/references/gate-bundle.md"
@@ -822,11 +822,11 @@
   {
     "experiment_id": "V22-BENCH-REAL",
     "baseline_id": "v22-real-b0b1-2026-10-22",
-    "run_id": "V22R-R06-B1-0907bdb1e83d",
+    "run_id": "V22R-R06-B1-e7bfcf8152f1",
     "arm": "B1",
     "task_id": "R06",
-    "timestamp": "2026-10-22T00:39:34.213142+00:00",
-    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "timestamp": "2026-10-22T00:40:04.249895+00:00",
+    "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
     "harness": "v22-real-corpus-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {
@@ -868,11 +868,11 @@
   {
     "experiment_id": "V22-BENCH-REAL",
     "baseline_id": "v22-real-b0b1-2026-10-22",
-    "run_id": "V22R-S03-B0-9412f233f830",
+    "run_id": "V22R-S03-B0-5cc80e65ff9c",
     "arm": "B0",
     "task_id": "S03",
-    "timestamp": "2026-10-22T00:39:34.221521+00:00",
-    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "timestamp": "2026-10-22T00:40:04.257999+00:00",
+    "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
     "harness": "v22-real-corpus-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {
@@ -909,7 +909,7 @@
       ],
       "input_tokens": 192,
       "output_tokens": 0,
-      "latency_ms": 8,
+      "latency_ms": 7,
       "recall": 0.0,
       "recall_notes": [
         "miss path not read: .ai/pages/decision-freeze-pin.md"
@@ -928,11 +928,11 @@
   {
     "experiment_id": "V22-BENCH-REAL",
     "baseline_id": "v22-real-b0b1-2026-10-22",
-    "run_id": "V22R-S03-B1-57324b06219d",
+    "run_id": "V22R-S03-B1-99bd08a6ba9a",
     "arm": "B1",
     "task_id": "S03",
-    "timestamp": "2026-10-22T00:39:34.222025+00:00",
-    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "timestamp": "2026-10-22T00:40:04.258497+00:00",
+    "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
     "harness": "v22-real-corpus-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {
@@ -969,11 +969,11 @@
   {
     "experiment_id": "V22-BENCH-REAL",
     "baseline_id": "v22-real-b0b1-2026-10-22",
-    "run_id": "V22R-S07-B1-d9e0ac09421f",
+    "run_id": "V22R-S07-B1-f6ee6cd1f563",
     "arm": "B1",
     "task_id": "S07",
-    "timestamp": "2026-10-22T00:39:34.222410+00:00",
-    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "timestamp": "2026-10-22T00:40:04.258885+00:00",
+    "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
     "harness": "v22-real-corpus-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {

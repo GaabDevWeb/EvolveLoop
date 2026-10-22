@@ -1,11 +1,11 @@
 {
   "experiment_id": "V22-BENCH-REAL",
   "baseline_id": "v22-real-b0b1-2026-10-22",
-  "run_id": "V22R-R01-B0-cb0656b1a376",
+  "run_id": "V22R-R01-B0-283b25bf890a",
   "arm": "B0",
   "task_id": "R01",
-  "timestamp": "2026-10-22T00:39:33.985732+00:00",
-  "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+  "timestamp": "2026-10-22T00:40:04.017612+00:00",
+  "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
   "harness": "v22-real-corpus-harness-1.0.0",
   "tokenizer": "tiktoken:cl100k_base",
   "model": {
@@ -85,9 +85,9 @@
         "path_count": 5
       }
     ],
-    "input_tokens": 80382,
+    "input_tokens": 80344,
     "output_tokens": 0,
-    "latency_ms": 54,
+    "latency_ms": 56,
     "recall": 0.0,
     "recall_notes": [
       "miss path not read: orchestrator/src/jobs/checkpoint.ts"

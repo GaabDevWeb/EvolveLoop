@@ -4,13 +4,13 @@
   "classification_note": "EvolveLoop git root corpus; tasks frozen in tasks-real-frozen.json",
   "baseline_id": "v22-real-b0b1-2026-10-22",
   "mode": "REAL_CORPUS_RETRIEVAL",
-  "freeze_tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+  "freeze_tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
   "tasks_frozen": "tasks-real-frozen.json",
   "aggregates": {
     "R01:B0": {
       "median_paths": 45.0,
-      "median_input_tokens": 80382.0,
-      "median_latency_ms": 54.0,
+      "median_input_tokens": 80344.0,
+      "median_latency_ms": 56.0,
       "recall": 0.0
     },
     "R01:B1": {
@@ -21,7 +21,7 @@
     },
     "R02:B0": {
       "median_paths": 45.0,
-      "median_input_tokens": 80382.0,
+      "median_input_tokens": 80344.0,
       "median_latency_ms": 49.0,
       "recall": 0.0
     },
@@ -33,8 +33,8 @@
     },
     "R03:B0": {
       "median_paths": 28.0,
-      "median_input_tokens": 52998.0,
-      "median_latency_ms": 38.0,
+      "median_input_tokens": 53149.0,
+      "median_latency_ms": 37.0,
       "recall": 1.0
     },
     "R03:B1": {
@@ -45,8 +45,8 @@
     },
     "R04:B0": {
       "median_paths": 45.0,
-      "median_input_tokens": 44403.0,
-      "median_latency_ms": 39.0,
+      "median_input_tokens": 44479.0,
+      "median_latency_ms": 40.0,
       "recall": 1.0
     },
     "R04:B1": {
@@ -58,7 +58,7 @@
     "R05:B0": {
       "median_paths": 45.0,
       "median_input_tokens": 45212.0,
-      "median_latency_ms": 42.0,
+      "median_latency_ms": 43.0,
       "recall": 0.0
     },
     "R05:B1": {
@@ -69,8 +69,8 @@
     },
     "R06:B0": {
       "median_paths": 26.0,
-      "median_input_tokens": 95231.0,
-      "median_latency_ms": 48.0,
+      "median_input_tokens": 95382.0,
+      "median_latency_ms": 51.0,
       "recall": 0.0
     },
     "R06:B1": {
@@ -82,7 +82,7 @@
     "S03:B0": {
       "median_paths": 8.0,
       "median_input_tokens": 192.0,
-      "median_latency_ms": 8.0,
+      "median_latency_ms": 7.0,
       "recall": 0.0
     },
     "S03:B1": {
@@ -101,7 +101,7 @@
   "rollups": {
     "real_repo_B0_median_paths": 45.0,
     "real_repo_B1_median_paths": 3.0,
-    "real_repo_B0_median_tokens": 66690.0,
+    "real_repo_B0_median_tokens": 66746.5,
     "real_repo_B1_median_tokens": 1781.0
   },
   "environment": {
@@ -109,25 +109,25 @@
     "python": "3.12.3",
     "harness": "real_corpus_harness.py",
     "tokenizer": "tiktoken:cl100k_base",
-    "source_revision": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "source_revision": "154b2d3c54d33815112769668e71817fdf118375",
     "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset on benchmark VM; ground.sh requires vault",
     "b1_mechanism": "project .ai/ knowledge pack"
   },
   "runs": [
-    "V22R-R01-B0-cb0656b1a376",
-    "V22R-R01-B1-accd7bf67b46",
-    "V22R-R02-B0-d1f038f6b319",
-    "V22R-R02-B1-6b2b3a9efd20",
-    "V22R-R03-B0-9ac581c9e386",
-    "V22R-R03-B1-ec84fdc97c5f",
-    "V22R-R04-B0-678d03260e1c",
-    "V22R-R04-B1-c7402afffe74",
-    "V22R-R05-B0-3bbb90ea4bdb",
-    "V22R-R05-B1-fdd18f190b38",
-    "V22R-R06-B0-63798d5c3870",
-    "V22R-R06-B1-0907bdb1e83d",
-    "V22R-S03-B0-9412f233f830",
-    "V22R-S03-B1-57324b06219d",
-    "V22R-S07-B1-d9e0ac09421f"
+    "V22R-R01-B0-283b25bf890a",
+    "V22R-R01-B1-8d10423aff05",
+    "V22R-R02-B0-8c2e737144d4",
+    "V22R-R02-B1-71531f218f49",
+    "V22R-R03-B0-8cd6439faecd",
+    "V22R-R03-B1-51a50c5d7120",
+    "V22R-R04-B0-175c305e88c2",
+    "V22R-R04-B1-9a66f4d62a9b",
+    "V22R-R05-B0-c101d6e69f3b",
+    "V22R-R05-B1-b41a0e84489e",
+    "V22R-R06-B0-660ecc6cbd61",
+    "V22R-R06-B1-e7bfcf8152f1",
+    "V22R-S03-B0-5cc80e65ff9c",
+    "V22R-S03-B1-99bd08a6ba9a",
+    "V22R-S07-B1-f6ee6cd1f563"
   ]
 }

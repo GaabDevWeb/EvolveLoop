@@ -1,7 +1,7 @@
 {
   "schema": "v22-bench-real-tasks-v1",
   "frozen_at_utc": "2026-10-22T00:45:00Z",
-  "freeze_tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+  "freeze_tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
   "corpus_root": "/workspace",
   "corpus_label": "EvolveLoop monorepo (git root)",
   "b1_mechanism": {

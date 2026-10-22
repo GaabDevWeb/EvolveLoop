@@ -3,7 +3,7 @@
   "python": "3.12.3",
   "harness": "real_corpus_harness.py",
   "tokenizer": "tiktoken:cl100k_base",
-  "source_revision": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+  "source_revision": "154b2d3c54d33815112769668e71817fdf118375",
   "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset on benchmark VM; ground.sh requires vault",
   "b1_mechanism": "project .ai/ knowledge pack"
 }

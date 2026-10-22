@@ -1,11 +1,11 @@
 {
   "experiment_id": "V22-BENCH-REAL",
   "baseline_id": "v22-real-b0b1-2026-10-22",
-  "run_id": "V22R-S03-B0-9412f233f830",
+  "run_id": "V22R-S03-B0-5cc80e65ff9c",
   "arm": "B0",
   "task_id": "S03",
-  "timestamp": "2026-10-22T00:39:34.221521+00:00",
-  "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+  "timestamp": "2026-10-22T00:40:04.257999+00:00",
+  "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
   "harness": "v22-real-corpus-harness-1.0.0",
   "tokenizer": "tiktoken:cl100k_base",
   "model": {
@@ -42,7 +42,7 @@
     ],
     "input_tokens": 192,
     "output_tokens": 0,
-    "latency_ms": 8,
+    "latency_ms": 7,
     "recall": 0.0,
     "recall_notes": [
       "miss path not read: .ai/pages/decision-freeze-pin.md"
