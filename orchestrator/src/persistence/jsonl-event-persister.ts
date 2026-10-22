@@ -2,6 +2,7 @@ import { appendFileSync, mkdirSync, readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import type { EventEnvelope } from "../types/index.js";
 import type { EventBus } from "../events/event-bus.js";
+import { serializeJsonlForPublish } from "../evidence/publish-sanitize.js";
 
 export class JsonlEventPersister {
   constructor(private eventsDir: string) {}
@@ -12,7 +13,11 @@ export class JsonlEventPersister {
 
   append(event: EventEnvelope): void {
     mkdirSync(this.eventsDir, { recursive: true });
-    appendFileSync(this.pathFor(event.feature_id), `${JSON.stringify(event)}\n`, "utf-8");
+    appendFileSync(
+      this.pathFor(event.feature_id),
+      `${serializeJsonlForPublish(event)}\n`,
+      "utf-8",
+    );
   }
 
   attach(bus: EventBus, featureId: string): () => void {

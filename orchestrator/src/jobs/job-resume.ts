@@ -1,20 +1,25 @@
-import { readFileSync, existsSync } from "node:fs";
-import { resolve } from "node:path";
+import { existsSync } from "node:fs";
+import { isAbsolute, join, resolve } from "node:path";
 import type { Evidence, ExecuteResult, GraphNode } from "../types/index.js";
+import { readSanitizedEvidence } from "../evidence/evidence-bus.js";
 import type { SkillJob, SkillJobResult } from "./job-store.js";
 
-export function loadEvidenceFile(path: string): Evidence {
-  const abs = resolve(path);
+export function loadEvidenceFile(path: string, jobsDir?: string): Evidence {
+  let abs = resolve(path);
+  if (!existsSync(abs) && jobsDir && !isAbsolute(path)) {
+    abs = resolve(join(jobsDir, path));
+  }
   if (!existsSync(abs)) {
     throw new Error(`Evidence file not found: ${abs}`);
   }
-  return JSON.parse(readFileSync(abs, "utf-8")) as Evidence;
+  return readSanitizedEvidence(abs);
 }
 
 export function jobResultToExecuteResult(
   job: SkillJob,
   result: SkillJobResult,
   node: GraphNode,
+  jobsDir?: string,
 ): ExecuteResult {
   if (!result.success) {
     return {
@@ -38,7 +43,7 @@ export function jobResultToExecuteResult(
 
   let evidence: Evidence;
   try {
-    evidence = loadEvidenceFile(result.evidence_path);
+    evidence = loadEvidenceFile(result.evidence_path, jobsDir);
   } catch (err) {
     return {
       run_id: job.run_id,

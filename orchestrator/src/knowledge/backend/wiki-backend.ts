@@ -8,6 +8,7 @@ import { spawn } from "node:child_process";
 import { existsSync } from "node:fs";
 import type { EvidenceSet, KnowledgeHit } from "../../capabilities/results.js";
 import { cleanOutput } from "../../capabilities/results.js";
+import { redactSecrets } from "../../evidence/secret-redaction.js";
 import type {
   KnowledgeBackend,
   KnowledgeHealth,
@@ -116,7 +117,9 @@ function mapGaabwikiHit(raw: Record<string, unknown>): KnowledgeHit {
     score: typeof raw.score === "number" ? raw.score : undefined,
     retrieval_method: raw.retrieval_method ? String(raw.retrieval_method) : undefined,
     project: raw.project ? String(raw.project) : undefined,
-    excerpt: excerptRaw ? cleanOutput(String(excerptRaw), 500) : undefined,
+    excerpt: excerptRaw
+      ? redactSecrets(cleanOutput(String(excerptRaw), 500))
+      : undefined,
     chunk_id: raw.chunk_id ? String(raw.chunk_id) : undefined,
     degraded,
   };

@@ -100,13 +100,17 @@ const DEFAULT_HANDLERS: Record<string, DeterministicHandler> = {
   },
   "system.inspect": () => systemHandlers.systemInspect(),
   "project.inspect": (req, ctx) => projectInspect(ctx.workspaceRoot, requestInputs(req).path ?? "."),
-  "knowledge.search": (req) => {
+  "knowledge.search": (req, ctx) => {
     const inputs = requestInputs(req);
     const query = inputs.query ?? inputs.q;
     if (!query) throw Object.assign(new Error("missing query"), { code: "MALFORMED_INPUT" });
-    return knowledgeSearch(query);
+    return knowledgeSearch(query, { projectRoot: ctx.workspaceRoot });
   },
-  "knowledge.inspect": (req) => knowledgeInspect(requestInputs(req).query ?? requestInputs(req).q ?? ""),
+  "knowledge.inspect": (req, ctx) => {
+    const inputs = requestInputs(req);
+    const query = inputs.query ?? inputs.q ?? "";
+    return knowledgeInspect(query, { projectRoot: ctx.workspaceRoot });
+  },
 };
 
 function capabilityPermissions(capability: string): {

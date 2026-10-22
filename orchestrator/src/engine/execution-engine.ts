@@ -35,6 +35,8 @@ import { PatternAggregator } from "../learning/pattern-aggregator.js";
 import type { Evidence, FeatureRunState } from "../types/index.js";
 import { JobStore } from "../jobs/job-store.js";
 import { jobResultToExecuteResult } from "../jobs/job-resume.js";
+import { persistNodeEvidence, persistRunSummary } from "../evidence/evidence-bus.js";
+import { redactSecrets } from "../evidence/secret-redaction.js";
 import { saveCheckpoint, loadCheckpoint, clearCheckpoint } from "../jobs/checkpoint.js";
 import type { Scheduler as SchedulerType } from "../scheduler/scheduler.js";
 import type { LongitudinalEvolveLoop } from "../evolveloop/longitudinal-controller.js";
@@ -384,6 +386,24 @@ export class ExecutionEngine {
       clearCheckpoint(this.jobsDir, featureId);
     }
 
+    const runSummary = {
+      success,
+      finished: success || !!this.blockedReason || this.aborted,
+      state: this.runState,
+      blocked_reason: this.blockedReason ?? (success ? undefined : "max_iterations"),
+      metrics: metrics.snapshot(graph.snapshot(), success),
+      evidence_count: this.allEvidence.length,
+      nodes: graph.snapshot().nodes.map((n) => ({
+        id: n.id,
+        status: n.status,
+        capability: n.capability,
+      })),
+    };
+
+    if (this.dataPaths) {
+      persistRunSummary(this.dataPaths.memoryDir, featureId, runSummary);
+    }
+
     return {
       success,
       finished: success || !!this.blockedReason || this.aborted,
@@ -458,7 +478,7 @@ export class ExecutionEngine {
       const result = store.readResult(node.run_id);
       if (!job || !result) continue;
 
-      const executeResult = jobResultToExecuteResult(job, result, node);
+      const executeResult = jobResultToExecuteResult(job, result, node, this.jobsDir);
       graph.setNodeStatus(node.id, "running");
       this.processRunResult(
         executeResult,
@@ -642,6 +662,9 @@ export class ExecutionEngine {
 
     graph.setNodeStatus(nodeId, "satisfied");
     graph.setNodeEvidence(nodeId, run.evidence);
+    if (this.dataPaths && run.evidence) {
+      persistNodeEvidence(this.dataPaths.memoryDir, featureId, node, run.evidence);
+    }
     this.registry.recordSuccess(run.provider_id, run);
 
     const simulated = run.evidence?.spec.assumptions?.includes(SIMULATED_EXECUTION_MARK) === true;
@@ -663,7 +686,10 @@ export class ExecutionEngine {
 
     if (run.contextual_learnings?.length) {
       for (const entry of run.contextual_learnings) {
-        this.memory.append(featureId, entry);
+        this.memory.append(featureId, {
+          ...entry,
+          content: redactSecrets(entry.content),
+        });
         eventBus.emit("MemoryWritten", featureId, "scheduler", {
           scope: featureId,
           entry,

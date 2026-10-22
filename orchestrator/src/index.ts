@@ -108,6 +108,50 @@ export {
 } from "./knowledge/backend/wiki-backend.js";
 export { FakeKnowledgeBackend } from "./knowledge/backend/fake-backend.js";
 export {
+  ProjectKnowledgeRuntime,
+  fenceEvidenceSet,
+  assertEveryHitHasProvenance,
+} from "./knowledge/truth-source/runtime.js";
+export type {
+  TruthSourcedItem,
+  TruthSourceTier,
+  TruthFenceResult,
+  ProjectIsolationReport,
+} from "./knowledge/truth-source/types.js";
+export {
+  applyTruthFence,
+  codeOverridesWiki,
+} from "./knowledge/truth-source/fence.js";
+export { normalizeAiPageStatus, isProvenanceComplete } from "./knowledge/truth-source/provenance.js";
+export {
+  detectCrossProjectLeakage,
+  projectScopeId,
+  scopedGraphCacheDir,
+} from "./knowledge/truth-source/isolation.js";
+export {
+  redactSecrets,
+  sanitizeDeep,
+  assertNoCanaryInPublishedEvidence,
+  EVIDENCE_SECRET_CANARY,
+} from "./evidence/secret-redaction.js";
+export {
+  sanitizeEvidenceForPublish,
+  serializeEvidenceForPublish,
+  serializeForPublish,
+} from "./evidence/publish-sanitize.js";
+export {
+  resolveEvidenceDir,
+  persistNodeEvidence,
+  persistRunSummary,
+  writeSanitizedJsonFile,
+  writeSanitizedTextFile,
+  copySanitizedEvidenceToJobsDir,
+} from "./evidence/evidence-bus.js";
+export {
+  isTruthFenceEnabled,
+  resolveKnowledgeProjectRoot,
+} from "./providers/deterministic/knowledge.js";
+export {
   loadMegaBrainProfile,
   loadEvolveLoopProfile,
   resolveKnowledgeBackendId,
