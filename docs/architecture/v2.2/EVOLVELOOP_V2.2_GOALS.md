@@ -15,7 +15,7 @@ A V2.2 torna **conhecimento por projeto** e **recuperação com orçamento** ope
 
 1. **Ownership do contexto de trabalho** indefinido — ADR-DR-0005 adia compaction; ADR-DR-0002 adia budget de skills no runtime (`docs/architecture/finalization/ADR-INDEX.md`).
 2. **Hierarquia de fonte de verdade** não operacionalizada — código, `.ai/`, vault e grafo inferido coexistem sem proveniência nem detecção de obsoleto unificada (`docs/research/evolveloop-v2.2/07-compatibility-matrix.md`).
-3. **Medição ausente** — E-001 é PROXY whitespace; plano 08 está `NOT_MEASURED` (`docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md`).
+3. **Medição parcial** — E-001 é PROXY whitespace; B0/B1 offline em `V22-BENCH` (`docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/EXPERIMENT.md`); LLM ao vivo ainda `NOT_MEASURED`.
 4. **Continuidade entre sessões** não verificável no perfil público — `memory.enabled: false`, hooks sem `wiki-mem` (`profiles/default.yaml`, `.cursor/hooks.json`).
 5. **Grounding Wiki fail-closed** quando `WIKI_ROOT` ausente (`orchestrator/src/knowledge/backend/wiki-backend.ts`).
 
@@ -85,16 +85,16 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Prioridade:** P0
 - **Título:** Harness de benchmark e baselines B0/B1
 - **Problema:** E-001 mede `token_estimate` por whitespace e `task_success NOT_MEASURED` (`docs/internal/historical/evals/docs-evals/experiments/E-001/EXPERIMENT.md`).
-- **Estado atual:** Plano 08 completo mas sem execução (`docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md`).
-- **Resultado:** Fixture + harness estilo E-001; **B0 e B1 executados uma vez**; raw JSON em árvore de evidência; tokenizer e modelo nomeados.
-- **Solução:** Novo experimento sob `docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/` (ver `BENCHMARK-PLAN.md`).
-- **Dependências:** Acesso a um modelo para fechar P0; sem modelo, harness entregue com resultado `NOT_MEASURED` (não conta como meta concluída).
+- **Estado atual:** B0 real `OFFICIAL_BASELINE` (`raw/battery-real/`); B1 bench pack `PROVISIONAL_CURATED_PACK`; sintético `PROVISIONAL_SYNTHETIC`; LLM `NOT_MEASURED`.
+- **Resultado:** B0 medido no monorepo (6 tarefas); B1 no pack curado (recall circular); S03/S07 no mini-fixture (B1 provisório).
+- **Solução:** `V22-BENCH/` + `BENCHMARK-PLAN.md` § B1→oficial.
+- **Dependências:** **B1 OFFICIAL** bloqueado até **V22-GOAL-005** (`ground.sh`/`WIKI_ROOT`, conhecimento sem gabarito, held-out). LLM ao vivo: `NOT_MEASURED`.
 - **Impacto arquitetural:** Nenhum no runtime de produção.
 - **Critérios de aceite:** Raw contém tokens entrada/saída, paths lidos, verificador, SHA do tree, id do modelo; integridade do scorer.
-- **Métricas:** Valores numéricos **somente** como observação do baseline; alvos de melhoria = `PENDING_BASELINE` até calibração pós-B0/B1 (D2).
+- **Métricas:** **OFFICIAL_BASELINE (B0):** paths mediana 45; tokens entrada mediana ~66747; recall por tarefa informativo (não gate). **PROVISIONAL_CURATED_PACK (B1):** observação recall 1.0*, paths mediana 3, tokens 1781 — *circular; **não** alvo oficial. Alvos B1/continuidade: `PENDING_BASELINE` até GOAL-005 + held-out. **PROVISIONAL_SYNTHETIC:** sanity apenas. LLM: `NOT_MEASURED`.
 - **Validação / testes:** `integrity_test` análogo ao E-001; cenários 1–2 mínimos para B0/B1.
 - **Riscos:** Cache do host Cursor desconhecido → registrar `UNKNOWN` no raw.
-- **Condição de conclusão:** Baselines B0 e B1 publicados; metas P1/P2 que dependem de economia referenciam esses números, não benchmarks externos.
+- **Condição de conclusão:** B0 oficial publicado; B1 oficial após V22-GOAL-005; P1/P2 economia só com B1 oficial ou `PENDING_BASELINE`.
 
 **Rotulo dominante:** meta + evidência projeto.
 
@@ -112,7 +112,7 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Dependências:** V22-GOAL-002 (cerca); V22-GOAL-005 (wiki de projeto) para braço B1.
 - **Impacto arquitetural:** Opt-in preservado; sem segundo `KnowledgeBackend`.
 - **Critérios de aceite:** Cenário 3: mesma tarefa de retomada; verificador acerta; cenário 7: cita página/ADR/código.
-- **Métricas:** Acerto do verificador; paths lidos; tokens `PENDING_BASELINE` até V22-GOAL-003.
+- **Métricas:** S03/S07 B1 no mini-fixture: `PROVISIONAL_CURATED_PACK` (obs. paths 2, tokens 114). Alvos oficiais continuidade: `PENDING_BASELINE` até B1 wiki real (005). Episódico engine/host: `NOT_MEASURED`.
 - **Validação / testes:** Fixture do plano 08; evidência em `memory/<feature_id>/evidence/` quando usar engine.
 - **Riscos:** Confundir episódico com SSOT de domínio (wiki skill já proíbe).
 - **Condição de conclusão:** Corrida registrada no fixture com verificador verde para cenários 3 e 7.
@@ -130,10 +130,10 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Estado atual:** `knowledge.backend: wiki` no perfil (`profiles/default.yaml`); `ground.sh` exige `WIKI_ROOT` (`.cursor/skills/wiki/scripts/ground.sh`); Carpaccio normativo em ADR-0004.
 - **Resultado:** Ambiente de referência documentado onde `ground.sh list-packs` funciona; workflows init/query/update/lint em fixture; atualização incremental após mudança relevante.
 - **Solução:** Operacionalizar `wiki` + `wiki-carpaccio` (host); bridge Python inalterada; sem LanceDB no TS (ADR-0004).
-- **Dependências:** V22-GOAL-002; V22-GOAL-003 para métricas de token.
+- **Dependências:** V22-GOAL-002; desbloqueia **B1 OFFICIAL** em V22-GOAL-003 (bench pack é `PROVISIONAL_CURATED_PACK`).
 - **Impacto arquitetural:** Arquivos no projeto-alvo e config de ambiente; sem novo `KnowledgeBackendId`.
 - **Critérios de aceite:** Cenários 2, 3, 6, 7 do plano 08; excerpt cap 500 permanece até ADR que altere (`wiki-backend.ts`).
-- **Métricas:** Paths lidos; páginas `atual` com hash válido; tokens totais `PENDING_BASELINE`.
+- **Métricas:** Bench B1 pack: `PROVISIONAL_CURATED_PACK` (não gate). `ground.sh`+vault: pré-requisito B1 oficial — `NOT_MEASURED` no VM bench. Páginas `atual`+hash: `PENDING_BASELINE` até lint operacional.
 - **Validação / testes:** Fixture; opcional `knowledge-backend.test.ts` quando deps instaladas.
 - **Riscos:** Wiki gigante na primeira sessão — init mínima obrigatória no teste.
 - **Condição de conclusão:** Quatro workflows (init, query, update, lint) com corrida registrada.
@@ -154,7 +154,7 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Dependências:** V22-GOAL-005; V22-GOAL-003 para alvos numéricos de token.
 - **Impacto arquitetural:** Aditivo em evidência; sem mudança obrigatória de contrato.
 - **Critérios de aceite:** Cenário 10: braço com orçamento não perde verificador nem lê path canário redundante.
-- **Métricas:** Leituras redundantes = 0 para path já evidenciado; tokens `PENDING_BASELINE`.
+- **Métricas:** B0 oficial: cap observado 45 paths (informativo). B1 bench: `PROVISIONAL_CURATED_PACK` — alvos paths/tokens `PENDING_BASELINE` até B1 oficial (003←005). Redundância: 0. PROVISIONAL_SYNTHETIC: não gate.
 - **Validação / testes:** Log de paths por run; gap do host Cursor documentado se paths não observáveis.
 - **Riscos:** Orçamento corta função no meio — cortar por arquivo inteiro.
 - **Condição de conclusão:** Fixture mostra lista de paths e ausência de canário cruzado.

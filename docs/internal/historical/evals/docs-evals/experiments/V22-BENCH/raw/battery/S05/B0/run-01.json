@@ -1,0 +1,95 @@
+{
+  "experiment_id": "V22-BENCH",
+  "baseline_id": "v22-b0b1-2026-10-22",
+  "run_id": "V22-S05-B0-47112bedb9e65264",
+  "arm": "B0",
+  "scenario": {
+    "id": "S05",
+    "number": 5,
+    "title": "Mudan\u00e7a em alpha \u2014 dependentes"
+  },
+  "timestamp": "2026-10-22T00:39:33.785273+00:00",
+  "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+  "harness": "v22-bench-harness-1.0.0",
+  "tokenizer": "tiktoken:cl100k_base",
+  "model": {
+    "id": "NOT_MEASURED",
+    "note": "offline deterministic retrieval; no live LLM in this battery"
+  },
+  "host_cache": "UNKNOWN",
+  "context_budget_tokens_declared": 128000,
+  "task": {
+    "query": "Se alterarmos src/alpha/core.py, quais arquivos devem ser revisados?"
+  },
+  "metrics": {
+    "arm": "B0",
+    "scenario_id": "S05",
+    "paths_read": [
+      "README.md",
+      "docs/adr/0001-alpha-gateway.md",
+      "src/alpha/core.py",
+      "src/beta/consumer.py",
+      "src/noise/filler_1.py",
+      "src/noise/filler_10.py",
+      "src/noise/filler_11.py",
+      "src/noise/filler_12.py",
+      "src/noise/filler_2.py",
+      "src/noise/filler_3.py",
+      "src/noise/filler_4.py",
+      "src/noise/filler_5.py",
+      "src/noise/filler_6.py",
+      "src/noise/filler_7.py",
+      "src/noise/filler_8.py"
+    ],
+    "rg_invocations": [
+      {
+        "pattern": "alpha",
+        "paths": [
+          "README.md",
+          "docs/adr/0001-alpha-gateway.md",
+          "src/alpha/core.py",
+          "src/beta/consumer.py"
+        ]
+      },
+      {
+        "pattern": "AlphaGateway",
+        "paths": [
+          "docs/adr/0001-alpha-gateway.md",
+          "src/alpha/core.py",
+          "src/beta/consumer.py",
+          "src/noise/filler_1.py",
+          "src/noise/filler_10.py",
+          "src/noise/filler_11.py",
+          "src/noise/filler_12.py",
+          "src/noise/filler_2.py",
+          "src/noise/filler_3.py",
+          "src/noise/filler_4.py",
+          "src/noise/filler_5.py",
+          "src/noise/filler_6.py",
+          "src/noise/filler_7.py",
+          "src/noise/filler_8.py",
+          "src/noise/filler_9.py"
+        ]
+      },
+      {
+        "pattern": "consumer",
+        "paths": [
+          "docs/adr/0001-alpha-gateway.md"
+        ]
+      }
+    ],
+    "input_tokens": 650,
+    "output_tokens": 24,
+    "total_tokens": 674,
+    "model_calls": 0,
+    "latency_ms_retrieval": 11,
+    "verifier_pass": true,
+    "verifier_notes": "ok",
+    "secret_leak": false,
+    "redundant_reads": 0
+  },
+  "verifier": {
+    "pass": true,
+    "notes": "ok"
+  }
+}

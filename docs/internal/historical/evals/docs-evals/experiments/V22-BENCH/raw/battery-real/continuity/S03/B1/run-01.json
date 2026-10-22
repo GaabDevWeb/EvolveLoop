@@ -1,0 +1,42 @@
+{
+  "experiment_id": "V22-BENCH-REAL",
+  "evidence_class": "PROVISIONAL_CURATED_PACK",
+  "baseline_id": "v22-real-b0b1-2026-10-22",
+  "run_id": "V22R-S03-B1-1c23fb605cb0",
+  "arm": "B1",
+  "task_id": "S03",
+  "timestamp": "2026-10-22T00:41:22.476519+00:00",
+  "tree_sha": "f9257fec42d9a67e3df99511e6fc9accb3216019",
+  "harness": "v22-real-corpus-harness-1.0.0",
+  "tokenizer": "tiktoken:cl100k_base",
+  "model": {
+    "id": "NOT_MEASURED",
+    "note": "retrieval-only; no LLM"
+  },
+  "host_cache": "UNKNOWN",
+  "corpus_label": "fixtures/continuity-s37/",
+  "continuity": true,
+  "scenario_number": 3,
+  "metrics": {
+    "task_id": "S03",
+    "arm": "B1",
+    "corpus": "/workspace/docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/fixtures/continuity-s37",
+    "paths_read": [
+      ".ai/index.md",
+      ".ai/pages/decision-freeze-pin.md"
+    ],
+    "rg_invocations": [],
+    "input_tokens": 114,
+    "output_tokens": 0,
+    "latency_ms": 0,
+    "recall": 1.0,
+    "recall_notes": [],
+    "page_cited": ".ai/pages/decision-freeze-pin.md",
+    "anchor_fallback_used": false
+  },
+  "verifier": {
+    "pass": true,
+    "recall": 1.0,
+    "notes": []
+  }
+}

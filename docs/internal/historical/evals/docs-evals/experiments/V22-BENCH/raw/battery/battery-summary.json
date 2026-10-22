@@ -1,0 +1,57 @@
+{
+  "experiment": "V22-BENCH",
+  "classification": "PROVISIONAL_SYNTHETIC",
+  "classification_note": "synth-repo; B1 paths curated in tasks.json \u2014 sanity check only, not product gates",
+  "baseline_id": "v22-b0b1-2026-10-22",
+  "mode": "OFFLINE_DETERMINISTIC_RETRIEVAL",
+  "started_at": "2026-10-22T00:39:33.757023+00:00",
+  "ended_at": "2026-10-22T00:39:33.786958+00:00",
+  "environment": {
+    "os": "Linux-6.12.94+-x86_64-with-glibc2.39",
+    "python": "3.12.3",
+    "harness": "bench_harness.py",
+    "seed": "v22-bench-2026-10-22",
+    "tokenizer": "tiktoken:cl100k_base",
+    "source_revision": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "cwd": "/workspace"
+  },
+  "aggregates": {
+    "S01:B0": {
+      "n_runs": 1,
+      "median_paths_read": 15.0,
+      "median_input_tokens": 650.0,
+      "verifier_pass_rate": 1.0
+    },
+    "S02:B0": {
+      "n_runs": 1,
+      "median_paths_read": 15.0,
+      "median_input_tokens": 650.0,
+      "verifier_pass_rate": 1.0
+    },
+    "S02:B1": {
+      "n_runs": 1,
+      "median_paths_read": 4.0,
+      "median_input_tokens": 247.0,
+      "verifier_pass_rate": 1.0
+    },
+    "S05:B0": {
+      "n_runs": 1,
+      "median_paths_read": 15.0,
+      "median_input_tokens": 650.0,
+      "verifier_pass_rate": 1.0
+    },
+    "S05:B1": {
+      "n_runs": 1,
+      "median_paths_read": 3.0,
+      "median_input_tokens": 164.0,
+      "verifier_pass_rate": 1.0
+    }
+  },
+  "runs": [
+    "V22-S01-B0-0179f282f7b8a5da",
+    "V22-S02-B0-ac9c6efb99872a7a",
+    "V22-S02-B1-06bfbc009e69ef62",
+    "V22-S05-B0-47112bedb9e65264",
+    "V22-S05-B1-7afcacf149a75735"
+  ]
+}

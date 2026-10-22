@@ -20,8 +20,11 @@ F7  Condicional   V22-GOAL-009 brevidade host; V22-GOAL-010 se adapter
 ```text
 V22-GOAL-001 ─┬─► (desbloqueia compaction futura, não V2.2 runtime)
 V22-GOAL-002 ─┼─► V22-GOAL-004, V22-GOAL-005
-V22-GOAL-003 ─┴─► V22-GOAL-006 (alvos token), V22-GOAL-008, V22-GOAL-009
-V22-GOAL-005 ───► V22-GOAL-004, V22-GOAL-006
+V22-GOAL-003 ─┬─► V22-GOAL-006 (alvos token), V22-GOAL-008, V22-GOAL-009
+              │     (B0 OFFICIAL entregue F3c; B1 OFFICIAL bloqueado — ver abaixo)
+V22-GOAL-005 ─┼─► V22-GOAL-004, V22-GOAL-006
+              └─► V22-GOAL-003 fecho B1 OFFICIAL (ground.sh/WIKI_ROOT, conhecimento
+                  sem gabarito, tarefas held-out — ver BENCHMARK-PLAN.md § B1→oficial)
 ```
 
 F1 e F2 podem paralelizar. **Nenhuma fase P2 promete economia** antes de F3.

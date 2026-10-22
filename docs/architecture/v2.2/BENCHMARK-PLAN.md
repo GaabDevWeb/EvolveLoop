@@ -1,61 +1,58 @@
 # V2.2 — Plano de benchmarks
 
-Derivado de `docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md` com política **D2**: resultados externos (JetBrains, Reddit, Anthropic contextual retrieval, LLMLingua) são **contexto bibliográfico** em `docs/research/evolveloop-v2.2/sources.md` — **nunca** como resultado EvolveLoop nem como gate numérico.
+Derivado de `docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md` com política **D2**.
+
+## Classificação de evidência
+
+| Classe | O que é | Gates de produto? |
+|--------|---------|-------------------|
+| **`PROVISIONAL_SYNTHETIC`** | `raw/battery/` (`synth-repo`) | Não — sanity harness |
+| **`OFFICIAL_BASELINE` (B0)** | `raw/battery-real/` braço **B0** no monorepo EvolveLoop | Sim — referência `rg`+leitura ampla |
+| **`PROVISIONAL_CURATED_PACK` (B1)** | `raw/battery-real/` braço **B1** via pack `fixtures/evolveloop-project-knowledge/.ai/` | **Não** — `source_paths` alinhados aos gabaritos congelados (recall circular) |
+| **`NOT_MEASURED`** | LLM ao vivo, `ground.sh`+`WIKI_ROOT` no bench VM | — |
 
 ## Estado
 
-| Item | Valor | Rotulo |
-|------|-------|--------|
-| Execução no EvolveLoop | `NOT_MEASURED` (pesquisa 2026-10-21) | pesquisa |
-| Alvos de melhoria P1/P2 | `PENDING_BASELINE` até B0/B1 | produto D2 |
-| Tree pin | `28ab56ce091fc25edbf67e5106268580becff2b2` | projeto |
+| Item | Valor |
+|------|-------|
+| B0 real | `OFFICIAL_BASELINE` — `raw/battery-real/battery-summary.json` → `classification_by_arm.B0` |
+| B1 bench pack | `PROVISIONAL_CURATED_PACK` — mesmo raw, `classification_by_arm.B1` |
+| Sintético | `PROVISIONAL_SYNTHETIC` — `raw/battery/` |
+| Alvos numéricos B1 / continuidade B1 | `PROVISIONAL_CURATED_PACK` ou `PENDING_BASELINE` até procedimento § B1→oficial |
+| Tokenizer | `tiktoken:cl100k_base` |
 
-## Baselines obrigatórios (antes de qualquer meta numérica)
+## Calibração observada (informativa; ver classe acima)
 
-| Braço | Conteúdo | Meta V2.2 | Ordem |
-|-------|---------|-----------|-------|
-| **B0** | Sem `.ai/`, sem grafo; `rg` + leitura | V22-GOAL-003 | 1º |
-| **B1** | `.ai/` com fatos verdadeiros do fixture | V22-GOAL-003, 005 | 2º (após B0) |
-| B1s | Página errada deliberada | V22-GOAL-005 cenário 6 | após B1 |
-| B2 | Manifest hash stale | V22-GOAL-005 | após B1 |
-| B3 | B1 + Graphify código only | V22-GOAL-008 | **só após B0/B1** |
-| B4 | Estilo saída curto | V22-GOAL-009 | após B0 |
-| B5 | Catálogo skills cheio vs reduzido | monitorar; **não** `max_skills` engine | opcional host |
+### B0 — `OFFICIAL_BASELINE` (R01–R06, sem fallback de âncora)
 
-## Campos obrigatórios no raw (reprodutibilidade)
+| Tarefa | recall | paths | tokens in (med.) | latência ms |
+|--------|--------|------:|-----------------:|------------:|
+| R01–R06 | ver raw | mediana rollup **45** | mediana **~66747** | ~41 |
 
-Conforme plano 08: modelo, data, tokenizer (não whitespace como aceite final), harness, SHA do tree, tarefa, verificador, orçamento declarado, contagem de `read`/`rg` por path, tokens entrada/saída/total, cache host `UNKNOWN` se não observável.
+Recall por tarefa: 0.0 em R01,R02,R05,R06; 1.0 em R03,R04 (ficheiros no cap `rg`).
 
-**Destino de raw JSON:** `docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery/` (placeholder; execução `NOT_MEASURED`).
+### B1 — `PROVISIONAL_CURATED_PACK` (não promover a gate)
 
-## Tarefas representativas (cenários mínimos por meta)
+| Tarefa | recall | paths | tokens in |
+|--------|--------|------:|----------:|
+| R01–R06 | 1.0* | mediana **3** | mediana **1781** |
 
-| Cenário | Descrição | Metas | Braços |
-|---------|-----------|-------|--------|
-| 1 | Projeto sem wiki | 003, 005 | B0 |
-| 2 | Wiki inicializada | 003, 005 | B0 vs B1 |
-| 3 | Nova sessão, retomar decisão | 004, 005 | B0 vs B1 |
-| 6 | Wiki desatualizada | 002, 005 | B1s |
-| 7 | Decisão antiga | 004, 005 | B1 |
-| 10 | Retrieval seletivo vs leitura ampla | 006 | B0 vs B1 |
-| 12 | Dois projetos / canário | 002 | B1 ×2 |
-| 5, 11 | Dependentes / stale grafo | 008 | B0, B1, B3 |
-| 9 | Compressão saída | 009 | B0 vs B4 |
-| — | Canário segredo | 007 | fixture dedicado |
+\*Circular face aos gabaritos — **não** conta como prova do mecanismo wiki.
 
-## Regras de qualidade (bloqueiam “economia”)
+### Continuidade S03/S07 — `PROVISIONAL_CURATED_PACK` (B1 no mini-fixture)
 
-Do plano 08: verificador não pode cair; negações do gabarito não podem sumir em braços de compressão; zero excerpt de outro projeto; zero segredo no log commitado.
+Observado: B1 paths 2, tokens 114 — **não** alvo oficial.
 
-## Calibração pós-baseline (procedimento, não números fixos)
+## Procedimento B1 → oficial (bloqueado até **V22-GOAL-005**)
 
-1. Executar B0 e B1 nos cenários 2 e 5.
-2. Publicar medianas de paths lidos e tokens (tokenizer nomeado).
-3. Escrever alvos derivados no `EVOLVELOOP_V2.2_GOALS.md` (substituir `PENDING_BASELINE` **somente** com referência ao raw SHA).
-4. Se B1 não reduzir paths, wiki ainda pode ser aceita por continuidade (cenários 3, 7) com margem de tokens definida **a partir** do baseline (+10% proposta inicial na pesquisa — permanece `PENDING_BASELINE` até medição).
+1. **Mecanismo real:** braço B1 gerado por `ground.sh` / wiki operacional com `WIKI_ROOT` (ou `.ai/` de projeto criado pelos workflows 005 — init/query/update/lint), **não** pelo pack `evolveloop-project-knowledge` do bench.
+2. **Conhecimento cego aos gabaritos:** páginas/packs escritos **sem** acesso a `tasks-real-frozen.json` nem às linhas-alvo; proveniência e hash no lint.
+3. **Held-out:** conjunto de tarefas novas congeladas por autor **independente** de quem criou o conhecimento; publicar raw com `baseline_id` distinto.
+4. **Re-medir:** B0 (inalterado) vs B1 mecanismo real; só então derivar alvos D2 (paths, tokens, recall) com margem sobre **essas** medianas.
+5. **Dependência de roadmap:** fecho **B1 oficial** de V22-GOAL-003 **depende de** V22-GOAL-005 (ver `IMPLEMENTATION-ROADMAP.md`).
 
-## Referências internas
+## Referências
 
-- E-001 integridade: `docs/internal/historical/evals/docs-evals/experiments/E-001/`
-- Contrato knowledge: `orchestrator/contracts/knowledge.search.yaml`
-- Pesquisa completa: `docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md`
+- `docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/EXPERIMENT-REAL.md`
+- `docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-real-frozen.json`
+- E-001 · `orchestrator/contracts/knowledge.search.yaml`

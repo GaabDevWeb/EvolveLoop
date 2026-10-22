@@ -1,0 +1,48 @@
+{
+  "experiment_id": "V22-BENCH",
+  "baseline_id": "v22-b0b1-2026-10-22",
+  "run_id": "V22-S02-B1-06bfbc009e69ef62",
+  "arm": "B1",
+  "scenario": {
+    "id": "S02",
+    "number": 2,
+    "title": "Wiki inicializada \u2014 ADR via conhecimento"
+  },
+  "timestamp": "2026-10-22T00:39:33.771951+00:00",
+  "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+  "harness": "v22-bench-harness-1.0.0",
+  "tokenizer": "tiktoken:cl100k_base",
+  "model": {
+    "id": "NOT_MEASURED",
+    "note": "offline deterministic retrieval; no live LLM in this battery"
+  },
+  "host_cache": "UNKNOWN",
+  "context_budget_tokens_declared": 128000,
+  "task": {
+    "query": "Onde est\u00e1 definido o gateway alpha e qual m\u00f3dulo depende dele?"
+  },
+  "metrics": {
+    "arm": "B1",
+    "scenario_id": "S02",
+    "paths_read": [
+      ".ai/index.md",
+      ".ai/pages/adr-summary.md",
+      ".ai/pages/module-map.md",
+      "src/beta/consumer.py"
+    ],
+    "rg_invocations": [],
+    "input_tokens": 247,
+    "output_tokens": 24,
+    "total_tokens": 271,
+    "model_calls": 0,
+    "latency_ms_retrieval": 0,
+    "verifier_pass": true,
+    "verifier_notes": "ok",
+    "secret_leak": false,
+    "redundant_reads": 0
+  },
+  "verifier": {
+    "pass": true,
+    "notes": "ok"
+  }
+}

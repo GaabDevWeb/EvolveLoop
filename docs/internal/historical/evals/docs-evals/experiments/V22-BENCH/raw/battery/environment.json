@@ -1,0 +1,9 @@
+{
+  "os": "Linux-6.12.94+-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "harness": "bench_harness.py",
+  "seed": "v22-bench-2026-10-22",
+  "tokenizer": "tiktoken:cl100k_base",
+  "source_revision": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+  "cwd": "/workspace"
+}

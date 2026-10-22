@@ -1,0 +1,9 @@
+{
+  "os": "Linux-6.12.94+-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "harness": "real_corpus_harness.py",
+  "tokenizer": "tiktoken:cl100k_base",
+  "source_revision": "f9257fec42d9a67e3df99511e6fc9accb3216019",
+  "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset; official B1 blocked on V22-GOAL-005",
+  "b1_mechanism": "PROVISIONAL_CURATED_PACK \u2014 bench .ai/ pack (not official wiki ops)"
+}

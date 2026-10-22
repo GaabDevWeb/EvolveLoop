@@ -1,0 +1,381 @@
+[
+  {
+    "experiment_id": "V22-BENCH",
+    "baseline_id": "v22-b0b1-2026-10-22",
+    "run_id": "V22-S01-B0-0179f282f7b8a5da",
+    "arm": "B0",
+    "scenario": {
+      "id": "S01",
+      "number": 1,
+      "title": "Projeto sem wiki"
+    },
+    "timestamp": "2026-10-22T00:39:33.757023+00:00",
+    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "harness": "v22-bench-harness-1.0.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "model": {
+      "id": "NOT_MEASURED",
+      "note": "offline deterministic retrieval; no live LLM in this battery"
+    },
+    "host_cache": "UNKNOWN",
+    "context_budget_tokens_declared": 128000,
+    "task": {
+      "query": "Qual \u00e9 a decis\u00e3o do ADR-0001 sobre o m\u00f3dulo alpha?"
+    },
+    "metrics": {
+      "arm": "B0",
+      "scenario_id": "S01",
+      "paths_read": [
+        "README.md",
+        "docs/adr/0001-alpha-gateway.md",
+        "src/alpha/core.py",
+        "src/beta/consumer.py",
+        "src/noise/filler_1.py",
+        "src/noise/filler_10.py",
+        "src/noise/filler_11.py",
+        "src/noise/filler_12.py",
+        "src/noise/filler_2.py",
+        "src/noise/filler_3.py",
+        "src/noise/filler_4.py",
+        "src/noise/filler_5.py",
+        "src/noise/filler_6.py",
+        "src/noise/filler_7.py",
+        "src/noise/filler_8.py"
+      ],
+      "rg_invocations": [
+        {
+          "pattern": "AlphaGateway",
+          "paths": [
+            "docs/adr/0001-alpha-gateway.md",
+            "src/alpha/core.py",
+            "src/beta/consumer.py",
+            "src/noise/filler_1.py",
+            "src/noise/filler_10.py",
+            "src/noise/filler_11.py",
+            "src/noise/filler_12.py",
+            "src/noise/filler_2.py",
+            "src/noise/filler_3.py",
+            "src/noise/filler_4.py",
+            "src/noise/filler_5.py",
+            "src/noise/filler_6.py",
+            "src/noise/filler_7.py",
+            "src/noise/filler_8.py",
+            "src/noise/filler_9.py"
+          ]
+        },
+        {
+          "pattern": "ADR-0001",
+          "paths": [
+            "docs/adr/0001-alpha-gateway.md"
+          ]
+        },
+        {
+          "pattern": "alpha",
+          "paths": [
+            "README.md",
+            "docs/adr/0001-alpha-gateway.md",
+            "src/alpha/core.py",
+            "src/beta/consumer.py"
+          ]
+        }
+      ],
+      "input_tokens": 650,
+      "output_tokens": 24,
+      "total_tokens": 674,
+      "model_calls": 0,
+      "latency_ms_retrieval": 16,
+      "verifier_pass": true,
+      "verifier_notes": "ok",
+      "secret_leak": false,
+      "redundant_reads": 0
+    },
+    "verifier": {
+      "pass": true,
+      "notes": "ok"
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH",
+    "baseline_id": "v22-b0b1-2026-10-22",
+    "run_id": "V22-S02-B0-ac9c6efb99872a7a",
+    "arm": "B0",
+    "scenario": {
+      "id": "S02",
+      "number": 2,
+      "title": "Wiki inicializada \u2014 ADR via conhecimento"
+    },
+    "timestamp": "2026-10-22T00:39:33.770031+00:00",
+    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "harness": "v22-bench-harness-1.0.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "model": {
+      "id": "NOT_MEASURED",
+      "note": "offline deterministic retrieval; no live LLM in this battery"
+    },
+    "host_cache": "UNKNOWN",
+    "context_budget_tokens_declared": 128000,
+    "task": {
+      "query": "Onde est\u00e1 definido o gateway alpha e qual m\u00f3dulo depende dele?"
+    },
+    "metrics": {
+      "arm": "B0",
+      "scenario_id": "S02",
+      "paths_read": [
+        "README.md",
+        "docs/adr/0001-alpha-gateway.md",
+        "src/alpha/core.py",
+        "src/beta/consumer.py",
+        "src/noise/filler_1.py",
+        "src/noise/filler_10.py",
+        "src/noise/filler_11.py",
+        "src/noise/filler_12.py",
+        "src/noise/filler_2.py",
+        "src/noise/filler_3.py",
+        "src/noise/filler_4.py",
+        "src/noise/filler_5.py",
+        "src/noise/filler_6.py",
+        "src/noise/filler_7.py",
+        "src/noise/filler_8.py"
+      ],
+      "rg_invocations": [
+        {
+          "pattern": "AlphaGateway",
+          "paths": [
+            "docs/adr/0001-alpha-gateway.md",
+            "src/alpha/core.py",
+            "src/beta/consumer.py",
+            "src/noise/filler_1.py",
+            "src/noise/filler_10.py",
+            "src/noise/filler_11.py",
+            "src/noise/filler_12.py",
+            "src/noise/filler_2.py",
+            "src/noise/filler_3.py",
+            "src/noise/filler_4.py",
+            "src/noise/filler_5.py",
+            "src/noise/filler_6.py",
+            "src/noise/filler_7.py",
+            "src/noise/filler_8.py",
+            "src/noise/filler_9.py"
+          ]
+        },
+        {
+          "pattern": "beta",
+          "paths": [
+            "README.md",
+            "docs/adr/0001-alpha-gateway.md",
+            "src/beta/consumer.py"
+          ]
+        },
+        {
+          "pattern": "consumer",
+          "paths": [
+            "docs/adr/0001-alpha-gateway.md"
+          ]
+        }
+      ],
+      "input_tokens": 650,
+      "output_tokens": 24,
+      "total_tokens": 674,
+      "model_calls": 0,
+      "latency_ms_retrieval": 11,
+      "verifier_pass": true,
+      "verifier_notes": "ok",
+      "secret_leak": false,
+      "redundant_reads": 0
+    },
+    "verifier": {
+      "pass": true,
+      "notes": "ok"
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH",
+    "baseline_id": "v22-b0b1-2026-10-22",
+    "run_id": "V22-S02-B1-06bfbc009e69ef62",
+    "arm": "B1",
+    "scenario": {
+      "id": "S02",
+      "number": 2,
+      "title": "Wiki inicializada \u2014 ADR via conhecimento"
+    },
+    "timestamp": "2026-10-22T00:39:33.771951+00:00",
+    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "harness": "v22-bench-harness-1.0.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "model": {
+      "id": "NOT_MEASURED",
+      "note": "offline deterministic retrieval; no live LLM in this battery"
+    },
+    "host_cache": "UNKNOWN",
+    "context_budget_tokens_declared": 128000,
+    "task": {
+      "query": "Onde est\u00e1 definido o gateway alpha e qual m\u00f3dulo depende dele?"
+    },
+    "metrics": {
+      "arm": "B1",
+      "scenario_id": "S02",
+      "paths_read": [
+        ".ai/index.md",
+        ".ai/pages/adr-summary.md",
+        ".ai/pages/module-map.md",
+        "src/beta/consumer.py"
+      ],
+      "rg_invocations": [],
+      "input_tokens": 247,
+      "output_tokens": 24,
+      "total_tokens": 271,
+      "model_calls": 0,
+      "latency_ms_retrieval": 0,
+      "verifier_pass": true,
+      "verifier_notes": "ok",
+      "secret_leak": false,
+      "redundant_reads": 0
+    },
+    "verifier": {
+      "pass": true,
+      "notes": "ok"
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH",
+    "baseline_id": "v22-b0b1-2026-10-22",
+    "run_id": "V22-S05-B0-47112bedb9e65264",
+    "arm": "B0",
+    "scenario": {
+      "id": "S05",
+      "number": 5,
+      "title": "Mudan\u00e7a em alpha \u2014 dependentes"
+    },
+    "timestamp": "2026-10-22T00:39:33.785273+00:00",
+    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "harness": "v22-bench-harness-1.0.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "model": {
+      "id": "NOT_MEASURED",
+      "note": "offline deterministic retrieval; no live LLM in this battery"
+    },
+    "host_cache": "UNKNOWN",
+    "context_budget_tokens_declared": 128000,
+    "task": {
+      "query": "Se alterarmos src/alpha/core.py, quais arquivos devem ser revisados?"
+    },
+    "metrics": {
+      "arm": "B0",
+      "scenario_id": "S05",
+      "paths_read": [
+        "README.md",
+        "docs/adr/0001-alpha-gateway.md",
+        "src/alpha/core.py",
+        "src/beta/consumer.py",
+        "src/noise/filler_1.py",
+        "src/noise/filler_10.py",
+        "src/noise/filler_11.py",
+        "src/noise/filler_12.py",
+        "src/noise/filler_2.py",
+        "src/noise/filler_3.py",
+        "src/noise/filler_4.py",
+        "src/noise/filler_5.py",
+        "src/noise/filler_6.py",
+        "src/noise/filler_7.py",
+        "src/noise/filler_8.py"
+      ],
+      "rg_invocations": [
+        {
+          "pattern": "alpha",
+          "paths": [
+            "README.md",
+            "docs/adr/0001-alpha-gateway.md",
+            "src/alpha/core.py",
+            "src/beta/consumer.py"
+          ]
+        },
+        {
+          "pattern": "AlphaGateway",
+          "paths": [
+            "docs/adr/0001-alpha-gateway.md",
+            "src/alpha/core.py",
+            "src/beta/consumer.py",
+            "src/noise/filler_1.py",
+            "src/noise/filler_10.py",
+            "src/noise/filler_11.py",
+            "src/noise/filler_12.py",
+            "src/noise/filler_2.py",
+            "src/noise/filler_3.py",
+            "src/noise/filler_4.py",
+            "src/noise/filler_5.py",
+            "src/noise/filler_6.py",
+            "src/noise/filler_7.py",
+            "src/noise/filler_8.py",
+            "src/noise/filler_9.py"
+          ]
+        },
+        {
+          "pattern": "consumer",
+          "paths": [
+            "docs/adr/0001-alpha-gateway.md"
+          ]
+        }
+      ],
+      "input_tokens": 650,
+      "output_tokens": 24,
+      "total_tokens": 674,
+      "model_calls": 0,
+      "latency_ms_retrieval": 11,
+      "verifier_pass": true,
+      "verifier_notes": "ok",
+      "secret_leak": false,
+      "redundant_reads": 0
+    },
+    "verifier": {
+      "pass": true,
+      "notes": "ok"
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH",
+    "baseline_id": "v22-b0b1-2026-10-22",
+    "run_id": "V22-S05-B1-7afcacf149a75735",
+    "arm": "B1",
+    "scenario": {
+      "id": "S05",
+      "number": 5,
+      "title": "Mudan\u00e7a em alpha \u2014 dependentes"
+    },
+    "timestamp": "2026-10-22T00:39:33.786958+00:00",
+    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "harness": "v22-bench-harness-1.0.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "model": {
+      "id": "NOT_MEASURED",
+      "note": "offline deterministic retrieval; no live LLM in this battery"
+    },
+    "host_cache": "UNKNOWN",
+    "context_budget_tokens_declared": 128000,
+    "task": {
+      "query": "Se alterarmos src/alpha/core.py, quais arquivos devem ser revisados?"
+    },
+    "metrics": {
+      "arm": "B1",
+      "scenario_id": "S05",
+      "paths_read": [
+        ".ai/pages/change-alpha.md",
+        ".ai/pages/module-map.md",
+        "src/beta/consumer.py"
+      ],
+      "rg_invocations": [],
+      "input_tokens": 164,
+      "output_tokens": 24,
+      "total_tokens": 188,
+      "model_calls": 0,
+      "latency_ms_retrieval": 0,
+      "verifier_pass": true,
+      "verifier_notes": "ok",
+      "secret_leak": false,
+      "redundant_reads": 0
+    },
+    "verifier": {
+      "pass": true,
+      "notes": "ok"
+    }
+  }
+]

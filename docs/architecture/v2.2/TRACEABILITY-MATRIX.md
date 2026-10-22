@@ -11,7 +11,11 @@ Legenda de rotulo: `pesquisa` = evidência da pesquisa versionada; `projeto` = e
 | Isolamento entre repos | `docs/research/evolveloop-v2.2/10-risks-and-open-questions.md` (pesquisa) | Vazamento MCP/grafo | V22-GOAL-002 | Cenário 12 | Fixture dois roots |
 | Hierarquia fonte de verdade | `docs/research/evolveloop-v2.2/07-compatibility-matrix.md` (pesquisa) | Conflito wiki/grafo | V22-GOAL-002 | Proveniência + obsoleto | Lint + hash |
 | E-001 PROXY apenas | `docs/internal/historical/evals/docs-evals/experiments/E-001/EXPERIMENT.md` (projeto) | Sem baseline live | V22-GOAL-003 | B0/B1 raw JSON | integrity_test |
-| Plano 08 não executado | `docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md` (pesquisa) | NOT_MEASURED | V22-GOAL-003 | B0/B1 publicados | Harness V22 |
+| B0 real monorepo | `V22-BENCH/EXPERIMENT-REAL.md` (projeto) | recall B0 informativo | V22-GOAL-003 | `OFFICIAL_BASELINE` B0 | `real_corpus_harness.py` |
+| B1 pack bench | `fixtures/evolveloop-project-knowledge/` (projeto) | recall circular | V22-GOAL-003 | `PROVISIONAL_CURATED_PACK` | aguarda V22-GOAL-005 |
+| Sintético F3 | `V22-BENCH/raw/battery/` (projeto) | tautologia | V22-GOAL-003 | `PROVISIONAL_SYNTHETIC` | `bench_harness.py` |
+| Continuidade S03/S07 | `fixtures/continuity-s37/` (projeto) | não `/mem` engine | V22-GOAL-004 | `PROVISIONAL_CURATED_PACK` B1 | `real_corpus_harness.py` |
+| B1→oficial | `BENCHMARK-PLAN.md` § B1→oficial (projeto) | ground.sh+held-out | V22-GOAL-005 → 003 | `PENDING_BASELINE` | F4 wiki ops |
 | Memória off no default | `profiles/default.yaml` L10–13 (projeto) | Sem continuidade | V22-GOAL-004 | Cenários 3, 7 | Fixture |
 | Hooks sem wiki-mem | `.cursor/hooks.json` (projeto) | Episódico não wired | V22-GOAL-004 | Procedimento opt-in | Skill wiki-mem |
 | RAG_REPO_MISSING sem vault | `orchestrator/src/knowledge/backend/wiki-backend.ts` L134–142 (projeto) | Grounding falha | V22-GOAL-005 | ground.sh OK | list-packs |

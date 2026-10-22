@@ -1,0 +1,85 @@
+{
+  "experiment_id": "V22-BENCH-REAL",
+  "evidence_class": "OFFICIAL_BASELINE",
+  "baseline_id": "v22-real-b0b1-2026-10-22",
+  "run_id": "V22R-R03-B0-181eb02d6522",
+  "arm": "B0",
+  "task_id": "R03",
+  "timestamp": "2026-10-22T00:41:22.304568+00:00",
+  "tree_sha": "f9257fec42d9a67e3df99511e6fc9accb3216019",
+  "harness": "v22-real-corpus-harness-1.0.0",
+  "tokenizer": "tiktoken:cl100k_base",
+  "model": {
+    "id": "NOT_MEASURED",
+    "note": "retrieval-only; no LLM"
+  },
+  "host_cache": "UNKNOWN",
+  "corpus_label": "EvolveLoop monorepo (git root)",
+  "b1_mechanism": {
+    "primary": "PROVISIONAL_CURATED_PACK \u2014 bench .ai/ pack (not official wiki ops)",
+    "pack_path": "fixtures/evolveloop-project-knowledge/.ai/",
+    "evidence_class": "PROVISIONAL_CURATED_PACK",
+    "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset; official B1 blocked on V22-GOAL-005",
+    "note": "source_paths align with frozen anchors \u2014 circular recall; see BENCHMARK-PLAN.md B1\u2192oficial"
+  },
+  "metrics": {
+    "task_id": "R03",
+    "arm": "B0",
+    "corpus": "/workspace",
+    "paths_read": [
+      "docs/adr/0005-hybrid-retrieval-degraded-mode.md",
+      "docs/architecture/knowledge/CORE-PERSONAL-BOUNDARY-V2.yaml",
+      "docs/architecture/knowledge/KNOWLEDGE-ARCHITECTURE.md",
+      "docs/architecture/knowledge/KNOWLEDGE-BACKEND-CONTRACT.md",
+      "docs/architecture/knowledge/KNOWLEDGE-BACKEND-MANIFEST.yaml",
+      "docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md",
+      "docs/architecture/publication/STRUCTURAL-PRECHECK-MAIN.yaml",
+      "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+      "docs/architecture/v2.2/TECH-DECISIONS-MATRIX.md",
+      "docs/architecture/v2.2/TRACEABILITY-MATRIX.md",
+      "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery-real/all-runs.json",
+      "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery-real/real/R03/B0/run-01.json",
+      "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery-real/real/R03/B1/run-01.json",
+      "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery-real/tasks-real-frozen.snapshot.json",
+      "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-real-frozen.json",
+      "docs/research/evolveloop-v2.2/01-current-state-audit.md",
+      "docs/research/evolveloop-v2.2/02-research-methodology.md",
+      "docs/research/evolveloop-v2.2/03-repositories-and-tools.md",
+      "docs/research/evolveloop-v2.2/06-token-optimization.md",
+      "docs/research/evolveloop-v2.2/07-compatibility-matrix.md",
+      "docs/research/evolveloop-v2.2/README.md",
+      "orchestrator/src/index.ts",
+      "orchestrator/src/knowledge/backend/resolve.ts",
+      "orchestrator/src/knowledge/backend/wiki-backend.ts",
+      "orchestrator/src/providers/deterministic/knowledge.ts",
+      "orchestrator/tests/unit/deterministic-capabilities.test.ts",
+      "orchestrator/tests/unit/knowledge-backend.test.ts"
+    ],
+    "rg_invocations": [
+      {
+        "pattern": "RAG_REPO_MISSING",
+        "path_count": 16
+      },
+      {
+        "pattern": "resolveWikiRoot",
+        "path_count": 8
+      },
+      {
+        "pattern": "wiki-backend",
+        "path_count": 18
+      }
+    ],
+    "input_tokens": 52710,
+    "output_tokens": 0,
+    "latency_ms": 39,
+    "recall": 1.0,
+    "recall_notes": [],
+    "page_cited": null,
+    "anchor_fallback_used": false
+  },
+  "verifier": {
+    "pass": true,
+    "recall": 1.0,
+    "notes": []
+  }
+}

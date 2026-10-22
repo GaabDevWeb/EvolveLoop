@@ -1,0 +1,107 @@
+{
+  "experiment_id": "V22-BENCH-REAL",
+  "evidence_class": "OFFICIAL_BASELINE",
+  "baseline_id": "v22-real-b0b1-2026-10-22",
+  "run_id": "V22R-R05-B0-f86fdeee8cea",
+  "arm": "B0",
+  "task_id": "R05",
+  "timestamp": "2026-10-22T00:41:22.399236+00:00",
+  "tree_sha": "f9257fec42d9a67e3df99511e6fc9accb3216019",
+  "harness": "v22-real-corpus-harness-1.0.0",
+  "tokenizer": "tiktoken:cl100k_base",
+  "model": {
+    "id": "NOT_MEASURED",
+    "note": "retrieval-only; no LLM"
+  },
+  "host_cache": "UNKNOWN",
+  "corpus_label": "EvolveLoop monorepo (git root)",
+  "b1_mechanism": {
+    "primary": "PROVISIONAL_CURATED_PACK \u2014 bench .ai/ pack (not official wiki ops)",
+    "pack_path": "fixtures/evolveloop-project-knowledge/.ai/",
+    "evidence_class": "PROVISIONAL_CURATED_PACK",
+    "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset; official B1 blocked on V22-GOAL-005",
+    "note": "source_paths align with frozen anchors \u2014 circular recall; see BENCHMARK-PLAN.md B1\u2192oficial"
+  },
+  "metrics": {
+    "task_id": "R05",
+    "arm": "B0",
+    "corpus": "/workspace",
+    "paths_read": [
+      "AGENT.md",
+      "Agents/Planner.md",
+      "CHANGELOG.md",
+      "INVENTORY.md",
+      "README.md",
+      "Rules/wiki-agent.mdc",
+      "agent-setup/README.md",
+      "agent-setup/cursor/commands/evolve.md",
+      "agent-setup/cursor/hooks/wiki-mem/mem.py",
+      "agent-setup/cursor/rules/wiki-agent.mdc",
+      "agent-setup/docs/components.md",
+      "agent-setup/manifest/manifest.yaml",
+      "agent-setup/manifest/profiles.yaml",
+      "docs/CEO-controller.md",
+      "docs/adr/0010-public-core-vs-gaabtype-profile.md",
+      "docs/adr/0012-wiki-default-knowledge-backend.md",
+      "docs/architecture/decision-review/ARCHITECTURE-DECISION-REVIEW.md",
+      "docs/architecture/decision-review/TRACEABILITY.md",
+      "docs/architecture/decision-review/adr-drafts/ADR-DR-0005-context-ownership-before-compaction.md",
+      "docs/architecture/evolveloopt/EVOLVELOOP-LONGITUDINAL-IMPLEMENTATION-REPORT.md",
+      "docs/architecture/evolveloopt/final/EVOLVELOOP-FINAL-OPERATIONALIZATION-REPORT.md",
+      "docs/architecture/evolveloopt/v1-final/OPERATIONS.md",
+      "docs/architecture/evolveloopt/validation/AUDIT-MATRIX.yaml",
+      "docs/architecture/evolveloopt/validation/EVOLVELOOP-VALIDATION-REPORT.md",
+      "docs/architecture/evolveloopt/validation/FINDINGS.yaml",
+      "docs/architecture/evolveloopt/validation/VALIDATION-VERDICT.yaml",
+      "docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md",
+      "docs/architecture/finalization/prototypes/PT-001-live-catalog-budget.md",
+      "docs/architecture/knowledge/KNOWLEDGE-ARCHITECTURE.md",
+      "docs/architecture/knowledge/KNOWLEDGE-BACKEND-MANIFEST.yaml",
+      "docs/architecture/knowledge/KNOWLEDGE-BEFORE-AFTER.md",
+      "docs/architecture/knowledge/KNOWLEDGE-DEPENDENCY-GRAPH.yaml",
+      "docs/architecture/knowledge/KNOWLEDGE-PROFILE-BOUNDARY.md",
+      "docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md",
+      "docs/architecture/knowledge/PERSONAL-COUPLING-AFTER.yaml",
+      "docs/architecture/knowledge/PROFILE-BOUNDARY-MANIFEST.yaml",
+      "docs/architecture/portability/CONFIG-PORTABILITY-MATRIX.yaml",
+      "docs/architecture/portability/CORE-ARCHITECTURE.yaml",
+      "docs/architecture/portability/CORE-VS-PERSONAL-GRAPH.yaml",
+      "docs/architecture/portability/IDENTITY-REFERENCE-MAP.yaml",
+      "docs/architecture/portability/MAIN-VS-GAABTYPE-PROPOSAL.yaml",
+      "docs/architecture/portability/PATH-REFERENCE-MAP.yaml",
+      "docs/architecture/portability/PERSONAL-CONNECTIONS.yaml",
+      "docs/architecture/portability/PORTABILITY-FORENSIC-AUDIT.md",
+      "docs/architecture/portability/PORTABILITY-INVENTORY.yaml"
+    ],
+    "rg_invocations": [
+      {
+        "pattern": "memory",
+        "path_count": 184
+      },
+      {
+        "pattern": "enabled: false",
+        "path_count": 11
+      },
+      {
+        "pattern": "default.yaml",
+        "path_count": 36
+      }
+    ],
+    "input_tokens": 45212,
+    "output_tokens": 0,
+    "latency_ms": 47,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: profiles/default.yaml"
+    ],
+    "page_cited": null,
+    "anchor_fallback_used": false
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: profiles/default.yaml"
+    ]
+  }
+}
