@@ -8,6 +8,7 @@ import { spawn } from "node:child_process";
 import { existsSync } from "node:fs";
 import type { EvidenceSet, KnowledgeHit } from "../../capabilities/results.js";
 import { cleanOutput } from "../../capabilities/results.js";
+import { redactSecrets } from "../../evidence/secret-redaction.js";
 import type {
   KnowledgeBackend,
   KnowledgeHealth,
@@ -95,7 +96,9 @@ function parseHits(stdout: string, _query: string): KnowledgeHit[] {
           score: typeof hit.score === "number" ? hit.score : undefined,
           retrieval_method: hit.retrieval_method ? String(hit.retrieval_method) : undefined,
           project: hit.project ? String(hit.project) : undefined,
-          excerpt: hit.excerpt ? cleanOutput(String(hit.excerpt), 500) : undefined,
+          excerpt: hit.excerpt
+            ? redactSecrets(cleanOutput(String(hit.excerpt), 500))
+            : undefined,
           chunk_id: hit.chunk_id ? String(hit.chunk_id) : undefined,
           degraded: hit.degraded ? String(hit.degraded) : undefined,
         };

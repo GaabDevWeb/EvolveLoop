@@ -8,8 +8,8 @@ Legenda de rotulo: `pesquisa` = evidência da pesquisa versionada; `projeto` = e
 |---------------|-----------|----------|------|-------------------|-----------|
 | ADR-DR-0005 bloqueia compaction | `docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md` (projeto) | Ownership indefinido | V22-GOAL-001 | 9 perguntas respondidas | Revisão ADR |
 | ADR-DR-0002 adia budget skills | `docs/architecture/finalization/ADR-INDEX.md` (projeto) | Sem budget runtime | V22-GOAL-001 + V22-GOAL-003 | ADR + baseline antes de alvo | E-001 + V22-BENCH |
-| Isolamento entre repos | `docs/research/evolveloop-v2.2/10-risks-and-open-questions.md` (pesquisa) | Vazamento MCP/grafo | V22-GOAL-002 | Cenário 12 | Fixture dois roots |
-| Hierarquia fonte de verdade | `docs/research/evolveloop-v2.2/07-compatibility-matrix.md` (pesquisa) | Conflito wiki/grafo | V22-GOAL-002 | Proveniência + obsoleto | Lint + hash |
+| Isolamento entre repos | `docs/research/evolveloop-v2.2/10-risks-and-open-questions.md` (pesquisa) | Vazamento MCP/grafo | V22-GOAL-002 | Cenário 12 | `truth-source-fence.test.ts` (0 leaks) |
+| Hierarquia fonte de verdade | `docs/research/evolveloop-v2.2/07-compatibility-matrix.md` (pesquisa) | Conflito wiki/grafo | V22-GOAL-002 | Proveniência + obsoleto | `truth-source-fence.test.ts` + `TRUTH-SOURCE-FENCE.md` |
 | E-001 PROXY apenas | `docs/internal/historical/evals/docs-evals/experiments/E-001/EXPERIMENT.md` (projeto) | Sem baseline live | V22-GOAL-003 | B0/B1 raw JSON | integrity_test |
 | B0 real monorepo | `V22-BENCH/EXPERIMENT-REAL.md` (projeto) | recall B0 informativo | V22-GOAL-003 | `OFFICIAL_BASELINE` B0 | `real_corpus_harness.py` |
 | B1 pack bench | `fixtures/evolveloop-project-knowledge/` (projeto) | recall circular | V22-GOAL-003 | `PROVISIONAL_CURATED_PACK` | aguarda V22-GOAL-005 |
@@ -22,7 +22,7 @@ Legenda de rotulo: `pesquisa` = evidência da pesquisa versionada; `projeto` = e
 | ADR dual Carpaccio+Wiki | `docs/adr/0004-project-knowledge-contract.md` (projeto) | Duas skills | V22-GOAL-005 | Workflows 4× | Fixture |
 | Sem orçamento de leitura | `docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md` § P1-2 (pesquisa) | Explosão contexto | V22-GOAL-006 | Cenário 10 | Log paths |
 | GATE_BUNDLE sem budget | `.cursor/skills/orquestrar/references/gate-bundle.md` (projeto) | Política incompleta | V22-GOAL-006 | Briefing PDA | Checklist |
-| Segredo em evidence | `docs/architecture/release-audit-2026-10-11/V2.1-FREEZE-SCOPE-REPORT.md` (projeto) | Redação V3 não merged | V22-GOAL-007 | Canário 0× | Teste |
+| Segredo em evidence | `docs/architecture/release-audit-2026-10-11/V2.1-FREEZE-SCOPE-REPORT.md` (projeto) | Redação V3 não merged | V22-GOAL-007 | Canário 0× | `secret-redaction.test.ts` |
 | Graphify hipótese | `docs/research/evolveloop-v2.2/03-repositories-and-tools.md` (pesquisa) | Dependentes código | V22-GOAL-008 | B3 vs B0/B1 | Bench |
 | Caveman −8,5% saída | `docs/research/evolveloop-v2.2/04-community-findings.md` (pesquisa) | **contexto D2** | V22-GOAL-009 | Cenário 9 harness | B4 |
 | Prompt cache | `docs/research/evolveloop-v2.2/sources.md` (pesquisa) | Custo prefixo | V22-GOAL-010 | Hit provedor | 2 chamadas |

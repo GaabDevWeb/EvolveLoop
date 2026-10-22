@@ -74,6 +74,7 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Validação / testes:** Dois roots temporários; cenário 12 do `docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md`.
 - **Riscos:** Monorepo multi-produto na mesma raiz — documentar uso de páginas, não múltiplas wikis.
 - **Condição de conclusão:** Teste de canário existe, passa, e convenção publicada em `docs/architecture/v2.2/` ou `docs/adr/`.
+- **Implementação (código):** `implemented` — runtime `orchestrator/src/knowledge/truth-source/`; convenção `docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md`; testes `orchestrator/tests/unit/knowledge/truth-source-fence.test.ts`.
 
 **Rotulo dominante:** meta + evidência pesquisa.
 
@@ -179,6 +180,7 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Validação / testes:** Fixture dedicado no plano V22-BENCH.
 - **Riscos:** Redação agressiva remove paths necessários à evidência.
 - **Condição de conclusão:** Teste do canário passa no tree da V2.2.
+- **Implementação (código):** `implemented` — `orchestrator/src/evidence/secret-redaction.ts`, `publish-sanitize.ts`, redação em `wiki-backend.ts`; doc `docs/architecture/v2.2/EVIDENCE-SECRET-CANARY.md`; testes `orchestrator/tests/unit/evidence/secret-redaction.test.ts`.
 
 **Rotulo dominante:** meta + evidência pesquisa.
 
