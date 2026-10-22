@@ -21,7 +21,7 @@ Legenda de rotulo: `pesquisa` = evidência da pesquisa versionada; `projeto` = e
 | RAG_REPO_MISSING sem vault | `orchestrator/src/knowledge/backend/wiki-backend.ts` L134–142 (projeto) | Grounding falha | V22-GOAL-005 | ground.sh OK | list-packs |
 | ADR dual Carpaccio+Wiki | `docs/adr/0004-project-knowledge-contract.md` (projeto) | Duas skills | V22-GOAL-005 | Workflows 4× | Fixture |
 | Sem orçamento de leitura | `docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md` § P1-2 (pesquisa) | Explosão contexto | V22-GOAL-006 | Cenário 10 | Log paths |
-| GATE_BUNDLE sem budget | `.cursor/skills/orquestrar/references/gate-bundle.md` (projeto) | Política incompleta | V22-GOAL-006 | Cenário 10 | `context-budget.test.ts` + `context-budget-harness.test.ts` |
+| GATE_BUNDLE sem budget | `.cursor/skills/orquestrar/references/gate-bundle.md` (projeto) | Política incompleta | V22-GOAL-006 | Cenário 10 | `context-budget-pickup.test.ts` + `bench-r01-r06-budget.test.ts` |
 | Segredo em evidence | `docs/architecture/release-audit-2026-10-11/V2.1-FREEZE-SCOPE-REPORT.md` (projeto) | Redação V3 não merged | V22-GOAL-007 | Canário 0× | Teste |
 | Graphify hipótese | `docs/research/evolveloop-v2.2/03-repositories-and-tools.md` (pesquisa) | Dependentes código | V22-GOAL-008 | B3 vs B0/B1 | Bench |
 | Caveman −8,5% saída | `docs/research/evolveloop-v2.2/04-community-findings.md` (pesquisa) | **contexto D2** | V22-GOAL-009 | Cenário 9 harness | B4 |

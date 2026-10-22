@@ -1,23 +1,41 @@
 {
   "task_id": "V22-GOAL-001-006",
-  "timestamp": "2026-10-22T01:02:00Z",
-  "tree_sha": "9293309115ddd6cf706747410ae7af904649e3ac",
-  "tokenizer_note": "orchestrator resolveTokenizer; harness B0 OFFICIAL uses same label when tiktoken installed",
-  "B0_OFFICIAL": {
-    "source": "raw/battery-real/battery-summary.json",
-    "evidence_class": "OFFICIAL_BASELINE",
-    "median_paths_read": 45,
-    "median_input_tokens": 67426.5
-  },
-  "B_BUDGET_RUNTIME": {
-    "source": "orchestrator/tests/unit/context-budget-harness.test.ts + applyContextBudget limits max_paths=15",
-    "synthetic_wide_list_paths": 60,
-    "paths_after_budget": 15,
-    "paths_after_B0_cap_45": 45,
-    "note": "Lab simulation; real corpus R01 task shape from tasks-real-frozen.json — not a replacement for B0 raw"
-  },
-  "compaction": {
-    "status": "NOT_IMPLEMENTED",
-    "ownership_adr": "docs/adr/0013-context-ownership-working-context.md"
-  }
+  "updated": "2026-10-22T01:05:00Z",
+  "harness": "orchestrator/src/context/bench-retrieval.ts (B0 rg + applyContextBudget)",
+  "budget_limits": { "max_paths": 15, "max_pages": 5 },
+  "integration_test": "orchestrator/tests/integration/context-budget-pickup.test.ts",
+  "pickup_wire": "JobFileExecutor → SkillJob.gate_bundle + invokePickup → evidence/context-budget-*.json + checkpoints/*.spawn-context.json",
+  "R01_R06_real_corpus": [
+    {
+      "task_id": "R01",
+      "B0_OFFICIAL": { "paths": 45, "tokens": 81323, "recall": 0 },
+      "B0_BUDGET": { "paths": 15, "tokens": 26662, "recall": 1, "notes": [] }
+    },
+    {
+      "task_id": "R02",
+      "B0_OFFICIAL": { "paths": 45, "tokens": 81323, "recall": 0 },
+      "B0_BUDGET": { "paths": 15, "tokens": 26148, "recall": 1, "notes": [] }
+    },
+    {
+      "task_id": "R03",
+      "B0_OFFICIAL": { "paths": 38, "tokens": 73918, "recall": 0 },
+      "B0_BUDGET": { "paths": 15, "tokens": 29141, "recall": 0, "notes": ["miss substring @ wiki-backend.ts:141"] }
+    },
+    {
+      "task_id": "R04",
+      "B0_OFFICIAL": { "paths": 45, "tokens": 42172, "recall": 1 },
+      "B0_BUDGET": { "paths": 15, "tokens": 37200, "recall": 0, "notes": ["ADR-DR-0005 path not in budgeted set"] }
+    },
+    {
+      "task_id": "R05",
+      "B0_OFFICIAL": { "paths": 45, "tokens": 44150, "recall": 0 },
+      "B0_BUDGET": { "paths": 15, "tokens": 19691, "recall": 1, "notes": [] }
+    },
+    {
+      "task_id": "R06",
+      "B0_OFFICIAL": { "paths": 32, "tokens": 103127, "recall": 0 },
+      "B0_BUDGET": { "paths": 15, "tokens": 41333, "recall": 0, "notes": ["gate-bundle.md not in budgeted set"] }
+    }
+  ],
+  "note": "B0_OFFICIAL TS replay uses same rg cap-45 as real_corpus_harness.py; recall can differ from frozen raw when anchor sorts after cap. Budget honestly drops recall on R03/R04/R06 when anchor paths rank low."
 }

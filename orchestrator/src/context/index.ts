@@ -6,3 +6,4 @@ export * from "./budget.js";
 export * from "./gate-bundle.js";
 export * from "./pda-spawn.js";
 export * from "./telemetry.js";
+export * from "./bench-retrieval.js";

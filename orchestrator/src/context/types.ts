@@ -42,6 +42,13 @@ export interface ContextSlice {
   priority: number;
 }
 
+export interface ContextRetrievalEntry {
+  path: string;
+  content: string;
+  kind?: ContextSliceKind;
+  priority?: number;
+}
+
 export interface ContextBudgetTelemetry {
   context_owner_id: ContextOwnerId;
   tokenizer: string;

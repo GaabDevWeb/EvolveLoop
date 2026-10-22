@@ -216,6 +216,16 @@ export {
 } from "./evidence/builders.js";
 export * from "./capabilities/results.js";
 export { JobStore, type SkillJob, type SkillJobResult } from "./jobs/job-store.js";
-export { invokePickup, buildPickupPrompt, type PickupPlan } from "./jobs/job-pickup.js";
+export {
+  invokePickup,
+  buildPickupPrompt,
+  type PickupPlan,
+} from "./jobs/job-pickup.js";
+export {
+  preparePickupSpawnContext,
+  extractGateBundleFromRequest,
+  extractContextRetrievalFromRequest,
+} from "./jobs/spawn-pickup-context.js";
+export { runB0Retrieval, anchorRecall, runRg, type BenchTask } from "./context/bench-retrieval.js";
 export { jobResultToExecuteResult, loadEvidenceFile } from "./jobs/job-resume.js";
 export { saveCheckpoint, loadCheckpoint, clearCheckpoint, CheckpointError, type EngineCheckpoint } from "./jobs/checkpoint.js";

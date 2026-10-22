@@ -4,6 +4,10 @@ import type { Evidence, EvidenceCheck, ExecuteRequest, ExecuteResult, ProviderMa
 import { unverifiedDodChecks } from "../evidence/builders.js";
 import { recordSkillLifecycle } from "../telemetry/skill-telemetry.js";
 import type { EventBus } from "../events/event-bus.js";
+import {
+  extractContextRetrievalFromRequest,
+  extractGateBundleFromRequest,
+} from "../jobs/spawn-pickup-context.js";
 
 /** Executes a capability — pluggable bridge (shell, subagent, job file). */
 export interface SkillExecutor {
@@ -18,6 +22,7 @@ export class JobFileExecutor implements SkillExecutor {
     const jobPath = resolve(this.jobsDir, `${request.run_id}.json`);
     mkdirSync(dirname(jobPath), { recursive: true });
 
+    const featureId = request.memory_scope;
     const job = {
       apiVersion: "capability-orchestrator.io/v2",
       kind: "SkillJob",
@@ -30,6 +35,10 @@ export class JobFileExecutor implements SkillExecutor {
       definition_of_done: request.definition_of_done,
       inputs: request.inputs,
       status: "pending",
+      feature_id: featureId,
+      gate_bundle: extractGateBundleFromRequest(request, manifest, featureId),
+      context_retrieval: extractContextRetrievalFromRequest(request),
+      spawn_metadata: request.node.metadata ?? {},
     };
 
     writeFileSync(jobPath, JSON.stringify(job, null, 2));

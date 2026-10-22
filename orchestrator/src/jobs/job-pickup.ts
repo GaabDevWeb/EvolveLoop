@@ -2,6 +2,8 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { resolveOrchestratorRoot } from "../cli/run-engine-env.js";
 import { JobStore, type SkillJob } from "./job-store.js";
+import { preparePickupSpawnContext } from "./spawn-pickup-context.js";
+import type { EventBus } from "../events/event-bus.js";
 
 export interface PickupPlan {
   status: "idle" | "ready";
@@ -29,10 +31,15 @@ export function buildPickupPrompt(
   job: SkillJob,
   jobsDir: string,
   orchestratorRoot?: string,
+  spawnContext?: ReturnType<typeof preparePickupSpawnContext>,
 ): string {
   const orchRoot = orchestratorRoot ?? resolveOrchestratorRoot();
   const completeCmd = `cd ${orchRoot} && npm run run-jobs -- complete --jobs-dir ${jobsDir} --run-id ${job.run_id} --success --evidence <path-to-evidence.json>`;
   const failCmd = `cd ${orchRoot} && npm run run-jobs -- complete --jobs-dir ${jobsDir} --run-id ${job.run_id} --error "reason"`;
+
+  const ctx =
+    spawnContext ??
+    preparePickupSpawnContext(job, jobsDir, { featureId: job.feature_id ?? job.node_id });
 
   return `# SkillJob Pickup — ${job.run_id}
 
@@ -52,6 +59,12 @@ export function buildPickupPrompt(
 ## Briefing
 
 ${job.briefing}
+
+${ctx.gate_bundle_block}
+
+${ctx.budgeted_context_block}
+
+${ctx.evidence_path ? `## Context budget evidence\n\nRecorded at: \`${ctx.evidence_path}\`\n` : ""}
 
 ## Definition of Done
 
@@ -74,10 +87,15 @@ export function writePickupArtifacts(
   job: SkillJob,
   jobsDir: string,
   promptDir: string,
+  options?: { eventBus?: EventBus },
 ): PickupPlan {
   mkdirSync(promptDir, { recursive: true });
   const promptPath = join(promptDir, "current-job.md");
-  const prompt = buildPickupPrompt(job, jobsDir);
+  const spawnContext = preparePickupSpawnContext(job, jobsDir, {
+    eventBus: options?.eventBus,
+    featureId: job.feature_id ?? job.node_id,
+  });
+  const prompt = buildPickupPrompt(job, jobsDir, undefined, spawnContext);
   writeFileSync(promptPath, prompt, "utf-8");
   writeFileSync(
     join(promptDir, "current-job.json"),
@@ -90,6 +108,9 @@ export function writePickupArtifacts(
         jobs_dir: jobsDir,
         prompt_path: promptPath,
         picked_at: new Date().toISOString(),
+        context_owner_id: spawnContext.context_owner_id,
+        context_budget_evidence: spawnContext.evidence_path,
+        context_budget_telemetry: spawnContext.telemetry,
       },
       null,
       2,
@@ -113,6 +134,7 @@ export function invokePickup(options: {
   jobsDir: string;
   promptDir: string;
   runId?: string;
+  eventBus?: EventBus;
 }): PickupPlan {
   const jobsDir = resolve(options.jobsDir);
   const store = new JobStore(jobsDir);
@@ -120,5 +142,7 @@ export function invokePickup(options: {
   if (!job) {
     return { status: "idle", jobs_dir: jobsDir };
   }
-  return writePickupArtifacts(job, jobsDir, resolve(options.promptDir));
+  return writePickupArtifacts(job, jobsDir, resolve(options.promptDir), {
+    eventBus: options.eventBus,
+  });
 }
