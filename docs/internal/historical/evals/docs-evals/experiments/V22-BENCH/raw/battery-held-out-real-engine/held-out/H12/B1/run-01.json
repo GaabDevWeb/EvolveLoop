@@ -1,0 +1,45 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_WIKI_GROUND",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H12-B1-165e8dec9b8c",
+  "arm": "B1",
+  "task_id": "H12",
+  "timestamp": "2026-10-22T01:08:38.296140+00:00",
+  "tree_sha": "35f024e4ab7ed18df9083d55f65aec58c147c7ea",
+  "harness": "v22-ground-b1-harness-1.3.0",
+  "tokenizer": "PROXY:whitespace_split",
+  "metrics": {
+    "task_id": "H12",
+    "arm": "B1",
+    "paths_read": [
+      ".cursor/skills/wiki/evals/trigger-eval-set.json",
+      "docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md",
+      "docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md",
+      "docs/research/evolveloop-v2.2/01-current-state-audit.md",
+      "docs/internal/historical/cursor-megabrain-rag-stack.md",
+      ".cursor/skills/orquestrar/references/knowledge-grounding-gate.md",
+      "docs/research/evolveloop-v2.2/04-community-findings.md",
+      ".cursor/skills/orquestrar/references/specs/README.md",
+      ".ai/index.md",
+      ".cursor/skills/planner/SKILL.md",
+      ".cursor/skills/orquestrar/evals/evals-v25-blind.json",
+      ".cursor/skills/po-review/SKILL.md"
+    ],
+    "input_tokens": 19912,
+    "latency_ms": 2891,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
+    ]
+  }
+}

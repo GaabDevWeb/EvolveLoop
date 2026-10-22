@@ -17,8 +17,7 @@ from typing import Any, Callable
 
 EXP_DIR = Path(__file__).resolve().parents[1]
 TASKS_HELD = EXP_DIR / "tasks-held-out-frozen.json"
-HARNESS_VERSION = "v22-ground-b1-harness-1.1.0"
-B1_EVIDENCE_CLASS = "FIXTURE_WIKI_GROUND"
+HARNESS_VERSION = "v22-ground-b1-harness-1.3.0"
 B0_CAP = 45
 RG_GLOBS = [
     "!node_modules",
@@ -134,11 +133,58 @@ def run_b0(root: Path, task: dict[str, Any], counter) -> RunResult:
     return RunResult(task_id=task["id"], arm="B0", paths_read=paths, input_tokens=tok_in, latency_ms=elapsed, recall=recall, recall_notes=notes)
 
 
+def _parse_source_paths_from_vault_page(vault_file: Path) -> list[str]:
+    if not vault_file.is_file():
+        return []
+    text = vault_file.read_text(encoding="utf-8", errors="replace")
+    if not text.startswith("---"):
+        return []
+    end = text.find("\n---", 3)
+    if end == -1:
+        return []
+    fm = text[3:end]
+    paths: list[str] = []
+    in_block = False
+    for line in fm.splitlines():
+        if line.strip() == "source_paths:":
+            in_block = True
+            continue
+        if in_block:
+            if line.strip().startswith("- "):
+                paths.append(line.strip()[2:].strip())
+            elif line and not line.startswith(" "):
+                in_block = False
+    return paths
+
+
+def _repo_paths_from_hit(hit: dict[str, Any], wiki_root: Path, repo: Path) -> list[str]:
+    src = hit.get("source")
+    vault_rel: str | None = None
+    if isinstance(src, str):
+        vault_rel = src
+    elif isinstance(src, dict):
+        vault_rel = str(src.get("file") or src.get("path") or "") or None
+        if src.get("stale"):
+            return []
+    if not vault_rel:
+        vault_rel = str(hit.get("path") or "")
+    out: list[str] = []
+    if vault_rel:
+        vault_fp = wiki_root / vault_rel
+        for sp in _parse_source_paths_from_vault_page(vault_fp):
+            if (repo / sp).is_file():
+                out.append(sp)
+        # Fallback: path exists in monorepo as-is
+        if (repo / vault_rel).is_file():
+            out.append(vault_rel)
+    return sorted(set(out))
+
+
 def run_ground_json(query: str, env: dict[str, str]) -> dict[str, Any]:
     vault = env["WIKI_ROOT"]
     py = env.get("WIKI_PYTHON", f"{vault}/.venv/bin/python")
     raw = subprocess.run(
-        [py, "-m", "gaabwiki", "search", query, "--json", "--top-k", "4"],
+        [py, "-m", "gaabwiki", "search", query, "--json", "--top-k", "12"],
         capture_output=True,
         text=True,
         env=env,
@@ -149,22 +195,47 @@ def run_ground_json(query: str, env: dict[str, str]) -> dict[str, Any]:
     return json.loads(raw.stdout or "{}")
 
 
+def _iter_search_hits(data: dict[str, Any], limit: int = 24) -> list[dict[str, Any]]:
+    """Real gaabwiki JSON exposes selected + stage lists; union for provenance paths."""
+    out: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for key in ("selected", "hybrid", "bm25", "results"):
+        for hit in data.get(key) or []:
+            if not isinstance(hit, dict):
+                continue
+            cid = str(hit.get("chunk_id") or hit.get("source") or len(out))
+            if cid in seen:
+                continue
+            seen.add(cid)
+            out.append(hit)
+            if len(out) >= limit:
+                return out
+    return out
+
+
 def run_b1_ground(root: Path, task: dict[str, Any], counter, env: dict[str, str]) -> RunResult:
     t0 = time.perf_counter()
     paths: list[str] = []
     buf: list[str] = []
+    wiki_root = Path(env["WIKI_ROOT"])
     # B1 must use natural-language task query only — rg_patterns are B0 gabarito (no leakage).
     data = run_ground_json(task["query"], env)
     stale = 0
-    for hit in data.get("selected") or []:
-        src = hit.get("source") or {}
-        if src.get("stale"):
+    for hit in _iter_search_hits(data):
+        src = hit.get("source")
+        if isinstance(src, dict) and src.get("stale"):
             stale += 1
             continue
-        rel = src.get("file")
-        if rel:
+        for rel in _repo_paths_from_hit(hit, wiki_root, root):
             read_rel(root, rel, paths, buf)
-        buf.append(hit.get("content") or "")
+        excerpt = (
+            hit.get("content")
+            or hit.get("text")
+            or hit.get("preview")
+            or ""
+        )
+        if excerpt:
+            buf.append(str(excerpt))
     recall, notes = anchor_recall(root, paths, task["anchors"])
     if stale:
         notes.append(f"skipped {stale} stale hits")
@@ -183,6 +254,102 @@ def run_b1_ground(root: Path, task: dict[str, Any], counter, env: dict[str, str]
     )
 
 
+def resolve_b1_class_and_env(repo: Path) -> tuple[str, dict[str, str], dict[str, Any]]:
+    """Official B1 only when real karpathyWiki clone + sha match; else fixture vault."""
+    env = os.environ.copy()
+    engine = os.environ.get("V22_WIKI_ENGINE", "auto").lower()
+    karpathy_dir = Path(os.environ.get("KARPATHY_WIKI_DIR", "/opt/karpathyWiki"))
+    expected_sha = os.environ.get("KARPATHY_WIKI_SHA", "cd3cf08")
+    fixture = repo / "fixtures" / "evolveloop-wiki-vault"
+    meta: dict[str, Any] = {
+        "engine_requested": engine,
+        "karpathy_wiki_dir": str(karpathy_dir),
+        "karpathy_wiki_sha_expected": expected_sha,
+    }
+
+    status_path = (
+        repo
+        / "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery-held-out-real-engine/OFFICIAL-STATUS.json"
+    )
+    motor_ready = (karpathy_dir / "gaabwiki" / "cli.py").is_file()
+    use_official = engine in ("official", "karpathywiki", "real")
+    if engine == "auto":
+        use_official = motor_ready
+
+    if use_official and not motor_ready:
+        meta["official_blocked"] = "motor_missing"
+        use_official = False
+    elif use_official and (karpathy_dir / ".git").is_dir():
+        try:
+            head = subprocess.check_output(
+                ["git", "rev-parse", "HEAD"], cwd=karpathy_dir, text=True
+            ).strip()
+            meta["karpathy_wiki_sha_actual"] = head
+            if not head.startswith(expected_sha):
+                meta["official_blocked"] = "sha_mismatch"
+                use_official = False
+        except subprocess.CalledProcessError as exc:
+            meta["official_blocked"] = f"git_head_error:{exc.returncode}"
+            use_official = False
+    elif use_official and status_path.is_file():
+        try:
+            st = json.loads(status_path.read_text(encoding="utf-8"))
+            meta["motor_origin"] = st.get("motor_origin")
+            meta["tarball_sha256"] = st.get("karpathywiki_tarball_sha256")
+            if st.get("status") != "READY":
+                meta["official_blocked"] = f"status_{st.get('status')}"
+                use_official = False
+        except json.JSONDecodeError:
+            meta["official_blocked"] = "invalid_official_status"
+            use_official = False
+    elif use_official:
+        meta["official_blocked"] = "no_git_and_no_status"
+        use_official = False
+
+    if use_official:
+        vault = karpathy_dir
+        py = Path(os.environ.get("WIKI_PYTHON", karpathy_dir / ".venv" / "bin" / "python"))
+        b1_class = "OFFICIAL_WIKI_GROUND"
+        meta["wiki_engine"] = "karpathyWiki"
+    else:
+        vault = fixture
+        py = Path(os.environ.get("WIKI_PYTHON", fixture / ".venv" / "bin" / "python"))
+        b1_class = "FIXTURE_WIKI_GROUND"
+        meta["wiki_engine"] = "fixtures/evolveloop-wiki-vault"
+
+    env["WIKI_ROOT"] = str(vault)
+    env["KNOWLEDGE_PATH"] = str(vault)
+    env["AGENTS_ROOT"] = str(repo)
+    env["EVOLVELOOP_MONOREPO_ROOT"] = str(repo)
+    env["WIKI_PYTHON"] = str(py)
+    env["CORPUS_YAML"] = str(
+        repo / "docs/architecture/v2.2/scripts/corpus-evolveloop-official.yaml"
+    )
+    env["CORPUS_SET"] = "evolveloop"
+    meta["wiki_root"] = str(vault)
+    meta["wiki_python"] = str(py)
+    return b1_class, env, meta
+
+
+def filter_tasks(tasks: list[dict[str, Any]], only: str | None) -> list[dict[str, Any]]:
+    if not only:
+        return tasks
+    if only.upper() == "H07-H18":
+        allowed = {f"H{n:02d}" for n in range(7, 19)}
+        return [t for t in tasks if t["id"] in allowed]
+    if "-" in only and only[0] == "H":
+        start, end = only.split("-", 1)
+        ids = []
+        for tid in (start, end):
+            if tid.startswith("H") and tid[1:].isdigit():
+                ids.append(int(tid[1:]))
+        if len(ids) == 2:
+            lo, hi = sorted(ids)
+            allowed = {f"H{n:02d}" for n in range(lo, hi + 1)}
+            return [t for t in tasks if t["id"] in allowed]
+    return [t for t in tasks if t["id"] == only]
+
+
 def median(vals: list[float]) -> float:
     if not vals:
         return 0.0
@@ -192,21 +359,18 @@ def median(vals: list[float]) -> float:
     return float(s[m]) if n % 2 else (s[m - 1] + s[m]) / 2.0
 
 
-def run_battery(out_dir: Path) -> dict[str, Any]:
+def run_battery(out_dir: Path, task_filter: str | None = None) -> dict[str, Any]:
     tok_label, counter = load_tokenizer()
     repo = repo_root()
     tree_sha = git_sha(repo)
     spec = json.loads(TASKS_HELD.read_text(encoding="utf-8"))
     spec["freeze_tree_sha"] = tree_sha
-    vault = repo / "fixtures" / "evolveloop-wiki-vault"
-    env = os.environ.copy()
-    env["WIKI_ROOT"] = str(vault)
-    env["AGENTS_ROOT"] = str(repo)
-    env["EVOLVELOOP_MONOREPO_ROOT"] = str(repo)
-    env["WIKI_PYTHON"] = str(vault / ".venv" / "bin" / "python")
+    b1_class, env, engine_meta = resolve_b1_class_and_env(repo)
+    vault = Path(engine_meta["wiki_root"])
+    tasks = filter_tasks(spec["tasks"], task_filter)
 
     all_runs: list[dict[str, Any]] = []
-    for task in spec["tasks"]:
+    for task in tasks:
         for arm in ("B0", "B1"):
             if arm == "B0":
                 res = run_b0(repo, task, counter)
@@ -214,8 +378,8 @@ def run_battery(out_dir: Path) -> dict[str, Any]:
                 res = run_b1_ground(repo, task, counter, env)
             rec = {
                 "experiment_id": "V22-BENCH-HELD-OUT",
-                "evidence_class": "OFFICIAL_BASELINE" if arm == "B0" else B1_EVIDENCE_CLASS,
-                "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-review",
+                "evidence_class": "OFFICIAL_BASELINE" if arm == "B0" else b1_class,
+                "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
                 "run_id": f"V22H-{task['id']}-{arm}-{hashlib.sha256((tree_sha+task['id']+arm).encode()).hexdigest()[:12]}",
                 "arm": arm,
                 "task_id": task["id"],
@@ -251,13 +415,14 @@ def run_battery(out_dir: Path) -> dict[str, Any]:
         "experiment": "V22-BENCH-HELD-OUT",
         "classification_by_arm": {
             "B0": "OFFICIAL_BASELINE",
-            "B1": B1_EVIDENCE_CLASS,
+            "B1": b1_class,
         },
-        "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-review",
+        "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
         "harness_notes": {
             "b1_query": "task.query only (rg_patterns reserved for B0)",
-            "wiki_cli": "fixtures/evolveloop-wiki-vault gaabwiki (minimal in-repo fixture)",
+            "wiki_engine": engine_meta,
         },
+        "task_filter": task_filter,
         "freeze_tree_sha": tree_sha,
         "tasks_frozen": str(TASKS_HELD.relative_to(EXP_DIR)),
         "aggregates": summary_aggs,
@@ -284,8 +449,21 @@ def run_battery(out_dir: Path) -> dict[str, Any]:
 
 
 if __name__ == "__main__":
-    target = EXP_DIR / "raw" / "battery-held-out"
-    if len(sys.argv) > 1:
-        target = Path(sys.argv[1])
-    s = run_battery(target)
-    print(json.dumps({"verdict": "OK", "rollups": s["rollups"]}, indent=2))
+    import argparse
+
+    ap = argparse.ArgumentParser()
+    ap.add_argument(
+        "out_dir",
+        nargs="?",
+        default=str(EXP_DIR / "raw" / "battery-held-out"),
+    )
+    ap.add_argument(
+        "--tasks",
+        default=os.environ.get("V22_HELD_OUT_TASKS"),
+        help="e.g. H07-H18 or H13",
+    )
+    args = ap.parse_args()
+    s = run_battery(Path(args.out_dir), task_filter=args.tasks)
+    blocked = s.get("harness_notes", {}).get("wiki_engine", {}).get("official_blocked")
+    verdict = "BLOCKED" if blocked else "OK"
+    print(json.dumps({"verdict": verdict, "blocked": blocked, "rollups": s["rollups"]}, indent=2))

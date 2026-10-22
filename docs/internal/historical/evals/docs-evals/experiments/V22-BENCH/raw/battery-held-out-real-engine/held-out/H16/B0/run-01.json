@@ -1,0 +1,44 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_BASELINE",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H16-B0-a292a861aca5",
+  "arm": "B0",
+  "task_id": "H16",
+  "timestamp": "2026-10-22T01:08:46.709871+00:00",
+  "tree_sha": "35f024e4ab7ed18df9083d55f65aec58c147c7ea",
+  "harness": "v22-ground-b1-harness-1.3.0",
+  "tokenizer": "PROXY:whitespace_split",
+  "metrics": {
+    "task_id": "H16",
+    "arm": "B0",
+    "paths_read": [
+      "agent-setup/manifest/manifest.yaml",
+      "agent-setup/manifest/profiles.yaml",
+      "docs/architecture/publication/AGENT-MD-REQUIREMENTS.yaml",
+      "docs/architecture/publication/FINAL-GAABTYPE-MANIFEST.yaml",
+      "docs/internal/historical/evals/docs-evals/experiments/E-005/harness/e005-duplicate-mutate.test.ts",
+      "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-held-out-frozen.json",
+      "orchestrator/policies/high-reliability.yaml",
+      "orchestrator/src/capabilities/results.ts",
+      "orchestrator/src/cli/run-engine.ts",
+      "orchestrator/src/config/profile.ts",
+      "orchestrator/src/engine/execution-engine.ts",
+      "orchestrator/src/policies/policy-engine.ts",
+      "orchestrator/src/providers/deterministic/system.ts",
+      "orchestrator/tests/integration/persistence.test.ts",
+      "profiles/default.yaml"
+    ],
+    "input_tokens": 7150,
+    "latency_ms": 17,
+    "recall": 1.0,
+    "recall_notes": [],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": true,
+    "recall": 1.0,
+    "notes": []
+  }
+}

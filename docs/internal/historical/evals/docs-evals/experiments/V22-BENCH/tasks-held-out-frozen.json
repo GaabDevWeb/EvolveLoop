@@ -11,6 +11,13 @@
     "task_ids": ["H07", "H08", "H09", "H10", "H11", "H12"],
     "note": "Tarefas escritas por revisor adversarial; commit de freeze separado antes do harness"
   },
+  "real_engine_extension": {
+    "author": "V22-GOAL-005b-real-engine",
+    "frozen_at_utc": "2026-10-22T14:00:00Z",
+    "task_ids": ["H13", "H14", "H15", "H16", "H17", "H18"],
+    "karpathy_wiki_sha": "cd3cf08",
+    "note": "Congeladas antes da medição com motor karpathyWiki real"
+  },
   "b1_mechanism": {
     "primary": "FIXTURE_WIKI_GROUND — python -m gaabwiki no vault fixtures/evolveloop-wiki-vault (reimplementação mínima no repo, não karpathyWiki externo)",
     "vault_path": "fixtures/evolveloop-wiki-vault",
@@ -160,6 +167,78 @@
           "path": "orchestrator/src/knowledge/backend/wiki-backend.ts",
           "line": 36,
           "substring": "timeoutMs = 20_000"
+        }
+      ]
+    },
+    {
+      "id": "H13",
+      "query": "No ADR-0005, o que fazer quando Ollama está indisponível mas o índice BM25 existe?",
+      "rg_patterns": ["ADR-0005", "BM25 only", "degraded"],
+      "anchors": [
+        {
+          "path": "docs/adr/0005-hybrid-retrieval-degraded-mode.md",
+          "line": 15,
+          "substring": "correr **BM25 only**"
+        }
+      ]
+    },
+    {
+      "id": "H14",
+      "query": "Qual função exportada implementa knowledge.search no provider determinístico?",
+      "rg_patterns": ["knowledgeSearch", "deterministic/knowledge"],
+      "anchors": [
+        {
+          "path": "orchestrator/src/providers/deterministic/knowledge.ts",
+          "line": 16,
+          "substring": "export async function knowledgeSearch"
+        }
+      ]
+    },
+    {
+      "id": "H15",
+      "query": "Na documentação KNOWLEDGE-WIKI-DEFAULT, qual é o backend default após perfil e env?",
+      "rg_patterns": ["KNOWLEDGE-WIKI-DEFAULT", "wiki"],
+      "anchors": [
+        {
+          "path": "docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md",
+          "line": 14,
+          "substring": "3. **`wiki`**"
+        }
+      ]
+    },
+    {
+      "id": "H16",
+      "query": "Qual provider de memória episódica está configurado em profiles/default.yaml?",
+      "rg_patterns": ["provider: wiki-mem", "memory:"],
+      "anchors": [
+        {
+          "path": "profiles/default.yaml",
+          "line": 13,
+          "substring": "provider: wiki-mem"
+        }
+      ]
+    },
+    {
+      "id": "H17",
+      "query": "No ADR-0002, qual plugin introduz handlers locais sem LLM?",
+      "rg_patterns": ["ADR-0002", "deterministic"],
+      "anchors": [
+        {
+          "path": "docs/adr/0002-capability-model-deterministic-providers.md",
+          "line": 16,
+          "substring": "plugin **`deterministic`**"
+        }
+      ]
+    },
+    {
+      "id": "H18",
+      "query": "A skill wiki deve ser usada para memória episódica wiki-mem?",
+      "rg_patterns": ["wiki-mem", "Não use para memória episódica"],
+      "anchors": [
+        {
+          "path": ".cursor/skills/wiki/SKILL.md",
+          "line": 9,
+          "substring": "Não use para memória episódica"
         }
       ]
     }
