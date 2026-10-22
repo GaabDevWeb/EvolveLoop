@@ -112,7 +112,7 @@ V22_WIKI_ENGINE=official python3 .../ground_b1_harness.py .../battery-held-out-r
 
 ## SHA / PR
 
-- **Commit de medição:** ver `freeze_tree_sha` em `held-out-summary.json` na branch `cursor/v22-goal-005d-recall-2e17`.
+- **Commit de medição:** `f453b84` (`freeze_tree_sha` nos `held-out-summary.json` da branch `cursor/v22-goal-005d-recall-2e17`).
 - **PR:** contra `release/v2.1-freeze-preparation`.
 
 ## Riscos
