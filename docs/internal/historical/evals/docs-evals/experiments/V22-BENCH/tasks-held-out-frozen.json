@@ -18,6 +18,12 @@
     "karpathy_wiki_sha": "cd3cf08",
     "note": "Congeladas antes da medição com motor karpathyWiki real"
   },
+  "recall_holdout_test_extension": {
+    "author": "V22-GOAL-005d-recall",
+    "frozen_at_utc": "2026-10-22T15:00:00Z",
+    "task_ids": ["H19", "H20", "H21", "H22", "H23", "H24"],
+    "note": "Congeladas antes de otimizações de recall; split teste (não dev H07-H18)"
+  },
   "b1_mechanism": {
     "primary": "FIXTURE_WIKI_GROUND — python -m gaabwiki no vault fixtures/evolveloop-wiki-vault (reimplementação mínima no repo, não karpathyWiki externo)",
     "vault_path": "fixtures/evolveloop-wiki-vault",
