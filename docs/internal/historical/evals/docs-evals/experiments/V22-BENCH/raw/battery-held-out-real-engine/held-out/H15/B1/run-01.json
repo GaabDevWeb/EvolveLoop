@@ -1,25 +1,31 @@
 {
   "experiment_id": "V22-BENCH-HELD-OUT",
-  "evidence_class": "FIXTURE_WIKI_GROUND",
+  "evidence_class": "OFFICIAL_WIKI_GROUND",
   "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
-  "run_id": "V22H-H15-B1-74ce80676c26",
+  "run_id": "V22H-H15-B1-a884b27efeda",
   "arm": "B1",
   "task_id": "H15",
-  "timestamp": "2026-10-22T01:02:23.666051+00:00",
-  "tree_sha": "9aebf0d3073a51af5c2de2cc5553d3a12d9ef005",
-  "harness": "v22-ground-b1-harness-1.2.0",
+  "timestamp": "2026-10-22T01:08:46.692358+00:00",
+  "tree_sha": "35f024e4ab7ed18df9083d55f65aec58c147c7ea",
+  "harness": "v22-ground-b1-harness-1.3.0",
   "tokenizer": "PROXY:whitespace_split",
   "metrics": {
     "task_id": "H15",
     "arm": "B1",
     "paths_read": [
-      ".cursor/skills/backend/SKILL.md",
-      ".cursor/skills/documentation/SKILL.md",
-      ".cursor/skills/orquestrar/references/knowledge-grounding-gate.md",
-      ".cursor/skills/debugger/SKILL.md"
+      ".cursor/skills/po-review/SKILL.md",
+      "docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md",
+      "docs/architecture/publication/PUBLIC-EXTRACTION-PLAN.md",
+      ".cursor/skills/orquestrar/references/specs/README.md",
+      "docs/research/evolveloop-v2.2/06-token-optimization.md",
+      ".cursor/skills/orquestrar/evals/evals-v25-blind.json",
+      "docs/research/evolveloop-v2.2/README.md",
+      "docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md",
+      "docs/architecture/v2.2/scripts/generate-evolveloop-wiki-knowledge.sh",
+      "docs/research/evolveloop-v2.2/01-current-state-audit.md"
     ],
-    "input_tokens": 7415,
-    "latency_ms": 103,
+    "input_tokens": 14900,
+    "latency_ms": 2771,
     "recall": 0.0,
     "recall_notes": [
       "miss path not read: docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md"

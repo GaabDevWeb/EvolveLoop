@@ -1,23 +1,12 @@
 {
   "gate": "OFFICIAL_WIKI_GROUND",
-  "status": "BLOCKED",
-  "reason": "karpathyWiki clone failed — repository not visible to cloud agent token",
-  "karpathy_wiki_repo": "https://github.com/GaabDevWeb/karpathyWiki.git",
-  "karpathy_wiki_sha_expected": "cd3cf08",
-  "clone_errors": [
-    "git clone: remote: Repository not found. fatal: repository 'https://github.com/GaabDevWeb/karpathyWiki.git/' not found (exit 128)",
-    "gh api repos/GaabDevWeb/karpathyWiki: HTTP 404 Not Found",
-    "gh repo clone GaabDevWeb/karpathyWiki: GraphQL Could not resolve to a Repository"
-  ],
-  "fixture_pipeline_measured": {
-    "note": "H07-H18 with autogen ingest + fixture gaabwiki only — NOT OFFICIAL_WIKI_GROUND",
-    "evidence_class": "FIXTURE_WIKI_GROUND",
-    "summary_path": "held-out-summary.json",
-    "bootstrap_log": "bootstrap.log"
-  },
-  "unblock_actions": [
-    "Grant Cloud Agent environment access to GaabDevWeb/karpathyWiki (private repo)",
-    "Re-run docs/architecture/v2.2/scripts/bootstrap-karpathywiki-official-bench.sh",
-    "Re-run harness with V22_WIKI_ENGINE=official"
-  ]
+  "status": "READY",
+  "motor_origin": "snapshot_cd3cf08_local",
+  "karpathy_wiki_sha_label": "cd3cf08",
+  "karpathywiki_tarball_sha256": "11160e77ad7c88885635ef2beeac1d8046b95c103952dbe1a90aba1bbb852377",
+  "karpathy_wiki_dir": "/opt/karpathyWiki",
+  "retrieval_mode_declared": "bm25_degraded (Ollama unavailable — ADR-0005)",
+  "index_mode": "bm25_degraded",
+  "corpus_yaml": "/workspace/docs/architecture/v2.2/scripts/corpus-evolveloop-official.yaml",
+  "ingest_layout": "EvolveLoop/wiki/autogen-*.md"
 }

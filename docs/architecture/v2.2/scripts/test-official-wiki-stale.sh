@@ -6,8 +6,8 @@ ENGINE="${V22_WIKI_ENGINE:-fixture}"
 
 if [[ "$ENGINE" == "official" ]]; then
   KARPATHY_WIKI_DIR="${KARPATHY_WIKI_DIR:-/opt/karpathyWiki}"
-  if [[ ! -d "$KARPATHY_WIKI_DIR/.git" ]]; then
-    echo "SKIP: official engine not cloned ($KARPATHY_WIKI_DIR)" >&2
+  if [[ ! -f "$KARPATHY_WIKI_DIR/gaabwiki/cli.py" ]]; then
+    echo "SKIP: official motor missing at $KARPATHY_WIKI_DIR" >&2
     exit 0
   fi
   WIKI_ROOT="$KARPATHY_WIKI_DIR"
@@ -20,12 +20,9 @@ fi
 export WIKI_ROOT EVOLVELOOP_MONOREPO_ROOT="$REPO" AGENTS_ROOT="$REPO"
 
 if [[ "$ENGINE" == "official" ]]; then
-  if [[ -d "$KARPATHY_WIKI_DIR/tests" ]]; then
-    cd "$KARPATHY_WIKI_DIR"
-    exec "$PYTHON" -m pytest tests -k stale -q
-  fi
-  echo "SKIP: no stale tests in karpathyWiki checkout" >&2
-  exit 0
+  cd "$KARPATHY_WIKI_DIR"
+  # Real motor: prova modo degradado BM25 (Ollama off) — ADR-0005 classificação de status.
+  exec "$PYTHON" -m pytest tests/test_integration.py::test_degraded_hybrid_search_bm25_only -q
 fi
 
 cd "$REPO/fixtures/evolveloop-wiki-vault"

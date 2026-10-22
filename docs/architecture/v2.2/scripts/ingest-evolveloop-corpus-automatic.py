@@ -35,7 +35,7 @@ SKIP_DIR_NAMES = {
     "raw",
 }
 MAX_BODY_CHARS = 12_000
-MAX_FILES = 800
+MAX_FILES = 2000
 
 
 def repo_root(explicit: str | None) -> Path:
@@ -128,14 +128,23 @@ def main() -> int:
         help="WIKI_ROOT (karpathyWiki clone or portable vault)",
     )
     parser.add_argument(
+        "--layout",
+        choices=("fixture", "karpathy"),
+        default="karpathy",
+        help="fixture=projects/<name>/pages; karpathy=EvolveLoop/wiki/ (real motor)",
+    )
+    parser.add_argument(
         "--project",
         default="evolveloop",
-        help="projects/<name>/pages target",
+        help="fixture layout: projects/<name>/pages",
     )
     args = parser.parse_args()
     repo = repo_root(args.repo)
     wiki = Path(args.wiki_root).resolve()
-    pages_dir = wiki / "projects" / args.project / "pages"
+    if args.layout == "karpathy":
+        pages_dir = wiki / "EvolveLoop" / "wiki"
+    else:
+        pages_dir = wiki / "projects" / args.project / "pages"
     pages_dir.mkdir(parents=True, exist_ok=True)
 
     # Clean prior autogen only

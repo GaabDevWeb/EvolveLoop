@@ -17,7 +17,7 @@ from typing import Any, Callable
 
 EXP_DIR = Path(__file__).resolve().parents[1]
 TASKS_HELD = EXP_DIR / "tasks-held-out-frozen.json"
-HARNESS_VERSION = "v22-ground-b1-harness-1.2.0"
+HARNESS_VERSION = "v22-ground-b1-harness-1.3.0"
 B0_CAP = 45
 RG_GLOBS = [
     "!node_modules",
@@ -133,11 +133,58 @@ def run_b0(root: Path, task: dict[str, Any], counter) -> RunResult:
     return RunResult(task_id=task["id"], arm="B0", paths_read=paths, input_tokens=tok_in, latency_ms=elapsed, recall=recall, recall_notes=notes)
 
 
+def _parse_source_paths_from_vault_page(vault_file: Path) -> list[str]:
+    if not vault_file.is_file():
+        return []
+    text = vault_file.read_text(encoding="utf-8", errors="replace")
+    if not text.startswith("---"):
+        return []
+    end = text.find("\n---", 3)
+    if end == -1:
+        return []
+    fm = text[3:end]
+    paths: list[str] = []
+    in_block = False
+    for line in fm.splitlines():
+        if line.strip() == "source_paths:":
+            in_block = True
+            continue
+        if in_block:
+            if line.strip().startswith("- "):
+                paths.append(line.strip()[2:].strip())
+            elif line and not line.startswith(" "):
+                in_block = False
+    return paths
+
+
+def _repo_paths_from_hit(hit: dict[str, Any], wiki_root: Path, repo: Path) -> list[str]:
+    src = hit.get("source")
+    vault_rel: str | None = None
+    if isinstance(src, str):
+        vault_rel = src
+    elif isinstance(src, dict):
+        vault_rel = str(src.get("file") or src.get("path") or "") or None
+        if src.get("stale"):
+            return []
+    if not vault_rel:
+        vault_rel = str(hit.get("path") or "")
+    out: list[str] = []
+    if vault_rel:
+        vault_fp = wiki_root / vault_rel
+        for sp in _parse_source_paths_from_vault_page(vault_fp):
+            if (repo / sp).is_file():
+                out.append(sp)
+        # Fallback: path exists in monorepo as-is
+        if (repo / vault_rel).is_file():
+            out.append(vault_rel)
+    return sorted(set(out))
+
+
 def run_ground_json(query: str, env: dict[str, str]) -> dict[str, Any]:
     vault = env["WIKI_ROOT"]
     py = env.get("WIKI_PYTHON", f"{vault}/.venv/bin/python")
     raw = subprocess.run(
-        [py, "-m", "gaabwiki", "search", query, "--json", "--top-k", "4"],
+        [py, "-m", "gaabwiki", "search", query, "--json", "--top-k", "12"],
         capture_output=True,
         text=True,
         env=env,
@@ -148,22 +195,47 @@ def run_ground_json(query: str, env: dict[str, str]) -> dict[str, Any]:
     return json.loads(raw.stdout or "{}")
 
 
+def _iter_search_hits(data: dict[str, Any], limit: int = 24) -> list[dict[str, Any]]:
+    """Real gaabwiki JSON exposes selected + stage lists; union for provenance paths."""
+    out: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for key in ("selected", "hybrid", "bm25", "results"):
+        for hit in data.get(key) or []:
+            if not isinstance(hit, dict):
+                continue
+            cid = str(hit.get("chunk_id") or hit.get("source") or len(out))
+            if cid in seen:
+                continue
+            seen.add(cid)
+            out.append(hit)
+            if len(out) >= limit:
+                return out
+    return out
+
+
 def run_b1_ground(root: Path, task: dict[str, Any], counter, env: dict[str, str]) -> RunResult:
     t0 = time.perf_counter()
     paths: list[str] = []
     buf: list[str] = []
+    wiki_root = Path(env["WIKI_ROOT"])
     # B1 must use natural-language task query only — rg_patterns are B0 gabarito (no leakage).
     data = run_ground_json(task["query"], env)
     stale = 0
-    for hit in data.get("selected") or []:
-        src = hit.get("source") or {}
-        if src.get("stale"):
+    for hit in _iter_search_hits(data):
+        src = hit.get("source")
+        if isinstance(src, dict) and src.get("stale"):
             stale += 1
             continue
-        rel = src.get("file")
-        if rel:
+        for rel in _repo_paths_from_hit(hit, wiki_root, root):
             read_rel(root, rel, paths, buf)
-        buf.append(hit.get("content") or "")
+        excerpt = (
+            hit.get("content")
+            or hit.get("text")
+            or hit.get("preview")
+            or ""
+        )
+        if excerpt:
+            buf.append(str(excerpt))
     recall, notes = anchor_recall(root, paths, task["anchors"])
     if stale:
         notes.append(f"skipped {stale} stale hits")
@@ -195,11 +267,19 @@ def resolve_b1_class_and_env(repo: Path) -> tuple[str, dict[str, str], dict[str,
         "karpathy_wiki_sha_expected": expected_sha,
     }
 
+    status_path = (
+        repo
+        / "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery-held-out-real-engine/OFFICIAL-STATUS.json"
+    )
+    motor_ready = (karpathy_dir / "gaabwiki" / "cli.py").is_file()
     use_official = engine in ("official", "karpathywiki", "real")
     if engine == "auto":
-        use_official = (karpathy_dir / ".git").is_dir()
+        use_official = motor_ready
 
-    if use_official and (karpathy_dir / ".git").is_dir():
+    if use_official and not motor_ready:
+        meta["official_blocked"] = "motor_missing"
+        use_official = False
+    elif use_official and (karpathy_dir / ".git").is_dir():
         try:
             head = subprocess.check_output(
                 ["git", "rev-parse", "HEAD"], cwd=karpathy_dir, text=True
@@ -211,8 +291,19 @@ def resolve_b1_class_and_env(repo: Path) -> tuple[str, dict[str, str], dict[str,
         except subprocess.CalledProcessError as exc:
             meta["official_blocked"] = f"git_head_error:{exc.returncode}"
             use_official = False
+    elif use_official and status_path.is_file():
+        try:
+            st = json.loads(status_path.read_text(encoding="utf-8"))
+            meta["motor_origin"] = st.get("motor_origin")
+            meta["tarball_sha256"] = st.get("karpathywiki_tarball_sha256")
+            if st.get("status") != "READY":
+                meta["official_blocked"] = f"status_{st.get('status')}"
+                use_official = False
+        except json.JSONDecodeError:
+            meta["official_blocked"] = "invalid_official_status"
+            use_official = False
     elif use_official:
-        meta["official_blocked"] = "clone_missing"
+        meta["official_blocked"] = "no_git_and_no_status"
         use_official = False
 
     if use_official:
@@ -227,9 +318,14 @@ def resolve_b1_class_and_env(repo: Path) -> tuple[str, dict[str, str], dict[str,
         meta["wiki_engine"] = "fixtures/evolveloop-wiki-vault"
 
     env["WIKI_ROOT"] = str(vault)
+    env["KNOWLEDGE_PATH"] = str(vault)
     env["AGENTS_ROOT"] = str(repo)
     env["EVOLVELOOP_MONOREPO_ROOT"] = str(repo)
     env["WIKI_PYTHON"] = str(py)
+    env["CORPUS_YAML"] = str(
+        repo / "docs/architecture/v2.2/scripts/corpus-evolveloop-official.yaml"
+    )
+    env["CORPUS_SET"] = "evolveloop"
     meta["wiki_root"] = str(vault)
     meta["wiki_python"] = str(py)
     return b1_class, env, meta
