@@ -5,7 +5,8 @@ Baselines **B0/B1** (meta V22-GOAL-003), fase F3.
 | Campo | Valor |
 |-------|-------|
 | Sintético | `PROVISIONAL_SYNTHETIC` → `raw/battery/` |
-| Corpus real | `OFFICIAL_BASELINE` → `raw/battery-real/` |
+| B0 monorepo | `OFFICIAL_BASELINE` → `raw/battery-real/` |
+| B1 pack bench | `PROVISIONAL_CURATED_PACK` → `raw/battery-real/` |
 | LLM / ground.sh | `NOT_MEASURED` |
 | Tokenizer | `tiktoken:cl100k_base` |
 

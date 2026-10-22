@@ -85,16 +85,16 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Prioridade:** P0
 - **Título:** Harness de benchmark e baselines B0/B1
 - **Problema:** E-001 mede `token_estimate` por whitespace e `task_success NOT_MEASURED` (`docs/internal/historical/evals/docs-evals/experiments/E-001/EXPERIMENT.md`).
-- **Estado atual:** Harness F3 + F3b; baseline **oficial** no monorepo (`raw/battery-real/`); sintético reclassificado `PROVISIONAL_SYNTHETIC`; LLM `NOT_MEASURED`.
-- **Resultado:** B0/B1 no corpus real (6 tarefas file:line) + continuidade S03/S07 em fixture mínimo; sintético permanece sanity check.
-- **Solução:** Experimento `docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/` (ver `BENCHMARK-PLAN.md`).
-- **Dependências:** Corrida com LLM ao vivo ainda necessária para fechar tokens de saída reais e `task_success` host — fora do escopo desta entrega offline.
+- **Estado atual:** B0 real `OFFICIAL_BASELINE` (`raw/battery-real/`); B1 bench pack `PROVISIONAL_CURATED_PACK`; sintético `PROVISIONAL_SYNTHETIC`; LLM `NOT_MEASURED`.
+- **Resultado:** B0 medido no monorepo (6 tarefas); B1 no pack curado (recall circular); S03/S07 no mini-fixture (B1 provisório).
+- **Solução:** `V22-BENCH/` + `BENCHMARK-PLAN.md` § B1→oficial.
+- **Dependências:** **B1 OFFICIAL** bloqueado até **V22-GOAL-005** (`ground.sh`/`WIKI_ROOT`, conhecimento sem gabarito, held-out). LLM ao vivo: `NOT_MEASURED`.
 - **Impacto arquitetural:** Nenhum no runtime de produção.
 - **Critérios de aceite:** Raw contém tokens entrada/saída, paths lidos, verificador, SHA do tree, id do modelo; integridade do scorer.
-- **Métricas:** **OFFICIAL_BASELINE** (`raw/battery-real/battery-summary.json`): B1 recall 1.0 em R01–R06; paths mediana 3; tokens entrada mediana 1781 (`tiktoken:cl100k_base`). Alvos oficiais: B1 recall 1.0; paths ≤ 5; tokens entrada ≤ 4000. B0 broad `rg` **não** é gate de recall (mediana paths 45). **PROVISIONAL_SYNTHETIC** (`raw/battery/`): apenas sanity — **sem** alvos de produto. LLM: `NOT_MEASURED`.
+- **Métricas:** **OFFICIAL_BASELINE (B0):** paths mediana 45; tokens entrada mediana ~66747; recall por tarefa informativo (não gate). **PROVISIONAL_CURATED_PACK (B1):** observação recall 1.0*, paths mediana 3, tokens 1781 — *circular; **não** alvo oficial. Alvos B1/continuidade: `PENDING_BASELINE` até GOAL-005 + held-out. **PROVISIONAL_SYNTHETIC:** sanity apenas. LLM: `NOT_MEASURED`.
 - **Validação / testes:** `integrity_test` análogo ao E-001; cenários 1–2 mínimos para B0/B1.
 - **Riscos:** Cache do host Cursor desconhecido → registrar `UNKNOWN` no raw.
-- **Condição de conclusão:** Baselines B0 e B1 publicados; metas P1/P2 que dependem de economia referenciam esses números, não benchmarks externos.
+- **Condição de conclusão:** B0 oficial publicado; B1 oficial após V22-GOAL-005; P1/P2 economia só com B1 oficial ou `PENDING_BASELINE`.
 
 **Rotulo dominante:** meta + evidência projeto.
 
@@ -112,7 +112,7 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Dependências:** V22-GOAL-002 (cerca); V22-GOAL-005 (wiki de projeto) para braço B1.
 - **Impacto arquitetural:** Opt-in preservado; sem segundo `KnowledgeBackend`.
 - **Critérios de aceite:** Cenário 3: mesma tarefa de retomada; verificador acerta; cenário 7: cita página/ADR/código.
-- **Métricas:** Fixture `continuity-s37` medido (S03/S07): B1 recall 1.0; paths ≤ 3; tokens entrada 114 observados. Alvo oficial continuidade: igual com margem +50 tokens. Episódico engine/host: `NOT_MEASURED`.
+- **Métricas:** S03/S07 B1 no mini-fixture: `PROVISIONAL_CURATED_PACK` (obs. paths 2, tokens 114). Alvos oficiais continuidade: `PENDING_BASELINE` até B1 wiki real (005). Episódico engine/host: `NOT_MEASURED`.
 - **Validação / testes:** Fixture do plano 08; evidência em `memory/<feature_id>/evidence/` quando usar engine.
 - **Riscos:** Confundir episódico com SSOT de domínio (wiki skill já proíbe).
 - **Condição de conclusão:** Corrida registrada no fixture com verificador verde para cenários 3 e 7.
@@ -130,10 +130,10 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Estado atual:** `knowledge.backend: wiki` no perfil (`profiles/default.yaml`); `ground.sh` exige `WIKI_ROOT` (`.cursor/skills/wiki/scripts/ground.sh`); Carpaccio normativo em ADR-0004.
 - **Resultado:** Ambiente de referência documentado onde `ground.sh list-packs` funciona; workflows init/query/update/lint em fixture; atualização incremental após mudança relevante.
 - **Solução:** Operacionalizar `wiki` + `wiki-carpaccio` (host); bridge Python inalterada; sem LanceDB no TS (ADR-0004).
-- **Dependências:** V22-GOAL-002; V22-GOAL-003 para métricas de token.
+- **Dependências:** V22-GOAL-002; desbloqueia **B1 OFFICIAL** em V22-GOAL-003 (bench pack é `PROVISIONAL_CURATED_PACK`).
 - **Impacto arquitetural:** Arquivos no projeto-alvo e config de ambiente; sem novo `KnowledgeBackendId`.
 - **Critérios de aceite:** Cenários 2, 3, 6, 7 do plano 08; excerpt cap 500 permanece até ADR que altere (`wiki-backend.ts`).
-- **Métricas:** OFFICIAL: B1 paths mediana 3 no monorepo real; tokens entrada mediana 1781; `ground.sh` vault `NOT_MEASURED`. PROVISIONAL_SYNTHETIC: não gate. Páginas `atual` com hash: `PENDING_BASELINE` até lint wiki no repo alvo.
+- **Métricas:** Bench B1 pack: `PROVISIONAL_CURATED_PACK` (não gate). `ground.sh`+vault: pré-requisito B1 oficial — `NOT_MEASURED` no VM bench. Páginas `atual`+hash: `PENDING_BASELINE` até lint operacional.
 - **Validação / testes:** Fixture; opcional `knowledge-backend.test.ts` quando deps instaladas.
 - **Riscos:** Wiki gigante na primeira sessão — init mínima obrigatória no teste.
 - **Condição de conclusão:** Quatro workflows (init, query, update, lint) com corrida registrada.
@@ -154,7 +154,7 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Dependências:** V22-GOAL-005; V22-GOAL-003 para alvos numéricos de token.
 - **Impacto arquitetural:** Aditivo em evidência; sem mudança obrigatória de contrato.
 - **Critérios de aceite:** Cenário 10: braço com orçamento não perde verificador nem lê path canário redundante.
-- **Métricas:** OFFICIAL: B1 ≤ 5 paths e ≤ 5 páginas `.ai/` por tarefa (mediana real 3 paths); tokens entrada B1 ≤ 4000; B0 cap observado 45 paths no monorepo (informativo). PROVISIONAL_SYNTHETIC: não gate. Redundância: 0.
+- **Métricas:** B0 oficial: cap observado 45 paths (informativo). B1 bench: `PROVISIONAL_CURATED_PACK` — alvos paths/tokens `PENDING_BASELINE` até B1 oficial (003←005). Redundância: 0. PROVISIONAL_SYNTHETIC: não gate.
 - **Validação / testes:** Log de paths por run; gap do host Cursor documentado se paths não observáveis.
 - **Riscos:** Orçamento corta função no meio — cortar por arquivo inteiro.
 - **Condição de conclusão:** Fixture mostra lista de paths e ausência de canário cruzado.

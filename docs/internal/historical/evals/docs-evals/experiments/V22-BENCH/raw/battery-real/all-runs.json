@@ -1,12 +1,13 @@
 [
   {
     "experiment_id": "V22-BENCH-REAL",
+    "evidence_class": "OFFICIAL_BASELINE",
     "baseline_id": "v22-real-b0b1-2026-10-22",
-    "run_id": "V22R-R01-B0-283b25bf890a",
+    "run_id": "V22R-R01-B0-72cc9b136228",
     "arm": "B0",
     "task_id": "R01",
-    "timestamp": "2026-10-22T00:40:04.017612+00:00",
-    "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
+    "timestamp": "2026-10-22T00:41:22.205321+00:00",
+    "tree_sha": "f9257fec42d9a67e3df99511e6fc9accb3216019",
     "harness": "v22-real-corpus-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {
@@ -16,10 +17,11 @@
     "host_cache": "UNKNOWN",
     "corpus_label": "EvolveLoop monorepo (git root)",
     "b1_mechanism": {
-      "primary": "project .ai/ knowledge pack",
+      "primary": "PROVISIONAL_CURATED_PACK \u2014 bench .ai/ pack (not official wiki ops)",
       "pack_path": "fixtures/evolveloop-project-knowledge/.ai/",
-      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset on benchmark VM; ground.sh requires vault",
-      "note": "B1 selects pages via keyword overlap on index, then reads frontmatter source_paths (same layout as wiki de projeto V22-GOAL-005)"
+      "evidence_class": "PROVISIONAL_CURATED_PACK",
+      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset; official B1 blocked on V22-GOAL-005",
+      "note": "source_paths align with frozen anchors \u2014 circular recall; see BENCHMARK-PLAN.md B1\u2192oficial"
     },
     "metrics": {
       "task_id": "R01",
@@ -75,20 +77,20 @@
       "rg_invocations": [
         {
           "pattern": "HMAC-SHA256",
-          "path_count": 9
+          "path_count": 8
         },
         {
           "pattern": "checkpoint",
-          "path_count": 158
+          "path_count": 157
         },
         {
           "pattern": "ALG",
           "path_count": 5
         }
       ],
-      "input_tokens": 80344,
+      "input_tokens": 80349,
       "output_tokens": 0,
-      "latency_ms": 56,
+      "latency_ms": 70,
       "recall": 0.0,
       "recall_notes": [
         "miss path not read: orchestrator/src/jobs/checkpoint.ts"
@@ -106,12 +108,13 @@
   },
   {
     "experiment_id": "V22-BENCH-REAL",
+    "evidence_class": "PROVISIONAL_CURATED_PACK",
     "baseline_id": "v22-real-b0b1-2026-10-22",
-    "run_id": "V22R-R01-B1-8d10423aff05",
+    "run_id": "V22R-R01-B1-8ca6524ce8eb",
     "arm": "B1",
     "task_id": "R01",
-    "timestamp": "2026-10-22T00:40:04.019886+00:00",
-    "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
+    "timestamp": "2026-10-22T00:41:22.207803+00:00",
+    "tree_sha": "f9257fec42d9a67e3df99511e6fc9accb3216019",
     "harness": "v22-real-corpus-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {
@@ -121,10 +124,11 @@
     "host_cache": "UNKNOWN",
     "corpus_label": "EvolveLoop monorepo (git root)",
     "b1_mechanism": {
-      "primary": "project .ai/ knowledge pack",
+      "primary": "PROVISIONAL_CURATED_PACK \u2014 bench .ai/ pack (not official wiki ops)",
       "pack_path": "fixtures/evolveloop-project-knowledge/.ai/",
-      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset on benchmark VM; ground.sh requires vault",
-      "note": "B1 selects pages via keyword overlap on index, then reads frontmatter source_paths (same layout as wiki de projeto V22-GOAL-005)"
+      "evidence_class": "PROVISIONAL_CURATED_PACK",
+      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset; official B1 blocked on V22-GOAL-005",
+      "note": "source_paths align with frozen anchors \u2014 circular recall; see BENCHMARK-PLAN.md B1\u2192oficial"
     },
     "metrics": {
       "task_id": "R01",
@@ -140,7 +144,7 @@
       "rg_invocations": [],
       "input_tokens": 3491,
       "output_tokens": 0,
-      "latency_ms": 1,
+      "latency_ms": 2,
       "recall": 1.0,
       "recall_notes": [],
       "page_cited": ".ai/pages/checkpoint-hmac.md",
@@ -154,12 +158,13 @@
   },
   {
     "experiment_id": "V22-BENCH-REAL",
+    "evidence_class": "OFFICIAL_BASELINE",
     "baseline_id": "v22-real-b0b1-2026-10-22",
-    "run_id": "V22R-R02-B0-8c2e737144d4",
+    "run_id": "V22R-R02-B0-83f976426a13",
     "arm": "B0",
     "task_id": "R02",
-    "timestamp": "2026-10-22T00:40:04.069271+00:00",
-    "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
+    "timestamp": "2026-10-22T00:41:22.263231+00:00",
+    "tree_sha": "f9257fec42d9a67e3df99511e6fc9accb3216019",
     "harness": "v22-real-corpus-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {
@@ -169,10 +174,11 @@
     "host_cache": "UNKNOWN",
     "corpus_label": "EvolveLoop monorepo (git root)",
     "b1_mechanism": {
-      "primary": "project .ai/ knowledge pack",
+      "primary": "PROVISIONAL_CURATED_PACK \u2014 bench .ai/ pack (not official wiki ops)",
       "pack_path": "fixtures/evolveloop-project-knowledge/.ai/",
-      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset on benchmark VM; ground.sh requires vault",
-      "note": "B1 selects pages via keyword overlap on index, then reads frontmatter source_paths (same layout as wiki de projeto V22-GOAL-005)"
+      "evidence_class": "PROVISIONAL_CURATED_PACK",
+      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset; official B1 blocked on V22-GOAL-005",
+      "note": "source_paths align with frozen anchors \u2014 circular recall; see BENCHMARK-PLAN.md B1\u2192oficial"
     },
     "metrics": {
       "task_id": "R02",
@@ -228,7 +234,7 @@
       "rg_invocations": [
         {
           "pattern": "EVOLVELOOP_CHECKPOINT_HMAC_KEY",
-          "path_count": 10
+          "path_count": 9
         },
         {
           "pattern": "KEY_ENV",
@@ -236,12 +242,12 @@
         },
         {
           "pattern": "checkpoint",
-          "path_count": 158
+          "path_count": 157
         }
       ],
-      "input_tokens": 80344,
+      "input_tokens": 80349,
       "output_tokens": 0,
-      "latency_ms": 49,
+      "latency_ms": 55,
       "recall": 0.0,
       "recall_notes": [
         "miss path not read: orchestrator/src/jobs/checkpoint.ts"
@@ -259,12 +265,13 @@
   },
   {
     "experiment_id": "V22-BENCH-REAL",
+    "evidence_class": "PROVISIONAL_CURATED_PACK",
     "baseline_id": "v22-real-b0b1-2026-10-22",
-    "run_id": "V22R-R02-B1-71531f218f49",
+    "run_id": "V22R-R02-B1-6b91e4ba2e70",
     "arm": "B1",
     "task_id": "R02",
-    "timestamp": "2026-10-22T00:40:04.071372+00:00",
-    "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
+    "timestamp": "2026-10-22T00:41:22.265126+00:00",
+    "tree_sha": "f9257fec42d9a67e3df99511e6fc9accb3216019",
     "harness": "v22-real-corpus-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {
@@ -274,10 +281,11 @@
     "host_cache": "UNKNOWN",
     "corpus_label": "EvolveLoop monorepo (git root)",
     "b1_mechanism": {
-      "primary": "project .ai/ knowledge pack",
+      "primary": "PROVISIONAL_CURATED_PACK \u2014 bench .ai/ pack (not official wiki ops)",
       "pack_path": "fixtures/evolveloop-project-knowledge/.ai/",
-      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset on benchmark VM; ground.sh requires vault",
-      "note": "B1 selects pages via keyword overlap on index, then reads frontmatter source_paths (same layout as wiki de projeto V22-GOAL-005)"
+      "evidence_class": "PROVISIONAL_CURATED_PACK",
+      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset; official B1 blocked on V22-GOAL-005",
+      "note": "source_paths align with frozen anchors \u2014 circular recall; see BENCHMARK-PLAN.md B1\u2192oficial"
     },
     "metrics": {
       "task_id": "R02",
@@ -307,12 +315,13 @@
   },
   {
     "experiment_id": "V22-BENCH-REAL",
+    "evidence_class": "OFFICIAL_BASELINE",
     "baseline_id": "v22-real-b0b1-2026-10-22",
-    "run_id": "V22R-R03-B0-8cd6439faecd",
+    "run_id": "V22R-R03-B0-181eb02d6522",
     "arm": "B0",
     "task_id": "R03",
-    "timestamp": "2026-10-22T00:40:04.108790+00:00",
-    "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
+    "timestamp": "2026-10-22T00:41:22.304568+00:00",
+    "tree_sha": "f9257fec42d9a67e3df99511e6fc9accb3216019",
     "harness": "v22-real-corpus-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {
@@ -322,10 +331,11 @@
     "host_cache": "UNKNOWN",
     "corpus_label": "EvolveLoop monorepo (git root)",
     "b1_mechanism": {
-      "primary": "project .ai/ knowledge pack",
+      "primary": "PROVISIONAL_CURATED_PACK \u2014 bench .ai/ pack (not official wiki ops)",
       "pack_path": "fixtures/evolveloop-project-knowledge/.ai/",
-      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset on benchmark VM; ground.sh requires vault",
-      "note": "B1 selects pages via keyword overlap on index, then reads frontmatter source_paths (same layout as wiki de projeto V22-GOAL-005)"
+      "evidence_class": "PROVISIONAL_CURATED_PACK",
+      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset; official B1 blocked on V22-GOAL-005",
+      "note": "source_paths align with frozen anchors \u2014 circular recall; see BENCHMARK-PLAN.md B1\u2192oficial"
     },
     "metrics": {
       "task_id": "R03",
@@ -342,7 +352,6 @@
         "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
         "docs/architecture/v2.2/TECH-DECISIONS-MATRIX.md",
         "docs/architecture/v2.2/TRACEABILITY-MATRIX.md",
-        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/EXPERIMENT-REAL.md",
         "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery-real/all-runs.json",
         "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery-real/real/R03/B0/run-01.json",
         "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery-real/real/R03/B1/run-01.json",
@@ -364,7 +373,7 @@
       "rg_invocations": [
         {
           "pattern": "RAG_REPO_MISSING",
-          "path_count": 17
+          "path_count": 16
         },
         {
           "pattern": "resolveWikiRoot",
@@ -372,12 +381,12 @@
         },
         {
           "pattern": "wiki-backend",
-          "path_count": 19
+          "path_count": 18
         }
       ],
-      "input_tokens": 53149,
+      "input_tokens": 52710,
       "output_tokens": 0,
-      "latency_ms": 37,
+      "latency_ms": 39,
       "recall": 1.0,
       "recall_notes": [],
       "page_cited": null,
@@ -391,12 +400,13 @@
   },
   {
     "experiment_id": "V22-BENCH-REAL",
+    "evidence_class": "PROVISIONAL_CURATED_PACK",
     "baseline_id": "v22-real-b0b1-2026-10-22",
-    "run_id": "V22R-R03-B1-51a50c5d7120",
+    "run_id": "V22R-R03-B1-84062691d5e7",
     "arm": "B1",
     "task_id": "R03",
-    "timestamp": "2026-10-22T00:40:04.110303+00:00",
-    "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
+    "timestamp": "2026-10-22T00:41:22.305985+00:00",
+    "tree_sha": "f9257fec42d9a67e3df99511e6fc9accb3216019",
     "harness": "v22-real-corpus-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {
@@ -406,10 +416,11 @@
     "host_cache": "UNKNOWN",
     "corpus_label": "EvolveLoop monorepo (git root)",
     "b1_mechanism": {
-      "primary": "project .ai/ knowledge pack",
+      "primary": "PROVISIONAL_CURATED_PACK \u2014 bench .ai/ pack (not official wiki ops)",
       "pack_path": "fixtures/evolveloop-project-knowledge/.ai/",
-      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset on benchmark VM; ground.sh requires vault",
-      "note": "B1 selects pages via keyword overlap on index, then reads frontmatter source_paths (same layout as wiki de projeto V22-GOAL-005)"
+      "evidence_class": "PROVISIONAL_CURATED_PACK",
+      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset; official B1 blocked on V22-GOAL-005",
+      "note": "source_paths align with frozen anchors \u2014 circular recall; see BENCHMARK-PLAN.md B1\u2192oficial"
     },
     "metrics": {
       "task_id": "R03",
@@ -437,12 +448,13 @@
   },
   {
     "experiment_id": "V22-BENCH-REAL",
+    "evidence_class": "OFFICIAL_BASELINE",
     "baseline_id": "v22-real-b0b1-2026-10-22",
-    "run_id": "V22R-R04-B0-175c305e88c2",
+    "run_id": "V22R-R04-B0-16797b821dfc",
     "arm": "B0",
     "task_id": "R04",
-    "timestamp": "2026-10-22T00:40:04.150956+00:00",
-    "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
+    "timestamp": "2026-10-22T00:41:22.349894+00:00",
+    "tree_sha": "f9257fec42d9a67e3df99511e6fc9accb3216019",
     "harness": "v22-real-corpus-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {
@@ -452,10 +464,11 @@
     "host_cache": "UNKNOWN",
     "corpus_label": "EvolveLoop monorepo (git root)",
     "b1_mechanism": {
-      "primary": "project .ai/ knowledge pack",
+      "primary": "PROVISIONAL_CURATED_PACK \u2014 bench .ai/ pack (not official wiki ops)",
       "pack_path": "fixtures/evolveloop-project-knowledge/.ai/",
-      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset on benchmark VM; ground.sh requires vault",
-      "note": "B1 selects pages via keyword overlap on index, then reads frontmatter source_paths (same layout as wiki de projeto V22-GOAL-005)"
+      "evidence_class": "PROVISIONAL_CURATED_PACK",
+      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset; official B1 blocked on V22-GOAL-005",
+      "note": "source_paths align with frozen anchors \u2014 circular recall; see BENCHMARK-PLAN.md B1\u2192oficial"
     },
     "metrics": {
       "task_id": "R04",
@@ -519,12 +532,12 @@
         },
         {
           "pattern": "ADR-DR-0005",
-          "path_count": 45
+          "path_count": 44
         }
       ],
-      "input_tokens": 44479,
+      "input_tokens": 44564,
       "output_tokens": 0,
-      "latency_ms": 40,
+      "latency_ms": 43,
       "recall": 1.0,
       "recall_notes": [],
       "page_cited": null,
@@ -538,12 +551,13 @@
   },
   {
     "experiment_id": "V22-BENCH-REAL",
+    "evidence_class": "PROVISIONAL_CURATED_PACK",
     "baseline_id": "v22-real-b0b1-2026-10-22",
-    "run_id": "V22R-R04-B1-9a66f4d62a9b",
+    "run_id": "V22R-R04-B1-75df2d88dd15",
     "arm": "B1",
     "task_id": "R04",
-    "timestamp": "2026-10-22T00:40:04.152165+00:00",
-    "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
+    "timestamp": "2026-10-22T00:41:22.351343+00:00",
+    "tree_sha": "f9257fec42d9a67e3df99511e6fc9accb3216019",
     "harness": "v22-real-corpus-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {
@@ -553,10 +567,11 @@
     "host_cache": "UNKNOWN",
     "corpus_label": "EvolveLoop monorepo (git root)",
     "b1_mechanism": {
-      "primary": "project .ai/ knowledge pack",
+      "primary": "PROVISIONAL_CURATED_PACK \u2014 bench .ai/ pack (not official wiki ops)",
       "pack_path": "fixtures/evolveloop-project-knowledge/.ai/",
-      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset on benchmark VM; ground.sh requires vault",
-      "note": "B1 selects pages via keyword overlap on index, then reads frontmatter source_paths (same layout as wiki de projeto V22-GOAL-005)"
+      "evidence_class": "PROVISIONAL_CURATED_PACK",
+      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset; official B1 blocked on V22-GOAL-005",
+      "note": "source_paths align with frozen anchors \u2014 circular recall; see BENCHMARK-PLAN.md B1\u2192oficial"
     },
     "metrics": {
       "task_id": "R04",
@@ -570,7 +585,7 @@
       "rg_invocations": [],
       "input_tokens": 1160,
       "output_tokens": 0,
-      "latency_ms": 0,
+      "latency_ms": 1,
       "recall": 1.0,
       "recall_notes": [],
       "page_cited": ".ai/pages/adr-compaction-defer.md",
@@ -584,12 +599,13 @@
   },
   {
     "experiment_id": "V22-BENCH-REAL",
+    "evidence_class": "OFFICIAL_BASELINE",
     "baseline_id": "v22-real-b0b1-2026-10-22",
-    "run_id": "V22R-R05-B0-c101d6e69f3b",
+    "run_id": "V22R-R05-B0-f86fdeee8cea",
     "arm": "B0",
     "task_id": "R05",
-    "timestamp": "2026-10-22T00:40:04.195942+00:00",
-    "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
+    "timestamp": "2026-10-22T00:41:22.399236+00:00",
+    "tree_sha": "f9257fec42d9a67e3df99511e6fc9accb3216019",
     "harness": "v22-real-corpus-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {
@@ -599,10 +615,11 @@
     "host_cache": "UNKNOWN",
     "corpus_label": "EvolveLoop monorepo (git root)",
     "b1_mechanism": {
-      "primary": "project .ai/ knowledge pack",
+      "primary": "PROVISIONAL_CURATED_PACK \u2014 bench .ai/ pack (not official wiki ops)",
       "pack_path": "fixtures/evolveloop-project-knowledge/.ai/",
-      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset on benchmark VM; ground.sh requires vault",
-      "note": "B1 selects pages via keyword overlap on index, then reads frontmatter source_paths (same layout as wiki de projeto V22-GOAL-005)"
+      "evidence_class": "PROVISIONAL_CURATED_PACK",
+      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset; official B1 blocked on V22-GOAL-005",
+      "note": "source_paths align with frozen anchors \u2014 circular recall; see BENCHMARK-PLAN.md B1\u2192oficial"
     },
     "metrics": {
       "task_id": "R05",
@@ -658,20 +675,20 @@
       "rg_invocations": [
         {
           "pattern": "memory",
-          "path_count": 185
+          "path_count": 184
         },
         {
           "pattern": "enabled: false",
-          "path_count": 12
+          "path_count": 11
         },
         {
           "pattern": "default.yaml",
-          "path_count": 37
+          "path_count": 36
         }
       ],
       "input_tokens": 45212,
       "output_tokens": 0,
-      "latency_ms": 43,
+      "latency_ms": 47,
       "recall": 0.0,
       "recall_notes": [
         "miss path not read: profiles/default.yaml"
@@ -689,12 +706,13 @@
   },
   {
     "experiment_id": "V22-BENCH-REAL",
+    "evidence_class": "PROVISIONAL_CURATED_PACK",
     "baseline_id": "v22-real-b0b1-2026-10-22",
-    "run_id": "V22R-R05-B1-b41a0e84489e",
+    "run_id": "V22R-R05-B1-ec19298c0b85",
     "arm": "B1",
     "task_id": "R05",
-    "timestamp": "2026-10-22T00:40:04.196906+00:00",
-    "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
+    "timestamp": "2026-10-22T00:41:22.400579+00:00",
+    "tree_sha": "f9257fec42d9a67e3df99511e6fc9accb3216019",
     "harness": "v22-real-corpus-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {
@@ -704,10 +722,11 @@
     "host_cache": "UNKNOWN",
     "corpus_label": "EvolveLoop monorepo (git root)",
     "b1_mechanism": {
-      "primary": "project .ai/ knowledge pack",
+      "primary": "PROVISIONAL_CURATED_PACK \u2014 bench .ai/ pack (not official wiki ops)",
       "pack_path": "fixtures/evolveloop-project-knowledge/.ai/",
-      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset on benchmark VM; ground.sh requires vault",
-      "note": "B1 selects pages via keyword overlap on index, then reads frontmatter source_paths (same layout as wiki de projeto V22-GOAL-005)"
+      "evidence_class": "PROVISIONAL_CURATED_PACK",
+      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset; official B1 blocked on V22-GOAL-005",
+      "note": "source_paths align with frozen anchors \u2014 circular recall; see BENCHMARK-PLAN.md B1\u2192oficial"
     },
     "metrics": {
       "task_id": "R05",
@@ -735,12 +754,13 @@
   },
   {
     "experiment_id": "V22-BENCH-REAL",
+    "evidence_class": "OFFICIAL_BASELINE",
     "baseline_id": "v22-real-b0b1-2026-10-22",
-    "run_id": "V22R-R06-B0-660ecc6cbd61",
+    "run_id": "V22R-R06-B0-970fa9f03cc9",
     "arm": "B0",
     "task_id": "R06",
-    "timestamp": "2026-10-22T00:40:04.248333+00:00",
-    "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
+    "timestamp": "2026-10-22T00:41:22.466378+00:00",
+    "tree_sha": "f9257fec42d9a67e3df99511e6fc9accb3216019",
     "harness": "v22-real-corpus-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {
@@ -750,10 +770,11 @@
     "host_cache": "UNKNOWN",
     "corpus_label": "EvolveLoop monorepo (git root)",
     "b1_mechanism": {
-      "primary": "project .ai/ knowledge pack",
+      "primary": "PROVISIONAL_CURATED_PACK \u2014 bench .ai/ pack (not official wiki ops)",
       "pack_path": "fixtures/evolveloop-project-knowledge/.ai/",
-      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset on benchmark VM; ground.sh requires vault",
-      "note": "B1 selects pages via keyword overlap on index, then reads frontmatter source_paths (same layout as wiki de projeto V22-GOAL-005)"
+      "evidence_class": "PROVISIONAL_CURATED_PACK",
+      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset; official B1 blocked on V22-GOAL-005",
+      "note": "source_paths align with frozen anchors \u2014 circular recall; see BENCHMARK-PLAN.md B1\u2192oficial"
     },
     "metrics": {
       "task_id": "R06",
@@ -767,6 +788,7 @@
         "docs/architecture/skills/audit/FLOW-SKILL-CATALOG.md",
         "docs/architecture/skills/audit/HARD-GATES-V2.yaml",
         "docs/architecture/skills/audit/SKILL-USAGE-MATRIX.yaml",
+        "docs/architecture/v2.2/BENCHMARK-PLAN.md",
         "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
         "docs/architecture/v2.2/IMPLEMENTATION-ROADMAP.md",
         "docs/architecture/v2.2/TECH-DECISIONS-MATRIX.md",
@@ -775,7 +797,6 @@
         "docs/internal/historical/MegaBrain-Ecosystem.md",
         "docs/internal/historical/cursor-megabrain-rag-stack.md",
         "docs/internal/historical/evals/docs-evals/experiments/E-001/raw/enablement/catalog-inventory.json",
-        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/EXPERIMENT-REAL.md",
         "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery-real/all-runs.json",
         "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery-real/real/R06/B0/run-01.json",
         "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery-real/tasks-real-frozen.snapshot.json",
@@ -790,20 +811,20 @@
       "rg_invocations": [
         {
           "pattern": "missing_gate_bundle",
-          "path_count": 6
+          "path_count": 5
         },
         {
           "pattern": "GATE_BUNDLE",
-          "path_count": 23
+          "path_count": 22
         },
         {
           "pattern": "bloqueado",
-          "path_count": 8
+          "path_count": 11
         }
       ],
-      "input_tokens": 95382,
+      "input_tokens": 96059,
       "output_tokens": 0,
-      "latency_ms": 51,
+      "latency_ms": 65,
       "recall": 0.0,
       "recall_notes": [
         "miss path not read: .cursor/skills/orquestrar/references/gate-bundle.md"
@@ -821,12 +842,13 @@
   },
   {
     "experiment_id": "V22-BENCH-REAL",
+    "evidence_class": "PROVISIONAL_CURATED_PACK",
     "baseline_id": "v22-real-b0b1-2026-10-22",
-    "run_id": "V22R-R06-B1-e7bfcf8152f1",
+    "run_id": "V22R-R06-B1-6a4b4c36a948",
     "arm": "B1",
     "task_id": "R06",
-    "timestamp": "2026-10-22T00:40:04.249895+00:00",
-    "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
+    "timestamp": "2026-10-22T00:41:22.468001+00:00",
+    "tree_sha": "f9257fec42d9a67e3df99511e6fc9accb3216019",
     "harness": "v22-real-corpus-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {
@@ -836,10 +858,11 @@
     "host_cache": "UNKNOWN",
     "corpus_label": "EvolveLoop monorepo (git root)",
     "b1_mechanism": {
-      "primary": "project .ai/ knowledge pack",
+      "primary": "PROVISIONAL_CURATED_PACK \u2014 bench .ai/ pack (not official wiki ops)",
       "pack_path": "fixtures/evolveloop-project-knowledge/.ai/",
-      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset on benchmark VM; ground.sh requires vault",
-      "note": "B1 selects pages via keyword overlap on index, then reads frontmatter source_paths (same layout as wiki de projeto V22-GOAL-005)"
+      "evidence_class": "PROVISIONAL_CURATED_PACK",
+      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset; official B1 blocked on V22-GOAL-005",
+      "note": "source_paths align with frozen anchors \u2014 circular recall; see BENCHMARK-PLAN.md B1\u2192oficial"
     },
     "metrics": {
       "task_id": "R06",
@@ -867,12 +890,13 @@
   },
   {
     "experiment_id": "V22-BENCH-REAL",
+    "evidence_class": "OFFICIAL_BASELINE",
     "baseline_id": "v22-real-b0b1-2026-10-22",
-    "run_id": "V22R-S03-B0-5cc80e65ff9c",
+    "run_id": "V22R-S03-B0-a29e75df969f",
     "arm": "B0",
     "task_id": "S03",
-    "timestamp": "2026-10-22T00:40:04.257999+00:00",
-    "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
+    "timestamp": "2026-10-22T00:41:22.475996+00:00",
+    "tree_sha": "f9257fec42d9a67e3df99511e6fc9accb3216019",
     "harness": "v22-real-corpus-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {
@@ -927,12 +951,13 @@
   },
   {
     "experiment_id": "V22-BENCH-REAL",
+    "evidence_class": "PROVISIONAL_CURATED_PACK",
     "baseline_id": "v22-real-b0b1-2026-10-22",
-    "run_id": "V22R-S03-B1-99bd08a6ba9a",
+    "run_id": "V22R-S03-B1-1c23fb605cb0",
     "arm": "B1",
     "task_id": "S03",
-    "timestamp": "2026-10-22T00:40:04.258497+00:00",
-    "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
+    "timestamp": "2026-10-22T00:41:22.476519+00:00",
+    "tree_sha": "f9257fec42d9a67e3df99511e6fc9accb3216019",
     "harness": "v22-real-corpus-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {
@@ -968,12 +993,13 @@
   },
   {
     "experiment_id": "V22-BENCH-REAL",
+    "evidence_class": "PROVISIONAL_CURATED_PACK",
     "baseline_id": "v22-real-b0b1-2026-10-22",
-    "run_id": "V22R-S07-B1-f6ee6cd1f563",
+    "run_id": "V22R-S07-B1-a1e4ae49d4a9",
     "arm": "B1",
     "task_id": "S07",
-    "timestamp": "2026-10-22T00:40:04.258885+00:00",
-    "tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
+    "timestamp": "2026-10-22T00:41:22.476914+00:00",
+    "tree_sha": "f9257fec42d9a67e3df99511e6fc9accb3216019",
     "harness": "v22-real-corpus-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {

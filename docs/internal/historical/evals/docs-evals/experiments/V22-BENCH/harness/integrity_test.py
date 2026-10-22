@@ -66,14 +66,13 @@ def test_battery_writes_json(tmp_path: Path | None = None):
         assert data.get("aggregates")
 
 
-def test_real_battery_b1_recall():
+def test_real_battery_classifications():
     out = EXP_DIR / "raw" / "battery-real" / "battery-summary.json"
     assert out.is_file(), "run real_corpus_harness.py first"
     data = json.loads(out.read_text(encoding="utf-8"))
-    assert data.get("classification") == "OFFICIAL_BASELINE"
-    for key, agg in data["aggregates"].items():
-        if key.endswith(":B1") and key.startswith("R"):
-            assert agg["recall"] == 1.0, f"B1 recall must be 1.0 on real tasks: {key}"
+    by_arm = data.get("classification_by_arm") or {}
+    assert by_arm.get("B0") == "OFFICIAL_BASELINE"
+    assert by_arm.get("B1") == "PROVISIONAL_CURATED_PACK"
 
 
 def main():
@@ -85,8 +84,8 @@ def main():
     print("OK secret_canary")
     test_battery_writes_json()
     print("OK battery_artifact_optional")
-    test_real_battery_b1_recall()
-    print("OK real_b1_recall")
+    test_real_battery_classifications()
+    print("OK real_classifications")
     print("ALL_INTEGRITY_OK")
 
 

@@ -5,10 +5,11 @@
   "corpus_root": "/workspace",
   "corpus_label": "EvolveLoop monorepo (git root)",
   "b1_mechanism": {
-    "primary": "project .ai/ knowledge pack",
+    "primary": "PROVISIONAL_CURATED_PACK — bench .ai/ pack (not official wiki ops)",
     "pack_path": "fixtures/evolveloop-project-knowledge/.ai/",
-    "wiki_ground_sh": "NOT_MEASURED — WIKI_ROOT unset on benchmark VM; ground.sh requires vault",
-    "note": "B1 selects pages via keyword overlap on index, then reads frontmatter source_paths (same layout as wiki de projeto V22-GOAL-005)"
+    "evidence_class": "PROVISIONAL_CURATED_PACK",
+    "wiki_ground_sh": "NOT_MEASURED — WIKI_ROOT unset; official B1 blocked on V22-GOAL-005",
+    "note": "source_paths align with frozen anchors — circular recall; see BENCHMARK-PLAN.md B1→oficial"
   },
   "tasks": [
     {

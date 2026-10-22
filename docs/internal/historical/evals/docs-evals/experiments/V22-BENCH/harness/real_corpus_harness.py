@@ -251,6 +251,12 @@ def run_b1(
     )
 
 
+def evidence_class_for_arm(arm: str) -> str:
+    if arm == "B0":
+        return "OFFICIAL_BASELINE"
+    return "PROVISIONAL_CURATED_PACK"
+
+
 def run_record(
     result: RunResult,
     meta: dict[str, Any],
@@ -259,6 +265,7 @@ def run_record(
 ) -> dict[str, Any]:
     return {
         "experiment_id": "V22-BENCH-REAL",
+        "evidence_class": evidence_class_for_arm(result.arm),
         "baseline_id": "v22-real-b0b1-2026-10-22",
         "run_id": f"V22R-{result.task_id}-{result.arm}-{hashlib.sha256((tree_sha+result.task_id+result.arm).encode()).hexdigest()[:12]}",
         "arm": result.arm,
@@ -367,8 +374,15 @@ def run_battery(out_dir: Path) -> dict[str, Any]:
     }
     summary = {
         "experiment": "V22-BENCH-REAL",
-        "classification": "OFFICIAL_BASELINE",
-        "classification_note": "EvolveLoop git root corpus; tasks frozen in tasks-real-frozen.json",
+        "classification_by_arm": {
+            "B0": "OFFICIAL_BASELINE",
+            "B1": "PROVISIONAL_CURATED_PACK",
+        },
+        "classification_note": (
+            "B0: real rg+read on EvolveLoop monorepo. "
+            "B1: curated bench pack with source_paths aligned to frozen anchors — "
+            "circular recall; not product gates until V22-GOAL-005 path (see BENCHMARK-PLAN.md § B1→oficial)."
+        ),
         "baseline_id": "v22-real-b0b1-2026-10-22",
         "mode": "REAL_CORPUS_RETRIEVAL",
         "freeze_tree_sha": tree_sha,

@@ -1,28 +1,31 @@
 {
   "experiment": "V22-BENCH-REAL",
-  "classification": "OFFICIAL_BASELINE",
-  "classification_note": "EvolveLoop git root corpus; tasks frozen in tasks-real-frozen.json",
+  "classification_by_arm": {
+    "B0": "OFFICIAL_BASELINE",
+    "B1": "PROVISIONAL_CURATED_PACK"
+  },
+  "classification_note": "B0: real rg+read on EvolveLoop monorepo. B1: curated bench pack with source_paths aligned to frozen anchors \u2014 circular recall; not product gates until V22-GOAL-005 path (see BENCHMARK-PLAN.md \u00a7 B1\u2192oficial).",
   "baseline_id": "v22-real-b0b1-2026-10-22",
   "mode": "REAL_CORPUS_RETRIEVAL",
-  "freeze_tree_sha": "154b2d3c54d33815112769668e71817fdf118375",
+  "freeze_tree_sha": "f9257fec42d9a67e3df99511e6fc9accb3216019",
   "tasks_frozen": "tasks-real-frozen.json",
   "aggregates": {
     "R01:B0": {
       "median_paths": 45.0,
-      "median_input_tokens": 80344.0,
-      "median_latency_ms": 56.0,
+      "median_input_tokens": 80349.0,
+      "median_latency_ms": 70.0,
       "recall": 0.0
     },
     "R01:B1": {
       "median_paths": 5.0,
       "median_input_tokens": 3491.0,
-      "median_latency_ms": 1.0,
+      "median_latency_ms": 2.0,
       "recall": 1.0
     },
     "R02:B0": {
       "median_paths": 45.0,
-      "median_input_tokens": 80344.0,
-      "median_latency_ms": 49.0,
+      "median_input_tokens": 80349.0,
+      "median_latency_ms": 55.0,
       "recall": 0.0
     },
     "R02:B1": {
@@ -32,9 +35,9 @@
       "recall": 1.0
     },
     "R03:B0": {
-      "median_paths": 28.0,
-      "median_input_tokens": 53149.0,
-      "median_latency_ms": 37.0,
+      "median_paths": 27.0,
+      "median_input_tokens": 52710.0,
+      "median_latency_ms": 39.0,
       "recall": 1.0
     },
     "R03:B1": {
@@ -45,20 +48,20 @@
     },
     "R04:B0": {
       "median_paths": 45.0,
-      "median_input_tokens": 44479.0,
-      "median_latency_ms": 40.0,
+      "median_input_tokens": 44564.0,
+      "median_latency_ms": 43.0,
       "recall": 1.0
     },
     "R04:B1": {
       "median_paths": 3.0,
       "median_input_tokens": 1160.0,
-      "median_latency_ms": 0.0,
+      "median_latency_ms": 1.0,
       "recall": 1.0
     },
     "R05:B0": {
       "median_paths": 45.0,
       "median_input_tokens": 45212.0,
-      "median_latency_ms": 43.0,
+      "median_latency_ms": 47.0,
       "recall": 0.0
     },
     "R05:B1": {
@@ -69,8 +72,8 @@
     },
     "R06:B0": {
       "median_paths": 26.0,
-      "median_input_tokens": 95382.0,
-      "median_latency_ms": 51.0,
+      "median_input_tokens": 96059.0,
+      "median_latency_ms": 65.0,
       "recall": 0.0
     },
     "R06:B1": {
@@ -101,7 +104,7 @@
   "rollups": {
     "real_repo_B0_median_paths": 45.0,
     "real_repo_B1_median_paths": 3.0,
-    "real_repo_B0_median_tokens": 66746.5,
+    "real_repo_B0_median_tokens": 66529.5,
     "real_repo_B1_median_tokens": 1781.0
   },
   "environment": {
@@ -109,25 +112,25 @@
     "python": "3.12.3",
     "harness": "real_corpus_harness.py",
     "tokenizer": "tiktoken:cl100k_base",
-    "source_revision": "154b2d3c54d33815112769668e71817fdf118375",
-    "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset on benchmark VM; ground.sh requires vault",
-    "b1_mechanism": "project .ai/ knowledge pack"
+    "source_revision": "f9257fec42d9a67e3df99511e6fc9accb3216019",
+    "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset; official B1 blocked on V22-GOAL-005",
+    "b1_mechanism": "PROVISIONAL_CURATED_PACK \u2014 bench .ai/ pack (not official wiki ops)"
   },
   "runs": [
-    "V22R-R01-B0-283b25bf890a",
-    "V22R-R01-B1-8d10423aff05",
-    "V22R-R02-B0-8c2e737144d4",
-    "V22R-R02-B1-71531f218f49",
-    "V22R-R03-B0-8cd6439faecd",
-    "V22R-R03-B1-51a50c5d7120",
-    "V22R-R04-B0-175c305e88c2",
-    "V22R-R04-B1-9a66f4d62a9b",
-    "V22R-R05-B0-c101d6e69f3b",
-    "V22R-R05-B1-b41a0e84489e",
-    "V22R-R06-B0-660ecc6cbd61",
-    "V22R-R06-B1-e7bfcf8152f1",
-    "V22R-S03-B0-5cc80e65ff9c",
-    "V22R-S03-B1-99bd08a6ba9a",
-    "V22R-S07-B1-f6ee6cd1f563"
+    "V22R-R01-B0-72cc9b136228",
+    "V22R-R01-B1-8ca6524ce8eb",
+    "V22R-R02-B0-83f976426a13",
+    "V22R-R02-B1-6b91e4ba2e70",
+    "V22R-R03-B0-181eb02d6522",
+    "V22R-R03-B1-84062691d5e7",
+    "V22R-R04-B0-16797b821dfc",
+    "V22R-R04-B1-75df2d88dd15",
+    "V22R-R05-B0-f86fdeee8cea",
+    "V22R-R05-B1-ec19298c0b85",
+    "V22R-R06-B0-970fa9f03cc9",
+    "V22R-R06-B1-6a4b4c36a948",
+    "V22R-S03-B0-a29e75df969f",
+    "V22R-S03-B1-1c23fb605cb0",
+    "V22R-S07-B1-a1e4ae49d4a9"
   ]
 }
