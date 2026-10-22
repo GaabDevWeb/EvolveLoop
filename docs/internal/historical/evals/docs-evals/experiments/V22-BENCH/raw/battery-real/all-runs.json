@@ -1,0 +1,1010 @@
+[
+  {
+    "experiment_id": "V22-BENCH-REAL",
+    "baseline_id": "v22-real-b0b1-2026-10-22",
+    "run_id": "V22R-R01-B0-cb0656b1a376",
+    "arm": "B0",
+    "task_id": "R01",
+    "timestamp": "2026-10-22T00:39:33.985732+00:00",
+    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "harness": "v22-real-corpus-harness-1.0.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "model": {
+      "id": "NOT_MEASURED",
+      "note": "retrieval-only; no LLM"
+    },
+    "host_cache": "UNKNOWN",
+    "corpus_label": "EvolveLoop monorepo (git root)",
+    "b1_mechanism": {
+      "primary": "project .ai/ knowledge pack",
+      "pack_path": "fixtures/evolveloop-project-knowledge/.ai/",
+      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset on benchmark VM; ground.sh requires vault",
+      "note": "B1 selects pages via keyword overlap on index, then reads frontmatter source_paths (same layout as wiki de projeto V22-GOAL-005)"
+    },
+    "metrics": {
+      "task_id": "R01",
+      "arm": "B0",
+      "corpus": "/workspace",
+      "paths_read": [
+        "CHANGELOG.md",
+        "docs/CEO-controller.md",
+        "docs/architecture/decision-review/ARCHITECTURE-DECISION-REVIEW.md",
+        "docs/architecture/decision-review/DECISION-LEDGER.md",
+        "docs/architecture/decision-review/DECISION-MATRIX.yaml",
+        "docs/architecture/decision-review/FUTURE-EXPERIMENTS.yaml",
+        "docs/architecture/decision-review/TRACEABILITY.md",
+        "docs/architecture/decision-review/adr-drafts/ADR-DR-0001-keep-job-path-resume.md",
+        "docs/architecture/evolution/FINAL-STATE.yaml",
+        "docs/architecture/evolution/UNSUPPORTED-CLAIMS.yaml",
+        "docs/architecture/finalization/adrs/ADR-DR-0001-keep-job-path-resume.md",
+        "docs/architecture/finalization/adrs/ADR-DR-0003-security-model-before-sandbox.md",
+        "docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md",
+        "docs/architecture/finalization/prototypes/PT-002-os-kill-job-resume.md",
+        "docs/architecture/gate/DECISION-GATE.yaml",
+        "docs/architecture/gate/FUTURE-EXPERIMENT-GATE.yaml",
+        "docs/architecture/prototype-gate/PREFLIGHT-EVIDENCE.yaml",
+        "docs/architecture/prototype-gate/PROTOTYPE-GATE.yaml",
+        "docs/architecture/prototype-gate/PT-002-GATE.md",
+        "docs/architecture/release-audit-2026-10-11/V2.1-FREEZE-SCOPE-REPORT.md",
+        "docs/architecture/skills/pruning/ROLLBACK-REASONS.yaml",
+        "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+        "docs/audit/ACTUAL-ARCHITECTURE.md",
+        "docs/audit/DOCUMENTATION-DRIFT.md",
+        "docs/audit/EVIDENCE-CATALOG.md",
+        "docs/audit/EXECUTION-TRACES.md",
+        "docs/audit/EXPERIMENT-READINESS.md",
+        "docs/audit/FINAL-STATE-MODEL.md",
+        "docs/audit/IMPLEMENTATION-AUDIT-EXECUTIVE.md",
+        "docs/audit/IMPLEMENTATION-MATRIX.yaml",
+        "docs/audit/RESEARCH-RECONCILIATION.md",
+        "docs/internal/historical/MegaBrain-Ecosystem.md",
+        "docs/internal/historical/evals/docs-evals/baseline/ARCHITECTURE-BASELINE.md",
+        "docs/internal/historical/evals/docs-evals/baseline/CRITICAL-FINGERPRINTS.sha256",
+        "docs/internal/historical/evals/docs-evals/baseline/RUNTIME-BASELINE.md",
+        "docs/internal/historical/evals/docs-evals/baseline/SOURCE-MANIFEST.yaml",
+        "docs/internal/historical/evals/docs-evals/baseline/TEST-NAMES.txt",
+        "docs/internal/historical/evals/docs-evals/catalog/specs/EVAL-EV-006.yaml",
+        "docs/internal/historical/evals/docs-evals/experiments/E-005/E-005-RESULT.md",
+        "docs/internal/historical/evals/docs-evals/experiments/E-005/EVIDENCE.yaml",
+        "docs/internal/historical/evals/docs-evals/experiments/E-005/EXPERIMENT.md",
+        "docs/internal/historical/evals/docs-evals/experiments/E-005/FIXTURE.md",
+        "docs/internal/historical/evals/docs-evals/experiments/E-005/harness/e005-duplicate-mutate.test.ts",
+        "docs/internal/historical/evals/docs-evals/experiments/E-005/harness/e005-metrics.test.ts",
+        "docs/internal/historical/evals/docs-evals/experiments/E-005/raw/dup-mutate/control-rep-1.json"
+      ],
+      "rg_invocations": [
+        {
+          "pattern": "HMAC-SHA256",
+          "path_count": 9
+        },
+        {
+          "pattern": "checkpoint",
+          "path_count": 158
+        },
+        {
+          "pattern": "ALG",
+          "path_count": 5
+        }
+      ],
+      "input_tokens": 80382,
+      "output_tokens": 0,
+      "latency_ms": 54,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: orchestrator/src/jobs/checkpoint.ts"
+      ],
+      "page_cited": null,
+      "anchor_fallback_used": false
+    },
+    "verifier": {
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: orchestrator/src/jobs/checkpoint.ts"
+      ]
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-REAL",
+    "baseline_id": "v22-real-b0b1-2026-10-22",
+    "run_id": "V22R-R01-B1-accd7bf67b46",
+    "arm": "B1",
+    "task_id": "R01",
+    "timestamp": "2026-10-22T00:39:33.987929+00:00",
+    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "harness": "v22-real-corpus-harness-1.0.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "model": {
+      "id": "NOT_MEASURED",
+      "note": "retrieval-only; no LLM"
+    },
+    "host_cache": "UNKNOWN",
+    "corpus_label": "EvolveLoop monorepo (git root)",
+    "b1_mechanism": {
+      "primary": "project .ai/ knowledge pack",
+      "pack_path": "fixtures/evolveloop-project-knowledge/.ai/",
+      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset on benchmark VM; ground.sh requires vault",
+      "note": "B1 selects pages via keyword overlap on index, then reads frontmatter source_paths (same layout as wiki de projeto V22-GOAL-005)"
+    },
+    "metrics": {
+      "task_id": "R01",
+      "arm": "B1",
+      "corpus": "/workspace",
+      "paths_read": [
+        ".ai/index.md",
+        ".ai/pages/checkpoint-hmac.md",
+        "orchestrator/src/jobs/checkpoint.ts",
+        ".ai/pages/adr-compaction-defer.md",
+        "docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md"
+      ],
+      "rg_invocations": [],
+      "input_tokens": 3491,
+      "output_tokens": 0,
+      "latency_ms": 1,
+      "recall": 1.0,
+      "recall_notes": [],
+      "page_cited": ".ai/pages/checkpoint-hmac.md",
+      "anchor_fallback_used": false
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-REAL",
+    "baseline_id": "v22-real-b0b1-2026-10-22",
+    "run_id": "V22R-R02-B0-d1f038f6b319",
+    "arm": "B0",
+    "task_id": "R02",
+    "timestamp": "2026-10-22T00:39:34.037279+00:00",
+    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "harness": "v22-real-corpus-harness-1.0.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "model": {
+      "id": "NOT_MEASURED",
+      "note": "retrieval-only; no LLM"
+    },
+    "host_cache": "UNKNOWN",
+    "corpus_label": "EvolveLoop monorepo (git root)",
+    "b1_mechanism": {
+      "primary": "project .ai/ knowledge pack",
+      "pack_path": "fixtures/evolveloop-project-knowledge/.ai/",
+      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset on benchmark VM; ground.sh requires vault",
+      "note": "B1 selects pages via keyword overlap on index, then reads frontmatter source_paths (same layout as wiki de projeto V22-GOAL-005)"
+    },
+    "metrics": {
+      "task_id": "R02",
+      "arm": "B0",
+      "corpus": "/workspace",
+      "paths_read": [
+        "CHANGELOG.md",
+        "docs/CEO-controller.md",
+        "docs/architecture/decision-review/ARCHITECTURE-DECISION-REVIEW.md",
+        "docs/architecture/decision-review/DECISION-LEDGER.md",
+        "docs/architecture/decision-review/DECISION-MATRIX.yaml",
+        "docs/architecture/decision-review/FUTURE-EXPERIMENTS.yaml",
+        "docs/architecture/decision-review/TRACEABILITY.md",
+        "docs/architecture/decision-review/adr-drafts/ADR-DR-0001-keep-job-path-resume.md",
+        "docs/architecture/evolution/FINAL-STATE.yaml",
+        "docs/architecture/evolution/UNSUPPORTED-CLAIMS.yaml",
+        "docs/architecture/finalization/adrs/ADR-DR-0001-keep-job-path-resume.md",
+        "docs/architecture/finalization/adrs/ADR-DR-0003-security-model-before-sandbox.md",
+        "docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md",
+        "docs/architecture/finalization/prototypes/PT-002-os-kill-job-resume.md",
+        "docs/architecture/gate/DECISION-GATE.yaml",
+        "docs/architecture/gate/FUTURE-EXPERIMENT-GATE.yaml",
+        "docs/architecture/prototype-gate/PREFLIGHT-EVIDENCE.yaml",
+        "docs/architecture/prototype-gate/PROTOTYPE-GATE.yaml",
+        "docs/architecture/prototype-gate/PT-002-GATE.md",
+        "docs/architecture/release-audit-2026-10-11/V2.1-FREEZE-SCOPE-REPORT.md",
+        "docs/architecture/skills/pruning/ROLLBACK-REASONS.yaml",
+        "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+        "docs/audit/ACTUAL-ARCHITECTURE.md",
+        "docs/audit/DOCUMENTATION-DRIFT.md",
+        "docs/audit/EVIDENCE-CATALOG.md",
+        "docs/audit/EXECUTION-TRACES.md",
+        "docs/audit/EXPERIMENT-READINESS.md",
+        "docs/audit/FINAL-STATE-MODEL.md",
+        "docs/audit/IMPLEMENTATION-AUDIT-EXECUTIVE.md",
+        "docs/audit/IMPLEMENTATION-MATRIX.yaml",
+        "docs/audit/RESEARCH-RECONCILIATION.md",
+        "docs/internal/historical/MegaBrain-Ecosystem.md",
+        "docs/internal/historical/evals/docs-evals/baseline/ARCHITECTURE-BASELINE.md",
+        "docs/internal/historical/evals/docs-evals/baseline/CRITICAL-FINGERPRINTS.sha256",
+        "docs/internal/historical/evals/docs-evals/baseline/RUNTIME-BASELINE.md",
+        "docs/internal/historical/evals/docs-evals/baseline/SOURCE-MANIFEST.yaml",
+        "docs/internal/historical/evals/docs-evals/baseline/TEST-NAMES.txt",
+        "docs/internal/historical/evals/docs-evals/catalog/specs/EVAL-EV-006.yaml",
+        "docs/internal/historical/evals/docs-evals/experiments/E-005/E-005-RESULT.md",
+        "docs/internal/historical/evals/docs-evals/experiments/E-005/EVIDENCE.yaml",
+        "docs/internal/historical/evals/docs-evals/experiments/E-005/EXPERIMENT.md",
+        "docs/internal/historical/evals/docs-evals/experiments/E-005/FIXTURE.md",
+        "docs/internal/historical/evals/docs-evals/experiments/E-005/harness/e005-duplicate-mutate.test.ts",
+        "docs/internal/historical/evals/docs-evals/experiments/E-005/harness/e005-metrics.test.ts",
+        "docs/internal/historical/evals/docs-evals/experiments/E-005/raw/dup-mutate/control-rep-1.json"
+      ],
+      "rg_invocations": [
+        {
+          "pattern": "EVOLVELOOP_CHECKPOINT_HMAC_KEY",
+          "path_count": 10
+        },
+        {
+          "pattern": "KEY_ENV",
+          "path_count": 7
+        },
+        {
+          "pattern": "checkpoint",
+          "path_count": 158
+        }
+      ],
+      "input_tokens": 80382,
+      "output_tokens": 0,
+      "latency_ms": 49,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: orchestrator/src/jobs/checkpoint.ts"
+      ],
+      "page_cited": null,
+      "anchor_fallback_used": false
+    },
+    "verifier": {
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: orchestrator/src/jobs/checkpoint.ts"
+      ]
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-REAL",
+    "baseline_id": "v22-real-b0b1-2026-10-22",
+    "run_id": "V22R-R02-B1-6b2b3a9efd20",
+    "arm": "B1",
+    "task_id": "R02",
+    "timestamp": "2026-10-22T00:39:34.039155+00:00",
+    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "harness": "v22-real-corpus-harness-1.0.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "model": {
+      "id": "NOT_MEASURED",
+      "note": "retrieval-only; no LLM"
+    },
+    "host_cache": "UNKNOWN",
+    "corpus_label": "EvolveLoop monorepo (git root)",
+    "b1_mechanism": {
+      "primary": "project .ai/ knowledge pack",
+      "pack_path": "fixtures/evolveloop-project-knowledge/.ai/",
+      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset on benchmark VM; ground.sh requires vault",
+      "note": "B1 selects pages via keyword overlap on index, then reads frontmatter source_paths (same layout as wiki de projeto V22-GOAL-005)"
+    },
+    "metrics": {
+      "task_id": "R02",
+      "arm": "B1",
+      "corpus": "/workspace",
+      "paths_read": [
+        ".ai/index.md",
+        ".ai/pages/checkpoint-hmac.md",
+        "orchestrator/src/jobs/checkpoint.ts",
+        ".ai/pages/adr-compaction-defer.md",
+        "docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md"
+      ],
+      "rg_invocations": [],
+      "input_tokens": 3491,
+      "output_tokens": 0,
+      "latency_ms": 1,
+      "recall": 1.0,
+      "recall_notes": [],
+      "page_cited": ".ai/pages/checkpoint-hmac.md",
+      "anchor_fallback_used": false
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-REAL",
+    "baseline_id": "v22-real-b0b1-2026-10-22",
+    "run_id": "V22R-R03-B0-9ac581c9e386",
+    "arm": "B0",
+    "task_id": "R03",
+    "timestamp": "2026-10-22T00:39:34.077373+00:00",
+    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "harness": "v22-real-corpus-harness-1.0.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "model": {
+      "id": "NOT_MEASURED",
+      "note": "retrieval-only; no LLM"
+    },
+    "host_cache": "UNKNOWN",
+    "corpus_label": "EvolveLoop monorepo (git root)",
+    "b1_mechanism": {
+      "primary": "project .ai/ knowledge pack",
+      "pack_path": "fixtures/evolveloop-project-knowledge/.ai/",
+      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset on benchmark VM; ground.sh requires vault",
+      "note": "B1 selects pages via keyword overlap on index, then reads frontmatter source_paths (same layout as wiki de projeto V22-GOAL-005)"
+    },
+    "metrics": {
+      "task_id": "R03",
+      "arm": "B0",
+      "corpus": "/workspace",
+      "paths_read": [
+        "docs/adr/0005-hybrid-retrieval-degraded-mode.md",
+        "docs/architecture/knowledge/CORE-PERSONAL-BOUNDARY-V2.yaml",
+        "docs/architecture/knowledge/KNOWLEDGE-ARCHITECTURE.md",
+        "docs/architecture/knowledge/KNOWLEDGE-BACKEND-CONTRACT.md",
+        "docs/architecture/knowledge/KNOWLEDGE-BACKEND-MANIFEST.yaml",
+        "docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md",
+        "docs/architecture/publication/STRUCTURAL-PRECHECK-MAIN.yaml",
+        "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+        "docs/architecture/v2.2/TECH-DECISIONS-MATRIX.md",
+        "docs/architecture/v2.2/TRACEABILITY-MATRIX.md",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/EXPERIMENT-REAL.md",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery-real/all-runs.json",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery-real/real/R03/B0/run-01.json",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery-real/real/R03/B1/run-01.json",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery-real/tasks-real-frozen.snapshot.json",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-real-frozen.json",
+        "docs/research/evolveloop-v2.2/01-current-state-audit.md",
+        "docs/research/evolveloop-v2.2/02-research-methodology.md",
+        "docs/research/evolveloop-v2.2/03-repositories-and-tools.md",
+        "docs/research/evolveloop-v2.2/06-token-optimization.md",
+        "docs/research/evolveloop-v2.2/07-compatibility-matrix.md",
+        "docs/research/evolveloop-v2.2/README.md",
+        "orchestrator/src/index.ts",
+        "orchestrator/src/knowledge/backend/resolve.ts",
+        "orchestrator/src/knowledge/backend/wiki-backend.ts",
+        "orchestrator/src/providers/deterministic/knowledge.ts",
+        "orchestrator/tests/unit/deterministic-capabilities.test.ts",
+        "orchestrator/tests/unit/knowledge-backend.test.ts"
+      ],
+      "rg_invocations": [
+        {
+          "pattern": "RAG_REPO_MISSING",
+          "path_count": 17
+        },
+        {
+          "pattern": "resolveWikiRoot",
+          "path_count": 8
+        },
+        {
+          "pattern": "wiki-backend",
+          "path_count": 19
+        }
+      ],
+      "input_tokens": 52998,
+      "output_tokens": 0,
+      "latency_ms": 38,
+      "recall": 1.0,
+      "recall_notes": [],
+      "page_cited": null,
+      "anchor_fallback_used": false
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-REAL",
+    "baseline_id": "v22-real-b0b1-2026-10-22",
+    "run_id": "V22R-R03-B1-ec84fdc97c5f",
+    "arm": "B1",
+    "task_id": "R03",
+    "timestamp": "2026-10-22T00:39:34.078768+00:00",
+    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "harness": "v22-real-corpus-harness-1.0.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "model": {
+      "id": "NOT_MEASURED",
+      "note": "retrieval-only; no LLM"
+    },
+    "host_cache": "UNKNOWN",
+    "corpus_label": "EvolveLoop monorepo (git root)",
+    "b1_mechanism": {
+      "primary": "project .ai/ knowledge pack",
+      "pack_path": "fixtures/evolveloop-project-knowledge/.ai/",
+      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset on benchmark VM; ground.sh requires vault",
+      "note": "B1 selects pages via keyword overlap on index, then reads frontmatter source_paths (same layout as wiki de projeto V22-GOAL-005)"
+    },
+    "metrics": {
+      "task_id": "R03",
+      "arm": "B1",
+      "corpus": "/workspace",
+      "paths_read": [
+        ".ai/index.md",
+        ".ai/pages/wiki-backend-missing.md",
+        "orchestrator/src/knowledge/backend/wiki-backend.ts"
+      ],
+      "rg_invocations": [],
+      "input_tokens": 1820,
+      "output_tokens": 0,
+      "latency_ms": 1,
+      "recall": 1.0,
+      "recall_notes": [],
+      "page_cited": ".ai/pages/wiki-backend-missing.md",
+      "anchor_fallback_used": false
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-REAL",
+    "baseline_id": "v22-real-b0b1-2026-10-22",
+    "run_id": "V22R-R04-B0-678d03260e1c",
+    "arm": "B0",
+    "task_id": "R04",
+    "timestamp": "2026-10-22T00:39:34.118234+00:00",
+    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "harness": "v22-real-corpus-harness-1.0.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "model": {
+      "id": "NOT_MEASURED",
+      "note": "retrieval-only; no LLM"
+    },
+    "host_cache": "UNKNOWN",
+    "corpus_label": "EvolveLoop monorepo (git root)",
+    "b1_mechanism": {
+      "primary": "project .ai/ knowledge pack",
+      "pack_path": "fixtures/evolveloop-project-knowledge/.ai/",
+      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset on benchmark VM; ground.sh requires vault",
+      "note": "B1 selects pages via keyword overlap on index, then reads frontmatter source_paths (same layout as wiki de projeto V22-GOAL-005)"
+    },
+    "metrics": {
+      "task_id": "R04",
+      "arm": "B0",
+      "corpus": "/workspace",
+      "paths_read": [
+        "Agents/Agent-architecture-mining.md",
+        "agent-setup/bootstrap.sh",
+        "agent-setup/src/agent_setup/paths.py",
+        "docs/architecture-mining/targets/mcp/REPORT.md",
+        "docs/architecture-mining/validation/pre-authoring-audit.md",
+        "docs/architecture-mining/validation/skill-validation-2026-09-18.md",
+        "docs/architecture/decision-review/ARCHITECTURE-DECISION-REVIEW.md",
+        "docs/architecture/decision-review/DECISION-LEDGER.md",
+        "docs/architecture/decision-review/DECISION-MATRIX.yaml",
+        "docs/architecture/decision-review/TRACEABILITY.md",
+        "docs/architecture/decision-review/adr-drafts/ADR-DR-0001-keep-job-path-resume.md",
+        "docs/architecture/decision-review/adr-drafts/ADR-DR-0002-defer-production-skill-budget.md",
+        "docs/architecture/decision-review/adr-drafts/ADR-DR-0003-security-model-before-sandbox.md",
+        "docs/architecture/decision-review/adr-drafts/ADR-DR-0004-define-stuck-semantics-first.md",
+        "docs/architecture/decision-review/adr-drafts/ADR-DR-0005-context-ownership-before-compaction.md",
+        "docs/architecture/evolution/ADR-REVIEW-MATRIX.yaml",
+        "docs/architecture/evolution/FINAL-ARCHITECTURE-EVOLUTION-REPORT.md",
+        "docs/architecture/evolution/FINAL-ARCHITECTURE-REVIEW.md",
+        "docs/architecture/evolution/FINAL-STATE.md",
+        "docs/architecture/evolution/FINAL-STATE.yaml",
+        "docs/architecture/evolution/IMPLEMENTATION-DECISION.yaml",
+        "docs/architecture/evolution/INTEGRITY-AUDIT.yaml",
+        "docs/architecture/evolution/OPEN-QUESTIONS.yaml",
+        "docs/architecture/evolution/STATE-AT-START.yaml",
+        "docs/architecture/evolution/TRACEABILITY.yaml",
+        "docs/architecture/evolution/UNSUPPORTED-CLAIMS.yaml",
+        "docs/architecture/finalization/ADR-FINALIZATION-REPORT.md",
+        "docs/architecture/finalization/ADR-INDEX.md",
+        "docs/architecture/finalization/FINALIZATION-MATRIX.yaml",
+        "docs/architecture/finalization/FINALIZATION-STATUS.yaml",
+        "docs/architecture/finalization/adrs/ADR-DR-0001-keep-job-path-resume.md",
+        "docs/architecture/finalization/adrs/ADR-DR-0002-defer-production-skill-budget.md",
+        "docs/architecture/finalization/adrs/ADR-DR-0003-security-model-before-sandbox.md",
+        "docs/architecture/finalization/adrs/ADR-DR-0004-define-stuck-semantics-first.md",
+        "docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md",
+        "docs/architecture/finalization/prototypes/PT-001-live-catalog-budget.md",
+        "docs/architecture/finalization/prototypes/PT-002-os-kill-job-resume.md",
+        "docs/architecture/gate/ADR-GATE-REPORT.md",
+        "docs/architecture/gate/DECISION-GATE.yaml",
+        "docs/architecture/gate/FUTURE-EXPERIMENT-GATE.yaml",
+        "docs/architecture/gate/PROTOTYPE-GATE.yaml",
+        "docs/architecture/gate/REVISION-REQUIRED.md",
+        "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+        "docs/architecture/v2.2/TRACEABILITY-MATRIX.md",
+        "docs/audit/IMPLEMENTATION-MATRIX.yaml"
+      ],
+      "rg_invocations": [
+        {
+          "pattern": "DEFER",
+          "path_count": 139
+        },
+        {
+          "pattern": "compaction/reinject",
+          "path_count": 16
+        },
+        {
+          "pattern": "ADR-DR-0005",
+          "path_count": 45
+        }
+      ],
+      "input_tokens": 44403,
+      "output_tokens": 0,
+      "latency_ms": 39,
+      "recall": 1.0,
+      "recall_notes": [],
+      "page_cited": null,
+      "anchor_fallback_used": false
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-REAL",
+    "baseline_id": "v22-real-b0b1-2026-10-22",
+    "run_id": "V22R-R04-B1-c7402afffe74",
+    "arm": "B1",
+    "task_id": "R04",
+    "timestamp": "2026-10-22T00:39:34.119440+00:00",
+    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "harness": "v22-real-corpus-harness-1.0.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "model": {
+      "id": "NOT_MEASURED",
+      "note": "retrieval-only; no LLM"
+    },
+    "host_cache": "UNKNOWN",
+    "corpus_label": "EvolveLoop monorepo (git root)",
+    "b1_mechanism": {
+      "primary": "project .ai/ knowledge pack",
+      "pack_path": "fixtures/evolveloop-project-knowledge/.ai/",
+      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset on benchmark VM; ground.sh requires vault",
+      "note": "B1 selects pages via keyword overlap on index, then reads frontmatter source_paths (same layout as wiki de projeto V22-GOAL-005)"
+    },
+    "metrics": {
+      "task_id": "R04",
+      "arm": "B1",
+      "corpus": "/workspace",
+      "paths_read": [
+        ".ai/index.md",
+        ".ai/pages/adr-compaction-defer.md",
+        "docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md"
+      ],
+      "rg_invocations": [],
+      "input_tokens": 1160,
+      "output_tokens": 0,
+      "latency_ms": 0,
+      "recall": 1.0,
+      "recall_notes": [],
+      "page_cited": ".ai/pages/adr-compaction-defer.md",
+      "anchor_fallback_used": false
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-REAL",
+    "baseline_id": "v22-real-b0b1-2026-10-22",
+    "run_id": "V22R-R05-B0-3bbb90ea4bdb",
+    "arm": "B0",
+    "task_id": "R05",
+    "timestamp": "2026-10-22T00:39:34.162237+00:00",
+    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "harness": "v22-real-corpus-harness-1.0.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "model": {
+      "id": "NOT_MEASURED",
+      "note": "retrieval-only; no LLM"
+    },
+    "host_cache": "UNKNOWN",
+    "corpus_label": "EvolveLoop monorepo (git root)",
+    "b1_mechanism": {
+      "primary": "project .ai/ knowledge pack",
+      "pack_path": "fixtures/evolveloop-project-knowledge/.ai/",
+      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset on benchmark VM; ground.sh requires vault",
+      "note": "B1 selects pages via keyword overlap on index, then reads frontmatter source_paths (same layout as wiki de projeto V22-GOAL-005)"
+    },
+    "metrics": {
+      "task_id": "R05",
+      "arm": "B0",
+      "corpus": "/workspace",
+      "paths_read": [
+        "AGENT.md",
+        "Agents/Planner.md",
+        "CHANGELOG.md",
+        "INVENTORY.md",
+        "README.md",
+        "Rules/wiki-agent.mdc",
+        "agent-setup/README.md",
+        "agent-setup/cursor/commands/evolve.md",
+        "agent-setup/cursor/hooks/wiki-mem/mem.py",
+        "agent-setup/cursor/rules/wiki-agent.mdc",
+        "agent-setup/docs/components.md",
+        "agent-setup/manifest/manifest.yaml",
+        "agent-setup/manifest/profiles.yaml",
+        "docs/CEO-controller.md",
+        "docs/adr/0010-public-core-vs-gaabtype-profile.md",
+        "docs/adr/0012-wiki-default-knowledge-backend.md",
+        "docs/architecture/decision-review/ARCHITECTURE-DECISION-REVIEW.md",
+        "docs/architecture/decision-review/TRACEABILITY.md",
+        "docs/architecture/decision-review/adr-drafts/ADR-DR-0005-context-ownership-before-compaction.md",
+        "docs/architecture/evolveloopt/EVOLVELOOP-LONGITUDINAL-IMPLEMENTATION-REPORT.md",
+        "docs/architecture/evolveloopt/final/EVOLVELOOP-FINAL-OPERATIONALIZATION-REPORT.md",
+        "docs/architecture/evolveloopt/v1-final/OPERATIONS.md",
+        "docs/architecture/evolveloopt/validation/AUDIT-MATRIX.yaml",
+        "docs/architecture/evolveloopt/validation/EVOLVELOOP-VALIDATION-REPORT.md",
+        "docs/architecture/evolveloopt/validation/FINDINGS.yaml",
+        "docs/architecture/evolveloopt/validation/VALIDATION-VERDICT.yaml",
+        "docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md",
+        "docs/architecture/finalization/prototypes/PT-001-live-catalog-budget.md",
+        "docs/architecture/knowledge/KNOWLEDGE-ARCHITECTURE.md",
+        "docs/architecture/knowledge/KNOWLEDGE-BACKEND-MANIFEST.yaml",
+        "docs/architecture/knowledge/KNOWLEDGE-BEFORE-AFTER.md",
+        "docs/architecture/knowledge/KNOWLEDGE-DEPENDENCY-GRAPH.yaml",
+        "docs/architecture/knowledge/KNOWLEDGE-PROFILE-BOUNDARY.md",
+        "docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md",
+        "docs/architecture/knowledge/PERSONAL-COUPLING-AFTER.yaml",
+        "docs/architecture/knowledge/PROFILE-BOUNDARY-MANIFEST.yaml",
+        "docs/architecture/portability/CONFIG-PORTABILITY-MATRIX.yaml",
+        "docs/architecture/portability/CORE-ARCHITECTURE.yaml",
+        "docs/architecture/portability/CORE-VS-PERSONAL-GRAPH.yaml",
+        "docs/architecture/portability/IDENTITY-REFERENCE-MAP.yaml",
+        "docs/architecture/portability/MAIN-VS-GAABTYPE-PROPOSAL.yaml",
+        "docs/architecture/portability/PATH-REFERENCE-MAP.yaml",
+        "docs/architecture/portability/PERSONAL-CONNECTIONS.yaml",
+        "docs/architecture/portability/PORTABILITY-FORENSIC-AUDIT.md",
+        "docs/architecture/portability/PORTABILITY-INVENTORY.yaml"
+      ],
+      "rg_invocations": [
+        {
+          "pattern": "memory",
+          "path_count": 185
+        },
+        {
+          "pattern": "enabled: false",
+          "path_count": 12
+        },
+        {
+          "pattern": "default.yaml",
+          "path_count": 37
+        }
+      ],
+      "input_tokens": 45212,
+      "output_tokens": 0,
+      "latency_ms": 42,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: profiles/default.yaml"
+      ],
+      "page_cited": null,
+      "anchor_fallback_used": false
+    },
+    "verifier": {
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: profiles/default.yaml"
+      ]
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-REAL",
+    "baseline_id": "v22-real-b0b1-2026-10-22",
+    "run_id": "V22R-R05-B1-fdd18f190b38",
+    "arm": "B1",
+    "task_id": "R05",
+    "timestamp": "2026-10-22T00:39:34.163183+00:00",
+    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "harness": "v22-real-corpus-harness-1.0.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "model": {
+      "id": "NOT_MEASURED",
+      "note": "retrieval-only; no LLM"
+    },
+    "host_cache": "UNKNOWN",
+    "corpus_label": "EvolveLoop monorepo (git root)",
+    "b1_mechanism": {
+      "primary": "project .ai/ knowledge pack",
+      "pack_path": "fixtures/evolveloop-project-knowledge/.ai/",
+      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset on benchmark VM; ground.sh requires vault",
+      "note": "B1 selects pages via keyword overlap on index, then reads frontmatter source_paths (same layout as wiki de projeto V22-GOAL-005)"
+    },
+    "metrics": {
+      "task_id": "R05",
+      "arm": "B1",
+      "corpus": "/workspace",
+      "paths_read": [
+        ".ai/index.md",
+        ".ai/pages/profile-memory-off.md",
+        "profiles/default.yaml"
+      ],
+      "rg_invocations": [],
+      "input_tokens": 384,
+      "output_tokens": 0,
+      "latency_ms": 0,
+      "recall": 1.0,
+      "recall_notes": [],
+      "page_cited": ".ai/pages/profile-memory-off.md",
+      "anchor_fallback_used": false
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-REAL",
+    "baseline_id": "v22-real-b0b1-2026-10-22",
+    "run_id": "V22R-R06-B0-63798d5c3870",
+    "arm": "B0",
+    "task_id": "R06",
+    "timestamp": "2026-10-22T00:39:34.211759+00:00",
+    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "harness": "v22-real-corpus-harness-1.0.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "model": {
+      "id": "NOT_MEASURED",
+      "note": "retrieval-only; no LLM"
+    },
+    "host_cache": "UNKNOWN",
+    "corpus_label": "EvolveLoop monorepo (git root)",
+    "b1_mechanism": {
+      "primary": "project .ai/ knowledge pack",
+      "pack_path": "fixtures/evolveloop-project-knowledge/.ai/",
+      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset on benchmark VM; ground.sh requires vault",
+      "note": "B1 selects pages via keyword overlap on index, then reads frontmatter source_paths (same layout as wiki de projeto V22-GOAL-005)"
+    },
+    "metrics": {
+      "task_id": "R06",
+      "arm": "B0",
+      "corpus": "/workspace",
+      "paths_read": [
+        "agent-setup/cursor/commands/evolve.md",
+        "docs/CEO-controller.md",
+        "docs/architecture/portability/CORE-ARCHITECTURE.yaml",
+        "docs/architecture/release-audit-2026-10-11/V2.1-FREEZE-SCOPE-REPORT.md",
+        "docs/architecture/skills/audit/FLOW-SKILL-CATALOG.md",
+        "docs/architecture/skills/audit/HARD-GATES-V2.yaml",
+        "docs/architecture/skills/audit/SKILL-USAGE-MATRIX.yaml",
+        "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+        "docs/architecture/v2.2/IMPLEMENTATION-ROADMAP.md",
+        "docs/architecture/v2.2/TECH-DECISIONS-MATRIX.md",
+        "docs/architecture/v2.2/TRACEABILITY-MATRIX.md",
+        "docs/concepts/README.md",
+        "docs/internal/historical/MegaBrain-Ecosystem.md",
+        "docs/internal/historical/cursor-megabrain-rag-stack.md",
+        "docs/internal/historical/evals/docs-evals/experiments/E-001/raw/enablement/catalog-inventory.json",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/EXPERIMENT-REAL.md",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery-real/all-runs.json",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery-real/real/R06/B0/run-01.json",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery-real/tasks-real-frozen.snapshot.json",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-real-frozen.json",
+        "docs/research/OUR-SYSTEM-BASELINE.md",
+        "docs/research/targets/external/claude-code/REPORT.md",
+        "docs/research/targets/external/cline/UNKNOWNS.md",
+        "docs/research/targets/external/mcp/REPORT.md",
+        "docs/research/targets/external/pydanticai/REPORT.md",
+        "docs/research/targets/external/roo-code/REPORT.md"
+      ],
+      "rg_invocations": [
+        {
+          "pattern": "missing_gate_bundle",
+          "path_count": 6
+        },
+        {
+          "pattern": "GATE_BUNDLE",
+          "path_count": 23
+        },
+        {
+          "pattern": "bloqueado",
+          "path_count": 8
+        }
+      ],
+      "input_tokens": 95231,
+      "output_tokens": 0,
+      "latency_ms": 48,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: .cursor/skills/orquestrar/references/gate-bundle.md"
+      ],
+      "page_cited": null,
+      "anchor_fallback_used": false
+    },
+    "verifier": {
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: .cursor/skills/orquestrar/references/gate-bundle.md"
+      ]
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-REAL",
+    "baseline_id": "v22-real-b0b1-2026-10-22",
+    "run_id": "V22R-R06-B1-0907bdb1e83d",
+    "arm": "B1",
+    "task_id": "R06",
+    "timestamp": "2026-10-22T00:39:34.213142+00:00",
+    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "harness": "v22-real-corpus-harness-1.0.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "model": {
+      "id": "NOT_MEASURED",
+      "note": "retrieval-only; no LLM"
+    },
+    "host_cache": "UNKNOWN",
+    "corpus_label": "EvolveLoop monorepo (git root)",
+    "b1_mechanism": {
+      "primary": "project .ai/ knowledge pack",
+      "pack_path": "fixtures/evolveloop-project-knowledge/.ai/",
+      "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset on benchmark VM; ground.sh requires vault",
+      "note": "B1 selects pages via keyword overlap on index, then reads frontmatter source_paths (same layout as wiki de projeto V22-GOAL-005)"
+    },
+    "metrics": {
+      "task_id": "R06",
+      "arm": "B1",
+      "corpus": "/workspace",
+      "paths_read": [
+        ".ai/index.md",
+        ".ai/pages/gate-bundle-missing.md",
+        ".cursor/skills/orquestrar/references/gate-bundle.md"
+      ],
+      "rg_invocations": [],
+      "input_tokens": 1742,
+      "output_tokens": 0,
+      "latency_ms": 1,
+      "recall": 1.0,
+      "recall_notes": [],
+      "page_cited": ".ai/pages/gate-bundle-missing.md",
+      "anchor_fallback_used": false
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-REAL",
+    "baseline_id": "v22-real-b0b1-2026-10-22",
+    "run_id": "V22R-S03-B0-9412f233f830",
+    "arm": "B0",
+    "task_id": "S03",
+    "timestamp": "2026-10-22T00:39:34.221521+00:00",
+    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "harness": "v22-real-corpus-harness-1.0.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "model": {
+      "id": "NOT_MEASURED",
+      "note": "retrieval-only; no LLM"
+    },
+    "host_cache": "UNKNOWN",
+    "corpus_label": "fixtures/continuity-s37/",
+    "continuity": true,
+    "scenario_number": 3,
+    "metrics": {
+      "task_id": "S03",
+      "arm": "B0",
+      "corpus": "/workspace/docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/fixtures/continuity-s37",
+      "paths_read": [
+        "src/noise/n_1.txt",
+        "src/noise/n_2.txt",
+        "src/noise/n_3.txt",
+        "src/noise/n_4.txt",
+        "src/noise/n_5.txt",
+        "src/noise/n_6.txt",
+        "src/noise/n_7.txt",
+        "src/noise/n_8.txt"
+      ],
+      "rg_invocations": [
+        {
+          "pattern": "release/v2.1-freeze-preparation",
+          "path_count": 8
+        },
+        {
+          "pattern": "DECISION_V22_PIN",
+          "path_count": 0
+        }
+      ],
+      "input_tokens": 192,
+      "output_tokens": 0,
+      "latency_ms": 8,
+      "recall": 0.0,
+      "recall_notes": [
+        "miss path not read: .ai/pages/decision-freeze-pin.md"
+      ],
+      "page_cited": null,
+      "anchor_fallback_used": false
+    },
+    "verifier": {
+      "pass": false,
+      "recall": 0.0,
+      "notes": [
+        "miss path not read: .ai/pages/decision-freeze-pin.md"
+      ]
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-REAL",
+    "baseline_id": "v22-real-b0b1-2026-10-22",
+    "run_id": "V22R-S03-B1-57324b06219d",
+    "arm": "B1",
+    "task_id": "S03",
+    "timestamp": "2026-10-22T00:39:34.222025+00:00",
+    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "harness": "v22-real-corpus-harness-1.0.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "model": {
+      "id": "NOT_MEASURED",
+      "note": "retrieval-only; no LLM"
+    },
+    "host_cache": "UNKNOWN",
+    "corpus_label": "fixtures/continuity-s37/",
+    "continuity": true,
+    "scenario_number": 3,
+    "metrics": {
+      "task_id": "S03",
+      "arm": "B1",
+      "corpus": "/workspace/docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/fixtures/continuity-s37",
+      "paths_read": [
+        ".ai/index.md",
+        ".ai/pages/decision-freeze-pin.md"
+      ],
+      "rg_invocations": [],
+      "input_tokens": 114,
+      "output_tokens": 0,
+      "latency_ms": 0,
+      "recall": 1.0,
+      "recall_notes": [],
+      "page_cited": ".ai/pages/decision-freeze-pin.md",
+      "anchor_fallback_used": false
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-REAL",
+    "baseline_id": "v22-real-b0b1-2026-10-22",
+    "run_id": "V22R-S07-B1-d9e0ac09421f",
+    "arm": "B1",
+    "task_id": "S07",
+    "timestamp": "2026-10-22T00:39:34.222410+00:00",
+    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "harness": "v22-real-corpus-harness-1.0.0",
+    "tokenizer": "tiktoken:cl100k_base",
+    "model": {
+      "id": "NOT_MEASURED",
+      "note": "retrieval-only; no LLM"
+    },
+    "host_cache": "UNKNOWN",
+    "corpus_label": "fixtures/continuity-s37/",
+    "continuity": true,
+    "scenario_number": 7,
+    "metrics": {
+      "task_id": "S07",
+      "arm": "B1",
+      "corpus": "/workspace/docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/fixtures/continuity-s37",
+      "paths_read": [
+        ".ai/index.md",
+        ".ai/pages/decision-freeze-pin.md"
+      ],
+      "rg_invocations": [],
+      "input_tokens": 114,
+      "output_tokens": 0,
+      "latency_ms": 0,
+      "recall": 1.0,
+      "recall_notes": [],
+      "page_cited": ".ai/pages/decision-freeze-pin.md",
+      "anchor_fallback_used": false
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    }
+  }
+]

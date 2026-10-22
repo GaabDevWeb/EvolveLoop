@@ -1,0 +1,86 @@
+{
+  "experiment_id": "V22-BENCH-REAL",
+  "baseline_id": "v22-real-b0b1-2026-10-22",
+  "run_id": "V22R-R06-B0-63798d5c3870",
+  "arm": "B0",
+  "task_id": "R06",
+  "timestamp": "2026-10-22T00:39:34.211759+00:00",
+  "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+  "harness": "v22-real-corpus-harness-1.0.0",
+  "tokenizer": "tiktoken:cl100k_base",
+  "model": {
+    "id": "NOT_MEASURED",
+    "note": "retrieval-only; no LLM"
+  },
+  "host_cache": "UNKNOWN",
+  "corpus_label": "EvolveLoop monorepo (git root)",
+  "b1_mechanism": {
+    "primary": "project .ai/ knowledge pack",
+    "pack_path": "fixtures/evolveloop-project-knowledge/.ai/",
+    "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset on benchmark VM; ground.sh requires vault",
+    "note": "B1 selects pages via keyword overlap on index, then reads frontmatter source_paths (same layout as wiki de projeto V22-GOAL-005)"
+  },
+  "metrics": {
+    "task_id": "R06",
+    "arm": "B0",
+    "corpus": "/workspace",
+    "paths_read": [
+      "agent-setup/cursor/commands/evolve.md",
+      "docs/CEO-controller.md",
+      "docs/architecture/portability/CORE-ARCHITECTURE.yaml",
+      "docs/architecture/release-audit-2026-10-11/V2.1-FREEZE-SCOPE-REPORT.md",
+      "docs/architecture/skills/audit/FLOW-SKILL-CATALOG.md",
+      "docs/architecture/skills/audit/HARD-GATES-V2.yaml",
+      "docs/architecture/skills/audit/SKILL-USAGE-MATRIX.yaml",
+      "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+      "docs/architecture/v2.2/IMPLEMENTATION-ROADMAP.md",
+      "docs/architecture/v2.2/TECH-DECISIONS-MATRIX.md",
+      "docs/architecture/v2.2/TRACEABILITY-MATRIX.md",
+      "docs/concepts/README.md",
+      "docs/internal/historical/MegaBrain-Ecosystem.md",
+      "docs/internal/historical/cursor-megabrain-rag-stack.md",
+      "docs/internal/historical/evals/docs-evals/experiments/E-001/raw/enablement/catalog-inventory.json",
+      "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/EXPERIMENT-REAL.md",
+      "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery-real/all-runs.json",
+      "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery-real/real/R06/B0/run-01.json",
+      "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery-real/tasks-real-frozen.snapshot.json",
+      "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-real-frozen.json",
+      "docs/research/OUR-SYSTEM-BASELINE.md",
+      "docs/research/targets/external/claude-code/REPORT.md",
+      "docs/research/targets/external/cline/UNKNOWNS.md",
+      "docs/research/targets/external/mcp/REPORT.md",
+      "docs/research/targets/external/pydanticai/REPORT.md",
+      "docs/research/targets/external/roo-code/REPORT.md"
+    ],
+    "rg_invocations": [
+      {
+        "pattern": "missing_gate_bundle",
+        "path_count": 6
+      },
+      {
+        "pattern": "GATE_BUNDLE",
+        "path_count": 23
+      },
+      {
+        "pattern": "bloqueado",
+        "path_count": 8
+      }
+    ],
+    "input_tokens": 95231,
+    "output_tokens": 0,
+    "latency_ms": 48,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: .cursor/skills/orquestrar/references/gate-bundle.md"
+    ],
+    "page_cited": null,
+    "anchor_fallback_used": false
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: .cursor/skills/orquestrar/references/gate-bundle.md"
+    ]
+  }
+}

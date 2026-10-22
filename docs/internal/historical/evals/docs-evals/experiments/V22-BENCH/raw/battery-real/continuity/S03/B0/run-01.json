@@ -1,0 +1,60 @@
+{
+  "experiment_id": "V22-BENCH-REAL",
+  "baseline_id": "v22-real-b0b1-2026-10-22",
+  "run_id": "V22R-S03-B0-9412f233f830",
+  "arm": "B0",
+  "task_id": "S03",
+  "timestamp": "2026-10-22T00:39:34.221521+00:00",
+  "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+  "harness": "v22-real-corpus-harness-1.0.0",
+  "tokenizer": "tiktoken:cl100k_base",
+  "model": {
+    "id": "NOT_MEASURED",
+    "note": "retrieval-only; no LLM"
+  },
+  "host_cache": "UNKNOWN",
+  "corpus_label": "fixtures/continuity-s37/",
+  "continuity": true,
+  "scenario_number": 3,
+  "metrics": {
+    "task_id": "S03",
+    "arm": "B0",
+    "corpus": "/workspace/docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/fixtures/continuity-s37",
+    "paths_read": [
+      "src/noise/n_1.txt",
+      "src/noise/n_2.txt",
+      "src/noise/n_3.txt",
+      "src/noise/n_4.txt",
+      "src/noise/n_5.txt",
+      "src/noise/n_6.txt",
+      "src/noise/n_7.txt",
+      "src/noise/n_8.txt"
+    ],
+    "rg_invocations": [
+      {
+        "pattern": "release/v2.1-freeze-preparation",
+        "path_count": 8
+      },
+      {
+        "pattern": "DECISION_V22_PIN",
+        "path_count": 0
+      }
+    ],
+    "input_tokens": 192,
+    "output_tokens": 0,
+    "latency_ms": 8,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: .ai/pages/decision-freeze-pin.md"
+    ],
+    "page_cited": null,
+    "anchor_fallback_used": false
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: .ai/pages/decision-freeze-pin.md"
+    ]
+  }
+}

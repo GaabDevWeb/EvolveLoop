@@ -2,15 +2,15 @@
   {
     "experiment_id": "V22-BENCH",
     "baseline_id": "v22-b0b1-2026-10-22",
-    "run_id": "V22-S01-B0-3ff793ab0d19643d",
+    "run_id": "V22-S01-B0-0179f282f7b8a5da",
     "arm": "B0",
     "scenario": {
       "id": "S01",
       "number": 1,
       "title": "Projeto sem wiki"
     },
-    "timestamp": "2026-10-22T00:36:53.030025+00:00",
-    "tree_sha": "34571388ea8a416667c64192d29e4932c7064347",
+    "timestamp": "2026-10-22T00:39:33.757023+00:00",
+    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
     "harness": "v22-bench-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {
@@ -83,7 +83,7 @@
       "output_tokens": 24,
       "total_tokens": 674,
       "model_calls": 0,
-      "latency_ms_retrieval": 18,
+      "latency_ms_retrieval": 16,
       "verifier_pass": true,
       "verifier_notes": "ok",
       "secret_leak": false,
@@ -97,15 +97,15 @@
   {
     "experiment_id": "V22-BENCH",
     "baseline_id": "v22-b0b1-2026-10-22",
-    "run_id": "V22-S02-B0-2354875fec46ac3d",
+    "run_id": "V22-S02-B0-ac9c6efb99872a7a",
     "arm": "B0",
     "scenario": {
       "id": "S02",
       "number": 2,
       "title": "Wiki inicializada \u2014 ADR via conhecimento"
     },
-    "timestamp": "2026-10-22T00:36:53.043931+00:00",
-    "tree_sha": "34571388ea8a416667c64192d29e4932c7064347",
+    "timestamp": "2026-10-22T00:39:33.770031+00:00",
+    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
     "harness": "v22-bench-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {
@@ -191,15 +191,15 @@
   {
     "experiment_id": "V22-BENCH",
     "baseline_id": "v22-b0b1-2026-10-22",
-    "run_id": "V22-S02-B1-e1a4c6e7d39aed61",
+    "run_id": "V22-S02-B1-06bfbc009e69ef62",
     "arm": "B1",
     "scenario": {
       "id": "S02",
       "number": 2,
       "title": "Wiki inicializada \u2014 ADR via conhecimento"
     },
-    "timestamp": "2026-10-22T00:36:53.045777+00:00",
-    "tree_sha": "34571388ea8a416667c64192d29e4932c7064347",
+    "timestamp": "2026-10-22T00:39:33.771951+00:00",
+    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
     "harness": "v22-bench-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {
@@ -239,15 +239,15 @@
   {
     "experiment_id": "V22-BENCH",
     "baseline_id": "v22-b0b1-2026-10-22",
-    "run_id": "V22-S05-B0-fcb3e24f6a9799e3",
+    "run_id": "V22-S05-B0-47112bedb9e65264",
     "arm": "B0",
     "scenario": {
       "id": "S05",
       "number": 5,
       "title": "Mudan\u00e7a em alpha \u2014 dependentes"
     },
-    "timestamp": "2026-10-22T00:36:53.058679+00:00",
-    "tree_sha": "34571388ea8a416667c64192d29e4932c7064347",
+    "timestamp": "2026-10-22T00:39:33.785273+00:00",
+    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
     "harness": "v22-bench-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {
@@ -334,15 +334,15 @@
   {
     "experiment_id": "V22-BENCH",
     "baseline_id": "v22-b0b1-2026-10-22",
-    "run_id": "V22-S05-B1-941f96db7c81067d",
+    "run_id": "V22-S05-B1-7afcacf149a75735",
     "arm": "B1",
     "scenario": {
       "id": "S05",
       "number": 5,
       "title": "Mudan\u00e7a em alpha \u2014 dependentes"
     },
-    "timestamp": "2026-10-22T00:36:53.060610+00:00",
-    "tree_sha": "34571388ea8a416667c64192d29e4932c7064347",
+    "timestamp": "2026-10-22T00:39:33.786958+00:00",
+    "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
     "harness": "v22-bench-harness-1.0.0",
     "tokenizer": "tiktoken:cl100k_base",
     "model": {

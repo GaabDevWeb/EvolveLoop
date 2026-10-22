@@ -58,12 +58,22 @@ def test_secret_not_read():
 
 def test_battery_writes_json(tmp_path: Path | None = None):
     out = EXP_DIR / "raw" / "battery"
-    # dry: only check structure if battery already run
     summary = out / "battery-summary.json"
     if summary.is_file():
         data = json.loads(summary.read_text(encoding="utf-8"))
         assert data.get("experiment") == "V22-BENCH"
+        assert data.get("classification") == "PROVISIONAL_SYNTHETIC"
         assert data.get("aggregates")
+
+
+def test_real_battery_b1_recall():
+    out = EXP_DIR / "raw" / "battery-real" / "battery-summary.json"
+    assert out.is_file(), "run real_corpus_harness.py first"
+    data = json.loads(out.read_text(encoding="utf-8"))
+    assert data.get("classification") == "OFFICIAL_BASELINE"
+    for key, agg in data["aggregates"].items():
+        if key.endswith(":B1") and key.startswith("R"):
+            assert agg["recall"] == 1.0, f"B1 recall must be 1.0 on real tasks: {key}"
 
 
 def main():
@@ -75,6 +85,8 @@ def main():
     print("OK secret_canary")
     test_battery_writes_json()
     print("OK battery_artifact_optional")
+    test_real_battery_b1_recall()
+    print("OK real_b1_recall")
     print("ALL_INTEGRITY_OK")
 
 

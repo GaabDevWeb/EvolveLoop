@@ -4,6 +4,6 @@
   "harness": "bench_harness.py",
   "seed": "v22-bench-2026-10-22",
   "tokenizer": "tiktoken:cl100k_base",
-  "source_revision": "34571388ea8a416667c64192d29e4932c7064347",
+  "source_revision": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
   "cwd": "/workspace"
 }

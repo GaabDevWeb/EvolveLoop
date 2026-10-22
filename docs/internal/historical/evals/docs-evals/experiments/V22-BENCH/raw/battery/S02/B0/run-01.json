@@ -1,15 +1,15 @@
 {
   "experiment_id": "V22-BENCH",
   "baseline_id": "v22-b0b1-2026-10-22",
-  "run_id": "V22-S02-B0-2354875fec46ac3d",
+  "run_id": "V22-S02-B0-ac9c6efb99872a7a",
   "arm": "B0",
   "scenario": {
     "id": "S02",
     "number": 2,
     "title": "Wiki inicializada \u2014 ADR via conhecimento"
   },
-  "timestamp": "2026-10-22T00:36:53.043931+00:00",
-  "tree_sha": "34571388ea8a416667c64192d29e4932c7064347",
+  "timestamp": "2026-10-22T00:39:33.770031+00:00",
+  "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
   "harness": "v22-bench-harness-1.0.0",
   "tokenizer": "tiktoken:cl100k_base",
   "model": {

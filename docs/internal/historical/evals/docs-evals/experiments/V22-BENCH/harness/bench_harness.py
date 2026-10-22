@@ -299,6 +299,8 @@ def build_summary(all_runs: list[dict[str, Any]], env: dict[str, Any]) -> dict[s
 
     return {
         "experiment": "V22-BENCH",
+        "classification": "PROVISIONAL_SYNTHETIC",
+        "classification_note": "synth-repo; B1 paths curated in tasks.json — sanity check only, not product gates",
         "baseline_id": "v22-b0b1-2026-10-22",
         "mode": "OFFLINE_DETERMINISTIC_RETRIEVAL",
         "started_at": all_runs[0]["timestamp"] if all_runs else None,

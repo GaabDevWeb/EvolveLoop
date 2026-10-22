@@ -1,0 +1,101 @@
+{
+  "experiment_id": "V22-BENCH-REAL",
+  "baseline_id": "v22-real-b0b1-2026-10-22",
+  "run_id": "V22R-R04-B0-678d03260e1c",
+  "arm": "B0",
+  "task_id": "R04",
+  "timestamp": "2026-10-22T00:39:34.118234+00:00",
+  "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+  "harness": "v22-real-corpus-harness-1.0.0",
+  "tokenizer": "tiktoken:cl100k_base",
+  "model": {
+    "id": "NOT_MEASURED",
+    "note": "retrieval-only; no LLM"
+  },
+  "host_cache": "UNKNOWN",
+  "corpus_label": "EvolveLoop monorepo (git root)",
+  "b1_mechanism": {
+    "primary": "project .ai/ knowledge pack",
+    "pack_path": "fixtures/evolveloop-project-knowledge/.ai/",
+    "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset on benchmark VM; ground.sh requires vault",
+    "note": "B1 selects pages via keyword overlap on index, then reads frontmatter source_paths (same layout as wiki de projeto V22-GOAL-005)"
+  },
+  "metrics": {
+    "task_id": "R04",
+    "arm": "B0",
+    "corpus": "/workspace",
+    "paths_read": [
+      "Agents/Agent-architecture-mining.md",
+      "agent-setup/bootstrap.sh",
+      "agent-setup/src/agent_setup/paths.py",
+      "docs/architecture-mining/targets/mcp/REPORT.md",
+      "docs/architecture-mining/validation/pre-authoring-audit.md",
+      "docs/architecture-mining/validation/skill-validation-2026-09-18.md",
+      "docs/architecture/decision-review/ARCHITECTURE-DECISION-REVIEW.md",
+      "docs/architecture/decision-review/DECISION-LEDGER.md",
+      "docs/architecture/decision-review/DECISION-MATRIX.yaml",
+      "docs/architecture/decision-review/TRACEABILITY.md",
+      "docs/architecture/decision-review/adr-drafts/ADR-DR-0001-keep-job-path-resume.md",
+      "docs/architecture/decision-review/adr-drafts/ADR-DR-0002-defer-production-skill-budget.md",
+      "docs/architecture/decision-review/adr-drafts/ADR-DR-0003-security-model-before-sandbox.md",
+      "docs/architecture/decision-review/adr-drafts/ADR-DR-0004-define-stuck-semantics-first.md",
+      "docs/architecture/decision-review/adr-drafts/ADR-DR-0005-context-ownership-before-compaction.md",
+      "docs/architecture/evolution/ADR-REVIEW-MATRIX.yaml",
+      "docs/architecture/evolution/FINAL-ARCHITECTURE-EVOLUTION-REPORT.md",
+      "docs/architecture/evolution/FINAL-ARCHITECTURE-REVIEW.md",
+      "docs/architecture/evolution/FINAL-STATE.md",
+      "docs/architecture/evolution/FINAL-STATE.yaml",
+      "docs/architecture/evolution/IMPLEMENTATION-DECISION.yaml",
+      "docs/architecture/evolution/INTEGRITY-AUDIT.yaml",
+      "docs/architecture/evolution/OPEN-QUESTIONS.yaml",
+      "docs/architecture/evolution/STATE-AT-START.yaml",
+      "docs/architecture/evolution/TRACEABILITY.yaml",
+      "docs/architecture/evolution/UNSUPPORTED-CLAIMS.yaml",
+      "docs/architecture/finalization/ADR-FINALIZATION-REPORT.md",
+      "docs/architecture/finalization/ADR-INDEX.md",
+      "docs/architecture/finalization/FINALIZATION-MATRIX.yaml",
+      "docs/architecture/finalization/FINALIZATION-STATUS.yaml",
+      "docs/architecture/finalization/adrs/ADR-DR-0001-keep-job-path-resume.md",
+      "docs/architecture/finalization/adrs/ADR-DR-0002-defer-production-skill-budget.md",
+      "docs/architecture/finalization/adrs/ADR-DR-0003-security-model-before-sandbox.md",
+      "docs/architecture/finalization/adrs/ADR-DR-0004-define-stuck-semantics-first.md",
+      "docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md",
+      "docs/architecture/finalization/prototypes/PT-001-live-catalog-budget.md",
+      "docs/architecture/finalization/prototypes/PT-002-os-kill-job-resume.md",
+      "docs/architecture/gate/ADR-GATE-REPORT.md",
+      "docs/architecture/gate/DECISION-GATE.yaml",
+      "docs/architecture/gate/FUTURE-EXPERIMENT-GATE.yaml",
+      "docs/architecture/gate/PROTOTYPE-GATE.yaml",
+      "docs/architecture/gate/REVISION-REQUIRED.md",
+      "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+      "docs/architecture/v2.2/TRACEABILITY-MATRIX.md",
+      "docs/audit/IMPLEMENTATION-MATRIX.yaml"
+    ],
+    "rg_invocations": [
+      {
+        "pattern": "DEFER",
+        "path_count": 139
+      },
+      {
+        "pattern": "compaction/reinject",
+        "path_count": 16
+      },
+      {
+        "pattern": "ADR-DR-0005",
+        "path_count": 45
+      }
+    ],
+    "input_tokens": 44403,
+    "output_tokens": 0,
+    "latency_ms": 39,
+    "recall": 1.0,
+    "recall_notes": [],
+    "page_cited": null,
+    "anchor_fallback_used": false
+  },
+  "verifier": {
+    "pass": true,
+    "recall": 1.0,
+    "notes": []
+  }
+}

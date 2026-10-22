@@ -1,0 +1,133 @@
+{
+  "experiment": "V22-BENCH-REAL",
+  "classification": "OFFICIAL_BASELINE",
+  "classification_note": "EvolveLoop git root corpus; tasks frozen in tasks-real-frozen.json",
+  "baseline_id": "v22-real-b0b1-2026-10-22",
+  "mode": "REAL_CORPUS_RETRIEVAL",
+  "freeze_tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+  "tasks_frozen": "tasks-real-frozen.json",
+  "aggregates": {
+    "R01:B0": {
+      "median_paths": 45.0,
+      "median_input_tokens": 80382.0,
+      "median_latency_ms": 54.0,
+      "recall": 0.0
+    },
+    "R01:B1": {
+      "median_paths": 5.0,
+      "median_input_tokens": 3491.0,
+      "median_latency_ms": 1.0,
+      "recall": 1.0
+    },
+    "R02:B0": {
+      "median_paths": 45.0,
+      "median_input_tokens": 80382.0,
+      "median_latency_ms": 49.0,
+      "recall": 0.0
+    },
+    "R02:B1": {
+      "median_paths": 5.0,
+      "median_input_tokens": 3491.0,
+      "median_latency_ms": 1.0,
+      "recall": 1.0
+    },
+    "R03:B0": {
+      "median_paths": 28.0,
+      "median_input_tokens": 52998.0,
+      "median_latency_ms": 38.0,
+      "recall": 1.0
+    },
+    "R03:B1": {
+      "median_paths": 3.0,
+      "median_input_tokens": 1820.0,
+      "median_latency_ms": 1.0,
+      "recall": 1.0
+    },
+    "R04:B0": {
+      "median_paths": 45.0,
+      "median_input_tokens": 44403.0,
+      "median_latency_ms": 39.0,
+      "recall": 1.0
+    },
+    "R04:B1": {
+      "median_paths": 3.0,
+      "median_input_tokens": 1160.0,
+      "median_latency_ms": 0.0,
+      "recall": 1.0
+    },
+    "R05:B0": {
+      "median_paths": 45.0,
+      "median_input_tokens": 45212.0,
+      "median_latency_ms": 42.0,
+      "recall": 0.0
+    },
+    "R05:B1": {
+      "median_paths": 3.0,
+      "median_input_tokens": 384.0,
+      "median_latency_ms": 0.0,
+      "recall": 1.0
+    },
+    "R06:B0": {
+      "median_paths": 26.0,
+      "median_input_tokens": 95231.0,
+      "median_latency_ms": 48.0,
+      "recall": 0.0
+    },
+    "R06:B1": {
+      "median_paths": 3.0,
+      "median_input_tokens": 1742.0,
+      "median_latency_ms": 1.0,
+      "recall": 1.0
+    },
+    "S03:B0": {
+      "median_paths": 8.0,
+      "median_input_tokens": 192.0,
+      "median_latency_ms": 8.0,
+      "recall": 0.0
+    },
+    "S03:B1": {
+      "median_paths": 2.0,
+      "median_input_tokens": 114.0,
+      "median_latency_ms": 0.0,
+      "recall": 1.0
+    },
+    "S07:B1": {
+      "median_paths": 2.0,
+      "median_input_tokens": 114.0,
+      "median_latency_ms": 0.0,
+      "recall": 1.0
+    }
+  },
+  "rollups": {
+    "real_repo_B0_median_paths": 45.0,
+    "real_repo_B1_median_paths": 3.0,
+    "real_repo_B0_median_tokens": 66690.0,
+    "real_repo_B1_median_tokens": 1781.0
+  },
+  "environment": {
+    "os": "Linux-6.12.94+-x86_64-with-glibc2.39",
+    "python": "3.12.3",
+    "harness": "real_corpus_harness.py",
+    "tokenizer": "tiktoken:cl100k_base",
+    "source_revision": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+    "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset on benchmark VM; ground.sh requires vault",
+    "b1_mechanism": "project .ai/ knowledge pack"
+  },
+  "runs": [
+    "V22R-R01-B0-cb0656b1a376",
+    "V22R-R01-B1-accd7bf67b46",
+    "V22R-R02-B0-d1f038f6b319",
+    "V22R-R02-B1-6b2b3a9efd20",
+    "V22R-R03-B0-9ac581c9e386",
+    "V22R-R03-B1-ec84fdc97c5f",
+    "V22R-R04-B0-678d03260e1c",
+    "V22R-R04-B1-c7402afffe74",
+    "V22R-R05-B0-3bbb90ea4bdb",
+    "V22R-R05-B1-fdd18f190b38",
+    "V22R-R06-B0-63798d5c3870",
+    "V22R-R06-B1-0907bdb1e83d",
+    "V22R-S03-B0-9412f233f830",
+    "V22R-S03-B1-57324b06219d",
+    "V22R-S07-B1-d9e0ac09421f"
+  ]
+}

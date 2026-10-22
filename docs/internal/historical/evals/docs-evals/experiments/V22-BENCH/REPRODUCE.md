@@ -8,14 +8,19 @@ python3 integrity_test.py
 # expect: ALL_INTEGRITY_OK
 ```
 
-## Battery
+## Battery (sintético — sanity)
 
 ```bash
-cd docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/harness
 python3 bench_harness.py
 ```
 
-Writes `../raw/battery/{environment,task-set,all-runs,battery-summary}.json` and per-scenario run files.
+## Battery (oficial — monorepo)
+
+```bash
+python3 real_corpus_harness.py
+```
+
+Writes `../raw/battery-real/` including `battery-summary.json`.
 
 ## Tokenizer
 

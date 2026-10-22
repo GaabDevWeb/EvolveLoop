@@ -1,0 +1,105 @@
+{
+  "experiment_id": "V22-BENCH-REAL",
+  "baseline_id": "v22-real-b0b1-2026-10-22",
+  "run_id": "V22R-R01-B0-cb0656b1a376",
+  "arm": "B0",
+  "task_id": "R01",
+  "timestamp": "2026-10-22T00:39:33.985732+00:00",
+  "tree_sha": "155e529f255177d8cbfa728dd11dc4b87cb639a1",
+  "harness": "v22-real-corpus-harness-1.0.0",
+  "tokenizer": "tiktoken:cl100k_base",
+  "model": {
+    "id": "NOT_MEASURED",
+    "note": "retrieval-only; no LLM"
+  },
+  "host_cache": "UNKNOWN",
+  "corpus_label": "EvolveLoop monorepo (git root)",
+  "b1_mechanism": {
+    "primary": "project .ai/ knowledge pack",
+    "pack_path": "fixtures/evolveloop-project-knowledge/.ai/",
+    "wiki_ground_sh": "NOT_MEASURED \u2014 WIKI_ROOT unset on benchmark VM; ground.sh requires vault",
+    "note": "B1 selects pages via keyword overlap on index, then reads frontmatter source_paths (same layout as wiki de projeto V22-GOAL-005)"
+  },
+  "metrics": {
+    "task_id": "R01",
+    "arm": "B0",
+    "corpus": "/workspace",
+    "paths_read": [
+      "CHANGELOG.md",
+      "docs/CEO-controller.md",
+      "docs/architecture/decision-review/ARCHITECTURE-DECISION-REVIEW.md",
+      "docs/architecture/decision-review/DECISION-LEDGER.md",
+      "docs/architecture/decision-review/DECISION-MATRIX.yaml",
+      "docs/architecture/decision-review/FUTURE-EXPERIMENTS.yaml",
+      "docs/architecture/decision-review/TRACEABILITY.md",
+      "docs/architecture/decision-review/adr-drafts/ADR-DR-0001-keep-job-path-resume.md",
+      "docs/architecture/evolution/FINAL-STATE.yaml",
+      "docs/architecture/evolution/UNSUPPORTED-CLAIMS.yaml",
+      "docs/architecture/finalization/adrs/ADR-DR-0001-keep-job-path-resume.md",
+      "docs/architecture/finalization/adrs/ADR-DR-0003-security-model-before-sandbox.md",
+      "docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md",
+      "docs/architecture/finalization/prototypes/PT-002-os-kill-job-resume.md",
+      "docs/architecture/gate/DECISION-GATE.yaml",
+      "docs/architecture/gate/FUTURE-EXPERIMENT-GATE.yaml",
+      "docs/architecture/prototype-gate/PREFLIGHT-EVIDENCE.yaml",
+      "docs/architecture/prototype-gate/PROTOTYPE-GATE.yaml",
+      "docs/architecture/prototype-gate/PT-002-GATE.md",
+      "docs/architecture/release-audit-2026-10-11/V2.1-FREEZE-SCOPE-REPORT.md",
+      "docs/architecture/skills/pruning/ROLLBACK-REASONS.yaml",
+      "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+      "docs/audit/ACTUAL-ARCHITECTURE.md",
+      "docs/audit/DOCUMENTATION-DRIFT.md",
+      "docs/audit/EVIDENCE-CATALOG.md",
+      "docs/audit/EXECUTION-TRACES.md",
+      "docs/audit/EXPERIMENT-READINESS.md",
+      "docs/audit/FINAL-STATE-MODEL.md",
+      "docs/audit/IMPLEMENTATION-AUDIT-EXECUTIVE.md",
+      "docs/audit/IMPLEMENTATION-MATRIX.yaml",
+      "docs/audit/RESEARCH-RECONCILIATION.md",
+      "docs/internal/historical/MegaBrain-Ecosystem.md",
+      "docs/internal/historical/evals/docs-evals/baseline/ARCHITECTURE-BASELINE.md",
+      "docs/internal/historical/evals/docs-evals/baseline/CRITICAL-FINGERPRINTS.sha256",
+      "docs/internal/historical/evals/docs-evals/baseline/RUNTIME-BASELINE.md",
+      "docs/internal/historical/evals/docs-evals/baseline/SOURCE-MANIFEST.yaml",
+      "docs/internal/historical/evals/docs-evals/baseline/TEST-NAMES.txt",
+      "docs/internal/historical/evals/docs-evals/catalog/specs/EVAL-EV-006.yaml",
+      "docs/internal/historical/evals/docs-evals/experiments/E-005/E-005-RESULT.md",
+      "docs/internal/historical/evals/docs-evals/experiments/E-005/EVIDENCE.yaml",
+      "docs/internal/historical/evals/docs-evals/experiments/E-005/EXPERIMENT.md",
+      "docs/internal/historical/evals/docs-evals/experiments/E-005/FIXTURE.md",
+      "docs/internal/historical/evals/docs-evals/experiments/E-005/harness/e005-duplicate-mutate.test.ts",
+      "docs/internal/historical/evals/docs-evals/experiments/E-005/harness/e005-metrics.test.ts",
+      "docs/internal/historical/evals/docs-evals/experiments/E-005/raw/dup-mutate/control-rep-1.json"
+    ],
+    "rg_invocations": [
+      {
+        "pattern": "HMAC-SHA256",
+        "path_count": 9
+      },
+      {
+        "pattern": "checkpoint",
+        "path_count": 158
+      },
+      {
+        "pattern": "ALG",
+        "path_count": 5
+      }
+    ],
+    "input_tokens": 80382,
+    "output_tokens": 0,
+    "latency_ms": 54,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: orchestrator/src/jobs/checkpoint.ts"
+    ],
+    "page_cited": null,
+    "anchor_fallback_used": false
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: orchestrator/src/jobs/checkpoint.ts"
+    ]
+  }
+}

@@ -1,72 +1,78 @@
 # V2.2 — Plano de benchmarks
 
-Derivado de `docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md` com política **D2**: resultados externos (JetBrains, Reddit, Anthropic contextual retrieval, LLMLingua) são **contexto bibliográfico** em `docs/research/evolveloop-v2.2/sources.md` — **nunca** como resultado EvolveLoop nem como gate numérico.
+Derivado de `docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md` com política **D2**: resultados externos são **contexto bibliográfico** — **nunca** como gate numérico.
+
+## Classificação de evidência (CEO F3b)
+
+| Classe | Onde | Uso |
+|--------|------|-----|
+| **`PROVISIONAL_SYNTHETIC`** | `V22-BENCH/raw/battery/` (`synth-repo`, 15 ficheiros) | Sanity check do harness; **não** alvo de produto |
+| **`OFFICIAL_BASELINE`** | `V22-BENCH/raw/battery-real/` (monorepo EvolveLoop) | Alvos numéricos oficiais D2 |
+| **`NOT_MEASURED`** | LLM ao vivo, `ground.sh` com vault real | Registar motivo no raw |
+
+**Limite do sintético:** B0 com cap fixo e B1 com `wiki_pages` declaradas na tarefa tornam a redução de paths **parcialmente tautológica** — reclassificado em F3b.
 
 ## Estado
 
 | Item | Valor | Rotulo |
 |------|-------|--------|
-| Execução B0/B1 (harness offline) | `MEASURED` — `V22-BENCH/raw/battery/battery-summary.json` (`baseline_id` `v22-b0b1-2026-10-22`) | projeto |
-| LLM ao vivo (modelo/tokens saída reais) | `NOT_MEASURED` — `model.id` no raw | projeto |
-| Tokenizer | `tiktoken:cl100k_base` (registrado em `raw/battery/environment.json`) | projeto |
-| Alvos P1/P2 derivados | Ver `EVOLVELOOP_V2.2_GOALS.md` (003, 005, 006) | produto D2 |
-| Tree pin (corrida) | SHA em `raw/battery/environment.json` → `source_revision` | projeto |
+| B0/B1 sintético | `PROVISIONAL_SYNTHETIC` — `raw/battery/battery-summary.json` | projeto |
+| B0/B1 corpus real | `OFFICIAL_BASELINE` — `raw/battery-real/battery-summary.json` | projeto |
+| LLM ao vivo | `NOT_MEASURED` | projeto |
+| Tokenizer | `tiktoken:cl100k_base` | projeto |
+| `ground.sh` / `WIKI_ROOT` | `NOT_MEASURED` no VM de bench (B1 usa pack `.ai/` de referência) | projeto |
+| Alvos oficiais | `EVOLVELOOP_V2.2_GOALS.md` (003, 004, 005, 006) | produto D2 |
 
-## Baselines obrigatórios (antes de qualquer meta numérica)
+## Baselines obrigatórios
 
 | Braço | Conteúdo | Meta V2.2 | Ordem |
 |-------|---------|-----------|-------|
-| **B0** | Sem `.ai/`, sem grafo; `rg` + leitura | V22-GOAL-003 | 1º |
-| **B1** | `.ai/` com fatos verdadeiros do fixture | V22-GOAL-003, 005 | 2º (após B0) |
-| B1s | Página errada deliberada | V22-GOAL-005 cenário 6 | após B1 |
-| B2 | Manifest hash stale | V22-GOAL-005 | após B1 |
-| B3 | B1 + Graphify código only | V22-GOAL-008 | **só após B0/B1** |
-| B4 | Estilo saída curto | V22-GOAL-009 | após B0 |
-| B5 | Catálogo skills cheio vs reduzido | monitorar; **não** `max_skills` engine | opcional host |
+| **B0** | Sem `.ai/`; `rg` + leitura (real: monorepo) | V22-GOAL-003 | 1º |
+| **B1** | `.ai/` projeto (pack bench ou wiki operacional) | V22-GOAL-003, 005 | 2º |
+| B1s–B5 | … | … | conforme plano 08 |
 
-## Campos obrigatórios no raw (reprodutibilidade)
+**Raw:** `raw/battery/` (sintético) · `raw/battery-real/` (oficial).
 
-Conforme plano 08: modelo, data, tokenizer (não whitespace como aceite final), harness, SHA do tree, tarefa, verificador, orçamento declarado, contagem de `read`/`rg` por path, tokens entrada/saída/total, cache host `UNKNOWN` se não observável.
+## Calibração oficial (corpus real, `tasks-real-frozen.json`)
 
-**Destino de raw JSON:** `docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery/` (populado pela bateria F3).
+Mediana por tarefa R01–R06 (1 run/arm, sem fallback de âncora no B0):
 
-## Tarefas representativas (cenários mínimos por meta)
+| Tarefa | B0 recall | B0 paths | B0 tokens in | B1 recall | B1 paths | B1 tokens in |
+|--------|-----------|---------:|-------------:|-----------|---------:|-------------:|
+| R01 | 0.0 | 46 | 82621 | 1.0 | 5 | 3491 |
+| R02 | 0.0 | 46 | 82621 | 1.0 | 5 | 3491 |
+| R03 | 1.0 | 23 | 37607 | 1.0 | 3 | 1820 |
+| R04 | 1.0 | 45 | 44403 | 1.0 | 3 | 1160 |
+| R05 | 0.0 | 46 | 45404 | 1.0 | 3 | 384 |
+| R06 | 0.0 | 23 | 81908 | 1.0 | 3 | 1742 |
 
-| Cenário | Descrição | Metas | Braços |
-|---------|-----------|-------|--------|
-| 1 | Projeto sem wiki | 003, 005 | B0 |
-| 2 | Wiki inicializada | 003, 005 | B0 vs B1 |
-| 3 | Nova sessão, retomar decisão | 004, 005 | B0 vs B1 |
-| 6 | Wiki desatualizada | 002, 005 | B1s |
-| 7 | Decisão antiga | 004, 005 | B1 |
-| 10 | Retrieval seletivo vs leitura ampla | 006 | B0 vs B1 |
-| 12 | Dois projetos / canário | 002 | B1 ×2 |
-| 5, 11 | Dependentes / stale grafo | 008 | B0, B1, B3 |
-| 9 | Compressão saída | 009 | B0 vs B4 |
-| — | Canário segredo | 007 | fixture dedicado |
+Rollup mediano real: B0 paths 45 · tokens in 66690 · B1 paths 3 · tokens in 1781.
 
-## Regras de qualidade (bloqueiam “economia”)
+**Continuidade (fixture `continuity-s37`, cenários 3/7):**
 
-Do plano 08: verificador não pode cair; negações do gabarito não podem sumir em braços de compressão; zero excerpt de outro projeto; zero segredo no log commitado.
+| ID | B0 recall / paths / tokens | B1 recall / paths / tokens |
+|----|----------------------------|----------------------------|
+| S03 | 0.0 / 9 / 269 | 1.0 / 2 / 114 |
+| S07 | — | 1.0 / 2 / 114 |
 
-## Calibração pós-baseline (F3 — mediana observada, 1 run/arm)
+Fonte: `raw/battery-real/battery-summary.json` · detalhe tarefas: `V22-BENCH/EXPERIMENT-REAL.md`.
 
-| Cenário | Braço | paths lidos (mediana) | tokens entrada (mediana, `cl100k_base`) | verificador |
-|---------|-------|----------------------:|----------------------------------------:|-------------|
-| 2 (S02) | B0 | 15 | 650 | pass |
-| 2 (S02) | B1 | 4 | 247 | pass |
-| 5 (S05) | B0 | 15 | 650 | pass |
-| 5 (S05) | B1 | 3 | 164 | pass |
+## Alvos oficiais (derivados, margem justificada)
 
-Fonte: `docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery/battery-summary.json`.
+Aplicam-se ao corpus **real** (`OFFICIAL_BASELINE`), não ao sintético.
 
-1. B0/B1 nos cenários 2 e 5 — **feito** (harness offline).
-2. Medianas publicadas acima (tokenizer nomeado no raw).
-3. Alvos derivados em `EVOLVELOOP_V2.2_GOALS.md` com referência ao raw e `source_revision`.
-4. B1 reduziu paths vs B0 nos cenários 2 e 5; margem de continuidade para cenários 3/7 permanece `PENDING_BASELINE` até fixture dedicado.
+| Métrica | Alvo | Justificativa |
+|---------|------|----------------|
+| B1 recall (R01–R06) | 1.0 | Gabarito file:line obrigatório |
+| B1 paths por tarefa | ≤ 5 | Mediana 3 + 2 (crescimento índice `.ai/`) |
+| B1 tokens entrada | ≤ 4000 | Mediana 1781 + ~2220 margem packs |
+| B0 recall | **não é gate** | Broad `rg` falha gabarito linha em 4/6 tarefas com cap 45 |
+| S03/S07 B1 | recall 1.0; paths ≤ 3 | Observado 2 paths; mini fixture continuidade |
 
-## Referências internas
+Sintético: manter apenas regressão `integrity_test` (`PROVISIONAL_SYNTHETIC`).
 
-- E-001 integridade: `docs/internal/historical/evals/docs-evals/experiments/E-001/`
-- Contrato knowledge: `orchestrator/contracts/knowledge.search.yaml`
-- Pesquisa completa: `docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md`
+## Referências
+
+- `docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/EXPERIMENT-REAL.md`
+- E-001 · contrato `orchestrator/contracts/knowledge.search.yaml`
+- Pesquisa: `docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md`

@@ -85,13 +85,13 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Prioridade:** P0
 - **Título:** Harness de benchmark e baselines B0/B1
 - **Problema:** E-001 mede `token_estimate` por whitespace e `task_success NOT_MEASURED` (`docs/internal/historical/evals/docs-evals/experiments/E-001/EXPERIMENT.md`).
-- **Estado atual:** Harness F3 publicado; bateria offline B0/B1 em cenários 1/2/5 (`battery-summary.json`); modelo `NOT_MEASURED` no raw.
-- **Resultado:** Fixture + harness estilo E-001; **B0 e B1 executados uma vez** (offline); raw JSON em `docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery/`; tokenizer `tiktoken:cl100k_base`.
+- **Estado atual:** Harness F3 + F3b; baseline **oficial** no monorepo (`raw/battery-real/`); sintético reclassificado `PROVISIONAL_SYNTHETIC`; LLM `NOT_MEASURED`.
+- **Resultado:** B0/B1 no corpus real (6 tarefas file:line) + continuidade S03/S07 em fixture mínimo; sintético permanece sanity check.
 - **Solução:** Experimento `docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/` (ver `BENCHMARK-PLAN.md`).
 - **Dependências:** Corrida com LLM ao vivo ainda necessária para fechar tokens de saída reais e `task_success` host — fora do escopo desta entrega offline.
 - **Impacto arquitetural:** Nenhum no runtime de produção.
 - **Critérios de aceite:** Raw contém tokens entrada/saída, paths lidos, verificador, SHA do tree, id do modelo; integridade do scorer.
-- **Métricas:** Baseline observado (raw `docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery/battery-summary.json`, `source_revision` no `environment.json`): S02 B0 paths 15 / entrada 650 tokens; S02 B1 paths 4 / entrada 247; S05 B1 paths 3 / entrada 164. Alvos derivados (fixture V22-BENCH): B1 manter verificador verde e `paths_read` ≤ 5 nos cenários 2 e 5; tokens entrada B1 ≤ 300 (cenário 2) e ≤ 200 (cenário 5). Saída LLM e `model.id` real: `NOT_MEASURED`.
+- **Métricas:** **OFFICIAL_BASELINE** (`raw/battery-real/battery-summary.json`): B1 recall 1.0 em R01–R06; paths mediana 3; tokens entrada mediana 1781 (`tiktoken:cl100k_base`). Alvos oficiais: B1 recall 1.0; paths ≤ 5; tokens entrada ≤ 4000. B0 broad `rg` **não** é gate de recall (mediana paths 45). **PROVISIONAL_SYNTHETIC** (`raw/battery/`): apenas sanity — **sem** alvos de produto. LLM: `NOT_MEASURED`.
 - **Validação / testes:** `integrity_test` análogo ao E-001; cenários 1–2 mínimos para B0/B1.
 - **Riscos:** Cache do host Cursor desconhecido → registrar `UNKNOWN` no raw.
 - **Condição de conclusão:** Baselines B0 e B1 publicados; metas P1/P2 que dependem de economia referenciam esses números, não benchmarks externos.
@@ -112,7 +112,7 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Dependências:** V22-GOAL-002 (cerca); V22-GOAL-005 (wiki de projeto) para braço B1.
 - **Impacto arquitetural:** Opt-in preservado; sem segundo `KnowledgeBackend`.
 - **Critérios de aceite:** Cenário 3: mesma tarefa de retomada; verificador acerta; cenário 7: cita página/ADR/código.
-- **Métricas:** Acerto do verificador; paths lidos B1 ≤ 5 (referência S02 baseline V22-BENCH); tokens entrada cenários 3/7 `PENDING_BASELINE` até fixture dedicado (proxy: não exceder mediana B1 S02 + 25 tokens até medição).
+- **Métricas:** Fixture `continuity-s37` medido (S03/S07): B1 recall 1.0; paths ≤ 3; tokens entrada 114 observados. Alvo oficial continuidade: igual com margem +50 tokens. Episódico engine/host: `NOT_MEASURED`.
 - **Validação / testes:** Fixture do plano 08; evidência em `memory/<feature_id>/evidence/` quando usar engine.
 - **Riscos:** Confundir episódico com SSOT de domínio (wiki skill já proíbe).
 - **Condição de conclusão:** Corrida registrada no fixture com verificador verde para cenários 3 e 7.
@@ -133,7 +133,7 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Dependências:** V22-GOAL-002; V22-GOAL-003 para métricas de token.
 - **Impacto arquitetural:** Arquivos no projeto-alvo e config de ambiente; sem novo `KnowledgeBackendId`.
 - **Critérios de aceite:** Cenários 2, 3, 6, 7 do plano 08; excerpt cap 500 permanece até ADR que altere (`wiki-backend.ts`).
-- **Métricas:** Paths lidos B1 mediana 4 (S02) e 3 (S05) no baseline; páginas `atual` com hash válido; tokens totais offline B1 mediana 411 (247+164) referência raw — alvo gate host `PENDING_BASELINE` até LLM medido.
+- **Métricas:** OFFICIAL: B1 paths mediana 3 no monorepo real; tokens entrada mediana 1781; `ground.sh` vault `NOT_MEASURED`. PROVISIONAL_SYNTHETIC: não gate. Páginas `atual` com hash: `PENDING_BASELINE` até lint wiki no repo alvo.
 - **Validação / testes:** Fixture; opcional `knowledge-backend.test.ts` quando deps instaladas.
 - **Riscos:** Wiki gigante na primeira sessão — init mínima obrigatória no teste.
 - **Condição de conclusão:** Quatro workflows (init, query, update, lint) com corrida registrada.
@@ -154,7 +154,7 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Dependências:** V22-GOAL-005; V22-GOAL-003 para alvos numéricos de token.
 - **Impacto arquitetural:** Aditivo em evidência; sem mudança obrigatória de contrato.
 - **Critérios de aceite:** Cenário 10: braço com orçamento não perde verificador nem lê path canário redundante.
-- **Métricas:** Leituras redundantes = 0; cap observado B0 `paths_read` 15 no fixture (cenários 2/5); alvo B1 ≤ 5 paths e ≤ 5 páginas `.ai/` por tarefa (calibrado no V22-BENCH); tokens entrada B1 referência 247 (S02) no raw — host `PENDING_BASELINE`.
+- **Métricas:** OFFICIAL: B1 ≤ 5 paths e ≤ 5 páginas `.ai/` por tarefa (mediana real 3 paths); tokens entrada B1 ≤ 4000; B0 cap observado 45 paths no monorepo (informativo). PROVISIONAL_SYNTHETIC: não gate. Redundância: 0.
 - **Validação / testes:** Log de paths por run; gap do host Cursor documentado se paths não observáveis.
 - **Riscos:** Orçamento corta função no meio — cortar por arquivo inteiro.
 - **Condição de conclusão:** Fixture mostra lista de paths e ausência de canário cruzado.
