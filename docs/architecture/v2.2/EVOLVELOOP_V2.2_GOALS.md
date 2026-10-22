@@ -203,6 +203,7 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Validação / testes:** Braço B3 do plano 08.
 - **Riscos:** Skill upstream desencoraja abrir arquivo — instrução de experimento deve permitir verificação no disco.
 - **Condição de conclusão:** Relatório de bench com decisão explícita; “instalado” não é conclusão.
+- **Implementação (código):** `wired` — flag `EVOLVELOOP_GRAPHIFY` (default OFF); `orchestrator/src/v22/graphify-adapter.ts` (stub/CLI opcional); `graphify-out/` gitignored; testes unit + `v22-p2-goals.integration.test.ts` (run-engine).
 
 **Rotulo dominante:** meta + hipótese pendente.
 
@@ -224,6 +225,7 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Validação / testes:** Braço B4; diff automático de fidelidade.
 - **Riscos:** Handoff ambíguo; perda de negação.
 - **Condição de conclusão:** Decisão registrada com números do harness V22, não de terceiros.
+- **Implementação (código):** `wired` — flag `EVOLVELOOP_BREVITY_CAVEMAN` (default OFF); `brevity-caveman.ts` + `measure-pickup-prompts.ts` (prompt **completo** invoke, R01–R06 + H07–H12, tokenizer `PROXY:whitespace_split` alinhado ao harness); evidência `FIXTURE_PICKUP_INVOKE`; doc `V22-P2-MEASUREMENT.md`.
 
 **Rotulo dominante:** meta + decisão de produto.
 
@@ -245,6 +247,7 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Validação / testes:** Duas chamadas gravadas.
 - **Riscos:** Segredo no prefixo cacheado no vendor.
 - **Condição de conclusão:** Provedor mostra hit ou item permanece adiado documentado.
+- **Implementação (código):** `wired` — flag `EVOLVELOOP_PROMPT_CACHE` (default OFF); adapter `prompt-cache-http.ts`; medição honesta `measure-prompt-cache-prefix.ts` (% cacheável, estabilidade entre jobs/features; **`vendor_http_cache_hit: NOT_MEASURED`**); doc `V22-P2-MEASUREMENT.md`.
 
 **Rotulo dominante:** meta + hipótese pendente.
 

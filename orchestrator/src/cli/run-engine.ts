@@ -30,6 +30,13 @@ import type { CapabilityIR, ProviderManifest } from "../types/index.js";
 import { manifestToRegistryEntries } from "../registry/manifest-loader.js";
 import { loadAgentsEnvFile, resolveOrchestratorCliPaths } from "./run-engine-env.js";
 import { serializeForPublish } from "../evidence/publish-sanitize.js";
+import {
+  isGraphifyExperimentEnabled,
+  isCavemanBrevityEnabled,
+  isPromptCacheEnabled,
+} from "../v22/feature-flags.js";
+import { queryGraphifyCodeStructure, formatGraphifyContext } from "../v22/graphify-adapter.js";
+import { measureV22Goals009010 } from "../v22/p2-bench-measure.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -287,7 +294,7 @@ async function main() {
     wait_for_jobs_ms: waitForJobsMs,
   });
 
-  const summary = {
+  let summary: Record<string, unknown> = {
     success: result.success,
     finished: result.finished,
     state: result.state,
@@ -297,6 +304,35 @@ async function main() {
     metrics: result.metrics,
     event_count: result.events.length,
   };
+
+  const anyP2 =
+    isGraphifyExperimentEnabled() || isCavemanBrevityEnabled() || isPromptCacheEnabled();
+  if (anyP2) {
+    const graph = isGraphifyExperimentEnabled()
+      ? queryGraphifyCodeStructure({
+          projectRoot: agentsRoot,
+          query: `capability graph ${featureId}`,
+        })
+      : undefined;
+    summary.v22_p2 = {
+      graphify: graph
+        ? {
+            enabled: graph.enabled,
+            source: graph.source,
+            cli_available: graph.cli_available,
+            edge_count: graph.edges.length,
+            context_preview: formatGraphifyContext(graph).slice(0, 500),
+          }
+        : undefined,
+      bench:
+        isCavemanBrevityEnabled() || isPromptCacheEnabled()
+          ? measureV22Goals009010({
+              jobsDir: jobsDir ? resolve(jobsDir) : join(orchestratorRoot, "jobs"),
+              orchestratorRoot,
+            })
+          : undefined,
+    };
+  }
 
   console.log(serializeForPublish(summary));
   process.exit(result.success ? 0 : 1);
