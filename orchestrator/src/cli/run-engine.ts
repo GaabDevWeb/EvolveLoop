@@ -36,7 +36,7 @@ import {
   isPromptCacheEnabled,
 } from "../v22/feature-flags.js";
 import { queryGraphifyCodeStructure, formatGraphifyContext } from "../v22/graphify-adapter.js";
-import { measureP2OnBenchTasks } from "../v22/p2-bench-measure.js";
+import { measureV22Goals009010 } from "../v22/p2-bench-measure.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -324,7 +324,13 @@ async function main() {
             context_preview: formatGraphifyContext(graph).slice(0, 500),
           }
         : undefined,
-      bench: isCavemanBrevityEnabled() || isPromptCacheEnabled() ? measureP2OnBenchTasks() : undefined,
+      bench:
+        isCavemanBrevityEnabled() || isPromptCacheEnabled()
+          ? measureV22Goals009010({
+              jobsDir: jobsDir ? resolve(jobsDir) : join(orchestratorRoot, "jobs"),
+              orchestratorRoot,
+            })
+          : undefined,
     };
   }
 

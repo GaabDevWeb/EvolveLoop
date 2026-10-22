@@ -3,7 +3,7 @@
  */
 
 import { isCavemanBrevityEnabled } from "./feature-flags.js";
-import { estimateWhitespaceTokens } from "./token-estimate.js";
+import { countBenchTokens } from "./bench-tokenizer.js";
 
 const FENCE_RE = /```[\s\S]*?```/g;
 const VERBATIM_LINE_MARKERS = [
@@ -50,7 +50,7 @@ function cavemanLine(line: string): string {
 
 export function applyCavemanBrevity(text: string, options?: { force?: boolean }): BrevityResult {
   const enabled = options?.force === true || isCavemanBrevityEnabled();
-  const input_tokens = estimateWhitespaceTokens(text);
+  const input_tokens = countBenchTokens(text);
   if (!enabled) {
     return { enabled: false, text, input_tokens, output_tokens: input_tokens, preserved_blocks: 0 };
   }
@@ -76,7 +76,7 @@ export function applyCavemanBrevity(text: string, options?: { force?: boolean })
     joined = joined.replace(`\u0000BLOCK${i}\u0000`, blocks[i]);
   }
 
-  const output_tokens = estimateWhitespaceTokens(joined);
+  const output_tokens = countBenchTokens(joined);
   return { enabled: true, text: joined, input_tokens, output_tokens, preserved_blocks };
 }
 
@@ -96,7 +96,10 @@ function compressBriefingProse(briefing: string): string {
 }
 
 /** Compress only the briefing section of a pickup prompt; headers/DoD/inputs stay intact. */
-export function applyCavemanToBriefingSection(fullPrompt: string): BrevityResult {
+export function applyCavemanToBriefingSection(
+  fullPrompt: string,
+  options?: { enabled?: boolean },
+): BrevityResult {
   const marker = "## Briefing\n\n";
   const endMarker = "\n\n## Definition of Done";
   const start = fullPrompt.indexOf(marker);
@@ -111,16 +114,34 @@ export function applyCavemanToBriefingSection(fullPrompt: string): BrevityResult
   const head = fullPrompt.slice(0, bodyStart);
   const briefing = fullPrompt.slice(bodyStart, end);
   const tail = fullPrompt.slice(end);
-  const enabled = isCavemanBrevityEnabled();
+  const enabled = options?.enabled ?? isCavemanBrevityEnabled();
   const compressedBriefing = enabled ? compressBriefingProse(briefing) : briefing;
   const text = head + compressedBriefing + tail;
   return {
     enabled,
     text,
-    input_tokens: estimateWhitespaceTokens(fullPrompt),
-    output_tokens: estimateWhitespaceTokens(text),
+    input_tokens: countBenchTokens(fullPrompt),
+    output_tokens: countBenchTokens(text),
     preserved_blocks: 0,
   };
+}
+
+const PROTECTED_MARKERS = ["## Definition of Done", "## Security", "EVIDENCE_SECRET_CANARY", "HMAC-SHA256"];
+
+/** Suffix from Definition of Done onward must remain byte-identical between B0 and B4. */
+export function extractProtectedPickupSuffix(fullPrompt: string): string {
+  const marker = "## Definition of Done";
+  const idx = fullPrompt.indexOf(marker);
+  if (idx === -1) throw new Error("pickup prompt missing Definition of Done section");
+  return fullPrompt.slice(idx);
+}
+
+export function protectedPickupSectionsByteEqual(b0: string, b4: string): boolean {
+  return extractProtectedPickupSuffix(b0) === extractProtectedPickupSuffix(b4);
+}
+
+export function protectedSecurityMarkersPresent(prompt: string): boolean {
+  return PROTECTED_MARKERS.every((m) => prompt.includes(m));
 }
 
 export function brevityPreservesNegation(original: string, compressed: string, needles: string[]): boolean {

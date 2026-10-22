@@ -28,10 +28,16 @@ export function resolvePendingJob(
   return store.listPending()[0] ?? null;
 }
 
+export interface BuildPickupPromptOptions {
+  /** When set, overrides EVOLVELOOP_BREVITY_CAVEMAN for this build. */
+  caveman?: boolean;
+}
+
 export function buildPickupPrompt(
   job: SkillJob,
   jobsDir: string,
   orchestratorRoot?: string,
+  options?: BuildPickupPromptOptions,
 ): string {
   const orchRoot = orchestratorRoot ?? resolveOrchestratorRoot();
   const completeCmd = `cd ${orchRoot} && npm run run-jobs -- complete --jobs-dir ${jobsDir} --run-id ${job.run_id} --success --evidence <path-to-evidence.json>`;
@@ -71,7 +77,10 @@ ${JSON.stringify(job.inputs, null, 2)}
 ---
 *Gerado por @agents/orchestrator run-jobs invoke*
 `;
-  return applyCavemanToBriefingSection(raw).text;
+  return applyCavemanToBriefingSection(
+    raw,
+    options?.caveman !== undefined ? { enabled: options.caveman } : undefined,
+  ).text;
 }
 
 export function writePickupArtifacts(

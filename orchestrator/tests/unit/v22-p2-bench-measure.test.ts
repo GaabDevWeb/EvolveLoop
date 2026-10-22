@@ -1,25 +1,18 @@
-import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import { measureP2OnBenchTasks } from "../../src/v22/p2-bench-measure.js";
-import { BENCH_R_TASKS } from "../../src/v22/bench-r-tasks.js";
+import { describe, it, expect } from "vitest";
+import { mkdtempSync } from "node:fs";
+import { join } from "node:path";
+import { tmpdir } from "node:os";
+import { measureV22Goals009010 } from "../../src/v22/p2-bench-measure.js";
 
-describe("P2 bench measure R01-R06", () => {
-  const prevCache = process.env.EVOLVELOOP_PROMPT_CACHE;
-
-  beforeEach(() => {
-    process.env.EVOLVELOOP_PROMPT_CACHE = "on";
-  });
-
-  afterEach(() => {
-    if (prevCache === undefined) delete process.env.EVOLVELOOP_PROMPT_CACHE;
-    else process.env.EVOLVELOOP_PROMPT_CACHE = prevCache;
-  });
-
-  it("covers six frozen tasks with brevity + cache metrics", () => {
-    const report = measureP2OnBenchTasks();
-    expect(report.brevity).toHaveLength(BENCH_R_TASKS.length);
-    expect(report.prompt_cache).toHaveLength(BENCH_R_TASKS.length);
-    expect(report.brevity_total_caveman).toBeLessThanOrEqual(report.brevity_total_baseline);
-    expect(report.brevity.every((r) => r.negation_ok)).toBe(true);
-    expect(report.prompt_cache_hit_rate).toBe(1);
+describe("V22 goals 009/010 aggregate measure", () => {
+  it("returns pickup + prefix reports", () => {
+    const jobsDir = mkdtempSync(join(tmpdir(), "v22-measure-"));
+    const report = measureV22Goals009010({
+      jobsDir,
+      orchestratorRoot: join(import.meta.dirname, "../.."),
+    });
+    expect(report.goal_009_pickup.pairs).toHaveLength(12);
+    expect(report.goal_010_prefix.rows).toHaveLength(12);
+    expect(report.goal_010_prefix.vendor_http_cache_hit).toBe("NOT_MEASURED");
   });
 });

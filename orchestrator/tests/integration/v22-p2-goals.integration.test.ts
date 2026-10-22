@@ -82,10 +82,13 @@ describe("V22 P2 goals integration (run-engine / run-jobs)", () => {
     );
     const summary = parseRunEngineSummary(out);
     expect((summary.v22_p2 as { graphify?: { enabled?: boolean } })?.graphify?.enabled).toBe(true);
-    const bench = (summary.v22_p2 as { bench?: { brevity?: unknown[]; prompt_cache_hit_rate?: number } })
-      ?.bench;
-    expect(bench?.brevity).toHaveLength(6);
-    expect(bench?.prompt_cache_hit_rate).toBe(1);
+    const bench = (
+      summary.v22_p2 as {
+        bench?: { goal_009_pickup?: { pairs?: unknown[] }; goal_010_prefix?: { vendor_http_cache_hit?: string } };
+      }
+    )?.bench;
+    expect(bench?.goal_009_pickup?.pairs).toHaveLength(12);
+    expect(bench?.goal_010_prefix?.vendor_http_cache_hit).toBe("NOT_MEASURED");
   });
 
   it("run-jobs invoke path compresses briefing only when caveman flag on", () => {
