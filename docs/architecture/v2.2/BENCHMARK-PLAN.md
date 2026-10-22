@@ -9,7 +9,8 @@ Derivado de `docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md` com p
 | **`PROVISIONAL_SYNTHETIC`** | `raw/battery/` (`synth-repo`) | Não — sanity harness |
 | **`OFFICIAL_BASELINE` (B0)** | `raw/battery-real/` braço **B0** no monorepo EvolveLoop | Sim — referência `rg`+leitura ampla |
 | **`PROVISIONAL_CURATED_PACK` (B1)** | `raw/battery-real/` braço **B1** via pack `fixtures/evolveloop-project-knowledge/.ai/` | **Não** — `source_paths` alinhados aos gabaritos congelados (recall circular) |
-| **`NOT_MEASURED`** | LLM ao vivo, `ground.sh`+`WIKI_ROOT` no bench VM | — |
+| **`OFFICIAL_WIKI_GROUND` (B1)** | `raw/battery-held-out/` via `ground_b1_harness.py` + `fixtures/evolveloop-wiki-vault` | Sim — pós V22-GOAL-005 (held-out) |
+| **`NOT_MEASURED`** | LLM ao vivo | — |
 
 ## Estado
 
