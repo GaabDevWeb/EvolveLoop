@@ -248,6 +248,7 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Riscos:** Segredo no prefixo cacheado no vendor.
 - **Condição de conclusão:** Provedor mostra hit ou item permanece adiado documentado.
 - **Implementação (código):** `wired` — flag `EVOLVELOOP_PROMPT_CACHE` (default OFF); adapter `prompt-cache-http.ts`; medição honesta `measure-prompt-cache-prefix.ts` (% cacheável, estabilidade entre jobs/features; **`vendor_http_cache_hit: NOT_MEASURED`**); doc `V22-P2-MEASUREMENT.md`.
+- **Implementação (vendor, V22-GOAL-010-vendor):** `wired` — `orchestrator/src/providers/llm/llm-http-provider-adapter.ts` lê `cache_read_input_tokens` / `cache_creation_input_tokens` (Anthropic) e `prompt_tokens_details.cached_tokens` (OpenAI); `cache_control` no prefixo estável; telemetria `vendor-cache-telemetry.json` (sanitizada); testes com fixtures de documentação; live `probeVendorCacheLive()` quando chave já existe no ambiente, senão **`NOT_MEASURED`**.
 
 **Rotulo dominante:** meta + hipótese pendente.
 
