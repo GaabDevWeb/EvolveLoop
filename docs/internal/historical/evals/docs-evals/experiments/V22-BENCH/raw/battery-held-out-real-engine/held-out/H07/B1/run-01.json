@@ -1,0 +1,37 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "FIXTURE_WIKI_GROUND",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H07-B1-de5e9648b5e4",
+  "arm": "B1",
+  "task_id": "H07",
+  "timestamp": "2026-10-22T01:02:22.614872+00:00",
+  "tree_sha": "9aebf0d3073a51af5c2de2cc5553d3a12d9ef005",
+  "harness": "v22-ground-b1-harness-1.2.0",
+  "tokenizer": "PROXY:whitespace_split",
+  "metrics": {
+    "task_id": "H07",
+    "arm": "B1",
+    "paths_read": [
+      "docs/research/evolveloop-v2.2/01-current-state-audit.md",
+      "docs/architecture/v2.2/TECH-DECISIONS-MATRIX.md",
+      "docs/research/evolveloop-v2.2/03-repositories-and-tools.md",
+      ".cursor/skills/orquestrar/references/image-attachment-gate.md"
+    ],
+    "input_tokens": 6671,
+    "latency_ms": 104,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: profiles/default.yaml"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: profiles/default.yaml"
+    ]
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "FIXTURE_WIKI_GROUND",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H09-B1-53175bb09c1e",
+  "arm": "B1",
+  "task_id": "H09",
+  "timestamp": "2026-10-22T01:02:22.869059+00:00",
+  "tree_sha": "9aebf0d3073a51af5c2de2cc5553d3a12d9ef005",
+  "harness": "v22-ground-b1-harness-1.2.0",
+  "tokenizer": "PROXY:whitespace_split",
+  "metrics": {
+    "task_id": "H09",
+    "arm": "B1",
+    "paths_read": [
+      ".cursor/skills/backend/SKILL.md",
+      ".cursor/skills/orquestrar/SKILL.md",
+      ".cursor/skills/orquestrar/evals/evals-v27-devintel.json",
+      ".cursor/skills/orquestrar/references/knowledge-grounding-gate.md"
+    ],
+    "input_tokens": 8692,
+    "latency_ms": 101,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: docs/architecture/knowledge/KNOWLEDGE-BACKEND-CONTRACT.md"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: docs/architecture/knowledge/KNOWLEDGE-BACKEND-CONTRACT.md"
+    ]
+  }
+}

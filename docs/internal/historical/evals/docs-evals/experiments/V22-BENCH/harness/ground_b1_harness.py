@@ -17,8 +17,7 @@ from typing import Any, Callable
 
 EXP_DIR = Path(__file__).resolve().parents[1]
 TASKS_HELD = EXP_DIR / "tasks-held-out-frozen.json"
-HARNESS_VERSION = "v22-ground-b1-harness-1.1.0"
-B1_EVIDENCE_CLASS = "FIXTURE_WIKI_GROUND"
+HARNESS_VERSION = "v22-ground-b1-harness-1.2.0"
 B0_CAP = 45
 RG_GLOBS = [
     "!node_modules",
@@ -183,6 +182,78 @@ def run_b1_ground(root: Path, task: dict[str, Any], counter, env: dict[str, str]
     )
 
 
+def resolve_b1_class_and_env(repo: Path) -> tuple[str, dict[str, str], dict[str, Any]]:
+    """Official B1 only when real karpathyWiki clone + sha match; else fixture vault."""
+    env = os.environ.copy()
+    engine = os.environ.get("V22_WIKI_ENGINE", "auto").lower()
+    karpathy_dir = Path(os.environ.get("KARPATHY_WIKI_DIR", "/opt/karpathyWiki"))
+    expected_sha = os.environ.get("KARPATHY_WIKI_SHA", "cd3cf08")
+    fixture = repo / "fixtures" / "evolveloop-wiki-vault"
+    meta: dict[str, Any] = {
+        "engine_requested": engine,
+        "karpathy_wiki_dir": str(karpathy_dir),
+        "karpathy_wiki_sha_expected": expected_sha,
+    }
+
+    use_official = engine in ("official", "karpathywiki", "real")
+    if engine == "auto":
+        use_official = (karpathy_dir / ".git").is_dir()
+
+    if use_official and (karpathy_dir / ".git").is_dir():
+        try:
+            head = subprocess.check_output(
+                ["git", "rev-parse", "HEAD"], cwd=karpathy_dir, text=True
+            ).strip()
+            meta["karpathy_wiki_sha_actual"] = head
+            if not head.startswith(expected_sha):
+                meta["official_blocked"] = "sha_mismatch"
+                use_official = False
+        except subprocess.CalledProcessError as exc:
+            meta["official_blocked"] = f"git_head_error:{exc.returncode}"
+            use_official = False
+    elif use_official:
+        meta["official_blocked"] = "clone_missing"
+        use_official = False
+
+    if use_official:
+        vault = karpathy_dir
+        py = Path(os.environ.get("WIKI_PYTHON", karpathy_dir / ".venv" / "bin" / "python"))
+        b1_class = "OFFICIAL_WIKI_GROUND"
+        meta["wiki_engine"] = "karpathyWiki"
+    else:
+        vault = fixture
+        py = Path(os.environ.get("WIKI_PYTHON", fixture / ".venv" / "bin" / "python"))
+        b1_class = "FIXTURE_WIKI_GROUND"
+        meta["wiki_engine"] = "fixtures/evolveloop-wiki-vault"
+
+    env["WIKI_ROOT"] = str(vault)
+    env["AGENTS_ROOT"] = str(repo)
+    env["EVOLVELOOP_MONOREPO_ROOT"] = str(repo)
+    env["WIKI_PYTHON"] = str(py)
+    meta["wiki_root"] = str(vault)
+    meta["wiki_python"] = str(py)
+    return b1_class, env, meta
+
+
+def filter_tasks(tasks: list[dict[str, Any]], only: str | None) -> list[dict[str, Any]]:
+    if not only:
+        return tasks
+    if only.upper() == "H07-H18":
+        allowed = {f"H{n:02d}" for n in range(7, 19)}
+        return [t for t in tasks if t["id"] in allowed]
+    if "-" in only and only[0] == "H":
+        start, end = only.split("-", 1)
+        ids = []
+        for tid in (start, end):
+            if tid.startswith("H") and tid[1:].isdigit():
+                ids.append(int(tid[1:]))
+        if len(ids) == 2:
+            lo, hi = sorted(ids)
+            allowed = {f"H{n:02d}" for n in range(lo, hi + 1)}
+            return [t for t in tasks if t["id"] in allowed]
+    return [t for t in tasks if t["id"] == only]
+
+
 def median(vals: list[float]) -> float:
     if not vals:
         return 0.0
@@ -192,21 +263,18 @@ def median(vals: list[float]) -> float:
     return float(s[m]) if n % 2 else (s[m - 1] + s[m]) / 2.0
 
 
-def run_battery(out_dir: Path) -> dict[str, Any]:
+def run_battery(out_dir: Path, task_filter: str | None = None) -> dict[str, Any]:
     tok_label, counter = load_tokenizer()
     repo = repo_root()
     tree_sha = git_sha(repo)
     spec = json.loads(TASKS_HELD.read_text(encoding="utf-8"))
     spec["freeze_tree_sha"] = tree_sha
-    vault = repo / "fixtures" / "evolveloop-wiki-vault"
-    env = os.environ.copy()
-    env["WIKI_ROOT"] = str(vault)
-    env["AGENTS_ROOT"] = str(repo)
-    env["EVOLVELOOP_MONOREPO_ROOT"] = str(repo)
-    env["WIKI_PYTHON"] = str(vault / ".venv" / "bin" / "python")
+    b1_class, env, engine_meta = resolve_b1_class_and_env(repo)
+    vault = Path(engine_meta["wiki_root"])
+    tasks = filter_tasks(spec["tasks"], task_filter)
 
     all_runs: list[dict[str, Any]] = []
-    for task in spec["tasks"]:
+    for task in tasks:
         for arm in ("B0", "B1"):
             if arm == "B0":
                 res = run_b0(repo, task, counter)
@@ -214,8 +282,8 @@ def run_battery(out_dir: Path) -> dict[str, Any]:
                 res = run_b1_ground(repo, task, counter, env)
             rec = {
                 "experiment_id": "V22-BENCH-HELD-OUT",
-                "evidence_class": "OFFICIAL_BASELINE" if arm == "B0" else B1_EVIDENCE_CLASS,
-                "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-review",
+                "evidence_class": "OFFICIAL_BASELINE" if arm == "B0" else b1_class,
+                "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
                 "run_id": f"V22H-{task['id']}-{arm}-{hashlib.sha256((tree_sha+task['id']+arm).encode()).hexdigest()[:12]}",
                 "arm": arm,
                 "task_id": task["id"],
@@ -251,13 +319,14 @@ def run_battery(out_dir: Path) -> dict[str, Any]:
         "experiment": "V22-BENCH-HELD-OUT",
         "classification_by_arm": {
             "B0": "OFFICIAL_BASELINE",
-            "B1": B1_EVIDENCE_CLASS,
+            "B1": b1_class,
         },
-        "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-review",
+        "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
         "harness_notes": {
             "b1_query": "task.query only (rg_patterns reserved for B0)",
-            "wiki_cli": "fixtures/evolveloop-wiki-vault gaabwiki (minimal in-repo fixture)",
+            "wiki_engine": engine_meta,
         },
+        "task_filter": task_filter,
         "freeze_tree_sha": tree_sha,
         "tasks_frozen": str(TASKS_HELD.relative_to(EXP_DIR)),
         "aggregates": summary_aggs,
@@ -284,8 +353,21 @@ def run_battery(out_dir: Path) -> dict[str, Any]:
 
 
 if __name__ == "__main__":
-    target = EXP_DIR / "raw" / "battery-held-out"
-    if len(sys.argv) > 1:
-        target = Path(sys.argv[1])
-    s = run_battery(target)
-    print(json.dumps({"verdict": "OK", "rollups": s["rollups"]}, indent=2))
+    import argparse
+
+    ap = argparse.ArgumentParser()
+    ap.add_argument(
+        "out_dir",
+        nargs="?",
+        default=str(EXP_DIR / "raw" / "battery-held-out"),
+    )
+    ap.add_argument(
+        "--tasks",
+        default=os.environ.get("V22_HELD_OUT_TASKS"),
+        help="e.g. H07-H18 or H13",
+    )
+    args = ap.parse_args()
+    s = run_battery(Path(args.out_dir), task_filter=args.tasks)
+    blocked = s.get("harness_notes", {}).get("wiki_engine", {}).get("official_blocked")
+    verdict = "BLOCKED" if blocked else "OK"
+    print(json.dumps({"verdict": verdict, "blocked": blocked, "rollups": s["rollups"]}, indent=2))

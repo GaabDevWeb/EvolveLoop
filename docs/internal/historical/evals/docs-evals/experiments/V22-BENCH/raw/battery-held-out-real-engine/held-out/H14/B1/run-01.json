@@ -1,0 +1,37 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "FIXTURE_WIKI_GROUND",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H14-B1-94f3d8df2a0f",
+  "arm": "B1",
+  "task_id": "H14",
+  "timestamp": "2026-10-22T01:02:23.531934+00:00",
+  "tree_sha": "9aebf0d3073a51af5c2de2cc5553d3a12d9ef005",
+  "harness": "v22-ground-b1-harness-1.2.0",
+  "tokenizer": "PROXY:whitespace_split",
+  "metrics": {
+    "task_id": "H14",
+    "arm": "B1",
+    "paths_read": [
+      ".cursor/skills/agent-architecture-mining/SKILL.md",
+      ".cursor/skills/agent-authoring/references/agent-package.md",
+      ".cursor/skills/orquestrar/evals/evals-v27-devintel.json",
+      ".cursor/skills/orquestrar/references/specs/README.md"
+    ],
+    "input_tokens": 2114,
+    "latency_ms": 99,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: orchestrator/src/providers/deterministic/knowledge.ts"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: orchestrator/src/providers/deterministic/knowledge.ts"
+    ]
+  }
+}

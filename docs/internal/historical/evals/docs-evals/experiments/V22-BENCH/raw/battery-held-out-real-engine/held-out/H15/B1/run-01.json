@@ -1,0 +1,37 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "FIXTURE_WIKI_GROUND",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H15-B1-74ce80676c26",
+  "arm": "B1",
+  "task_id": "H15",
+  "timestamp": "2026-10-22T01:02:23.666051+00:00",
+  "tree_sha": "9aebf0d3073a51af5c2de2cc5553d3a12d9ef005",
+  "harness": "v22-ground-b1-harness-1.2.0",
+  "tokenizer": "PROXY:whitespace_split",
+  "metrics": {
+    "task_id": "H15",
+    "arm": "B1",
+    "paths_read": [
+      ".cursor/skills/backend/SKILL.md",
+      ".cursor/skills/documentation/SKILL.md",
+      ".cursor/skills/orquestrar/references/knowledge-grounding-gate.md",
+      ".cursor/skills/debugger/SKILL.md"
+    ],
+    "input_tokens": 7415,
+    "latency_ms": 103,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md"
+    ]
+  }
+}

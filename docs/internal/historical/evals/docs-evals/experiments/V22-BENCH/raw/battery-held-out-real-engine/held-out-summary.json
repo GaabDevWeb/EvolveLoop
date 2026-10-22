@@ -1,0 +1,208 @@
+{
+  "experiment": "V22-BENCH-HELD-OUT",
+  "classification_by_arm": {
+    "B0": "OFFICIAL_BASELINE",
+    "B1": "FIXTURE_WIKI_GROUND"
+  },
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "harness_notes": {
+    "b1_query": "task.query only (rg_patterns reserved for B0)",
+    "wiki_engine": {
+      "engine_requested": "auto",
+      "karpathy_wiki_dir": "/opt/karpathyWiki",
+      "karpathy_wiki_sha_expected": "cd3cf08",
+      "wiki_engine": "fixtures/evolveloop-wiki-vault",
+      "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
+      "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
+    }
+  },
+  "task_filter": "H07-H18",
+  "freeze_tree_sha": "9aebf0d3073a51af5c2de2cc5553d3a12d9ef005",
+  "tasks_frozen": "tasks-held-out-frozen.json",
+  "aggregates": {
+    "H07:B0": {
+      "median_paths": 45.0,
+      "median_input_tokens": 14011.0,
+      "median_latency_ms": 35.0,
+      "recall": 0.0
+    },
+    "H07:B1": {
+      "median_paths": 4.0,
+      "median_input_tokens": 6671.0,
+      "median_latency_ms": 104.0,
+      "recall": 0.0
+    },
+    "H08:B0": {
+      "median_paths": 28.0,
+      "median_input_tokens": 23502.0,
+      "median_latency_ms": 19.0,
+      "recall": 1.0
+    },
+    "H08:B1": {
+      "median_paths": 4.0,
+      "median_input_tokens": 6758.0,
+      "median_latency_ms": 104.0,
+      "recall": 0.0
+    },
+    "H09:B0": {
+      "median_paths": 45.0,
+      "median_input_tokens": 14038.0,
+      "median_latency_ms": 26.0,
+      "recall": 1.0
+    },
+    "H09:B1": {
+      "median_paths": 4.0,
+      "median_input_tokens": 8692.0,
+      "median_latency_ms": 101.0,
+      "recall": 0.0
+    },
+    "H10:B0": {
+      "median_paths": 45.0,
+      "median_input_tokens": 39731.0,
+      "median_latency_ms": 27.0,
+      "recall": 1.0
+    },
+    "H10:B1": {
+      "median_paths": 4.0,
+      "median_input_tokens": 4280.0,
+      "median_latency_ms": 100.0,
+      "recall": 1.0
+    },
+    "H11:B0": {
+      "median_paths": 45.0,
+      "median_input_tokens": 10725.0,
+      "median_latency_ms": 46.0,
+      "recall": 0.0
+    },
+    "H11:B1": {
+      "median_paths": 4.0,
+      "median_input_tokens": 4860.0,
+      "median_latency_ms": 103.0,
+      "recall": 0.0
+    },
+    "H12:B0": {
+      "median_paths": 17.0,
+      "median_input_tokens": 12556.0,
+      "median_latency_ms": 26.0,
+      "recall": 1.0
+    },
+    "H12:B1": {
+      "median_paths": 4.0,
+      "median_input_tokens": 4428.0,
+      "median_latency_ms": 101.0,
+      "recall": 0.0
+    },
+    "H13:B0": {
+      "median_paths": 45.0,
+      "median_input_tokens": 37893.0,
+      "median_latency_ms": 30.0,
+      "recall": 1.0
+    },
+    "H13:B1": {
+      "median_paths": 4.0,
+      "median_input_tokens": 4396.0,
+      "median_latency_ms": 104.0,
+      "recall": 1.0
+    },
+    "H14:B0": {
+      "median_paths": 22.0,
+      "median_input_tokens": 14523.0,
+      "median_latency_ms": 19.0,
+      "recall": 1.0
+    },
+    "H14:B1": {
+      "median_paths": 4.0,
+      "median_input_tokens": 2114.0,
+      "median_latency_ms": 99.0,
+      "recall": 0.0
+    },
+    "H15:B0": {
+      "median_paths": 45.0,
+      "median_input_tokens": 10725.0,
+      "median_latency_ms": 30.0,
+      "recall": 0.0
+    },
+    "H15:B1": {
+      "median_paths": 4.0,
+      "median_input_tokens": 7415.0,
+      "median_latency_ms": 103.0,
+      "recall": 0.0
+    },
+    "H16:B0": {
+      "median_paths": 26.0,
+      "median_input_tokens": 12559.0,
+      "median_latency_ms": 19.0,
+      "recall": 1.0
+    },
+    "H16:B1": {
+      "median_paths": 4.0,
+      "median_input_tokens": 12674.0,
+      "median_latency_ms": 104.0,
+      "recall": 0.0
+    },
+    "H17:B0": {
+      "median_paths": 45.0,
+      "median_input_tokens": 27626.0,
+      "median_latency_ms": 29.0,
+      "recall": 1.0
+    },
+    "H17:B1": {
+      "median_paths": 4.0,
+      "median_input_tokens": 2357.0,
+      "median_latency_ms": 103.0,
+      "recall": 1.0
+    },
+    "H18:B0": {
+      "median_paths": 45.0,
+      "median_input_tokens": 14085.0,
+      "median_latency_ms": 24.0,
+      "recall": 0.0
+    },
+    "H18:B1": {
+      "median_paths": 4.0,
+      "median_input_tokens": 8816.0,
+      "median_latency_ms": 101.0,
+      "recall": 0.0
+    }
+  },
+  "rollups": {
+    "held_out_B0_median_paths": 45.0,
+    "held_out_B1_median_paths": 4.0,
+    "held_out_B0_median_tokens": 14061.5,
+    "held_out_B1_median_tokens": 5765.5,
+    "held_out_B0_median_latency_ms": 26.5,
+    "held_out_B1_median_latency_ms": 103.0
+  },
+  "environment": {
+    "os": "Linux-6.12.94+-x86_64-with-glibc2.39",
+    "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
+    "ground_sh": "/workspace/.cursor/skills/wiki/scripts/ground.sh",
+    "contamination_guard": "generate-evolveloop-wiki-knowledge.sh allowlist; no V22-BENCH reads"
+  },
+  "runs": [
+    "V22H-H07-B0-ec779153b706",
+    "V22H-H07-B1-de5e9648b5e4",
+    "V22H-H08-B0-fc51d9a0aa44",
+    "V22H-H08-B1-098568175a50",
+    "V22H-H09-B0-bda50f36e40e",
+    "V22H-H09-B1-53175bb09c1e",
+    "V22H-H10-B0-c547287f3617",
+    "V22H-H10-B1-dc90217c8da2",
+    "V22H-H11-B0-019a56e3b3f7",
+    "V22H-H11-B1-a1c51924a9dc",
+    "V22H-H12-B0-e700b110b71a",
+    "V22H-H12-B1-94f3e6955d45",
+    "V22H-H13-B0-17b4a57a166e",
+    "V22H-H13-B1-4fe4a4e6b047",
+    "V22H-H14-B0-c6b41245e451",
+    "V22H-H14-B1-94f3d8df2a0f",
+    "V22H-H15-B0-411141b9d14d",
+    "V22H-H15-B1-74ce80676c26",
+    "V22H-H16-B0-3469b9968bcb",
+    "V22H-H16-B1-31dbe9e0d6af",
+    "V22H-H17-B0-5456f83ce3bb",
+    "V22H-H17-B1-0c8a3cb747d5",
+    "V22H-H18-B0-4c827c20ac89",
+    "V22H-H18-B1-66e4d408063b"
+  ]
+}
