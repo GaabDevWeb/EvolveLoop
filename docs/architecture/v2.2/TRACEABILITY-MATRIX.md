@@ -8,21 +8,21 @@ Legenda de rotulo: `pesquisa` = evidência da pesquisa versionada; `projeto` = e
 |---------------|-----------|----------|------|-------------------|-----------|
 | ADR-DR-0005 bloqueia compaction | `docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md` (projeto) | Ownership indefinido | V22-GOAL-001 | 9 perguntas respondidas | `docs/adr/0013-context-ownership-working-context.md` + `context-ownership.test.ts` |
 | ADR-DR-0002 adia budget skills | `docs/architecture/finalization/ADR-INDEX.md` (projeto) | Sem budget runtime | V22-GOAL-001 + V22-GOAL-003 | ADR + baseline antes de alvo | E-001 + V22-BENCH |
-| Isolamento entre repos | `docs/research/evolveloop-v2.2/10-risks-and-open-questions.md` (pesquisa) | Vazamento MCP/grafo | V22-GOAL-002 | Cenário 12 | Fixture dois roots |
-| Hierarquia fonte de verdade | `docs/research/evolveloop-v2.2/07-compatibility-matrix.md` (pesquisa) | Conflito wiki/grafo | V22-GOAL-002 | Proveniência + obsoleto | Lint + hash |
+| Isolamento entre repos | `docs/research/evolveloop-v2.2/10-risks-and-open-questions.md` (pesquisa) | Vazamento MCP/grafo | V22-GOAL-002 | Cenário 12 | `truth-source-fence.test.ts` + `v22-wire.integration.test.ts` |
+| Hierarquia fonte de verdade | `docs/research/evolveloop-v2.2/07-compatibility-matrix.md` (pesquisa) | Conflito wiki/grafo | V22-GOAL-002 | Proveniência + obsoleto | engine `knowledge.search` + integração |
 | E-001 PROXY apenas | `docs/internal/historical/evals/docs-evals/experiments/E-001/EXPERIMENT.md` (projeto) | Sem baseline live | V22-GOAL-003 | B0/B1 raw JSON | integrity_test |
 | B0 real monorepo | `V22-BENCH/EXPERIMENT-REAL.md` (projeto) | recall B0 informativo | V22-GOAL-003 | `OFFICIAL_BASELINE` B0 | `real_corpus_harness.py` |
 | B1 pack bench | `fixtures/evolveloop-project-knowledge/` (projeto) | recall circular | V22-GOAL-003 | `PROVISIONAL_CURATED_PACK` | aguarda V22-GOAL-005 |
 | Sintético F3 | `V22-BENCH/raw/battery/` (projeto) | tautologia | V22-GOAL-003 | `PROVISIONAL_SYNTHETIC` | `bench_harness.py` |
-| Continuidade S03/S07 | `fixtures/continuity-s37/` (projeto) | não `/mem` engine | V22-GOAL-004 | `PROVISIONAL_CURATED_PACK` B1 | `real_corpus_harness.py` |
+| Continuidade S03/S07 | `fixtures/continuity-s37/` (projeto) + engine `session-continuity` | não `/mem` engine default | V22-GOAL-004 | `PROVISIONAL_CURATED_PACK` B1 | `v22-session-continuity.integration.test.ts` |
 | B1→oficial | `BENCHMARK-PLAN.md` § B1→oficial (projeto) | ground.sh+held-out | V22-GOAL-005 → 003 | `PENDING_BASELINE` | F4 wiki ops |
 | Memória off no default | `profiles/default.yaml` L10–13 (projeto) | Sem continuidade | V22-GOAL-004 | Cenários 3, 7 | Fixture |
 | Hooks sem wiki-mem | `.cursor/hooks.json` (projeto) | Episódico não wired | V22-GOAL-004 | Procedimento opt-in | Skill wiki-mem |
 | RAG_REPO_MISSING sem vault | `orchestrator/src/knowledge/backend/wiki-backend.ts` L134–142 (projeto) | Grounding falha | V22-GOAL-005 | ground.sh OK | list-packs |
 | ADR dual Carpaccio+Wiki | `docs/adr/0004-project-knowledge-contract.md` (projeto) | Duas skills | V22-GOAL-005 | Workflows 4× | Fixture |
 | Sem orçamento de leitura | `docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md` § P1-2 (pesquisa) | Explosão contexto | V22-GOAL-006 | Cenário 10 | Log paths |
-| GATE_BUNDLE sem budget | `.cursor/skills/orquestrar/references/gate-bundle.md` (projeto) | Política incompleta | V22-GOAL-006 | Cenário 10 | `context-budget-pickup.test.ts` + `bench-r01-r06-budget.test.ts` |
-| Segredo em evidence | `docs/architecture/release-audit-2026-10-11/V2.1-FREEZE-SCOPE-REPORT.md` (projeto) | Redação V3 não merged | V22-GOAL-007 | Canário 0× | Teste |
+| GATE_BUNDLE sem budget | `.cursor/skills/orquestrar/references/gate-bundle.md` (projeto) | Política incompleta | V22-GOAL-006 | Cenário 10 | `context-budget-pickup.test.ts` + `bench-budget-nocirc.bench.test.ts` |
+| Segredo em evidence | `docs/architecture/release-audit-2026-10-11/V2.1-FREEZE-SCOPE-REPORT.md` (projeto) | Redação V3 não merged | V22-GOAL-007 | Canário 0× | `secret-redaction.test.ts` + `v22-wire.integration.test.ts` |
 | Graphify hipótese | `docs/research/evolveloop-v2.2/03-repositories-and-tools.md` (pesquisa) | Dependentes código | V22-GOAL-008 | B3 vs B0/B1 | Bench |
 | Caveman −8,5% saída | `docs/research/evolveloop-v2.2/04-community-findings.md` (pesquisa) | **contexto D2** | V22-GOAL-009 | Cenário 9 harness | B4 |
 | Prompt cache | `docs/research/evolveloop-v2.2/sources.md` (pesquisa) | Custo prefixo | V22-GOAL-010 | Hit provedor | 2 chamadas |

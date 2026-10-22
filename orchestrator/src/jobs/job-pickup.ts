@@ -1,6 +1,8 @@
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { resolveOrchestratorRoot } from "../cli/run-engine-env.js";
+import { writeSanitizedJsonFile, writeSanitizedTextFile } from "../evidence/evidence-bus.js";
+import { redactSecrets } from "../evidence/secret-redaction.js";
 import { JobStore, type SkillJob } from "./job-store.js";
 import { preparePickupSpawnContext } from "./spawn-pickup-context.js";
 import type { EventBus } from "../events/event-bus.js";
@@ -58,7 +60,7 @@ export function buildPickupPrompt(
 
 ## Briefing
 
-${job.briefing}
+${redactSecrets(job.briefing)}
 
 ${ctx.gate_bundle_block}
 
@@ -96,27 +98,20 @@ export function writePickupArtifacts(
     featureId: job.feature_id ?? job.node_id,
   });
   const prompt = buildPickupPrompt(job, jobsDir, undefined, spawnContext);
-  writeFileSync(promptPath, prompt, "utf-8");
-  writeFileSync(
-    join(promptDir, "current-job.json"),
-    JSON.stringify(
-      {
-        run_id: job.run_id,
-        skill_path: job.skill_path,
-        capability: job.capability,
-        provider_id: job.provider_id,
-        jobs_dir: jobsDir,
-        prompt_path: promptPath,
-        picked_at: new Date().toISOString(),
-        context_owner_id: spawnContext.context_owner_id,
-        context_budget_evidence: spawnContext.evidence_path,
-        context_budget_telemetry: spawnContext.telemetry,
-      },
-      null,
-      2,
-    ),
-    "utf-8",
-  );
+  writeSanitizedTextFile(promptPath, prompt);
+  writeSanitizedJsonFile(join(promptDir, "current-job.json"), {
+    run_id: job.run_id,
+    skill_path: job.skill_path,
+    capability: job.capability,
+    provider_id: job.provider_id,
+    jobs_dir: jobsDir,
+    prompt_path: promptPath,
+    briefing: job.briefing,
+    picked_at: new Date().toISOString(),
+    context_owner_id: spawnContext.context_owner_id,
+    context_budget_evidence: spawnContext.evidence_path,
+    context_budget_telemetry: spawnContext.telemetry,
+  });
 
   return {
     status: "ready",

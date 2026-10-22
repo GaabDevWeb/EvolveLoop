@@ -1,7 +1,9 @@
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { readFileSync, mkdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import type { Evidence, EvidenceCheck, ExecuteRequest, ExecuteResult, ProviderManifest, ProviderRuntime } from "../types/index.js";
 import { unverifiedDodChecks } from "../evidence/builders.js";
+import { writeSanitizedJsonFile } from "../evidence/evidence-bus.js";
+import { redactSecrets } from "../evidence/secret-redaction.js";
 import { recordSkillLifecycle } from "../telemetry/skill-telemetry.js";
 import type { EventBus } from "../events/event-bus.js";
 import {
@@ -31,7 +33,7 @@ export class JobFileExecutor implements SkillExecutor {
       skill_path: skillPath,
       capability: request.capability,
       node_id: request.node_id,
-      briefing: request.briefing,
+      briefing: redactSecrets(request.briefing),
       definition_of_done: request.definition_of_done,
       inputs: request.inputs,
       status: "pending",
@@ -41,7 +43,7 @@ export class JobFileExecutor implements SkillExecutor {
       spawn_metadata: request.node.metadata ?? {},
     };
 
-    writeFileSync(jobPath, JSON.stringify(job, null, 2));
+    writeSanitizedJsonFile(jobPath, job);
 
     return {
       run_id: request.run_id,

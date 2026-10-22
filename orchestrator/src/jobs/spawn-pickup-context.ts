@@ -200,7 +200,7 @@ export function preparePickupSpawnContext(
   const ranked = rankRetrievalPaths(
     retrieval.map((e) => e.path),
     (p) => retrieval.find((e) => e.path === p)?.content ?? "",
-    { query: job.briefing, rg_patterns: [], cited_paths: cited },
+    { query: job.briefing, cited_paths: cited },
   );
   const priorityByPath = new Map(ranked.map((r) => [r.path, r.score]));
   const slices: ContextSlice[] = [

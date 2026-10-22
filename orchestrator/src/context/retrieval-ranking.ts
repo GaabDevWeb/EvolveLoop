@@ -1,18 +1,46 @@
 /**
- * Deterministic relevance ranking for context budget (V22-GOAL-006c).
+ * Deterministic relevance ranking for context budget (V22-GOAL-006d).
  *
- * Uses only: task query, rg_patterns, optional cited_paths from objective/metadata.
- * Does NOT use verifier anchors, expected answers, or held-out labels.
+ * Scoring inputs (no circularity):
+ * - query / briefing text
+ * - runtime cited_paths from objective metadata
+ * - structural path signals (docs/adr, docs/architecture, orchestrator/src, profiles/)
+ *
+ * Does NOT use: rg_patterns (answer leakage), verifier anchors, expected substrings.
+ * Candidate path SET is unchanged from B0 (rg union); only ORDER/cut differs.
  */
 
 export interface RetrievalRankingContext {
   query: string;
-  rg_patterns: string[];
   /** Paths explicitly named in briefing/objective (not verifier anchors). */
   cited_paths?: string[];
 }
 
 const ARCH_PREFIXES = ["docs/adr/", "docs/architecture/", "docs/architecture/finalization/adrs/"];
+
+const STOPWORDS = new Set([
+  "qual",
+  "quais",
+  "onde",
+  "como",
+  "que",
+  "the",
+  "uma",
+  "um",
+  "no",
+  "na",
+  "do",
+  "da",
+  "dos",
+  "das",
+  "para",
+  "por",
+  "com",
+  "sem",
+  "uso",
+  "usa",
+  "usar",
+]);
 
 export function tokenizeForRanking(text: string): string[] {
   const raw = text.match(/[a-zA-Z0-9_./-]+/g) ?? [];
@@ -20,7 +48,7 @@ export function tokenizeForRanking(text: string): string[] {
   for (const t of raw) {
     const low = t.toLowerCase();
     if (low.length < 2) continue;
-    if (low === "qual" || low === "onde" || low === "como" || low === "que" || low === "the") continue;
+    if (STOPWORDS.has(low)) continue;
     out.push(low);
   }
   return out;
@@ -29,13 +57,6 @@ export function tokenizeForRanking(text: string): string[] {
 export function extractQueryTerms(ctx: RetrievalRankingContext): string[] {
   const terms = new Set<string>();
   for (const t of tokenizeForRanking(ctx.query)) terms.add(t);
-  for (const pat of ctx.rg_patterns) {
-    const stripped = pat.replace(/[\\^$.*+?()[\]{}|]/g, " ");
-    for (const part of stripped.split(/\s+/)) {
-      const p = part.trim().toLowerCase();
-      if (p.length >= 2) terms.add(p);
-    }
-  }
   for (const cite of ctx.cited_paths ?? []) {
     for (const t of tokenizeForRanking(cite)) terms.add(t);
   }
@@ -66,6 +87,17 @@ function countOccurrences(haystack: string, needle: string): number {
   return n;
 }
 
+function camelCaseTokens(query: string): string[] {
+  const ids = query.match(/[A-Z][a-zA-Z0-9]+/g) ?? [];
+  const parts: string[] = [];
+  for (const id of ids) {
+    parts.push(id.toLowerCase());
+    const split = id.replace(/([a-z])([A-Z])/g, "$1 $2").toLowerCase().split(/\s+/);
+    parts.push(...split.filter((p) => p.length >= 3));
+  }
+  return parts;
+}
+
 /**
  * Higher score = more relevant. Tie-break: lexicographic path (stable).
  */
@@ -82,12 +114,6 @@ export function scoreRetrievalPath(
   for (const term of terms) {
     if (relLower.includes(term)) score += 5;
     score += Math.min(countOccurrences(bodyLower, term), 8);
-  }
-
-  for (const pat of ctx.rg_patterns) {
-    const p = pat.toLowerCase();
-    if (relLower.includes(p)) score += 8;
-    if (bodyLower.includes(p)) score += 4;
   }
 
   for (const prefix of ARCH_PREFIXES) {
@@ -109,11 +135,11 @@ export function scoreRetrievalPath(
 
   if (relLower.includes("orchestrator/src/")) score += 1;
   if (relLower.includes("profiles/")) score += 4;
+  if (relLower.includes(".cursor/skills/")) score += 2;
 
-  for (const id of ctx.query.match(/[A-Z][a-zA-Z0-9]+/g) ?? []) {
-    const low = id.toLowerCase();
-    if (relLower.includes(low) || relLower.includes("types.ts") && low.includes("backend")) score += 14;
-    if (low === "knowledgebackendid" && relLower.includes("knowledge/backend/types.ts")) score += 28;
+  for (const part of camelCaseTokens(ctx.query)) {
+    if (relLower.includes(part)) score += 6;
+    if (bodyLower.includes(part)) score += 3;
   }
 
   return score;

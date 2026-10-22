@@ -1,34 +1,32 @@
-# Retrieval ranking (V22-GOAL-006c)
+# Retrieval ranking (V22-GOAL-006d — no circularity)
 
-Orçamento de contexto **não** ordena paths por ordem lexicográfica. Antes do corte (`max_paths` / `max_tokens`), o runtime classifica candidatos com score determinístico.
+## Candidatos
 
-## Entradas permitidas
+Igual ao braço **B0**: união dos paths devolvidos por `rg` com os `rg_patterns` da task (só para **enumerar** candidatos). O ranking **não** usa `rg_patterns` no score (vazamento de resposta — GOAL-005 harness 1.1.0).
 
-- `query` da tarefa / briefing do spawn
-- `rg_patterns` do harness (mesmos padrões do braço B0)
-- `cited_paths` opcionais em metadata do spawn (paths nomeados no objetivo — **não** anchors do verificador)
+## Entradas de score (permitidas)
 
-## Proibido (anti-circularidade)
+| Fonte | Uso |
+|-------|-----|
+| Texto da `query` / briefing | Termos, ADR-*, fragmentos path-like, CamelCase |
+| `cited_paths` em metadata do spawn | Boost explícito |
+| Sinais estruturais de path | `docs/adr/`, `docs/architecture/`, `orchestrator/src/`, `profiles/`, `.cursor/skills/` |
 
-- `anchors` / `substring` / linhas gabarito das tasks R01–R06 ou H01–H12
-- Respostas esperadas ou recall labels
+## Proibido no score
 
-## Score (resumo)
+- `rg_patterns` da task
+- Anchors / substrings / linhas gabarito
+- Ajuste por resultados de H13–H18 (medir apenas)
 
-| Sinal | Peso |
-|-------|------|
-| Termo da query/pattern no path | +5 |
-| Termo no conteúdo (cap 8 ocorrências/termo) | +1 cada |
-| Pattern `rg` no path / conteúdo | +8 / +4 |
-| Prefixo `docs/adr/`, `docs/architecture/` | +3 |
-| `ADR-*` citado na query e presente no path | +20 |
-| Fragmento path-like na query (`*.ts`, `profiles/...`) | +18 |
-| `cited_paths` explícitos | +22 |
+## Seleção
 
-Desempate: ordem lexicográfica do path (estável).
+1. `rankRetrievalPaths` por score (query + metadata + estrutural).
+2. `selectTopRankedPaths` — densidade `score/log1p(tokens)`, `max_paths=15`.
+3. `applyContextBudget` — classes protegidas (DoD, segurança, evidência).
 
-Implementação: `orchestrator/src/context/retrieval-ranking.ts`
+Código: `orchestrator/src/context/retrieval-ranking.ts`
 
-## Critério GOAL-006 (bench)
+## Testes
 
-Por task: `recall(budget) >= recall(B0_OFFICIAL)` e `tokens(budget) <= tokens(B0_OFFICIAL)` com `max_paths=15`.
+- Rápido: `npm test` (unit + integração, sem bench de corpus).
+- Lento: `npm run test:bench` — R01–R06 + H07–H18.

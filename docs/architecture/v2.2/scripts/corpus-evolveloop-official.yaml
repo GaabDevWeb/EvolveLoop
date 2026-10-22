@@ -1,0 +1,17 @@
+version: 1
+
+matching:
+  engine: pathlib-glob
+  root: repository-root
+  semantics: |
+    EvolveLoop official B1 — apenas páginas auto-ingeridas em EvolveLoop/wiki/.
+
+corpora:
+  evolveloop:
+    include:
+      - "EvolveLoop/wiki/**/*.md"
+    description: "EvolveLoop monorepo auto-ingest (V22-GOAL-005c)"
+
+exclude:
+  - "**/.git/**"
+  - "**/node_modules/**"

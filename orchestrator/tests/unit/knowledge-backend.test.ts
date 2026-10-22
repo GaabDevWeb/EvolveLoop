@@ -77,6 +77,22 @@ describe("KnowledgeBackend seam", () => {
     expect(resolveWikiRoot()).not.toContain("/home/gaab");
   });
 
+  it("parses gaabwiki envelope using results alias (real engine compatibility)", () => {
+    const stdout = JSON.stringify({
+      status: "ok",
+      results: [
+        {
+          score: 1.5,
+          content: "body",
+          source: { file: "docs/adr/0004-project-knowledge-contract.md", line: 21 },
+        },
+      ],
+    });
+    const hits = parseWikiSearchStdout(stdout);
+    expect(hits[0]?.source).toBe("docs/adr/0004-project-knowledge-contract.md");
+    expect(hits[0]?.excerpt).toContain("body");
+  });
+
   it("parses gaabwiki search envelope with provenance and stale flag", () => {
     const stdout = JSON.stringify({
       status: "ok",

@@ -1,5 +1,10 @@
-import { readdirSync, readFileSync, writeFileSync, existsSync, unlinkSync } from "node:fs";
-import { join } from "node:path";
+import { readdirSync, readFileSync, existsSync, unlinkSync } from "node:fs";
+import { join, resolve } from "node:path";
+import {
+  copySanitizedEvidenceToJobsDir,
+  relativeJobsEvidencePath,
+  writeSanitizedJsonFile,
+} from "../evidence/evidence-bus.js";
 
 import type { GateBundleFields, ContextRetrievalEntry } from "../context/types.js";
 
@@ -65,14 +70,21 @@ export class JobStore {
     if (!job) throw new Error(`Job not found: ${runId}`);
 
     job.status = result.success ? "completed" : "failed";
-    writeFileSync(join(this.jobsDir, `${runId}.json`), JSON.stringify(job, null, 2));
+    writeSanitizedJsonFile(join(this.jobsDir, `${runId}.json`), job);
+
+    let evidence_path = result.evidence_path;
+    if (result.success && evidence_path && existsSync(resolve(evidence_path))) {
+      copySanitizedEvidenceToJobsDir(this.jobsDir, runId, evidence_path);
+      evidence_path = relativeJobsEvidencePath(runId);
+    }
 
     const full: SkillJobResult = {
       run_id: runId,
       completed_at: new Date().toISOString(),
       ...result,
+      evidence_path,
     };
-    writeFileSync(join(this.jobsDir, `${runId}.result.json`), JSON.stringify(full, null, 2));
+    writeSanitizedJsonFile(join(this.jobsDir, `${runId}.result.json`), full);
   }
 
   deleteResult(runId: string): void {
@@ -91,7 +103,7 @@ export class JobStore {
     }
     this.deleteResult(runId);
     job.status = "pending";
-    writeFileSync(join(this.jobsDir, `${runId}.json`), JSON.stringify(job, null, 2));
+    writeSanitizedJsonFile(join(this.jobsDir, `${runId}.json`), job);
     return job;
   }
 }

@@ -110,7 +110,6 @@ function collectRgHits(repoRoot: string, task: BenchTask): string[] {
 function rankingContext(task: BenchTask): RetrievalRankingContext {
   return {
     query: task.query,
-    rg_patterns: task.rg_patterns,
     cited_paths: task.cited_paths,
   };
 }

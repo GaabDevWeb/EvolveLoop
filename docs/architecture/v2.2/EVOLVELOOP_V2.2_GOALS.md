@@ -74,6 +74,7 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Validação / testes:** Dois roots temporários; cenário 12 do `docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md`.
 - **Riscos:** Monorepo multi-produto na mesma raiz — documentar uso de páginas, não múltiplas wikis.
 - **Condição de conclusão:** Teste de canário existe, passa, e convenção publicada em `docs/architecture/v2.2/` ou `docs/adr/`.
+- **Implementação (código):** `wired` — runtime `orchestrator/src/knowledge/truth-source/`; fence default em `knowledge.search` (engine/`DeterministicProvider`); opt-out `KNOWLEDGE_TRUTH_FENCE=off`; testes unit + `orchestrator/tests/integration/v22-wire.integration.test.ts`.
 
 **Rotulo dominante:** meta + evidência pesquisa.
 
@@ -116,6 +117,7 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Validação / testes:** Fixture do plano 08; evidência em `memory/<feature_id>/evidence/` quando usar engine.
 - **Riscos:** Confundir episódico com SSOT de domínio (wiki skill já proíbe).
 - **Condição de conclusão:** Corrida registrada no fixture com verificador verde para cenários 3 e 7.
+- **Implementação (código):** `wired` — `orchestrator/src/session/session-continuity.ts` + checkpoint HMAC existente; hooks em `ExecutionEngine` (persist/load/clear, `satisfied_job_run_ids`); evidência via `evidence-bus`; doc `docs/architecture/v2.2/SESSION-CONTINUITY.md`; testes `orchestrator/tests/integration/v22-session-continuity.integration.test.ts` e `orchestrator/tests/unit/session-continuity.test.ts`.
 
 **Rotulo dominante:** meta + decisão de produto.
 
@@ -179,6 +181,7 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Validação / testes:** Fixture dedicado no plano V22-BENCH.
 - **Riscos:** Redação agressiva remove paths necessários à evidência.
 - **Condição de conclusão:** Teste do canário passa no tree da V2.2.
+- **Implementação (código):** `wired` — `secret-redaction.ts`, `evidence-bus.ts`, `publish-sanitize.ts`; jobs/memory/evidence bus/engine reports; testes unit + `v22-wire.integration.test.ts` (canário 0× em jobs-dir e memory).
 
 **Rotulo dominante:** meta + evidência pesquisa.
 

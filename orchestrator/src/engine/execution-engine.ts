@@ -35,6 +35,15 @@ import { PatternAggregator } from "../learning/pattern-aggregator.js";
 import type { Evidence, FeatureRunState } from "../types/index.js";
 import { JobStore } from "../jobs/job-store.js";
 import { jobResultToExecuteResult } from "../jobs/job-resume.js";
+import { persistNodeEvidence, persistRunSummary } from "../evidence/evidence-bus.js";
+import { redactSecrets } from "../evidence/secret-redaction.js";
+import {
+  applySessionContinuityToMemory,
+  buildSessionContinuitySnapshot,
+  clearSessionContinuity,
+  loadSessionContinuity,
+  persistSessionContinuity,
+} from "../session/session-continuity.js";
 import { saveCheckpoint, loadCheckpoint, clearCheckpoint } from "../jobs/checkpoint.js";
 import type { Scheduler as SchedulerType } from "../scheduler/scheduler.js";
 import type { LongitudinalEvolveLoop } from "../evolveloop/longitudinal-controller.js";
@@ -102,6 +111,8 @@ export class ExecutionEngine {
   private aborted = false;
   private allEvidence: Evidence[] = [];
   private nodesExecuted = 0;
+  /** Run_ids already satisfied before this process (V22-GOAL-004). */
+  private satisfiedJobRunIds = new Set<string>();
 
   constructor(options: ExecutionEngineOptions) {
     this.policyEngine = new PolicyEngine({ policiesDir: options.policiesDir });
@@ -158,6 +169,9 @@ export class ExecutionEngine {
     }
 
     try {
+      if (!input.resume) {
+        this.satisfiedJobRunIds = new Set();
+      }
       this.memory.initFeature(featureId, {
         ir_id: input.ir.metadata.id,
         policy: policy.metadata.id,
@@ -182,6 +196,22 @@ export class ExecutionEngine {
       });
       if (checkpoint) {
         graph = GraphStore.fromSnapshot(checkpoint.graph);
+        if (this.dataPaths) {
+          const continuity = loadSessionContinuity(this.dataPaths.memoryDir, featureId);
+          if (continuity) {
+            if (
+              continuity.ir_id !== input.ir.metadata.id ||
+              continuity.policy_id !== policy.metadata.id
+            ) {
+              this.blockedReason = "continuity_context_mismatch";
+            } else {
+              applySessionContinuityToMemory(this.memory, featureId, continuity);
+              for (const id of continuity.satisfied_job_run_ids) {
+                this.satisfiedJobRunIds.add(id);
+              }
+            }
+          }
+        }
         for (const node of graph.getAllNodes()) {
           const interrupted = node.metadata?.reconciliation === "interrupted_running";
           if (node.status !== "running" && !interrupted) continue;
@@ -373,15 +403,49 @@ export class ExecutionEngine {
     }
 
     if (!success && this.jobsDir && graph.getAllNodes().some((n) => n.status === "waiting")) {
+      const snapshot = graph.snapshot();
       saveCheckpoint(this.jobsDir, {
         feature_id: featureId,
         policy_id: policy.metadata.id,
         ir_id: input.ir.metadata.id,
-        graph: graph.snapshot(),
+        graph: snapshot,
       });
+      if (this.dataPaths) {
+        const waiting = graph.getAllNodes().find((n) => n.status === "waiting");
+        const continuity = buildSessionContinuitySnapshot({
+          featureId,
+          irId: input.ir.metadata.id,
+          policyId: policy.metadata.id,
+          graph: snapshot,
+          memory: this.memory,
+          waitingNode: waiting
+            ? { id: waiting.id, capability: waiting.capability, run_id: waiting.run_id }
+            : undefined,
+        });
+        persistSessionContinuity(this.dataPaths.memoryDir, continuity);
+      }
       if (!this.blockedReason) this.blockedReason = "awaiting_external_jobs";
     } else if (success && this.jobsDir) {
       clearCheckpoint(this.jobsDir, featureId);
+      if (this.dataPaths) clearSessionContinuity(this.dataPaths.memoryDir, featureId);
+    }
+
+    const runSummary = {
+      success,
+      finished: success || !!this.blockedReason || this.aborted,
+      state: this.runState,
+      blocked_reason: this.blockedReason ?? (success ? undefined : "max_iterations"),
+      metrics: metrics.snapshot(graph.snapshot(), success),
+      evidence_count: this.allEvidence.length,
+      nodes: graph.snapshot().nodes.map((n) => ({
+        id: n.id,
+        status: n.status,
+        capability: n.capability,
+      })),
+    };
+
+    if (this.dataPaths) {
+      persistRunSummary(this.dataPaths.memoryDir, featureId, runSummary);
     }
 
     return {
@@ -452,13 +516,14 @@ export class ExecutionEngine {
 
     for (const node of graph.getAllNodes()) {
       if (node.status !== "waiting" || !node.run_id) continue;
+      if (this.satisfiedJobRunIds.has(node.run_id)) continue;
       if (!store.hasCompletedResult(node.run_id)) continue;
 
       const job = store.readJob(node.run_id);
       const result = store.readResult(node.run_id);
       if (!job || !result) continue;
 
-      const executeResult = jobResultToExecuteResult(job, result, node);
+      const executeResult = jobResultToExecuteResult(job, result, node, this.jobsDir);
       graph.setNodeStatus(node.id, "running");
       this.processRunResult(
         executeResult,
@@ -642,6 +707,9 @@ export class ExecutionEngine {
 
     graph.setNodeStatus(nodeId, "satisfied");
     graph.setNodeEvidence(nodeId, run.evidence);
+    if (this.dataPaths && run.evidence) {
+      persistNodeEvidence(this.dataPaths.memoryDir, featureId, node, run.evidence);
+    }
     this.registry.recordSuccess(run.provider_id, run);
 
     const simulated = run.evidence?.spec.assumptions?.includes(SIMULATED_EXECUTION_MARK) === true;
@@ -661,9 +729,25 @@ export class ExecutionEngine {
       }, run.run_id);
     }
 
+    const SESSION_DECISION_PREFIX = "session_decision:";
+    for (const assumption of run.evidence?.spec.assumptions ?? []) {
+      if (!assumption.startsWith(SESSION_DECISION_PREFIX)) continue;
+      const content = assumption.slice(SESSION_DECISION_PREFIX.length).trim();
+      if (!content) continue;
+      this.memory.append(featureId, {
+        timestamp: new Date().toISOString(),
+        source: nodeId,
+        type: "decision",
+        content: redactSecrets(content),
+      });
+    }
+
     if (run.contextual_learnings?.length) {
       for (const entry of run.contextual_learnings) {
-        this.memory.append(featureId, entry);
+        this.memory.append(featureId, {
+          ...entry,
+          content: redactSecrets(entry.content),
+        });
         eventBus.emit("MemoryWritten", featureId, "scheduler", {
           scope: featureId,
           entry,
@@ -688,5 +772,7 @@ export class ExecutionEngine {
         node_id: nodeId,
       });
     }
+
+    this.satisfiedJobRunIds.add(run.run_id);
   }
 }

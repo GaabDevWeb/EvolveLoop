@@ -1,3 +1,6 @@
+/**
+ * Slow corpus bench — run via `npm run test:bench` (excluded from default `npm test`).
+ */
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, it, expect } from "vitest";
@@ -57,26 +60,23 @@ function runPair(task: BenchTask, suite: string): Row {
   };
 }
 
-describe("V22-BENCH — B0 OFFICIAL vs ranked budget (max_paths=15)", () => {
+describe("V22-BENCH nocirc — B0 vs ranked budget (query-only score)", () => {
   const real = loadTasks(TASKS_REAL, (id) => /^R0[1-6]$/.test(id));
-  const held = loadTasks(TASKS_HELD, (id) => /^H(0[7-9]|1[0-2])$/.test(id));
+  const held = loadTasks(TASKS_HELD, (id) => /^H(0[7-9]|1[0-8])$/.test(id));
 
   const all = [
     ...real.map((t) => ({ task: t, suite: "real-R01-R06" })),
-    ...held.map((t) => ({ task: t, suite: "held-out-H07-H12" })),
+    ...held.map((t) => ({ task: t, suite: "held-out-H07-H18" })),
   ];
 
-  const rows: Row[] = [];
-
   for (const { task, suite } of all) {
-    it(`${task.id} (${suite}): recall budget >= B0 and tokens <= B0`, () => {
+    it(`${task.id} (${suite}): recall budget >= B0`, () => {
       const row = runPair(task, suite);
-      rows.push(row);
       // eslint-disable-next-line no-console
       console.log(JSON.stringify(row));
       expect(row.budget.paths).toBeLessThanOrEqual(BUDGET_LIMITS.max_paths!);
-      expect(row.recall_ok, `recall regression: ${JSON.stringify(row)}`).toBe(true);
-      expect(row.tokens_ok, `token regression: ${JSON.stringify(row)}`).toBe(true);
+      expect(row.recall_ok, `recall: ${JSON.stringify(row)}`).toBe(true);
+      expect(row.tokens_ok, `tokens: ${JSON.stringify(row)}`).toBe(true);
     });
   }
 });

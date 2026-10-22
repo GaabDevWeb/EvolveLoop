@@ -23,7 +23,11 @@ export function resolveKnowledgeBackend(options?: {
   /** Inject instance (tests). */
   instance?: KnowledgeBackend;
 }): KnowledgeBackend {
-  if (options?.instance) return options.instance;
+  if (options?.instance) {
+    cached = options.instance;
+    cachedKey = options.instance.id;
+    return options.instance;
+  }
 
   const profile = loadMegaBrainProfile();
   const id = (options?.backendId ?? resolveKnowledgeBackendId(profile)).toLowerCase();

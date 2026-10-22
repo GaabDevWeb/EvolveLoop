@@ -1,0 +1,12 @@
+{
+  "gate": "OFFICIAL_WIKI_GROUND",
+  "status": "READY",
+  "motor_origin": "snapshot_cd3cf08_local",
+  "karpathy_wiki_sha_label": "cd3cf08",
+  "karpathywiki_tarball_sha256": "11160e77ad7c88885635ef2beeac1d8046b95c103952dbe1a90aba1bbb852377",
+  "karpathy_wiki_dir": "/opt/karpathyWiki",
+  "retrieval_mode_declared": "bm25_degraded (Ollama unavailable — ADR-0005)",
+  "index_mode": "bm25_degraded",
+  "corpus_yaml": "/workspace/docs/architecture/v2.2/scripts/corpus-evolveloop-official.yaml",
+  "ingest_layout": "EvolveLoop/wiki/autogen-*.md"
+}

@@ -1,0 +1,38 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_WIKI_GROUND",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H17-B1-bff4a51bb447",
+  "arm": "B1",
+  "task_id": "H17",
+  "timestamp": "2026-10-22T01:08:52.241293+00:00",
+  "tree_sha": "35f024e4ab7ed18df9083d55f65aec58c147c7ea",
+  "harness": "v22-ground-b1-harness-1.3.0",
+  "tokenizer": "PROXY:whitespace_split",
+  "metrics": {
+    "task_id": "H17",
+    "arm": "B1",
+    "paths_read": [
+      ".cursor/skills/orquestrar/references/specs/plugins.md",
+      ".cursor/skills/security/references/ai-code-antipatterns.md",
+      ".cursor/skills/security/references/capability-matrix.md",
+      "docs/adr/0002-capability-model-deterministic-providers.md",
+      "docs/architecture/skills/pruning/POST-PRUNE-CONTRACT-AUDIT.md",
+      "orchestrator/src/events/event-bus.ts",
+      "orchestrator/src/providers/deterministic/index.ts",
+      ".cursor/skills/orquestrar/references/specs/README.md",
+      "docs/architecture/finalization/PROTOTYPE-HARDENING-REPORT.md"
+    ],
+    "input_tokens": 4564,
+    "latency_ms": 2751,
+    "recall": 1.0,
+    "recall_notes": [],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": true,
+    "recall": 1.0,
+    "notes": []
+  }
+}

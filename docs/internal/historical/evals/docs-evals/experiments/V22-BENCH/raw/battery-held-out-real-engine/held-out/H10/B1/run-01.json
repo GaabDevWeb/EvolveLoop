@@ -1,0 +1,44 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_WIKI_GROUND",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H10-B1-f0f39c1ca85c",
+  "arm": "B1",
+  "task_id": "H10",
+  "timestamp": "2026-10-22T01:08:32.487593+00:00",
+  "tree_sha": "35f024e4ab7ed18df9083d55f65aec58c147c7ea",
+  "harness": "v22-ground-b1-harness-1.3.0",
+  "tokenizer": "PROXY:whitespace_split",
+  "metrics": {
+    "task_id": "H10",
+    "arm": "B1",
+    "paths_read": [
+      "docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md",
+      ".cursor/skills/planner/SKILL.md",
+      "docs/architecture/v2.2/scripts/bootstrap-karpathywiki-official-bench.sh",
+      ".cursor/skills/po-review/SKILL.md",
+      "docs/research/evolveloop-v2.2/04-community-findings.md",
+      "docs/research/evolveloop-v2.2/01-current-state-audit.md",
+      ".cursor/skills/orquestrar/references/specs/README.md",
+      "docs/research/evolveloop-v2.2/03-repositories-and-tools.md",
+      "docs/research/evolveloop-v2.2/02-research-methodology.md",
+      "docs/research/evolveloop-v2.2/README.md",
+      "docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md"
+    ],
+    "input_tokens": 20485,
+    "latency_ms": 2788,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: docs/adr/0004-project-knowledge-contract.md"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: docs/adr/0004-project-knowledge-contract.md"
+    ]
+  }
+}
