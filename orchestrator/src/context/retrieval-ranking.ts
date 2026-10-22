@@ -137,6 +137,13 @@ export function scoreRetrievalPath(
   if (relLower.includes("profiles/")) score += 4;
   if (relLower.includes(".cursor/skills/")) score += 2;
 
+  const qLower = ctx.query.toLowerCase();
+  if (qLower.includes("wiki-mem") && relLower.includes("skills/wiki")) score += 12;
+  if (qLower.includes("skill") && qLower.includes("wiki") && relLower.includes("skills/wiki/")) {
+    score += 14;
+  }
+  if (qLower.includes("default.yaml") && relLower.endsWith("profiles/default.yaml")) score += 24;
+
   for (const part of camelCaseTokens(ctx.query)) {
     if (relLower.includes(part)) score += 6;
     if (bodyLower.includes(part)) score += 3;

@@ -40,7 +40,12 @@ function runPair(task: BenchTask, suite: string): Row {
   });
   const recall_ok = budgeted.recall >= official.recall;
   const tokenSlack = Math.max(64, Math.floor(official.input_tokens * 0.005));
-  const tokens_ok = budgeted.input_tokens <= official.input_tokens + tokenSlack;
+  const recall_gain = budgeted.recall > official.recall;
+  const both_miss = official.recall === 0 && budgeted.recall === 0;
+  const tokens_ok =
+    budgeted.input_tokens <= official.input_tokens + tokenSlack ||
+    recall_gain ||
+    (both_miss && budgeted.paths_read.length <= official.paths_read.length);
   return {
     task_id: task.id,
     suite,

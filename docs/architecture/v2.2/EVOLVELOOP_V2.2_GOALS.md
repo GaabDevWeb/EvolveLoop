@@ -150,7 +150,7 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Prioridade:** P1
 - **Título:** Orçamento de contexto por spawn / GATE_BUNDLE
 - **Problema:** Nada impede reler repo inteiro ou injetar vault completa; sem dedup de paths (`docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md` § P1-2).
-- **Estado atual:** `GATE_BUNDLE` aditivo; budget com **ranking determinístico** (`retrieval-ranking.ts`, sem anchors) antes do corte; pickup + bench R01–R06 e held-out H07–H12; telemetria `ContextBudget` + evidência em `jobs/evidence/`.
+- **Estado atual:** ranking **query-only** (sem `rg_patterns` no score; candidatos = união rg como B0); `npm run test:bench` cobre R01–R06 + H07–H18; pickup grava `ContextBudgetEvidence`.
 - **Resultado:** Procedimento normativo: índice `.ai/`, até N páginas, até M paths `rg`; N/M calibrados pós-baseline ou parametrizados no fixture (N=5, M=15 proposta inicial **não é gate** — `PENDING_BASELINE`).
 - **Solução:** Checklist em skill / briefing PDA; campos opcionais em JSON de evidência (aditivos); não quebrar `knowledge.search` v1 (`orchestrator/contracts/knowledge.search.yaml`).
 - **Dependências:** V22-GOAL-005; V22-GOAL-003 para alvos numéricos de token.
