@@ -2,12 +2,12 @@
   "experiment_id": "V22-BENCH-GRAPHIFY-B3",
   "evidence_class": "GRAPHIFY_CODE_GRAPH",
   "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-  "run_id": "V22G-H14-B3-d079054b1dcf",
+  "run_id": "V22G-H14-B3-f5c43cb33e9c",
   "arm": "B3",
   "task_id": "H14",
   "split": "H07_H18_dev",
-  "timestamp": "2026-10-22T02:06:02.495418+00:00",
-  "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+  "timestamp": "2026-10-22T03:37:54.192552+00:00",
+  "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
   "harness": "v22-graphify-b3-harness-1.5.0",
   "ground_harness": "v22-ground-b1-harness-1.5.0",
   "tokenizer": "tiktoken:cl100k_base",
@@ -76,11 +76,11 @@
       "orchestrator/src/evidence/validator.ts",
       "orchestrator/tests/unit/deterministic-capabilities.test.ts"
     ],
-    "input_tokens": 20426,
-    "latency_ms": 766,
+    "input_tokens": 20590,
+    "latency_ms": 776,
     "recall": 1.0,
     "recall_notes": [
-      "anchor line drift (file hit): orchestrator/src/providers/deterministic/knowledge.ts:16"
+      "anchor line drift (file evidence): orchestrator/src/providers/deterministic/knowledge.ts:16"
     ],
     "graphify_exit": 0,
     "graph_path": "/workspace/graphify-out/graph.json"
@@ -89,10 +89,11 @@
     "pass": true,
     "recall": 1.0,
     "notes": [
-      "anchor line drift (file hit): orchestrator/src/providers/deterministic/knowledge.ts:16"
+      "anchor line drift (file evidence): orchestrator/src/providers/deterministic/knowledge.ts:16"
     ]
   },
   "graphify": {
     "cli_version": "graphify 0.9.93"
-  }
+  },
+  "scorer_version": "v22-anchor-scorer-1.0.0"
 }

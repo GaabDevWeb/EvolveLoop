@@ -2,12 +2,12 @@
   "experiment_id": "V22-BENCH-GRAPHIFY-B3",
   "evidence_class": "OFFICIAL_BASELINE",
   "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-  "run_id": "V22G-H22-B0-47420d3c876f",
+  "run_id": "V22G-H22-B0-08b6cb6b56d3",
   "arm": "B0",
   "task_id": "H22",
   "split": "H19_H24_test",
-  "timestamp": "2026-10-22T02:06:08.762469+00:00",
-  "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+  "timestamp": "2026-10-22T03:37:59.363086+00:00",
+  "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
   "harness": "v22-graphify-b3-harness-1.5.0",
   "ground_harness": "v22-ground-b1-harness-1.5.0",
   "tokenizer": "tiktoken:cl100k_base",
@@ -19,16 +19,17 @@
       "docs/architecture/v2.2/EVIDENCE-SECRET-CANARY.md",
       "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
       "docs/architecture/v2.2/TRACEABILITY-MATRIX.md",
-      "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/GOAL-005d-recall-report.md"
+      "docs/research/evolveloop-v2.2/05-knowledge-wiki-architecture.md"
     ],
-    "input_tokens": 19133,
-    "latency_ms": 71,
+    "graph_paths_ranked": [],
+    "input_tokens": 19734,
+    "latency_ms": 46,
     "recall": 0.0,
     "recall_notes": [
       "miss path not read: orchestrator/src/evidence/secret-redaction.ts"
     ],
-    "ground_exit": 0,
-    "stale_hits": 0
+    "graphify_exit": 0,
+    "graph_path": ""
   },
   "verifier": {
     "pass": false,
@@ -36,5 +37,7 @@
     "notes": [
       "miss path not read: orchestrator/src/evidence/secret-redaction.ts"
     ]
-  }
+  },
+  "official_reference": "raw/battery-held-out-official-hybrid/run-01/test/held-out/H22/B0/run-01.json",
+  "scorer_version": "v22-anchor-scorer-1.0.0"
 }

@@ -2,12 +2,12 @@
   "experiment_id": "V22-BENCH-GRAPHIFY-B3",
   "evidence_class": "GRAPHIFY_CODE_GRAPH",
   "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
-  "run_id": "V22G-H07-B3-0a2d960c3237",
+  "run_id": "V22G-H07-B3-7046af8bb1e6",
   "arm": "B3",
   "task_id": "H07",
   "split": "H07_H18_dev",
-  "timestamp": "2026-10-22T02:05:56.694497+00:00",
-  "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+  "timestamp": "2026-10-22T03:37:48.871067+00:00",
+  "tree_sha": "b127baefda7470bf7848d7632c285e3aac4c6bba",
   "harness": "v22-graphify-b3-harness-1.5.0",
   "ground_harness": "v22-ground-b1-harness-1.5.0",
   "tokenizer": "tiktoken:cl100k_base",
@@ -25,8 +25,7 @@
       "orchestrator/src/config/profile.ts",
       "orchestrator/src/memory/memory-store.ts",
       "orchestrator/src/v22/brevity-caveman.ts",
-      "orchestrator/src/index.ts",
-      "orchestrator/src/engine/execution-engine.ts"
+      "orchestrator/src/index.ts"
     ],
     "graph_paths_ranked": [
       "docs/research/evolveloop-v2.2/07-compatibility-matrix.md",
@@ -80,8 +79,8 @@
       "orchestrator/src/providers/mock-provider.ts",
       "orchestrator/src/authority/capability-authority.ts"
     ],
-    "input_tokens": 21892,
-    "latency_ms": 706,
+    "input_tokens": 16039,
+    "latency_ms": 745,
     "recall": 0.0,
     "recall_notes": [
       "miss path not read: profiles/default.yaml"
@@ -98,5 +97,6 @@
   },
   "graphify": {
     "cli_version": "graphify 0.9.93"
-  }
+  },
+  "scorer_version": "v22-anchor-scorer-1.0.0"
 }
