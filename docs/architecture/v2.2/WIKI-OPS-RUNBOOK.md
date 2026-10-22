@@ -25,6 +25,19 @@ bash "$AGENTS_ROOT/.cursor/skills/wiki/scripts/ground.sh" search "KNOWLEDGE_BACK
 
 Geração de conhecimento: script com **allowlist**; não lê `docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/`. Log: `memory/V22-GOAL-005-wiki/evidence/knowledge-generate.log`.
 
+## B1 motor real (karpathyWiki) — `OFFICIAL_WIKI_GROUND`
+
+Pré-requisito: clone `GaabDevWeb/karpathyWiki` @ `cd3cf08` em `KARPATHY_WIKI_DIR` (default `/opt/karpathyWiki`).
+
+```bash
+bash docs/architecture/v2.2/scripts/bootstrap-karpathywiki-official-bench.sh
+V22_WIKI_ENGINE=official V22_HELD_OUT_TASKS=H07-H18 \
+  python3 docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/harness/ground_b1_harness.py \
+  docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery-held-out-real-engine
+```
+
+Ingestão: `ingest-evolveloop-corpus-automatic.py` (sem V22-BENCH). Stale: `test-official-wiki-stale.sh`.
+
 ## B1 held-out (`FIXTURE_WIKI_GROUND`)
 
 1. Congelar `tasks-held-out-frozen.json` (commit separado antes do harness).
