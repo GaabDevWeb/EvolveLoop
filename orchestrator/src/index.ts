@@ -100,7 +100,12 @@ export type {
   KnowledgeInspectResult,
 } from "./knowledge/backend/types.js";
 export { resolveKnowledgeBackend, resetKnowledgeBackendCache } from "./knowledge/backend/resolve.js";
-export { WikiKnowledgeBackend, resolveWikiRoot, resolveWikiCliModule } from "./knowledge/backend/wiki-backend.js";
+export {
+  WikiKnowledgeBackend,
+  resolveWikiRoot,
+  resolveWikiCliModule,
+  parseWikiSearchStdout,
+} from "./knowledge/backend/wiki-backend.js";
 export { FakeKnowledgeBackend } from "./knowledge/backend/fake-backend.js";
 export {
   loadMegaBrainProfile,

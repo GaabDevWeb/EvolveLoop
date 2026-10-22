@@ -9,7 +9,9 @@ Derivado de `docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md` com p
 | **`PROVISIONAL_SYNTHETIC`** | `raw/battery/` (`synth-repo`) | Não — sanity harness |
 | **`OFFICIAL_BASELINE` (B0)** | `raw/battery-real/` braço **B0** no monorepo EvolveLoop | Sim — referência `rg`+leitura ampla |
 | **`PROVISIONAL_CURATED_PACK` (B1)** | `raw/battery-real/` braço **B1** via pack `fixtures/evolveloop-project-knowledge/.ai/` | **Não** — `source_paths` alinhados aos gabaritos congelados (recall circular) |
-| **`NOT_MEASURED`** | LLM ao vivo, `ground.sh`+`WIKI_ROOT` no bench VM | — |
+| **`FIXTURE_WIKI_GROUND` (B1)** | `raw/battery-held-out/` via `ground_b1_harness.py` + `fixtures/evolveloop-wiki-vault` (CLI `gaabwiki` **mínimo no repo**) | Não — prova de mecanismo/contrato; não substitui vault externo |
+| **`OFFICIAL_WIKI_GROUND` (B1)** | Mesmo harness + **wiki Python real** (fora do monorepo) + held-out independente + query sem gabarito | Sim — gate futuro |
+| **`NOT_MEASURED`** | LLM ao vivo | — |
 
 ## Estado
 
@@ -18,7 +20,8 @@ Derivado de `docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md` com p
 | B0 real | `OFFICIAL_BASELINE` — `raw/battery-real/battery-summary.json` → `classification_by_arm.B0` |
 | B1 bench pack | `PROVISIONAL_CURATED_PACK` — mesmo raw, `classification_by_arm.B1` |
 | Sintético | `PROVISIONAL_SYNTHETIC` — `raw/battery/` |
-| Alvos numéricos B1 / continuidade B1 | `PROVISIONAL_CURATED_PACK` ou `PENDING_BASELINE` até procedimento § B1→oficial |
+| B1 held-out (fixture vault) | `FIXTURE_WIKI_GROUND` — `raw/battery-held-out/held-out-summary.json` |
+| Alvos numéricos B1 / continuidade B1 | `PENDING_BASELINE` até `OFFICIAL_WIKI_GROUND` (§ B1→oficial) |
 | Tokenizer | `tiktoken:cl100k_base` |
 
 ## Calibração observada (informativa; ver classe acima)

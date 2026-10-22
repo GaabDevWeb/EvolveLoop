@@ -1,0 +1,52 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_BASELINE",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-review",
+  "run_id": "V22H-H03-B0-8e384c196974",
+  "arm": "B0",
+  "task_id": "H03",
+  "timestamp": "2026-10-22T00:58:03.691797+00:00",
+  "tree_sha": "141dec563681fee04340244abf239175baff191f",
+  "harness": "v22-ground-b1-harness-1.1.0",
+  "tokenizer": "PROXY:whitespace_split",
+  "metrics": {
+    "task_id": "H03",
+    "arm": "B0",
+    "paths_read": [
+      "README.md",
+      "docs/adr/0012-wiki-default-knowledge-backend.md",
+      "docs/architecture/knowledge/KNOWLEDGE-ARCHITECTURE.md",
+      "docs/architecture/knowledge/KNOWLEDGE-BACKEND-CONTRACT.md",
+      "docs/architecture/knowledge/KNOWLEDGE-BACKEND-MANIFEST.yaml",
+      "docs/architecture/knowledge/KNOWLEDGE-BEFORE-AFTER.md",
+      "docs/architecture/knowledge/KNOWLEDGE-PROFILE-BOUNDARY.md",
+      "docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md",
+      "docs/architecture/knowledge/PROFILE-BOUNDARY-MANIFEST.yaml",
+      "docs/architecture/public/OVERVIEW.md",
+      "docs/architecture/publication/PUBLIC-CONFIG-MATRIX.yaml",
+      "docs/architecture/publication/PUBLIC-EXTRACTION-PLAN.md",
+      "docs/architecture/v2.2/WIKI-OPS-RUNBOOK.md",
+      "docs/architecture/v2.2/scripts/generate-evolveloop-wiki-knowledge.sh",
+      "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-held-out-frozen.json",
+      "fixtures/evolveloop-wiki-vault/projects/evolveloop/pages/env-backend-override.md",
+      "fixtures/evolveloop-wiki-vault/projects/evolveloop/pages/fake-knowledge-backend.md",
+      "fixtures/evolveloop-wiki-vault/projects/evolveloop/pages/wiki-default-adr.md",
+      "orchestrator/src/config/profile.ts",
+      "orchestrator/src/knowledge/backend/fake-backend.ts",
+      "orchestrator/src/knowledge/backend/resolve.ts",
+      "orchestrator/tests/unit/knowledge-backend.test.ts",
+      "profiles/default.yaml"
+    ],
+    "input_tokens": 5815,
+    "latency_ms": 15,
+    "recall": 1.0,
+    "recall_notes": [],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": true,
+    "recall": 1.0,
+    "notes": []
+  }
+}
