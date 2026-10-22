@@ -82,6 +82,26 @@ export type {
   EventCoverageMode,
 } from "./evolveloop/index.js";
 
+export {
+  deriveContextOwnerId,
+  validateSpawnContext,
+  parseGateBundle,
+  prepareSpawnContext,
+  prepareSpawnContextWithTelemetry,
+  applyContextBudget,
+  getCompactionReinjectContract,
+  assertReinjectAllowed,
+  countTokens,
+  resolveTokenizer,
+  sliceFromFile,
+  appendContextBudgetEvidenceFields,
+  emitContextBudgetTelemetry,
+  type GateBundleFields,
+  type ContextBudgetLimits,
+  type ContextSlice,
+  type ContextBudgetTelemetry,
+  type SpawnContextValidation,
+} from "./context/index.js";
 export { PolicyEngine } from "./policies/policy-engine.js";
 export { RegistryClient, buildRegistryFromManifests } from "./registry/registry-client.js";
 export {

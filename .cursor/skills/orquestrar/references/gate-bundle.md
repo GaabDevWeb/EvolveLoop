@@ -32,6 +32,11 @@ anti_vibe: coding via Agent tools — NÃO wiki vibe / Composer CLI
 wiki_register: se editar código → append {Projeto}/log.md (± wiki/); NUNCA raw/; executor: librarian se spawnado, senão exec/raiz
 mem_episodic: complementar LATEST.md / wiki-mem — NÃO substitui contratos
 vault: $WIKI_ROOT
+context_owner_id: <opcional — runtime deriva parent_cycle_id:role:dN se ausente; ADR-0013>
+context_budget:
+  max_paths: <opcional — default engine 15; PENDING_BASELINE até B1 oficial>
+  max_pages: <opcional — default 5>
+  max_tokens: <opcional — default 128000; tokenizer tiktoken:cl100k_base ou PROXY>
 ```
 
 ### Campos — regras

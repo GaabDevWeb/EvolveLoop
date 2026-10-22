@@ -67,6 +67,7 @@ export type EventType =
   | "ProviderDiscoveryStarted"
   | "ProviderDiscoveryCompleted"
   | "SkillLifecycle"
+  | "ContextBudget"
   | "KnowledgeHit"
   | "KnowledgeProposed"
   | "MemoryWritten"

@@ -2,7 +2,7 @@
 
 ## Status
 
-ACCEPTED
+ACCEPTED — ownership checklist **resolvido** por `docs/adr/0013-context-ownership-working-context.md`. Compaction/reinject engine: **NOT_IMPLEMENTED** (defer de implementação mantido).
 
 ## Date
 
