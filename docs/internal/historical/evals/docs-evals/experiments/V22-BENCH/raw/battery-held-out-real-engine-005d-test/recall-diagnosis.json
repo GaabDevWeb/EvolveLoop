@@ -1,0 +1,81 @@
+{
+  "schema": "v22-b1-recall-diagnosis-v1",
+  "wiki_root": "/opt/karpathyWiki",
+  "tree_sha": "7eef62f816b43fcb4454e8016943f6b3d5ef5cc0",
+  "task_filter": "H19-H24",
+  "top_k": 12,
+  "rows": [
+    {
+      "task_id": "H19",
+      "anchor_path": "docs/adr/0003-capability-authority-vs-execution-policy.md",
+      "ingested": true,
+      "vault_page": "autogen-docs-adr-0003-capability-authority-vs-execution-policy.md.md",
+      "bm25_rank_raw_query": 92,
+      "bm25_rank_expanded_query": 43,
+      "bm25_rank_reported": 43,
+      "hit_source_path": "EvolveLoop/wiki/autogen-docs-adr-0003-capability-authority-vs-execution-policy.md.md",
+      "cause": "top_k_below_rank_43",
+      "query_lang_hint": "pt"
+    },
+    {
+      "task_id": "H20",
+      "anchor_path": "orchestrator/src/knowledge/truth-source/fence.ts",
+      "ingested": true,
+      "vault_page": "autogen-orchestrator-src-knowledge-truth-source-fence.ts.md",
+      "bm25_rank_raw_query": null,
+      "bm25_rank_expanded_query": null,
+      "bm25_rank_reported": null,
+      "hit_source_path": "",
+      "cause": "language_pt_vs_en_corpus",
+      "query_lang_hint": "pt"
+    },
+    {
+      "task_id": "H21",
+      "anchor_path": "docs/adr/0011-evolve-alias.md",
+      "ingested": true,
+      "vault_page": "autogen-docs-adr-0011-evolve-alias.md.md",
+      "bm25_rank_raw_query": 26,
+      "bm25_rank_expanded_query": 47,
+      "bm25_rank_reported": 47,
+      "hit_source_path": "EvolveLoop/wiki/autogen-docs-adr-0011-evolve-alias.md.md",
+      "cause": "top_k_below_rank_47",
+      "query_lang_hint": "pt"
+    },
+    {
+      "task_id": "H22",
+      "anchor_path": "orchestrator/src/evidence/secret-redaction.ts",
+      "ingested": true,
+      "vault_page": "autogen-orchestrator-src-evidence-secret-redaction.ts.md",
+      "bm25_rank_raw_query": 3,
+      "bm25_rank_expanded_query": 10,
+      "bm25_rank_reported": 10,
+      "hit_source_path": "EvolveLoop/wiki/autogen-docs-architecture-v2.2-EVIDENCE-SECRET-CANARY.md.md",
+      "cause": "in_top_k",
+      "query_lang_hint": "pt"
+    },
+    {
+      "task_id": "H23",
+      "anchor_path": "docs/adr/0001-agent-package-composition.md",
+      "ingested": true,
+      "vault_page": "autogen-docs-adr-0001-agent-package-composition.md.md",
+      "bm25_rank_raw_query": 15,
+      "bm25_rank_expanded_query": 91,
+      "bm25_rank_reported": 91,
+      "hit_source_path": "EvolveLoop/wiki/autogen-docs-adr-0001-agent-package-composition.md.md",
+      "cause": "top_k_below_rank_91",
+      "query_lang_hint": "pt"
+    },
+    {
+      "task_id": "H24",
+      "anchor_path": "docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md",
+      "ingested": true,
+      "vault_page": "autogen-docs-architecture-v2.2-TRUTH-SOURCE-FENCE.md.md",
+      "bm25_rank_raw_query": 43,
+      "bm25_rank_expanded_query": 26,
+      "bm25_rank_reported": 26,
+      "hit_source_path": "EvolveLoop/wiki/autogen-docs-architecture-v2.2-TRUTH-SOURCE-FENCE.md.md",
+      "cause": "top_k_below_rank_26",
+      "query_lang_hint": "pt"
+    }
+  ]
+}

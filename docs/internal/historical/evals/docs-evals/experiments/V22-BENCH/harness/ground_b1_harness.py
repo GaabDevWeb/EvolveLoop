@@ -256,25 +256,35 @@ def run_b1_ground(root: Path, task: dict[str, Any], counter, env: dict[str, str]
     paths: list[str] = []
     buf: list[str] = []
     wiki_root = Path(env["WIKI_ROOT"])
-    # B1: task.query only (+ corpus glossary expansion). Never task.rg_patterns.
-    search_query = _expand_b1_query(task["query"], env)
-    data = run_ground_json(search_query, env)
+    # B1: task.query only (+ optional corpus glossary expansion). Never task.rg_patterns.
+    search_queries = [task["query"]]
+    expanded = _expand_b1_query(task["query"], env)
+    if expanded != task["query"]:
+        search_queries.append(expanded)
     stale = 0
-    for hit in _iter_search_hits(data):
-        src = hit.get("source")
-        if isinstance(src, dict) and src.get("stale"):
-            stale += 1
-            continue
-        for rel in _repo_paths_from_hit(hit, wiki_root, root):
-            read_rel(root, rel, paths, buf)
-        excerpt = (
-            hit.get("content")
-            or hit.get("text")
-            or hit.get("preview")
-            or ""
-        )
-        if excerpt:
-            buf.append(str(excerpt))
+    seen_hit: set[str] = set()
+    for q in search_queries:
+        data = run_ground_json(q, env)
+        hits = _iter_search_hits(data)
+        for hit in hits:
+            cid = str(hit.get("chunk_id") or hit.get("source") or "")
+            if cid in seen_hit:
+                continue
+            seen_hit.add(cid)
+            src = hit.get("source")
+            if isinstance(src, dict) and src.get("stale"):
+                stale += 1
+                continue
+            for rel in _repo_paths_from_hit(hit, wiki_root, root):
+                read_rel(root, rel, paths, buf)
+            excerpt = (
+                hit.get("content")
+                or hit.get("text")
+                or hit.get("preview")
+                or ""
+            )
+            if excerpt:
+                buf.append(str(excerpt))
     for rel in _hybrid_lexical_paths(root, task["query"], env):
         read_rel(root, rel, paths, buf)
     recall, notes = anchor_recall(root, paths, task["anchors"])

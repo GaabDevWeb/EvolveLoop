@@ -1,0 +1,153 @@
+{
+  "schema": "v22-b1-recall-diagnosis-v1",
+  "wiki_root": "/opt/karpathyWiki",
+  "tree_sha": "7eef62f816b43fcb4454e8016943f6b3d5ef5cc0",
+  "task_filter": "H07-H18",
+  "top_k": 12,
+  "rows": [
+    {
+      "task_id": "H07",
+      "anchor_path": "profiles/default.yaml",
+      "ingested": true,
+      "vault_page": "autogen-profiles-default.yaml.md",
+      "bm25_rank_raw_query": 5,
+      "bm25_rank_expanded_query": 19,
+      "bm25_rank_reported": 19,
+      "hit_source_path": "EvolveLoop/wiki/autogen-docs-research-evolveloop-v2.2-01-current-state-audit.md.md",
+      "cause": "top_k_below_rank_19",
+      "query_lang_hint": "pt"
+    },
+    {
+      "task_id": "H08",
+      "anchor_path": "orchestrator/src/knowledge/backend/wiki-backend.ts",
+      "ingested": true,
+      "vault_page": "autogen-orchestrator-src-knowledge-backend-wiki-backend.ts.md",
+      "bm25_rank_raw_query": 45,
+      "bm25_rank_expanded_query": 42,
+      "bm25_rank_reported": 42,
+      "hit_source_path": "EvolveLoop/wiki/autogen-docs-research-evolveloop-v2.2-03-repositories-and-tools.md.md",
+      "cause": "top_k_below_rank_42",
+      "query_lang_hint": "pt"
+    },
+    {
+      "task_id": "H09",
+      "anchor_path": "docs/architecture/knowledge/KNOWLEDGE-BACKEND-CONTRACT.md",
+      "ingested": true,
+      "vault_page": "autogen-docs-architecture-knowledge-KNOWLEDGE-BACKEND-CONTRACT.md.md",
+      "bm25_rank_raw_query": 21,
+      "bm25_rank_expanded_query": 30,
+      "bm25_rank_reported": 30,
+      "hit_source_path": "EvolveLoop/wiki/autogen-docs-research-evolveloop-v2.2-03-repositories-and-tools.md.md",
+      "cause": "top_k_below_rank_30",
+      "query_lang_hint": "mixed"
+    },
+    {
+      "task_id": "H10",
+      "anchor_path": "docs/adr/0004-project-knowledge-contract.md",
+      "ingested": true,
+      "vault_page": "autogen-docs-adr-0004-project-knowledge-contract.md.md",
+      "bm25_rank_raw_query": 58,
+      "bm25_rank_expanded_query": 21,
+      "bm25_rank_reported": 21,
+      "hit_source_path": "EvolveLoop/wiki/autogen-docs-architecture-v2.2-EVOLVELOOP_V2.2_GOALS.md.md",
+      "cause": "top_k_below_rank_21",
+      "query_lang_hint": "pt"
+    },
+    {
+      "task_id": "H11",
+      "anchor_path": "orchestrator/src/knowledge/backend/types.ts",
+      "ingested": true,
+      "vault_page": "autogen-orchestrator-src-knowledge-backend-types.ts.md",
+      "bm25_rank_raw_query": 26,
+      "bm25_rank_expanded_query": 6,
+      "bm25_rank_reported": 6,
+      "hit_source_path": "EvolveLoop/wiki/autogen-orchestrator-src-knowledge-backend-types.ts.md",
+      "cause": "in_top_k",
+      "query_lang_hint": "pt"
+    },
+    {
+      "task_id": "H12",
+      "anchor_path": "orchestrator/src/knowledge/backend/wiki-backend.ts",
+      "ingested": true,
+      "vault_page": "autogen-orchestrator-src-knowledge-backend-wiki-backend.ts.md",
+      "bm25_rank_raw_query": 30,
+      "bm25_rank_expanded_query": 2,
+      "bm25_rank_reported": 2,
+      "hit_source_path": "EvolveLoop/wiki/autogen-docs-research-evolveloop-v2.2-03-repositories-and-tools.md.md",
+      "cause": "in_top_k",
+      "query_lang_hint": "mixed"
+    },
+    {
+      "task_id": "H13",
+      "anchor_path": "docs/adr/0005-hybrid-retrieval-degraded-mode.md",
+      "ingested": true,
+      "vault_page": "autogen-docs-adr-0005-hybrid-retrieval-degraded-mode.md.md",
+      "bm25_rank_raw_query": 48,
+      "bm25_rank_expanded_query": 49,
+      "bm25_rank_reported": 49,
+      "hit_source_path": "EvolveLoop/wiki/autogen-docs-adr-0005-hybrid-retrieval-degraded-mode.md.md",
+      "cause": "top_k_below_rank_49",
+      "query_lang_hint": "pt"
+    },
+    {
+      "task_id": "H14",
+      "anchor_path": "orchestrator/src/providers/deterministic/knowledge.ts",
+      "ingested": true,
+      "vault_page": "autogen-orchestrator-src-providers-deterministic-knowledge.ts.md",
+      "bm25_rank_raw_query": 54,
+      "bm25_rank_expanded_query": 18,
+      "bm25_rank_reported": 18,
+      "hit_source_path": "EvolveLoop/wiki/autogen-docs-audit-IMPLEMENTATION-MATRIX.yaml.md",
+      "cause": "top_k_below_rank_18",
+      "query_lang_hint": "pt"
+    },
+    {
+      "task_id": "H15",
+      "anchor_path": "docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md",
+      "ingested": true,
+      "vault_page": "autogen-docs-architecture-knowledge-KNOWLEDGE-WIKI-DEFAULT.md.md",
+      "bm25_rank_raw_query": 130,
+      "bm25_rank_expanded_query": 69,
+      "bm25_rank_reported": 69,
+      "hit_source_path": "EvolveLoop/wiki/autogen-docs-architecture-knowledge-KNOWLEDGE-WIKI-DEFAULT.md.md",
+      "cause": "top_k_below_rank_69",
+      "query_lang_hint": "pt"
+    },
+    {
+      "task_id": "H16",
+      "anchor_path": "profiles/default.yaml",
+      "ingested": true,
+      "vault_page": "autogen-profiles-default.yaml.md",
+      "bm25_rank_raw_query": 3,
+      "bm25_rank_expanded_query": 11,
+      "bm25_rank_reported": 11,
+      "hit_source_path": "EvolveLoop/wiki/autogen-docs-architecture-v2.2-EVOLVELOOP_V2.2_GOALS.md.md",
+      "cause": "in_top_k",
+      "query_lang_hint": "pt"
+    },
+    {
+      "task_id": "H17",
+      "anchor_path": "docs/adr/0002-capability-model-deterministic-providers.md",
+      "ingested": true,
+      "vault_page": "autogen-docs-adr-0002-capability-model-deterministic-providers.md.md",
+      "bm25_rank_raw_query": 4,
+      "bm25_rank_expanded_query": 4,
+      "bm25_rank_reported": 4,
+      "hit_source_path": "EvolveLoop/wiki/autogen-docs-adr-0002-capability-model-deterministic-providers.md.md",
+      "cause": "in_top_k",
+      "query_lang_hint": "mixed"
+    },
+    {
+      "task_id": "H18",
+      "anchor_path": ".cursor/skills/wiki/SKILL.md",
+      "ingested": true,
+      "vault_page": "autogen-.cursor-skills-wiki-SKILL.md.md",
+      "bm25_rank_raw_query": 1,
+      "bm25_rank_expanded_query": 7,
+      "bm25_rank_reported": 7,
+      "hit_source_path": "EvolveLoop/wiki/autogen-docs-internal-historical-cursor-megabrain-rag-stack.md.md",
+      "cause": "in_top_k",
+      "query_lang_hint": "pt"
+    }
+  ]
+}

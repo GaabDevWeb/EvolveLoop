@@ -1,0 +1,72 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_WIKI_GROUND",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H07-B1-22f81f25148a",
+  "arm": "B1",
+  "task_id": "H07",
+  "timestamp": "2026-10-22T01:14:03.608918+00:00",
+  "tree_sha": "7eef62f816b43fcb4454e8016943f6b3d5ef5cc0",
+  "harness": "v22-ground-b1-harness-1.4.0",
+  "tokenizer": "PROXY:whitespace_split",
+  "metrics": {
+    "task_id": "H07",
+    "arm": "B1",
+    "paths_read": [
+      "docs/internal/historical/cursor-megabrain-rag-stack.md",
+      "docs/research/evolveloop-v2.2/07-compatibility-matrix.md",
+      ".cursor/skills/orquestrar/references/knowledge-grounding-gate.md",
+      "docs/research/evolveloop-v2.2/README.md",
+      "docs/research/evolveloop-v2.2/01-current-state-audit.md",
+      "docs/research/evolveloop-v2.2/05-knowledge-wiki-architecture.md",
+      ".cursor/skills/orquestrar/references/pda-roles.md",
+      "docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md",
+      "docs/research/evolveloop-v2.2/03-repositories-and-tools.md",
+      "docs/architecture/skills/audit/SKILL-USAGE-AUDIT.md",
+      "docs/architecture/publication/MAIN-VS-GAABTYPE-GRAPH.yaml",
+      "docs/research/targets/external/microsoft-agent-framework/REPORT.md",
+      "docs/research/targets/external/cursor/REPORT.md",
+      "docs/research/targets/external/mcp/UNKNOWNS.md",
+      "docs/research/targets/external/anthropic-agent-skills/REPORT.md",
+      "docs/research/targets/external/mcp/REPORT.md",
+      "docs/research/targets/external/swe-agent/REPORT.md",
+      "docs/research/DECISION-MATRIX.md",
+      "docs/architecture/publication/PROJECT-NAMING-CANDIDATES.yaml",
+      "Agents/Adr.md",
+      "Agents/Agent-architecture-mining.md",
+      "Agents/Architect.md",
+      "Agents/Orquestrador-v2.md",
+      "Agents/Prd.md",
+      "CONTRIBUTING.md",
+      "agent-setup/docs/architecture.md",
+      "agent-setup/src/agent_setup/cli.py",
+      "docs/AGENT_ARCHITECTURE_PRINCIPLES.md",
+      "docs/architecture-mining/targets/mcp/REPORT.md",
+      "docs/architecture-mining/validation/skill-validation-2026-09-18.md",
+      "docs/architecture/decision-review/DECISION-MATRIX.yaml",
+      "docs/architecture/decision-review/EVIDENCE-LEDGER.yaml",
+      "docs/architecture/decision-review/FUTURE-EXPERIMENTS.yaml",
+      "docs/architecture/decision-review/TRACEABILITY.md",
+      "docs/architecture/decision-review/adr-drafts/ADR-DR-0005-context-ownership-before-compaction.md",
+      "docs/architecture/evolution/ADR-REVIEW-MATRIX.yaml",
+      "docs/architecture/evolution/EVIDENCE-CONSOLIDATION.yaml",
+      "docs/architecture/evolution/FINAL-ARCHITECTURE-EVOLUTION-REPORT.md",
+      "docs/architecture/evolution/FINAL-STATE.md"
+    ],
+    "input_tokens": 41639,
+    "latency_ms": 5626,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: profiles/default.yaml"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: profiles/default.yaml"
+    ]
+  }
+}

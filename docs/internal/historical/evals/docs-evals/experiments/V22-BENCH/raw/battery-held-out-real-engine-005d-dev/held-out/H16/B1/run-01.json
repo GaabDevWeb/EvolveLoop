@@ -1,0 +1,68 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_WIKI_GROUND",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H16-B1-88b257318e73",
+  "arm": "B1",
+  "task_id": "H16",
+  "timestamp": "2026-10-22T01:14:54.790282+00:00",
+  "tree_sha": "7eef62f816b43fcb4454e8016943f6b3d5ef5cc0",
+  "harness": "v22-ground-b1-harness-1.4.0",
+  "tokenizer": "PROXY:whitespace_split",
+  "metrics": {
+    "task_id": "H16",
+    "arm": "B1",
+    "paths_read": [
+      "docs/internal/historical/cursor-megabrain-rag-stack.md",
+      "docs/research/evolveloop-v2.2/04-community-findings.md",
+      "docs/research/evolveloop-v2.2/01-current-state-audit.md",
+      "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+      "docs/research/evolveloop-v2.2/07-compatibility-matrix.md",
+      "docs/research/evolveloop-v2.2/02-research-methodology.md",
+      "docs/research/evolveloop-v2.2/03-repositories-and-tools.md",
+      "docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md",
+      ".cursor/skills/orquestrar/references/knowledge-grounding-gate.md",
+      ".cursor/skills/orquestrar/references/specs/README.md",
+      "docs/research/targets/external/cursor/REPORT.md",
+      "docs/architecture/skills/audit/SKILL-USAGE-AUDIT.md",
+      "docs/architecture/publication/MAIN-VS-GAABTYPE-GRAPH.yaml",
+      "docs/architecture/publication/PROJECT-NAMING-CANDIDATES.yaml",
+      "docs/research/targets/external/aider/REPORT.md",
+      "docs/architecture-mining/findings/FINDING-MCP-01.md",
+      "docs/architecture-mining/targets/mcp/REPORT.md",
+      "docs/architecture-mining/validation/skill-validation-2026-09-18.md",
+      "docs/architecture/decision-review/EVIDENCE-LEDGER.yaml",
+      "docs/architecture/evolution/EVIDENCE-CONSOLIDATION.yaml",
+      "docs/architecture/evolution/STATE-AT-START.yaml",
+      "docs/architecture/evolveloopt/stabilization/START-STATE.md",
+      "docs/architecture/evolveloopt/validation/AUDIT-START-STATE.md",
+      "docs/architecture/finalization/adrs/ADR-DR-0003-security-model-before-sandbox.md",
+      "docs/architecture/finalization/adrs/ADR-DR-0004-define-stuck-semantics-first.md",
+      "docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md",
+      "docs/architecture/skills/audit/PRE-PRUNING-DECISION.md",
+      "docs/architecture/skills/audit/SKILL-DEPENDENCY-GRAPH-V2.yaml",
+      "docs/architecture/skills/audit/SKILL-DEPENDENCY-GRAPH.md",
+      "docs/architecture/skills/audit/SKILL-DEPENDENCY-GRAPH.yaml",
+      "docs/architecture/skills/audit/SKILL-USAGE-FINAL-REPORT.md",
+      "docs/architecture/skills/audit/SKILL-USAGE-MATRIX-V2.yaml",
+      "docs/architecture/skills/audit/UNKNOWN-USAGE.yaml",
+      "docs/architecture/skills/environment/CURSOR-REBUILD-TEST-MATRIX.yaml",
+      "docs/architecture/skills/pruning/ADVERSARIAL-VALIDATION.md"
+    ],
+    "input_tokens": 34523,
+    "latency_ms": 5710,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: profiles/default.yaml"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: profiles/default.yaml"
+    ]
+  }
+}

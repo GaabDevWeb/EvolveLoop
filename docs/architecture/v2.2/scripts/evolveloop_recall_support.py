@@ -209,7 +209,11 @@ def expand_query(query: str, glossary: dict) -> str:
             extra.append(m)
     # Backtick-style paths mentioned in NL
     for m in re.findall(r"[\w./-]+\.(?:ts|md|yaml|yml|json)", query, re.I):
-        extra.append(m.split("/")[-1])
+        base = m.split("/")[-1]
+        extra.append(base)
+        stem = re.sub(r"\.[a-z]+$", "", base, flags=re.I)
+        if stem and stem != base:
+            extra.append(stem)
     if not extra:
         return query
     seen: set[str] = set()
@@ -243,4 +247,13 @@ def lexical_rg_patterns(query: str, glossary: dict, max_patterns: int = 4) -> li
         if len(m) >= 6 and m not in seen:
             seen.add(m)
             patterns.append(m)
+    for m in re.findall(r"[\w.-]+\.(?:ts|md|yaml|yml)", expanded, re.I):
+        base = m.split("/")[-1]
+        if base not in seen:
+            seen.add(base)
+            patterns.append(base)
+        stem = re.sub(r"\.[a-z]+$", "", base, flags=re.I)
+        if stem and stem not in seen:
+            seen.add(stem)
+            patterns.append(stem)
     return patterns[:max_patterns]
