@@ -1,0 +1,40 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_WIKI_GROUND",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H22-B1-6c50dfa6008b",
+  "arm": "B1",
+  "task_id": "H22",
+  "timestamp": "2026-10-22T02:20:30.862523+00:00",
+  "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+  "harness": "v22-ground-b1-harness-1.5.0",
+  "tokenizer": "PROXY:whitespace_split",
+  "metrics": {
+    "task_id": "H22",
+    "arm": "B1",
+    "paths_read": [
+      "docs/architecture/v2.2/EVIDENCE-SECRET-CANARY.md",
+      "docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md",
+      "orchestrator/src/evidence/secret-redaction.ts",
+      "docs/research/evolveloop-v2.2/01-current-state-audit.md",
+      "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+      "docs/research/evolveloop-v2.2/04-community-findings.md",
+      "orchestrator/src/v22/bench-h-tasks.ts",
+      "docs/research/targets/external/openhands/MECHANISMS.yaml",
+      "docs/architecture/release-audit-2026-10-11/V2.1-FREEZE-SCOPE-REPORT.md",
+      ".cursor/skills/planner/SKILL.md",
+      "docs/research/evolveloop-v2.2/05-knowledge-wiki-architecture.md"
+    ],
+    "input_tokens": 20088,
+    "latency_ms": 1585,
+    "recall": 1.0,
+    "recall_notes": [],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": true,
+    "recall": 1.0,
+    "notes": []
+  }
+}

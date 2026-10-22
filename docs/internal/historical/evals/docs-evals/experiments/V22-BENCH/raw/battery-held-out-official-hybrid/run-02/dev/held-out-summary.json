@@ -1,0 +1,227 @@
+{
+  "experiment": "V22-BENCH-HELD-OUT",
+  "classification_by_arm": {
+    "B0": "OFFICIAL_BASELINE",
+    "B1": "OFFICIAL_WIKI_GROUND"
+  },
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "harness_notes": {
+    "b0_corpus_rg_globs": [
+      "!node_modules",
+      "!.git",
+      "!dist",
+      "!**/.venv",
+      "!agent-setup/.venv",
+      "!fixtures/evolveloop-wiki-vault/**",
+      "!**/EvolveLoop/wiki/**",
+      "!**/autogen-*",
+      "!docs/internal/historical/evals/**",
+      "!docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/**"
+    ],
+    "anchor_recall_mode": "file",
+    "bench_max_paths": 45,
+    "bench_max_input_tokens": 22000,
+    "b1_query": "task.query + corpus glossary expansion (rg_patterns reserved for B0)",
+    "b1_hybrid_lexical": "1",
+    "b1_top_k": "16",
+    "wiki_engine": {
+      "engine_requested": "official",
+      "karpathy_wiki_dir": "/opt/karpathyWiki",
+      "karpathy_wiki_sha_expected": "cd3cf08",
+      "motor_origin": "snapshot_cd3cf08_local",
+      "tarball_sha256": "11160e77ad7c88885635ef2beeac1d8046b95c103952dbe1a90aba1bbb852377",
+      "wiki_engine": "karpathyWiki",
+      "wiki_root": "/opt/karpathyWiki",
+      "wiki_python": "/opt/karpathyWiki/.venv/bin/python"
+    }
+  },
+  "task_filter": "H07-H18",
+  "freeze_tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+  "tasks_frozen": "tasks-held-out-frozen.json",
+  "aggregates": {
+    "H07:B0": {
+      "median_paths": 45.0,
+      "median_input_tokens": 14042.0,
+      "median_latency_ms": 44.0,
+      "recall": 0.0
+    },
+    "H07:B1": {
+      "median_paths": 15.0,
+      "median_input_tokens": 21384.0,
+      "median_latency_ms": 1637.0,
+      "recall": 1.0
+    },
+    "H08:B0": {
+      "median_paths": 15.0,
+      "median_input_tokens": 12809.0,
+      "median_latency_ms": 23.0,
+      "recall": 1.0
+    },
+    "H08:B1": {
+      "median_paths": 11.0,
+      "median_input_tokens": 21066.0,
+      "median_latency_ms": 1547.0,
+      "recall": 0.0
+    },
+    "H09:B0": {
+      "median_paths": 45.0,
+      "median_input_tokens": 14038.0,
+      "median_latency_ms": 34.0,
+      "recall": 1.0
+    },
+    "H09:B1": {
+      "median_paths": 15.0,
+      "median_input_tokens": 21712.0,
+      "median_latency_ms": 1561.0,
+      "recall": 1.0
+    },
+    "H10:B0": {
+      "median_paths": 24.0,
+      "median_input_tokens": 21950.0,
+      "median_latency_ms": 27.0,
+      "recall": 1.0
+    },
+    "H10:B1": {
+      "median_paths": 12.0,
+      "median_input_tokens": 20740.0,
+      "median_latency_ms": 1572.0,
+      "recall": 1.0
+    },
+    "H11:B0": {
+      "median_paths": 45.0,
+      "median_input_tokens": 10759.0,
+      "median_latency_ms": 42.0,
+      "recall": 0.0
+    },
+    "H11:B1": {
+      "median_paths": 11.0,
+      "median_input_tokens": 20807.0,
+      "median_latency_ms": 1590.0,
+      "recall": 0.0
+    },
+    "H12:B0": {
+      "median_paths": 9.0,
+      "median_input_tokens": 5926.0,
+      "median_latency_ms": 24.0,
+      "recall": 1.0
+    },
+    "H12:B1": {
+      "median_paths": 15.0,
+      "median_input_tokens": 21468.0,
+      "median_latency_ms": 1579.0,
+      "recall": 0.0
+    },
+    "H13:B0": {
+      "median_paths": 26.0,
+      "median_input_tokens": 20864.0,
+      "median_latency_ms": 35.0,
+      "recall": 1.0
+    },
+    "H13:B1": {
+      "median_paths": 15.0,
+      "median_input_tokens": 21862.0,
+      "median_latency_ms": 1697.0,
+      "recall": 1.0
+    },
+    "H14:B0": {
+      "median_paths": 13.0,
+      "median_input_tokens": 8616.0,
+      "median_latency_ms": 18.0,
+      "recall": 1.0
+    },
+    "H14:B1": {
+      "median_paths": 19.0,
+      "median_input_tokens": 21494.0,
+      "median_latency_ms": 1603.0,
+      "recall": 1.0
+    },
+    "H15:B0": {
+      "median_paths": 45.0,
+      "median_input_tokens": 10759.0,
+      "median_latency_ms": 34.0,
+      "recall": 0.0
+    },
+    "H15:B1": {
+      "median_paths": 15.0,
+      "median_input_tokens": 20455.0,
+      "median_latency_ms": 1566.0,
+      "recall": 1.0
+    },
+    "H16:B0": {
+      "median_paths": 16.0,
+      "median_input_tokens": 7331.0,
+      "median_latency_ms": 18.0,
+      "recall": 1.0
+    },
+    "H16:B1": {
+      "median_paths": 17.0,
+      "median_input_tokens": 20883.0,
+      "median_latency_ms": 1559.0,
+      "recall": 1.0
+    },
+    "H17:B0": {
+      "median_paths": 34.0,
+      "median_input_tokens": 21651.0,
+      "median_latency_ms": 36.0,
+      "recall": 1.0
+    },
+    "H17:B1": {
+      "median_paths": 24.0,
+      "median_input_tokens": 21857.0,
+      "median_latency_ms": 3250.0,
+      "recall": 1.0
+    },
+    "H18:B0": {
+      "median_paths": 45.0,
+      "median_input_tokens": 14036.0,
+      "median_latency_ms": 36.0,
+      "recall": 0.0
+    },
+    "H18:B1": {
+      "median_paths": 12.0,
+      "median_input_tokens": 21996.0,
+      "median_latency_ms": 1609.0,
+      "recall": 1.0
+    }
+  },
+  "rollups": {
+    "held_out_B0_median_paths": 30.0,
+    "held_out_B1_median_paths": 15.0,
+    "held_out_B0_median_tokens": 13422.5,
+    "held_out_B1_median_tokens": 21426.0,
+    "held_out_B0_median_latency_ms": 34.0,
+    "held_out_B1_median_latency_ms": 1584.5
+  },
+  "environment": {
+    "os": "Linux-6.12.94+-x86_64-with-glibc2.39",
+    "wiki_root": "/opt/karpathyWiki",
+    "ground_sh": "/workspace/.cursor/skills/wiki/scripts/ground.sh",
+    "contamination_guard": "generate-evolveloop-wiki-knowledge.sh allowlist; no V22-BENCH reads"
+  },
+  "runs": [
+    "V22H-H07-B0-b762ba372190",
+    "V22H-H07-B1-44191b28c87d",
+    "V22H-H08-B0-25f696785fc6",
+    "V22H-H08-B1-6363c54be662",
+    "V22H-H09-B0-4a7fd361e7b7",
+    "V22H-H09-B1-9707d2da962d",
+    "V22H-H10-B0-99de8e4421fb",
+    "V22H-H10-B1-99c0955e49d2",
+    "V22H-H11-B0-59436ff84c21",
+    "V22H-H11-B1-e578ff24f42d",
+    "V22H-H12-B0-cd068e4a2d3b",
+    "V22H-H12-B1-a35b4b2208b4",
+    "V22H-H13-B0-777205ff3fb8",
+    "V22H-H13-B1-0a2b2b2cd371",
+    "V22H-H14-B0-9906346bbb90",
+    "V22H-H14-B1-795ca839288e",
+    "V22H-H15-B0-9f7407568552",
+    "V22H-H15-B1-b41058860382",
+    "V22H-H16-B0-f8fc55a0e9e8",
+    "V22H-H16-B1-c175c6c41f34",
+    "V22H-H17-B0-30050be0d0dd",
+    "V22H-H17-B1-a5660871c379",
+    "V22H-H18-B0-1efdf3132197",
+    "V22H-H18-B1-1af0fefc3ca8"
+  ]
+}

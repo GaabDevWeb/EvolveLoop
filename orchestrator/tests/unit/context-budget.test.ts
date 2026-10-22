@@ -70,7 +70,7 @@ describe("V22-GOAL-006 — context budget per spawn", () => {
   it("AC: telemetria registra tokenizer e contagem após budget", () => {
     const slices = [
       sliceFromFile("keep.md", "short", "acceptance_criteria", 100),
-      sliceFromFile("only.txt", "a".repeat(8000), "generic", 1),
+      sliceFromFile("only.txt", "word ".repeat(4000), "generic", 1),
     ];
     const r = applyContextBudget(slices, {
       ownerId: "o3",

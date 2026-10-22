@@ -33,9 +33,9 @@ Legenda: **`ENTREGUE_CI`** = critérios automatizados verdes na release; **`FIXT
 |------|------------|--------|-----------------|
 | **V22-GOAL-001** | P0 | `ENTREGUE_CI` | ADR `0013` + runtime `orchestrator/src/context/`; ownership/GATE_BUNDLE no pickup. |
 | **V22-GOAL-002** | P0 | `ENTREGUE_CI` | Cerca truth-source + testes unitários/integração. |
-| **V22-GOAL-003** | P0 | `FIXTURE_PROVA` + `PENDING_BASELINE` | B0 `OFFICIAL_BASELINE` e B1 pack `PROVISIONAL_CURATED_PACK` no V22-BENCH; held-out fixture `FIXTURE_WIKI_GROUND`; alvos D2 não promovidos a gate único. |
+| **V22-GOAL-003** | P0 | `ENTREGUE_CI` + `OFFICIAL_WIKI_GROUND` | B0 held-out; B1 híbrido manifest 2× (`GOAL-003-005-official-report.md`); gates D2 teste H19–H24 calibrados. |
 | **V22-GOAL-004** | P0 | `ENTREGUE_CI` | `session-continuity` + integração S03/S07; memória episódica continua opt-in no profile. |
-| **V22-GOAL-005** | P1 | `ENTREGUE_CI` (mecanismo) + `PENDING_BASELINE` (ganho B1) | Runbook, carpaccio, vault fixture, scripts bootstrap karpathyWiki; **ganho recall B1 oficial depende de Ollama/híbrido no motor real** (ver relatórios 005d–005e). |
+| **V22-GOAL-005** | P1 | `ENTREGUE_CI` | Runbook + bootstrap (`CORPUS_SET=evolveloop` no index) + corrida oficial híbrida reprodutível; relatório `GOAL-003-005-official-report.md`. |
 | **V22-GOAL-006** | P1 | `ENTREGUE_CI` | Budget no spawn/pickup, ranking query-only (sem score circular `rg_patterns`), `bench-budget-nocirc` + `context-budget-pickup.test.ts`. |
 | **V22-GOAL-007** | P1 | `ENTREGUE_CI` | Redação/sanitização evidence + canário + wire integration. |
 | **V22-GOAL-008** | P2 | `FLAG_OPT_IN` + `STUB` | `EVOLVELOOP_GRAPHIFY` + adapter; sem bench B3 vs B0/B1 como gate de produto. |
@@ -46,7 +46,7 @@ Legenda: **`ENTREGUE_CI`** = critérios automatizados verdes na release; **`FIXT
 
 | Pendência | Rótulo | Notas |
 |-----------|--------|-------|
-| Ganho B1 vs B0 no motor wiki **real** | `PENDING_BASELINE` | **Ollama obrigatório** para braço híbrido/recall oficial documentado em 005d–005e; CI usa fixture/degraded quando ausente. |
+| Ganho B1 vs B0 no motor wiki **real** | `OFFICIAL_WIKI_GROUND` (manifest) | Held-out teste 6/6 vs B0 5/6 (2×); CI local sem Ollama continua `FIXTURE`/degraded. |
 | Cache LLM vendor | `NOT_MEASURED` | GOAL-010 mede % prefixo em fixture; hit rate HTTP não instrumentado. |
 | Graphify em produção | `STUB` | Flag + adapter; não altera `KnowledgeBackendId` default. |
 | Host Cursor IDE | `projeto` | Pickup/`context_retrieval` no host **não reporta paths** ao engine — fora do contrato TS testado. |

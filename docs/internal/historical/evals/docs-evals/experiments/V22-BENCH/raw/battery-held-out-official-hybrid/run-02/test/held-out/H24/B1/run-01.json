@@ -1,0 +1,51 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_WIKI_GROUND",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H24-B1-325dd6a73283",
+  "arm": "B1",
+  "task_id": "H24",
+  "timestamp": "2026-10-22T02:40:45.614582+00:00",
+  "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+  "harness": "v22-ground-b1-harness-1.5.0",
+  "tokenizer": "PROXY:whitespace_split",
+  "metrics": {
+    "task_id": "H24",
+    "arm": "B1",
+    "paths_read": [
+      ".cursor/skills/agent-architecture-mining/references/evidence.md",
+      ".cursor/skills/security/references/trust-boundaries.md",
+      ".cursor/skills/skill-authoring/references/post-ship-recommendations.md",
+      "docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md",
+      "docs/reconciliation/TEST-RECONCILIATION.md",
+      "orchestrator/src/v22/bench-h-tasks.ts",
+      ".cursor/skills/security/references/business-logic.md",
+      "docs/architecture/v2.2/CONSOLIDATION-REPORT.md",
+      "orchestrator/src/knowledge/truth-source/fence.ts",
+      "docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md",
+      "docs/research/evolveloop-v2.2/03-repositories-and-tools.md",
+      "docs/research/evolveloop-v2.2/05-knowledge-wiki-architecture.md",
+      "docs/architecture/evolution/OPEN-QUESTIONS.yaml",
+      ".cursor/skills/orquestrar/references/specs/README.md",
+      "orchestrator/src/v22/bench-r-tasks.ts",
+      "docs/research/findings/_aggregate_decisions.json",
+      "docs/research/CROSS-INVESTIGATION-REVIEW.md",
+      ".cursor/skills/wiki/scripts/format_hits.py",
+      "orchestrator/src/cli/run-engine.ts",
+      "docs/research/DECISION-MATRIX.md",
+      "docs/architecture/skills/audit/SKILL-DEPENDENCY-GRAPH-V2.yaml",
+      "docs/architecture/v2.2/scripts/validate-v22-artifacts.sh"
+    ],
+    "input_tokens": 21586,
+    "latency_ms": 3215,
+    "recall": 1.0,
+    "recall_notes": [],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": true,
+    "recall": 1.0,
+    "notes": []
+  }
+}

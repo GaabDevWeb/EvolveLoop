@@ -1,0 +1,48 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_WIKI_GROUND",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H12-B1-a35b4b2208b4",
+  "arm": "B1",
+  "task_id": "H12",
+  "timestamp": "2026-10-22T02:40:19.219300+00:00",
+  "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+  "harness": "v22-ground-b1-harness-1.5.0",
+  "tokenizer": "PROXY:whitespace_split",
+  "metrics": {
+    "task_id": "H12",
+    "arm": "B1",
+    "paths_read": [
+      "orchestrator/src/v22/bench-h-tasks.ts",
+      ".cursor/skills/orquestrar/references/dev-intelligence.md",
+      ".cursor/skills/wiki/evals/trigger-eval-set.json",
+      "docs/research/evolveloop-v2.2/README.md",
+      "docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md",
+      ".cursor/skills/security/references/exploitation-checklist.md",
+      "docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md",
+      ".cursor/skills/orquestrar/references/contracts/runtime.md",
+      "docs/research/evolveloop-v2.2/04-community-findings.md",
+      ".cursor/skills/orquestrar/references/specs/runtime.md",
+      "docs/research/evolveloop-v2.2/01-current-state-audit.md",
+      "docs/architecture/v2.2/WIKI-OPS-RUNBOOK.md",
+      "docs/internal/historical/cursor-megabrain-rag-stack.md",
+      "docs/research/evolveloop-v2.2/05-knowledge-wiki-architecture.md",
+      ".cursor/skills/planner/SKILL.md"
+    ],
+    "input_tokens": 21468,
+    "latency_ms": 1579,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
+    ]
+  }
+}

@@ -2,11 +2,19 @@
 """Integrity tests for V22-BENCH harness."""
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from official_manifest import (  # noqa: E402
+    TASKS_FROZEN,
+    sha256_file,
+    validate_b1_no_task_rg_leak,
+    validate_manifest,
+    validate_raw_matches_summary,
+)
 from bench_harness import (  # noqa: E402
     EXP_DIR,
     FIXTURE_SRC,
@@ -75,7 +83,40 @@ def test_real_battery_classifications():
     assert by_arm.get("B1") == "PROVISIONAL_CURATED_PACK"
 
 
+def test_official_manifest(manifest_path: Path):
+    ok, errs = validate_manifest(manifest_path)
+    if not ok:
+        raise AssertionError("; ".join(errs))
+    print("OK official_manifest")
+
+
+def test_tasks_frozen_hash_stable():
+    assert TASKS_FROZEN.is_file()
+    digest = sha256_file(TASKS_FROZEN)
+    assert len(digest) == 64
+    print(f"OK tasks_frozen_sha256={digest[:12]}...")
+
+
+def test_b1_harness_no_rg_leak():
+    errs = validate_b1_no_task_rg_leak()
+    assert not errs, errs
+    print("OK b1_no_rg_patterns")
+
+
 def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument(
+        "--official",
+        help="Path to OFFICIAL-MANIFEST.json (runs official checks only)",
+    )
+    args = ap.parse_args()
+    if args.official:
+        test_tasks_frozen_hash_stable()
+        test_b1_harness_no_rg_leak()
+        test_official_manifest(Path(args.official))
+        print("ALL_OFFICIAL_INTEGRITY_OK")
+        return
+
     test_fixture_present()
     print("OK fixture")
     test_b1_fewer_paths_than_b0_on_s02()
@@ -86,6 +127,8 @@ def main():
     print("OK battery_artifact_optional")
     test_real_battery_classifications()
     print("OK real_classifications")
+    test_tasks_frozen_hash_stable()
+    test_b1_harness_no_rg_leak()
     print("ALL_INTEGRITY_OK")
 
 

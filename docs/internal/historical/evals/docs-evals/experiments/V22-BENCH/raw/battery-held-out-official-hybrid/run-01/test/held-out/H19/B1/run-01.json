@@ -1,0 +1,45 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_WIKI_GROUND",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H19-B1-08289ee36d2a",
+  "arm": "B1",
+  "task_id": "H19",
+  "timestamp": "2026-10-22T02:20:24.306431+00:00",
+  "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+  "harness": "v22-ground-b1-harness-1.5.0",
+  "tokenizer": "PROXY:whitespace_split",
+  "metrics": {
+    "task_id": "H19",
+    "arm": "B1",
+    "paths_read": [
+      "docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md",
+      "docs/architecture/finalization/ADR-FINALIZATION-REPORT.md",
+      "docs/research/evolveloop-v2.2/01-current-state-audit.md",
+      "docs/adr/0002-capability-model-deterministic-providers.md",
+      ".cursor/skills/planner/SKILL.md",
+      ".cursor/skills/orquestrar/references/policy-engine.md",
+      "docs/research/evolveloop-v2.2/04-community-findings.md",
+      "docs/adr/0003-capability-authority-vs-execution-policy.md",
+      "docs/research/evolveloop-v2.2/README.md",
+      "docs/architecture/decision-review/adr-drafts/ADR-DR-0002-defer-production-skill-budget.md",
+      "docs/research/evolveloop-v2.2/10-risks-and-open-questions.md",
+      "docs/architecture/gate/ADR-GATE-REPORT.md",
+      "docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md",
+      "docs/architecture/finalization/adrs/ADR-DR-0002-defer-production-skill-budget.md",
+      ".cursor/skills/orquestrar/evals/evals-v25-blind.json",
+      ".cursor/skills/orquestrar/evals/evals-v26-blind.json"
+    ],
+    "input_tokens": 20168,
+    "latency_ms": 1583,
+    "recall": 1.0,
+    "recall_notes": [],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": true,
+    "recall": 1.0,
+    "notes": []
+  }
+}

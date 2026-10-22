@@ -1,0 +1,52 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_WIKI_GROUND",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H14-B1-795ca839288e",
+  "arm": "B1",
+  "task_id": "H14",
+  "timestamp": "2026-10-22T02:40:22.576472+00:00",
+  "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+  "harness": "v22-ground-b1-harness-1.5.0",
+  "tokenizer": "PROXY:whitespace_split",
+  "metrics": {
+    "task_id": "H14",
+    "arm": "B1",
+    "paths_read": [
+      "docs/research/evolveloop-v2.2/01-current-state-audit.md",
+      "orchestrator/src/v22/bench-h-tasks.ts",
+      ".cursor/skills/orquestrar/references/ecosystem-v2.md",
+      "docs/adr/0002-capability-model-deterministic-providers.md",
+      ".cursor/skills/orquestrar/references/specs/runtime.md",
+      ".cursor/skills/orquestrar/references/specs/README.md",
+      "orchestrator/src/providers/deterministic/knowledge.ts",
+      "orchestrator/src/v22/bench-r-tasks.ts",
+      "docs/architecture/portability/PORTABILITY-FORENSIC-AUDIT.md",
+      "orchestrator/src/discovery/capability-profiles.ts",
+      "docs/architecture/finalization/PROTOTYPE-HARDENING-REPORT.md",
+      "docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md",
+      "docs/architecture/evolveloopt/SECURITY.md",
+      "docs/architecture/release-audit-2026-10-11/V2.1-FREEZE-SCOPE-REPORT.md",
+      "docs/architecture/prototype-gate/PROTOTYPE-GATE-REPORT.md",
+      ".cursor/skills/orquestrar/references/specs/interfaces.md",
+      "orchestrator/src/registry/registry-client.ts",
+      ".cursor/skills/orquestrar/references/specs/plugins.md",
+      "docs/research/evolveloop-v2.2/README.md"
+    ],
+    "input_tokens": 21494,
+    "latency_ms": 1603,
+    "recall": 1.0,
+    "recall_notes": [
+      "anchor line drift (file hit): orchestrator/src/providers/deterministic/knowledge.ts:16"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": true,
+    "recall": 1.0,
+    "notes": [
+      "anchor line drift (file hit): orchestrator/src/providers/deterministic/knowledge.ts:16"
+    ]
+  }
+}
