@@ -4,6 +4,7 @@ import { join } from "node:path";
 import {
   FakeKnowledgeBackend,
   WikiKnowledgeBackend,
+  parseWikiSearchStdout,
   resolveKnowledgeBackend,
   resetKnowledgeBackendCache,
   loadMegaBrainProfile,
@@ -74,6 +75,30 @@ describe("KnowledgeBackend seam", () => {
     delete process.env.RAG_REPO_ROOT;
     expect(resolveWikiRoot()).toBe("/tmp/custom-wiki-root-xyz");
     expect(resolveWikiRoot()).not.toContain("/home/gaab");
+  });
+
+  it("parses gaabwiki search envelope with provenance and stale flag", () => {
+    const stdout = JSON.stringify({
+      status: "ok",
+      selected: [
+        {
+          score: 2,
+          content: "excerpt text",
+          source: {
+            file: "profiles/default.yaml",
+            line: 12,
+            source_hash: "abc123",
+            stale: true,
+            stale_reason: "source_hash_mismatch",
+          },
+        },
+      ],
+    });
+    const hits = parseWikiSearchStdout(stdout);
+    expect(hits.length).toBe(1);
+    expect(hits[0]?.source).toBe("profiles/default.yaml");
+    expect(hits[0]?.degraded).toContain("source_hash_mismatch");
+    expect(hits[0]?.excerpt).toContain("excerpt");
   });
 
   it("missing wiki root yields RAG_REPO_MISSING (fail closed for retrieval)", async () => {

@@ -1,0 +1,493 @@
+[
+  {
+    "experiment_id": "V22-BENCH-HELD-OUT",
+    "evidence_class": "OFFICIAL_BASELINE",
+    "baseline_id": "v22-held-out-b0b1-ground-2026-10-22",
+    "run_id": "V22H-H01-B0-f5cc24dc4b8c",
+    "arm": "B0",
+    "task_id": "H01",
+    "timestamp": "2026-10-22T00:55:26.355312+00:00",
+    "tree_sha": "1dc11ea9e293ce5d63809a575b0f4eb132f1a0a1",
+    "harness": "v22-ground-b1-harness-1.0.0",
+    "tokenizer": "PROXY:whitespace_split",
+    "metrics": {
+      "task_id": "H01",
+      "arm": "B0",
+      "paths_read": [
+        "docs/architecture/knowledge/KNOWLEDGE-BACKEND-MATRIX.yaml",
+        "docs/architecture/public/OVERVIEW.md",
+        "docs/architecture/publication/FINAL-MAIN-MANIFEST.yaml",
+        "docs/architecture/v2.2/scripts/generate-evolveloop-wiki-knowledge.sh",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-held-out-frozen.json",
+        "fixtures/evolveloop-wiki-vault/projects/evolveloop/pages/fake-knowledge-backend.md",
+        "orchestrator/src/executors/smart-mock-executor.ts",
+        "orchestrator/src/index.ts",
+        "orchestrator/src/knowledge/backend/fake-backend.ts",
+        "orchestrator/src/knowledge/backend/resolve.ts",
+        "orchestrator/src/knowledge/backend/types.ts",
+        "orchestrator/src/knowledge/backend/wiki-backend.ts",
+        "orchestrator/src/plugins/cursor-skill-provider.ts",
+        "orchestrator/src/providers/deterministic/index.ts",
+        "orchestrator/src/providers/mock-provider.ts",
+        "orchestrator/tests/unit/knowledge-backend.test.ts"
+      ],
+      "input_tokens": 6148,
+      "latency_ms": 16,
+      "recall": 1.0,
+      "recall_notes": [],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-HELD-OUT",
+    "evidence_class": "OFFICIAL_WIKI_GROUND",
+    "baseline_id": "v22-held-out-b0b1-ground-2026-10-22",
+    "run_id": "V22H-H01-B1-8d28580be52b",
+    "arm": "B1",
+    "task_id": "H01",
+    "timestamp": "2026-10-22T00:55:26.392592+00:00",
+    "tree_sha": "1dc11ea9e293ce5d63809a575b0f4eb132f1a0a1",
+    "harness": "v22-ground-b1-harness-1.0.0",
+    "tokenizer": "PROXY:whitespace_split",
+    "metrics": {
+      "task_id": "H01",
+      "arm": "B1",
+      "paths_read": [
+        "orchestrator/src/knowledge/backend/fake-backend.ts"
+      ],
+      "input_tokens": 180,
+      "latency_ms": 36,
+      "recall": 1.0,
+      "recall_notes": [],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-HELD-OUT",
+    "evidence_class": "OFFICIAL_BASELINE",
+    "baseline_id": "v22-held-out-b0b1-ground-2026-10-22",
+    "run_id": "V22H-H02-B0-1780824337ee",
+    "arm": "B0",
+    "task_id": "H02",
+    "timestamp": "2026-10-22T00:55:26.407649+00:00",
+    "tree_sha": "1dc11ea9e293ce5d63809a575b0f4eb132f1a0a1",
+    "harness": "v22-ground-b1-harness-1.0.0",
+    "tokenizer": "PROXY:whitespace_split",
+    "metrics": {
+      "task_id": "H02",
+      "arm": "B0",
+      "paths_read": [
+        "docs/architecture/knowledge/KNOWLEDGE-PROFILE-BOUNDARY.md",
+        "docs/architecture/v2.2/scripts/generate-evolveloop-wiki-knowledge.sh",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-held-out-frozen.json",
+        "fixtures/evolveloop-wiki-vault/projects/evolveloop/pages/profile-knowledge-default.md",
+        "orchestrator/src/config/profile.ts",
+        "orchestrator/src/index.ts",
+        "orchestrator/tests/unit/knowledge-backend.test.ts"
+      ],
+      "input_tokens": 2030,
+      "latency_ms": 14,
+      "recall": 1.0,
+      "recall_notes": [],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-HELD-OUT",
+    "evidence_class": "OFFICIAL_WIKI_GROUND",
+    "baseline_id": "v22-held-out-b0b1-ground-2026-10-22",
+    "run_id": "V22H-H02-B1-a4973b764e0c",
+    "arm": "B1",
+    "task_id": "H02",
+    "timestamp": "2026-10-22T00:55:26.444628+00:00",
+    "tree_sha": "1dc11ea9e293ce5d63809a575b0f4eb132f1a0a1",
+    "harness": "v22-ground-b1-harness-1.0.0",
+    "tokenizer": "PROXY:whitespace_split",
+    "metrics": {
+      "task_id": "H02",
+      "arm": "B1",
+      "paths_read": [
+        "orchestrator/src/knowledge/backend/fake-backend.ts",
+        "orchestrator/src/config/profile.ts"
+      ],
+      "input_tokens": 572,
+      "latency_ms": 36,
+      "recall": 1.0,
+      "recall_notes": [],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-HELD-OUT",
+    "evidence_class": "OFFICIAL_BASELINE",
+    "baseline_id": "v22-held-out-b0b1-ground-2026-10-22",
+    "run_id": "V22H-H03-B0-46d30a1553be",
+    "arm": "B0",
+    "task_id": "H03",
+    "timestamp": "2026-10-22T00:55:26.459481+00:00",
+    "tree_sha": "1dc11ea9e293ce5d63809a575b0f4eb132f1a0a1",
+    "harness": "v22-ground-b1-harness-1.0.0",
+    "tokenizer": "PROXY:whitespace_split",
+    "metrics": {
+      "task_id": "H03",
+      "arm": "B0",
+      "paths_read": [
+        "README.md",
+        "docs/adr/0012-wiki-default-knowledge-backend.md",
+        "docs/architecture/knowledge/KNOWLEDGE-ARCHITECTURE.md",
+        "docs/architecture/knowledge/KNOWLEDGE-BACKEND-CONTRACT.md",
+        "docs/architecture/knowledge/KNOWLEDGE-BACKEND-MANIFEST.yaml",
+        "docs/architecture/knowledge/KNOWLEDGE-BEFORE-AFTER.md",
+        "docs/architecture/knowledge/KNOWLEDGE-PROFILE-BOUNDARY.md",
+        "docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md",
+        "docs/architecture/knowledge/PROFILE-BOUNDARY-MANIFEST.yaml",
+        "docs/architecture/public/OVERVIEW.md",
+        "docs/architecture/publication/PUBLIC-CONFIG-MATRIX.yaml",
+        "docs/architecture/publication/PUBLIC-EXTRACTION-PLAN.md",
+        "docs/architecture/v2.2/WIKI-OPS-RUNBOOK.md",
+        "docs/architecture/v2.2/scripts/generate-evolveloop-wiki-knowledge.sh",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-held-out-frozen.json",
+        "fixtures/evolveloop-wiki-vault/projects/evolveloop/pages/env-backend-override.md",
+        "fixtures/evolveloop-wiki-vault/projects/evolveloop/pages/fake-knowledge-backend.md",
+        "fixtures/evolveloop-wiki-vault/projects/evolveloop/pages/wiki-default-adr.md",
+        "orchestrator/src/config/profile.ts",
+        "orchestrator/src/knowledge/backend/fake-backend.ts",
+        "orchestrator/src/knowledge/backend/resolve.ts",
+        "orchestrator/tests/unit/knowledge-backend.test.ts",
+        "profiles/default.yaml"
+      ],
+      "input_tokens": 5582,
+      "latency_ms": 14,
+      "recall": 1.0,
+      "recall_notes": [],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-HELD-OUT",
+    "evidence_class": "OFFICIAL_WIKI_GROUND",
+    "baseline_id": "v22-held-out-b0b1-ground-2026-10-22",
+    "run_id": "V22H-H03-B1-ff5023da8e47",
+    "arm": "B1",
+    "task_id": "H03",
+    "timestamp": "2026-10-22T00:55:26.496017+00:00",
+    "tree_sha": "1dc11ea9e293ce5d63809a575b0f4eb132f1a0a1",
+    "harness": "v22-ground-b1-harness-1.0.0",
+    "tokenizer": "PROXY:whitespace_split",
+    "metrics": {
+      "task_id": "H03",
+      "arm": "B1",
+      "paths_read": [
+        "orchestrator/src/config/profile.ts",
+        "orchestrator/src/knowledge/backend/fake-backend.ts",
+        "docs/adr/0012-wiki-default-knowledge-backend.md"
+      ],
+      "input_tokens": 678,
+      "latency_ms": 36,
+      "recall": 1.0,
+      "recall_notes": [],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-HELD-OUT",
+    "evidence_class": "OFFICIAL_BASELINE",
+    "baseline_id": "v22-held-out-b0b1-ground-2026-10-22",
+    "run_id": "V22H-H04-B0-8761e57641be",
+    "arm": "B0",
+    "task_id": "H04",
+    "timestamp": "2026-10-22T00:55:26.515912+00:00",
+    "tree_sha": "1dc11ea9e293ce5d63809a575b0f4eb132f1a0a1",
+    "harness": "v22-ground-b1-harness-1.0.0",
+    "tokenizer": "PROXY:whitespace_split",
+    "metrics": {
+      "task_id": "H04",
+      "arm": "B0",
+      "paths_read": [
+        "AGENT.md",
+        "Agents/Adr.md",
+        "Agents/Architect.md",
+        "Agents/Orquestrador-v2.md",
+        "Agents/Planner.md",
+        "Agents/Prd.md",
+        "CONTRIBUTING.md",
+        "docs/adr/0001-agent-package-composition.md",
+        "docs/adr/0002-capability-model-deterministic-providers.md",
+        "docs/adr/0003-capability-authority-vs-execution-policy.md",
+        "docs/adr/0004-project-knowledge-contract.md",
+        "docs/adr/0005-hybrid-retrieval-degraded-mode.md",
+        "docs/adr/0010-public-core-vs-gaabtype-profile.md",
+        "docs/adr/0011-evolve-alias.md",
+        "docs/adr/0012-wiki-default-knowledge-backend.md",
+        "docs/architecture/decision-review/ARCHITECTURE-DECISION-REVIEW.md",
+        "docs/architecture/decision-review/DECISION-MATRIX.yaml",
+        "docs/architecture/decision-review/E-001-TOKEN-RECONCILIATION.md",
+        "docs/architecture/decision-review/FUTURE-EXPERIMENTS.yaml",
+        "docs/architecture/decision-review/TRACEABILITY.md",
+        "docs/architecture/decision-review/adr-drafts/ADR-DR-0001-keep-job-path-resume.md",
+        "docs/architecture/decision-review/adr-drafts/ADR-DR-0002-defer-production-skill-budget.md",
+        "docs/architecture/decision-review/adr-drafts/ADR-DR-0003-security-model-before-sandbox.md",
+        "docs/architecture/decision-review/adr-drafts/ADR-DR-0004-define-stuck-semantics-first.md",
+        "docs/architecture/decision-review/adr-drafts/ADR-DR-0005-context-ownership-before-compaction.md",
+        "docs/architecture/evolution/ADR-REVIEW-MATRIX.yaml",
+        "docs/architecture/evolution/EVIDENCE-CONSOLIDATION.yaml",
+        "docs/architecture/evolution/FINAL-ARCHITECTURE-EVOLUTION-REPORT.md",
+        "docs/architecture/evolution/FINAL-ARCHITECTURE-REVIEW.md",
+        "docs/architecture/evolution/FINAL-STATE.md",
+        "docs/architecture/evolution/FINAL-STATE.yaml",
+        "docs/architecture/evolution/IMPLEMENTATION-DECISION.yaml",
+        "docs/architecture/evolution/INTEGRITY-AUDIT.yaml",
+        "docs/architecture/evolution/OPEN-QUESTIONS.yaml",
+        "docs/architecture/evolution/PIPELINE-STATUS.yaml",
+        "docs/architecture/evolution/README.md",
+        "docs/architecture/evolution/STATE-AT-START.md",
+        "docs/architecture/evolution/STATE-AT-START.yaml",
+        "docs/architecture/evolution/TRACEABILITY.yaml",
+        "docs/architecture/evolution/UNSUPPORTED-CLAIMS.yaml",
+        "docs/architecture/finalization/ADR-FINALIZATION-REPORT.md",
+        "docs/architecture/finalization/ADR-INDEX.md",
+        "docs/architecture/finalization/FINALIZATION-MATRIX.yaml",
+        "docs/architecture/finalization/FINALIZATION-STATUS.yaml",
+        "docs/architecture/finalization/PROTOTYPE-HARDENING-REPORT.md"
+      ],
+      "input_tokens": 12397,
+      "latency_ms": 19,
+      "recall": 1.0,
+      "recall_notes": [],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-HELD-OUT",
+    "evidence_class": "OFFICIAL_WIKI_GROUND",
+    "baseline_id": "v22-held-out-b0b1-ground-2026-10-22",
+    "run_id": "V22H-H04-B1-6e420eab42a9",
+    "arm": "B1",
+    "task_id": "H04",
+    "timestamp": "2026-10-22T00:55:26.555183+00:00",
+    "tree_sha": "1dc11ea9e293ce5d63809a575b0f4eb132f1a0a1",
+    "harness": "v22-ground-b1-harness-1.0.0",
+    "tokenizer": "PROXY:whitespace_split",
+    "metrics": {
+      "task_id": "H04",
+      "arm": "B1",
+      "paths_read": [
+        "docs/adr/0012-wiki-default-knowledge-backend.md",
+        "orchestrator/src/config/profile.ts",
+        "orchestrator/src/knowledge/backend/fake-backend.ts"
+      ],
+      "input_tokens": 671,
+      "latency_ms": 39,
+      "recall": 1.0,
+      "recall_notes": [],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-HELD-OUT",
+    "evidence_class": "OFFICIAL_BASELINE",
+    "baseline_id": "v22-held-out-b0b1-ground-2026-10-22",
+    "run_id": "V22H-H05-B0-612a04be5837",
+    "arm": "B0",
+    "task_id": "H05",
+    "timestamp": "2026-10-22T00:55:26.578014+00:00",
+    "tree_sha": "1dc11ea9e293ce5d63809a575b0f4eb132f1a0a1",
+    "harness": "v22-ground-b1-harness-1.0.0",
+    "tokenizer": "PROXY:whitespace_split",
+    "metrics": {
+      "task_id": "H05",
+      "arm": "B0",
+      "paths_read": [
+        "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+        "docs/architecture/v2.2/scripts/generate-evolveloop-wiki-knowledge.sh",
+        "docs/internal/historical/evals/docs-evals/experiments/E-001/HYPOTHESIS.md",
+        "docs/internal/historical/evals/docs-evals/experiments/E-001/conditions.json",
+        "docs/internal/historical/evals/docs-evals/experiments/E-001/conditions.yaml",
+        "docs/internal/historical/evals/docs-evals/experiments/E-001/harness/catalog_harness.py",
+        "docs/internal/historical/evals/docs-evals/experiments/E-001/raw/battery/T_TOKENS_40/aggregate.json",
+        "docs/internal/historical/evals/docs-evals/experiments/E-001/raw/battery/T_TOKENS_40/catalog-manifest.json",
+        "docs/internal/historical/evals/docs-evals/experiments/E-001/raw/battery/battery-summary.json",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-held-out-frozen.json",
+        "docs/research/evolveloop-v2.2/01-current-state-audit.md",
+        "docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md",
+        "docs/research/targets/external/aider/MECHANISMS.yaml",
+        "docs/research/targets/external/aider/REPORT.md",
+        "docs/research/targets/external/codex/REPORT.md",
+        "fixtures/evolveloop-wiki-vault/projects/evolveloop/pages/knowledge-hit-excerpt-cap.md",
+        "global-skills/subagent-driven-development/SKILL.md",
+        "global-skills/ui-ux-pro-max/SKILL.md",
+        "global-skills/ui-ux-pro-max/data/design.csv",
+        "global-skills/ui-ux-pro-max/data/draft.csv",
+        "global-skills/ui-ux-pro-max/data/stacks/html-tailwind.csv",
+        "global-skills/ui-ux-pro-max/data/stacks/shadcn.csv",
+        "orchestrator/src/capabilities/results.ts",
+        "orchestrator/src/jobs/checkpoint.ts",
+        "orchestrator/src/knowledge/backend/wiki-backend.ts",
+        "orchestrator/src/providers/deterministic/filesystem.ts",
+        "orchestrator/src/providers/deterministic/git.ts",
+        "orchestrator/src/providers/deterministic/shell.ts",
+        "orchestrator/src/providers/deterministic/system.ts",
+        "orchestrator/tests/unit/checkpoint-integrity.test.ts"
+      ],
+      "input_tokens": 60426,
+      "latency_ms": 22,
+      "recall": 1.0,
+      "recall_notes": [],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-HELD-OUT",
+    "evidence_class": "OFFICIAL_WIKI_GROUND",
+    "baseline_id": "v22-held-out-b0b1-ground-2026-10-22",
+    "run_id": "V22H-H05-B1-7f65a70f25b0",
+    "arm": "B1",
+    "task_id": "H05",
+    "timestamp": "2026-10-22T00:55:26.615261+00:00",
+    "tree_sha": "1dc11ea9e293ce5d63809a575b0f4eb132f1a0a1",
+    "harness": "v22-ground-b1-harness-1.0.0",
+    "tokenizer": "PROXY:whitespace_split",
+    "metrics": {
+      "task_id": "H05",
+      "arm": "B1",
+      "paths_read": [
+        "orchestrator/src/capabilities/results.ts"
+      ],
+      "input_tokens": 333,
+      "latency_ms": 37,
+      "recall": 1.0,
+      "recall_notes": [],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-HELD-OUT",
+    "evidence_class": "OFFICIAL_BASELINE",
+    "baseline_id": "v22-held-out-b0b1-ground-2026-10-22",
+    "run_id": "V22H-H06-B0-7a6e24463cb2",
+    "arm": "B0",
+    "task_id": "H06",
+    "timestamp": "2026-10-22T00:55:26.631189+00:00",
+    "tree_sha": "1dc11ea9e293ce5d63809a575b0f4eb132f1a0a1",
+    "harness": "v22-ground-b1-harness-1.0.0",
+    "tokenizer": "PROXY:whitespace_split",
+    "metrics": {
+      "task_id": "H06",
+      "arm": "B0",
+      "paths_read": [
+        "docs/architecture/knowledge/KNOWLEDGE-BACKEND-MATRIX.yaml",
+        "docs/architecture/public/OVERVIEW.md",
+        "docs/architecture/publication/FINAL-MAIN-MANIFEST.yaml",
+        "docs/architecture/v2.2/scripts/generate-evolveloop-wiki-knowledge.sh",
+        "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-held-out-frozen.json",
+        "fixtures/evolveloop-wiki-vault/projects/evolveloop/pages/fake-knowledge-backend.md",
+        "orchestrator/src/index.ts",
+        "orchestrator/src/knowledge/backend/fake-backend.ts",
+        "orchestrator/src/knowledge/backend/resolve.ts",
+        "orchestrator/tests/unit/knowledge-backend.test.ts"
+      ],
+      "input_tokens": 2303,
+      "latency_ms": 15,
+      "recall": 1.0,
+      "recall_notes": [],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    }
+  },
+  {
+    "experiment_id": "V22-BENCH-HELD-OUT",
+    "evidence_class": "OFFICIAL_WIKI_GROUND",
+    "baseline_id": "v22-held-out-b0b1-ground-2026-10-22",
+    "run_id": "V22H-H06-B1-13b42f6f902f",
+    "arm": "B1",
+    "task_id": "H06",
+    "timestamp": "2026-10-22T00:55:26.668124+00:00",
+    "tree_sha": "1dc11ea9e293ce5d63809a575b0f4eb132f1a0a1",
+    "harness": "v22-ground-b1-harness-1.0.0",
+    "tokenizer": "PROXY:whitespace_split",
+    "metrics": {
+      "task_id": "H06",
+      "arm": "B1",
+      "paths_read": [
+        "orchestrator/src/knowledge/backend/fake-backend.ts",
+        "orchestrator/src/knowledge/backend/resolve.ts"
+      ],
+      "input_tokens": 360,
+      "latency_ms": 36,
+      "recall": 1.0,
+      "recall_notes": [],
+      "ground_exit": 0,
+      "stale_hits": 0
+    },
+    "verifier": {
+      "pass": true,
+      "recall": 1.0,
+      "notes": []
+    }
+  }
+]

@@ -1,0 +1,39 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_BASELINE",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22",
+  "run_id": "V22H-H06-B0-7a6e24463cb2",
+  "arm": "B0",
+  "task_id": "H06",
+  "timestamp": "2026-10-22T00:55:26.631189+00:00",
+  "tree_sha": "1dc11ea9e293ce5d63809a575b0f4eb132f1a0a1",
+  "harness": "v22-ground-b1-harness-1.0.0",
+  "tokenizer": "PROXY:whitespace_split",
+  "metrics": {
+    "task_id": "H06",
+    "arm": "B0",
+    "paths_read": [
+      "docs/architecture/knowledge/KNOWLEDGE-BACKEND-MATRIX.yaml",
+      "docs/architecture/public/OVERVIEW.md",
+      "docs/architecture/publication/FINAL-MAIN-MANIFEST.yaml",
+      "docs/architecture/v2.2/scripts/generate-evolveloop-wiki-knowledge.sh",
+      "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-held-out-frozen.json",
+      "fixtures/evolveloop-wiki-vault/projects/evolveloop/pages/fake-knowledge-backend.md",
+      "orchestrator/src/index.ts",
+      "orchestrator/src/knowledge/backend/fake-backend.ts",
+      "orchestrator/src/knowledge/backend/resolve.ts",
+      "orchestrator/tests/unit/knowledge-backend.test.ts"
+    ],
+    "input_tokens": 2303,
+    "latency_ms": 15,
+    "recall": 1.0,
+    "recall_notes": [],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": true,
+    "recall": 1.0,
+    "notes": []
+  }
+}

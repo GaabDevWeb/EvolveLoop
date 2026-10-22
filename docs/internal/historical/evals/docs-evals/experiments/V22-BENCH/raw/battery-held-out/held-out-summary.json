@@ -1,0 +1,112 @@
+{
+  "experiment": "V22-BENCH-HELD-OUT",
+  "classification_by_arm": {
+    "B0": "OFFICIAL_BASELINE",
+    "B1": "OFFICIAL_WIKI_GROUND"
+  },
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22",
+  "freeze_tree_sha": "1dc11ea9e293ce5d63809a575b0f4eb132f1a0a1",
+  "tasks_frozen": "tasks-held-out-frozen.json",
+  "aggregates": {
+    "H01:B0": {
+      "median_paths": 16.0,
+      "median_input_tokens": 6148.0,
+      "median_latency_ms": 16.0,
+      "recall": 1.0
+    },
+    "H01:B1": {
+      "median_paths": 1.0,
+      "median_input_tokens": 180.0,
+      "median_latency_ms": 36.0,
+      "recall": 1.0
+    },
+    "H02:B0": {
+      "median_paths": 7.0,
+      "median_input_tokens": 2030.0,
+      "median_latency_ms": 14.0,
+      "recall": 1.0
+    },
+    "H02:B1": {
+      "median_paths": 2.0,
+      "median_input_tokens": 572.0,
+      "median_latency_ms": 36.0,
+      "recall": 1.0
+    },
+    "H03:B0": {
+      "median_paths": 23.0,
+      "median_input_tokens": 5582.0,
+      "median_latency_ms": 14.0,
+      "recall": 1.0
+    },
+    "H03:B1": {
+      "median_paths": 3.0,
+      "median_input_tokens": 678.0,
+      "median_latency_ms": 36.0,
+      "recall": 1.0
+    },
+    "H04:B0": {
+      "median_paths": 45.0,
+      "median_input_tokens": 12397.0,
+      "median_latency_ms": 19.0,
+      "recall": 1.0
+    },
+    "H04:B1": {
+      "median_paths": 3.0,
+      "median_input_tokens": 671.0,
+      "median_latency_ms": 39.0,
+      "recall": 1.0
+    },
+    "H05:B0": {
+      "median_paths": 30.0,
+      "median_input_tokens": 60426.0,
+      "median_latency_ms": 22.0,
+      "recall": 1.0
+    },
+    "H05:B1": {
+      "median_paths": 1.0,
+      "median_input_tokens": 333.0,
+      "median_latency_ms": 37.0,
+      "recall": 1.0
+    },
+    "H06:B0": {
+      "median_paths": 10.0,
+      "median_input_tokens": 2303.0,
+      "median_latency_ms": 15.0,
+      "recall": 1.0
+    },
+    "H06:B1": {
+      "median_paths": 2.0,
+      "median_input_tokens": 360.0,
+      "median_latency_ms": 36.0,
+      "recall": 1.0
+    }
+  },
+  "rollups": {
+    "held_out_B0_median_paths": 19.5,
+    "held_out_B1_median_paths": 2.0,
+    "held_out_B0_median_tokens": 5865.0,
+    "held_out_B1_median_tokens": 466.0,
+    "held_out_B0_median_latency_ms": 15.5,
+    "held_out_B1_median_latency_ms": 36.0
+  },
+  "environment": {
+    "os": "Linux-6.12.94+-x86_64-with-glibc2.39",
+    "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
+    "ground_sh": "/workspace/.cursor/skills/wiki/scripts/ground.sh",
+    "contamination_guard": "generate-evolveloop-wiki-knowledge.sh allowlist; no V22-BENCH reads"
+  },
+  "runs": [
+    "V22H-H01-B0-f5cc24dc4b8c",
+    "V22H-H01-B1-8d28580be52b",
+    "V22H-H02-B0-1780824337ee",
+    "V22H-H02-B1-a4973b764e0c",
+    "V22H-H03-B0-46d30a1553be",
+    "V22H-H03-B1-ff5023da8e47",
+    "V22H-H04-B0-8761e57641be",
+    "V22H-H04-B1-6e420eab42a9",
+    "V22H-H05-B0-612a04be5837",
+    "V22H-H05-B1-7f65a70f25b0",
+    "V22H-H06-B0-7a6e24463cb2",
+    "V22H-H06-B1-13b42f6f902f"
+  ]
+}

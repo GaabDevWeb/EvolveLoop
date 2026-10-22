@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gaabwiki"
+version = "0.1.0"
+description = "Minimal BM25 vault CLI for EvolveLoop V22-GOAL-005 (fixture; EXTERNAL module name per ADR-0004)"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+gaabwiki = "gaabwiki.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["gaabwiki*"]

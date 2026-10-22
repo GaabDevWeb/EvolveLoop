@@ -1,0 +1,31 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_WIKI_GROUND",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22",
+  "run_id": "V22H-H02-B1-a4973b764e0c",
+  "arm": "B1",
+  "task_id": "H02",
+  "timestamp": "2026-10-22T00:55:26.444628+00:00",
+  "tree_sha": "1dc11ea9e293ce5d63809a575b0f4eb132f1a0a1",
+  "harness": "v22-ground-b1-harness-1.0.0",
+  "tokenizer": "PROXY:whitespace_split",
+  "metrics": {
+    "task_id": "H02",
+    "arm": "B1",
+    "paths_read": [
+      "orchestrator/src/knowledge/backend/fake-backend.ts",
+      "orchestrator/src/config/profile.ts"
+    ],
+    "input_tokens": 572,
+    "latency_ms": 36,
+    "recall": 1.0,
+    "recall_notes": [],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": true,
+    "recall": 1.0,
+    "notes": []
+  }
+}
