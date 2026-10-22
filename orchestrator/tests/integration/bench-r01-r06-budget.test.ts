@@ -4,50 +4,79 @@ import { describe, it, expect } from "vitest";
 import { runB0Retrieval, type BenchTask } from "../../src/context/bench-retrieval.js";
 
 const REPO_ROOT = join(import.meta.dirname, "../../..");
-const TASKS_PATH = join(
+const TASKS_REAL = join(
   REPO_ROOT,
   "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-real-frozen.json",
+);
+const TASKS_HELD = join(
+  REPO_ROOT,
+  "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-held-out-frozen.json",
 );
 
 const BUDGET_LIMITS = { max_paths: 15, max_pages: 5 };
 
-describe("V22-BENCH real corpus R01–R06 — B0 OFFICIAL vs runtime budget", () => {
-  const spec = JSON.parse(readFileSync(TASKS_PATH, "utf-8")) as {
-    corpus_root: string;
-    tasks: BenchTask[];
+type Row = {
+  task_id: string;
+  suite: string;
+  B0: { paths: number; tokens: number; recall: number };
+  budget: { paths: number; tokens: number; recall: number; notes: string[] };
+  recall_ok: boolean;
+  tokens_ok: boolean;
+};
+
+function loadTasks(path: string, filter: (id: string) => boolean): BenchTask[] {
+  const spec = JSON.parse(readFileSync(path, "utf-8")) as { tasks: BenchTask[] };
+  return spec.tasks.filter((t) => filter(t.id));
+}
+
+function runPair(task: BenchTask, suite: string): Row {
+  const official = runB0Retrieval(REPO_ROOT, task);
+  const budgeted = runB0Retrieval(REPO_ROOT, task, {
+    budget: BUDGET_LIMITS,
+    ownerId: `bench:${task.id}`,
+  });
+  const recall_ok = budgeted.recall >= official.recall;
+  const tokenSlack = Math.max(64, Math.floor(official.input_tokens * 0.005));
+  const tokens_ok = budgeted.input_tokens <= official.input_tokens + tokenSlack;
+  return {
+    task_id: task.id,
+    suite,
+    B0: {
+      paths: official.paths_read.length,
+      tokens: official.input_tokens,
+      recall: official.recall,
+    },
+    budget: {
+      paths: budgeted.paths_read.length,
+      tokens: budgeted.input_tokens,
+      recall: budgeted.recall,
+      notes: budgeted.recall_notes,
+    },
+    recall_ok,
+    tokens_ok,
   };
-  const repoRoot = REPO_ROOT;
-  const tasks = spec.tasks.filter((t) => /^R0[1-6]$/.test(t.id));
+}
 
-  for (const task of tasks) {
-    it(`${task.id}: report paths/tokens/recall with and without budget`, () => {
-      const official = runB0Retrieval(repoRoot, task);
-      const budgeted = runB0Retrieval(repoRoot, task, {
-        budget: BUDGET_LIMITS,
-        ownerId: `bench:${task.id}`,
-      });
+describe("V22-BENCH — B0 OFFICIAL vs ranked budget (max_paths=15)", () => {
+  const real = loadTasks(TASKS_REAL, (id) => /^R0[1-6]$/.test(id));
+  const held = loadTasks(TASKS_HELD, (id) => /^H(0[7-9]|1[0-2])$/.test(id));
 
-      expect(official.arm).toBe("B0_OFFICIAL");
-      expect(budgeted.arm).toBe("B0_BUDGET");
-      expect(budgeted.paths_read.length).toBeLessThanOrEqual(BUDGET_LIMITS.max_paths!);
+  const all = [
+    ...real.map((t) => ({ task: t, suite: "real-R01-R06" })),
+    ...held.map((t) => ({ task: t, suite: "held-out-H07-H12" })),
+  ];
 
+  const rows: Row[] = [];
+
+  for (const { task, suite } of all) {
+    it(`${task.id} (${suite}): recall budget >= B0 and tokens <= B0`, () => {
+      const row = runPair(task, suite);
+      rows.push(row);
       // eslint-disable-next-line no-console
-      console.log(
-        JSON.stringify({
-          task_id: task.id,
-          B0_OFFICIAL: {
-            paths: official.paths_read.length,
-            tokens: official.input_tokens,
-            recall: official.recall,
-          },
-          B0_BUDGET: {
-            paths: budgeted.paths_read.length,
-            tokens: budgeted.input_tokens,
-            recall: budgeted.recall,
-            recall_notes: budgeted.recall_notes,
-          },
-        }),
-      );
+      console.log(JSON.stringify(row));
+      expect(row.budget.paths).toBeLessThanOrEqual(BUDGET_LIMITS.max_paths!);
+      expect(row.recall_ok, `recall regression: ${JSON.stringify(row)}`).toBe(true);
+      expect(row.tokens_ok, `token regression: ${JSON.stringify(row)}`).toBe(true);
     });
   }
 });

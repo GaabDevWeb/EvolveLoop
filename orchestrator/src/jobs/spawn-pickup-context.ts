@@ -7,6 +7,7 @@ import {
   deriveContextOwnerId,
   sliceFromFile,
   validateSpawnContext,
+  rankRetrievalPaths,
   type ContextSlice,
   type ContextBudgetTelemetry,
   type GateBundleFields,
@@ -193,10 +194,24 @@ export function preparePickupSpawnContext(
   }
 
   const retrieval = job.context_retrieval ?? [];
+  const cited =
+    (job.spawn_metadata?.cited_paths as string[] | undefined) ??
+    (job.spawn_metadata?.retrieval_paths as string[] | undefined);
+  const ranked = rankRetrievalPaths(
+    retrieval.map((e) => e.path),
+    (p) => retrieval.find((e) => e.path === p)?.content ?? "",
+    { query: job.briefing, rg_patterns: [], cited_paths: cited },
+  );
+  const priorityByPath = new Map(ranked.map((r) => [r.path, r.score]));
   const slices: ContextSlice[] = [
     ...protectedSlicesFromJob(job),
     ...retrieval.map((e) =>
-      sliceFromFile(e.path, e.content, e.kind ?? "generic", e.priority ?? 10),
+      sliceFromFile(
+        e.path,
+        e.content,
+        e.kind ?? "generic",
+        e.priority ?? priorityByPath.get(e.path) ?? 10,
+      ),
     ),
   ];
 

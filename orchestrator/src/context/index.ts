@@ -7,3 +7,4 @@ export * from "./gate-bundle.js";
 export * from "./pda-spawn.js";
 export * from "./telemetry.js";
 export * from "./bench-retrieval.js";
+export * from "./retrieval-ranking.js";

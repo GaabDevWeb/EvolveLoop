@@ -6,6 +6,11 @@ import { join } from "node:path";
 import { spawnSync } from "node:child_process";
 import { applyContextBudget, sliceFromFile, type ContextBudgetLimits } from "./index.js";
 import { countTokens } from "./tokenizer.js";
+import {
+  rankRetrievalPaths,
+  selectTopRankedPaths,
+  type RetrievalRankingContext,
+} from "./retrieval-ranking.js";
 
 export interface BenchAnchor {
   path: string;
@@ -18,6 +23,8 @@ export interface BenchTask {
   query: string;
   rg_patterns: string[];
   anchors: BenchAnchor[];
+  /** Optional objective paths (not anchors) for ranking boost */
+  cited_paths?: string[];
 }
 
 const B0_CAP = 45;
@@ -92,20 +99,33 @@ export interface BenchRetrievalResult {
   tokenizer: string;
 }
 
+function collectRgHits(repoRoot: string, task: BenchTask): string[] {
+  const hits: string[] = [];
+  for (const pat of task.rg_patterns) {
+    hits.push(...runRg(repoRoot, pat));
+  }
+  return [...new Set(hits)];
+}
+
+function rankingContext(task: BenchTask): RetrievalRankingContext {
+  return {
+    query: task.query,
+    rg_patterns: task.rg_patterns,
+    cited_paths: task.cited_paths,
+  };
+}
+
 export function runB0Retrieval(
   repoRoot: string,
   task: BenchTask,
   options?: { budget?: ContextBudgetLimits; ownerId?: string },
 ): BenchRetrievalResult {
-  const hits: string[] = [];
-  for (const pat of task.rg_patterns) {
-    hits.push(...runRg(repoRoot, pat));
-  }
-  const ordered = [...new Set(hits)].sort();
+  const hits = collectRgHits(repoRoot, task);
+  const orderedLex = [...hits].sort();
 
   if (!options?.budget) {
     const paths: string[] = [];
-    for (const rel of ordered) {
+    for (const rel of orderedLex) {
       if (rel.startsWith("secrets/")) continue;
       paths.push(rel);
       if (paths.length >= B0_CAP) break;
@@ -125,9 +145,16 @@ export function runB0Retrieval(
     };
   }
 
-  const slices = ordered
-    .filter((rel) => !rel.startsWith("secrets/"))
-    .map((rel, i) => sliceFromFile(rel, readRel(repoRoot, rel), "generic", i));
+  const ranked = rankRetrievalPaths(hits, (p) => readRel(repoRoot, p), rankingContext(task));
+  const topPaths = selectTopRankedPaths(
+    ranked,
+    (p) => countTokens(readRel(repoRoot, p)).tokens,
+    options.budget.max_paths ?? 15,
+  );
+  const scoreByPath = new Map(ranked.map((r) => [r.path, r.score]));
+  const slices = topPaths.map((path) =>
+    sliceFromFile(path, readRel(repoRoot, path), "generic", scoreByPath.get(path) ?? 0),
+  );
 
   const budgeted = applyContextBudget(slices, {
     ownerId: options.ownerId ?? `bench:${task.id}`,
