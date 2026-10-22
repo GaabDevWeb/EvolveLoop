@@ -17,7 +17,12 @@ export V22_WIKI_ENGINE=official
 export V22_B1_RETRIEVAL=hybrid
 export V22_BENCH_MAX_PATHS="${V22_BENCH_MAX_PATHS:-45}"
 export V22_BENCH_MAX_INPUT_TOKENS="${V22_BENCH_MAX_INPUT_TOKENS:-22000}"
-export V22_ANCHOR_RECALL="${V22_ANCHOR_RECALL:-file}"
+export V22_ANCHOR_SCORER_MODE="${V22_ANCHOR_SCORER_MODE:-file_evidence}"
+export V22_BENCH_TOKENIZER="${V22_BENCH_TOKENIZER:-tiktoken}"
+
+if [[ "${V22_BENCH_TOKENIZER}" == "tiktoken" ]]; then
+  python3 -c "import tiktoken" 2>/dev/null || python3 -m pip install -q tiktoken
+fi
 
 mkdir -p "$OUT"
 LOG="$OUT/pipeline.log"

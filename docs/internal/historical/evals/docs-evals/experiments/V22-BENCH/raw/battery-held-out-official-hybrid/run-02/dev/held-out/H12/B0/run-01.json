@@ -2,13 +2,13 @@
   "experiment_id": "V22-BENCH-HELD-OUT",
   "evidence_class": "OFFICIAL_BASELINE",
   "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
-  "run_id": "V22H-H12-B0-cd068e4a2d3b",
+  "run_id": "V22H-H12-B0-6f3acbc1732d",
   "arm": "B0",
   "task_id": "H12",
-  "timestamp": "2026-10-22T02:40:17.639816+00:00",
-  "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+  "timestamp": "2026-10-22T03:27:43.715139+00:00",
+  "tree_sha": "88f6b643f2dca49440c4f0d8e47569ef03033773",
   "harness": "v22-ground-b1-harness-1.5.0",
-  "tokenizer": "PROXY:whitespace_split",
+  "tokenizer": "tiktoken:cl100k_base",
   "metrics": {
     "task_id": "H12",
     "arm": "B0",
@@ -23,11 +23,11 @@
       "orchestrator/src/providers/deterministic/shell.ts",
       "orchestrator/src/v22/bench-h-tasks.ts"
     ],
-    "input_tokens": 5926,
-    "latency_ms": 24,
+    "input_tokens": 12652,
+    "latency_ms": 46,
     "recall": 1.0,
     "recall_notes": [
-      "anchor line drift (file hit): orchestrator/src/knowledge/backend/wiki-backend.ts:36"
+      "anchor line drift (file evidence): orchestrator/src/knowledge/backend/wiki-backend.ts:36"
     ],
     "ground_exit": 0,
     "stale_hits": 0
@@ -36,7 +36,7 @@
     "pass": true,
     "recall": 1.0,
     "notes": [
-      "anchor line drift (file hit): orchestrator/src/knowledge/backend/wiki-backend.ts:36"
+      "anchor line drift (file evidence): orchestrator/src/knowledge/backend/wiki-backend.ts:36"
     ]
   }
 }

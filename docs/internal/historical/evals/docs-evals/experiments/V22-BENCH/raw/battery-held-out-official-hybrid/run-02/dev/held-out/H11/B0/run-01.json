@@ -2,13 +2,13 @@
   "experiment_id": "V22-BENCH-HELD-OUT",
   "evidence_class": "OFFICIAL_BASELINE",
   "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
-  "run_id": "V22H-H11-B0-59436ff84c21",
+  "run_id": "V22H-H11-B0-4b325b4116ce",
   "arm": "B0",
   "task_id": "H11",
-  "timestamp": "2026-10-22T02:40:16.024193+00:00",
-  "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+  "timestamp": "2026-10-22T03:27:41.845849+00:00",
+  "tree_sha": "88f6b643f2dca49440c4f0d8e47569ef03033773",
   "harness": "v22-ground-b1-harness-1.5.0",
-  "tokenizer": "PROXY:whitespace_split",
+  "tokenizer": "tiktoken:cl100k_base",
   "metrics": {
     "task_id": "H11",
     "arm": "B0",
@@ -53,14 +53,10 @@
       "agent-setup/skills/wiki/references/cli.md",
       "agent-setup/skills/wiki/references/packs.md",
       "agent-setup/skills/wiki/references/ritual.md",
-      "agent-setup/skills/wiki/scripts/format_hits.py",
-      "agent-setup/skills/wiki/scripts/ground.sh",
-      "agent-setup/src/agent_setup/diff.py",
-      "agent-setup/src/agent_setup/doctor.py",
-      "agent-setup/src/agent_setup/init_project.py"
+      "agent-setup/skills/wiki/scripts/format_hits.py"
     ],
-    "input_tokens": 10759,
-    "latency_ms": 42,
+    "input_tokens": 21370,
+    "latency_ms": 166,
     "recall": 0.0,
     "recall_notes": [
       "miss path not read: orchestrator/src/knowledge/backend/types.ts"

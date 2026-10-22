@@ -1,0 +1,52 @@
+{
+  "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+  "evidence_class": "FIXTURE_WIKI_GROUND",
+  "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+  "run_id": "V22G-H11-B1-a4ce7e3697b4",
+  "arm": "B1",
+  "task_id": "H11",
+  "split": "H07_H18_dev",
+  "timestamp": "2026-10-22T02:04:32.125387+00:00",
+  "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+  "harness": "v22-graphify-b3-harness-1.5.0",
+  "ground_harness": "v22-ground-b1-harness-1.5.0",
+  "tokenizer": "tiktoken:cl100k_base",
+  "metrics": {
+    "task_id": "H11",
+    "arm": "B1",
+    "paths_read": [
+      "orchestrator/src/knowledge/backend/resolve.ts",
+      "docs/adr/0014-graphify-b3-benchmark-decision.md",
+      "docs/architecture/v2.2/CONSOLIDATION-REPORT.md",
+      "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+      "docs/architecture/v2.2/TECH-DECISIONS-MATRIX.md",
+      "docs/architecture/v2.2/TRACEABILITY-MATRIX.md",
+      "docs/architecture/v2.2/scripts/generate-evolveloop-wiki-knowledge.sh",
+      "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-held-out-frozen.json",
+      "docs/research/evolveloop-v2.2/01-current-state-audit.md"
+    ],
+    "input_tokens": 20493,
+    "latency_ms": 128,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: orchestrator/src/knowledge/backend/types.ts"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: orchestrator/src/knowledge/backend/types.ts"
+    ]
+  },
+  "b1_engine": {
+    "engine_requested": "auto",
+    "karpathy_wiki_dir": "/opt/karpathyWiki",
+    "karpathy_wiki_sha_expected": "cd3cf08",
+    "wiki_engine": "fixtures/evolveloop-wiki-vault",
+    "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
+    "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
+  }
+}

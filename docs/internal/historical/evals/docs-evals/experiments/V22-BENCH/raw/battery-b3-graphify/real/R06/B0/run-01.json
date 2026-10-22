@@ -1,0 +1,42 @@
+{
+  "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+  "evidence_class": "OFFICIAL_BASELINE",
+  "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+  "run_id": "V22G-R06-B0-9cf2473abef5",
+  "arm": "B0",
+  "task_id": "R06",
+  "split": "R01_R06",
+  "timestamp": "2026-10-22T02:05:55.131373+00:00",
+  "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+  "harness": "v22-graphify-b3-harness-1.5.0",
+  "ground_harness": "v22-ground-b1-harness-1.5.0",
+  "tokenizer": "tiktoken:cl100k_base",
+  "metrics": {
+    "task_id": "R06",
+    "arm": "B0",
+    "paths_read": [
+      "agent-setup/cursor/commands/evolve.md",
+      "docs/CEO-controller.md",
+      "docs/adr/0013-context-ownership-working-context.md",
+      "docs/architecture/portability/CORE-ARCHITECTURE.yaml",
+      "docs/architecture/release-audit-2026-10-11/V2.1-FREEZE-SCOPE-REPORT.md",
+      "docs/architecture/skills/audit/FLOW-SKILL-CATALOG.md",
+      "docs/architecture/skills/audit/HARD-GATES-V2.yaml"
+    ],
+    "input_tokens": 14620,
+    "latency_ms": 59,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: .cursor/skills/orquestrar/references/gate-bundle.md"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: .cursor/skills/orquestrar/references/gate-bundle.md"
+    ]
+  }
+}

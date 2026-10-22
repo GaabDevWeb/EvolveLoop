@@ -46,7 +46,7 @@ Legenda: **`ENTREGUE_CI`** = critérios automatizados verdes na release; **`FIXT
 
 | Pendência | Rótulo | Notas |
 |-----------|--------|-------|
-| Ganho B1 vs B0 no motor wiki **real** | `OFFICIAL_WIKI_GROUND` (manifest) | Held-out teste 6/6 vs B0 5/6 (2×); CI local sem Ollama continua `FIXTURE`/degraded. |
+| Ganho B1 vs B0 no motor wiki **real** | `OFFICIAL_WIKI_GROUND` (manifest) | Held-out teste **5/6** vs B0 **4/6** (2×, scorer `v22-anchor-scorer-1.0.0` + tiktoken budget); CI local sem Ollama continua `FIXTURE`/degraded. |
 | Cache LLM vendor | `NOT_MEASURED` | GOAL-010 mede % prefixo em fixture; hit rate HTTP não instrumentado. |
 | Graphify em produção | `STUB` | Flag + adapter; não altera `KnowledgeBackendId` default. |
 | Host Cursor IDE | `projeto` | Pickup/`context_retrieval` no host **não reporta paths** ao engine — fora do contrato TS testado. |

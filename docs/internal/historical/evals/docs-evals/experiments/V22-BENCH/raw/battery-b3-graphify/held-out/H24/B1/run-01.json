@@ -1,0 +1,60 @@
+{
+  "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+  "evidence_class": "FIXTURE_WIKI_GROUND",
+  "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+  "run_id": "V22G-H24-B1-de04b54891b0",
+  "arm": "B1",
+  "task_id": "H24",
+  "split": "H19_H24_test",
+  "timestamp": "2026-10-22T02:04:44.870165+00:00",
+  "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+  "harness": "v22-graphify-b3-harness-1.5.0",
+  "ground_harness": "v22-ground-b1-harness-1.5.0",
+  "tokenizer": "tiktoken:cl100k_base",
+  "metrics": {
+    "task_id": "H24",
+    "arm": "B1",
+    "paths_read": [
+      "orchestrator/src/knowledge/backend/resolve.ts",
+      "agent-setup/bootstrap.sh",
+      "agent-setup/install.sh",
+      "agent-setup/skills/wiki/SKILL.md",
+      "agent-setup/skills/wiki/references/ritual.md",
+      "agent-setup/skills/wiki/scripts/ground.sh",
+      "agent-setup/uninstall.sh",
+      "docs/architecture/portability/KNOWLEDGE-PERSONALIZATION-MAP.yaml",
+      "docs/architecture/prototype-gate/PROTOTYPE-GATE.yaml",
+      "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+      "docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md",
+      "docs/architecture/v2.2/scripts/bootstrap-karpathywiki-official-bench.sh",
+      "docs/architecture/v2.2/scripts/generate-evolveloop-wiki-knowledge.sh",
+      "docs/architecture/v2.2/scripts/run-graphify-b3-bench.sh",
+      "docs/architecture/v2.2/scripts/sync-carpaccio-to-vault.sh",
+      "docs/architecture/v2.2/scripts/test-official-wiki-stale.sh",
+      "docs/architecture/v2.2/scripts/validate-v22-artifacts.sh",
+      "docs/audit/EVIDENCE-CATALOG.md",
+      "docs/internal/historical/evals/docs-evals/baseline-v2-2026-09-19/BASELINE-CHECKSUMS.sha256",
+      "docs/internal/historical/evals/docs-evals/baseline-v3-2026-09-19/BASELINE-CHECKSUMS.sha256",
+      "docs/internal/historical/evals/docs-evals/baseline-v4-2026-09-19/BASELINE-CHECKSUMS.sha256"
+    ],
+    "input_tokens": 21870,
+    "latency_ms": 230,
+    "recall": 1.0,
+    "recall_notes": [],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": true,
+    "recall": 1.0,
+    "notes": []
+  },
+  "b1_engine": {
+    "engine_requested": "auto",
+    "karpathy_wiki_dir": "/opt/karpathyWiki",
+    "karpathy_wiki_sha_expected": "cd3cf08",
+    "wiki_engine": "fixtures/evolveloop-wiki-vault",
+    "wiki_root": "/workspace/fixtures/evolveloop-wiki-vault",
+    "wiki_python": "/workspace/fixtures/evolveloop-wiki-vault/.venv/bin/python"
+  }
+}

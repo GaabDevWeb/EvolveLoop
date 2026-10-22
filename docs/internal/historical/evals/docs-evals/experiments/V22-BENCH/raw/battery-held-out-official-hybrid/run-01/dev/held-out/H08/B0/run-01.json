@@ -2,13 +2,13 @@
   "experiment_id": "V22-BENCH-HELD-OUT",
   "evidence_class": "OFFICIAL_BASELINE",
   "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
-  "run_id": "V22H-H08-B0-25f696785fc6",
+  "run_id": "V22H-H08-B0-af85f580bff9",
   "arm": "B0",
   "task_id": "H08",
-  "timestamp": "2026-10-22T02:20:03.195692+00:00",
-  "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+  "timestamp": "2026-10-22T03:07:32.609092+00:00",
+  "tree_sha": "88f6b643f2dca49440c4f0d8e47569ef03033773",
   "harness": "v22-ground-b1-harness-1.5.0",
-  "tokenizer": "PROXY:whitespace_split",
+  "tokenizer": "tiktoken:cl100k_base",
   "metrics": {
     "task_id": "H08",
     "arm": "B0",
@@ -21,28 +21,22 @@
       "docs/research/evolveloop-v2.2/01-current-state-audit.md",
       "docs/research/evolveloop-v2.2/06-token-optimization.md",
       "docs/research/evolveloop-v2.2/07-compatibility-matrix.md",
-      "docs/research/evolveloop-v2.2/README.md",
-      "orchestrator/src/index.ts",
-      "orchestrator/src/knowledge/backend/wiki-backend.ts",
-      "orchestrator/src/providers/deterministic/knowledge.ts",
-      "orchestrator/src/v22/bench-r-tasks.ts",
-      "orchestrator/tests/unit/deterministic-capabilities.test.ts",
-      "orchestrator/tests/unit/knowledge-backend.test.ts"
+      "docs/research/evolveloop-v2.2/README.md"
     ],
-    "input_tokens": 12809,
-    "latency_ms": 22,
-    "recall": 1.0,
+    "input_tokens": 20531,
+    "latency_ms": 49,
+    "recall": 0.0,
     "recall_notes": [
-      "anchor line drift (file hit): orchestrator/src/knowledge/backend/wiki-backend.ts:183"
+      "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
     ],
     "ground_exit": 0,
     "stale_hits": 0
   },
   "verifier": {
-    "pass": true,
-    "recall": 1.0,
+    "pass": false,
+    "recall": 0.0,
     "notes": [
-      "anchor line drift (file hit): orchestrator/src/knowledge/backend/wiki-backend.ts:183"
+      "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
     ]
   }
 }

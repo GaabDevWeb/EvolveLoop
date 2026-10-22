@@ -1,0 +1,57 @@
+{
+  "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+  "evidence_class": "OFFICIAL_BASELINE",
+  "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+  "run_id": "V22G-R05-B0-b1b3a54f4899",
+  "arm": "B0",
+  "task_id": "R05",
+  "split": "R01_R06",
+  "timestamp": "2026-10-22T02:05:54.347427+00:00",
+  "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+  "harness": "v22-graphify-b3-harness-1.5.0",
+  "ground_harness": "v22-ground-b1-harness-1.5.0",
+  "tokenizer": "tiktoken:cl100k_base",
+  "metrics": {
+    "task_id": "R05",
+    "arm": "B0",
+    "paths_read": [
+      "AGENT.md",
+      "Agents/Planner.md",
+      "CHANGELOG.md",
+      "INVENTORY.md",
+      "README.md",
+      "Rules/wiki-agent.mdc",
+      "agent-setup/README.md",
+      "agent-setup/cursor/commands/evolve.md",
+      "agent-setup/cursor/hooks/wiki-mem/mem.py",
+      "agent-setup/cursor/rules/wiki-agent.mdc",
+      "agent-setup/docs/components.md",
+      "agent-setup/manifest/manifest.yaml",
+      "agent-setup/manifest/profiles.yaml",
+      "docs/CEO-controller.md",
+      "docs/adr/0010-public-core-vs-gaabtype-profile.md",
+      "docs/adr/0012-wiki-default-knowledge-backend.md",
+      "docs/adr/0013-context-ownership-working-context.md",
+      "docs/architecture/decision-review/ARCHITECTURE-DECISION-REVIEW.md",
+      "docs/architecture/decision-review/TRACEABILITY.md",
+      "docs/architecture/decision-review/adr-drafts/ADR-DR-0005-context-ownership-before-compaction.md",
+      "docs/architecture/evolveloopt/EVOLVELOOP-LONGITUDINAL-IMPLEMENTATION-REPORT.md",
+      "docs/architecture/evolveloopt/final/EVOLVELOOP-FINAL-OPERATIONALIZATION-REPORT.md"
+    ],
+    "input_tokens": 21469,
+    "latency_ms": 116,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: profiles/default.yaml"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: profiles/default.yaml"
+    ]
+  }
+}

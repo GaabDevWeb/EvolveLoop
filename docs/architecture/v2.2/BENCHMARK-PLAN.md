@@ -50,7 +50,8 @@ Observado: B1 paths 2, tokens 114 — **não** alvo oficial.
 ## Procedimento B1 → oficial (**V22-GOAL-003-005-official**)
 
 Script: `docs/architecture/v2.2/scripts/run-official-wiki-hybrid-bench.sh`  
-Manifest: `docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery-held-out-official-hybrid/OFFICIAL-MANIFEST.json`
+Manifest: `docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery-held-out-official-hybrid/OFFICIAL-MANIFEST.json`  
+Scorer canônico: `harness/v22_anchor_scorer.py` (`v22-anchor-scorer-1.0.0`, modo `file_evidence`; budget `V22_BENCH_TOKENIZER=tiktoken`). Re-score offline: `harness/reconcile_canonical_scores.py`.
 
 ## Procedimento histórico B1 → oficial (pré-manifest)
 

@@ -43,7 +43,11 @@ def bench_max_input_tokens() -> int:
 
 
 def anchor_recall_mode() -> str:
-    return os.environ.get("V22_ANCHOR_RECALL", "file").strip().lower()
+    from v22_anchor_scorer import SCORER_VERSION, effective_scorer_mode
+
+    return f"{SCORER_VERSION}:{effective_scorer_mode()}"
+
+
 def repo_root() -> Path:
     out = subprocess.check_output(
         ["git", "rev-parse", "--show-toplevel"], cwd=EXP_DIR, text=True
@@ -56,12 +60,17 @@ def git_sha(repo: Path) -> str:
 
 
 def load_tokenizer() -> tuple[str, Callable[[str], int]]:
+    pref = os.environ.get("V22_BENCH_TOKENIZER", "tiktoken").strip().lower()
+    if pref in ("proxy", "whitespace", "whitespace_split"):
+        return "PROXY:whitespace_split", lambda t: len([x for x in t.split() if x])
     try:
         import tiktoken
 
         enc = tiktoken.get_encoding("cl100k_base")
         return "tiktoken:cl100k_base", lambda t: len(enc.encode(t))
     except Exception:
+        if pref == "tiktoken":
+            raise RuntimeError("V22_BENCH_TOKENIZER=tiktoken but tiktoken not installed")
         return "PROXY:whitespace_split", lambda t: len([x for x in t.split() if x])
 
 
@@ -129,35 +138,9 @@ def append_excerpt(
 
 
 def anchor_recall(root: Path, paths_read: list[str], anchors: list[dict[str, Any]]) -> tuple[float, list[str]]:
-    notes: list[str] = []
-    hit = 0
-    for a in anchors:
-        rel = a["path"]
-        line_no = int(a["line"])
-        sub = a["substring"]
-        fp = root / rel
-        if rel not in paths_read:
-            notes.append(f"miss path not read: {rel}")
-            continue
-        if not fp.is_file():
-            notes.append(f"miss file missing: {rel}")
-            continue
-        lines = fp.read_text(encoding="utf-8", errors="replace").splitlines()
-        if line_no < 1 or line_no > len(lines):
-            notes.append(f"miss line OOB: {rel}:{line_no}")
-            continue
-        line_ok = 1 <= line_no <= len(lines) and sub in lines[line_no - 1]
-        file_ok = sub in "\n".join(lines)
-        mode = anchor_recall_mode()
-        if line_ok:
-            hit += 1
-        elif mode == "file" and file_ok:
-            hit += 1
-            notes.append(f"anchor line drift (file hit): {rel}:{line_no}")
-        else:
-            notes.append(f"miss substring @ {rel}:{line_no}")
-    total = len(anchors) or 1
-    return hit / total, notes
+    from v22_anchor_scorer import score_anchors
+
+    return score_anchors(root, paths_read, anchors)
 
 
 @dataclass

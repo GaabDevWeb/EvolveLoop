@@ -1,0 +1,62 @@
+{
+  "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+  "evidence_class": "OFFICIAL_BASELINE",
+  "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+  "run_id": "V22G-H24-B0-a995c1892a4e",
+  "arm": "B0",
+  "task_id": "H24",
+  "split": "H19_H24_test",
+  "timestamp": "2026-10-22T02:06:10.500122+00:00",
+  "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+  "harness": "v22-graphify-b3-harness-1.5.0",
+  "ground_harness": "v22-ground-b1-harness-1.5.0",
+  "tokenizer": "tiktoken:cl100k_base",
+  "metrics": {
+    "task_id": "H24",
+    "arm": "B0",
+    "paths_read": [
+      "AGENT.md",
+      "Agents/Code-reviewer.md",
+      "Agents/Frontend-pro.md",
+      "Agents/Orquestrador-v2.md",
+      "Agents/Po-review.md",
+      "Agents/Skill-authoring.md",
+      "Agents/Tester.md",
+      "Agents/Validator.md",
+      "CHANGELOG.md",
+      "CODE_OF_CONDUCT.md",
+      "CONTRIBUTING.md",
+      "INVENTORY.md",
+      "README.md",
+      "Rules/wiki-agent.mdc",
+      "SECURITY.md",
+      "agent-setup/bootstrap.sh",
+      "agent-setup/cursor/commands/evolve.md",
+      "agent-setup/cursor/hooks/wiki-mem/mem.py",
+      "agent-setup/cursor/rules/wiki-agent.mdc",
+      "agent-setup/manifest/components.yaml",
+      "agent-setup/prompts/bootstrap-project.md",
+      "agent-setup/skills/wiki/evals/evals.json",
+      "agent-setup/skills/wiki/scripts/format_hits.py",
+      "agent-setup/src/agent_setup/backup.py",
+      "agent-setup/src/agent_setup/detect.py",
+      "agent-setup/src/agent_setup/diff.py",
+      "agent-setup/src/agent_setup/paths.py"
+    ],
+    "input_tokens": 20463,
+    "latency_ms": 146,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md"
+    ]
+  }
+}

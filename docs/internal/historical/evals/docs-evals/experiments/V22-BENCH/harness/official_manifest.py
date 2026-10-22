@@ -185,7 +185,9 @@ def cmd_write_success(args: argparse.Namespace) -> int:
             "V22_BENCH_MAX_PATHS": 45,
             "V22_BENCH_MAX_INPUT_TOKENS": 22000,
             "V22_B1_RETRIEVAL": "hybrid",
-            "V22_ANCHOR_RECALL": "file",
+            "V22_BENCH_TOKENIZER": "tiktoken",
+            "V22_ANCHOR_SCORER_MODE": "file_evidence",
+            "V22_ANCHOR_SCORER_VERSION": "v22-anchor-scorer-1.0.0",
         },
         "commands": [
             "docs/architecture/v2.2/scripts/run-official-wiki-hybrid-bench.sh",

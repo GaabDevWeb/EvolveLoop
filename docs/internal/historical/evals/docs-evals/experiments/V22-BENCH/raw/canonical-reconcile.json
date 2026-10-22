@@ -1,0 +1,1841 @@
+[
+  {
+    "label": "official-tiktoken-run-01",
+    "raw_root": "/workspace/docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery-held-out-official-hybrid/run-01",
+    "tree_sha": "88f6b643f2dca49440c4f0d8e47569ef03033773",
+    "canonical_scorer": "v22-anchor-scorer-1.0.0",
+    "canonical_mode": "file_evidence",
+    "rows": [
+      {
+        "task_id": "H07",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H07/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 38,
+        "tokens_at_run": 21795,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: profiles/default.yaml"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H07",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H07/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 9,
+        "tokens_at_run": 21530,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H08",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H08/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 9,
+        "tokens_at_run": 20531,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H08",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H08/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 5,
+        "tokens_at_run": 18555,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H09",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H09/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 24,
+        "tokens_at_run": 20986,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H09",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H09/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 9,
+        "tokens_at_run": 21425,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H10",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H10/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 13,
+        "tokens_at_run": 16643,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H10",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H10/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 7,
+        "tokens_at_run": 20570,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H11",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H11/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 41,
+        "tokens_at_run": 21370,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: orchestrator/src/knowledge/backend/types.ts"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H11",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H11/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 7,
+        "tokens_at_run": 20241,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: orchestrator/src/knowledge/backend/types.ts"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H12",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H12/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 9,
+        "tokens_at_run": 12652,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [
+          "anchor line drift (file evidence): orchestrator/src/knowledge/backend/wiki-backend.ts:36"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H12",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H12/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 10,
+        "tokens_at_run": 20417,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H13",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H13/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 19,
+        "tokens_at_run": 21197,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H13",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H13/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 9,
+        "tokens_at_run": 21706,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H14",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H14/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 12,
+        "tokens_at_run": 21925,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [
+          "anchor line drift (file evidence): orchestrator/src/providers/deterministic/knowledge.ts:16"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H14",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H14/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 7,
+        "tokens_at_run": 21874,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [
+          "anchor line drift (file evidence): orchestrator/src/providers/deterministic/knowledge.ts:16"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H15",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H15/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 41,
+        "tokens_at_run": 21370,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H15",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H15/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 10,
+        "tokens_at_run": 19471,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H16",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H16/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 16,
+        "tokens_at_run": 19804,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H16",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H16/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 8,
+        "tokens_at_run": 19651,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H17",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H17/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 18,
+        "tokens_at_run": 21674,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H17",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H17/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 16,
+        "tokens_at_run": 19155,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H18",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H18/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 37,
+        "tokens_at_run": 21610,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: .cursor/skills/wiki/SKILL.md"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H18",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-01/dev/held-out/H18/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 4,
+        "tokens_at_run": 20508,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H19",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-01/test/held-out/H19/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 18,
+        "tokens_at_run": 18509,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H19",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-01/test/held-out/H19/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 7,
+        "tokens_at_run": 21461,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: docs/adr/0003-capability-authority-vs-execution-policy.md"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H20",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-01/test/held-out/H20/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 10,
+        "tokens_at_run": 17831,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H20",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-01/test/held-out/H20/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 8,
+        "tokens_at_run": 21952,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H21",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-01/test/held-out/H21/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 32,
+        "tokens_at_run": 21308,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H21",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-01/test/held-out/H21/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 5,
+        "tokens_at_run": 21601,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H22",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-01/test/held-out/H22/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 5,
+        "tokens_at_run": 19734,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: orchestrator/src/evidence/secret-redaction.ts"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H22",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-01/test/held-out/H22/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 7,
+        "tokens_at_run": 20357,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H23",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-01/test/held-out/H23/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 21,
+        "tokens_at_run": 21564,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H23",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-01/test/held-out/H23/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 16,
+        "tokens_at_run": 21364,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H24",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-01/test/held-out/H24/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 27,
+        "tokens_at_run": 20463,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H24",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-01/test/held-out/H24/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 11,
+        "tokens_at_run": 21645,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      }
+    ],
+    "summary": {
+      "dev:B0": {
+        "recall_ge1": "7/12",
+        "recall_at_run_ge1": "7/12"
+      },
+      "dev:B1": {
+        "recall_ge1": "9/12",
+        "recall_at_run_ge1": "9/12"
+      },
+      "test:B0": {
+        "recall_ge1": "4/6",
+        "recall_at_run_ge1": "4/6"
+      },
+      "test:B1": {
+        "recall_ge1": "5/6",
+        "recall_at_run_ge1": "5/6"
+      }
+    }
+  },
+  {
+    "label": "official-tiktoken-run-02",
+    "raw_root": "/workspace/docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery-held-out-official-hybrid/run-02",
+    "tree_sha": "88f6b643f2dca49440c4f0d8e47569ef03033773",
+    "canonical_scorer": "v22-anchor-scorer-1.0.0",
+    "canonical_mode": "file_evidence",
+    "rows": [
+      {
+        "task_id": "H07",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-02/dev/held-out/H07/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 38,
+        "tokens_at_run": 21795,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: profiles/default.yaml"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H07",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-02/dev/held-out/H07/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 9,
+        "tokens_at_run": 21530,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H08",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-02/dev/held-out/H08/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 9,
+        "tokens_at_run": 20531,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H08",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-02/dev/held-out/H08/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 5,
+        "tokens_at_run": 18555,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H09",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-02/dev/held-out/H09/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 24,
+        "tokens_at_run": 20986,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H09",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-02/dev/held-out/H09/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 9,
+        "tokens_at_run": 21425,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H10",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-02/dev/held-out/H10/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 13,
+        "tokens_at_run": 16643,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H10",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-02/dev/held-out/H10/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 7,
+        "tokens_at_run": 20570,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H11",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-02/dev/held-out/H11/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 41,
+        "tokens_at_run": 21370,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: orchestrator/src/knowledge/backend/types.ts"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H11",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-02/dev/held-out/H11/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 7,
+        "tokens_at_run": 20241,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: orchestrator/src/knowledge/backend/types.ts"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H12",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-02/dev/held-out/H12/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 9,
+        "tokens_at_run": 12652,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [
+          "anchor line drift (file evidence): orchestrator/src/knowledge/backend/wiki-backend.ts:36"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H12",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-02/dev/held-out/H12/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 10,
+        "tokens_at_run": 20417,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H13",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-02/dev/held-out/H13/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 19,
+        "tokens_at_run": 21197,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H13",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-02/dev/held-out/H13/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 9,
+        "tokens_at_run": 21706,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H14",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-02/dev/held-out/H14/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 12,
+        "tokens_at_run": 21925,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [
+          "anchor line drift (file evidence): orchestrator/src/providers/deterministic/knowledge.ts:16"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H14",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-02/dev/held-out/H14/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 7,
+        "tokens_at_run": 21874,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [
+          "anchor line drift (file evidence): orchestrator/src/providers/deterministic/knowledge.ts:16"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H15",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-02/dev/held-out/H15/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 41,
+        "tokens_at_run": 21370,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H15",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-02/dev/held-out/H15/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 10,
+        "tokens_at_run": 19471,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H16",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-02/dev/held-out/H16/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 16,
+        "tokens_at_run": 19804,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H16",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-02/dev/held-out/H16/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 8,
+        "tokens_at_run": 19651,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H17",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-02/dev/held-out/H17/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 18,
+        "tokens_at_run": 21674,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H17",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-02/dev/held-out/H17/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 16,
+        "tokens_at_run": 19155,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H18",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-02/dev/held-out/H18/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 37,
+        "tokens_at_run": 21610,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: .cursor/skills/wiki/SKILL.md"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H18",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-02/dev/held-out/H18/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 4,
+        "tokens_at_run": 20508,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H19",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-02/test/held-out/H19/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 18,
+        "tokens_at_run": 18509,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H19",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-02/test/held-out/H19/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 7,
+        "tokens_at_run": 21461,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: docs/adr/0003-capability-authority-vs-execution-policy.md"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H20",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-02/test/held-out/H20/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 10,
+        "tokens_at_run": 17831,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H20",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-02/test/held-out/H20/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 8,
+        "tokens_at_run": 21952,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H21",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-02/test/held-out/H21/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 32,
+        "tokens_at_run": 21308,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H21",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-02/test/held-out/H21/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 5,
+        "tokens_at_run": 21601,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H22",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-02/test/held-out/H22/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 5,
+        "tokens_at_run": 19734,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: orchestrator/src/evidence/secret-redaction.ts"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H22",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-02/test/held-out/H22/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 7,
+        "tokens_at_run": 20357,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H23",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-02/test/held-out/H23/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 21,
+        "tokens_at_run": 21564,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H23",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-02/test/held-out/H23/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 16,
+        "tokens_at_run": 21364,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H24",
+        "arm": "B0",
+        "source": "raw/battery-held-out-official-hybrid/run-02/test/held-out/H24/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 27,
+        "tokens_at_run": 20463,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H24",
+        "arm": "B1",
+        "source": "raw/battery-held-out-official-hybrid/run-02/test/held-out/H24/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 11,
+        "tokens_at_run": 21645,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      }
+    ],
+    "summary": {
+      "dev:B0": {
+        "recall_ge1": "7/12",
+        "recall_at_run_ge1": "7/12"
+      },
+      "dev:B1": {
+        "recall_ge1": "9/12",
+        "recall_at_run_ge1": "9/12"
+      },
+      "test:B0": {
+        "recall_ge1": "4/6",
+        "recall_at_run_ge1": "4/6"
+      },
+      "test:B1": {
+        "recall_ge1": "5/6",
+        "recall_at_run_ge1": "5/6"
+      }
+    }
+  },
+  {
+    "label": "graphify-b3-held-out",
+    "raw_root": "/workspace/docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery-b3-graphify/held-out",
+    "tree_sha": "88f6b643f2dca49440c4f0d8e47569ef03033773",
+    "canonical_scorer": "v22-anchor-scorer-1.0.0",
+    "canonical_mode": "file_evidence",
+    "rows": [
+      {
+        "task_id": "H07",
+        "arm": "B0",
+        "source": "raw/battery-b3-graphify/held-out/H07/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 38,
+        "tokens_at_run": 21795,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: profiles/default.yaml"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H07",
+        "arm": "B1",
+        "source": "raw/battery-b3-graphify/held-out/H07/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 22,
+        "tokens_at_run": 13272,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: profiles/default.yaml"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H07",
+        "arm": "B3",
+        "source": "raw/battery-b3-graphify/held-out/H07/B3/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 12,
+        "tokens_at_run": 21892,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: profiles/default.yaml"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H08",
+        "arm": "B0",
+        "source": "raw/battery-b3-graphify/held-out/H08/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 5,
+        "tokens_at_run": 10083,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H08",
+        "arm": "B1",
+        "source": "raw/battery-b3-graphify/held-out/H08/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 20,
+        "tokens_at_run": 16145,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H08",
+        "arm": "B3",
+        "source": "raw/battery-b3-graphify/held-out/H08/B3/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 12,
+        "tokens_at_run": 21114,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [
+          "anchor line drift (file evidence): orchestrator/src/knowledge/backend/wiki-backend.ts:183"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H09",
+        "arm": "B0",
+        "source": "raw/battery-b3-graphify/held-out/H09/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 24,
+        "tokens_at_run": 20986,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H09",
+        "arm": "B1",
+        "source": "raw/battery-b3-graphify/held-out/H09/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 21,
+        "tokens_at_run": 7972,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H09",
+        "arm": "B3",
+        "source": "raw/battery-b3-graphify/held-out/H09/B3/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 9,
+        "tokens_at_run": 19995,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H10",
+        "arm": "B0",
+        "source": "raw/battery-b3-graphify/held-out/H10/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 13,
+        "tokens_at_run": 16643,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H10",
+        "arm": "B1",
+        "source": "raw/battery-b3-graphify/held-out/H10/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 11,
+        "tokens_at_run": 20095,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H10",
+        "arm": "B3",
+        "source": "raw/battery-b3-graphify/held-out/H10/B3/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 4,
+        "tokens_at_run": 21449,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H11",
+        "arm": "B0",
+        "source": "raw/battery-b3-graphify/held-out/H11/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 41,
+        "tokens_at_run": 21370,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: orchestrator/src/knowledge/backend/types.ts"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H11",
+        "arm": "B1",
+        "source": "raw/battery-b3-graphify/held-out/H11/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 9,
+        "tokens_at_run": 20493,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: orchestrator/src/knowledge/backend/types.ts"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H11",
+        "arm": "B3",
+        "source": "raw/battery-b3-graphify/held-out/H11/B3/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 10,
+        "tokens_at_run": 20895,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H12",
+        "arm": "B0",
+        "source": "raw/battery-b3-graphify/held-out/H12/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 10,
+        "tokens_at_run": 15606,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [
+          "anchor line drift (file evidence): orchestrator/src/knowledge/backend/wiki-backend.ts:36"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H12",
+        "arm": "B1",
+        "source": "raw/battery-b3-graphify/held-out/H12/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 2,
+        "tokens_at_run": 1027,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H12",
+        "arm": "B3",
+        "source": "raw/battery-b3-graphify/held-out/H12/B3/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 9,
+        "tokens_at_run": 21614,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [
+          "anchor line drift (file evidence): orchestrator/src/knowledge/backend/wiki-backend.ts:36"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H13",
+        "arm": "B0",
+        "source": "raw/battery-b3-graphify/held-out/H13/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 19,
+        "tokens_at_run": 21826,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H13",
+        "arm": "B1",
+        "source": "raw/battery-b3-graphify/held-out/H13/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 21,
+        "tokens_at_run": 21490,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H13",
+        "arm": "B3",
+        "source": "raw/battery-b3-graphify/held-out/H13/B3/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 3,
+        "tokens_at_run": 15879,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H14",
+        "arm": "B0",
+        "source": "raw/battery-b3-graphify/held-out/H14/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 10,
+        "tokens_at_run": 17593,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: orchestrator/src/providers/deterministic/knowledge.ts"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H14",
+        "arm": "B1",
+        "source": "raw/battery-b3-graphify/held-out/H14/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 1,
+        "tokens_at_run": 362,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: orchestrator/src/providers/deterministic/knowledge.ts"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H14",
+        "arm": "B3",
+        "source": "raw/battery-b3-graphify/held-out/H14/B3/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 8,
+        "tokens_at_run": 20426,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [
+          "anchor line drift (file evidence): orchestrator/src/providers/deterministic/knowledge.ts:16"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H15",
+        "arm": "B0",
+        "source": "raw/battery-b3-graphify/held-out/H15/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 41,
+        "tokens_at_run": 21370,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H15",
+        "arm": "B1",
+        "source": "raw/battery-b3-graphify/held-out/H15/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 22,
+        "tokens_at_run": 17819,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H15",
+        "arm": "B3",
+        "source": "raw/battery-b3-graphify/held-out/H15/B3/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 9,
+        "tokens_at_run": 19802,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H16",
+        "arm": "B0",
+        "source": "raw/battery-b3-graphify/held-out/H16/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 15,
+        "tokens_at_run": 21689,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: profiles/default.yaml"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H16",
+        "arm": "B1",
+        "source": "raw/battery-b3-graphify/held-out/H16/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 22,
+        "tokens_at_run": 17280,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: profiles/default.yaml"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H16",
+        "arm": "B3",
+        "source": "raw/battery-b3-graphify/held-out/H16/B3/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 12,
+        "tokens_at_run": 20289,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: profiles/default.yaml"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H17",
+        "arm": "B0",
+        "source": "raw/battery-b3-graphify/held-out/H17/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 18,
+        "tokens_at_run": 21674,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H17",
+        "arm": "B1",
+        "source": "raw/battery-b3-graphify/held-out/H17/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 5,
+        "tokens_at_run": 5318,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H17",
+        "arm": "B3",
+        "source": "raw/battery-b3-graphify/held-out/H17/B3/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 8,
+        "tokens_at_run": 21780,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H18",
+        "arm": "B0",
+        "source": "raw/battery-b3-graphify/held-out/H18/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 37,
+        "tokens_at_run": 21610,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: .cursor/skills/wiki/SKILL.md"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H18",
+        "arm": "B1",
+        "source": "raw/battery-b3-graphify/held-out/H18/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 22,
+        "tokens_at_run": 13927,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: .cursor/skills/wiki/SKILL.md"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H18",
+        "arm": "B3",
+        "source": "raw/battery-b3-graphify/held-out/H18/B3/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 7,
+        "tokens_at_run": 17069,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: .cursor/skills/wiki/SKILL.md"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H19",
+        "arm": "B0",
+        "source": "raw/battery-b3-graphify/held-out/H19/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 18,
+        "tokens_at_run": 18509,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H19",
+        "arm": "B1",
+        "source": "raw/battery-b3-graphify/held-out/H19/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 6,
+        "tokens_at_run": 7508,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H19",
+        "arm": "B3",
+        "source": "raw/battery-b3-graphify/held-out/H19/B3/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 4,
+        "tokens_at_run": 16751,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H20",
+        "arm": "B0",
+        "source": "raw/battery-b3-graphify/held-out/H20/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 4,
+        "tokens_at_run": 11378,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: orchestrator/src/knowledge/truth-source/fence.ts"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H20",
+        "arm": "B1",
+        "source": "raw/battery-b3-graphify/held-out/H20/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 6,
+        "tokens_at_run": 13931,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: orchestrator/src/knowledge/truth-source/fence.ts"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H20",
+        "arm": "B3",
+        "source": "raw/battery-b3-graphify/held-out/H20/B3/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 17,
+        "tokens_at_run": 20112,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H21",
+        "arm": "B0",
+        "source": "raw/battery-b3-graphify/held-out/H21/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 32,
+        "tokens_at_run": 21308,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H21",
+        "arm": "B1",
+        "source": "raw/battery-b3-graphify/held-out/H21/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 1,
+        "tokens_at_run": 362,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: docs/adr/0011-evolve-alias.md"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H21",
+        "arm": "B3",
+        "source": "raw/battery-b3-graphify/held-out/H21/B3/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 7,
+        "tokens_at_run": 21122,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H22",
+        "arm": "B0",
+        "source": "raw/battery-b3-graphify/held-out/H22/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 5,
+        "tokens_at_run": 19133,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: orchestrator/src/evidence/secret-redaction.ts"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H22",
+        "arm": "B1",
+        "source": "raw/battery-b3-graphify/held-out/H22/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 6,
+        "tokens_at_run": 19495,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: orchestrator/src/evidence/secret-redaction.ts"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H22",
+        "arm": "B3",
+        "source": "raw/battery-b3-graphify/held-out/H22/B3/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 14,
+        "tokens_at_run": 21007,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H23",
+        "arm": "B0",
+        "source": "raw/battery-b3-graphify/held-out/H23/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 21,
+        "tokens_at_run": 21564,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H23",
+        "arm": "B1",
+        "source": "raw/battery-b3-graphify/held-out/H23/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 10,
+        "tokens_at_run": 13373,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H23",
+        "arm": "B3",
+        "source": "raw/battery-b3-graphify/held-out/H23/B3/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 5,
+        "tokens_at_run": 18588,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H24",
+        "arm": "B0",
+        "source": "raw/battery-b3-graphify/held-out/H24/B0/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 27,
+        "tokens_at_run": 20463,
+        "recall_at_run": 0.0,
+        "canonical_recall": 0.0,
+        "canonical_notes": [
+          "miss path not read: docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md"
+        ],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H24",
+        "arm": "B1",
+        "source": "raw/battery-b3-graphify/held-out/H24/B1/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 21,
+        "tokens_at_run": 21870,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      },
+      {
+        "task_id": "H24",
+        "arm": "B3",
+        "source": "raw/battery-b3-graphify/held-out/H24/B3/run-01.json",
+        "tokenizer_at_run": "tiktoken:cl100k_base",
+        "paths": 19,
+        "tokens_at_run": 21252,
+        "recall_at_run": 1.0,
+        "canonical_recall": 1.0,
+        "canonical_notes": [],
+        "scorer": "v22-anchor-scorer-1.0.0",
+        "scorer_mode": "file_evidence"
+      }
+    ],
+    "summary": {
+      "dev:B0": {
+        "recall_ge1": "5/12",
+        "recall_at_run_ge1": "5/12"
+      },
+      "dev:B1": {
+        "recall_ge1": "4/12",
+        "recall_at_run_ge1": "4/12"
+      },
+      "dev:B3": {
+        "recall_ge1": "9/12",
+        "recall_at_run_ge1": "9/12"
+      },
+      "test:B0": {
+        "recall_ge1": "3/6",
+        "recall_at_run_ge1": "3/6"
+      },
+      "test:B1": {
+        "recall_ge1": "3/6",
+        "recall_at_run_ge1": "3/6"
+      },
+      "test:B3": {
+        "recall_ge1": "6/6",
+        "recall_at_run_ge1": "6/6"
+      }
+    }
+  }
+]

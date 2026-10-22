@@ -18,7 +18,7 @@
       "!docs/internal/historical/evals/**",
       "!docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/**"
     ],
-    "anchor_recall_mode": "file",
+    "anchor_recall_mode": "v22-anchor-scorer-1.0.0:file_evidence",
     "bench_max_paths": 45,
     "bench_max_input_tokens": 22000,
     "b1_query": "task.query + corpus glossary expansion (rg_patterns reserved for B0)",
@@ -36,89 +36,89 @@
     }
   },
   "task_filter": "H19-H24",
-  "freeze_tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+  "freeze_tree_sha": "88f6b643f2dca49440c4f0d8e47569ef03033773",
   "tasks_frozen": "tasks-held-out-frozen.json",
   "aggregates": {
     "H19:B0": {
-      "median_paths": 24.0,
-      "median_input_tokens": 21054.0,
-      "median_latency_ms": 35.0,
+      "median_paths": 18.0,
+      "median_input_tokens": 18509.0,
+      "median_latency_ms": 85.0,
       "recall": 1.0
     },
     "H19:B1": {
-      "median_paths": 16.0,
-      "median_input_tokens": 20168.0,
-      "median_latency_ms": 1583.0,
-      "recall": 1.0
+      "median_paths": 7.0,
+      "median_input_tokens": 21461.0,
+      "median_latency_ms": 1627.0,
+      "recall": 0.0
     },
     "H20:B0": {
       "median_paths": 10.0,
-      "median_input_tokens": 6721.0,
-      "median_latency_ms": 17.0,
+      "median_input_tokens": 17831.0,
+      "median_latency_ms": 56.0,
       "recall": 1.0
     },
     "H20:B1": {
-      "median_paths": 16.0,
-      "median_input_tokens": 20787.0,
-      "median_latency_ms": 3295.0,
+      "median_paths": 8.0,
+      "median_input_tokens": 21952.0,
+      "median_latency_ms": 1737.0,
       "recall": 1.0
     },
     "H21:B0": {
-      "median_paths": 45.0,
-      "median_input_tokens": 12923.0,
-      "median_latency_ms": 35.0,
+      "median_paths": 32.0,
+      "median_input_tokens": 21308.0,
+      "median_latency_ms": 130.0,
       "recall": 1.0
     },
     "H21:B1": {
-      "median_paths": 11.0,
-      "median_input_tokens": 21350.0,
-      "median_latency_ms": 1590.0,
+      "median_paths": 5.0,
+      "median_input_tokens": 21601.0,
+      "median_latency_ms": 1654.0,
       "recall": 1.0
     },
     "H22:B0": {
-      "median_paths": 20.0,
-      "median_input_tokens": 19695.0,
-      "median_latency_ms": 30.0,
-      "recall": 1.0
+      "median_paths": 5.0,
+      "median_input_tokens": 19734.0,
+      "median_latency_ms": 46.0,
+      "recall": 0.0
     },
     "H22:B1": {
-      "median_paths": 11.0,
-      "median_input_tokens": 20088.0,
-      "median_latency_ms": 1585.0,
+      "median_paths": 7.0,
+      "median_input_tokens": 20357.0,
+      "median_latency_ms": 1737.0,
       "recall": 1.0
     },
     "H23:B0": {
-      "median_paths": 25.0,
-      "median_input_tokens": 12060.0,
-      "median_latency_ms": 23.0,
+      "median_paths": 21.0,
+      "median_input_tokens": 21564.0,
+      "median_latency_ms": 88.0,
       "recall": 1.0
     },
     "H23:B1": {
-      "median_paths": 27.0,
-      "median_input_tokens": 21847.0,
-      "median_latency_ms": 3291.0,
+      "median_paths": 16.0,
+      "median_input_tokens": 21364.0,
+      "median_latency_ms": 1653.0,
       "recall": 1.0
     },
     "H24:B0": {
-      "median_paths": 45.0,
-      "median_input_tokens": 16486.0,
-      "median_latency_ms": 43.0,
+      "median_paths": 27.0,
+      "median_input_tokens": 20463.0,
+      "median_latency_ms": 103.0,
       "recall": 0.0
     },
     "H24:B1": {
-      "median_paths": 22.0,
-      "median_input_tokens": 21586.0,
-      "median_latency_ms": 3242.0,
+      "median_paths": 11.0,
+      "median_input_tokens": 21645.0,
+      "median_latency_ms": 1627.0,
       "recall": 1.0
     }
   },
   "rollups": {
-    "held_out_B0_median_paths": 24.5,
-    "held_out_B1_median_paths": 16.0,
-    "held_out_B0_median_tokens": 14704.5,
-    "held_out_B1_median_tokens": 21068.5,
-    "held_out_B0_median_latency_ms": 32.5,
-    "held_out_B1_median_latency_ms": 2416.0
+    "held_out_B0_median_paths": 19.5,
+    "held_out_B1_median_paths": 7.5,
+    "held_out_B0_median_tokens": 20098.5,
+    "held_out_B1_median_tokens": 21531.0,
+    "held_out_B0_median_latency_ms": 86.5,
+    "held_out_B1_median_latency_ms": 1653.5
   },
   "environment": {
     "os": "Linux-6.12.94+-x86_64-with-glibc2.39",
@@ -127,17 +127,17 @@
     "contamination_guard": "generate-evolveloop-wiki-knowledge.sh allowlist; no V22-BENCH reads"
   },
   "runs": [
-    "V22H-H19-B0-639b7791b1ca",
-    "V22H-H19-B1-08289ee36d2a",
-    "V22H-H20-B0-df9d75d4861a",
-    "V22H-H20-B1-5966cb82aacb",
-    "V22H-H21-B0-8cacf4d18567",
-    "V22H-H21-B1-013be8c298f8",
-    "V22H-H22-B0-f4be1967dc4d",
-    "V22H-H22-B1-6c50dfa6008b",
-    "V22H-H23-B0-74f8debd6343",
-    "V22H-H23-B1-e87f8880ecaf",
-    "V22H-H24-B0-e84536df2033",
-    "V22H-H24-B1-325dd6a73283"
+    "V22H-H19-B0-b17dc9c544d0",
+    "V22H-H19-B1-4af1271e621e",
+    "V22H-H20-B0-1832280b50dc",
+    "V22H-H20-B1-bd6b2d244175",
+    "V22H-H21-B0-ff864820587c",
+    "V22H-H21-B1-1d11951a701a",
+    "V22H-H22-B0-d1e5511c5a09",
+    "V22H-H22-B1-7797427dafe0",
+    "V22H-H23-B0-7363308af302",
+    "V22H-H23-B1-8e7c5ae97f59",
+    "V22H-H24-B0-de6c034b9fa0",
+    "V22H-H24-B1-32f31d72fe3d"
   ]
 }
