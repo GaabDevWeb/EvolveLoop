@@ -203,7 +203,7 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Validação / testes:** Braço B3 do plano 08.
 - **Riscos:** Skill upstream desencoraja abrir arquivo — instrução de experimento deve permitir verificação no disco.
 - **Condição de conclusão:** Relatório de bench com decisão explícita; “instalado” não é conclusão.
-- **Implementação (código):** `wired` — flag `EVOLVELOOP_GRAPHIFY` (default OFF); `orchestrator/src/v22/graphify-adapter.ts` (stub/CLI opcional); `graphify-out/` gitignored; testes unit + `v22-p2-goals.integration.test.ts` (run-engine).
+- **Implementação (código):** `wired` — flag `EVOLVELOOP_GRAPHIFY` (default OFF); `orchestrator/src/v22/graphify-adapter.ts` (CLI real + fallback stub); braço B3 medido (`graphify_b3_harness.py`, raw `battery-b3-graphify/`); ADR-0014; `graphify-out/` gitignored; testes unit + integração B3 + `v22-p2-goals.integration.test.ts`.
 
 **Rotulo dominante:** meta + hipótese pendente.
 
