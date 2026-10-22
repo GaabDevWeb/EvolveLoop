@@ -1,0 +1,89 @@
+{
+  "schema": "v22-bench-held-out-v1",
+  "frozen_at_utc": "2026-10-22T12:00:00Z",
+  "freeze_tree_sha": "PENDING_AT_RUN",
+  "corpus_root": "/workspace",
+  "corpus_label": "EvolveLoop monorepo held-out (independent of curated bench pack)",
+  "author": "held-out-freeze-v22-goal-005",
+  "b1_mechanism": {
+    "primary": "OFFICIAL_WIKI_GROUND — ground.sh + WIKI_ROOT fixture vault",
+    "vault_path": "fixtures/evolveloop-wiki-vault",
+    "evidence_class": "OFFICIAL_WIKI_GROUND",
+    "wiki_ground_sh": "MEASURED",
+    "note": "Knowledge generated without V22-BENCH gabarito paths; tasks frozen before B1 run"
+  },
+  "tasks": [
+    {
+      "id": "H01",
+      "query": "Qual é o id do FakeKnowledgeBackend usado em testes?",
+      "rg_patterns": ["FakeKnowledgeBackend", "readonly id"],
+      "anchors": [
+        {
+          "path": "orchestrator/src/knowledge/backend/fake-backend.ts",
+          "line": 14,
+          "substring": "readonly id = \"fake\""
+        }
+      ]
+    },
+    {
+      "id": "H02",
+      "query": "No DEFAULT_PROFILE em código, qual backend de knowledge?",
+      "rg_patterns": ["DEFAULT_PROFILE", "backend: \"wiki\""],
+      "anchors": [
+        {
+          "path": "orchestrator/src/config/profile.ts",
+          "line": 41,
+          "substring": "backend: \"wiki\""
+        }
+      ]
+    },
+    {
+      "id": "H03",
+      "query": "KNOWLEDGE_BACKEND no ambiente vence o perfil YAML?",
+      "rg_patterns": ["KNOWLEDGE_BACKEND", "env wins"],
+      "anchors": [
+        {
+          "path": "orchestrator/src/config/profile.ts",
+          "line": 114,
+          "substring": "if (process.env.KNOWLEDGE_BACKEND?.trim())"
+        }
+      ]
+    },
+    {
+      "id": "H04",
+      "query": "ADR-0012 declara qual backend default no profiles/default.yaml?",
+      "rg_patterns": ["knowledge.backend: wiki", "ADR"],
+      "anchors": [
+        {
+          "path": "docs/adr/0012-wiki-default-knowledge-backend.md",
+          "line": 13,
+          "substring": "Default `knowledge.backend: wiki`"
+        }
+      ]
+    },
+    {
+      "id": "H05",
+      "query": "Qual função trunca stdout para capabilities determinísticas?",
+      "rg_patterns": ["cleanOutput", "truncate"],
+      "anchors": [
+        {
+          "path": "orchestrator/src/capabilities/results.ts",
+          "line": 14,
+          "substring": "export function cleanOutput"
+        }
+      ]
+    },
+    {
+      "id": "H06",
+      "query": "resolveKnowledgeBackend usa qual backend quando id é fake?",
+      "rg_patterns": ["case \"fake\"", "FakeKnowledgeBackend"],
+      "anchors": [
+        {
+          "path": "orchestrator/src/knowledge/backend/resolve.ts",
+          "line": 35,
+          "substring": "case \"fake\":"
+        }
+      ]
+    }
+  ]
+}
