@@ -1,0 +1,36 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_WIKI_GROUND",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H22-B1-7797427dafe0",
+  "arm": "B1",
+  "task_id": "H22",
+  "timestamp": "2026-10-22T03:08:00.380749+00:00",
+  "tree_sha": "88f6b643f2dca49440c4f0d8e47569ef03033773",
+  "harness": "v22-ground-b1-harness-1.5.0",
+  "tokenizer": "tiktoken:cl100k_base",
+  "metrics": {
+    "task_id": "H22",
+    "arm": "B1",
+    "paths_read": [
+      "docs/architecture/v2.2/EVIDENCE-SECRET-CANARY.md",
+      "docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md",
+      "orchestrator/src/evidence/secret-redaction.ts",
+      "docs/research/evolveloop-v2.2/01-current-state-audit.md",
+      "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+      "docs/research/evolveloop-v2.2/04-community-findings.md",
+      "orchestrator/src/v22/bench-h-tasks.ts"
+    ],
+    "input_tokens": 20357,
+    "latency_ms": 1737,
+    "recall": 1.0,
+    "recall_notes": [],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": true,
+    "recall": 1.0,
+    "notes": []
+  }
+}

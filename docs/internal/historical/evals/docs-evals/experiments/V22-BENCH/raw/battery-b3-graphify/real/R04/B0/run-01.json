@@ -1,0 +1,66 @@
+{
+  "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+  "evidence_class": "OFFICIAL_BASELINE",
+  "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+  "run_id": "V22G-R04-B0-930f9641f686",
+  "arm": "B0",
+  "task_id": "R04",
+  "split": "R01_R06",
+  "timestamp": "2026-10-22T02:05:53.437312+00:00",
+  "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+  "harness": "v22-graphify-b3-harness-1.5.0",
+  "ground_harness": "v22-ground-b1-harness-1.5.0",
+  "tokenizer": "tiktoken:cl100k_base",
+  "metrics": {
+    "task_id": "R04",
+    "arm": "B0",
+    "paths_read": [
+      "Agents/Agent-architecture-mining.md",
+      "agent-setup/bootstrap.sh",
+      "agent-setup/src/agent_setup/paths.py",
+      "docs/adr/0013-context-ownership-working-context.md",
+      "docs/architecture-mining/targets/mcp/REPORT.md",
+      "docs/architecture-mining/validation/pre-authoring-audit.md",
+      "docs/architecture-mining/validation/skill-validation-2026-09-18.md",
+      "docs/architecture/decision-review/ARCHITECTURE-DECISION-REVIEW.md",
+      "docs/architecture/decision-review/DECISION-LEDGER.md",
+      "docs/architecture/decision-review/DECISION-MATRIX.yaml",
+      "docs/architecture/decision-review/TRACEABILITY.md",
+      "docs/architecture/decision-review/adr-drafts/ADR-DR-0001-keep-job-path-resume.md",
+      "docs/architecture/decision-review/adr-drafts/ADR-DR-0002-defer-production-skill-budget.md",
+      "docs/architecture/decision-review/adr-drafts/ADR-DR-0003-security-model-before-sandbox.md",
+      "docs/architecture/decision-review/adr-drafts/ADR-DR-0004-define-stuck-semantics-first.md",
+      "docs/architecture/decision-review/adr-drafts/ADR-DR-0005-context-ownership-before-compaction.md",
+      "docs/architecture/evolution/ADR-REVIEW-MATRIX.yaml",
+      "docs/architecture/evolution/FINAL-ARCHITECTURE-EVOLUTION-REPORT.md",
+      "docs/architecture/evolution/FINAL-ARCHITECTURE-REVIEW.md",
+      "docs/architecture/evolution/FINAL-STATE.md",
+      "docs/architecture/evolution/FINAL-STATE.yaml",
+      "docs/architecture/evolution/IMPLEMENTATION-DECISION.yaml",
+      "docs/architecture/evolution/INTEGRITY-AUDIT.yaml",
+      "docs/architecture/evolution/OPEN-QUESTIONS.yaml",
+      "docs/architecture/evolution/STATE-AT-START.yaml",
+      "docs/architecture/evolution/TRACEABILITY.yaml",
+      "docs/architecture/evolution/UNSUPPORTED-CLAIMS.yaml",
+      "docs/architecture/finalization/ADR-FINALIZATION-REPORT.md",
+      "docs/architecture/finalization/ADR-INDEX.md",
+      "docs/architecture/finalization/FINALIZATION-MATRIX.yaml",
+      "docs/architecture/finalization/FINALIZATION-STATUS.yaml"
+    ],
+    "input_tokens": 21207,
+    "latency_ms": 154,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md"
+    ]
+  }
+}

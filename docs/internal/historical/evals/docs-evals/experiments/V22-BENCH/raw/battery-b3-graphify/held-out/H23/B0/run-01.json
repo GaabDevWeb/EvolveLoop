@@ -1,0 +1,52 @@
+{
+  "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+  "evidence_class": "OFFICIAL_BASELINE",
+  "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+  "run_id": "V22G-H23-B0-48a874e66dc6",
+  "arm": "B0",
+  "task_id": "H23",
+  "split": "H19_H24_test",
+  "timestamp": "2026-10-22T02:06:09.630037+00:00",
+  "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+  "harness": "v22-graphify-b3-harness-1.5.0",
+  "ground_harness": "v22-ground-b1-harness-1.5.0",
+  "tokenizer": "tiktoken:cl100k_base",
+  "metrics": {
+    "task_id": "H23",
+    "arm": "B0",
+    "paths_read": [
+      "docs/adr/0001-agent-package-composition.md",
+      "docs/adr/0003-capability-authority-vs-execution-policy.md",
+      "docs/architecture-mining/targets/mcp/REPORT.md",
+      "docs/architecture/decision-review/adr-drafts/ADR-DR-0003-security-model-before-sandbox.md",
+      "docs/architecture/finalization/adrs/ADR-DR-0003-security-model-before-sandbox.md",
+      "docs/audit/ACTUAL-ARCHITECTURE.md",
+      "docs/audit/DOCUMENTATION-DRIFT.md",
+      "docs/audit/DUPLICATION-ANALYSIS.md",
+      "docs/audit/EVIDENCE-CATALOG.md",
+      "docs/audit/EXECUTION-TRACES.md",
+      "docs/audit/EXPERIMENT-READINESS.md",
+      "docs/audit/FINAL-STATE-MODEL.md",
+      "docs/audit/FRAGILE-ALREADY-PRESENT.md",
+      "docs/audit/IMPLEMENTATION-AUDIT-EXECUTIVE.md",
+      "docs/audit/IMPLEMENTATION-GAPS.md",
+      "docs/audit/IMPLEMENTATION-MATRIX.yaml",
+      "docs/audit/RESEARCH-RECONCILIATION.md",
+      "docs/execution-replay-model.md",
+      "docs/internal/historical/audits/IMPLEMENTATION-STATUS.md",
+      "docs/internal/historical/audits/architecture-audit-2026-09-17.md",
+      "docs/internal/historical/audits/architecture-current.md"
+    ],
+    "input_tokens": 21564,
+    "latency_ms": 112,
+    "recall": 1.0,
+    "recall_notes": [],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": true,
+    "recall": 1.0,
+    "notes": []
+  }
+}

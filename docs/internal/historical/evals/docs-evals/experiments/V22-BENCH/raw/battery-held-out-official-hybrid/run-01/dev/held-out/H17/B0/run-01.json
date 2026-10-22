@@ -1,0 +1,47 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_BASELINE",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H17-B0-a46e62103515",
+  "arm": "B0",
+  "task_id": "H17",
+  "timestamp": "2026-10-22T03:07:48.159039+00:00",
+  "tree_sha": "88f6b643f2dca49440c4f0d8e47569ef03033773",
+  "harness": "v22-ground-b1-harness-1.5.0",
+  "tokenizer": "tiktoken:cl100k_base",
+  "metrics": {
+    "task_id": "H17",
+    "arm": "B0",
+    "paths_read": [
+      "docs/adr/0002-capability-model-deterministic-providers.md",
+      "docs/adr/0003-capability-authority-vs-execution-policy.md",
+      "docs/adr/0004-project-knowledge-contract.md",
+      "docs/architecture/decision-review/DECISION-MATRIX.yaml",
+      "docs/architecture/evolution/EVOLVELOOP-IMPLEMENTATION-REPORT.md",
+      "docs/architecture/evolution/FINAL-STATE.yaml",
+      "docs/architecture/evolution/UNSUPPORTED-CLAIMS.yaml",
+      "docs/architecture/finalization/adrs/ADR-DR-0002-defer-production-skill-budget.md",
+      "docs/architecture/finalization/prototypes/PT-001-live-catalog-budget.md",
+      "docs/architecture/knowledge/CORE-PERSONAL-BOUNDARY-V2.yaml",
+      "docs/architecture/knowledge/KNOWLEDGE-DEPENDENCY-GRAPH.yaml",
+      "docs/architecture/portability/CORE-ARCHITECTURE.yaml",
+      "docs/architecture/portability/KNOWLEDGE-PERSONALIZATION-MAP.yaml",
+      "docs/architecture/portability/PATH-REFERENCE-MAP.yaml",
+      "docs/architecture/portability/PERSONAL-CONNECTIONS.yaml",
+      "docs/architecture/portability/PORTABILITY-FORENSIC-AUDIT.md",
+      "docs/architecture/portability/PORTABILITY-INVENTORY.yaml",
+      "docs/architecture/portability/WIKI-GENERALIZATION-REPORT.md"
+    ],
+    "input_tokens": 21674,
+    "latency_ms": 73,
+    "recall": 1.0,
+    "recall_notes": [],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": true,
+    "recall": 1.0,
+    "notes": []
+  }
+}

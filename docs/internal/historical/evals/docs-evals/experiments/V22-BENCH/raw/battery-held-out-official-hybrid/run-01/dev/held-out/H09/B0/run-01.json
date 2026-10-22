@@ -1,0 +1,53 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_BASELINE",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H09-B0-b72e3948f32f",
+  "arm": "B0",
+  "task_id": "H09",
+  "timestamp": "2026-10-22T03:07:34.319703+00:00",
+  "tree_sha": "88f6b643f2dca49440c4f0d8e47569ef03033773",
+  "harness": "v22-ground-b1-harness-1.5.0",
+  "tokenizer": "tiktoken:cl100k_base",
+  "metrics": {
+    "task_id": "H09",
+    "arm": "B0",
+    "paths_read": [
+      "README.md",
+      "agent-setup/skills/wiki/references/cli.md",
+      "agent-setup/skills/wiki/scripts/ground.sh",
+      "docs/adr/0004-project-knowledge-contract.md",
+      "docs/adr/0012-wiki-default-knowledge-backend.md",
+      "docs/architecture/evolveloopt/final/FINAL-START-STATE.yaml",
+      "docs/architecture/evolveloopt/v1-final/START-STATE.yaml",
+      "docs/architecture/knowledge/CORE-PERSONAL-BOUNDARY-V2.yaml",
+      "docs/architecture/knowledge/KNOWLEDGE-BACKEND-CONTRACT.md",
+      "docs/architecture/knowledge/KNOWLEDGE-BACKEND-MATRIX.yaml",
+      "docs/architecture/knowledge/KNOWLEDGE-WIKI-DEFAULT.md",
+      "docs/architecture/knowledge/PERSONAL-COUPLING-AFTER.yaml",
+      "docs/architecture/portability/AGENT-PORTABILITY-MATRIX.yaml",
+      "docs/architecture/portability/CONFIG-PORTABILITY-MATRIX.yaml",
+      "docs/architecture/portability/CORE-ARCHITECTURE.yaml",
+      "docs/architecture/portability/CORE-VS-PERSONAL-GRAPH.yaml",
+      "docs/architecture/portability/ENVIRONMENT-ASSUMPTIONS.yaml",
+      "docs/architecture/portability/IDENTITY-REFERENCE-MAP.yaml",
+      "docs/architecture/portability/KNOWLEDGE-PERSONALIZATION-MAP.yaml",
+      "docs/architecture/portability/MAIN-VS-GAABTYPE-PROPOSAL.yaml",
+      "docs/architecture/portability/PATH-REFERENCE-MAP.yaml",
+      "docs/architecture/portability/PERSONAL-CONNECTIONS.yaml",
+      "docs/architecture/portability/PORTABILITY-FORENSIC-AUDIT.md",
+      "docs/architecture/portability/PORTABILITY-INVENTORY.yaml"
+    ],
+    "input_tokens": 20986,
+    "latency_ms": 78,
+    "recall": 1.0,
+    "recall_notes": [],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": true,
+    "recall": 1.0,
+    "notes": []
+  }
+}

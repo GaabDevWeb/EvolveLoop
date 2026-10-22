@@ -15,7 +15,7 @@ Legenda de rotulo: `pesquisa` = evidência da pesquisa versionada; `projeto` = e
 | B1 pack bench | `fixtures/evolveloop-project-knowledge/` (projeto) | recall circular | V22-GOAL-003 | `PROVISIONAL_CURATED_PACK` | aguarda V22-GOAL-005 |
 | Sintético F3 | `V22-BENCH/raw/battery/` (projeto) | tautologia | V22-GOAL-003 | `PROVISIONAL_SYNTHETIC` | `bench_harness.py` |
 | Continuidade S03/S07 | `fixtures/continuity-s37/` (projeto) + engine `session-continuity` | não `/mem` engine default | V22-GOAL-004 | `PROVISIONAL_CURATED_PACK` B1 | `v22-session-continuity.integration.test.ts` |
-| B1→oficial | `BENCHMARK-PLAN.md` § B1→oficial (projeto) | ground.sh+held-out | V22-GOAL-005 → 003 | `PENDING_BASELINE` | F4 wiki ops |
+| B1→oficial | `BENCHMARK-PLAN.md` § OFFICIAL_WIKI_GROUND (projeto) | ground.sh+held-out híbrido | V22-GOAL-005 → 003 | manifest `battery-held-out-official-hybrid` | `run-official-wiki-hybrid-bench.sh` |
 | Memória off no default | `profiles/default.yaml` L10–13 (projeto) | Sem continuidade | V22-GOAL-004 | Cenários 3, 7 | Fixture |
 | Hooks sem wiki-mem | `.cursor/hooks.json` (projeto) | Episódico não wired | V22-GOAL-004 | Procedimento opt-in | Skill wiki-mem |
 | RAG_REPO_MISSING sem vault | `orchestrator/src/knowledge/backend/wiki-backend.ts` L134–142 (projeto) | Grounding falha | V22-GOAL-005 | ground.sh OK | list-packs |

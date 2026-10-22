@@ -1,0 +1,37 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_WIKI_GROUND",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H16-B1-c80d5ba4f5ba",
+  "arm": "B1",
+  "task_id": "H16",
+  "timestamp": "2026-10-22T03:07:48.085573+00:00",
+  "tree_sha": "88f6b643f2dca49440c4f0d8e47569ef03033773",
+  "harness": "v22-ground-b1-harness-1.5.0",
+  "tokenizer": "tiktoken:cl100k_base",
+  "metrics": {
+    "task_id": "H16",
+    "arm": "B1",
+    "paths_read": [
+      "docs/research/evolveloop-v2.2/07-compatibility-matrix.md",
+      "orchestrator/src/v22/bench-h-tasks.ts",
+      "docs/architecture/public/OVERVIEW.md",
+      "docs/internal/historical/cursor-megabrain-rag-stack.md",
+      "profiles/default.yaml",
+      "docs/research/evolveloop-v2.2/04-community-findings.md",
+      ".cursor/skills/security/capability-registry.yaml",
+      "docs/research/evolveloop-v2.2/01-current-state-audit.md"
+    ],
+    "input_tokens": 19651,
+    "latency_ms": 1657,
+    "recall": 1.0,
+    "recall_notes": [],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": true,
+    "recall": 1.0,
+    "notes": []
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_BASELINE",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H08-B0-af85f580bff9",
+  "arm": "B0",
+  "task_id": "H08",
+  "timestamp": "2026-10-22T03:27:36.680916+00:00",
+  "tree_sha": "88f6b643f2dca49440c4f0d8e47569ef03033773",
+  "harness": "v22-ground-b1-harness-1.5.0",
+  "tokenizer": "tiktoken:cl100k_base",
+  "metrics": {
+    "task_id": "H08",
+    "arm": "B0",
+    "paths_read": [
+      "docs/adr/0005-hybrid-retrieval-degraded-mode.md",
+      "docs/architecture/knowledge/KNOWLEDGE-ARCHITECTURE.md",
+      "docs/architecture/knowledge/KNOWLEDGE-BACKEND-CONTRACT.md",
+      "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+      "docs/architecture/v2.2/TRACEABILITY-MATRIX.md",
+      "docs/research/evolveloop-v2.2/01-current-state-audit.md",
+      "docs/research/evolveloop-v2.2/06-token-optimization.md",
+      "docs/research/evolveloop-v2.2/07-compatibility-matrix.md",
+      "docs/research/evolveloop-v2.2/README.md"
+    ],
+    "input_tokens": 20531,
+    "latency_ms": 50,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: orchestrator/src/knowledge/backend/wiki-backend.ts"
+    ]
+  }
+}

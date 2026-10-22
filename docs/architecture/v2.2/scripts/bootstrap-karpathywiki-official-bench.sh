@@ -83,6 +83,8 @@ export KNOWLEDGE_PATH="$KARPATHY_WIKI_DIR"
 export EVOLVELOOP_MONOREPO_ROOT="$REPO"
 export AGENTS_ROOT="$REPO"
 export WIKI_PYTHON="$PYTHON"
+export CORPUS_YAML="$CORPUS_YAML"
+export CORPUS_SET="${CORPUS_SET:-evolveloop}"
 
 "$PYTHON" -m gaabwiki --help >>"$LOG" 2>&1 || {
   echo "FAIL: python -m gaabwiki not importable" | tee -a "$LOG"

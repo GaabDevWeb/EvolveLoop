@@ -1,0 +1,39 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_BASELINE",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H20-B0-1832280b50dc",
+  "arm": "B0",
+  "task_id": "H20",
+  "timestamp": "2026-10-22T03:27:59.678932+00:00",
+  "tree_sha": "88f6b643f2dca49440c4f0d8e47569ef03033773",
+  "harness": "v22-ground-b1-harness-1.5.0",
+  "tokenizer": "tiktoken:cl100k_base",
+  "metrics": {
+    "task_id": "H20",
+    "arm": "B0",
+    "paths_read": [
+      "docs/architecture/v2.2/CONSOLIDATION-REPORT.md",
+      "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+      "docs/architecture/v2.2/TRACEABILITY-MATRIX.md",
+      "docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md",
+      "orchestrator/src/index.ts",
+      "orchestrator/src/knowledge/truth-source/fence.ts",
+      "orchestrator/src/knowledge/truth-source/runtime.ts",
+      "orchestrator/src/knowledge/truth-source/types.ts",
+      "orchestrator/src/providers/deterministic/knowledge.ts",
+      "orchestrator/tests/unit/knowledge/truth-source-fence.test.ts"
+    ],
+    "input_tokens": 17831,
+    "latency_ms": 54,
+    "recall": 1.0,
+    "recall_notes": [],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": true,
+    "recall": 1.0,
+    "notes": []
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_BASELINE",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H22-B0-d1e5511c5a09",
+  "arm": "B0",
+  "task_id": "H22",
+  "timestamp": "2026-10-22T03:28:03.250445+00:00",
+  "tree_sha": "88f6b643f2dca49440c4f0d8e47569ef03033773",
+  "harness": "v22-ground-b1-harness-1.5.0",
+  "tokenizer": "tiktoken:cl100k_base",
+  "metrics": {
+    "task_id": "H22",
+    "arm": "B0",
+    "paths_read": [
+      "docs/architecture/release-audit-2026-10-11/V2.1-FREEZE-SCOPE-REPORT.md",
+      "docs/architecture/v2.2/EVIDENCE-SECRET-CANARY.md",
+      "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+      "docs/architecture/v2.2/TRACEABILITY-MATRIX.md",
+      "docs/research/evolveloop-v2.2/05-knowledge-wiki-architecture.md"
+    ],
+    "input_tokens": 19734,
+    "latency_ms": 44,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: orchestrator/src/evidence/secret-redaction.ts"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: orchestrator/src/evidence/secret-redaction.ts"
+    ]
+  }
+}

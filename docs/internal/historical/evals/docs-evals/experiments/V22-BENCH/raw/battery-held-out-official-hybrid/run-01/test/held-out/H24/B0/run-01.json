@@ -1,0 +1,60 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_BASELINE",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H24-B0-de6c034b9fa0",
+  "arm": "B0",
+  "task_id": "H24",
+  "timestamp": "2026-10-22T03:08:02.227507+00:00",
+  "tree_sha": "88f6b643f2dca49440c4f0d8e47569ef03033773",
+  "harness": "v22-ground-b1-harness-1.5.0",
+  "tokenizer": "tiktoken:cl100k_base",
+  "metrics": {
+    "task_id": "H24",
+    "arm": "B0",
+    "paths_read": [
+      "AGENT.md",
+      "Agents/Code-reviewer.md",
+      "Agents/Frontend-pro.md",
+      "Agents/Orquestrador-v2.md",
+      "Agents/Po-review.md",
+      "Agents/Skill-authoring.md",
+      "Agents/Tester.md",
+      "Agents/Validator.md",
+      "CHANGELOG.md",
+      "CODE_OF_CONDUCT.md",
+      "CONTRIBUTING.md",
+      "INVENTORY.md",
+      "README.md",
+      "Rules/wiki-agent.mdc",
+      "SECURITY.md",
+      "agent-setup/bootstrap.sh",
+      "agent-setup/cursor/commands/evolve.md",
+      "agent-setup/cursor/hooks/wiki-mem/mem.py",
+      "agent-setup/cursor/rules/wiki-agent.mdc",
+      "agent-setup/manifest/components.yaml",
+      "agent-setup/prompts/bootstrap-project.md",
+      "agent-setup/skills/wiki/evals/evals.json",
+      "agent-setup/skills/wiki/scripts/format_hits.py",
+      "agent-setup/src/agent_setup/backup.py",
+      "agent-setup/src/agent_setup/detect.py",
+      "agent-setup/src/agent_setup/diff.py",
+      "agent-setup/src/agent_setup/paths.py"
+    ],
+    "input_tokens": 20463,
+    "latency_ms": 103,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md"
+    ]
+  }
+}

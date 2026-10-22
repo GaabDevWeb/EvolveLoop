@@ -1,0 +1,50 @@
+{
+  "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+  "evidence_class": "GRAPHIFY_CODE_GRAPH",
+  "baseline_id": "v22-graphify-b3-coherent-2026-10-22",
+  "run_id": "V22G-H19-B3-c3b5e0901208",
+  "arm": "B3",
+  "task_id": "H19",
+  "split": "H19_H24_test",
+  "timestamp": "2026-10-22T02:06:06.850194+00:00",
+  "tree_sha": "e9c25633ea4c3292360aed3f24f77ca6081f46fb",
+  "harness": "v22-graphify-b3-harness-1.5.0",
+  "ground_harness": "v22-ground-b1-harness-1.5.0",
+  "tokenizer": "tiktoken:cl100k_base",
+  "metrics": {
+    "task_id": "H19",
+    "arm": "B3",
+    "paths_read": [
+      ".cursor/skills/testing/references/correction-loop.md",
+      "docs/adr/0003-capability-authority-vs-execution-policy.md",
+      "docs/architecture/finalization/adrs/ADR-DR-0003-security-model-before-sandbox.md",
+      "docs/internal/historical/MegaBrain-Ecosystem.md"
+    ],
+    "graph_paths_ranked": [
+      ".cursor/skills/testing/references/correction-loop.md",
+      "docs/adr/0003-capability-authority-vs-execution-policy.md",
+      "docs/architecture/finalization/adrs/ADR-DR-0003-security-model-before-sandbox.md",
+      "docs/internal/historical/MegaBrain-Ecosystem.md",
+      ".cursor/skills/backend/SKILL.md",
+      "Agents/Orquestrador-v2.md",
+      ".cursor/skills/orquestrar/references/specs/execution-policies.md",
+      "orchestrator/src/policies/policy-engine.ts",
+      "orchestrator/src/authority/capability-authority.ts",
+      "orchestrator/src/evidence/builders.ts"
+    ],
+    "input_tokens": 16751,
+    "latency_ms": 704,
+    "recall": 1.0,
+    "recall_notes": [],
+    "graphify_exit": 0,
+    "graph_path": "/workspace/graphify-out/graph.json"
+  },
+  "verifier": {
+    "pass": true,
+    "recall": 1.0,
+    "notes": []
+  },
+  "graphify": {
+    "cli_version": "graphify 0.9.93"
+  }
+}

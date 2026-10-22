@@ -1,0 +1,45 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_BASELINE",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H14-B0-6d1b23820b37",
+  "arm": "B0",
+  "task_id": "H14",
+  "timestamp": "2026-10-22T03:27:47.275982+00:00",
+  "tree_sha": "88f6b643f2dca49440c4f0d8e47569ef03033773",
+  "harness": "v22-ground-b1-harness-1.5.0",
+  "tokenizer": "tiktoken:cl100k_base",
+  "metrics": {
+    "task_id": "H14",
+    "arm": "B0",
+    "paths_read": [
+      "docs/architecture/knowledge/CORE-PERSONAL-BOUNDARY-V2.yaml",
+      "docs/architecture/portability/PATH-REFERENCE-MAP.yaml",
+      "docs/architecture/portability/PERSONAL-CONNECTIONS.yaml",
+      "docs/architecture/portability/PORTABILITY-FORENSIC-AUDIT.md",
+      "docs/architecture/portability/PORTABILITY-INVENTORY.yaml",
+      "docs/architecture/portability/WIKI-REFERENCE-AUDIT.yaml",
+      "docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md",
+      "docs/audit/EVIDENCE-CATALOG.md",
+      "docs/audit/IMPLEMENTATION-MATRIX.yaml",
+      "orchestrator/src/index.ts",
+      "orchestrator/src/providers/deterministic/index.ts",
+      "orchestrator/src/providers/deterministic/knowledge.ts"
+    ],
+    "input_tokens": 21925,
+    "latency_ms": 73,
+    "recall": 1.0,
+    "recall_notes": [
+      "anchor line drift (file evidence): orchestrator/src/providers/deterministic/knowledge.ts:16"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": true,
+    "recall": 1.0,
+    "notes": [
+      "anchor line drift (file evidence): orchestrator/src/providers/deterministic/knowledge.ts:16"
+    ]
+  }
+}

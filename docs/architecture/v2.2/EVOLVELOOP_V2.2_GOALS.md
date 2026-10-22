@@ -92,10 +92,10 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Dependências:** **B1 OFFICIAL** bloqueado até **V22-GOAL-005** (`ground.sh`/`WIKI_ROOT`, conhecimento sem gabarito, held-out). LLM ao vivo: `NOT_MEASURED`.
 - **Impacto arquitetural:** Nenhum no runtime de produção.
 - **Critérios de aceite:** Raw contém tokens entrada/saída, paths lidos, verificador, SHA do tree, id do modelo; integridade do scorer.
-- **Métricas:** **OFFICIAL_BASELINE (B0):** paths mediana 45; tokens entrada mediana ~66747; recall por tarefa informativo (não gate). **PROVISIONAL_CURATED_PACK (B1):** observação recall 1.0*, paths mediana 3, tokens 1781 — *circular; **não** alvo oficial. Alvos B1/continuidade: `PENDING_BASELINE` até GOAL-005 + held-out. **PROVISIONAL_SYNTHETIC:** sanity apenas. LLM: `NOT_MEASURED`.
+- **Métricas:** Scorer canônico `v22-anchor-scorer-1.0.0` (`file_evidence`) + budget com `tiktoken:cl100k_base`. **OFFICIAL_WIKI_GROUND (B1 híbrido):** manifest `raw/battery-held-out-official-hybrid/OFFICIAL-MANIFEST.json` — dev H07–H18 B1 **9/12** vs B0 **7/12**; teste H19–H24 B1 **5/6** vs B0 **4/6** (2× rebuild estável); B1 mediana tokens ≤22000 (~20463 dev / ~21531 teste); latência B1 ≤3000 ms (~1656). Reconciliação PR #14/B3: `GOAL-003-005-official-report.md`. **PROVISIONAL_CURATED_PACK:** pack bench (circular). **PROVISIONAL_SYNTHETIC:** sanity. LLM: `NOT_MEASURED`.
 - **Validação / testes:** `integrity_test` análogo ao E-001; cenários 1–2 mínimos para B0/B1.
 - **Riscos:** Cache do host Cursor desconhecido → registrar `UNKNOWN` no raw.
-- **Condição de conclusão:** B0 oficial publicado; B1 oficial após V22-GOAL-005; P1/P2 economia só com B1 oficial ou `PENDING_BASELINE`.
+- **Condição de conclusão:** B0 oficial publicado; B1 **OFFICIAL_WIKI_GROUND** (híbrido Ollama) com manifest reprodutível e integridade verde; alvos D2 held-out teste calibrados (recall B1≥B0, tokens, latência).
 
 **Rotulo dominante:** meta + evidência projeto.
 
@@ -135,7 +135,7 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Dependências:** V22-GOAL-002; desbloqueia **B1 OFFICIAL** em V22-GOAL-003 (bench pack é `PROVISIONAL_CURATED_PACK`).
 - **Impacto arquitetural:** Arquivos no projeto-alvo e config de ambiente; sem novo `KnowledgeBackendId`.
 - **Critérios de aceite:** Cenários 2, 3, 6, 7 do plano 08; excerpt cap 500 permanece até ADR que altere (`wiki-backend.ts`).
-- **Métricas:** Bench B1 pack: `PROVISIONAL_CURATED_PACK` (não gate). Held-out fixture vault: `FIXTURE_WIKI_GROUND` em `raw/battery-held-out/` (harness 1.1.0, query-only B1). `OFFICIAL_WIKI_GROUND` permanece `PENDING_BASELINE` (wiki externo + held-out não circular).
+- **Métricas:** **OFFICIAL_WIKI_GROUND:** `run-official-wiki-hybrid-bench.sh` + manifest (karpathyWiki `cd3cf08`, Ollama `nomic-embed-text`, corpus `evolveloop`). Gates D2 (held-out teste): recall B1≥B0, B1 tokens ≤22000, latência ≤3000 ms — ver `GOAL-003-005-official-report.md`. Fixture vault: `FIXTURE_WIKI_GROUND` (mecanismo). Pack bench: `PROVISIONAL_CURATED_PACK`.
 - **Validação / testes:** Fixture; opcional `knowledge-backend.test.ts` quando deps instaladas.
 - **Riscos:** Wiki gigante na primeira sessão — init mínima obrigatória no teste.
 - **Condição de conclusão:** Quatro workflows (init, query, update, lint) com corrida registrada.
