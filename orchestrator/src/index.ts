@@ -276,6 +276,22 @@ export {
   computePromptCacheKey,
   type PromptCacheMetrics,
 } from "./v22/prompt-cache-http.js";
-export { measureP2OnBenchTasks, type P2BenchMeasureReport } from "./v22/p2-bench-measure.js";
+export {
+  measureP2OnBenchTasks,
+  measureV22Goals009010,
+  type V22MeasureReport,
+} from "./v22/p2-bench-measure.js";
+export {
+  measurePickupPromptsForBench,
+  type PickupPromptMeasureReport,
+} from "./v22/measure-pickup-prompts.js";
+export {
+  measurePromptCachePrefixStability,
+  splitPickupPromptCacheRegions,
+  VENDOR_HTTP_CACHE_LABEL,
+  type PromptCacheStabilityReport,
+} from "./v22/measure-prompt-cache-prefix.js";
+export { countBenchTokens, benchTokenizerLabel, BENCH_TOKENIZER_PROXY } from "./v22/bench-tokenizer.js";
+export { BENCH_H_TASKS } from "./v22/bench-h-tasks.js";
 export { BENCH_R_TASKS } from "./v22/bench-r-tasks.js";
 export { estimateWhitespaceTokens } from "./v22/token-estimate.js";

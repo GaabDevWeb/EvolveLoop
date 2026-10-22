@@ -33,15 +33,19 @@ commands:
 
 skills:
   - name: wiki
-    source: bundled:skills/wiki
+    source: repo:${AGENTS_ROOT}/.cursor/skills/wiki
+    fallback_source: bundled:skills/wiki
     destination: "~/.cursor/skills/wiki"
+    install: symlink
     scope: global
     profiles: [minimal, standard, full]
     also_link: "~/.agents/skills/wiki"
 
   - name: wiki-mem
-    source: bundled:skills/wiki-mem
+    source: repo:${AGENTS_ROOT}/.cursor/skills/wiki-mem
+    fallback_source: bundled:skills/wiki-mem
     destination: "~/.cursor/skills/wiki-mem"
+    install: symlink
     scope: global
     profiles: [standard, full]
     also_link: "~/.agents/skills/wiki-mem"

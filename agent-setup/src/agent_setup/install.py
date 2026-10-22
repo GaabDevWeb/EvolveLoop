@@ -50,6 +50,11 @@ def _copy_or_link(src: Path, dest: Path, *, symlink: bool, force: bool, componen
         pass
 
     if dest.exists() or dest.is_symlink():
+        try:
+            if dest.resolve() == src.resolve():
+                return "skipped"
+        except OSError:
+            pass
         if dest.is_symlink() and dest.resolve() == src.resolve():
             return "skipped"
         if dest.is_file():
@@ -59,7 +64,9 @@ def _copy_or_link(src: Path, dest: Path, *, symlink: bool, force: bool, componen
             create_backup(component, dest)
             if dest.is_symlink() or dest.is_file():
                 dest.unlink()
-            elif dest.is_dir() and not symlink:
+            elif dest.is_dir():
+                if symlink:
+                    return "conflict"
                 return "conflict"
         else:
             if dest.is_symlink() or dest.is_file():
@@ -183,6 +190,9 @@ def install(profile: str = "standard", *, force: bool = False, dry_run: bool = F
         if profile not in skill.get("profiles", []):
             continue
         src = _resolve_source(skill["source"], env)
+        fallback = skill.get("fallback_source")
+        if not src.exists() and fallback:
+            src = _resolve_source(fallback, env)
         dest = expand(skill["destination"], extra=env)
         use_symlink = skill.get("install") == "symlink"
         status = _copy_or_link(src, dest, symlink=use_symlink, force=force, component=f"skill:{skill['name']}", state=state)
