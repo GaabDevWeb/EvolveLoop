@@ -1,0 +1,62 @@
+{
+  "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+  "evidence_class": "GRAPHIFY_CODE_GRAPH",
+  "baseline_id": "v22-graphify-b3-2026-10-22",
+  "run_id": "V22G-H11-B3-cc2004b043c6",
+  "arm": "B3",
+  "task_id": "H11",
+  "timestamp": "2026-10-22T01:55:12.525645+00:00",
+  "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+  "harness": "v22-graphify-b3-harness-1.5.0",
+  "ground_harness": "v22-ground-b1-harness-1.5.0",
+  "tokenizer": "tiktoken:cl100k_base",
+  "metrics": {
+    "task_id": "H11",
+    "arm": "B3",
+    "paths_read": [
+      "orchestrator/src/knowledge/backend/types.ts",
+      ".cursor/skills/prd/templates/CONTRIBUTING.md",
+      ".cursor/skills/skill-authoring/references/eval-workflow.md",
+      "docs/architecture/v2.2/TECH-DECISIONS-MATRIX.md",
+      "orchestrator/src/index.ts",
+      "orchestrator/src/config/profile.ts",
+      "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+      "docs/research/evolveloop-v2.2/01-current-state-audit.md",
+      "docs/architecture/v2.2/CONSOLIDATION-REPORT.md",
+      "docs/architecture/v2.2/TRACEABILITY-MATRIX.md"
+    ],
+    "graph_paths_ranked": [
+      "orchestrator/src/knowledge/backend/types.ts",
+      ".cursor/skills/prd/templates/CONTRIBUTING.md",
+      ".cursor/skills/skill-authoring/references/eval-workflow.md",
+      "docs/architecture/v2.2/TECH-DECISIONS-MATRIX.md",
+      "orchestrator/src/index.ts",
+      "orchestrator/src/config/profile.ts",
+      "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+      "docs/research/evolveloop-v2.2/01-current-state-audit.md",
+      "docs/architecture/v2.2/CONSOLIDATION-REPORT.md",
+      "docs/architecture/v2.2/TRACEABILITY-MATRIX.md",
+      "docs/research/evolveloop-v2.2/03-repositories-and-tools.md",
+      "docs/research/evolveloop-v2.2/07-compatibility-matrix.md",
+      "docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md",
+      "orchestrator/src/capabilities/results.ts",
+      "orchestrator/src/knowledge/backend/wiki-backend.ts",
+      "orchestrator/src/providers/deterministic/knowledge.ts",
+      "orchestrator/src/providers/deterministic/index.ts",
+      "orchestrator/src/knowledge/backend/resolve.ts",
+      "orchestrator/src/knowledge/backend/fake-backend.ts",
+      "orchestrator/package.json"
+    ],
+    "input_tokens": 20856,
+    "latency_ms": 689,
+    "recall": 1.0,
+    "recall_notes": [],
+    "graphify_exit": 0,
+    "graph_path": "/workspace/graphify-out/graph.json"
+  },
+  "verifier": {
+    "pass": true,
+    "recall": 1.0,
+    "notes": []
+  }
+}

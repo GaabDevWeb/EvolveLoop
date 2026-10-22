@@ -1,0 +1,75 @@
+{
+  "experiment_id": "V22-BENCH-GRAPHIFY-B3",
+  "evidence_class": "GRAPHIFY_CODE_GRAPH",
+  "baseline_id": "v22-graphify-b3-2026-10-22",
+  "run_id": "V22G-H18-B3-1cc82302ace6",
+  "arm": "B3",
+  "task_id": "H18",
+  "timestamp": "2026-10-22T01:55:17.636884+00:00",
+  "tree_sha": "9b647f8721e9d0716c2b71841293449c0ae1f99f",
+  "harness": "v22-graphify-b3-harness-1.5.0",
+  "ground_harness": "v22-ground-b1-harness-1.5.0",
+  "tokenizer": "tiktoken:cl100k_base",
+  "metrics": {
+    "task_id": "H18",
+    "arm": "B3",
+    "paths_read": [
+      "docs/research/evolveloop-v2.2/07-compatibility-matrix.md",
+      "agent-setup/skills/wiki-mem/SKILL.md",
+      ".cursor/skills/security/references/audit-memory.md",
+      "AGENT.md",
+      ".cursor/skills/orquestrar/references/ecosystem-v2.md",
+      "docs/development/README.md",
+      "orchestrator/src/memory/memory-store.ts"
+    ],
+    "graph_paths_ranked": [
+      "docs/research/evolveloop-v2.2/07-compatibility-matrix.md",
+      "agent-setup/skills/wiki-mem/SKILL.md",
+      ".cursor/skills/security/references/audit-memory.md",
+      "AGENT.md",
+      ".cursor/skills/orquestrar/references/ecosystem-v2.md",
+      "docs/development/README.md",
+      "orchestrator/src/memory/memory-store.ts",
+      "global-skills/brainstorming/scripts/server.cjs",
+      "docs/internal/historical/cursor-megabrain-rag-stack.md",
+      "orchestrator/src/index.ts",
+      "orchestrator/src/engine/execution-engine.ts",
+      "orchestrator/src/memory/filesystem-memory-store.ts",
+      "orchestrator/src/session/session-continuity.ts",
+      "docs/research/evolveloop-v2.2/01-current-state-audit.md",
+      "orchestrator/tests/unit/knowledge-memory.test.ts",
+      "CONTRIBUTING.md",
+      "docs/research/evolveloop-v2.2/README.md",
+      "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+      "docs/adr/0013-context-ownership-working-context.md",
+      "docs/research/evolveloop-v2.2/05-knowledge-wiki-architecture.md",
+      "orchestrator/src/types/index.ts",
+      "orchestrator/package.json",
+      "orchestrator/src/cli/run-engine.ts",
+      "orchestrator/src/evolveloop/longitudinal-types.ts",
+      "orchestrator/src/evolveloop/longitudinal-controller.ts",
+      "orchestrator/src/evolveloop/live/live-coordinator.ts",
+      "orchestrator/src/evidence/evidence-bus.ts",
+      "orchestrator/src/knowledge/backend/types.ts",
+      "orchestrator/tests/integration/v22-wire.integration.test.ts",
+      "orchestrator/tests/integration/v22-session-continuity.integration.test.ts",
+      "orchestrator/src/knowledge/knowledge-store.ts",
+      "orchestrator/src/policies/policy-engine.ts"
+    ],
+    "input_tokens": 17069,
+    "latency_ms": 789,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: .cursor/skills/wiki/SKILL.md"
+    ],
+    "graphify_exit": 0,
+    "graph_path": "/workspace/graphify-out/graph.json"
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: .cursor/skills/wiki/SKILL.md"
+    ]
+  }
+}

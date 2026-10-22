@@ -38,7 +38,7 @@ Legenda: **`ENTREGUE_CI`** = critérios automatizados verdes na release; **`FIXT
 | **V22-GOAL-005** | P1 | `ENTREGUE_CI` (mecanismo) + `PENDING_BASELINE` (ganho B1) | Runbook, carpaccio, vault fixture, scripts bootstrap karpathyWiki; **ganho recall B1 oficial depende de Ollama/híbrido no motor real** (ver relatórios 005d–005e). |
 | **V22-GOAL-006** | P1 | `ENTREGUE_CI` | Budget no spawn/pickup, ranking query-only (sem score circular `rg_patterns`), `bench-budget-nocirc` + `context-budget-pickup.test.ts`. |
 | **V22-GOAL-007** | P1 | `ENTREGUE_CI` | Redação/sanitização evidence + canário + wire integration. |
-| **V22-GOAL-008** | P2 | `FLAG_OPT_IN` + `STUB` | `EVOLVELOOP_GRAPHIFY` + adapter; sem bench B3 vs B0/B1 como gate de produto. |
+| **V22-GOAL-008** | P2 | `FLAG_OPT_IN` + `GRAPHIFY_CODE_GRAPH` | B3 medido (`battery-b3-graphify/`, ADR-0014); adapter CLI real; não é `KnowledgeBackendId`. |
 | **V22-GOAL-009** | P2 | `FLAG_OPT_IN` + `FIXTURE_PROVA` | `EVOLVELOOP_BREVITY_CAVEMAN`; medição `FIXTURE_PICKUP_INVOKE` (R01–R06, H07–H12); flags **OFF** = pickup inalterado (teste integração P2). |
 | **V22-GOAL-010** | P2 | `FIXTURE_PROVA` | Prefixo cacheável estável em fixture (`measure-prompt-cache-prefix.ts`); **`vendor_http_cache_hit: NOT_MEASURED`** (sem HTTP vendor). |
 

@@ -12,6 +12,7 @@ Derivado de `docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md` com p
 | **`FIXTURE_WIKI_GROUND` (B1)** | `raw/battery-held-out/` via `ground_b1_harness.py` + `fixtures/evolveloop-wiki-vault` (CLI `gaabwiki` **mínimo no repo**) | Não — prova de mecanismo/contrato; não substitui vault externo |
 | **`OFFICIAL_WIKI_GROUND` (B1)** | Mesmo harness + **wiki Python real** (fora do monorepo) + held-out independente + query sem gabarito | Sim — gate futuro |
 | **`NOT_MEASURED`** | LLM ao vivo | — |
+| **`GRAPHIFY_CODE_GRAPH` (B3)** | `raw/battery-b3-graphify/` — `graphify query` + leitura de paths `src=` (AST local, `--no-cluster`) | Não — experimento GOAL-008; ver ADR-0014 |
 
 ## Estado
 
@@ -23,6 +24,7 @@ Derivado de `docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md` com p
 | B1 held-out (fixture vault) | `FIXTURE_WIKI_GROUND` — `raw/battery-held-out/held-out-summary.json` |
 | Alvos numéricos B1 / continuidade B1 | `PENDING_BASELINE` até `OFFICIAL_WIKI_GROUND` (§ B1→oficial) |
 | Tokenizer | `tiktoken:cl100k_base` |
+| B3 Graphify (2026-10-22) | `GRAPHIFY_CODE_GRAPH` — `raw/battery-b3-graphify/b3-summary.json` (harness 1.5.0, recall por arquivo) |
 
 ## Calibração observada (informativa; ver classe acima)
 
