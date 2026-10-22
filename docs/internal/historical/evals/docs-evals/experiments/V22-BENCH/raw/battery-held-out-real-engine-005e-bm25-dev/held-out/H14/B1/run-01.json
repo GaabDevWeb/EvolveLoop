@@ -1,0 +1,46 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_WIKI_GROUND",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H14-B1-d4ed02c7cc08",
+  "arm": "B1",
+  "task_id": "H14",
+  "timestamp": "2026-10-22T01:39:03.165165+00:00",
+  "tree_sha": "c36ca0dff50cb24a5a180578a66bf8e4829afbcd",
+  "harness": "v22-ground-b1-harness-1.5.0",
+  "tokenizer": "PROXY:whitespace_split",
+  "metrics": {
+    "task_id": "H14",
+    "arm": "B1",
+    "paths_read": [
+      ".cursor/skills/orquestrar/references/ecosystem-v2.md",
+      ".cursor/skills/orquestrar/references/specs/runtime.md",
+      ".cursor/skills/orquestrar/references/specs/README.md",
+      "orchestrator/src/discovery/capability-profiles.ts",
+      "docs/architecture/finalization/PROTOTYPE-HARDENING-REPORT.md",
+      "docs/research/evolveloop-v2.2/01-current-state-audit.md",
+      "docs/architecture/evolveloopt/SECURITY.md",
+      "docs/architecture/release-audit-2026-10-11/V2.1-FREEZE-SCOPE-REPORT.md",
+      "docs/architecture/prototype-gate/PROTOTYPE-GATE-REPORT.md",
+      ".cursor/skills/orquestrar/references/specs/interfaces.md",
+      "orchestrator/src/registry/registry-client.ts",
+      ".cursor/skills/orquestrar/references/specs/plugins.md",
+      "docs/research/evolveloop-v2.2/README.md"
+    ],
+    "input_tokens": 17630,
+    "latency_ms": 2734,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: orchestrator/src/providers/deterministic/knowledge.ts"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: orchestrator/src/providers/deterministic/knowledge.ts"
+    ]
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "OFFICIAL_WIKI_GROUND",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
+  "run_id": "V22H-H24-B1-3a9292397fb7",
+  "arm": "B1",
+  "task_id": "H24",
+  "timestamp": "2026-10-22T01:39:52.586122+00:00",
+  "tree_sha": "c36ca0dff50cb24a5a180578a66bf8e4829afbcd",
+  "harness": "v22-ground-b1-harness-1.5.0",
+  "tokenizer": "PROXY:whitespace_split",
+  "metrics": {
+    "task_id": "H24",
+    "arm": "B1",
+    "paths_read": [
+      ".cursor/skills/skill-authoring/references/post-ship-recommendations.md",
+      ".cursor/skills/security/references/trust-boundaries.md",
+      "docs/reconciliation/TEST-RECONCILIATION.md",
+      ".cursor/skills/agent-architecture-mining/references/evidence.md",
+      "docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md",
+      "docs/research/evolveloop-v2.2/03-repositories-and-tools.md",
+      "docs/research/evolveloop-v2.2/05-knowledge-wiki-architecture.md",
+      "docs/architecture/evolution/OPEN-QUESTIONS.yaml",
+      ".cursor/skills/orquestrar/references/specs/README.md",
+      "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+      "docs/research/findings/_aggregate_decisions.json",
+      "docs/research/CROSS-INVESTIGATION-REVIEW.md",
+      "docs/architecture/skills/audit/SKILL-DEPENDENCY-GRAPH-V2.yaml",
+      ".cursor/skills/wiki/scripts/format_hits.py",
+      "docs/research/DECISION-MATRIX.md",
+      ".cursor/skills/skill-authoring/references/isolated-eval-protocol.md",
+      "docs/architecture/v2.2/scripts/validate-v22-artifacts.sh",
+      "agent-setup/bootstrap.sh",
+      "agent-setup/install.sh"
+    ],
+    "input_tokens": 21797,
+    "latency_ms": 5627,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md"
+    ]
+  }
+}
