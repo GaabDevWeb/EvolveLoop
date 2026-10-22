@@ -1,6 +1,7 @@
 # V22-GOAL-003-005-official — OFFICIAL_WIKI_GROUND (híbrido)
 
 **Base:** `release/v2.1-freeze-preparation` @ `9b647f8`  
+**Medição commit:** `6d86301` (branch `cursor/v22-goal-003-005-official-2e17`)  
 **Manifest:** `raw/battery-held-out-official-hybrid/OFFICIAL-MANIFEST.json`  
 **Harness:** `v22-ground-b1-harness-1.5.0`  
 **Motor:** karpathyWiki `cd3cf08` (tarball SHA256 `11160e77…852377`)  
