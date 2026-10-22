@@ -17,7 +17,7 @@ from typing import Any, Callable
 
 EXP_DIR = Path(__file__).resolve().parents[1]
 TASKS_HELD = EXP_DIR / "tasks-held-out-frozen.json"
-HARNESS_VERSION = "v22-ground-b1-harness-1.3.0"
+HARNESS_VERSION = "v22-ground-b1-harness-1.4.0"
 B0_CAP = 45
 RG_GLOBS = [
     "!node_modules",
@@ -180,11 +180,49 @@ def _repo_paths_from_hit(hit: dict[str, Any], wiki_root: Path, repo: Path) -> li
     return sorted(set(out))
 
 
+def _load_query_glossary(env: dict[str, str]) -> dict[str, Any]:
+    wiki = Path(env["WIKI_ROOT"])
+    gpath = wiki / ".data" / "evolveloop-query-glossary.json"
+    if not gpath.is_file():
+        return {"pt_to_en": {}}
+    try:
+        return json.loads(gpath.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return {"pt_to_en": {}}
+
+
+def _expand_b1_query(query: str, env: dict[str, str]) -> str:
+    scripts = repo_root() / "docs/architecture/v2.2/scripts"
+    if str(scripts) not in sys.path:
+        sys.path.insert(0, str(scripts))
+    from evolveloop_recall_support import expand_query, lexical_rg_patterns
+
+    glossary = _load_query_glossary(env)
+    return expand_query(query, glossary)
+
+
+def _hybrid_lexical_paths(root: Path, query: str, env: dict[str, str]) -> list[str]:
+    if os.environ.get("V22_B1_HYBRID_LEXICAL", "1").strip() in ("0", "false", "no"):
+        return []
+    scripts = repo_root() / "docs/architecture/v2.2/scripts"
+    if str(scripts) not in sys.path:
+        sys.path.insert(0, str(scripts))
+    from evolveloop_recall_support import lexical_rg_patterns
+
+    glossary = _load_query_glossary(env)
+    patterns = lexical_rg_patterns(query, glossary, max_patterns=4)
+    hits: list[str] = []
+    for pat in patterns:
+        hits.extend(run_rg(root, pat))
+    return sorted(set(hits))[:20]
+
+
 def run_ground_json(query: str, env: dict[str, str]) -> dict[str, Any]:
     vault = env["WIKI_ROOT"]
     py = env.get("WIKI_PYTHON", f"{vault}/.venv/bin/python")
+    top_k = os.environ.get("V22_B1_TOP_K", "16")
     raw = subprocess.run(
-        [py, "-m", "gaabwiki", "search", query, "--json", "--top-k", "12"],
+        [py, "-m", "gaabwiki", "search", query, "--json", "--top-k", top_k],
         capture_output=True,
         text=True,
         env=env,
@@ -218,8 +256,9 @@ def run_b1_ground(root: Path, task: dict[str, Any], counter, env: dict[str, str]
     paths: list[str] = []
     buf: list[str] = []
     wiki_root = Path(env["WIKI_ROOT"])
-    # B1 must use natural-language task query only — rg_patterns are B0 gabarito (no leakage).
-    data = run_ground_json(task["query"], env)
+    # B1: task.query only (+ corpus glossary expansion). Never task.rg_patterns.
+    search_query = _expand_b1_query(task["query"], env)
+    data = run_ground_json(search_query, env)
     stale = 0
     for hit in _iter_search_hits(data):
         src = hit.get("source")
@@ -236,6 +275,8 @@ def run_b1_ground(root: Path, task: dict[str, Any], counter, env: dict[str, str]
         )
         if excerpt:
             buf.append(str(excerpt))
+    for rel in _hybrid_lexical_paths(root, task["query"], env):
+        read_rel(root, rel, paths, buf)
     recall, notes = anchor_recall(root, paths, task["anchors"])
     if stale:
         notes.append(f"skipped {stale} stale hits")
@@ -419,7 +460,9 @@ def run_battery(out_dir: Path, task_filter: str | None = None) -> dict[str, Any]
         },
         "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-real-engine",
         "harness_notes": {
-            "b1_query": "task.query only (rg_patterns reserved for B0)",
+            "b1_query": "task.query + corpus glossary expansion (rg_patterns reserved for B0)",
+            "b1_hybrid_lexical": os.environ.get("V22_B1_HYBRID_LEXICAL", "1"),
+            "b1_top_k": os.environ.get("V22_B1_TOP_K", "16"),
             "wiki_engine": engine_meta,
         },
         "task_filter": task_filter,
