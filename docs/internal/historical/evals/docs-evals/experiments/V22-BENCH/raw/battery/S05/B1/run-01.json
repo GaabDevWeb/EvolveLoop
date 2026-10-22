@@ -1,0 +1,47 @@
+{
+  "experiment_id": "V22-BENCH",
+  "baseline_id": "v22-b0b1-2026-10-22",
+  "run_id": "V22-S05-B1-0159b8046fa5bae1",
+  "arm": "B1",
+  "scenario": {
+    "id": "S05",
+    "number": 5,
+    "title": "Mudan\u00e7a em alpha \u2014 dependentes"
+  },
+  "timestamp": "2026-10-22T00:36:09.214824+00:00",
+  "tree_sha": "dfcbc9a2e54964374d5f84acb6e28882f3773288",
+  "harness": "v22-bench-harness-1.0.0",
+  "tokenizer": "tiktoken:cl100k_base",
+  "model": {
+    "id": "NOT_MEASURED",
+    "note": "offline deterministic retrieval; no live LLM in this battery"
+  },
+  "host_cache": "UNKNOWN",
+  "context_budget_tokens_declared": 128000,
+  "task": {
+    "query": "Se alterarmos src/alpha/core.py, quais arquivos devem ser revisados?"
+  },
+  "metrics": {
+    "arm": "B1",
+    "scenario_id": "S05",
+    "paths_read": [
+      ".ai/pages/change-alpha.md",
+      ".ai/pages/module-map.md",
+      "src/beta/consumer.py"
+    ],
+    "rg_invocations": [],
+    "input_tokens": 164,
+    "output_tokens": 24,
+    "total_tokens": 188,
+    "model_calls": 0,
+    "latency_ms_retrieval": 0,
+    "verifier_pass": true,
+    "verifier_notes": "ok",
+    "secret_leak": false,
+    "redundant_reads": 0
+  },
+  "verifier": {
+    "pass": true,
+    "notes": "ok"
+  }
+}

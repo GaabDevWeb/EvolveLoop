@@ -1,0 +1,52 @@
+{
+  "schema": "v22-bench-tasks-v1",
+  "seed": "v22-bench-2026-10-22",
+  "context_budget_tokens_declared": 128000,
+  "scenarios": [
+    {
+      "id": "S01",
+      "number": 1,
+      "title": "Projeto sem wiki",
+      "arms": ["B0"],
+      "wiki": false,
+      "query": "Qual é a decisão do ADR-0001 sobre o módulo alpha?",
+      "rg_patterns": ["AlphaGateway", "ADR-0001", "alpha"],
+      "wiki_pages": [],
+      "code_paths_after_wiki": [],
+      "verifier": {
+        "answer_must_contain": ["AlphaGateway", "src/alpha/core.py"],
+        "forbidden_in_log": ["SUPERSECRETO_NAO_LOGAR"]
+      }
+    },
+    {
+      "id": "S02",
+      "number": 2,
+      "title": "Wiki inicializada — ADR via conhecimento",
+      "arms": ["B0", "B1"],
+      "wiki": true,
+      "query": "Onde está definido o gateway alpha e qual módulo depende dele?",
+      "rg_patterns": ["AlphaGateway", "beta", "consumer"],
+      "wiki_pages": [".ai/index.md", ".ai/pages/adr-summary.md", ".ai/pages/module-map.md"],
+      "code_paths_after_wiki": ["src/beta/consumer.py"],
+      "verifier": {
+        "answer_must_contain": ["src/alpha/core.py", "src/beta/consumer.py"],
+        "forbidden_in_log": ["SUPERSECRETO_NAO_LOGAR"]
+      }
+    },
+    {
+      "id": "S05",
+      "number": 5,
+      "title": "Mudança em alpha — dependentes",
+      "arms": ["B0", "B1"],
+      "wiki": true,
+      "query": "Se alterarmos src/alpha/core.py, quais arquivos devem ser revisados?",
+      "rg_patterns": ["alpha", "AlphaGateway", "consumer"],
+      "wiki_pages": [".ai/pages/change-alpha.md", ".ai/pages/module-map.md"],
+      "code_paths_after_wiki": ["src/beta/consumer.py"],
+      "verifier": {
+        "answer_must_contain": ["src/beta/consumer.py"],
+        "forbidden_in_log": ["SUPERSECRETO_NAO_LOGAR"]
+      }
+    }
+  ]
+}

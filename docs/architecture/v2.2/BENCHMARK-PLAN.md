@@ -6,9 +6,11 @@ Derivado de `docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md` com p
 
 | Item | Valor | Rotulo |
 |------|-------|--------|
-| Execução no EvolveLoop | `NOT_MEASURED` (pesquisa 2026-10-21) | pesquisa |
-| Alvos de melhoria P1/P2 | `PENDING_BASELINE` até B0/B1 | produto D2 |
-| Tree pin | `28ab56ce091fc25edbf67e5106268580becff2b2` | projeto |
+| Execução B0/B1 (harness offline) | `MEASURED` — `V22-BENCH/raw/battery/battery-summary.json` (`baseline_id` `v22-b0b1-2026-10-22`) | projeto |
+| LLM ao vivo (modelo/tokens saída reais) | `NOT_MEASURED` — `model.id` no raw | projeto |
+| Tokenizer | `tiktoken:cl100k_base` (registrado em `raw/battery/environment.json`) | projeto |
+| Alvos P1/P2 derivados | Ver `EVOLVELOOP_V2.2_GOALS.md` (003, 005, 006) | produto D2 |
+| Tree pin (corrida) | SHA em `raw/battery/environment.json` → `source_revision` | projeto |
 
 ## Baselines obrigatórios (antes de qualquer meta numérica)
 
@@ -26,7 +28,7 @@ Derivado de `docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md` com p
 
 Conforme plano 08: modelo, data, tokenizer (não whitespace como aceite final), harness, SHA do tree, tarefa, verificador, orçamento declarado, contagem de `read`/`rg` por path, tokens entrada/saída/total, cache host `UNKNOWN` se não observável.
 
-**Destino de raw JSON:** `docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery/` (placeholder; execução `NOT_MEASURED`).
+**Destino de raw JSON:** `docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery/` (populado pela bateria F3).
 
 ## Tarefas representativas (cenários mínimos por meta)
 
@@ -47,12 +49,21 @@ Conforme plano 08: modelo, data, tokenizer (não whitespace como aceite final), 
 
 Do plano 08: verificador não pode cair; negações do gabarito não podem sumir em braços de compressão; zero excerpt de outro projeto; zero segredo no log commitado.
 
-## Calibração pós-baseline (procedimento, não números fixos)
+## Calibração pós-baseline (F3 — mediana observada, 1 run/arm)
 
-1. Executar B0 e B1 nos cenários 2 e 5.
-2. Publicar medianas de paths lidos e tokens (tokenizer nomeado).
-3. Escrever alvos derivados no `EVOLVELOOP_V2.2_GOALS.md` (substituir `PENDING_BASELINE` **somente** com referência ao raw SHA).
-4. Se B1 não reduzir paths, wiki ainda pode ser aceita por continuidade (cenários 3, 7) com margem de tokens definida **a partir** do baseline (+10% proposta inicial na pesquisa — permanece `PENDING_BASELINE` até medição).
+| Cenário | Braço | paths lidos (mediana) | tokens entrada (mediana, `cl100k_base`) | verificador |
+|---------|-------|----------------------:|----------------------------------------:|-------------|
+| 2 (S02) | B0 | 15 | 650 | pass |
+| 2 (S02) | B1 | 4 | 247 | pass |
+| 5 (S05) | B0 | 15 | 650 | pass |
+| 5 (S05) | B1 | 3 | 164 | pass |
+
+Fonte: `docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery/battery-summary.json`.
+
+1. B0/B1 nos cenários 2 e 5 — **feito** (harness offline).
+2. Medianas publicadas acima (tokenizer nomeado no raw).
+3. Alvos derivados em `EVOLVELOOP_V2.2_GOALS.md` com referência ao raw e `source_revision`.
+4. B1 reduziu paths vs B0 nos cenários 2 e 5; margem de continuidade para cenários 3/7 permanece `PENDING_BASELINE` até fixture dedicado.
 
 ## Referências internas
 

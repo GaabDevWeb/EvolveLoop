@@ -15,7 +15,7 @@ A V2.2 torna **conhecimento por projeto** e **recuperação com orçamento** ope
 
 1. **Ownership do contexto de trabalho** indefinido — ADR-DR-0005 adia compaction; ADR-DR-0002 adia budget de skills no runtime (`docs/architecture/finalization/ADR-INDEX.md`).
 2. **Hierarquia de fonte de verdade** não operacionalizada — código, `.ai/`, vault e grafo inferido coexistem sem proveniência nem detecção de obsoleto unificada (`docs/research/evolveloop-v2.2/07-compatibility-matrix.md`).
-3. **Medição ausente** — E-001 é PROXY whitespace; plano 08 está `NOT_MEASURED` (`docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md`).
+3. **Medição parcial** — E-001 é PROXY whitespace; B0/B1 offline em `V22-BENCH` (`docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/EXPERIMENT.md`); LLM ao vivo ainda `NOT_MEASURED`.
 4. **Continuidade entre sessões** não verificável no perfil público — `memory.enabled: false`, hooks sem `wiki-mem` (`profiles/default.yaml`, `.cursor/hooks.json`).
 5. **Grounding Wiki fail-closed** quando `WIKI_ROOT` ausente (`orchestrator/src/knowledge/backend/wiki-backend.ts`).
 
@@ -85,13 +85,13 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Prioridade:** P0
 - **Título:** Harness de benchmark e baselines B0/B1
 - **Problema:** E-001 mede `token_estimate` por whitespace e `task_success NOT_MEASURED` (`docs/internal/historical/evals/docs-evals/experiments/E-001/EXPERIMENT.md`).
-- **Estado atual:** Plano 08 completo mas sem execução (`docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md`).
-- **Resultado:** Fixture + harness estilo E-001; **B0 e B1 executados uma vez**; raw JSON em árvore de evidência; tokenizer e modelo nomeados.
-- **Solução:** Novo experimento sob `docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/` (ver `BENCHMARK-PLAN.md`).
-- **Dependências:** Acesso a um modelo para fechar P0; sem modelo, harness entregue com resultado `NOT_MEASURED` (não conta como meta concluída).
+- **Estado atual:** Harness F3 publicado; bateria offline B0/B1 em cenários 1/2/5 (`battery-summary.json`); modelo `NOT_MEASURED` no raw.
+- **Resultado:** Fixture + harness estilo E-001; **B0 e B1 executados uma vez** (offline); raw JSON em `docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery/`; tokenizer `tiktoken:cl100k_base`.
+- **Solução:** Experimento `docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/` (ver `BENCHMARK-PLAN.md`).
+- **Dependências:** Corrida com LLM ao vivo ainda necessária para fechar tokens de saída reais e `task_success` host — fora do escopo desta entrega offline.
 - **Impacto arquitetural:** Nenhum no runtime de produção.
 - **Critérios de aceite:** Raw contém tokens entrada/saída, paths lidos, verificador, SHA do tree, id do modelo; integridade do scorer.
-- **Métricas:** Valores numéricos **somente** como observação do baseline; alvos de melhoria = `PENDING_BASELINE` até calibração pós-B0/B1 (D2).
+- **Métricas:** Baseline observado (raw `docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery/battery-summary.json`, `source_revision` no `environment.json`): S02 B0 paths 15 / entrada 650 tokens; S02 B1 paths 4 / entrada 247; S05 B1 paths 3 / entrada 164. Alvos derivados (fixture V22-BENCH): B1 manter verificador verde e `paths_read` ≤ 5 nos cenários 2 e 5; tokens entrada B1 ≤ 300 (cenário 2) e ≤ 200 (cenário 5). Saída LLM e `model.id` real: `NOT_MEASURED`.
 - **Validação / testes:** `integrity_test` análogo ao E-001; cenários 1–2 mínimos para B0/B1.
 - **Riscos:** Cache do host Cursor desconhecido → registrar `UNKNOWN` no raw.
 - **Condição de conclusão:** Baselines B0 e B1 publicados; metas P1/P2 que dependem de economia referenciam esses números, não benchmarks externos.
@@ -112,7 +112,7 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Dependências:** V22-GOAL-002 (cerca); V22-GOAL-005 (wiki de projeto) para braço B1.
 - **Impacto arquitetural:** Opt-in preservado; sem segundo `KnowledgeBackend`.
 - **Critérios de aceite:** Cenário 3: mesma tarefa de retomada; verificador acerta; cenário 7: cita página/ADR/código.
-- **Métricas:** Acerto do verificador; paths lidos; tokens `PENDING_BASELINE` até V22-GOAL-003.
+- **Métricas:** Acerto do verificador; paths lidos B1 ≤ 5 (referência S02 baseline V22-BENCH); tokens entrada cenários 3/7 `PENDING_BASELINE` até fixture dedicado (proxy: não exceder mediana B1 S02 + 25 tokens até medição).
 - **Validação / testes:** Fixture do plano 08; evidência em `memory/<feature_id>/evidence/` quando usar engine.
 - **Riscos:** Confundir episódico com SSOT de domínio (wiki skill já proíbe).
 - **Condição de conclusão:** Corrida registrada no fixture com verificador verde para cenários 3 e 7.
@@ -133,7 +133,7 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Dependências:** V22-GOAL-002; V22-GOAL-003 para métricas de token.
 - **Impacto arquitetural:** Arquivos no projeto-alvo e config de ambiente; sem novo `KnowledgeBackendId`.
 - **Critérios de aceite:** Cenários 2, 3, 6, 7 do plano 08; excerpt cap 500 permanece até ADR que altere (`wiki-backend.ts`).
-- **Métricas:** Paths lidos; páginas `atual` com hash válido; tokens totais `PENDING_BASELINE`.
+- **Métricas:** Paths lidos B1 mediana 4 (S02) e 3 (S05) no baseline; páginas `atual` com hash válido; tokens totais offline B1 mediana 411 (247+164) referência raw — alvo gate host `PENDING_BASELINE` até LLM medido.
 - **Validação / testes:** Fixture; opcional `knowledge-backend.test.ts` quando deps instaladas.
 - **Riscos:** Wiki gigante na primeira sessão — init mínima obrigatória no teste.
 - **Condição de conclusão:** Quatro workflows (init, query, update, lint) com corrida registrada.
@@ -154,7 +154,7 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Dependências:** V22-GOAL-005; V22-GOAL-003 para alvos numéricos de token.
 - **Impacto arquitetural:** Aditivo em evidência; sem mudança obrigatória de contrato.
 - **Critérios de aceite:** Cenário 10: braço com orçamento não perde verificador nem lê path canário redundante.
-- **Métricas:** Leituras redundantes = 0 para path já evidenciado; tokens `PENDING_BASELINE`.
+- **Métricas:** Leituras redundantes = 0; cap observado B0 `paths_read` 15 no fixture (cenários 2/5); alvo B1 ≤ 5 paths e ≤ 5 páginas `.ai/` por tarefa (calibrado no V22-BENCH); tokens entrada B1 referência 247 (S02) no raw — host `PENDING_BASELINE`.
 - **Validação / testes:** Log de paths por run; gap do host Cursor documentado se paths não observáveis.
 - **Riscos:** Orçamento corta função no meio — cortar por arquivo inteiro.
 - **Condição de conclusão:** Fixture mostra lista de paths e ausência de canário cruzado.

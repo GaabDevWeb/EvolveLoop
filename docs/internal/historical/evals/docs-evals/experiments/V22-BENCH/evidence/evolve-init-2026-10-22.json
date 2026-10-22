@@ -1,0 +1,25 @@
+{
+  "task_id": "V22-F3-baselines",
+  "evolve_entrypoint": "/evolve",
+  "steps": [
+    {
+      "cmd": "apt install python3.12-venv",
+      "exit_code": 0,
+      "note": "required for agent-setup bootstrap on VM"
+    },
+    {
+      "cmd": "AGENTS_ROOT=/workspace bash agent-setup/bootstrap.sh",
+      "log": "/tmp/bootstrap-evolve.log",
+      "exit_code": 0
+    },
+    {
+      "cmd": "AGENTS_ROOT=/workspace bash agent-setup/install.sh standard",
+      "log": "/tmp/install-evolve.log",
+      "exit_code": 0
+    }
+  ],
+  "agents_env": "~/.cursor/agents.env",
+  "orquestrar_skill": "~/.cursor/skills/orquestrar/SKILL.md",
+  "agent_doctor": "DEGRADED (MegaBrain legacy missing; wiki vault unset)",
+  "contract_read": "agent-setup/cursor/commands/evolve.md + ~/.cursor/skills/orquestrar/SKILL.md"
+}
