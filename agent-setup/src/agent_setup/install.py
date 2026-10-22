@@ -43,6 +43,12 @@ def _copy_or_link(src: Path, dest: Path, *, symlink: bool, force: bool, componen
     if not src.exists():
         return "error:missing_source"
 
+    try:
+        if src.resolve() == dest.resolve():
+            return "skipped"
+    except OSError:
+        pass
+
     if dest.exists() or dest.is_symlink():
         if dest.is_symlink() and dest.resolve() == src.resolve():
             return "skipped"

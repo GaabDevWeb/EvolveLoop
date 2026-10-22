@@ -254,3 +254,28 @@ export {
   type SessionContinuitySnapshot,
   type SessionNextAction,
 } from "./session/session-continuity.js";
+export {
+  isGraphifyExperimentEnabled,
+  isCavemanBrevityEnabled,
+  isPromptCacheEnabled,
+} from "./v22/feature-flags.js";
+export {
+  queryGraphifyCodeStructure,
+  detectGraphifyCli,
+  formatGraphifyContext,
+  type GraphifyQueryResult,
+} from "./v22/graphify-adapter.js";
+export {
+  applyCavemanBrevity,
+  applyCavemanToBriefingSection,
+  brevityPreservesNegation,
+} from "./v22/brevity-caveman.js";
+export {
+  PromptCacheHttpAdapter,
+  buildStablePromptPrefix,
+  computePromptCacheKey,
+  type PromptCacheMetrics,
+} from "./v22/prompt-cache-http.js";
+export { measureP2OnBenchTasks, type P2BenchMeasureReport } from "./v22/p2-bench-measure.js";
+export { BENCH_R_TASKS } from "./v22/bench-r-tasks.js";
+export { estimateWhitespaceTokens } from "./v22/token-estimate.js";
