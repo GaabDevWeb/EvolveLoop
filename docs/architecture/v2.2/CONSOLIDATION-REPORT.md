@@ -39,7 +39,7 @@
 | Branch `evolve-v3` ausente no `origin` | hipótese | Fetch quando publicada; revisar TRACEABILITY V3 |
 | `WIKI_ROOT` não definido no CI/agent VM | projeto | Ambiente de referência para V22-GOAL-005 |
 | B0/B1 não executados | pesquisa + meta 003 | Fase F3 roadmap |
-| `experiments/V22-BENCH/` ainda não criado | meta | Criar na execução do harness |
+| `docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/` só placeholder (`NOT_MEASURED`) | meta 003 | Executar B0/B1 e preencher `raw/battery/` |
 | `wiki-carpaccio` host-only | pesquisa | Confirmar path no pack ou documentar instalação |
 | `npm test` orchestrator sem deps na VM | projeto | Não bloqueia pack documental |
 | Promote 3× spec vs MemoryStore | hipótese | ADR ou alinhamento spec |

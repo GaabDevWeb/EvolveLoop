@@ -32,7 +32,7 @@ Legenda de rotulo: `pesquisa` = evidência da pesquisa versionada; `projeto` = e
 | Sandbox SO / HMAC freeze completo | `V2.1-FREEZE-SCOPE-REPORT.md` | V2.1 / V3 | projeto |
 | `max_skills` runtime | ADR-DR-0002 | Após E-001-LIVE / baseline | projeto |
 | Promote “3×” spec vs MemoryStore | `01-current-state-audit.md` (pesquisa) + `memory-store.ts` (projeto) | Esclarecer spec ou implementação futura | hipótese |
-| EvolveLoop adapters não wired | `.agent_history.md` (histórico) | Fora V2.2 wiki | projeto |
+| EvolveLoop adapters não wired | `docs/internal/historical/audits/.agent_history.md` (histórico) | Fora V2.2 wiki | projeto |
 
 ## Achados descartados (D1)
 

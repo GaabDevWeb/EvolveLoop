@@ -32,7 +32,7 @@ F1 e F2 podem paralelizar. **Nenhuma fase P2 promete economia** antes de F3.
 |------|-----------|------|
 | F1 | `docs/adr/NNNN-context-ownership.md` | 001 |
 | F2 | Addendum + spec fixture em `docs/architecture/v2.2/` ou ADR | 002 |
-| F3 | `experiments/V22-BENCH/` + raw JSON | 003 |
+| F3 | `docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/` + raw JSON | 003 |
 | F4 | Runbook wiki + profile opt-in memória | 004, 005 |
 | F5 | Checklist GATE_BUNDLE + teste canário | 006, 007 |
 | F6 | Relatório bench Graphify | 008 |
