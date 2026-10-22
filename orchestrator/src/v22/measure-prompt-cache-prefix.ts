@@ -118,8 +118,9 @@ export function measurePromptCachePrefixStability(input: {
     input.jobsDir,
     input.orchestratorRoot,
   );
+  const sameTask = tasks[0];
   const jobB = rowFor(
-    tasks[1],
+    sameTask,
     featureId,
     "22222222-2222-4222-8222-222222222222",
     input.jobsDir,
@@ -127,9 +128,10 @@ export function measurePromptCachePrefixStability(input: {
   );
   const promptA = buildPickupPrompt(
     buildBenchSkillJob({
-      task: tasks[0],
+      task: sameTask,
       featureId,
       runId: jobA.run_id,
+      nodeId: "bench-same-feature",
     }),
     input.jobsDir,
     input.orchestratorRoot,
@@ -137,9 +139,10 @@ export function measurePromptCachePrefixStability(input: {
   );
   const promptB = buildPickupPrompt(
     buildBenchSkillJob({
-      task: tasks[1],
+      task: sameTask,
       featureId,
       runId: jobB.run_id,
+      nodeId: "bench-same-feature",
     }),
     input.jobsDir,
     input.orchestratorRoot,

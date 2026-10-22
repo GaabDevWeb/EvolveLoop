@@ -6,7 +6,7 @@ import {
   protectedPickupSectionsByteEqual,
   protectedSecurityMarkersPresent,
 } from "./brevity-caveman.js";
-import { benchTokenizerLabel, countBenchTokens } from "./bench-tokenizer.js";
+import { benchTokenizerLabel, countBenchTokensBatch } from "./bench-tokenizer.js";
 
 export interface PickupPromptMeasureRow {
   task_id: string;
@@ -39,13 +39,13 @@ function measureTask(
   orchestratorRoot: string,
   featureId: string,
   runId: string,
+  tokenCounts: number[],
 ): PickupPromptMeasureReport["pairs"][0] & { rows: PickupPromptMeasureRow[] } {
   const job = buildBenchSkillJob({ task, featureId, runId });
   const b0 = buildPickupPrompt(job, jobsDir, orchestratorRoot, { caveman: false });
   const b4 = buildPickupPrompt(job, jobsDir, orchestratorRoot, { caveman: true });
   const protectedOk = protectedPickupSectionsByteEqual(b0, b4);
-  const tokens_b0 = countBenchTokens(b0);
-  const tokens_b4 = countBenchTokens(b4);
+  const [tokens_b0, tokens_b4] = tokenCounts;
   const rows: PickupPromptMeasureRow[] = [
     {
       task_id: task.id,
@@ -88,9 +88,27 @@ export function measurePickupPromptsForBench(input: {
   let tokens_b0 = 0;
   let tokens_b4 = 0;
 
+  const prompts: string[] = [];
+  const meta: Array<{ task: BenchPickupTask; runId: string }> = [];
   for (const task of tasks) {
     const runId = `00000000-0000-4000-8000-${task.id.padStart(12, "0")}`;
-    const result = measureTask(task, input.jobsDir, input.orchestratorRoot, featureId, runId);
+    const job = buildBenchSkillJob({ task, featureId, runId });
+    prompts.push(buildPickupPrompt(job, input.jobsDir, input.orchestratorRoot, { caveman: false }));
+    prompts.push(buildPickupPrompt(job, input.jobsDir, input.orchestratorRoot, { caveman: true }));
+    meta.push({ task, runId });
+  }
+  const tokenCounts = countBenchTokensBatch(prompts);
+
+  for (let i = 0; i < meta.length; i++) {
+    const { task, runId } = meta[i];
+    const result = measureTask(
+      task,
+      input.jobsDir,
+      input.orchestratorRoot,
+      featureId,
+      runId,
+      [tokenCounts[i * 2], tokenCounts[i * 2 + 1]],
+    );
     pairs.push({
       task_id: result.task_id,
       tokens_b0: result.tokens_b0,

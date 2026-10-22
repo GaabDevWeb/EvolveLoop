@@ -43,7 +43,7 @@ export function buildPickupPrompt(
   const completeCmd = `cd ${orchRoot} && npm run run-jobs -- complete --jobs-dir ${jobsDir} --run-id ${job.run_id} --success --evidence <path-to-evidence.json>`;
   const failCmd = `cd ${orchRoot} && npm run run-jobs -- complete --jobs-dir ${jobsDir} --run-id ${job.run_id} --error "reason"`;
 
-  const raw = `# SkillJob Pickup — ${job.run_id}
+  const raw = `# SkillJob Pickup
 
 **Capability:** ${job.capability}  
 **Provider:** ${job.provider_id}  
@@ -54,11 +54,15 @@ export function buildPickupPrompt(
 1. **Ler skill:** \`${job.skill_path}\`
 2. **Executar briefing** abaixo; cumprir Definition of Done
 3. **Emitir evidence** conforme contrato da capability (ex.: \`telemetry/evidence/*.json\`)
-4. **Completar job:**
-   - Sucesso: \`${completeCmd}\`
-   - Falha: \`${failCmd}\`
+4. **Completar job** após evidência (run-id e comandos no briefing)
 
 ## Briefing
+
+**Run desta sessão:** \`${job.run_id}\`
+
+**Completar job:**
+- Sucesso: \`${completeCmd}\`
+- Falha: \`${failCmd}\`
 
 ${redactSecrets(job.briefing)}
 

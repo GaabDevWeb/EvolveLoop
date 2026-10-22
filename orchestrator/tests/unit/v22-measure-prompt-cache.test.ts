@@ -18,6 +18,7 @@ describe("GOAL-010 prefix stability measure", () => {
     expect(report.rows).toHaveLength(12);
     expect(report.median_cacheable_pct).toBeGreaterThan(0);
     expect(report.median_cacheable_pct).toBeLessThan(100);
+    expect(report.same_feature_two_jobs.prefix_key_equal).toBe(true);
     expect(report.same_feature_two_jobs.normalized_prefix_key_equal).toBe(true);
     expect(report.cross_task_prefix_key_unique_count).toBeGreaterThan(1);
   });

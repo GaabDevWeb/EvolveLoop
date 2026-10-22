@@ -15,6 +15,6 @@ describe("GOAL-009 pickup measure", () => {
     expect(report.pairs.every((p) => p.protected_suffix_byte_equal)).toBe(true);
     expect(report.pairs.every((p) => p.tokens_b4 <= p.tokens_b0)).toBe(true);
     expect(report.totals.tokens_b4).toBeLessThan(report.totals.tokens_b0);
-    expect(report.tokenizer).toMatch(/PROXY:whitespace_split/);
+    expect(["tiktoken:cl100k_base", "PROXY:whitespace_split"]).toContain(report.tokenizer);
   });
 });

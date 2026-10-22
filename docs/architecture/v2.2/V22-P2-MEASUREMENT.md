@@ -9,9 +9,9 @@
 
 ## Tokenizer
 
-Orchestrator uses **`PROXY:whitespace_split`** (same fallback as `V22-BENCH/harness/bench_harness.py` when `tiktoken` is absent).
+Orchestrator measure calls `orchestrator/scripts/bench_tokenizer_probe.py` (same logic as harness): **`tiktoken:cl100k_base`** when `pip install tiktoken` in the bench Python env, else **`PROXY:whitespace_split`**. Not a Node production dependency.
 
-Python harness may record `tiktoken:cl100k_base` when installed — **not** bundled in `@agents/orchestrator`.
+Pickup **run_id** and complete/fail commands live under `## Briefing` (dynamic), not in the cacheable prefix template.
 
 ## GOAL-009 acceptance
 
