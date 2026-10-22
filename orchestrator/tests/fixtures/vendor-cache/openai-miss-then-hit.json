@@ -1,0 +1,27 @@
+{
+  "description": "Shapes from OpenAI Chat Completions usage.prompt_tokens_details (cached_tokens)",
+  "responses": [
+    {
+      "id": "chatcmpl-fixture-miss",
+      "object": "chat.completion",
+      "choices": [{ "index": 0, "message": { "role": "assistant", "content": "probe-1" } }],
+      "usage": {
+        "prompt_tokens": 50,
+        "completion_tokens": 6,
+        "total_tokens": 56,
+        "prompt_tokens_details": { "cached_tokens": 0 }
+      }
+    },
+    {
+      "id": "chatcmpl-fixture-hit",
+      "object": "chat.completion",
+      "choices": [{ "index": 0, "message": { "role": "assistant", "content": "probe-2" } }],
+      "usage": {
+        "prompt_tokens": 50,
+        "completion_tokens": 6,
+        "total_tokens": 56,
+        "prompt_tokens_details": { "cached_tokens": 40 }
+      }
+    }
+  ]
+}

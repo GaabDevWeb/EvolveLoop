@@ -25,7 +25,7 @@ Legenda de rotulo: `pesquisa` = evidência da pesquisa versionada; `projeto` = e
 | Segredo em evidence | `docs/architecture/release-audit-2026-10-11/V2.1-FREEZE-SCOPE-REPORT.md` (projeto) | Redação V3 não merged | V22-GOAL-007 | Canário 0× | `secret-redaction.test.ts` + `v22-wire.integration.test.ts` |
 | Graphify hipótese | `docs/research/evolveloop-v2.2/03-repositories-and-tools.md` (pesquisa) | Dependentes código | V22-GOAL-008 | B3 vs B0/B1 | Bench |
 | Caveman −8,5% saída | `docs/research/evolveloop-v2.2/04-community-findings.md` (pesquisa) | **contexto D2** | V22-GOAL-009 | `FIXTURE_PICKUP_INVOKE` R01–R06+H07–H12 | `measure-pickup-prompts.ts` |
-| Prompt cache | `docs/research/evolveloop-v2.2/sources.md` (pesquisa) | Custo prefixo | V22-GOAL-010 | `FIXTURE_PREFIX_STABILITY`; vendor **NOT_MEASURED** | `measure-prompt-cache-prefix.ts` |
+| Prompt cache | `docs/research/evolveloop-v2.2/sources.md` (pesquisa) | Custo prefixo | V22-GOAL-010 | `FIXTURE_PREFIX_STABILITY`; vendor via `llm-http-provider-adapter` + fixtures | `measure-prompt-cache-prefix.ts`, `vendor-cache-usage.ts` |
 | CEO escopo base 09 | `docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md` (pesquisa) + D1 (produto) | Alinhamento | V22-GOAL-001…010 | Pack completo | `validate-v22-artifacts.sh` |
 
 ## Achados adiados (não metas V2.2)

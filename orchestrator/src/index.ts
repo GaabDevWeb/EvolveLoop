@@ -325,3 +325,25 @@ export { countBenchTokens, benchTokenizerLabel, BENCH_TOKENIZER_PROXY } from "./
 export { BENCH_H_TASKS } from "./v22/bench-h-tasks.js";
 export { BENCH_R_TASKS } from "./v22/bench-r-tasks.js";
 export { estimateWhitespaceTokens } from "./v22/token-estimate.js";
+export {
+  parseAnthropicCacheUsage,
+  parseOpenAiCacheUsage,
+  type VendorCacheUsage,
+  type LlmVendorId,
+} from "./providers/llm/vendor-cache-usage.js";
+export {
+  LlmHttpProviderAdapter,
+  buildAnthropicMessagesBody,
+  buildOpenAiChatBody,
+  type LlmAdapterResult,
+} from "./providers/llm/llm-http-provider-adapter.js";
+export {
+  buildVendorCacheTelemetry,
+  persistVendorCacheTelemetry,
+  VENDOR_CACHE_TELEMETRY_VERSION,
+  type VendorCacheTelemetryRecord,
+} from "./providers/llm/vendor-cache-telemetry.js";
+export {
+  probeVendorCacheLive,
+  type VendorLiveProbeReport,
+} from "./providers/llm/vendor-cache-live-probe.js";
