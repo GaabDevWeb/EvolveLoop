@@ -1,7 +1,7 @@
 {
   "task_id": "V22-GOAL-001-006",
   "timestamp": "2026-10-22T01:02:00Z",
-  "tree_sha": "75c03c923530c995e12838dc5bad41d88b6e89b7",
+  "tree_sha": "9293309115ddd6cf706747410ae7af904649e3ac",
   "tokenizer_note": "orchestrator resolveTokenizer; harness B0 OFFICIAL uses same label when tiktoken installed",
   "B0_OFFICIAL": {
     "source": "raw/battery-real/battery-summary.json",
