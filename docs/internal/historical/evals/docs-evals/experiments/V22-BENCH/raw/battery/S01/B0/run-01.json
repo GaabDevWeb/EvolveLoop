@@ -1,15 +1,15 @@
 {
   "experiment_id": "V22-BENCH",
   "baseline_id": "v22-b0b1-2026-10-22",
-  "run_id": "V22-S01-B0-a7a211307b799d19",
+  "run_id": "V22-S01-B0-3ff793ab0d19643d",
   "arm": "B0",
   "scenario": {
     "id": "S01",
     "number": 1,
     "title": "Projeto sem wiki"
   },
-  "timestamp": "2026-10-22T00:36:09.183455+00:00",
-  "tree_sha": "dfcbc9a2e54964374d5f84acb6e28882f3773288",
+  "timestamp": "2026-10-22T00:36:53.030025+00:00",
+  "tree_sha": "34571388ea8a416667c64192d29e4932c7064347",
   "harness": "v22-bench-harness-1.0.0",
   "tokenizer": "tiktoken:cl100k_base",
   "model": {
