@@ -29,6 +29,7 @@ import type { AnalysisScope } from "../evolveloop/longitudinal-types.js";
 import type { CapabilityIR, ProviderManifest } from "../types/index.js";
 import { manifestToRegistryEntries } from "../registry/manifest-loader.js";
 import { loadAgentsEnvFile, resolveOrchestratorCliPaths } from "./run-engine-env.js";
+import { serializeForPublish } from "../evidence/publish-sanitize.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -297,7 +298,7 @@ async function main() {
     event_count: result.events.length,
   };
 
-  console.log(JSON.stringify(summary, null, 2));
+  console.log(serializeForPublish(summary));
   process.exit(result.success ? 0 : 1);
 }
 

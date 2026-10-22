@@ -20,3 +20,13 @@ export function sanitizeEvidenceForPublish(evidence: Evidence): Evidence {
 export function serializeEvidenceForPublish(evidence: Evidence): string {
   return JSON.stringify(sanitizeEvidenceForPublish(evidence), null, 2);
 }
+
+/** Any JSON artifact written to jobs-dir / evidence bus / engine reports. */
+export function serializeForPublish(data: unknown): string {
+  return JSON.stringify(sanitizeDeep(data), null, 2);
+}
+
+/** Single-line JSON for JSONL telemetry (no pretty-print). */
+export function serializeJsonlForPublish(data: unknown): string {
+  return JSON.stringify(sanitizeDeep(data));
+}

@@ -4,7 +4,8 @@
 |-------|-------|
 | **Meta** | V22-GOAL-002 |
 | **Runtime** | `orchestrator/src/knowledge/truth-source/` |
-| **Integração** | `knowledgeSearch(query, { projectRoot })` aplica `fenceEvidenceSet` |
+| **Integração** | `knowledge.search` no `DeterministicProvider` (engine) chama `knowledgeSearch` com `projectRoot=workspaceRoot` e fence **ON** por defeito |
+| **Opt-out** | `KNOWLEDGE_TRUTH_FENCE=off` ou `disableTruthFence: true` em `knowledgeSearch` |
 
 ## Hierarquia (P1)
 

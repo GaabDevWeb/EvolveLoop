@@ -1,6 +1,8 @@
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { resolveOrchestratorRoot } from "../cli/run-engine-env.js";
+import { writeSanitizedJsonFile, writeSanitizedTextFile } from "../evidence/evidence-bus.js";
+import { redactSecrets } from "../evidence/secret-redaction.js";
 import { JobStore, type SkillJob } from "./job-store.js";
 
 export interface PickupPlan {
@@ -51,7 +53,7 @@ export function buildPickupPrompt(
 
 ## Briefing
 
-${job.briefing}
+${redactSecrets(job.briefing)}
 
 ## Definition of Done
 
@@ -78,24 +80,17 @@ export function writePickupArtifacts(
   mkdirSync(promptDir, { recursive: true });
   const promptPath = join(promptDir, "current-job.md");
   const prompt = buildPickupPrompt(job, jobsDir);
-  writeFileSync(promptPath, prompt, "utf-8");
-  writeFileSync(
-    join(promptDir, "current-job.json"),
-    JSON.stringify(
-      {
-        run_id: job.run_id,
-        skill_path: job.skill_path,
-        capability: job.capability,
-        provider_id: job.provider_id,
-        jobs_dir: jobsDir,
-        prompt_path: promptPath,
-        picked_at: new Date().toISOString(),
-      },
-      null,
-      2,
-    ),
-    "utf-8",
-  );
+  writeSanitizedTextFile(promptPath, prompt);
+  writeSanitizedJsonFile(join(promptDir, "current-job.json"), {
+    run_id: job.run_id,
+    skill_path: job.skill_path,
+    capability: job.capability,
+    provider_id: job.provider_id,
+    jobs_dir: jobsDir,
+    prompt_path: promptPath,
+    briefing: job.briefing,
+    picked_at: new Date().toISOString(),
+  });
 
   return {
     status: "ready",

@@ -74,7 +74,7 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Validação / testes:** Dois roots temporários; cenário 12 do `docs/research/evolveloop-v2.2/08-benchmarks-and-test-plan.md`.
 - **Riscos:** Monorepo multi-produto na mesma raiz — documentar uso de páginas, não múltiplas wikis.
 - **Condição de conclusão:** Teste de canário existe, passa, e convenção publicada em `docs/architecture/v2.2/` ou `docs/adr/`.
-- **Implementação (código):** `implemented` — runtime `orchestrator/src/knowledge/truth-source/`; convenção `docs/architecture/v2.2/TRUTH-SOURCE-FENCE.md`; testes `orchestrator/tests/unit/knowledge/truth-source-fence.test.ts`.
+- **Implementação (código):** `wired` — runtime `orchestrator/src/knowledge/truth-source/`; fence default em `knowledge.search` (engine/`DeterministicProvider`); opt-out `KNOWLEDGE_TRUTH_FENCE=off`; testes unit + `orchestrator/tests/integration/v22-wire.integration.test.ts`.
 
 **Rotulo dominante:** meta + evidência pesquisa.
 
@@ -134,7 +134,7 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Dependências:** V22-GOAL-002; desbloqueia **B1 OFFICIAL** em V22-GOAL-003 (bench pack é `PROVISIONAL_CURATED_PACK`).
 - **Impacto arquitetural:** Arquivos no projeto-alvo e config de ambiente; sem novo `KnowledgeBackendId`.
 - **Critérios de aceite:** Cenários 2, 3, 6, 7 do plano 08; excerpt cap 500 permanece até ADR que altere (`wiki-backend.ts`).
-- **Métricas:** Bench B1 pack: `PROVISIONAL_CURATED_PACK` (não gate). `ground.sh`+vault: pré-requisito B1 oficial — `NOT_MEASURED` no VM bench. Páginas `atual`+hash: `PENDING_BASELINE` até lint operacional.
+- **Métricas:** Bench B1 pack: `PROVISIONAL_CURATED_PACK` (não gate). Held-out fixture vault: `FIXTURE_WIKI_GROUND` em `raw/battery-held-out/` (harness 1.1.0, query-only B1). `OFFICIAL_WIKI_GROUND` permanece `PENDING_BASELINE` (wiki externo + held-out não circular).
 - **Validação / testes:** Fixture; opcional `knowledge-backend.test.ts` quando deps instaladas.
 - **Riscos:** Wiki gigante na primeira sessão — init mínima obrigatória no teste.
 - **Condição de conclusão:** Quatro workflows (init, query, update, lint) com corrida registrada.
@@ -180,7 +180,7 @@ Cada meta abaixo declara os 14 campos exigidos pelo pack V2.2.
 - **Validação / testes:** Fixture dedicado no plano V22-BENCH.
 - **Riscos:** Redação agressiva remove paths necessários à evidência.
 - **Condição de conclusão:** Teste do canário passa no tree da V2.2.
-- **Implementação (código):** `implemented` — `orchestrator/src/evidence/secret-redaction.ts`, `publish-sanitize.ts`, redação em `wiki-backend.ts`; doc `docs/architecture/v2.2/EVIDENCE-SECRET-CANARY.md`; testes `orchestrator/tests/unit/evidence/secret-redaction.test.ts`.
+- **Implementação (código):** `wired` — `secret-redaction.ts`, `evidence-bus.ts`, `publish-sanitize.ts`; jobs/memory/evidence bus/engine reports; testes unit + `v22-wire.integration.test.ts` (canário 0× em jobs-dir e memory).
 
 **Rotulo dominante:** meta + evidência pesquisa.
 

@@ -1,0 +1,34 @@
+{
+  "experiment_id": "V22-BENCH-HELD-OUT",
+  "evidence_class": "FIXTURE_WIKI_GROUND",
+  "baseline_id": "v22-held-out-b0b1-ground-2026-10-22-review",
+  "run_id": "V22H-H10-B1-e0e66a541452",
+  "arm": "B1",
+  "task_id": "H10",
+  "timestamp": "2026-10-22T00:58:04.124810+00:00",
+  "tree_sha": "141dec563681fee04340244abf239175baff191f",
+  "harness": "v22-ground-b1-harness-1.1.0",
+  "tokenizer": "PROXY:whitespace_split",
+  "metrics": {
+    "task_id": "H10",
+    "arm": "B1",
+    "paths_read": [
+      "orchestrator/src/knowledge/backend/resolve.ts"
+    ],
+    "input_tokens": 180,
+    "latency_ms": 38,
+    "recall": 0.0,
+    "recall_notes": [
+      "miss path not read: docs/adr/0004-project-knowledge-contract.md"
+    ],
+    "ground_exit": 0,
+    "stale_hits": 0
+  },
+  "verifier": {
+    "pass": false,
+    "recall": 0.0,
+    "notes": [
+      "miss path not read: docs/adr/0004-project-knowledge-contract.md"
+    ]
+  }
+}

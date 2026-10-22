@@ -4,8 +4,9 @@
 |-------|-------|
 | **Meta** | V22-GOAL-007 |
 | **Módulo** | `orchestrator/src/evidence/secret-redaction.ts` |
-| **Publicação** | `serializeEvidenceForPublish` em `publish-sanitize.ts` |
-| **Retrieval** | excerpts wiki passam por `redactSecrets` em `wiki-backend.ts` |
+| **Publicação** | `evidence-bus.ts` + `serializeEvidenceForPublish` / `serializeForPublish` / `serializeJsonlForPublish` |
+| **Runtime wired** | `JobStore.completeJob`, `job-pickup` (`current-job.*`), `ExecutionEngine` (evidence bus + `run-summary.json`), `JsonlEventPersister`, `run-engine` stdout, `JobFileExecutor` |
+| **Retrieval** | excerpts wiki passam por `redactSecrets` em `wiki-backend.ts` (`mapGaabwikiHit`) |
 
 ## Canário de teste
 

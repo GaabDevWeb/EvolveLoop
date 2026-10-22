@@ -81,28 +81,70 @@ function runWikiSearch(
   });
 }
 
+function mapGaabwikiHit(raw: Record<string, unknown>): KnowledgeHit {
+  const src = raw.source;
+  let sourcePath = "unknown";
+  let section: string | undefined;
+  let degraded: string | undefined =
+    raw.degraded != null ? String(raw.degraded) : undefined;
+
+  if (src && typeof src === "object") {
+    const s = src as Record<string, unknown>;
+    sourcePath = String(s.file ?? s.path ?? s.vault_page ?? "unknown");
+    if (typeof s.line === "number") section = String(s.line);
+    if (s.stale === true) {
+      const reason = String(s.stale_reason ?? "stale_source");
+      degraded = degraded ? `${degraded};${reason}` : reason;
+    }
+    if (s.source_hash) {
+      section = section ? `${section}#${String(s.source_hash).slice(0, 12)}` : String(s.source_hash).slice(0, 12);
+    }
+  } else {
+    sourcePath = String(raw.source ?? raw.path ?? raw.file ?? "unknown");
+    if (raw.section) section = String(raw.section);
+  }
+
+  const excerptRaw =
+    raw.excerpt ??
+    raw.content ??
+    raw.preview ??
+    raw.text ??
+    undefined;
+
+  return {
+    source: sourcePath,
+    section,
+    score: typeof raw.score === "number" ? raw.score : undefined,
+    retrieval_method: raw.retrieval_method ? String(raw.retrieval_method) : undefined,
+    project: raw.project ? String(raw.project) : undefined,
+    excerpt: excerptRaw
+      ? redactSecrets(cleanOutput(String(excerptRaw), 500))
+      : undefined,
+    chunk_id: raw.chunk_id ? String(raw.chunk_id) : undefined,
+    degraded,
+  };
+}
+
+/** @internal Exported for unit tests (CLI JSON envelope). */
+export function parseWikiSearchStdout(stdout: string, query = ""): KnowledgeHit[] {
+  return parseHits(stdout, query);
+}
+
 function parseHits(stdout: string, _query: string): KnowledgeHit[] {
   const trimmed = stdout.trim();
   if (!trimmed) return [];
 
   try {
     const parsed = JSON.parse(trimmed) as unknown;
+    if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+      const envelope = parsed as Record<string, unknown>;
+      const selected = envelope.selected ?? envelope.results ?? envelope.hits;
+      if (Array.isArray(selected)) {
+        return selected.map((h) => mapGaabwikiHit(h as Record<string, unknown>));
+      }
+    }
     if (Array.isArray(parsed)) {
-      return parsed.map((h) => {
-        const hit = h as Record<string, unknown>;
-        return {
-          source: String(hit.source ?? hit.path ?? hit.file ?? "unknown"),
-          section: hit.section ? String(hit.section) : undefined,
-          score: typeof hit.score === "number" ? hit.score : undefined,
-          retrieval_method: hit.retrieval_method ? String(hit.retrieval_method) : undefined,
-          project: hit.project ? String(hit.project) : undefined,
-          excerpt: hit.excerpt
-            ? redactSecrets(cleanOutput(String(hit.excerpt), 500))
-            : undefined,
-          chunk_id: hit.chunk_id ? String(hit.chunk_id) : undefined,
-          degraded: hit.degraded ? String(hit.degraded) : undefined,
-        };
-      });
+      return parsed.map((h) => mapGaabwikiHit(h as Record<string, unknown>));
     }
     if (parsed && typeof parsed === "object" && Array.isArray((parsed as { hits?: unknown }).hits)) {
       return parseHits(JSON.stringify((parsed as { hits: unknown[] }).hits), _query);
