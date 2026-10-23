@@ -1,0 +1,166 @@
+{
+  "schema_id": "v22-p0-baseline-tasks-1",
+  "task_id": "V22-GAP-P0-1",
+  "norm": "docs/v22/GOALS-OFFICIAL.md",
+  "corpus": "evolveloop-monorepo",
+  "corpus_note": "Mesmo corpus do benchmark oficial (git root). Não é o synth-repo.",
+  "canonical_budget": {
+    "scorer": "v22-anchor-scorer-1.0.0",
+    "scorer_mode": "file_evidence",
+    "max_paths": 45,
+    "max_input_tokens": 22000,
+    "source": "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery-held-out-official-hybrid/OFFICIAL-MANIFEST.json"
+  },
+  "n_min": 3,
+  "arms": [
+    { "id": "B0", "role": "V2" },
+    { "id": "V2.2", "role": "V2.2" }
+  ],
+  "required_fields": [
+    "input_tokens",
+    "output_tokens",
+    "cache_read_tokens",
+    "cache_write_tokens",
+    "cost",
+    "latency_ms",
+    "reread_count",
+    "n",
+    "dispersion",
+    "model_id",
+    "tree_sha",
+    "limitation"
+  ],
+  "fixed_values": {
+    "output_tokens": "NOT_MEASURED",
+    "cache_read_tokens": "NOT_MEASURED",
+    "cache_write_tokens": "NOT_MEASURED",
+    "cost": "NOT_MEASURED",
+    "model_id": "deterministic-provider",
+    "compaction": "UNAVAILABLE",
+    "generative_token_reduction": "NOT_MEASURED",
+    "product_percent_gate": "NOT_MEASURED",
+    "ollama_hybrid": "NOT_MEASURED"
+  },
+  "limitation": "input_tokens é o pacote montado no corpus oficial. B0 lê os hits de rg até 45 paths. V2.2 é o pickup/handoff real com retrieval e budget canónico de 22000 tokens. Tokenizer obrigatório: tiktoken:cl100k_base. output_tokens, cache e cost são NOT_MEASURED. Híbrido Ollama é NOT_MEASURED. Latência medida é a de retrieval, não de modelo. Dispersão 0 de input_tokens é a esperada nesta corrida determinística. Economia de input só conta quando a qualidade V2.2 >= B0 (GOALS-OFFICIAL seção 5.3). Compactação é UNAVAILABLE. tree_sha é o HEAD no momento da corrida.",
+  "tasks": [
+    {
+      "id": "curta",
+      "brief_name": "curta",
+      "source_task": "H05",
+      "source_file": "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-held-out-frozen.json",
+      "query": "Qual função trunca stdout para capabilities determinísticas?",
+      "b0_patterns": ["cleanOutput", "truncate"],
+      "anchors": [
+        {
+          "path": "orchestrator/src/capabilities/results.ts",
+          "line": 14,
+          "substring": "export function cleanOutput"
+        }
+      ],
+      "restrictions": [],
+      "handoff": true
+    },
+    {
+      "id": "projeto_grande",
+      "brief_name": "projeto grande",
+      "source_task": "R01",
+      "source_file": "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-real-frozen.json",
+      "query": "Qual algoritmo de integridade o checkpoint do engine usa?",
+      "b0_patterns": ["checkpoint", "HMAC-SHA256"],
+      "b0_patterns_note": "No tree atual o padrão ALG de R01 acerta poucos ficheiros. checkpoint é o objeto de R01 e enche o cap de 45 paths.",
+      "anchors": [
+        {
+          "path": "orchestrator/src/jobs/checkpoint.ts",
+          "line": 10,
+          "substring": "HMAC-SHA256"
+        }
+      ],
+      "restrictions": [],
+      "handoff": true
+    },
+    {
+      "id": "retomada",
+      "brief_name": "retomada",
+      "source_task": "ADR-0013-q9",
+      "source_file": "docs/adr/0013-context-ownership-working-context.md",
+      "query": "O que sobrevive para resume do working context?",
+      "b0_patterns": ["sobrevive para resume", "working context"],
+      "anchors": [
+        {
+          "path": "docs/adr/0013-context-ownership-working-context.md",
+          "line": 37,
+          "substring": "O que sobrevive para resume?"
+        }
+      ],
+      "restrictions": [],
+      "resume_marker": "O que sobrevive para resume?",
+      "handoff": true
+    },
+    {
+      "id": "delegada",
+      "brief_name": "delegada",
+      "source_task": "R06",
+      "source_file": "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-real-frozen.json",
+      "query": "O que acontece se um spawn PDA não herdar GATE_BUNDLE completo?",
+      "b0_patterns": ["missing_gate_bundle", "GATE_BUNDLE"],
+      "anchors": [
+        {
+          "path": ".cursor/skills/orquestrar/references/gate-bundle.md",
+          "line": 4,
+          "substring": "missing_gate_bundle"
+        }
+      ],
+      "restrictions": ["Answer cites anchored file:line from repository"],
+      "handoff": true
+    },
+    {
+      "id": "fontes_conflitantes",
+      "brief_name": "fontes conflitantes",
+      "source_task": "ADR-0013-vs-adr-compaction-defer",
+      "source_file": "docs/adr/0013-context-ownership-working-context.md",
+      "query": "ADR-DR-0005 compaction ownership NOT_IMPLEMENTED",
+      "b0_patterns": ["ADR-DR-0005", "NOT_IMPLEMENTED"],
+      "anchors": [
+        {
+          "path": "docs/adr/0013-context-ownership-working-context.md",
+          "line": 49,
+          "substring": "Compaction engine: **NOT_IMPLEMENTED**"
+        }
+      ],
+      "restrictions": [],
+      "conflict": {
+        "topic_key": "compaction_ownership",
+        "code_path": "docs/adr/0013-context-ownership-working-context.md",
+        "wiki_path": "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/fixtures/evolveloop-project-knowledge/.ai/pages/adr-compaction-defer.md",
+        "stale_marker": "ownership futuro"
+      },
+      "handoff": true
+    },
+    {
+      "id": "restricoes_compactacao_handoff",
+      "brief_name": "restrições sob compactação/handoff",
+      "source_task": "ADR-0013-q7",
+      "source_file": "docs/adr/0013-context-ownership-working-context.md",
+      "query": "Quando reinject é permitido e o que a compactação não pode apagar?",
+      "b0_patterns": ["reinject_allowed", "NOT_IMPLEMENTED"],
+      "anchors": [
+        {
+          "path": "docs/adr/0013-context-ownership-working-context.md",
+          "line": 35,
+          "substring": "reinject_allowed: false"
+        }
+      ],
+      "restrictions": ["reinject_allowed: false", "No secret leakage in evidence payload"],
+      "security_restriction": "Nunca apagar paths, negações, comandos, DoD ou evidência. reinject_allowed: false.",
+      "handoff": true,
+      "compaction_measurement": {
+        "status": "UNAVAILABLE",
+        "fidelity": "UNAVAILABLE",
+        "compaction_tokens": "UNAVAILABLE",
+        "source": "orchestrator/src/context/compaction-contract.ts",
+        "cited_test": "orchestrator/tests/unit/context-ownership.test.ts — AC: contrato compaction/reinject fail-closed",
+        "note": "Handoff sem compactar. Não há número de token de compactação."
+      }
+    }
+  ]
+}

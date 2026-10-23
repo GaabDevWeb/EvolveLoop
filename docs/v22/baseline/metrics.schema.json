@@ -1,0 +1,219 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "v22-p0-baseline-metrics-1",
+  "title": "V22-GAP-P0-1 metric report",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema_id",
+    "task_id",
+    "evidence_class",
+    "generative_token_reduction",
+    "product_percent_gate",
+    "ollama_hybrid",
+    "compaction",
+    "model_id",
+    "tokenizer",
+    "tree_sha",
+    "n",
+    "limitation",
+    "tasks_sha256",
+    "canonical_scorer",
+    "canonical_max_paths",
+    "canonical_max_input_tokens",
+    "dispersion_declaration",
+    "tasks"
+  ],
+  "properties": {
+    "schema_id": { "const": "v22-p0-baseline-report-1" },
+    "task_id": { "const": "V22-GAP-P0-1" },
+    "evidence_class": { "const": "MEASURED_DETERMINISTIC_CONTEXT" },
+    "generative_token_reduction": { "const": "NOT_MEASURED" },
+    "product_percent_gate": { "const": "NOT_MEASURED" },
+    "ollama_hybrid": { "const": "NOT_MEASURED" },
+    "compaction": { "const": "UNAVAILABLE" },
+    "model_id": { "const": "deterministic-provider" },
+    "tokenizer": { "const": "tiktoken:cl100k_base" },
+    "tree_sha": {
+      "anyOf": [
+        { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+        { "const": "NOT_MEASURED" }
+      ]
+    },
+    "n": { "type": "integer", "minimum": 3 },
+    "limitation": { "type": "string", "minLength": 1 },
+    "tasks_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "canonical_scorer": { "const": "v22-anchor-scorer-1.0.0" },
+    "canonical_max_paths": { "const": 45 },
+    "canonical_max_input_tokens": { "const": 22000 },
+    "dispersion_declaration": { "const": "zero_expected_deterministic_for_input_tokens" },
+    "tasks": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": { "$ref": "#/$defs/task" }
+    }
+  },
+  "$defs": {
+    "metric_status": {
+      "enum": ["PASS", "LIMITED", "NOT_MEASURED", "UNAVAILABLE"]
+    },
+    "dispersion": {
+      "anyOf": [
+        { "enum": ["NOT_MEASURED", "UNAVAILABLE"] },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["statistic", "value", "n", "expectation", "status"],
+          "properties": {
+            "statistic": { "const": "sample_stddev" },
+            "value": { "type": "number", "minimum": 0 },
+            "n": { "type": "integer", "minimum": 3 },
+            "expectation": {
+              "enum": ["zero_expected_deterministic", "retrieval_io_jitter"]
+            },
+            "status": { "$ref": "#/$defs/metric_status" }
+          }
+        }
+      ]
+    },
+    "arm": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "arm",
+        "role",
+        "evidence_class",
+        "input_tokens",
+        "input_tokens_status",
+        "retrieval_input_tokens",
+        "output_tokens",
+        "output_tokens_status",
+        "cache_read_tokens",
+        "cache_write_tokens",
+        "cost",
+        "latency_ms",
+        "latency_ms_status",
+        "latency_kind",
+        "model_latency_ms",
+        "reread_count",
+        "n",
+        "n_status",
+        "dispersion",
+        "model_id",
+        "tree_sha",
+        "limitation",
+        "tokenizer",
+        "quality",
+        "quality_status",
+        "verifier_pass",
+        "paths_read",
+        "runs"
+      ],
+      "properties": {
+        "arm": { "enum": ["B0", "V2.2"] },
+        "role": { "enum": ["V2", "V2.2"] },
+        "evidence_class": {
+          "enum": ["OFFICIAL_BASELINE", "PROJECT_WIKI_PICKUP_BUDGET"]
+        },
+        "input_tokens": { "type": "number", "minimum": 0 },
+        "input_tokens_status": { "$ref": "#/$defs/metric_status" },
+        "retrieval_input_tokens": { "type": "number", "minimum": 0 },
+        "output_tokens": { "const": "NOT_MEASURED" },
+        "output_tokens_status": { "const": "NOT_MEASURED" },
+        "cache_read_tokens": { "const": "NOT_MEASURED" },
+        "cache_write_tokens": { "const": "NOT_MEASURED" },
+        "cost": { "const": "NOT_MEASURED" },
+        "latency_ms": { "type": "number", "minimum": 0 },
+        "latency_ms_status": { "const": "LIMITED" },
+        "latency_kind": { "const": "retrieval" },
+        "model_latency_ms": { "const": "NOT_MEASURED" },
+        "reread_count": { "type": "number", "minimum": 0 },
+        "n": { "type": "integer", "minimum": 3 },
+        "n_status": { "const": "PASS" },
+        "dispersion": {
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "input_tokens",
+            "output_tokens",
+            "cache_read_tokens",
+            "cache_write_tokens",
+            "cost",
+            "latency_ms",
+            "reread_count",
+            "model"
+          ],
+          "properties": {
+            "input_tokens": { "$ref": "#/$defs/dispersion" },
+            "output_tokens": { "const": "NOT_MEASURED" },
+            "cache_read_tokens": { "const": "NOT_MEASURED" },
+            "cache_write_tokens": { "const": "NOT_MEASURED" },
+            "cost": { "const": "NOT_MEASURED" },
+            "latency_ms": { "$ref": "#/$defs/dispersion" },
+            "reread_count": { "$ref": "#/$defs/dispersion" },
+            "model": { "const": "NOT_MEASURED" }
+          }
+        },
+        "model_id": { "const": "deterministic-provider" },
+        "tokenizer": { "const": "tiktoken:cl100k_base" },
+        "quality": { "type": "number", "minimum": 0, "maximum": 1 },
+        "quality_status": { "$ref": "#/$defs/metric_status" },
+        "verifier_pass": { "type": "boolean" }
+      }
+    },
+    "task": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "id",
+        "brief_name",
+        "source_task",
+        "compaction",
+        "compaction_tokens",
+        "compaction_fidelity",
+        "generative_token_reduction",
+        "product_percent_gate",
+        "ollama_hybrid",
+        "quality_b0",
+        "quality_v22",
+        "quality_v22_gte_b0",
+        "raw_input_delta",
+        "savings_counted",
+        "deterministic_context_savings_status",
+        "deterministic_context_evidence_class",
+        "savings_rule",
+        "arms"
+      ],
+      "properties": {
+        "id": { "type": "string" },
+        "compaction": { "const": "UNAVAILABLE" },
+        "compaction_tokens": { "const": "UNAVAILABLE" },
+        "compaction_fidelity": { "const": "UNAVAILABLE" },
+        "generative_token_reduction": { "const": "NOT_MEASURED" },
+        "product_percent_gate": { "const": "NOT_MEASURED" },
+        "ollama_hybrid": { "const": "NOT_MEASURED" },
+        "quality_b0": { "type": "number", "minimum": 0, "maximum": 1 },
+        "quality_v22": { "type": "number", "minimum": 0, "maximum": 1 },
+        "savings_counted": { "type": "boolean" },
+        "deterministic_context_savings_status": {
+          "enum": ["PASS", "LIMITED", "NOT_MEASURED"]
+        },
+        "deterministic_context_evidence_class": {
+          "const": "MEASURED_DETERMINISTIC_CONTEXT"
+        },
+        "savings_rule": { "const": "docs/v22/GOALS-OFFICIAL.md#5.3" },
+        "raw_input_delta": { "type": "number" },
+        "arms": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["B0", "V2.2"],
+          "properties": {
+            "B0": { "$ref": "#/$defs/arm" },
+            "V2.2": { "$ref": "#/$defs/arm" }
+          }
+        }
+      }
+    }
+  }
+}
