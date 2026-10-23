@@ -21,3 +21,8 @@ export function isCavemanBrevityEnabled(): boolean {
 export function isPromptCacheEnabled(): boolean {
   return envOn("EVOLVELOOP_PROMPT_CACHE");
 }
+
+/** V22-GAP-P0-6 — extractive condenser. Default OFF. Does not enable reinject. */
+export function isExtractiveCompactionEnabled(): boolean {
+  return envOn("EVOLVELOOP_COMPACTION");
+}

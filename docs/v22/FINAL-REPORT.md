@@ -36,7 +36,7 @@ Estado: **`LIMITED`**. A auditoria em `7ca568f` dizia `NOT_MEASURED` porque as s
 | Custo | `NOT_MEASURED` | Campo `cost` no JSON | O provedor determinístico não devolve moeda |
 | Latência | `LIMITED` | `latency_ms` é tempo de parede do retrieval, estado `LIMITED` | Não é latência de modelo (`model_latency_ms` = `NOT_MEASURED`) |
 | Releituras | `PASS` | `reread_count` 0 nos dois braços, dispersão 0 | Contagem determinística, não de sessão de modelo |
-| Restrições sob compactação | `UNAVAILABLE` | `compaction-contract.ts` `NOT_IMPLEMENTED`, `reinject_allowed: false`. O cartão não tem número de token de compactação | O condenser não existe |
+| Restrições sob compactação | `LIMITED` | Condenser extrativo em `orchestrator/src/context/extractive-condenser.ts`. Flag `EVOLVELOOP_COMPACTION` default OFF. A corrida default do cartão continua `UNAVAILABLE` (`reinject_allowed: false`). A medição com a flag ligada está em `docs/v22/baseline/raw/p0-compaction-report.json` | Reinject continua recusado. Se a fidelidade das âncoras e restrições cair, a economia dessa corrida fica `NOT_MEASURED` e o JSON regista o trade-off. Saída de modelo `NOT_MEASURED` |
 | Frase «a V2.2 gasta menos tokens» | `NOT_MEASURED` | `product_percent_gate` no JSON | Faltam saída, cache e custo |
 
 Híbrido Ollama: `NOT_MEASURED`. Classe do braço V2.2: `PROJECT_WIKI_PICKUP_BUDGET`, não `OFFICIAL_WIKI_GROUND`.
@@ -58,13 +58,15 @@ Estado: **`LIMITED`**.
 
 Estado: **`LIMITED`**.
 
+O rácio 26,91 do P0-5 saía de `2180 / 81`. O denominador era o checklist `required_resume_payload`, uma sonda de sobrevivência. O método de referência passa a ser o dump dos stores do emissor. O pickup medido fica acima desse dump porque a montagem acrescenta chrome. O runtime não tem uma transcrição de chat fora desses stores.
+
 | Critério | Estado | Evidência | O que falta |
 |----------|--------|-----------|-------------|
 | Restrições sobrevivem no pickup | `PASS` | `orchestrator/tests/integration/context-budget-pickup.test.ts` e o payload de `p0-handoff-report.json` | — |
-| Volume transferido vs referência | `LIMITED` | JSON de handoff. `reference_tokens` é o payload de retomada. `transferred_tokens` é o pickup normalizado. `n=3`. Dispersão 0 declarada. `volume_ratio_status` = `LIMITED` (observação, não gate) | Não é saída de modelo |
+| Volume transferido vs referência | `LIMITED` | `reference_kind` `sender_complete_context`: briefing, DoD, restrições, decisões, próximo passo, grafo, conhecimento recuperado e evidência do emissor, sem `saved_at`. `transferred_tokens` é o pickup normalizado. `n=3`. O rácio 26,91 do P0-5 dividia o pickup por um checklist de 81 tokens (`required_resume_payload`). Esse checklist continua em `fidelity_checklist_tokens` e não é o denominador. `volume_ratio_status` = `LIMITED` (observação, não gate) | Não é saída de modelo |
 | Retomada pelo agente receptor | `PASS` | O receptor faz `loadSessionContinuity` e `applySessionContinuityToMemory` e recupera `run_id`, `node_id` e a decisão. O teste é `orchestrator/tests/unit/v22-p0-handoff.test.ts` | Um handoff, não todos os papéis |
 | Saída, cache, custo | `NOT_MEASURED` | Campos no JSON de handoff | Sem modelo e sem chave |
-| Compactação no handoff | `UNAVAILABLE` | O mesmo contrato fail-closed. Sem número | Condenser inexistente |
+| Compactação no handoff | `LIMITED` | A mesma medição P0-6 na tarefa `restricoes_compactacao_handoff`, flag ligada só nessa corrida. Reinject continua `false` | Não é o hot path. A corrida default do handoff mantém compactação `UNAVAILABLE` |
 
 ## GOAL-005 — adoção ou rejeição rastreável de ferramentas
 
@@ -102,4 +104,4 @@ Estado: **`LIMITED`**.
 
 ## O que continua de fora
 
-P0-6 não muda: compactação `UNAVAILABLE`. Não há condenser. Graphify permanece OFF. Nenhuma chave de vendor entra no tree.
+P0-6 mede o condenser extrativo numa tarefa, com a flag ligada só nessa corrida. O default continua OFF. Reinject continua `NOT_IMPLEMENTED`. Graphify permanece OFF. Nenhuma chave de vendor entra no tree. Os números estão nos JSON. Este texto não os copia.

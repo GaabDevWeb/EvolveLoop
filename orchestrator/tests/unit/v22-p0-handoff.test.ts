@@ -33,8 +33,11 @@ describe("V22-GAP-P0-5 handoff", () => {
     expect(report.n).toBeGreaterThanOrEqual(3);
     expect(report.tokenizer).toBe("tiktoken:cl100k_base");
     expect(report.path_normalization).toBe("stable_relative");
-    expect(report.reference_tokens).toBeGreaterThan(0);
-    expect(report.transferred_tokens).toBeGreaterThan(report.reference_tokens);
+    expect(report.reference_kind).toBe("sender_complete_context");
+    expect(report.fidelity_checklist_kind).toBe("required_resume_payload");
+    expect(report.fidelity_checklist_tokens).toBe(81);
+    expect(report.reference_tokens).toBeGreaterThan(report.fidelity_checklist_tokens);
+    expect(report.transferred_tokens).toBeGreaterThan(0);
     expect(report.receiver_resume_ok).toBe(true);
     expect(report.receiver_resume_status).toBe("PASS");
     expect(report.volume_ratio_status).toBe("LIMITED");
@@ -58,14 +61,18 @@ describe("V22-GAP-P0-5 handoff", () => {
       writeFileSync(out, `${JSON.stringify(report, null, 2)}\n`);
     } else {
       const committedPath = path.join(repoRootFromModule(), "docs/v22/baseline/raw/p0-handoff-report.json");
-      let committed: { path_normalization?: string; transferred_tokens?: number; reference_tokens?: number } | null =
-        null;
+      let committed: {
+        schema_id?: string;
+        path_normalization?: string;
+        transferred_tokens?: number;
+        reference_tokens?: number;
+      } | null = null;
       try {
         committed = JSON.parse(readFileSync(committedPath, "utf-8")) as typeof committed;
       } catch {
         committed = null;
       }
-      if (committed?.path_normalization === "stable_relative") {
+      if (committed?.schema_id === "v22-p0-handoff-report-2" && committed.path_normalization === "stable_relative") {
         expect(committed.transferred_tokens).toBe(report.transferred_tokens);
         expect(committed.reference_tokens).toBe(report.reference_tokens);
       }

@@ -1,11 +1,14 @@
 /**
- * V22-GAP-P0-5 — one handoff measurement.
+ * V22-GAP-P0-5 handoff measurement, reference redefined in V22-GAP-P0-6.
  *
- * Reference volume is the stable payload the receiver must still see.
- * Transferred volume is the normalized pickup prompt. The receiving agent
- * reloads session continuity and must recover the same next action and decision.
- * N>=3. Output, cache, cost, and model latency stay NOT_MEASURED.
- * Compaction stays UNAVAILABLE. Dispersion 0 of input tokens is expected.
+ * The reference method is transferring the sending agent's complete context:
+ * briefing, definition of done, restrictions, decisions, next action, graph,
+ * retrieved knowledge, and evidence. saved_at is excluded (wall clock).
+ * The 81-token checklist is only the survival probe (fidelity_checklist_tokens).
+ * Transferred volume is the normalized pickup. The receiver reloads session
+ * continuity. N>=3. Output, cache, cost, and model latency stay NOT_MEASURED.
+ * This run keeps EVOLVELOOP_COMPACTION off. Compaction numbers live in the
+ * P0-6 report. Dispersion 0 of transferred tokens is expected.
  */
 
 import { spawnSync } from "node:child_process";
@@ -47,6 +50,7 @@ const RESTRICTIONS = [
 export interface HandoffRun {
   repetition: number;
   reference_tokens: number;
+  fidelity_checklist_tokens: number;
   transferred_tokens: number;
   volume_ratio: number;
   latency_ms: number;
@@ -56,10 +60,11 @@ export interface HandoffRun {
 }
 
 export interface HandoffReport {
-  schema_id: "v22-p0-handoff-report-1";
+  schema_id: "v22-p0-handoff-report-2";
   task_id: "V22-GAP-P0-5";
   evidence_class: "MEASURED_DETERMINISTIC_HANDOFF";
-  reference_kind: "required_resume_payload";
+  reference_kind: "sender_complete_context";
+  fidelity_checklist_kind: "required_resume_payload";
   tokenizer: "tiktoken:cl100k_base";
   path_normalization: "stable_relative";
   model_id: "deterministic-provider";
@@ -68,6 +73,7 @@ export interface HandoffReport {
   n_status: "PASS";
   reference_tokens: number;
   reference_tokens_status: "PASS";
+  fidelity_checklist_tokens: number;
   transferred_tokens: number;
   transferred_tokens_status: "PASS";
   volume_ratio: number;
@@ -113,7 +119,7 @@ function treeSha(root: string): string {
   return sha;
 }
 
-function referencePayload(): string {
+function fidelityChecklist(): string {
   return [
     `resume: ${HANDOFF_RESUME_MARKER}`,
     `run_id: ${HANDOFF_RUN_ID}`,
@@ -123,6 +129,44 @@ function referencePayload(): string {
     `decision: ${HANDOFF_DECISION}`,
     ...RESTRICTIONS.map((line) => `restriction: ${line}`),
   ].join("\n");
+}
+
+function senderCompleteContext(input: {
+  briefing: string;
+  definitionOfDone: unknown[];
+  decisions: Array<{ timestamp: string; source: string; type: string; content: string }>;
+  nextAction: { node_id: string; capability: string; run_id?: string; reason: string };
+  satisfiedJobRunIds: string[];
+  graphNodes: Array<{ id: string; capability: string; type: string; status: string; run_id?: string }>;
+  knowledge: Array<{ path: string; content: string }>;
+  evidence: string;
+}): string {
+  const lines = ["# sender_complete_context", "## briefing", input.briefing.trimEnd(), "## definition_of_done"];
+  for (const item of input.definitionOfDone) lines.push(JSON.stringify(item));
+  lines.push("## restrictions");
+  for (const restriction of RESTRICTIONS) lines.push(`restriction: ${restriction}`);
+  lines.push("## decisions");
+  for (const decision of input.decisions) {
+    lines.push(`decision: ${decision.timestamp} ${decision.source} ${decision.type} ${decision.content}`);
+  }
+  lines.push("## next_action");
+  lines.push(
+    `next_action: ${input.nextAction.node_id} ${input.nextAction.capability} ${input.nextAction.run_id ?? ""} ${input.nextAction.reason}`,
+  );
+  lines.push("## satisfied_job_run_ids");
+  for (const id of input.satisfiedJobRunIds) lines.push(`satisfied_job_run_id: ${id}`);
+  lines.push("## graph");
+  for (const node of input.graphNodes) {
+    lines.push(`graph_node: ${node.id} ${node.capability} ${node.type} ${node.status} ${node.run_id ?? ""}`);
+  }
+  lines.push("## knowledge");
+  for (const item of input.knowledge) {
+    lines.push(`--- path:${item.path} ---`);
+    lines.push(item.content.trimEnd());
+  }
+  lines.push("## evidence");
+  lines.push(input.evidence.trimEnd());
+  return lines.join("\n");
 }
 
 function graph(): GraphSnapshot {
@@ -180,7 +224,7 @@ function missingLines(prompt: string, payload: string): string[] {
   return payload.split("\n").filter((line) => line.length > 0 && !prompt.includes(line));
 }
 
-async function oneRun(root: string, payload: string, repetition: number): Promise<HandoffRun> {
+async function oneRun(root: string, checklist: string, repetition: number): Promise<HandoffRun> {
   const started = performance.now();
   const memoryRoot = await mkdtemp(path.join(tmpdir(), "v22-p0-handoff-mem-"));
   const jobsDir = await mkdtemp(path.join(tmpdir(), "v22-p0-handoff-jobs-"));
@@ -227,26 +271,55 @@ async function oneRun(root: string, payload: string, repetition: number): Promis
         },
       ],
       spawn_metadata: {
-        evidence_verbatim: payload,
+        evidence_verbatim: checklist,
         security_restrictions: "Nunca apagar paths, negações, comandos, DoD ou evidência. reinject_allowed: false.",
       },
     };
+    const referenceRaw = senderCompleteContext({
+      briefing: job.briefing,
+      definitionOfDone: job.definition_of_done,
+      decisions: snapshot.decisions,
+      nextAction: snapshot.next_action ?? {
+        node_id: HANDOFF_NODE_ID,
+        capability: "knowledge-retrieval",
+        run_id: HANDOFF_RUN_ID,
+        reason: "awaiting_external_job",
+      },
+      satisfiedJobRunIds: snapshot.satisfied_job_run_ids,
+      graphNodes: graph().nodes.map((node) => ({
+        id: node.id,
+        capability: node.capability,
+        type: node.type,
+        status: node.status,
+        run_id: node.run_id,
+      })),
+      knowledge: [
+        {
+          path: "docs/adr/0013-context-ownership-working-context.md",
+          content: adr,
+        },
+      ],
+      evidence: checklist,
+    });
     const spawn = preparePickupSpawnContext(job, jobsDir, { featureId: HANDOFF_FEATURE_ID });
     if (!spawn.validation_ok) {
       throw new Error(`handoff pickup was not assembled (${spawn.validation_reason ?? "invalid"})`);
     }
     const raw = buildPickupPrompt(job, jobsDir, undefined, { caveman: false, spawnContext: spawn });
-    const prompt = normalizeMeasurementPaths(raw, {
+    const pathSpec = {
       jobsDir,
       jobsLabel: stableJobsLabel("handoff", "receiver"),
       orchestratorRoot: resolveOrchestratorRoot(),
-    });
-    const [referenceTokens, transferredTokens] = requireTiktokenCounts([payload, prompt]);
-    const missing = missingLines(prompt, payload);
+    };
+    const prompt = normalizeMeasurementPaths(raw, pathSpec);
+    const reference = normalizeMeasurementPaths(referenceRaw, pathSpec);
+    const [checklistTokens, referenceTokens, transferredTokens] = requireTiktokenCounts([checklist, reference, prompt]);
+    const missing = missingLines(prompt, checklist);
     const latencyMs = performance.now() - started;
     return {
       repetition,
       reference_tokens: referenceTokens ?? 0,
+      fidelity_checklist_tokens: checklistTokens ?? 0,
       transferred_tokens: transferredTokens ?? 0,
       volume_ratio: referenceTokens ? (transferredTokens ?? 0) / referenceTokens : 0,
       latency_ms: latencyMs,
@@ -281,15 +354,22 @@ export async function runP0Handoff(options?: { n?: number; repoRoot?: string }):
   const reinject = assertReinjectAllowed(true);
   if (reinject.allowed) throw new Error("compaction reinject probe returned allowed");
   requireTiktokenCounts(["p0-handoff-tiktoken-probe"]);
-  const payload = referencePayload();
+  const previousFlag = process.env.EVOLVELOOP_COMPACTION;
+  delete process.env.EVOLVELOOP_COMPACTION;
+  const checklist = fidelityChecklist();
   const runs: HandoffRun[] = [];
-  for (let repetition = 1; repetition <= n; repetition += 1) {
-    runs.push(await oneRun(root, payload, repetition));
+  try {
+    for (let repetition = 1; repetition <= n; repetition += 1) {
+      runs.push(await oneRun(root, checklist, repetition));
+    }
+  } finally {
+    if (previousFlag === undefined) delete process.env.EVOLVELOOP_COMPACTION;
+    else process.env.EVOLVELOOP_COMPACTION = previousFlag;
   }
   const transferred = runs.map((run) => run.transferred_tokens);
   const dispersion = sampleStddev(transferred);
-  if (dispersion !== 0) {
-    throw new Error("handoff transferred-token dispersion was not 0 on a deterministic payload");
+  if (dispersion !== 0 || sampleStddev(runs.map((run) => run.reference_tokens)) !== 0) {
+    throw new Error("handoff token dispersion was not 0 on a deterministic payload");
   }
   if (runs.some((run) => !run.receiver_resume_ok || !run.payload_present)) {
     const missing = runs.flatMap((run) => run.missing);
@@ -298,10 +378,11 @@ export async function runP0Handoff(options?: { n?: number; repoRoot?: string }):
   const reference = mean(runs.map((run) => run.reference_tokens));
   const transferredMean = mean(transferred);
   return {
-    schema_id: "v22-p0-handoff-report-1",
+    schema_id: "v22-p0-handoff-report-2",
     task_id: "V22-GAP-P0-5",
     evidence_class: "MEASURED_DETERMINISTIC_HANDOFF",
-    reference_kind: "required_resume_payload",
+    reference_kind: "sender_complete_context",
+    fidelity_checklist_kind: "required_resume_payload",
     tokenizer: "tiktoken:cl100k_base",
     path_normalization: "stable_relative",
     model_id: "deterministic-provider",
@@ -310,6 +391,7 @@ export async function runP0Handoff(options?: { n?: number; repoRoot?: string }):
     n_status: "PASS",
     reference_tokens: reference,
     reference_tokens_status: "PASS",
+    fidelity_checklist_tokens: mean(runs.map((run) => run.fidelity_checklist_tokens)),
     transferred_tokens: transferredMean,
     transferred_tokens_status: "PASS",
     volume_ratio: reference === 0 ? 0 : transferredMean / reference,
@@ -340,7 +422,7 @@ export async function runP0Handoff(options?: { n?: number; repoRoot?: string }):
     compaction_fidelity: "UNAVAILABLE",
     product_percent_gate: "NOT_MEASURED",
     limitation:
-      "Uma corrida de handoff. reference_tokens é o payload que o receptor tem de ver. transferred_tokens é o pickup normalizado. O rácio é observação, não gate de produto. Saída, cache, custo e latência de modelo são NOT_MEASURED. Dispersão 0 de transferred_tokens é a esperada no determinístico. Compactação é UNAVAILABLE. tree_sha é o HEAD no momento da corrida.",
+      "Uma corrida de handoff com a flag EVOLVELOOP_COMPACTION ausente. reference_tokens é o contexto completo do agente emissor (briefing, DoD, restrições, decisões, próximo passo, grafo, conhecimento recuperado e evidência), sem saved_at. O checklist required_resume_payload fica em fidelity_checklist_tokens e não é o denominador: no P0-5 esse checklist (81 tokens) produziu o rácio 26,91 contra o pickup. transferred_tokens é o pickup normalizado. O rácio é observação, não gate de produto. Saída, cache, custo e latência de modelo são NOT_MEASURED. Dispersão 0 de transferred_tokens é a esperada no determinístico. Compactação desta corrida é UNAVAILABLE; a medição com a flag ligada está no relatório P0-6. tree_sha é o HEAD no momento da corrida.",
     measured_at: new Date().toISOString(),
     runs,
   };
