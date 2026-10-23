@@ -53,7 +53,7 @@ Legenda: **`ENTREGUE_CI`** = critérios automatizados verdes na release; **`FIXT
 | Graphify em produção | `FLAG_OPT_IN` | Medição B3 em `battery-b3-graphify/`; default OFF; não altera `KnowledgeBackendId`. |
 | Host Cursor IDE | `projeto` | Pickup/`context_retrieval` no **host Cursor** sem report de paths — fora do contrato TS/orchestrator testado. |
 | Branch `evolve-v3` | `hipótese` | Confronto World Model ainda pendente. |
-| `wiki` / `wiki-mem` no `install.sh` | `projeto` | CONFLICT esperado quando skills já existem no monorepo (idempotência OK). |
+| `wiki` / `wiki-mem` no `install.sh` | `resolvido` (V22-POST-001) | Diretório legado é movido para `~/.agent-setup/backups/<timestamp>/` (nunca apagado) e vira symlink; a segunda execução fica `already configured`. |
 
 ## Verificação `V22-FINAL-verify-2` (tip `b127bae`)
 

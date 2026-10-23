@@ -1,14 +1,19 @@
 # wiki / wiki-mem install
 
-`standard` profile installs `wiki` and `wiki-mem` from `repo:${AGENTS_ROOT}/.cursor/skills/...` as **symlinks** into `~/.cursor/skills/` (fallback: `agent-setup/skills/*`).
+O perfil `standard` instala `wiki` e `wiki-mem` a partir de `repo:${AGENTS_ROOT}/.cursor/skills/...` como **symlinks** em `~/.cursor/skills/` (fallback: `agent-setup/skills/*`).
 
-## CONFLICT
+## Diretório legado
 
-If `~/.cursor/skills/wiki` already exists as a **copied directory** from an older install (bundled copytree), a second run reports `CONFLICT skill:wiki` instead of overwriting. Remediation:
+Uma instalação antiga fazia `copytree` e deixava `~/.cursor/skills/wiki` (e `wiki-mem`) como **diretório real**. A execução seguinte respondia `CONFLICT skill:wiki` e não instalava o symlink.
+
+Agora o instalador **move** esse diretório para `~/.agent-setup/backups/<timestamp>/<nome>/` e só então cria o symlink. O conteúdo do usuário permanece no backup (`method: move` em `manifest.json`). Não há `rm` nem `rmtree` desse legado.
+
+Quando o destino já é um symlink para o mesmo caminho resolvido da origem, a instalação fica **skipped** (`already configured`). A segunda execução é idempotente e não move o backup de novo.
 
 ```bash
-rm -rf ~/.cursor/skills/wiki ~/.cursor/skills/wiki-mem
-AGENTS_ROOT=/path/to/repo agent install --profile standard
+export AGENTS_ROOT=/path/to/repo
+./install.sh standard
+./install.sh standard
 ```
 
-When the destination already symlinks to the same resolved path as the source, install is **skipped** (idempotent).
+O backup da primeira execução fica em `~/.agent-setup/backups/`.

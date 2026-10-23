@@ -22,6 +22,39 @@ def sha256_text(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
+def relocate_legacy_tree(component: str, source: Path, meta: dict[str, Any] | None = None) -> Path:
+    """Move a real directory aside. Never deletes the tree.
+
+    Used when a legacy copied skill directory blocks a symlink install.
+    """
+    if source.is_symlink() or not source.is_dir():
+        raise OSError(f"not a legacy directory: {source}")
+    ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    backup_root = state_dir() / "backups" / ts
+    backup_root.mkdir(parents=True, exist_ok=True)
+    dest = backup_root / source.name
+    n = 0
+    while dest.exists():
+        n += 1
+        dest = backup_root / f"{source.name}-{n}"
+    shutil.move(source, dest)
+    record = {
+        "timestamp": ts,
+        "component": component,
+        "original": str(source),
+        "backup": str(dest),
+        "method": "move",
+        **(meta or {}),
+    }
+    manifest = backup_root / "manifest.json"
+    existing: list[Any] = []
+    if manifest.is_file():
+        existing = json.loads(manifest.read_text(encoding="utf-8"))
+    existing.append(record)
+    manifest.write_text(json.dumps(existing, indent=2) + "\n", encoding="utf-8")
+    return dest
+
+
 def create_backup(component: str, source: Path, meta: dict[str, Any] | None = None) -> str | None:
     if not source.exists():
         return None
