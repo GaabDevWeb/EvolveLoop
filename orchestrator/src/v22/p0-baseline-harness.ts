@@ -23,7 +23,9 @@ import { rankRetrievalPaths, selectTopRankedPaths, tokenizeForRanking } from "..
 import { requireTiktokenCounts } from "../context/tokenizer.js";
 import { applyTruthFence, codeOverridesWiki } from "../knowledge/truth-source/fence.js";
 import type { TruthSourcedItem } from "../knowledge/truth-source/types.js";
+import { resolveOrchestratorRoot } from "../cli/run-engine-env.js";
 import { buildPickupPrompt } from "../jobs/job-pickup.js";
+import { normalizeMeasurementPaths, stableJobsLabel } from "./measurement-paths.js";
 import type { SkillJob } from "../jobs/job-store.js";
 import { preparePickupSpawnContext } from "../jobs/spawn-pickup-context.js";
 import { buildBenchSkillJob } from "./bench-pickup-fixture.js";
@@ -225,6 +227,7 @@ export interface P0BaselineReport {
   canonical_max_paths: typeof CANONICAL_MAX_PATHS;
   canonical_max_input_tokens: typeof CANONICAL_MAX_INPUT_TOKENS;
   dispersion_declaration: "zero_expected_deterministic_for_input_tokens";
+  path_normalization: "stable_relative";
   measured_at: string;
   compaction_contract: CompactionContractEvidence;
   tasks: TaskReport[];
@@ -783,9 +786,14 @@ function assembleV22(task: FrozenTask, cache: CorpusCache, root: string, jobsDir
   if (!spawn.validation_ok || !spawn.budgeted_context_block) {
     throw new Error(`${task.id}: pickup context was not assembled (${spawn.validation_reason ?? "empty budget"})`);
   }
-  const prompt = task.handoff
+  const promptRaw = task.handoff
     ? buildPickupPrompt(job, jobsDir, undefined, { caveman: false, spawnContext: spawn })
     : extractBudgetedContext(spawn.budgeted_context_block);
+  const prompt = normalizeMeasurementPaths(promptRaw, {
+    jobsDir,
+    jobsLabel: stableJobsLabel(task.id, "V2.2"),
+    orchestratorRoot: resolveOrchestratorRoot(),
+  });
   const inner = extractBudgetedContext(spawn.budgeted_context_block);
   const retrievalTokens = countOne(inner);
   if (retrievalTokens > CANONICAL_MAX_INPUT_TOKENS) {
@@ -990,6 +998,7 @@ export async function runP0Baseline(options?: { n?: number; repoRoot?: string })
     canonical_max_paths: CANONICAL_MAX_PATHS,
     canonical_max_input_tokens: CANONICAL_MAX_INPUT_TOKENS,
     dispersion_declaration: "zero_expected_deterministic_for_input_tokens",
+    path_normalization: "stable_relative",
     measured_at: new Date().toISOString(),
     compaction_contract: compaction,
     tasks: taskReports,

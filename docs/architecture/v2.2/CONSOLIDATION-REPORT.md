@@ -7,6 +7,10 @@
 | **release tip** | `release/v2.1-freeze-preparation` @ `b127bae` |
 | **verificação** | 2026-10-22 (agent VM) |
 
+## Vocabulário interno e fecho normativo
+
+`ENTREGUE_CI` na tabela abaixo é rótulo interno: a suíte de CI ficou verde. Não é `PASS` da seção 9 de `docs/v22/GOALS-OFFICIAL.md`. O fecho normativo, meta a meta, está em `docs/v22/FINAL-REPORT.md`. A auditoria escrita contra `7ca568f` permanece em `docs/v22/TRACEABILITY-AUDIT.md` e não foi reescrita.
+
 ## Entrega na release (PRs #1–#11)
 
 | PR | Tema | Metas tocadas |

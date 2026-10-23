@@ -1,0 +1,77 @@
+{
+  "schema_id": "v22-p0-handoff-report-1",
+  "task_id": "V22-GAP-P0-5",
+  "evidence_class": "MEASURED_DETERMINISTIC_HANDOFF",
+  "reference_kind": "required_resume_payload",
+  "tokenizer": "tiktoken:cl100k_base",
+  "path_normalization": "stable_relative",
+  "model_id": "deterministic-provider",
+  "tree_sha": "59f611728d16033ef0baa46e2b58a86cde9fd6f8",
+  "n": 3,
+  "n_status": "PASS",
+  "reference_tokens": 81,
+  "reference_tokens_status": "PASS",
+  "transferred_tokens": 2180,
+  "transferred_tokens_status": "PASS",
+  "volume_ratio": 26.91358024691358,
+  "volume_ratio_status": "LIMITED",
+  "receiver_resume_ok": true,
+  "receiver_resume_status": "PASS",
+  "output_tokens": "NOT_MEASURED",
+  "output_tokens_status": "NOT_MEASURED",
+  "cache_read_tokens": "NOT_MEASURED",
+  "cache_write_tokens": "NOT_MEASURED",
+  "cost": "NOT_MEASURED",
+  "model_latency_ms": "NOT_MEASURED",
+  "latency_ms": 880.979848,
+  "latency_ms_status": "LIMITED",
+  "latency_kind": "handoff_assembly",
+  "dispersion": {
+    "transferred_tokens": {
+      "statistic": "sample_stddev",
+      "value": 0,
+      "n": 3,
+      "expectation": "zero_expected_deterministic",
+      "status": "PASS"
+    },
+    "model": "NOT_MEASURED"
+  },
+  "compaction": "UNAVAILABLE",
+  "compaction_tokens": "UNAVAILABLE",
+  "compaction_fidelity": "UNAVAILABLE",
+  "product_percent_gate": "NOT_MEASURED",
+  "limitation": "Uma corrida de handoff. reference_tokens é o payload que o receptor tem de ver. transferred_tokens é o pickup normalizado. O rácio é observação, não gate de produto. Saída, cache, custo e latência de modelo são NOT_MEASURED. Dispersão 0 de transferred_tokens é a esperada no determinístico. Compactação é UNAVAILABLE. tree_sha é o HEAD no momento da corrida.",
+  "measured_at": "2026-10-23T01:47:50.199Z",
+  "runs": [
+    {
+      "repetition": 1,
+      "reference_tokens": 81,
+      "transferred_tokens": 2180,
+      "volume_ratio": 26.91358024691358,
+      "latency_ms": 1005.7354519999999,
+      "receiver_resume_ok": true,
+      "payload_present": true,
+      "missing": []
+    },
+    {
+      "repetition": 2,
+      "reference_tokens": 81,
+      "transferred_tokens": 2180,
+      "volume_ratio": 26.91358024691358,
+      "latency_ms": 824.6343959999999,
+      "receiver_resume_ok": true,
+      "payload_present": true,
+      "missing": []
+    },
+    {
+      "repetition": 3,
+      "reference_tokens": 81,
+      "transferred_tokens": 2180,
+      "volume_ratio": 26.91358024691358,
+      "latency_ms": 812.569696,
+      "receiver_resume_ok": true,
+      "payload_present": true,
+      "missing": []
+    }
+  ]
+}

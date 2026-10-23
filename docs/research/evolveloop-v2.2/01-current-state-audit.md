@@ -1,3 +1,5 @@
+> Snapshot de pesquisa de 2026-10-21, tree `28ab56ce`. Não é o estado da ponta. O estado atual está em `docs/v22/STATE-AUDIT-TIP.md`. O corpo abaixo não foi reescrito.
+
 # Auditoria do estado atual
 
 **Tree:** `release/v2.1-freeze-preparation` @ `28ab56ce` (2026-10-11), salvo indicação `evolve-v3`.

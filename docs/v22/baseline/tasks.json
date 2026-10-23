@@ -41,7 +41,7 @@
     "product_percent_gate": "NOT_MEASURED",
     "ollama_hybrid": "NOT_MEASURED"
   },
-  "limitation": "input_tokens é o pacote montado no corpus oficial. B0 lê os hits de rg até 45 paths. V2.2 é o pickup/handoff real com retrieval e budget canónico de 22000 tokens. Tokenizer obrigatório: tiktoken:cl100k_base. output_tokens, cache e cost são NOT_MEASURED. Híbrido Ollama é NOT_MEASURED. Latência medida é a de retrieval, não de modelo. Dispersão 0 de input_tokens é a esperada nesta corrida determinística. Economia de input só conta quando a qualidade V2.2 >= B0 (GOALS-OFFICIAL seção 5.3). Compactação é UNAVAILABLE. tree_sha é o HEAD no momento da corrida.",
+  "limitation": "input_tokens é o pacote montado no corpus oficial. B0 lê os hits de rg até 45 paths. V2.2 é o pickup/handoff real com retrieval e budget canónico de 22000 tokens. O caminho absoluto do diretório de jobs e a raiz do orchestrator no prompt são normalizados para jobs/v22-p0-baseline/<tarefa>/V2.2 e orchestrator. Tokenizer obrigatório: tiktoken:cl100k_base. output_tokens, cache e cost são NOT_MEASURED. Híbrido Ollama é NOT_MEASURED. Latência medida é a de retrieval, não de modelo. Dispersão 0 de input_tokens é a esperada nesta corrida determinística. Economia de input só conta quando a qualidade V2.2 >= B0 (GOALS-OFFICIAL seção 5.3). Compactação é UNAVAILABLE. tree_sha é o HEAD no momento da corrida.",
   "tasks": [
     {
       "id": "curta",
