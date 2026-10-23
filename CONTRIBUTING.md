@@ -13,6 +13,15 @@ Thanks for contributing. EvolveLoop is a **modular agent architecture** with con
 
 ## Tests
 
+Local and CI (see [docs/development/ci.md](docs/development/ci.md)):
+
+```bash
+(cd orchestrator && npm ci && npm test && npm run test:bench)
+python -m pip install -e "./agent-setup[dev]"
+(cd agent-setup && python -m pytest -q)
+bash docs/architecture/v2.2/scripts/validate-v22-artifacts.sh
+```
+
 - Prefer unit/integration tests under `orchestrator/tests/`.
 - Evals live under `orchestrator/tests/evals/` — extend carefully; do not weaken freeze constraints on EvolveLoop V1 without an ADR.
 - Do not claim regression pass without running the suite.

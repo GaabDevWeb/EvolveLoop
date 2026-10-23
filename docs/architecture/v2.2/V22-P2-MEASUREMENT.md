@@ -30,4 +30,4 @@ Pickup **run_id** and complete/fail commands live under `## Briefing` (dynamic),
 
 ## agent-setup wiki CONFLICT (resolved)
 
-`wiki` / `wiki-mem` install from `repo:${AGENTS_ROOT}/.cursor/skills/...` via **symlink** (fallback `bundled:skills/*`) so `~/.cursor/skills/wiki` is not copied over the repo checkout (prior `CONFLICT` when dest equalled project tree).
+`wiki` / `wiki-mem` install from `repo:${AGENTS_ROOT}/.cursor/skills/...` via **symlink** (fallback `bundled:skills/*`). A legacy copied directory at `~/.cursor/skills/wiki` or `wiki-mem` is **moved** to `~/.agent-setup/backups/<timestamp>/` (never deleted) and replaced by the symlink. The next run is `already configured`. See `agent-setup/docs/wiki-skill-install.md`.

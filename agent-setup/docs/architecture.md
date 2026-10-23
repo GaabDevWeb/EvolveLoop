@@ -38,4 +38,6 @@ Install compares checksums / symlink targets. Existing correct config → `alrea
 
 ## Conflicts
 
-Local modifications to managed files → backup + report `CONFLICT` (preserve by default).
+Ficheiro gerido com conteúdo local diferente → backup por cópia + `CONFLICT` (o original fica no lugar).
+
+Diretório real no destino de um componente `install: symlink` (cópia antiga de `wiki` / `wiki-mem`, ou `--force` sobre um diretório) → o diretório é **movido** para `~/.agent-setup/backups/<timestamp>/`. O destino passa a ser o symlink ou a cópia nova. O legado não é apagado. Ver `docs/wiki-skill-install.md`.

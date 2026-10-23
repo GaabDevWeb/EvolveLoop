@@ -8,7 +8,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-from agent_setup.backup import create_backup, sha256_file, sha256_text
+from agent_setup.backup import create_backup, relocate_legacy_tree, sha256_file, sha256_text
 from agent_setup.manifest import ManifestBundle, read_version
 from agent_setup.paths import expand, repo_root, resolve_env_defaults
 from agent_setup.state import init_state, load_state, save_state, state_dir
@@ -55,24 +55,34 @@ def _copy_or_link(src: Path, dest: Path, *, symlink: bool, force: bool, componen
                 return "skipped"
         except OSError:
             pass
-        if dest.is_symlink() and dest.resolve() == src.resolve():
-            return "skipped"
-        if dest.is_file():
-            if sha256_file(dest) == (sha256_file(src) if src.is_file() else ""):
-                return "skipped"
-        if not force:
+        if dest.is_symlink():
+            # Replacing a symlink does not delete its target.
             create_backup(component, dest)
-            if dest.is_symlink() or dest.is_file():
-                dest.unlink()
-            elif dest.is_dir():
-                if symlink:
-                    return "conflict"
+            dest.unlink()
+        elif dest.is_file():
+            if src.is_file() and sha256_file(dest) == sha256_file(src):
+                return "skipped"
+            create_backup(component, dest)
+            dest.unlink()
+        elif dest.is_dir():
+            # Legacy copytree (wiki / wiki-mem). Move the tree aside — never rmtree.
+            if symlink or force:
+                try:
+                    moved = relocate_legacy_tree(component, dest)
+                except OSError as exc:
+                    return f"error:legacy_relocate:{exc}"
+                state.setdefault("legacy_relocations", []).append(
+                    {
+                        "component": component,
+                        "original": str(dest),
+                        "backup": str(moved),
+                    }
+                )
+            else:
+                create_backup(component, dest)
                 return "conflict"
         else:
-            if dest.is_symlink() or dest.is_file():
-                dest.unlink()
-            elif dest.is_dir():
-                shutil.rmtree(dest)
+            return "conflict"
 
     _ensure_parent(dest)
     if symlink:
@@ -173,8 +183,16 @@ def install(profile: str = "standard", *, force: bool = False, dry_run: bool = F
             continue
         src = _resolve_source(rule["source"], env)
         dest = expand(rule["destination"], extra=env)
-        status = _copy_or_link(src, dest, symlink=False, force=force, component=f"rule:{rule['name']}", state=state)
-        _record(result, f"rule:{rule['name']}", status)
+        _install_component(
+            result,
+            f"rule:{rule['name']}",
+            src,
+            dest,
+            symlink=False,
+            force=force,
+            component=f"rule:{rule['name']}",
+            state=state,
+        )
 
     # Commands
     for cmd in components.get("commands", []):
@@ -182,8 +200,16 @@ def install(profile: str = "standard", *, force: bool = False, dry_run: bool = F
             continue
         src = _resolve_source(cmd["source"], env)
         dest = expand(cmd["destination"], extra=env)
-        status = _copy_or_link(src, dest, symlink=False, force=force, component=f"command:{cmd['name']}", state=state)
-        _record(result, f"command:{cmd['name']}", status)
+        _install_component(
+            result,
+            f"command:{cmd['name']}",
+            src,
+            dest,
+            symlink=False,
+            force=force,
+            component=f"command:{cmd['name']}",
+            state=state,
+        )
 
     # Skills
     for skill in components.get("skills", []):
@@ -195,12 +221,29 @@ def install(profile: str = "standard", *, force: bool = False, dry_run: bool = F
             src = _resolve_source(fallback, env)
         dest = expand(skill["destination"], extra=env)
         use_symlink = skill.get("install") == "symlink"
-        status = _copy_or_link(src, dest, symlink=use_symlink, force=force, component=f"skill:{skill['name']}", state=state)
-        _record(result, f"skill:{skill['name']}", status)
+        status = _install_component(
+            result,
+            f"skill:{skill['name']}",
+            src,
+            dest,
+            symlink=use_symlink,
+            force=force,
+            component=f"skill:{skill['name']}",
+            state=state,
+        )
         also = skill.get("also_link")
         if also and status in ("installed", "skipped"):
             link_dest = expand(also, extra=env)
-            _copy_or_link(dest if dest.exists() else src, link_dest, symlink=True, force=force, component=f"skill-link:{skill['name']}", state=state)
+            _install_component(
+                result,
+                f"skill-link:{skill['name']}",
+                dest if dest.exists() else src,
+                link_dest,
+                symlink=True,
+                force=force,
+                component=f"skill-link:{skill['name']}",
+                state=state,
+            )
 
     # Worker skills (standard/full)
     if profile_data.get("components", {}).get("worker_skills"):
@@ -211,8 +254,16 @@ def install(profile: str = "standard", *, force: bool = False, dry_run: bool = F
         for name in ws.get("names", []):
             src = Path(os.path.expanduser(base)) / name
             dest = expand(f"~/.cursor/skills/{name}", extra=env)
-            status = _copy_or_link(src, dest, symlink=True, force=force, component=f"worker:{name}", state=state)
-            _record(result, f"worker:{name}", status)
+            _install_component(
+                result,
+                f"worker:{name}",
+                src,
+                dest,
+                symlink=True,
+                force=force,
+                component=f"worker:{name}",
+                state=state,
+            )
 
     # Hooks merge
     try:
@@ -242,8 +293,16 @@ def install(profile: str = "standard", *, force: bool = False, dry_run: bool = F
             )
             _record(result, f"env:{tmpl['name']}", "installed")
         else:
-            status = _copy_or_link(src, dest, symlink=False, force=force, component=f"env:{tmpl['name']}", state=state)
-            _record(result, f"env:{tmpl['name']}", status)
+            _install_component(
+                result,
+                f"env:{tmpl['name']}",
+                src,
+                dest,
+                symlink=False,
+                force=force,
+                component=f"env:{tmpl['name']}",
+                state=state,
+            )
 
     # RAG full profile
     if profile_data.get("components", {}).get("rag"):
@@ -275,6 +334,27 @@ def install(profile: str = "standard", *, force: bool = False, dry_run: bool = F
 
     save_state(state)
     return result
+
+
+def _install_component(
+    result: InstallResult,
+    name: str,
+    src: Path,
+    dest: Path,
+    *,
+    symlink: bool,
+    force: bool,
+    component: str,
+    state: dict,
+) -> str:
+    before = len(state.get("legacy_relocations", []))
+    status = _copy_or_link(
+        src, dest, symlink=symlink, force=force, component=component, state=state
+    )
+    _record(result, name, status)
+    for entry in state.get("legacy_relocations", [])[before:]:
+        result.ok.append(f"legacy-moved:{name} -> {entry['backup']}")
+    return status
 
 
 def _record(result: InstallResult, name: str, status: str) -> None:

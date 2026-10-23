@@ -63,6 +63,12 @@ Nunca versionar `.env` com valores reais. Usar `config/defaults/env.example`.
 
 Testado: **Debian 13**, Python 3.11+. Cursor instalado. systemd user opcional (profile full).
 
+## Skills wiki / wiki-mem
+
+`install.sh standard` cria symlinks. Se `~/.cursor/skills/wiki` ou `wiki-mem` ainda for um diretório copiado por uma instalação antiga, esse diretório é movido para `~/.agent-setup/backups/<timestamp>/` e substituído pelo symlink. A segunda execução não altera o backup. Detalhe: `docs/wiki-skill-install.md`.
+
+CI do monorepo (suíte, bench, pytest, validate): `docs/development/ci.md` na raiz do repositório.
+
 ## Uninstall
 
 ```bash

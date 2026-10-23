@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# Profile install. Legacy skill directories (old copytree of wiki / wiki-mem)
+# are moved to ~/.agent-setup/backups/<timestamp>/ by the Python installer.
+# They are never deleted. A second run is idempotent when the symlink target matches.
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 export AGENT_SETUP_ROOT="$ROOT"
