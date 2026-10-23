@@ -8,10 +8,10 @@
   "ollama_hybrid": "NOT_MEASURED",
   "model_id": "deterministic-provider",
   "tokenizer": "tiktoken:cl100k_base",
-  "tree_sha": "bc6871ef76f21f226a517595a3aa6a4597698777",
+  "tree_sha": "59f611728d16033ef0baa46e2b58a86cde9fd6f8",
   "n": 3,
-  "limitation": "input_tokens é o pacote montado no corpus oficial. B0 lê os hits de rg até 45 paths. V2.2 é o pickup/handoff real com retrieval e budget canónico de 22000 tokens. Tokenizer obrigatório: tiktoken:cl100k_base. output_tokens, cache e cost são NOT_MEASURED. Híbrido Ollama é NOT_MEASURED. Latência medida é a de retrieval, não de modelo. Dispersão 0 de input_tokens é a esperada nesta corrida determinística. Economia de input só conta quando a qualidade V2.2 >= B0 (GOALS-OFFICIAL seção 5.3). Compactação é UNAVAILABLE. tree_sha é o HEAD no momento da corrida.",
-  "tasks_sha256": "3fc07ed5be840bf6f176190b8ee9b2394473c0f6967dc02be5ceb48d9f47ad83",
+  "limitation": "input_tokens é o pacote montado no corpus oficial. B0 lê os hits de rg até 45 paths. V2.2 é o pickup/handoff real com retrieval e budget canónico de 22000 tokens. O caminho absoluto do diretório de jobs e a raiz do orchestrator no prompt são normalizados para jobs/v22-p0-baseline/<tarefa>/V2.2 e orchestrator. Tokenizer obrigatório: tiktoken:cl100k_base. output_tokens, cache e cost são NOT_MEASURED. Híbrido Ollama é NOT_MEASURED. Latência medida é a de retrieval, não de modelo. Dispersão 0 de input_tokens é a esperada nesta corrida determinística. Economia de input só conta quando a qualidade V2.2 >= B0 (GOALS-OFFICIAL seção 5.3). Compactação é UNAVAILABLE. tree_sha é o HEAD no momento da corrida.",
+  "tasks_sha256": "2a2dbb867ed30ab93dde203307c2c958a4ea05985c5fc310388562d088fca0b6",
   "norm": "docs/v22/GOALS-OFFICIAL.md",
   "metrics_schema": "docs/v22/baseline/metrics.schema.json",
   "tasks_file": "docs/v22/baseline/tasks.json",
@@ -19,7 +19,8 @@
   "canonical_max_paths": 45,
   "canonical_max_input_tokens": 22000,
   "dispersion_declaration": "zero_expected_deterministic_for_input_tokens",
-  "measured_at": "2026-10-23T01:12:14.337Z",
+  "path_normalization": "stable_relative",
+  "measured_at": "2026-10-23T01:48:24.832Z",
   "compaction_contract": {
     "status": "UNAVAILABLE",
     "fidelity": "UNAVAILABLE",
@@ -46,7 +47,7 @@
       "quality_b0": 1,
       "quality_v22": 1,
       "quality_v22_gte_b0": true,
-      "raw_input_delta": -114460,
+      "raw_input_delta": -114525,
       "savings_counted": true,
       "deterministic_context_savings_status": "PASS",
       "deterministic_context_evidence_class": "MEASURED_DETERMINISTIC_CONTEXT",
@@ -56,9 +57,9 @@
           "arm": "B0",
           "role": "V2",
           "evidence_class": "OFFICIAL_BASELINE",
-          "input_tokens": 136381,
+          "input_tokens": 136436,
           "input_tokens_status": "PASS",
-          "retrieval_input_tokens": 136381,
+          "retrieval_input_tokens": 136436,
           "output_tokens": "NOT_MEASURED",
           "output_tokens_status": "NOT_MEASURED",
           "cache_read_tokens": "NOT_MEASURED",
@@ -67,7 +68,7 @@
           "cache_write_tokens_status": "NOT_MEASURED",
           "cost": "NOT_MEASURED",
           "cost_status": "NOT_MEASURED",
-          "latency_ms": 276.26036233333315,
+          "latency_ms": 277.5826656666666,
           "latency_ms_status": "LIMITED",
           "latency_kind": "retrieval",
           "model_latency_ms": "NOT_MEASURED",
@@ -90,7 +91,7 @@
             "cost": "NOT_MEASURED",
             "latency_ms": {
               "statistic": "sample_stddev",
-              "value": 9.621328378932967,
+              "value": 3.8286651664780655,
               "n": 3,
               "expectation": "retrieval_io_jitter",
               "status": "PASS"
@@ -105,8 +106,8 @@
             "model": "NOT_MEASURED"
           },
           "model_id": "deterministic-provider",
-          "tree_sha": "bc6871ef76f21f226a517595a3aa6a4597698777",
-          "limitation": "input_tokens é o pacote montado no corpus oficial. B0 lê os hits de rg até 45 paths. V2.2 é o pickup/handoff real com retrieval e budget canónico de 22000 tokens. Tokenizer obrigatório: tiktoken:cl100k_base. output_tokens, cache e cost são NOT_MEASURED. Híbrido Ollama é NOT_MEASURED. Latência medida é a de retrieval, não de modelo. Dispersão 0 de input_tokens é a esperada nesta corrida determinística. Economia de input só conta quando a qualidade V2.2 >= B0 (GOALS-OFFICIAL seção 5.3). Compactação é UNAVAILABLE. tree_sha é o HEAD no momento da corrida.",
+          "tree_sha": "59f611728d16033ef0baa46e2b58a86cde9fd6f8",
+          "limitation": "input_tokens é o pacote montado no corpus oficial. B0 lê os hits de rg até 45 paths. V2.2 é o pickup/handoff real com retrieval e budget canónico de 22000 tokens. O caminho absoluto do diretório de jobs e a raiz do orchestrator no prompt são normalizados para jobs/v22-p0-baseline/<tarefa>/V2.2 e orchestrator. Tokenizer obrigatório: tiktoken:cl100k_base. output_tokens, cache e cost são NOT_MEASURED. Híbrido Ollama é NOT_MEASURED. Latência medida é a de retrieval, não de modelo. Dispersão 0 de input_tokens é a esperada nesta corrida determinística. Economia de input só conta quando a qualidade V2.2 >= B0 (GOALS-OFFICIAL seção 5.3). Compactação é UNAVAILABLE. tree_sha é o HEAD no momento da corrida.",
           "tokenizer": "tiktoken:cl100k_base",
           "quality": 1,
           "quality_status": "PASS",
@@ -147,9 +148,9 @@
           "runs": [
             {
               "repetition": 1,
-              "input_tokens": 136381,
-              "retrieval_input_tokens": 136381,
-              "latency_ms": 287.223067,
+              "input_tokens": 136436,
+              "retrieval_input_tokens": 136436,
+              "latency_ms": 281.390539,
               "reread_count": 0,
               "paths_read": [
                 "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
@@ -196,9 +197,9 @@
             },
             {
               "repetition": 2,
-              "input_tokens": 136381,
-              "retrieval_input_tokens": 136381,
-              "latency_ms": 272.3392309999999,
+              "input_tokens": 136436,
+              "retrieval_input_tokens": 136436,
+              "latency_ms": 277.623916,
               "reread_count": 0,
               "paths_read": [
                 "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
@@ -245,9 +246,9 @@
             },
             {
               "repetition": 3,
-              "input_tokens": 136381,
-              "retrieval_input_tokens": 136381,
-              "latency_ms": 269.21878899999956,
+              "input_tokens": 136436,
+              "retrieval_input_tokens": 136436,
+              "latency_ms": 273.73354199999994,
               "reread_count": 0,
               "paths_read": [
                 "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
@@ -298,7 +299,7 @@
           "arm": "V2.2",
           "role": "V2.2",
           "evidence_class": "PROJECT_WIKI_PICKUP_BUDGET",
-          "input_tokens": 21921,
+          "input_tokens": 21911,
           "input_tokens_status": "PASS",
           "retrieval_input_tokens": 21293,
           "output_tokens": "NOT_MEASURED",
@@ -309,7 +310,7 @@
           "cache_write_tokens_status": "NOT_MEASURED",
           "cost": "NOT_MEASURED",
           "cost_status": "NOT_MEASURED",
-          "latency_ms": 1434.981082333333,
+          "latency_ms": 1368.9918099999998,
           "latency_ms_status": "LIMITED",
           "latency_kind": "retrieval",
           "model_latency_ms": "NOT_MEASURED",
@@ -332,7 +333,7 @@
             "cost": "NOT_MEASURED",
             "latency_ms": {
               "statistic": "sample_stddev",
-              "value": 90.62392306095177,
+              "value": 114.38251448962258,
               "n": 3,
               "expectation": "retrieval_io_jitter",
               "status": "PASS"
@@ -347,8 +348,8 @@
             "model": "NOT_MEASURED"
           },
           "model_id": "deterministic-provider",
-          "tree_sha": "bc6871ef76f21f226a517595a3aa6a4597698777",
-          "limitation": "input_tokens é o pacote montado no corpus oficial. B0 lê os hits de rg até 45 paths. V2.2 é o pickup/handoff real com retrieval e budget canónico de 22000 tokens. Tokenizer obrigatório: tiktoken:cl100k_base. output_tokens, cache e cost são NOT_MEASURED. Híbrido Ollama é NOT_MEASURED. Latência medida é a de retrieval, não de modelo. Dispersão 0 de input_tokens é a esperada nesta corrida determinística. Economia de input só conta quando a qualidade V2.2 >= B0 (GOALS-OFFICIAL seção 5.3). Compactação é UNAVAILABLE. tree_sha é o HEAD no momento da corrida.",
+          "tree_sha": "59f611728d16033ef0baa46e2b58a86cde9fd6f8",
+          "limitation": "input_tokens é o pacote montado no corpus oficial. B0 lê os hits de rg até 45 paths. V2.2 é o pickup/handoff real com retrieval e budget canónico de 22000 tokens. O caminho absoluto do diretório de jobs e a raiz do orchestrator no prompt são normalizados para jobs/v22-p0-baseline/<tarefa>/V2.2 e orchestrator. Tokenizer obrigatório: tiktoken:cl100k_base. output_tokens, cache e cost são NOT_MEASURED. Híbrido Ollama é NOT_MEASURED. Latência medida é a de retrieval, não de modelo. Dispersão 0 de input_tokens é a esperada nesta corrida determinística. Economia de input só conta quando a qualidade V2.2 >= B0 (GOALS-OFFICIAL seção 5.3). Compactação é UNAVAILABLE. tree_sha é o HEAD no momento da corrida.",
           "tokenizer": "tiktoken:cl100k_base",
           "quality": 1,
           "quality_status": "PASS",
@@ -374,9 +375,9 @@
           "runs": [
             {
               "repetition": 1,
-              "input_tokens": 21921,
+              "input_tokens": 21911,
               "retrieval_input_tokens": 21293,
-              "latency_ms": 1528.916427,
+              "latency_ms": 1500.9991029999999,
               "reread_count": 0,
               "paths_read": [
                 "orchestrator/src/providers/deterministic/paths.ts",
@@ -408,9 +409,9 @@
             },
             {
               "repetition": 2,
-              "input_tokens": 21921,
+              "input_tokens": 21911,
               "retrieval_input_tokens": 21293,
-              "latency_ms": 1427.9484659999998,
+              "latency_ms": 1306.7185209999998,
               "reread_count": 0,
               "paths_read": [
                 "orchestrator/src/providers/deterministic/paths.ts",
@@ -442,9 +443,9 @@
             },
             {
               "repetition": 3,
-              "input_tokens": 21921,
+              "input_tokens": 21911,
               "retrieval_input_tokens": 21293,
-              "latency_ms": 1348.0783539999993,
+              "latency_ms": 1299.2578059999996,
               "reread_count": 0,
               "paths_read": [
                 "orchestrator/src/providers/deterministic/paths.ts",
@@ -491,7 +492,7 @@
       "quality_b0": 0,
       "quality_v22": 1,
       "quality_v22_gte_b0": true,
-      "raw_input_delta": -57970,
+      "raw_input_delta": -59268,
       "savings_counted": true,
       "deterministic_context_savings_status": "PASS",
       "deterministic_context_evidence_class": "MEASURED_DETERMINISTIC_CONTEXT",
@@ -501,9 +502,9 @@
           "arm": "B0",
           "role": "V2",
           "evidence_class": "OFFICIAL_BASELINE",
-          "input_tokens": 79981,
+          "input_tokens": 81269,
           "input_tokens_status": "PASS",
-          "retrieval_input_tokens": 79981,
+          "retrieval_input_tokens": 81269,
           "output_tokens": "NOT_MEASURED",
           "output_tokens_status": "NOT_MEASURED",
           "cache_read_tokens": "NOT_MEASURED",
@@ -512,7 +513,7 @@
           "cache_write_tokens_status": "NOT_MEASURED",
           "cost": "NOT_MEASURED",
           "cost_status": "NOT_MEASURED",
-          "latency_ms": 265.2630743333336,
+          "latency_ms": 269.6096203333327,
           "latency_ms_status": "LIMITED",
           "latency_kind": "retrieval",
           "model_latency_ms": "NOT_MEASURED",
@@ -535,7 +536,7 @@
             "cost": "NOT_MEASURED",
             "latency_ms": {
               "statistic": "sample_stddev",
-              "value": 11.833768980048351,
+              "value": 21.60247253555161,
               "n": 3,
               "expectation": "retrieval_io_jitter",
               "status": "PASS"
@@ -550,8 +551,8 @@
             "model": "NOT_MEASURED"
           },
           "model_id": "deterministic-provider",
-          "tree_sha": "bc6871ef76f21f226a517595a3aa6a4597698777",
-          "limitation": "input_tokens é o pacote montado no corpus oficial. B0 lê os hits de rg até 45 paths. V2.2 é o pickup/handoff real com retrieval e budget canónico de 22000 tokens. Tokenizer obrigatório: tiktoken:cl100k_base. output_tokens, cache e cost são NOT_MEASURED. Híbrido Ollama é NOT_MEASURED. Latência medida é a de retrieval, não de modelo. Dispersão 0 de input_tokens é a esperada nesta corrida determinística. Economia de input só conta quando a qualidade V2.2 >= B0 (GOALS-OFFICIAL seção 5.3). Compactação é UNAVAILABLE. tree_sha é o HEAD no momento da corrida.",
+          "tree_sha": "59f611728d16033ef0baa46e2b58a86cde9fd6f8",
+          "limitation": "input_tokens é o pacote montado no corpus oficial. B0 lê os hits de rg até 45 paths. V2.2 é o pickup/handoff real com retrieval e budget canónico de 22000 tokens. O caminho absoluto do diretório de jobs e a raiz do orchestrator no prompt são normalizados para jobs/v22-p0-baseline/<tarefa>/V2.2 e orchestrator. Tokenizer obrigatório: tiktoken:cl100k_base. output_tokens, cache e cost são NOT_MEASURED. Híbrido Ollama é NOT_MEASURED. Latência medida é a de retrieval, não de modelo. Dispersão 0 de input_tokens é a esperada nesta corrida determinística. Economia de input só conta quando a qualidade V2.2 >= B0 (GOALS-OFFICIAL seção 5.3). Compactação é UNAVAILABLE. tree_sha é o HEAD no momento da corrida.",
           "tokenizer": "tiktoken:cl100k_base",
           "quality": 0,
           "quality_status": "LIMITED",
@@ -581,6 +582,7 @@
             "docs/architecture/skills/pruning/ROLLBACK-REASONS.yaml",
             "docs/architecture/v2.2/CONSOLIDATION-REPORT.md",
             "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+            "docs/architecture/v2.2/IMPLEMENTATION-ROADMAP.md",
             "docs/architecture/v2.2/SESSION-CONTINUITY.md",
             "docs/audit/ACTUAL-ARCHITECTURE.md",
             "docs/audit/DOCUMENTATION-DRIFT.md",
@@ -600,15 +602,14 @@
             "docs/internal/historical/evals/docs-evals/catalog/specs/EVAL-EV-006.yaml",
             "docs/internal/historical/evals/docs-evals/experiments/E-005/E-005-RESULT.md",
             "docs/internal/historical/evals/docs-evals/experiments/E-005/EVIDENCE.yaml",
-            "docs/internal/historical/evals/docs-evals/experiments/E-005/EXPERIMENT.md",
-            "docs/internal/historical/evals/docs-evals/experiments/E-005/FIXTURE.md"
+            "docs/internal/historical/evals/docs-evals/experiments/E-005/EXPERIMENT.md"
           ],
           "runs": [
             {
               "repetition": 1,
-              "input_tokens": 79981,
-              "retrieval_input_tokens": 79981,
-              "latency_ms": 278.8086150000008,
+              "input_tokens": 81269,
+              "retrieval_input_tokens": 81269,
+              "latency_ms": 257.1654689999996,
               "reread_count": 0,
               "paths_read": [
                 "CHANGELOG.md",
@@ -635,6 +636,7 @@
                 "docs/architecture/skills/pruning/ROLLBACK-REASONS.yaml",
                 "docs/architecture/v2.2/CONSOLIDATION-REPORT.md",
                 "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+                "docs/architecture/v2.2/IMPLEMENTATION-ROADMAP.md",
                 "docs/architecture/v2.2/SESSION-CONTINUITY.md",
                 "docs/audit/ACTUAL-ARCHITECTURE.md",
                 "docs/audit/DOCUMENTATION-DRIFT.md",
@@ -654,8 +656,7 @@
                 "docs/internal/historical/evals/docs-evals/catalog/specs/EVAL-EV-006.yaml",
                 "docs/internal/historical/evals/docs-evals/experiments/E-005/E-005-RESULT.md",
                 "docs/internal/historical/evals/docs-evals/experiments/E-005/EVIDENCE.yaml",
-                "docs/internal/historical/evals/docs-evals/experiments/E-005/EXPERIMENT.md",
-                "docs/internal/historical/evals/docs-evals/experiments/E-005/FIXTURE.md"
+                "docs/internal/historical/evals/docs-evals/experiments/E-005/EXPERIMENT.md"
               ],
               "quality": 0,
               "quality_checks": [
@@ -670,9 +671,9 @@
             },
             {
               "repetition": 2,
-              "input_tokens": 79981,
-              "retrieval_input_tokens": 79981,
-              "latency_ms": 256.9324739999993,
+              "input_tokens": 81269,
+              "retrieval_input_tokens": 81269,
+              "latency_ms": 257.1094059999996,
               "reread_count": 0,
               "paths_read": [
                 "CHANGELOG.md",
@@ -699,6 +700,7 @@
                 "docs/architecture/skills/pruning/ROLLBACK-REASONS.yaml",
                 "docs/architecture/v2.2/CONSOLIDATION-REPORT.md",
                 "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+                "docs/architecture/v2.2/IMPLEMENTATION-ROADMAP.md",
                 "docs/architecture/v2.2/SESSION-CONTINUITY.md",
                 "docs/audit/ACTUAL-ARCHITECTURE.md",
                 "docs/audit/DOCUMENTATION-DRIFT.md",
@@ -718,8 +720,7 @@
                 "docs/internal/historical/evals/docs-evals/catalog/specs/EVAL-EV-006.yaml",
                 "docs/internal/historical/evals/docs-evals/experiments/E-005/E-005-RESULT.md",
                 "docs/internal/historical/evals/docs-evals/experiments/E-005/EVIDENCE.yaml",
-                "docs/internal/historical/evals/docs-evals/experiments/E-005/EXPERIMENT.md",
-                "docs/internal/historical/evals/docs-evals/experiments/E-005/FIXTURE.md"
+                "docs/internal/historical/evals/docs-evals/experiments/E-005/EXPERIMENT.md"
               ],
               "quality": 0,
               "quality_checks": [
@@ -734,9 +735,9 @@
             },
             {
               "repetition": 3,
-              "input_tokens": 79981,
-              "retrieval_input_tokens": 79981,
-              "latency_ms": 260.0481340000006,
+              "input_tokens": 81269,
+              "retrieval_input_tokens": 81269,
+              "latency_ms": 294.553985999999,
               "reread_count": 0,
               "paths_read": [
                 "CHANGELOG.md",
@@ -763,6 +764,7 @@
                 "docs/architecture/skills/pruning/ROLLBACK-REASONS.yaml",
                 "docs/architecture/v2.2/CONSOLIDATION-REPORT.md",
                 "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
+                "docs/architecture/v2.2/IMPLEMENTATION-ROADMAP.md",
                 "docs/architecture/v2.2/SESSION-CONTINUITY.md",
                 "docs/audit/ACTUAL-ARCHITECTURE.md",
                 "docs/audit/DOCUMENTATION-DRIFT.md",
@@ -782,8 +784,7 @@
                 "docs/internal/historical/evals/docs-evals/catalog/specs/EVAL-EV-006.yaml",
                 "docs/internal/historical/evals/docs-evals/experiments/E-005/E-005-RESULT.md",
                 "docs/internal/historical/evals/docs-evals/experiments/E-005/EVIDENCE.yaml",
-                "docs/internal/historical/evals/docs-evals/experiments/E-005/EXPERIMENT.md",
-                "docs/internal/historical/evals/docs-evals/experiments/E-005/FIXTURE.md"
+                "docs/internal/historical/evals/docs-evals/experiments/E-005/EXPERIMENT.md"
               ],
               "quality": 0,
               "quality_checks": [
@@ -802,7 +803,7 @@
           "arm": "V2.2",
           "role": "V2.2",
           "evidence_class": "PROJECT_WIKI_PICKUP_BUDGET",
-          "input_tokens": 22011,
+          "input_tokens": 22001,
           "input_tokens_status": "PASS",
           "retrieval_input_tokens": 21342,
           "output_tokens": "NOT_MEASURED",
@@ -813,7 +814,7 @@
           "cache_write_tokens_status": "NOT_MEASURED",
           "cost": "NOT_MEASURED",
           "cost_status": "NOT_MEASURED",
-          "latency_ms": 1308.4348150000005,
+          "latency_ms": 1303.1456689999998,
           "latency_ms_status": "LIMITED",
           "latency_kind": "retrieval",
           "model_latency_ms": "NOT_MEASURED",
@@ -836,7 +837,7 @@
             "cost": "NOT_MEASURED",
             "latency_ms": {
               "statistic": "sample_stddev",
-              "value": 30.848924085452726,
+              "value": 21.098395946122203,
               "n": 3,
               "expectation": "retrieval_io_jitter",
               "status": "PASS"
@@ -851,8 +852,8 @@
             "model": "NOT_MEASURED"
           },
           "model_id": "deterministic-provider",
-          "tree_sha": "bc6871ef76f21f226a517595a3aa6a4597698777",
-          "limitation": "input_tokens é o pacote montado no corpus oficial. B0 lê os hits de rg até 45 paths. V2.2 é o pickup/handoff real com retrieval e budget canónico de 22000 tokens. Tokenizer obrigatório: tiktoken:cl100k_base. output_tokens, cache e cost são NOT_MEASURED. Híbrido Ollama é NOT_MEASURED. Latência medida é a de retrieval, não de modelo. Dispersão 0 de input_tokens é a esperada nesta corrida determinística. Economia de input só conta quando a qualidade V2.2 >= B0 (GOALS-OFFICIAL seção 5.3). Compactação é UNAVAILABLE. tree_sha é o HEAD no momento da corrida.",
+          "tree_sha": "59f611728d16033ef0baa46e2b58a86cde9fd6f8",
+          "limitation": "input_tokens é o pacote montado no corpus oficial. B0 lê os hits de rg até 45 paths. V2.2 é o pickup/handoff real com retrieval e budget canónico de 22000 tokens. O caminho absoluto do diretório de jobs e a raiz do orchestrator no prompt são normalizados para jobs/v22-p0-baseline/<tarefa>/V2.2 e orchestrator. Tokenizer obrigatório: tiktoken:cl100k_base. output_tokens, cache e cost são NOT_MEASURED. Híbrido Ollama é NOT_MEASURED. Latência medida é a de retrieval, não de modelo. Dispersão 0 de input_tokens é a esperada nesta corrida determinística. Economia de input só conta quando a qualidade V2.2 >= B0 (GOALS-OFFICIAL seção 5.3). Compactação é UNAVAILABLE. tree_sha é o HEAD no momento da corrida.",
           "tokenizer": "tiktoken:cl100k_base",
           "quality": 1,
           "quality_status": "PASS",
@@ -874,9 +875,9 @@
           "runs": [
             {
               "repetition": 1,
-              "input_tokens": 22011,
+              "input_tokens": 22001,
               "retrieval_input_tokens": 21342,
-              "latency_ms": 1307.3396169999996,
+              "latency_ms": 1319.7745050000003,
               "reread_count": 0,
               "paths_read": [
                 "docs/reconciliation/runtime-sync/backup/jobs.AG.reference/checkpoint.ts",
@@ -904,9 +905,9 @@
             },
             {
               "repetition": 2,
-              "input_tokens": 22011,
+              "input_tokens": 22001,
               "retrieval_input_tokens": 21342,
-              "latency_ms": 1278.1480740000006,
+              "latency_ms": 1310.2505139999994,
               "reread_count": 0,
               "paths_read": [
                 "docs/reconciliation/runtime-sync/backup/jobs.AG.reference/checkpoint.ts",
@@ -934,9 +935,9 @@
             },
             {
               "repetition": 3,
-              "input_tokens": 22011,
+              "input_tokens": 22001,
               "retrieval_input_tokens": 21342,
-              "latency_ms": 1339.8167540000013,
+              "latency_ms": 1279.4119879999998,
               "reread_count": 0,
               "paths_read": [
                 "docs/reconciliation/runtime-sync/backup/jobs.AG.reference/checkpoint.ts",
@@ -979,7 +980,7 @@
       "quality_b0": 1,
       "quality_v22": 1,
       "quality_v22_gte_b0": true,
-      "raw_input_delta": -500,
+      "raw_input_delta": -6220,
       "savings_counted": true,
       "deterministic_context_savings_status": "PASS",
       "deterministic_context_evidence_class": "MEASURED_DETERMINISTIC_CONTEXT",
@@ -989,9 +990,9 @@
           "arm": "B0",
           "role": "V2",
           "evidence_class": "OFFICIAL_BASELINE",
-          "input_tokens": 22559,
+          "input_tokens": 28337,
           "input_tokens_status": "PASS",
-          "retrieval_input_tokens": 22559,
+          "retrieval_input_tokens": 28337,
           "output_tokens": "NOT_MEASURED",
           "output_tokens_status": "NOT_MEASURED",
           "cache_read_tokens": "NOT_MEASURED",
@@ -1000,7 +1001,7 @@
           "cache_write_tokens_status": "NOT_MEASURED",
           "cost": "NOT_MEASURED",
           "cost_status": "NOT_MEASURED",
-          "latency_ms": 240.68983666666705,
+          "latency_ms": 239.86666033333253,
           "latency_ms_status": "LIMITED",
           "latency_kind": "retrieval",
           "model_latency_ms": "NOT_MEASURED",
@@ -1023,7 +1024,7 @@
             "cost": "NOT_MEASURED",
             "latency_ms": {
               "statistic": "sample_stddev",
-              "value": 6.750604576544461,
+              "value": 7.533545430388197,
               "n": 3,
               "expectation": "retrieval_io_jitter",
               "status": "PASS"
@@ -1038,8 +1039,8 @@
             "model": "NOT_MEASURED"
           },
           "model_id": "deterministic-provider",
-          "tree_sha": "bc6871ef76f21f226a517595a3aa6a4597698777",
-          "limitation": "input_tokens é o pacote montado no corpus oficial. B0 lê os hits de rg até 45 paths. V2.2 é o pickup/handoff real com retrieval e budget canónico de 22000 tokens. Tokenizer obrigatório: tiktoken:cl100k_base. output_tokens, cache e cost são NOT_MEASURED. Híbrido Ollama é NOT_MEASURED. Latência medida é a de retrieval, não de modelo. Dispersão 0 de input_tokens é a esperada nesta corrida determinística. Economia de input só conta quando a qualidade V2.2 >= B0 (GOALS-OFFICIAL seção 5.3). Compactação é UNAVAILABLE. tree_sha é o HEAD no momento da corrida.",
+          "tree_sha": "59f611728d16033ef0baa46e2b58a86cde9fd6f8",
+          "limitation": "input_tokens é o pacote montado no corpus oficial. B0 lê os hits de rg até 45 paths. V2.2 é o pickup/handoff real com retrieval e budget canónico de 22000 tokens. O caminho absoluto do diretório de jobs e a raiz do orchestrator no prompt são normalizados para jobs/v22-p0-baseline/<tarefa>/V2.2 e orchestrator. Tokenizer obrigatório: tiktoken:cl100k_base. output_tokens, cache e cost são NOT_MEASURED. Híbrido Ollama é NOT_MEASURED. Latência medida é a de retrieval, não de modelo. Dispersão 0 de input_tokens é a esperada nesta corrida determinística. Economia de input só conta quando a qualidade V2.2 >= B0 (GOALS-OFFICIAL seção 5.3). Compactação é UNAVAILABLE. tree_sha é o HEAD no momento da corrida.",
           "tokenizer": "tiktoken:cl100k_base",
           "quality": 1,
           "quality_status": "PASS",
@@ -1049,23 +1050,27 @@
             "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
             "docs/research/evolveloop-v2.2/06-token-optimization.md",
             "docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md",
+            "docs/v22/FINAL-REPORT.md",
             "docs/v22/TRACEABILITY-AUDIT.md",
-            "orchestrator/src/context/types.ts"
+            "orchestrator/src/context/types.ts",
+            "orchestrator/src/v22/p0-handoff-measure.ts"
           ],
           "runs": [
             {
               "repetition": 1,
-              "input_tokens": 22559,
-              "retrieval_input_tokens": 22559,
-              "latency_ms": 233.06215100000009,
+              "input_tokens": 28337,
+              "retrieval_input_tokens": 28337,
+              "latency_ms": 245.6280799999986,
               "reread_count": 0,
               "paths_read": [
                 "docs/adr/0013-context-ownership-working-context.md",
                 "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
                 "docs/research/evolveloop-v2.2/06-token-optimization.md",
                 "docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md",
+                "docs/v22/FINAL-REPORT.md",
                 "docs/v22/TRACEABILITY-AUDIT.md",
-                "orchestrator/src/context/types.ts"
+                "orchestrator/src/context/types.ts",
+                "orchestrator/src/v22/p0-handoff-measure.ts"
               ],
               "quality": 1,
               "quality_checks": [
@@ -1083,17 +1088,19 @@
             },
             {
               "repetition": 2,
-              "input_tokens": 22559,
-              "retrieval_input_tokens": 22559,
-              "latency_ms": 245.89453200000025,
+              "input_tokens": 28337,
+              "retrieval_input_tokens": 28337,
+              "latency_ms": 242.630314,
               "reread_count": 0,
               "paths_read": [
                 "docs/adr/0013-context-ownership-working-context.md",
                 "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
                 "docs/research/evolveloop-v2.2/06-token-optimization.md",
                 "docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md",
+                "docs/v22/FINAL-REPORT.md",
                 "docs/v22/TRACEABILITY-AUDIT.md",
-                "orchestrator/src/context/types.ts"
+                "orchestrator/src/context/types.ts",
+                "orchestrator/src/v22/p0-handoff-measure.ts"
               ],
               "quality": 1,
               "quality_checks": [
@@ -1111,17 +1118,19 @@
             },
             {
               "repetition": 3,
-              "input_tokens": 22559,
-              "retrieval_input_tokens": 22559,
-              "latency_ms": 243.11282700000083,
+              "input_tokens": 28337,
+              "retrieval_input_tokens": 28337,
+              "latency_ms": 231.34158699999898,
               "reread_count": 0,
               "paths_read": [
                 "docs/adr/0013-context-ownership-working-context.md",
                 "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
                 "docs/research/evolveloop-v2.2/06-token-optimization.md",
                 "docs/research/evolveloop-v2.2/09-v2.2-proposed-scope.md",
+                "docs/v22/FINAL-REPORT.md",
                 "docs/v22/TRACEABILITY-AUDIT.md",
-                "orchestrator/src/context/types.ts"
+                "orchestrator/src/context/types.ts",
+                "orchestrator/src/v22/p0-handoff-measure.ts"
               ],
               "quality": 1,
               "quality_checks": [
@@ -1143,9 +1152,9 @@
           "arm": "V2.2",
           "role": "V2.2",
           "evidence_class": "PROJECT_WIKI_PICKUP_BUDGET",
-          "input_tokens": 22059,
+          "input_tokens": 22117,
           "input_tokens_status": "PASS",
-          "retrieval_input_tokens": 21418,
+          "retrieval_input_tokens": 21486,
           "output_tokens": "NOT_MEASURED",
           "output_tokens_status": "NOT_MEASURED",
           "cache_read_tokens": "NOT_MEASURED",
@@ -1154,7 +1163,7 @@
           "cache_write_tokens_status": "NOT_MEASURED",
           "cost": "NOT_MEASURED",
           "cost_status": "NOT_MEASURED",
-          "latency_ms": 1302.5421110000013,
+          "latency_ms": 1303.8556159999996,
           "latency_ms_status": "LIMITED",
           "latency_kind": "retrieval",
           "model_latency_ms": "NOT_MEASURED",
@@ -1177,7 +1186,7 @@
             "cost": "NOT_MEASURED",
             "latency_ms": {
               "statistic": "sample_stddev",
-              "value": 42.33254486371969,
+              "value": 43.61124061077579,
               "n": 3,
               "expectation": "retrieval_io_jitter",
               "status": "PASS"
@@ -1192,15 +1201,17 @@
             "model": "NOT_MEASURED"
           },
           "model_id": "deterministic-provider",
-          "tree_sha": "bc6871ef76f21f226a517595a3aa6a4597698777",
-          "limitation": "input_tokens é o pacote montado no corpus oficial. B0 lê os hits de rg até 45 paths. V2.2 é o pickup/handoff real com retrieval e budget canónico de 22000 tokens. Tokenizer obrigatório: tiktoken:cl100k_base. output_tokens, cache e cost são NOT_MEASURED. Híbrido Ollama é NOT_MEASURED. Latência medida é a de retrieval, não de modelo. Dispersão 0 de input_tokens é a esperada nesta corrida determinística. Economia de input só conta quando a qualidade V2.2 >= B0 (GOALS-OFFICIAL seção 5.3). Compactação é UNAVAILABLE. tree_sha é o HEAD no momento da corrida.",
+          "tree_sha": "59f611728d16033ef0baa46e2b58a86cde9fd6f8",
+          "limitation": "input_tokens é o pacote montado no corpus oficial. B0 lê os hits de rg até 45 paths. V2.2 é o pickup/handoff real com retrieval e budget canónico de 22000 tokens. O caminho absoluto do diretório de jobs e a raiz do orchestrator no prompt são normalizados para jobs/v22-p0-baseline/<tarefa>/V2.2 e orchestrator. Tokenizer obrigatório: tiktoken:cl100k_base. output_tokens, cache e cost são NOT_MEASURED. Híbrido Ollama é NOT_MEASURED. Latência medida é a de retrieval, não de modelo. Dispersão 0 de input_tokens é a esperada nesta corrida determinística. Economia de input só conta quando a qualidade V2.2 >= B0 (GOALS-OFFICIAL seção 5.3). Compactação é UNAVAILABLE. tree_sha é o HEAD no momento da corrida.",
           "tokenizer": "tiktoken:cl100k_base",
           "quality": 1,
           "quality_status": "PASS",
           "verifier_pass": true,
           "paths_read": [
+            "orchestrator/contracts/context-grounding.yaml",
+            "orchestrator/tests/integration/context-budget-pickup.test.ts",
+            "docs/research/hypotheses/H-005-hitl-runstate-resume.md",
             "orchestrator/src/jobs/spawn-pickup-context.ts",
-            "docs/research/targets/external/openai-agents-sdk/REPORT.md",
             "docs/architecture/decision-review/ARCHITECTURE-DECISION-REVIEW.md",
             "orchestrator/src/context/bench-retrieval.ts",
             "orchestrator/tests/unit/context-budget.test.ts",
@@ -1213,6 +1224,7 @@
             "docs/architecture/finalization/prototypes/PT-002-os-kill-job-resume.md",
             "orchestrator/src/cli/apply-context-budget.ts",
             "orchestrator/src/context/ownership.ts",
+            "orchestrator/src/v22/p0-handoff-measure.ts",
             "orchestrator/src/context/types.ts",
             "orchestrator/src/context/telemetry.ts",
             "docs/architecture/decision-review/adr-drafts/ADR-DR-0001-keep-job-path-resume.md",
@@ -1223,13 +1235,15 @@
           "runs": [
             {
               "repetition": 1,
-              "input_tokens": 22059,
-              "retrieval_input_tokens": 21418,
-              "latency_ms": 1257.8857070000013,
+              "input_tokens": 22117,
+              "retrieval_input_tokens": 21486,
+              "latency_ms": 1288.5248609999999,
               "reread_count": 0,
               "paths_read": [
+                "orchestrator/contracts/context-grounding.yaml",
+                "orchestrator/tests/integration/context-budget-pickup.test.ts",
+                "docs/research/hypotheses/H-005-hitl-runstate-resume.md",
                 "orchestrator/src/jobs/spawn-pickup-context.ts",
-                "docs/research/targets/external/openai-agents-sdk/REPORT.md",
                 "docs/architecture/decision-review/ARCHITECTURE-DECISION-REVIEW.md",
                 "orchestrator/src/context/bench-retrieval.ts",
                 "orchestrator/tests/unit/context-budget.test.ts",
@@ -1242,6 +1256,7 @@
                 "docs/architecture/finalization/prototypes/PT-002-os-kill-job-resume.md",
                 "orchestrator/src/cli/apply-context-budget.ts",
                 "orchestrator/src/context/ownership.ts",
+                "orchestrator/src/v22/p0-handoff-measure.ts",
                 "orchestrator/src/context/types.ts",
                 "orchestrator/src/context/telemetry.ts",
                 "docs/architecture/decision-review/adr-drafts/ADR-DR-0001-keep-job-path-resume.md",
@@ -1265,13 +1280,15 @@
             },
             {
               "repetition": 2,
-              "input_tokens": 22059,
-              "retrieval_input_tokens": 21418,
-              "latency_ms": 1307.6540840000016,
+              "input_tokens": 22117,
+              "retrieval_input_tokens": 21486,
+              "latency_ms": 1269.9798539999992,
               "reread_count": 0,
               "paths_read": [
+                "orchestrator/contracts/context-grounding.yaml",
+                "orchestrator/tests/integration/context-budget-pickup.test.ts",
+                "docs/research/hypotheses/H-005-hitl-runstate-resume.md",
                 "orchestrator/src/jobs/spawn-pickup-context.ts",
-                "docs/research/targets/external/openai-agents-sdk/REPORT.md",
                 "docs/architecture/decision-review/ARCHITECTURE-DECISION-REVIEW.md",
                 "orchestrator/src/context/bench-retrieval.ts",
                 "orchestrator/tests/unit/context-budget.test.ts",
@@ -1284,6 +1301,7 @@
                 "docs/architecture/finalization/prototypes/PT-002-os-kill-job-resume.md",
                 "orchestrator/src/cli/apply-context-budget.ts",
                 "orchestrator/src/context/ownership.ts",
+                "orchestrator/src/v22/p0-handoff-measure.ts",
                 "orchestrator/src/context/types.ts",
                 "orchestrator/src/context/telemetry.ts",
                 "docs/architecture/decision-review/adr-drafts/ADR-DR-0001-keep-job-path-resume.md",
@@ -1307,13 +1325,15 @@
             },
             {
               "repetition": 3,
-              "input_tokens": 22059,
-              "retrieval_input_tokens": 21418,
-              "latency_ms": 1342.086542000001,
+              "input_tokens": 22117,
+              "retrieval_input_tokens": 21486,
+              "latency_ms": 1353.0621329999994,
               "reread_count": 0,
               "paths_read": [
+                "orchestrator/contracts/context-grounding.yaml",
+                "orchestrator/tests/integration/context-budget-pickup.test.ts",
+                "docs/research/hypotheses/H-005-hitl-runstate-resume.md",
                 "orchestrator/src/jobs/spawn-pickup-context.ts",
-                "docs/research/targets/external/openai-agents-sdk/REPORT.md",
                 "docs/architecture/decision-review/ARCHITECTURE-DECISION-REVIEW.md",
                 "orchestrator/src/context/bench-retrieval.ts",
                 "orchestrator/tests/unit/context-budget.test.ts",
@@ -1326,6 +1346,7 @@
                 "docs/architecture/finalization/prototypes/PT-002-os-kill-job-resume.md",
                 "orchestrator/src/cli/apply-context-budget.ts",
                 "orchestrator/src/context/ownership.ts",
+                "orchestrator/src/v22/p0-handoff-measure.ts",
                 "orchestrator/src/context/types.ts",
                 "orchestrator/src/context/telemetry.ts",
                 "docs/architecture/decision-review/adr-drafts/ADR-DR-0001-keep-job-path-resume.md",
@@ -1364,7 +1385,7 @@
       "quality_b0": 0,
       "quality_v22": 1,
       "quality_v22_gte_b0": true,
-      "raw_input_delta": -64124,
+      "raw_input_delta": -65241,
       "savings_counted": true,
       "deterministic_context_savings_status": "PASS",
       "deterministic_context_evidence_class": "MEASURED_DETERMINISTIC_CONTEXT",
@@ -1374,9 +1395,9 @@
           "arm": "B0",
           "role": "V2",
           "evidence_class": "OFFICIAL_BASELINE",
-          "input_tokens": 86120,
+          "input_tokens": 87227,
           "input_tokens_status": "PASS",
-          "retrieval_input_tokens": 86120,
+          "retrieval_input_tokens": 87227,
           "output_tokens": "NOT_MEASURED",
           "output_tokens_status": "NOT_MEASURED",
           "cache_read_tokens": "NOT_MEASURED",
@@ -1385,7 +1406,7 @@
           "cache_write_tokens_status": "NOT_MEASURED",
           "cost": "NOT_MEASURED",
           "cost_status": "NOT_MEASURED",
-          "latency_ms": 292.5086483333337,
+          "latency_ms": 308.297509,
           "latency_ms_status": "LIMITED",
           "latency_kind": "retrieval",
           "model_latency_ms": "NOT_MEASURED",
@@ -1408,7 +1429,7 @@
             "cost": "NOT_MEASURED",
             "latency_ms": {
               "statistic": "sample_stddev",
-              "value": 23.847157951128985,
+              "value": 65.53038675258384,
               "n": 3,
               "expectation": "retrieval_io_jitter",
               "status": "PASS"
@@ -1423,8 +1444,8 @@
             "model": "NOT_MEASURED"
           },
           "model_id": "deterministic-provider",
-          "tree_sha": "bc6871ef76f21f226a517595a3aa6a4597698777",
-          "limitation": "input_tokens é o pacote montado no corpus oficial. B0 lê os hits de rg até 45 paths. V2.2 é o pickup/handoff real com retrieval e budget canónico de 22000 tokens. Tokenizer obrigatório: tiktoken:cl100k_base. output_tokens, cache e cost são NOT_MEASURED. Híbrido Ollama é NOT_MEASURED. Latência medida é a de retrieval, não de modelo. Dispersão 0 de input_tokens é a esperada nesta corrida determinística. Economia de input só conta quando a qualidade V2.2 >= B0 (GOALS-OFFICIAL seção 5.3). Compactação é UNAVAILABLE. tree_sha é o HEAD no momento da corrida.",
+          "tree_sha": "59f611728d16033ef0baa46e2b58a86cde9fd6f8",
+          "limitation": "input_tokens é o pacote montado no corpus oficial. B0 lê os hits de rg até 45 paths. V2.2 é o pickup/handoff real com retrieval e budget canónico de 22000 tokens. O caminho absoluto do diretório de jobs e a raiz do orchestrator no prompt são normalizados para jobs/v22-p0-baseline/<tarefa>/V2.2 e orchestrator. Tokenizer obrigatório: tiktoken:cl100k_base. output_tokens, cache e cost são NOT_MEASURED. Híbrido Ollama é NOT_MEASURED. Latência medida é a de retrieval, não de modelo. Dispersão 0 de input_tokens é a esperada nesta corrida determinística. Economia de input só conta quando a qualidade V2.2 >= B0 (GOALS-OFFICIAL seção 5.3). Compactação é UNAVAILABLE. tree_sha é o HEAD no momento da corrida.",
           "tokenizer": "tiktoken:cl100k_base",
           "quality": 0,
           "quality_status": "LIMITED",
@@ -1465,9 +1486,9 @@
           "runs": [
             {
               "repetition": 1,
-              "input_tokens": 86120,
-              "retrieval_input_tokens": 86120,
-              "latency_ms": 273.8038080000006,
+              "input_tokens": 87227,
+              "retrieval_input_tokens": 87227,
+              "latency_ms": 383.38878099999783,
               "reread_count": 0,
               "paths_read": [
                 "agent-setup/cursor/commands/evolve.md",
@@ -1520,9 +1541,9 @@
             },
             {
               "repetition": 2,
-              "input_tokens": 86120,
-              "retrieval_input_tokens": 86120,
-              "latency_ms": 319.36203000000023,
+              "input_tokens": 87227,
+              "retrieval_input_tokens": 87227,
+              "latency_ms": 278.82697299999927,
               "reread_count": 0,
               "paths_read": [
                 "agent-setup/cursor/commands/evolve.md",
@@ -1575,9 +1596,9 @@
             },
             {
               "repetition": 3,
-              "input_tokens": 86120,
-              "retrieval_input_tokens": 86120,
-              "latency_ms": 284.3601070000004,
+              "input_tokens": 87227,
+              "retrieval_input_tokens": 87227,
+              "latency_ms": 262.67677300000287,
               "reread_count": 0,
               "paths_read": [
                 "agent-setup/cursor/commands/evolve.md",
@@ -1634,7 +1655,7 @@
           "arm": "V2.2",
           "role": "V2.2",
           "evidence_class": "PROJECT_WIKI_PICKUP_BUDGET",
-          "input_tokens": 21996,
+          "input_tokens": 21986,
           "input_tokens_status": "PASS",
           "retrieval_input_tokens": 21344,
           "output_tokens": "NOT_MEASURED",
@@ -1645,7 +1666,7 @@
           "cache_write_tokens_status": "NOT_MEASURED",
           "cost": "NOT_MEASURED",
           "cost_status": "NOT_MEASURED",
-          "latency_ms": 1356.405015666666,
+          "latency_ms": 1249.309178333333,
           "latency_ms_status": "LIMITED",
           "latency_kind": "retrieval",
           "model_latency_ms": "NOT_MEASURED",
@@ -1668,7 +1689,7 @@
             "cost": "NOT_MEASURED",
             "latency_ms": {
               "statistic": "sample_stddev",
-              "value": 31.31953858324197,
+              "value": 3.488181490415923,
               "n": 3,
               "expectation": "retrieval_io_jitter",
               "status": "PASS"
@@ -1683,8 +1704,8 @@
             "model": "NOT_MEASURED"
           },
           "model_id": "deterministic-provider",
-          "tree_sha": "bc6871ef76f21f226a517595a3aa6a4597698777",
-          "limitation": "input_tokens é o pacote montado no corpus oficial. B0 lê os hits de rg até 45 paths. V2.2 é o pickup/handoff real com retrieval e budget canónico de 22000 tokens. Tokenizer obrigatório: tiktoken:cl100k_base. output_tokens, cache e cost são NOT_MEASURED. Híbrido Ollama é NOT_MEASURED. Latência medida é a de retrieval, não de modelo. Dispersão 0 de input_tokens é a esperada nesta corrida determinística. Economia de input só conta quando a qualidade V2.2 >= B0 (GOALS-OFFICIAL seção 5.3). Compactação é UNAVAILABLE. tree_sha é o HEAD no momento da corrida.",
+          "tree_sha": "59f611728d16033ef0baa46e2b58a86cde9fd6f8",
+          "limitation": "input_tokens é o pacote montado no corpus oficial. B0 lê os hits de rg até 45 paths. V2.2 é o pickup/handoff real com retrieval e budget canónico de 22000 tokens. O caminho absoluto do diretório de jobs e a raiz do orchestrator no prompt são normalizados para jobs/v22-p0-baseline/<tarefa>/V2.2 e orchestrator. Tokenizer obrigatório: tiktoken:cl100k_base. output_tokens, cache e cost são NOT_MEASURED. Híbrido Ollama é NOT_MEASURED. Latência medida é a de retrieval, não de modelo. Dispersão 0 de input_tokens é a esperada nesta corrida determinística. Economia de input só conta quando a qualidade V2.2 >= B0 (GOALS-OFFICIAL seção 5.3). Compactação é UNAVAILABLE. tree_sha é o HEAD no momento da corrida.",
           "tokenizer": "tiktoken:cl100k_base",
           "quality": 1,
           "quality_status": "PASS",
@@ -1711,9 +1732,9 @@
           "runs": [
             {
               "repetition": 1,
-              "input_tokens": 21996,
+              "input_tokens": 21986,
               "retrieval_input_tokens": 21344,
-              "latency_ms": 1321.7049929999994,
+              "latency_ms": 1246.5650380000006,
               "reread_count": 0,
               "paths_read": [
                 "Agents/Adr.md",
@@ -1750,9 +1771,9 @@
             },
             {
               "repetition": 2,
-              "input_tokens": 21996,
+              "input_tokens": 21986,
               "retrieval_input_tokens": 21344,
-              "latency_ms": 1382.577997999997,
+              "latency_ms": 1253.2346149999976,
               "reread_count": 0,
               "paths_read": [
                 "Agents/Adr.md",
@@ -1789,9 +1810,9 @@
             },
             {
               "repetition": 3,
-              "input_tokens": 21996,
+              "input_tokens": 21986,
               "retrieval_input_tokens": 21344,
-              "latency_ms": 1364.9320560000015,
+              "latency_ms": 1248.1278820000007,
               "reread_count": 0,
               "paths_read": [
                 "Agents/Adr.md",
@@ -1843,7 +1864,7 @@
       "quality_b0": 0.6666666666666666,
       "quality_v22": 1,
       "quality_v22_gte_b0": true,
-      "raw_input_delta": -25414,
+      "raw_input_delta": -25424,
       "savings_counted": true,
       "deterministic_context_savings_status": "PASS",
       "deterministic_context_evidence_class": "MEASURED_DETERMINISTIC_CONTEXT",
@@ -1864,7 +1885,7 @@
           "cache_write_tokens_status": "NOT_MEASURED",
           "cost": "NOT_MEASURED",
           "cost_status": "NOT_MEASURED",
-          "latency_ms": 259.89523200000014,
+          "latency_ms": 266.0745596666663,
           "latency_ms_status": "LIMITED",
           "latency_kind": "retrieval",
           "model_latency_ms": "NOT_MEASURED",
@@ -1887,7 +1908,7 @@
             "cost": "NOT_MEASURED",
             "latency_ms": {
               "statistic": "sample_stddev",
-              "value": 4.613634440307934,
+              "value": 23.26791158664355,
               "n": 3,
               "expectation": "retrieval_io_jitter",
               "status": "PASS"
@@ -1902,8 +1923,8 @@
             "model": "NOT_MEASURED"
           },
           "model_id": "deterministic-provider",
-          "tree_sha": "bc6871ef76f21f226a517595a3aa6a4597698777",
-          "limitation": "input_tokens é o pacote montado no corpus oficial. B0 lê os hits de rg até 45 paths. V2.2 é o pickup/handoff real com retrieval e budget canónico de 22000 tokens. Tokenizer obrigatório: tiktoken:cl100k_base. output_tokens, cache e cost são NOT_MEASURED. Híbrido Ollama é NOT_MEASURED. Latência medida é a de retrieval, não de modelo. Dispersão 0 de input_tokens é a esperada nesta corrida determinística. Economia de input só conta quando a qualidade V2.2 >= B0 (GOALS-OFFICIAL seção 5.3). Compactação é UNAVAILABLE. tree_sha é o HEAD no momento da corrida.",
+          "tree_sha": "59f611728d16033ef0baa46e2b58a86cde9fd6f8",
+          "limitation": "input_tokens é o pacote montado no corpus oficial. B0 lê os hits de rg até 45 paths. V2.2 é o pickup/handoff real com retrieval e budget canónico de 22000 tokens. O caminho absoluto do diretório de jobs e a raiz do orchestrator no prompt são normalizados para jobs/v22-p0-baseline/<tarefa>/V2.2 e orchestrator. Tokenizer obrigatório: tiktoken:cl100k_base. output_tokens, cache e cost são NOT_MEASURED. Híbrido Ollama é NOT_MEASURED. Latência medida é a de retrieval, não de modelo. Dispersão 0 de input_tokens é a esperada nesta corrida determinística. Economia de input só conta quando a qualidade V2.2 >= B0 (GOALS-OFFICIAL seção 5.3). Compactação é UNAVAILABLE. tree_sha é o HEAD no momento da corrida.",
           "tokenizer": "tiktoken:cl100k_base",
           "quality": 0.6666666666666666,
           "quality_status": "LIMITED",
@@ -1960,7 +1981,7 @@
               "repetition": 1,
               "input_tokens": 47558,
               "retrieval_input_tokens": 47558,
-              "latency_ms": 257.7657590000017,
+              "latency_ms": 250.14235199999894,
               "reread_count": 0,
               "paths_read": [
                 "docs/adr/0013-context-ownership-working-context.md",
@@ -2032,7 +2053,7 @@
               "repetition": 2,
               "input_tokens": 47558,
               "retrieval_input_tokens": 47558,
-              "latency_ms": 256.7309459999997,
+              "latency_ms": 255.30515500000183,
               "reread_count": 0,
               "paths_read": [
                 "docs/adr/0013-context-ownership-working-context.md",
@@ -2104,7 +2125,7 @@
               "repetition": 3,
               "input_tokens": 47558,
               "retrieval_input_tokens": 47558,
-              "latency_ms": 265.1889909999991,
+              "latency_ms": 292.77617199999804,
               "reread_count": 0,
               "paths_read": [
                 "docs/adr/0013-context-ownership-working-context.md",
@@ -2178,7 +2199,7 @@
           "arm": "V2.2",
           "role": "V2.2",
           "evidence_class": "PROJECT_WIKI_PICKUP_BUDGET",
-          "input_tokens": 22144,
+          "input_tokens": 22134,
           "input_tokens_status": "PASS",
           "retrieval_input_tokens": 21463,
           "output_tokens": "NOT_MEASURED",
@@ -2189,7 +2210,7 @@
           "cache_write_tokens_status": "NOT_MEASURED",
           "cost": "NOT_MEASURED",
           "cost_status": "NOT_MEASURED",
-          "latency_ms": 1560.2650486666669,
+          "latency_ms": 1502.5580793333331,
           "latency_ms_status": "LIMITED",
           "latency_kind": "retrieval",
           "model_latency_ms": "NOT_MEASURED",
@@ -2212,7 +2233,7 @@
             "cost": "NOT_MEASURED",
             "latency_ms": {
               "statistic": "sample_stddev",
-              "value": 37.505287536722655,
+              "value": 24.769325547060674,
               "n": 3,
               "expectation": "retrieval_io_jitter",
               "status": "PASS"
@@ -2227,8 +2248,8 @@
             "model": "NOT_MEASURED"
           },
           "model_id": "deterministic-provider",
-          "tree_sha": "bc6871ef76f21f226a517595a3aa6a4597698777",
-          "limitation": "input_tokens é o pacote montado no corpus oficial. B0 lê os hits de rg até 45 paths. V2.2 é o pickup/handoff real com retrieval e budget canónico de 22000 tokens. Tokenizer obrigatório: tiktoken:cl100k_base. output_tokens, cache e cost são NOT_MEASURED. Híbrido Ollama é NOT_MEASURED. Latência medida é a de retrieval, não de modelo. Dispersão 0 de input_tokens é a esperada nesta corrida determinística. Economia de input só conta quando a qualidade V2.2 >= B0 (GOALS-OFFICIAL seção 5.3). Compactação é UNAVAILABLE. tree_sha é o HEAD no momento da corrida.",
+          "tree_sha": "59f611728d16033ef0baa46e2b58a86cde9fd6f8",
+          "limitation": "input_tokens é o pacote montado no corpus oficial. B0 lê os hits de rg até 45 paths. V2.2 é o pickup/handoff real com retrieval e budget canónico de 22000 tokens. O caminho absoluto do diretório de jobs e a raiz do orchestrator no prompt são normalizados para jobs/v22-p0-baseline/<tarefa>/V2.2 e orchestrator. Tokenizer obrigatório: tiktoken:cl100k_base. output_tokens, cache e cost são NOT_MEASURED. Híbrido Ollama é NOT_MEASURED. Latência medida é a de retrieval, não de modelo. Dispersão 0 de input_tokens é a esperada nesta corrida determinística. Economia de input só conta quando a qualidade V2.2 >= B0 (GOALS-OFFICIAL seção 5.3). Compactação é UNAVAILABLE. tree_sha é o HEAD no momento da corrida.",
           "tokenizer": "tiktoken:cl100k_base",
           "quality": 1,
           "quality_status": "PASS",
@@ -2258,9 +2279,9 @@
           "runs": [
             {
               "repetition": 1,
-              "input_tokens": 22144,
+              "input_tokens": 22134,
               "retrieval_input_tokens": 21463,
-              "latency_ms": 1593.446697000003,
+              "latency_ms": 1498.7068209999998,
               "reread_count": 0,
               "paths_read": [
                 "docs/architecture/evolution/IMPLEMENTATION-DECISION.yaml",
@@ -2306,9 +2327,9 @@
             },
             {
               "repetition": 2,
-              "input_tokens": 22144,
+              "input_tokens": 22134,
               "retrieval_input_tokens": 21463,
-              "latency_ms": 1567.7756819999995,
+              "latency_ms": 1529.0274519999984,
               "reread_count": 0,
               "paths_read": [
                 "docs/architecture/evolution/IMPLEMENTATION-DECISION.yaml",
@@ -2354,9 +2375,9 @@
             },
             {
               "repetition": 3,
-              "input_tokens": 22144,
+              "input_tokens": 22134,
               "retrieval_input_tokens": 21463,
-              "latency_ms": 1519.5727669999978,
+              "latency_ms": 1479.9399650000014,
               "reread_count": 0,
               "paths_read": [
                 "docs/architecture/evolution/IMPLEMENTATION-DECISION.yaml",
@@ -2417,7 +2438,7 @@
       "quality_b0": 0.6666666666666666,
       "quality_v22": 1,
       "quality_v22_gte_b0": true,
-      "raw_input_delta": -26258,
+      "raw_input_delta": -26161,
       "savings_counted": true,
       "deterministic_context_savings_status": "PASS",
       "deterministic_context_evidence_class": "MEASURED_DETERMINISTIC_CONTEXT",
@@ -2450,7 +2471,7 @@
           "cache_write_tokens_status": "NOT_MEASURED",
           "cost": "NOT_MEASURED",
           "cost_status": "NOT_MEASURED",
-          "latency_ms": 274.38360866666943,
+          "latency_ms": 258.1096239999994,
           "latency_ms_status": "LIMITED",
           "latency_kind": "retrieval",
           "model_latency_ms": "NOT_MEASURED",
@@ -2473,7 +2494,7 @@
             "cost": "NOT_MEASURED",
             "latency_ms": {
               "statistic": "sample_stddev",
-              "value": 31.04137745117633,
+              "value": 15.482928981349708,
               "n": 3,
               "expectation": "retrieval_io_jitter",
               "status": "PASS"
@@ -2488,8 +2509,8 @@
             "model": "NOT_MEASURED"
           },
           "model_id": "deterministic-provider",
-          "tree_sha": "bc6871ef76f21f226a517595a3aa6a4597698777",
-          "limitation": "input_tokens é o pacote montado no corpus oficial. B0 lê os hits de rg até 45 paths. V2.2 é o pickup/handoff real com retrieval e budget canónico de 22000 tokens. Tokenizer obrigatório: tiktoken:cl100k_base. output_tokens, cache e cost são NOT_MEASURED. Híbrido Ollama é NOT_MEASURED. Latência medida é a de retrieval, não de modelo. Dispersão 0 de input_tokens é a esperada nesta corrida determinística. Economia de input só conta quando a qualidade V2.2 >= B0 (GOALS-OFFICIAL seção 5.3). Compactação é UNAVAILABLE. tree_sha é o HEAD no momento da corrida.",
+          "tree_sha": "59f611728d16033ef0baa46e2b58a86cde9fd6f8",
+          "limitation": "input_tokens é o pacote montado no corpus oficial. B0 lê os hits de rg até 45 paths. V2.2 é o pickup/handoff real com retrieval e budget canónico de 22000 tokens. O caminho absoluto do diretório de jobs e a raiz do orchestrator no prompt são normalizados para jobs/v22-p0-baseline/<tarefa>/V2.2 e orchestrator. Tokenizer obrigatório: tiktoken:cl100k_base. output_tokens, cache e cost são NOT_MEASURED. Híbrido Ollama é NOT_MEASURED. Latência medida é a de retrieval, não de modelo. Dispersão 0 de input_tokens é a esperada nesta corrida determinística. Economia de input só conta quando a qualidade V2.2 >= B0 (GOALS-OFFICIAL seção 5.3). Compactação é UNAVAILABLE. tree_sha é o HEAD no momento da corrida.",
           "tokenizer": "tiktoken:cl100k_base",
           "quality": 0.6666666666666666,
           "quality_status": "LIMITED",
@@ -2546,7 +2567,7 @@
               "repetition": 1,
               "input_tokens": 48295,
               "retrieval_input_tokens": 48295,
-              "latency_ms": 254.34961600000315,
+              "latency_ms": 270.2720249999984,
               "reread_count": 0,
               "paths_read": [
                 "docs/adr/0013-context-ownership-working-context.md",
@@ -2618,7 +2639,7 @@
               "repetition": 2,
               "input_tokens": 48295,
               "retrieval_input_tokens": 48295,
-              "latency_ms": 258.66062700000475,
+              "latency_ms": 240.68037999999797,
               "reread_count": 0,
               "paths_read": [
                 "docs/adr/0013-context-ownership-working-context.md",
@@ -2690,7 +2711,7 @@
               "repetition": 3,
               "input_tokens": 48295,
               "retrieval_input_tokens": 48295,
-              "latency_ms": 310.14058300000033,
+              "latency_ms": 263.37646700000187,
               "reread_count": 0,
               "paths_read": [
                 "docs/adr/0013-context-ownership-working-context.md",
@@ -2764,9 +2785,9 @@
           "arm": "V2.2",
           "role": "V2.2",
           "evidence_class": "PROJECT_WIKI_PICKUP_BUDGET",
-          "input_tokens": 22037,
+          "input_tokens": 22134,
           "input_tokens_status": "PASS",
-          "retrieval_input_tokens": 21306,
+          "retrieval_input_tokens": 21413,
           "output_tokens": "NOT_MEASURED",
           "output_tokens_status": "NOT_MEASURED",
           "cache_read_tokens": "NOT_MEASURED",
@@ -2775,7 +2796,7 @@
           "cache_write_tokens_status": "NOT_MEASURED",
           "cost": "NOT_MEASURED",
           "cost_status": "NOT_MEASURED",
-          "latency_ms": 1271.749897666671,
+          "latency_ms": 1257.2318013333327,
           "latency_ms_status": "LIMITED",
           "latency_kind": "retrieval",
           "model_latency_ms": "NOT_MEASURED",
@@ -2798,7 +2819,7 @@
             "cost": "NOT_MEASURED",
             "latency_ms": {
               "statistic": "sample_stddev",
-              "value": 20.622272624733533,
+              "value": 21.08521421731859,
               "n": 3,
               "expectation": "retrieval_io_jitter",
               "status": "PASS"
@@ -2813,14 +2834,15 @@
             "model": "NOT_MEASURED"
           },
           "model_id": "deterministic-provider",
-          "tree_sha": "bc6871ef76f21f226a517595a3aa6a4597698777",
-          "limitation": "input_tokens é o pacote montado no corpus oficial. B0 lê os hits de rg até 45 paths. V2.2 é o pickup/handoff real com retrieval e budget canónico de 22000 tokens. Tokenizer obrigatório: tiktoken:cl100k_base. output_tokens, cache e cost são NOT_MEASURED. Híbrido Ollama é NOT_MEASURED. Latência medida é a de retrieval, não de modelo. Dispersão 0 de input_tokens é a esperada nesta corrida determinística. Economia de input só conta quando a qualidade V2.2 >= B0 (GOALS-OFFICIAL seção 5.3). Compactação é UNAVAILABLE. tree_sha é o HEAD no momento da corrida.",
+          "tree_sha": "59f611728d16033ef0baa46e2b58a86cde9fd6f8",
+          "limitation": "input_tokens é o pacote montado no corpus oficial. B0 lê os hits de rg até 45 paths. V2.2 é o pickup/handoff real com retrieval e budget canónico de 22000 tokens. O caminho absoluto do diretório de jobs e a raiz do orchestrator no prompt são normalizados para jobs/v22-p0-baseline/<tarefa>/V2.2 e orchestrator. Tokenizer obrigatório: tiktoken:cl100k_base. output_tokens, cache e cost são NOT_MEASURED. Híbrido Ollama é NOT_MEASURED. Latência medida é a de retrieval, não de modelo. Dispersão 0 de input_tokens é a esperada nesta corrida determinística. Economia de input só conta quando a qualidade V2.2 >= B0 (GOALS-OFFICIAL seção 5.3). Compactação é UNAVAILABLE. tree_sha é o HEAD no momento da corrida.",
           "tokenizer": "tiktoken:cl100k_base",
           "quality": 1,
           "quality_status": "PASS",
           "verifier_pass": true,
           "paths_read": [
-            "docs/architecture/v2.2/IMPLEMENTATION-ROADMAP.md",
+            "agent-setup/cursor/rules/evolveloop.mdc",
+            "Rules/Rules.md",
             "docs/architecture/v2.2/V22-VENDOR-CACHE.md",
             "docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md",
             "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
@@ -2833,12 +2855,13 @@
           "runs": [
             {
               "repetition": 1,
-              "input_tokens": 22037,
-              "retrieval_input_tokens": 21306,
-              "latency_ms": 1270.7063200000048,
+              "input_tokens": 22134,
+              "retrieval_input_tokens": 21413,
+              "latency_ms": 1278.3574040000021,
               "reread_count": 0,
               "paths_read": [
-                "docs/architecture/v2.2/IMPLEMENTATION-ROADMAP.md",
+                "agent-setup/cursor/rules/evolveloop.mdc",
+                "Rules/Rules.md",
                 "docs/architecture/v2.2/V22-VENDOR-CACHE.md",
                 "docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md",
                 "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
@@ -2868,12 +2891,13 @@
             },
             {
               "repetition": 2,
-              "input_tokens": 22037,
-              "retrieval_input_tokens": 21306,
-              "latency_ms": 1251.6692270000058,
+              "input_tokens": 22134,
+              "retrieval_input_tokens": 21413,
+              "latency_ms": 1257.150791,
               "reread_count": 0,
               "paths_read": [
-                "docs/architecture/v2.2/IMPLEMENTATION-ROADMAP.md",
+                "agent-setup/cursor/rules/evolveloop.mdc",
+                "Rules/Rules.md",
                 "docs/architecture/v2.2/V22-VENDOR-CACHE.md",
                 "docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md",
                 "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
@@ -2903,12 +2927,13 @@
             },
             {
               "repetition": 3,
-              "input_tokens": 22037,
-              "retrieval_input_tokens": 21306,
-              "latency_ms": 1292.874146000002,
+              "input_tokens": 22134,
+              "retrieval_input_tokens": 21413,
+              "latency_ms": 1236.187208999996,
               "reread_count": 0,
               "paths_read": [
-                "docs/architecture/v2.2/IMPLEMENTATION-ROADMAP.md",
+                "agent-setup/cursor/rules/evolveloop.mdc",
+                "Rules/Rules.md",
                 "docs/architecture/v2.2/V22-VENDOR-CACHE.md",
                 "docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md",
                 "docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md",
