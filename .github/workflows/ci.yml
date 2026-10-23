@@ -41,6 +41,11 @@ jobs:
           python -m venv /tmp/v22-baseline-venv
           /tmp/v22-baseline-venv/bin/pip install -r docs/v22/baseline/requirements.txt
           echo "/tmp/v22-baseline-venv/bin" >> "$GITHUB_PATH"
+          if ! command -v rg >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y ripgrep
+          fi
+          rg --version
 
       - name: Install orchestrator
         working-directory: orchestrator

@@ -160,7 +160,7 @@ describe("V22-GAP-P0-1 baseline", () => {
         expect(arm.latency_kind).toBe("retrieval");
         expect(Number.isFinite(arm.latency_ms)).toBe(true);
         expect(arm.latency_ms).toBeGreaterThan(0);
-        expect(arm.input_tokens).toBeGreaterThan(200);
+        expect(arm.input_tokens, `${item.id} ${arm.arm} paths=${arm.paths_read.length}`).toBeGreaterThan(200);
         expect(arm.input_tokens_status).toBe("PASS");
         expect(arm.runs).toHaveLength(arm.n);
         expect(new Set(arm.runs.map((run) => run.input_tokens)).size).toBe(1);

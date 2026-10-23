@@ -26,7 +26,6 @@ import type { TruthSourcedItem } from "../knowledge/truth-source/types.js";
 import { buildPickupPrompt } from "../jobs/job-pickup.js";
 import type { SkillJob } from "../jobs/job-store.js";
 import { preparePickupSpawnContext } from "../jobs/spawn-pickup-context.js";
-import { runRg } from "../context/bench-retrieval.js";
 import { buildBenchSkillJob } from "./bench-pickup-fixture.js";
 
 export const P0_TASK_IDS = [
@@ -443,11 +442,48 @@ function isMeasurementArtifact(rel: string): boolean {
   );
 }
 
+const RG_GLOBS = [
+  "!node_modules",
+  "!.git",
+  "!dist",
+  "!**/.venv",
+  "!agent-setup/.venv",
+  "!docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/**",
+];
+
+function assertRgAvailable(): void {
+  const probe = spawnSync("rg", ["--version"], { encoding: "utf-8" });
+  if (probe.error || probe.status !== 0) {
+    throw new Error(
+      `P0 baseline requires rg and will not publish an empty read: ${probe.error?.message || probe.stderr?.trim() || "rg --version failed"}`,
+    );
+  }
+}
+
+function rgList(root: string, pattern: string): string[] {
+  const args = ["-l", pattern, root];
+  for (const glob of RG_GLOBS) args.push("--glob", glob);
+  const proc = spawnSync("rg", args, { encoding: "utf-8", maxBuffer: 64 * 1024 * 1024 });
+  if (proc.error || (proc.status !== 0 && proc.status !== 1)) {
+    throw new Error(
+      `rg failed for ${JSON.stringify(pattern)} under ${root}: ${proc.error?.message || proc.stderr?.trim() || `status ${proc.status}`}`,
+    );
+  }
+  const rel: string[] = [];
+  for (const line of (proc.stdout ?? "").split("\n")) {
+    const trimmed = line.trim();
+    if (!trimmed) continue;
+    if (trimmed.startsWith(root)) rel.push(trimmed.slice(root.length + 1));
+    else rel.push(trimmed);
+  }
+  return rel;
+}
+
 function rgHits(root: string, patterns: string[]): string[] {
   const hits: string[] = [];
   for (const pattern of patterns) {
     if (!pattern.trim()) continue;
-    hits.push(...runRg(root, pattern));
+    hits.push(...rgList(root, pattern));
   }
   return [...new Set(hits.map(normPath))]
     .filter((rel) => !rel.startsWith("secrets/") && !isMeasurementArtifact(rel))
@@ -654,6 +690,9 @@ function budgetPaths(
 
 function assembleB0(task: FrozenTask, cache: CorpusCache, root: string): Packed {
   const hits = rgHits(root, task.b0_patterns).slice(0, CANONICAL_MAX_PATHS);
+  if (hits.length === 0) {
+    throw new Error(`${task.id}: B0 rg returned no files for ${task.b0_patterns.join(", ")} under ${root}`);
+  }
   const packed = packFiles(cache, hits);
   return {
     text: packed.text,
@@ -883,7 +922,12 @@ export async function runP0Baseline(options?: { n?: number; repoRoot?: string })
   if (!Number.isInteger(n) || n < Math.max(3, loaded.document.n_min)) {
     throw new Error(`n must be an integer >= ${Math.max(3, loaded.document.n_min)}`);
   }
+  assertRgAvailable();
   requireTiktokenCounts(["p0-baseline-tiktoken-probe"]);
+  const corpusProbe = rgHits(repoRoot, ["cleanOutput"]);
+  if (!corpusProbe.includes("orchestrator/src/capabilities/results.ts")) {
+    throw new Error(`P0 corpus probe missed results.ts under ${repoRoot} (rg hits: ${corpusProbe.length})`);
+  }
   const compaction = readCompactionContract();
   const treeSha = readTreeSha(repoRoot);
   const taskReports: TaskReport[] = [];
