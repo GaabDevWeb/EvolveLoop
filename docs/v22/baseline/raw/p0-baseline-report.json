@@ -1,0 +1,1271 @@
+{
+  "schema_id": "v22-p0-baseline-report-1",
+  "task_id": "V22-GAP-P0-1",
+  "evidence_class": "MEASURED_DETERMINISTIC_CONTEXT",
+  "generative_token_reduction": "NOT_MEASURED",
+  "product_percent_gate": "NOT_MEASURED",
+  "compaction": "UNAVAILABLE",
+  "model_id": "deterministic-provider",
+  "tokenizer": "PROXY:whitespace_split",
+  "tree_sha": "e577cf8f9129f34e6d8abe4612f178eba21625ef",
+  "n": 3,
+  "limitation": "Contexto montado pelo DeterministicProvider (filesystem.search/read), sem modelo generativo. output_tokens, cache_read_tokens, cache_write_tokens e cost são NOT_MEASURED. Latência é a soma de duration_ms do provider local, não latência de modelo. Compactação é UNAVAILABLE: condenser NOT_IMPLEMENTED. O delta de input_tokens é MEASURED_DETERMINISTIC_CONTEXT e não é gate percentual de produto. Este B0 não é o retrieval híbrido de OFFICIAL-MANIFEST.json. tree_sha é o HEAD no momento da corrida; um commit posterior que só acrescenta o relatório não entra nesse SHA.",
+  "tasks_sha256": "3cc28626ab43c52101c3ab6c09f4e7f733747f98118a391e86bda25e99c40534",
+  "norm": "docs/v22/GOALS-OFFICIAL.md",
+  "metrics_schema": "docs/v22/baseline/metrics.schema.json",
+  "tasks_file": "docs/v22/baseline/tasks.json",
+  "measured_at": "2026-10-23T00:50:28.444Z",
+  "compaction_contract": {
+    "status": "UNAVAILABLE",
+    "fidelity": "UNAVAILABLE",
+    "compaction_tokens": "UNAVAILABLE",
+    "contract_status": "NOT_IMPLEMENTED",
+    "reinject_allowed": false,
+    "reinject_probe_allowed": false,
+    "reinject_probe_reason": "compaction_not_implemented",
+    "fidelity_probe_reason": "fidelity_test_required",
+    "source": "orchestrator/src/context/compaction-contract.ts",
+    "cited_test": "orchestrator/tests/unit/context-ownership.test.ts — AC: contrato compaction/reinject fail-closed"
+  },
+  "tasks": [
+    {
+      "id": "curta",
+      "brief_name": "curta",
+      "compaction": "UNAVAILABLE",
+      "compaction_tokens": "UNAVAILABLE",
+      "compaction_fidelity": "UNAVAILABLE",
+      "generative_token_reduction": "NOT_MEASURED",
+      "product_percent_gate": "NOT_MEASURED",
+      "deterministic_context_input_delta": -5,
+      "deterministic_context_evidence_class": "MEASURED_DETERMINISTIC_CONTEXT",
+      "arms": {
+        "B0": {
+          "arm": "B0",
+          "role": "V2",
+          "input_tokens": 10,
+          "output_tokens": "NOT_MEASURED",
+          "cache_read_tokens": "NOT_MEASURED",
+          "cache_write_tokens": "NOT_MEASURED",
+          "cost": "NOT_MEASURED",
+          "latency_ms": 0.6666666666666666,
+          "reread_count": 1,
+          "n": 3,
+          "dispersion": {
+            "input_tokens": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 3
+            },
+            "output_tokens": "NOT_MEASURED",
+            "cache_read_tokens": "NOT_MEASURED",
+            "cache_write_tokens": "NOT_MEASURED",
+            "cost": "NOT_MEASURED",
+            "latency_ms": {
+              "statistic": "sample_stddev",
+              "value": 0.5773502691896258,
+              "n": 3
+            },
+            "reread_count": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 3
+            }
+          },
+          "model_id": "deterministic-provider",
+          "tree_sha": "e577cf8f9129f34e6d8abe4612f178eba21625ef",
+          "limitation": "Contexto montado pelo DeterministicProvider (filesystem.search/read), sem modelo generativo. output_tokens, cache_read_tokens, cache_write_tokens e cost são NOT_MEASURED. Latência é a soma de duration_ms do provider local, não latência de modelo. Compactação é UNAVAILABLE: condenser NOT_IMPLEMENTED. O delta de input_tokens é MEASURED_DETERMINISTIC_CONTEXT e não é gate percentual de produto. Este B0 não é o retrieval híbrido de OFFICIAL-MANIFEST.json. tree_sha é o HEAD no momento da corrida; um commit posterior que só acrescenta o relatório não entra nesse SHA.",
+          "tokenizer": "PROXY:whitespace_split",
+          "evidence_class": "MEASURED_DETERMINISTIC_CONTEXT",
+          "verifier_pass": true,
+          "paths_read": [
+            "src/answer.ts"
+          ],
+          "runs": [
+            {
+              "repetition": 1,
+              "input_tokens": 10,
+              "latency_ms": 1,
+              "reread_count": 1,
+              "paths_read": [
+                "src/answer.ts"
+              ],
+              "markers_present": [
+                "RESPOSTA_CURTA_OK"
+              ],
+              "verifier_pass": true
+            },
+            {
+              "repetition": 2,
+              "input_tokens": 10,
+              "latency_ms": 1,
+              "reread_count": 1,
+              "paths_read": [
+                "src/answer.ts"
+              ],
+              "markers_present": [
+                "RESPOSTA_CURTA_OK"
+              ],
+              "verifier_pass": true
+            },
+            {
+              "repetition": 3,
+              "input_tokens": 10,
+              "latency_ms": 0,
+              "reread_count": 1,
+              "paths_read": [
+                "src/answer.ts"
+              ],
+              "markers_present": [
+                "RESPOSTA_CURTA_OK"
+              ],
+              "verifier_pass": true
+            }
+          ]
+        },
+        "V2.2": {
+          "arm": "V2.2",
+          "role": "V2.2",
+          "input_tokens": 5,
+          "output_tokens": "NOT_MEASURED",
+          "cache_read_tokens": "NOT_MEASURED",
+          "cache_write_tokens": "NOT_MEASURED",
+          "cost": "NOT_MEASURED",
+          "latency_ms": 0.3333333333333333,
+          "reread_count": 0,
+          "n": 3,
+          "dispersion": {
+            "input_tokens": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 3
+            },
+            "output_tokens": "NOT_MEASURED",
+            "cache_read_tokens": "NOT_MEASURED",
+            "cache_write_tokens": "NOT_MEASURED",
+            "cost": "NOT_MEASURED",
+            "latency_ms": {
+              "statistic": "sample_stddev",
+              "value": 0.5773502691896258,
+              "n": 3
+            },
+            "reread_count": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 3
+            }
+          },
+          "model_id": "deterministic-provider",
+          "tree_sha": "e577cf8f9129f34e6d8abe4612f178eba21625ef",
+          "limitation": "Contexto montado pelo DeterministicProvider (filesystem.search/read), sem modelo generativo. output_tokens, cache_read_tokens, cache_write_tokens e cost são NOT_MEASURED. Latência é a soma de duration_ms do provider local, não latência de modelo. Compactação é UNAVAILABLE: condenser NOT_IMPLEMENTED. O delta de input_tokens é MEASURED_DETERMINISTIC_CONTEXT e não é gate percentual de produto. Este B0 não é o retrieval híbrido de OFFICIAL-MANIFEST.json. tree_sha é o HEAD no momento da corrida; um commit posterior que só acrescenta o relatório não entra nesse SHA.",
+          "tokenizer": "PROXY:whitespace_split",
+          "evidence_class": "MEASURED_DETERMINISTIC_CONTEXT",
+          "verifier_pass": true,
+          "paths_read": [
+            "src/answer.ts"
+          ],
+          "runs": [
+            {
+              "repetition": 1,
+              "input_tokens": 5,
+              "latency_ms": 1,
+              "reread_count": 0,
+              "paths_read": [
+                "src/answer.ts"
+              ],
+              "markers_present": [
+                "RESPOSTA_CURTA_OK"
+              ],
+              "verifier_pass": true
+            },
+            {
+              "repetition": 2,
+              "input_tokens": 5,
+              "latency_ms": 0,
+              "reread_count": 0,
+              "paths_read": [
+                "src/answer.ts"
+              ],
+              "markers_present": [
+                "RESPOSTA_CURTA_OK"
+              ],
+              "verifier_pass": true
+            },
+            {
+              "repetition": 3,
+              "input_tokens": 5,
+              "latency_ms": 0,
+              "reread_count": 0,
+              "paths_read": [
+                "src/answer.ts"
+              ],
+              "markers_present": [
+                "RESPOSTA_CURTA_OK"
+              ],
+              "verifier_pass": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "projeto_grande",
+      "brief_name": "projeto grande",
+      "compaction": "UNAVAILABLE",
+      "compaction_tokens": "UNAVAILABLE",
+      "compaction_fidelity": "UNAVAILABLE",
+      "generative_token_reduction": "NOT_MEASURED",
+      "product_percent_gate": "NOT_MEASURED",
+      "deterministic_context_input_delta": -621,
+      "deterministic_context_evidence_class": "MEASURED_DETERMINISTIC_CONTEXT",
+      "arms": {
+        "B0": {
+          "arm": "B0",
+          "role": "V2",
+          "input_tokens": 626,
+          "output_tokens": "NOT_MEASURED",
+          "cache_read_tokens": "NOT_MEASURED",
+          "cache_write_tokens": "NOT_MEASURED",
+          "cost": "NOT_MEASURED",
+          "latency_ms": 0.3333333333333333,
+          "reread_count": 1,
+          "n": 3,
+          "dispersion": {
+            "input_tokens": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 3
+            },
+            "output_tokens": "NOT_MEASURED",
+            "cache_read_tokens": "NOT_MEASURED",
+            "cache_write_tokens": "NOT_MEASURED",
+            "cost": "NOT_MEASURED",
+            "latency_ms": {
+              "statistic": "sample_stddev",
+              "value": 0.5773502691896258,
+              "n": 3
+            },
+            "reread_count": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 3
+            }
+          },
+          "model_id": "deterministic-provider",
+          "tree_sha": "e577cf8f9129f34e6d8abe4612f178eba21625ef",
+          "limitation": "Contexto montado pelo DeterministicProvider (filesystem.search/read), sem modelo generativo. output_tokens, cache_read_tokens, cache_write_tokens e cost são NOT_MEASURED. Latência é a soma de duration_ms do provider local, não latência de modelo. Compactação é UNAVAILABLE: condenser NOT_IMPLEMENTED. O delta de input_tokens é MEASURED_DETERMINISTIC_CONTEXT e não é gate percentual de produto. Este B0 não é o retrieval híbrido de OFFICIAL-MANIFEST.json. tree_sha é o HEAD no momento da corrida; um commit posterior que só acrescenta o relatório não entra nesse SHA.",
+          "tokenizer": "PROXY:whitespace_split",
+          "evidence_class": "MEASURED_DETERMINISTIC_CONTEXT",
+          "verifier_pass": true,
+          "paths_read": [
+            "src/noise-01.ts",
+            "src/noise-02.ts",
+            "src/noise-03.ts",
+            "src/noise-04.ts",
+            "src/noise-05.ts",
+            "src/noise-06.ts",
+            "src/noise-07.ts",
+            "src/noise-08.ts",
+            "src/target.ts"
+          ],
+          "runs": [
+            {
+              "repetition": 1,
+              "input_tokens": 626,
+              "latency_ms": 0,
+              "reread_count": 1,
+              "paths_read": [
+                "src/noise-01.ts",
+                "src/noise-02.ts",
+                "src/noise-03.ts",
+                "src/noise-04.ts",
+                "src/noise-05.ts",
+                "src/noise-06.ts",
+                "src/noise-07.ts",
+                "src/noise-08.ts",
+                "src/target.ts"
+              ],
+              "markers_present": [
+                "FATO_ALVO_GRANDE",
+                "NOISE_GRANDE_01"
+              ],
+              "verifier_pass": true
+            },
+            {
+              "repetition": 2,
+              "input_tokens": 626,
+              "latency_ms": 1,
+              "reread_count": 1,
+              "paths_read": [
+                "src/noise-01.ts",
+                "src/noise-02.ts",
+                "src/noise-03.ts",
+                "src/noise-04.ts",
+                "src/noise-05.ts",
+                "src/noise-06.ts",
+                "src/noise-07.ts",
+                "src/noise-08.ts",
+                "src/target.ts"
+              ],
+              "markers_present": [
+                "FATO_ALVO_GRANDE",
+                "NOISE_GRANDE_01"
+              ],
+              "verifier_pass": true
+            },
+            {
+              "repetition": 3,
+              "input_tokens": 626,
+              "latency_ms": 0,
+              "reread_count": 1,
+              "paths_read": [
+                "src/noise-01.ts",
+                "src/noise-02.ts",
+                "src/noise-03.ts",
+                "src/noise-04.ts",
+                "src/noise-05.ts",
+                "src/noise-06.ts",
+                "src/noise-07.ts",
+                "src/noise-08.ts",
+                "src/target.ts"
+              ],
+              "markers_present": [
+                "FATO_ALVO_GRANDE",
+                "NOISE_GRANDE_01"
+              ],
+              "verifier_pass": true
+            }
+          ]
+        },
+        "V2.2": {
+          "arm": "V2.2",
+          "role": "V2.2",
+          "input_tokens": 5,
+          "output_tokens": "NOT_MEASURED",
+          "cache_read_tokens": "NOT_MEASURED",
+          "cache_write_tokens": "NOT_MEASURED",
+          "cost": "NOT_MEASURED",
+          "latency_ms": 0.6666666666666666,
+          "reread_count": 0,
+          "n": 3,
+          "dispersion": {
+            "input_tokens": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 3
+            },
+            "output_tokens": "NOT_MEASURED",
+            "cache_read_tokens": "NOT_MEASURED",
+            "cache_write_tokens": "NOT_MEASURED",
+            "cost": "NOT_MEASURED",
+            "latency_ms": {
+              "statistic": "sample_stddev",
+              "value": 0.5773502691896258,
+              "n": 3
+            },
+            "reread_count": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 3
+            }
+          },
+          "model_id": "deterministic-provider",
+          "tree_sha": "e577cf8f9129f34e6d8abe4612f178eba21625ef",
+          "limitation": "Contexto montado pelo DeterministicProvider (filesystem.search/read), sem modelo generativo. output_tokens, cache_read_tokens, cache_write_tokens e cost são NOT_MEASURED. Latência é a soma de duration_ms do provider local, não latência de modelo. Compactação é UNAVAILABLE: condenser NOT_IMPLEMENTED. O delta de input_tokens é MEASURED_DETERMINISTIC_CONTEXT e não é gate percentual de produto. Este B0 não é o retrieval híbrido de OFFICIAL-MANIFEST.json. tree_sha é o HEAD no momento da corrida; um commit posterior que só acrescenta o relatório não entra nesse SHA.",
+          "tokenizer": "PROXY:whitespace_split",
+          "evidence_class": "MEASURED_DETERMINISTIC_CONTEXT",
+          "verifier_pass": true,
+          "paths_read": [
+            "src/target.ts"
+          ],
+          "runs": [
+            {
+              "repetition": 1,
+              "input_tokens": 5,
+              "latency_ms": 1,
+              "reread_count": 0,
+              "paths_read": [
+                "src/target.ts"
+              ],
+              "markers_present": [
+                "FATO_ALVO_GRANDE"
+              ],
+              "verifier_pass": true
+            },
+            {
+              "repetition": 2,
+              "input_tokens": 5,
+              "latency_ms": 0,
+              "reread_count": 0,
+              "paths_read": [
+                "src/target.ts"
+              ],
+              "markers_present": [
+                "FATO_ALVO_GRANDE"
+              ],
+              "verifier_pass": true
+            },
+            {
+              "repetition": 3,
+              "input_tokens": 5,
+              "latency_ms": 1,
+              "reread_count": 0,
+              "paths_read": [
+                "src/target.ts"
+              ],
+              "markers_present": [
+                "FATO_ALVO_GRANDE"
+              ],
+              "verifier_pass": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "retomada",
+      "brief_name": "retomada",
+      "compaction": "UNAVAILABLE",
+      "compaction_tokens": "UNAVAILABLE",
+      "compaction_fidelity": "UNAVAILABLE",
+      "generative_token_reduction": "NOT_MEASURED",
+      "product_percent_gate": "NOT_MEASURED",
+      "deterministic_context_input_delta": -621,
+      "deterministic_context_evidence_class": "MEASURED_DETERMINISTIC_CONTEXT",
+      "arms": {
+        "B0": {
+          "arm": "B0",
+          "role": "V2",
+          "input_tokens": 626,
+          "output_tokens": "NOT_MEASURED",
+          "cache_read_tokens": "NOT_MEASURED",
+          "cache_write_tokens": "NOT_MEASURED",
+          "cost": "NOT_MEASURED",
+          "latency_ms": 0.6666666666666666,
+          "reread_count": 1,
+          "n": 3,
+          "dispersion": {
+            "input_tokens": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 3
+            },
+            "output_tokens": "NOT_MEASURED",
+            "cache_read_tokens": "NOT_MEASURED",
+            "cache_write_tokens": "NOT_MEASURED",
+            "cost": "NOT_MEASURED",
+            "latency_ms": {
+              "statistic": "sample_stddev",
+              "value": 0.5773502691896258,
+              "n": 3
+            },
+            "reread_count": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 3
+            }
+          },
+          "model_id": "deterministic-provider",
+          "tree_sha": "e577cf8f9129f34e6d8abe4612f178eba21625ef",
+          "limitation": "Contexto montado pelo DeterministicProvider (filesystem.search/read), sem modelo generativo. output_tokens, cache_read_tokens, cache_write_tokens e cost são NOT_MEASURED. Latência é a soma de duration_ms do provider local, não latência de modelo. Compactação é UNAVAILABLE: condenser NOT_IMPLEMENTED. O delta de input_tokens é MEASURED_DETERMINISTIC_CONTEXT e não é gate percentual de produto. Este B0 não é o retrieval híbrido de OFFICIAL-MANIFEST.json. tree_sha é o HEAD no momento da corrida; um commit posterior que só acrescenta o relatório não entra nesse SHA.",
+          "tokenizer": "PROXY:whitespace_split",
+          "evidence_class": "MEASURED_DETERMINISTIC_CONTEXT",
+          "verifier_pass": true,
+          "paths_read": [
+            ".ai/decisions/resume.md",
+            "src/noise-01.ts",
+            "src/noise-02.ts",
+            "src/noise-03.ts",
+            "src/noise-04.ts",
+            "src/noise-05.ts",
+            "src/noise-06.ts",
+            "src/noise-07.ts",
+            "src/noise-08.ts"
+          ],
+          "runs": [
+            {
+              "repetition": 1,
+              "input_tokens": 626,
+              "latency_ms": 1,
+              "reread_count": 1,
+              "paths_read": [
+                ".ai/decisions/resume.md",
+                "src/noise-01.ts",
+                "src/noise-02.ts",
+                "src/noise-03.ts",
+                "src/noise-04.ts",
+                "src/noise-05.ts",
+                "src/noise-06.ts",
+                "src/noise-07.ts",
+                "src/noise-08.ts"
+              ],
+              "markers_present": [
+                "DECISAO_RETOMADA_OK",
+                "NOISE_RETOMADA_01"
+              ],
+              "verifier_pass": true
+            },
+            {
+              "repetition": 2,
+              "input_tokens": 626,
+              "latency_ms": 1,
+              "reread_count": 1,
+              "paths_read": [
+                ".ai/decisions/resume.md",
+                "src/noise-01.ts",
+                "src/noise-02.ts",
+                "src/noise-03.ts",
+                "src/noise-04.ts",
+                "src/noise-05.ts",
+                "src/noise-06.ts",
+                "src/noise-07.ts",
+                "src/noise-08.ts"
+              ],
+              "markers_present": [
+                "DECISAO_RETOMADA_OK",
+                "NOISE_RETOMADA_01"
+              ],
+              "verifier_pass": true
+            },
+            {
+              "repetition": 3,
+              "input_tokens": 626,
+              "latency_ms": 0,
+              "reread_count": 1,
+              "paths_read": [
+                ".ai/decisions/resume.md",
+                "src/noise-01.ts",
+                "src/noise-02.ts",
+                "src/noise-03.ts",
+                "src/noise-04.ts",
+                "src/noise-05.ts",
+                "src/noise-06.ts",
+                "src/noise-07.ts",
+                "src/noise-08.ts"
+              ],
+              "markers_present": [
+                "DECISAO_RETOMADA_OK",
+                "NOISE_RETOMADA_01"
+              ],
+              "verifier_pass": true
+            }
+          ]
+        },
+        "V2.2": {
+          "arm": "V2.2",
+          "role": "V2.2",
+          "input_tokens": 5,
+          "output_tokens": "NOT_MEASURED",
+          "cache_read_tokens": "NOT_MEASURED",
+          "cache_write_tokens": "NOT_MEASURED",
+          "cost": "NOT_MEASURED",
+          "latency_ms": 0.3333333333333333,
+          "reread_count": 0,
+          "n": 3,
+          "dispersion": {
+            "input_tokens": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 3
+            },
+            "output_tokens": "NOT_MEASURED",
+            "cache_read_tokens": "NOT_MEASURED",
+            "cache_write_tokens": "NOT_MEASURED",
+            "cost": "NOT_MEASURED",
+            "latency_ms": {
+              "statistic": "sample_stddev",
+              "value": 0.5773502691896258,
+              "n": 3
+            },
+            "reread_count": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 3
+            }
+          },
+          "model_id": "deterministic-provider",
+          "tree_sha": "e577cf8f9129f34e6d8abe4612f178eba21625ef",
+          "limitation": "Contexto montado pelo DeterministicProvider (filesystem.search/read), sem modelo generativo. output_tokens, cache_read_tokens, cache_write_tokens e cost são NOT_MEASURED. Latência é a soma de duration_ms do provider local, não latência de modelo. Compactação é UNAVAILABLE: condenser NOT_IMPLEMENTED. O delta de input_tokens é MEASURED_DETERMINISTIC_CONTEXT e não é gate percentual de produto. Este B0 não é o retrieval híbrido de OFFICIAL-MANIFEST.json. tree_sha é o HEAD no momento da corrida; um commit posterior que só acrescenta o relatório não entra nesse SHA.",
+          "tokenizer": "PROXY:whitespace_split",
+          "evidence_class": "MEASURED_DETERMINISTIC_CONTEXT",
+          "verifier_pass": true,
+          "paths_read": [
+            ".ai/decisions/resume.md"
+          ],
+          "runs": [
+            {
+              "repetition": 1,
+              "input_tokens": 5,
+              "latency_ms": 0,
+              "reread_count": 0,
+              "paths_read": [
+                ".ai/decisions/resume.md"
+              ],
+              "markers_present": [
+                "DECISAO_RETOMADA_OK"
+              ],
+              "verifier_pass": true
+            },
+            {
+              "repetition": 2,
+              "input_tokens": 5,
+              "latency_ms": 0,
+              "reread_count": 0,
+              "paths_read": [
+                ".ai/decisions/resume.md"
+              ],
+              "markers_present": [
+                "DECISAO_RETOMADA_OK"
+              ],
+              "verifier_pass": true
+            },
+            {
+              "repetition": 3,
+              "input_tokens": 5,
+              "latency_ms": 1,
+              "reread_count": 0,
+              "paths_read": [
+                ".ai/decisions/resume.md"
+              ],
+              "markers_present": [
+                "DECISAO_RETOMADA_OK"
+              ],
+              "verifier_pass": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "delegada",
+      "brief_name": "delegada",
+      "compaction": "UNAVAILABLE",
+      "compaction_tokens": "UNAVAILABLE",
+      "compaction_fidelity": "UNAVAILABLE",
+      "generative_token_reduction": "NOT_MEASURED",
+      "product_percent_gate": "NOT_MEASURED",
+      "deterministic_context_input_delta": -621,
+      "deterministic_context_evidence_class": "MEASURED_DETERMINISTIC_CONTEXT",
+      "arms": {
+        "B0": {
+          "arm": "B0",
+          "role": "V2",
+          "input_tokens": 631,
+          "output_tokens": "NOT_MEASURED",
+          "cache_read_tokens": "NOT_MEASURED",
+          "cache_write_tokens": "NOT_MEASURED",
+          "cost": "NOT_MEASURED",
+          "latency_ms": 0.3333333333333333,
+          "reread_count": 1,
+          "n": 3,
+          "dispersion": {
+            "input_tokens": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 3
+            },
+            "output_tokens": "NOT_MEASURED",
+            "cache_read_tokens": "NOT_MEASURED",
+            "cache_write_tokens": "NOT_MEASURED",
+            "cost": "NOT_MEASURED",
+            "latency_ms": {
+              "statistic": "sample_stddev",
+              "value": 0.5773502691896258,
+              "n": 3
+            },
+            "reread_count": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 3
+            }
+          },
+          "model_id": "deterministic-provider",
+          "tree_sha": "e577cf8f9129f34e6d8abe4612f178eba21625ef",
+          "limitation": "Contexto montado pelo DeterministicProvider (filesystem.search/read), sem modelo generativo. output_tokens, cache_read_tokens, cache_write_tokens e cost são NOT_MEASURED. Latência é a soma de duration_ms do provider local, não latência de modelo. Compactação é UNAVAILABLE: condenser NOT_IMPLEMENTED. O delta de input_tokens é MEASURED_DETERMINISTIC_CONTEXT e não é gate percentual de produto. Este B0 não é o retrieval híbrido de OFFICIAL-MANIFEST.json. tree_sha é o HEAD no momento da corrida; um commit posterior que só acrescenta o relatório não entra nesse SHA.",
+          "tokenizer": "PROXY:whitespace_split",
+          "evidence_class": "MEASURED_DETERMINISTIC_CONTEXT",
+          "verifier_pass": true,
+          "paths_read": [
+            "src/noise-01.ts",
+            "src/noise-02.ts",
+            "src/noise-03.ts",
+            "src/noise-04.ts",
+            "src/noise-05.ts",
+            "src/noise-06.ts",
+            "src/noise-07.ts",
+            "src/noise-08.ts",
+            "src/work.ts",
+            "handoff/dod.md"
+          ],
+          "runs": [
+            {
+              "repetition": 1,
+              "input_tokens": 631,
+              "latency_ms": 1,
+              "reread_count": 1,
+              "paths_read": [
+                "src/noise-01.ts",
+                "src/noise-02.ts",
+                "src/noise-03.ts",
+                "src/noise-04.ts",
+                "src/noise-05.ts",
+                "src/noise-06.ts",
+                "src/noise-07.ts",
+                "src/noise-08.ts",
+                "src/work.ts",
+                "handoff/dod.md"
+              ],
+              "markers_present": [
+                "DOD_DELEGADA_VERBATIM",
+                "NOISE_DELEGADA_01"
+              ],
+              "verifier_pass": true
+            },
+            {
+              "repetition": 2,
+              "input_tokens": 631,
+              "latency_ms": 0,
+              "reread_count": 1,
+              "paths_read": [
+                "src/noise-01.ts",
+                "src/noise-02.ts",
+                "src/noise-03.ts",
+                "src/noise-04.ts",
+                "src/noise-05.ts",
+                "src/noise-06.ts",
+                "src/noise-07.ts",
+                "src/noise-08.ts",
+                "src/work.ts",
+                "handoff/dod.md"
+              ],
+              "markers_present": [
+                "DOD_DELEGADA_VERBATIM",
+                "NOISE_DELEGADA_01"
+              ],
+              "verifier_pass": true
+            },
+            {
+              "repetition": 3,
+              "input_tokens": 631,
+              "latency_ms": 0,
+              "reread_count": 1,
+              "paths_read": [
+                "src/noise-01.ts",
+                "src/noise-02.ts",
+                "src/noise-03.ts",
+                "src/noise-04.ts",
+                "src/noise-05.ts",
+                "src/noise-06.ts",
+                "src/noise-07.ts",
+                "src/noise-08.ts",
+                "src/work.ts",
+                "handoff/dod.md"
+              ],
+              "markers_present": [
+                "DOD_DELEGADA_VERBATIM",
+                "NOISE_DELEGADA_01"
+              ],
+              "verifier_pass": true
+            }
+          ]
+        },
+        "V2.2": {
+          "arm": "V2.2",
+          "role": "V2.2",
+          "input_tokens": 10,
+          "output_tokens": "NOT_MEASURED",
+          "cache_read_tokens": "NOT_MEASURED",
+          "cache_write_tokens": "NOT_MEASURED",
+          "cost": "NOT_MEASURED",
+          "latency_ms": 0.3333333333333333,
+          "reread_count": 0,
+          "n": 3,
+          "dispersion": {
+            "input_tokens": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 3
+            },
+            "output_tokens": "NOT_MEASURED",
+            "cache_read_tokens": "NOT_MEASURED",
+            "cache_write_tokens": "NOT_MEASURED",
+            "cost": "NOT_MEASURED",
+            "latency_ms": {
+              "statistic": "sample_stddev",
+              "value": 0.5773502691896258,
+              "n": 3
+            },
+            "reread_count": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 3
+            }
+          },
+          "model_id": "deterministic-provider",
+          "tree_sha": "e577cf8f9129f34e6d8abe4612f178eba21625ef",
+          "limitation": "Contexto montado pelo DeterministicProvider (filesystem.search/read), sem modelo generativo. output_tokens, cache_read_tokens, cache_write_tokens e cost são NOT_MEASURED. Latência é a soma de duration_ms do provider local, não latência de modelo. Compactação é UNAVAILABLE: condenser NOT_IMPLEMENTED. O delta de input_tokens é MEASURED_DETERMINISTIC_CONTEXT e não é gate percentual de produto. Este B0 não é o retrieval híbrido de OFFICIAL-MANIFEST.json. tree_sha é o HEAD no momento da corrida; um commit posterior que só acrescenta o relatório não entra nesse SHA.",
+          "tokenizer": "PROXY:whitespace_split",
+          "evidence_class": "MEASURED_DETERMINISTIC_CONTEXT",
+          "verifier_pass": true,
+          "paths_read": [
+            "handoff/dod.md",
+            "src/work.ts"
+          ],
+          "runs": [
+            {
+              "repetition": 1,
+              "input_tokens": 10,
+              "latency_ms": 0,
+              "reread_count": 0,
+              "paths_read": [
+                "handoff/dod.md",
+                "src/work.ts"
+              ],
+              "markers_present": [
+                "DOD_DELEGADA_VERBATIM"
+              ],
+              "verifier_pass": true
+            },
+            {
+              "repetition": 2,
+              "input_tokens": 10,
+              "latency_ms": 1,
+              "reread_count": 0,
+              "paths_read": [
+                "handoff/dod.md",
+                "src/work.ts"
+              ],
+              "markers_present": [
+                "DOD_DELEGADA_VERBATIM"
+              ],
+              "verifier_pass": true
+            },
+            {
+              "repetition": 3,
+              "input_tokens": 10,
+              "latency_ms": 0,
+              "reread_count": 0,
+              "paths_read": [
+                "handoff/dod.md",
+                "src/work.ts"
+              ],
+              "markers_present": [
+                "DOD_DELEGADA_VERBATIM"
+              ],
+              "verifier_pass": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "fontes_conflitantes",
+      "brief_name": "fontes conflitantes",
+      "compaction": "UNAVAILABLE",
+      "compaction_tokens": "UNAVAILABLE",
+      "compaction_fidelity": "UNAVAILABLE",
+      "generative_token_reduction": "NOT_MEASURED",
+      "product_percent_gate": "NOT_MEASURED",
+      "deterministic_context_input_delta": -15,
+      "deterministic_context_evidence_class": "MEASURED_DETERMINISTIC_CONTEXT",
+      "arms": {
+        "B0": {
+          "arm": "B0",
+          "role": "V2",
+          "input_tokens": 20,
+          "output_tokens": "NOT_MEASURED",
+          "cache_read_tokens": "NOT_MEASURED",
+          "cache_write_tokens": "NOT_MEASURED",
+          "cost": "NOT_MEASURED",
+          "latency_ms": 0.3333333333333333,
+          "reread_count": 1,
+          "n": 3,
+          "dispersion": {
+            "input_tokens": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 3
+            },
+            "output_tokens": "NOT_MEASURED",
+            "cache_read_tokens": "NOT_MEASURED",
+            "cache_write_tokens": "NOT_MEASURED",
+            "cost": "NOT_MEASURED",
+            "latency_ms": {
+              "statistic": "sample_stddev",
+              "value": 0.5773502691896258,
+              "n": 3
+            },
+            "reread_count": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 3
+            }
+          },
+          "model_id": "deterministic-provider",
+          "tree_sha": "e577cf8f9129f34e6d8abe4612f178eba21625ef",
+          "limitation": "Contexto montado pelo DeterministicProvider (filesystem.search/read), sem modelo generativo. output_tokens, cache_read_tokens, cache_write_tokens e cost são NOT_MEASURED. Latência é a soma de duration_ms do provider local, não latência de modelo. Compactação é UNAVAILABLE: condenser NOT_IMPLEMENTED. O delta de input_tokens é MEASURED_DETERMINISTIC_CONTEXT e não é gate percentual de produto. Este B0 não é o retrieval híbrido de OFFICIAL-MANIFEST.json. tree_sha é o HEAD no momento da corrida; um commit posterior que só acrescenta o relatório não entra nesse SHA.",
+          "tokenizer": "PROXY:whitespace_split",
+          "evidence_class": "MEASURED_DETERMINISTIC_CONTEXT",
+          "verifier_pass": true,
+          "paths_read": [
+            ".ai/limit.md",
+            ".ai/old-limit.md",
+            "src/limit.ts"
+          ],
+          "runs": [
+            {
+              "repetition": 1,
+              "input_tokens": 20,
+              "latency_ms": 0,
+              "reread_count": 1,
+              "paths_read": [
+                ".ai/limit.md",
+                ".ai/old-limit.md",
+                "src/limit.ts"
+              ],
+              "markers_present": [
+                "CODE_FACT_LIMIT_10",
+                "WIKI_STALE_LIMIT_99",
+                "OBSOLETO_NAO_INJETAR"
+              ],
+              "verifier_pass": true
+            },
+            {
+              "repetition": 2,
+              "input_tokens": 20,
+              "latency_ms": 1,
+              "reread_count": 1,
+              "paths_read": [
+                ".ai/limit.md",
+                ".ai/old-limit.md",
+                "src/limit.ts"
+              ],
+              "markers_present": [
+                "CODE_FACT_LIMIT_10",
+                "WIKI_STALE_LIMIT_99",
+                "OBSOLETO_NAO_INJETAR"
+              ],
+              "verifier_pass": true
+            },
+            {
+              "repetition": 3,
+              "input_tokens": 20,
+              "latency_ms": 0,
+              "reread_count": 1,
+              "paths_read": [
+                ".ai/limit.md",
+                ".ai/old-limit.md",
+                "src/limit.ts"
+              ],
+              "markers_present": [
+                "CODE_FACT_LIMIT_10",
+                "WIKI_STALE_LIMIT_99",
+                "OBSOLETO_NAO_INJETAR"
+              ],
+              "verifier_pass": true
+            }
+          ]
+        },
+        "V2.2": {
+          "arm": "V2.2",
+          "role": "V2.2",
+          "input_tokens": 5,
+          "output_tokens": "NOT_MEASURED",
+          "cache_read_tokens": "NOT_MEASURED",
+          "cache_write_tokens": "NOT_MEASURED",
+          "cost": "NOT_MEASURED",
+          "latency_ms": 0,
+          "reread_count": 0,
+          "n": 3,
+          "dispersion": {
+            "input_tokens": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 3
+            },
+            "output_tokens": "NOT_MEASURED",
+            "cache_read_tokens": "NOT_MEASURED",
+            "cache_write_tokens": "NOT_MEASURED",
+            "cost": "NOT_MEASURED",
+            "latency_ms": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 3
+            },
+            "reread_count": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 3
+            }
+          },
+          "model_id": "deterministic-provider",
+          "tree_sha": "e577cf8f9129f34e6d8abe4612f178eba21625ef",
+          "limitation": "Contexto montado pelo DeterministicProvider (filesystem.search/read), sem modelo generativo. output_tokens, cache_read_tokens, cache_write_tokens e cost são NOT_MEASURED. Latência é a soma de duration_ms do provider local, não latência de modelo. Compactação é UNAVAILABLE: condenser NOT_IMPLEMENTED. O delta de input_tokens é MEASURED_DETERMINISTIC_CONTEXT e não é gate percentual de produto. Este B0 não é o retrieval híbrido de OFFICIAL-MANIFEST.json. tree_sha é o HEAD no momento da corrida; um commit posterior que só acrescenta o relatório não entra nesse SHA.",
+          "tokenizer": "PROXY:whitespace_split",
+          "evidence_class": "MEASURED_DETERMINISTIC_CONTEXT",
+          "verifier_pass": true,
+          "paths_read": [
+            "src/limit.ts"
+          ],
+          "runs": [
+            {
+              "repetition": 1,
+              "input_tokens": 5,
+              "latency_ms": 0,
+              "reread_count": 0,
+              "paths_read": [
+                "src/limit.ts"
+              ],
+              "markers_present": [
+                "CODE_FACT_LIMIT_10"
+              ],
+              "verifier_pass": true,
+              "rejected_source_refs": [
+                ".ai/old-limit.md",
+                ".ai/limit.md"
+              ]
+            },
+            {
+              "repetition": 2,
+              "input_tokens": 5,
+              "latency_ms": 0,
+              "reread_count": 0,
+              "paths_read": [
+                "src/limit.ts"
+              ],
+              "markers_present": [
+                "CODE_FACT_LIMIT_10"
+              ],
+              "verifier_pass": true,
+              "rejected_source_refs": [
+                ".ai/old-limit.md",
+                ".ai/limit.md"
+              ]
+            },
+            {
+              "repetition": 3,
+              "input_tokens": 5,
+              "latency_ms": 0,
+              "reread_count": 0,
+              "paths_read": [
+                "src/limit.ts"
+              ],
+              "markers_present": [
+                "CODE_FACT_LIMIT_10"
+              ],
+              "verifier_pass": true,
+              "rejected_source_refs": [
+                ".ai/old-limit.md",
+                ".ai/limit.md"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "restricoes_compactacao_handoff",
+      "brief_name": "restrições sob compactação/handoff",
+      "compaction": "UNAVAILABLE",
+      "compaction_tokens": "UNAVAILABLE",
+      "compaction_fidelity": "UNAVAILABLE",
+      "generative_token_reduction": "NOT_MEASURED",
+      "product_percent_gate": "NOT_MEASURED",
+      "deterministic_context_input_delta": -5,
+      "deterministic_context_evidence_class": "MEASURED_DETERMINISTIC_CONTEXT",
+      "arms": {
+        "B0": {
+          "arm": "B0",
+          "role": "V2",
+          "input_tokens": 15,
+          "output_tokens": "NOT_MEASURED",
+          "cache_read_tokens": "NOT_MEASURED",
+          "cache_write_tokens": "NOT_MEASURED",
+          "cost": "NOT_MEASURED",
+          "latency_ms": 0,
+          "reread_count": 1,
+          "n": 3,
+          "dispersion": {
+            "input_tokens": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 3
+            },
+            "output_tokens": "NOT_MEASURED",
+            "cache_read_tokens": "NOT_MEASURED",
+            "cache_write_tokens": "NOT_MEASURED",
+            "cost": "NOT_MEASURED",
+            "latency_ms": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 3
+            },
+            "reread_count": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 3
+            }
+          },
+          "model_id": "deterministic-provider",
+          "tree_sha": "e577cf8f9129f34e6d8abe4612f178eba21625ef",
+          "limitation": "Contexto montado pelo DeterministicProvider (filesystem.search/read), sem modelo generativo. output_tokens, cache_read_tokens, cache_write_tokens e cost são NOT_MEASURED. Latência é a soma de duration_ms do provider local, não latência de modelo. Compactação é UNAVAILABLE: condenser NOT_IMPLEMENTED. O delta de input_tokens é MEASURED_DETERMINISTIC_CONTEXT e não é gate percentual de produto. Este B0 não é o retrieval híbrido de OFFICIAL-MANIFEST.json. tree_sha é o HEAD no momento da corrida; um commit posterior que só acrescenta o relatório não entra nesse SHA.",
+          "tokenizer": "PROXY:whitespace_split",
+          "evidence_class": "MEASURED_DETERMINISTIC_CONTEXT",
+          "verifier_pass": true,
+          "paths_read": [
+            "src/rule.ts",
+            "handoff/dod.md"
+          ],
+          "runs": [
+            {
+              "repetition": 1,
+              "input_tokens": 15,
+              "latency_ms": 0,
+              "reread_count": 1,
+              "paths_read": [
+                "src/rule.ts",
+                "handoff/dod.md"
+              ],
+              "markers_present": [
+                "NAO_REMOVER_NEGACAO",
+                "DOD_COMPACTACAO_VERBATIM"
+              ],
+              "verifier_pass": true
+            },
+            {
+              "repetition": 2,
+              "input_tokens": 15,
+              "latency_ms": 0,
+              "reread_count": 1,
+              "paths_read": [
+                "src/rule.ts",
+                "handoff/dod.md"
+              ],
+              "markers_present": [
+                "NAO_REMOVER_NEGACAO",
+                "DOD_COMPACTACAO_VERBATIM"
+              ],
+              "verifier_pass": true
+            },
+            {
+              "repetition": 3,
+              "input_tokens": 15,
+              "latency_ms": 0,
+              "reread_count": 1,
+              "paths_read": [
+                "src/rule.ts",
+                "handoff/dod.md"
+              ],
+              "markers_present": [
+                "NAO_REMOVER_NEGACAO",
+                "DOD_COMPACTACAO_VERBATIM"
+              ],
+              "verifier_pass": true
+            }
+          ]
+        },
+        "V2.2": {
+          "arm": "V2.2",
+          "role": "V2.2",
+          "input_tokens": 10,
+          "output_tokens": "NOT_MEASURED",
+          "cache_read_tokens": "NOT_MEASURED",
+          "cache_write_tokens": "NOT_MEASURED",
+          "cost": "NOT_MEASURED",
+          "latency_ms": 0,
+          "reread_count": 0,
+          "n": 3,
+          "dispersion": {
+            "input_tokens": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 3
+            },
+            "output_tokens": "NOT_MEASURED",
+            "cache_read_tokens": "NOT_MEASURED",
+            "cache_write_tokens": "NOT_MEASURED",
+            "cost": "NOT_MEASURED",
+            "latency_ms": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 3
+            },
+            "reread_count": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 3
+            }
+          },
+          "model_id": "deterministic-provider",
+          "tree_sha": "e577cf8f9129f34e6d8abe4612f178eba21625ef",
+          "limitation": "Contexto montado pelo DeterministicProvider (filesystem.search/read), sem modelo generativo. output_tokens, cache_read_tokens, cache_write_tokens e cost são NOT_MEASURED. Latência é a soma de duration_ms do provider local, não latência de modelo. Compactação é UNAVAILABLE: condenser NOT_IMPLEMENTED. O delta de input_tokens é MEASURED_DETERMINISTIC_CONTEXT e não é gate percentual de produto. Este B0 não é o retrieval híbrido de OFFICIAL-MANIFEST.json. tree_sha é o HEAD no momento da corrida; um commit posterior que só acrescenta o relatório não entra nesse SHA.",
+          "tokenizer": "PROXY:whitespace_split",
+          "evidence_class": "MEASURED_DETERMINISTIC_CONTEXT",
+          "verifier_pass": true,
+          "paths_read": [
+            "src/rule.ts",
+            "handoff/dod.md"
+          ],
+          "runs": [
+            {
+              "repetition": 1,
+              "input_tokens": 10,
+              "latency_ms": 0,
+              "reread_count": 0,
+              "paths_read": [
+                "src/rule.ts",
+                "handoff/dod.md"
+              ],
+              "markers_present": [
+                "NAO_REMOVER_NEGACAO",
+                "DOD_COMPACTACAO_VERBATIM"
+              ],
+              "verifier_pass": true
+            },
+            {
+              "repetition": 2,
+              "input_tokens": 10,
+              "latency_ms": 0,
+              "reread_count": 0,
+              "paths_read": [
+                "src/rule.ts",
+                "handoff/dod.md"
+              ],
+              "markers_present": [
+                "NAO_REMOVER_NEGACAO",
+                "DOD_COMPACTACAO_VERBATIM"
+              ],
+              "verifier_pass": true
+            },
+            {
+              "repetition": 3,
+              "input_tokens": 10,
+              "latency_ms": 0,
+              "reread_count": 0,
+              "paths_read": [
+                "src/rule.ts",
+                "handoff/dod.md"
+              ],
+              "markers_present": [
+                "NAO_REMOVER_NEGACAO",
+                "DOD_COMPACTACAO_VERBATIM"
+              ],
+              "verifier_pass": true
+            }
+          ]
+        }
+      },
+      "compaction_contract": {
+        "status": "UNAVAILABLE",
+        "fidelity": "UNAVAILABLE",
+        "compaction_tokens": "UNAVAILABLE",
+        "contract_status": "NOT_IMPLEMENTED",
+        "reinject_allowed": false,
+        "reinject_probe_allowed": false,
+        "reinject_probe_reason": "compaction_not_implemented",
+        "fidelity_probe_reason": "fidelity_test_required",
+        "source": "orchestrator/src/context/compaction-contract.ts",
+        "cited_test": "orchestrator/tests/unit/context-ownership.test.ts — AC: contrato compaction/reinject fail-closed"
+      }
+    }
+  ]
+}
