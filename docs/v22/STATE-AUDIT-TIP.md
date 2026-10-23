@@ -3,9 +3,9 @@
 | Campo | Valor |
 |-------|-------|
 | **task_id** | V22-GAP-P0-3 |
-| **Base** | `release/v2.1-freeze-preparation` @ `f611780` (merge do PR #19) |
+| **Base** | `release/v2.1-freeze-preparation` @ `f3c901a` (merge do PR #20) |
 | **O que este ficheiro não é** | Não substitui o corpo de `docs/research/evolveloop-v2.2/01-current-state-audit.md`, que descreve `28ab56ce` em 2026-10-21 e diz que a implementação V2.2 não tinha começado. Esse texto permanece. Uma linha no topo aponta para aqui |
-| **Medição** | `tree_sha` em `docs/v22/baseline/raw/p0-baseline-report.json` e `docs/v22/baseline/raw/p0-handoff-report.json` |
+| **Medição** | `tree_sha` em `docs/v22/baseline/raw/p0-baseline-report.json`, `p0-handoff-report.json` e `p0-compaction-report.json` |
 
 O dossiê de outubro não serve de estado desta release. A implementação V2.2 já está no tree.
 
@@ -18,7 +18,7 @@ O dossiê de outubro não serve de estado desta release. A implementação V2.2 
 | Continuidade entre processos | `orchestrator/src/session/session-continuity.ts` | Teste de integração retoma job e rejeita checkpoint adulterado |
 | Orçamento no pickup | `orchestrator/src/context/budget.ts` | Classes protegidas não são cortadas a meio |
 | Baseline das seis tarefas | `docs/v22/baseline/` | Entrada medida com tiktoken. Saída, cache e custo `NOT_MEASURED` |
-| Handoff com N≥3 | `docs/v22/baseline/raw/p0-handoff-report.json` e `orchestrator/tests/unit/v22-p0-handoff.test.ts` | Volume contra o payload de referência. Retomada do receptor pelo snapshot de continuidade |
+| Handoff com N≥3 | `docs/v22/baseline/raw/p0-handoff-report.json` e `orchestrator/tests/unit/v22-p0-handoff.test.ts` | Volume contra o contexto completo do emissor. O checklist de 81 tokens é sonda de sobrevivência. Retomada do receptor pelo snapshot de continuidade |
 | Memória episódica pública | `profiles/default.yaml` | `memory.enabled: false` |
 | Graphify | `EVOLVELOOP_GRAPHIFY` default OFF. ADR-0014 | Não é backend de conhecimento |
 | Caveman e cache de prefixo | `EVOLVELOOP_BREVITY_CAVEMAN`, `EVOLVELOOP_PROMPT_CACHE` default OFF | Hit HTTP de vendor `NOT_MEASURED` |
@@ -32,7 +32,7 @@ O dossiê de outubro não serve de estado desta release. A implementação V2.2 
 | Cache de vendor e custo | `NOT_MEASURED` |
 | Híbrido Ollama / `OFFICIAL_WIKI_GROUND` nesta baseline | `NOT_MEASURED` |
 | Latência de modelo | `NOT_MEASURED`. A latência publicada é de montagem, estado `LIMITED` |
-| Compactação e reinject | `UNAVAILABLE`. `orchestrator/src/context/compaction-contract.ts` recusa reinject |
+| Compactação | `LIMITED`. Condenser extrativo opt-in, `EVOLVELOOP_COMPACTION` default OFF. A corrida default continua `UNAVAILABLE`. Reinject continua recusado em `orchestrator/src/context/compaction-contract.ts` |
 | Host Cursor como superfície de pickup | Fora do contrato testado |
 | Branch `evolve-v3` | Hipótese. Não está neste tree |
 

@@ -57,6 +57,10 @@ Não há flag. Reverter é um commit que retire o pack em `docs/architecture/v2.
 
 Commit de introdução: `9293309` (`feat(v2.2): context ownership ADR and spawn context budget runtime`). Esse commit também traz o runtime de orçamento (F5). Reverter o commit inteiro desfaz as duas fases. Para reverter só o ADR: novo ADR que rejeite 0013, como a secção Reversibilidade de `docs/adr/0013-context-ownership-working-context.md` já diz, ou `git revert -n 9293309` limitado a `docs/adr/0013-context-ownership-working-context.md`. Prova: `orchestrator/tests/unit/context-ownership.test.ts` («ADR responde 9 perguntas») falha se as respostas saírem. Não apaga raw.
 
+### Condenser extrativo (P0-6)
+
+Flag `EVOLVELOOP_COMPACTION`, default OFF, em `orchestrator/src/v22/feature-flags.ts`. O contrato de reinject em `orchestrator/src/context/compaction-contract.ts` não muda: continua `NOT_IMPLEMENTED` e `reinject_allowed: false`. Rollback operacional: a variável ausente. Prova: `orchestrator/tests/unit/v22-p0-compaction.test.ts` com a env ausente devolve o texto de entrada sem o filtrar, e `orchestrator/tests/unit/context-ownership.test.ts` continua a recusar reinject. Não apaga `docs/v22/baseline/raw/` nem o raw histórico de bench.
+
 ### F2 — cerca de proveniência
 
 Commit de introdução: `4bbbe4b` (`feat(v22): truth-source fence and evidence secret redaction`). Reverter esse commit, ou só `orchestrator/src/knowledge/truth-source/`. Prova: `orchestrator/tests/unit/knowledge/truth-source-fence.test.ts` deixa de passar. Não apaga raw de bench.

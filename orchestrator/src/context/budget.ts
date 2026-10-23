@@ -6,7 +6,9 @@ import type {
   ContextSlice,
   ContextSliceKind,
 } from "./types.js";
+import { condenseExtractive } from "./extractive-condenser.js";
 import { countTokens } from "./tokenizer.js";
+import { isExtractiveCompactionEnabled } from "../v22/feature-flags.js";
 
 const PROTECTED_KINDS: Set<ContextSliceKind> = new Set([
   "acceptance_criteria",
@@ -100,6 +102,26 @@ export function applyContextBudget(
       tokenizer = m.tokenizer;
     }
     overflow = tokens_measured > maxTokens;
+  }
+
+  if (isExtractiveCompactionEnabled()) {
+    let changed = false;
+    for (let index = 0; index < kept.length; index += 1) {
+      const slice = kept[index];
+      if (!slice || PROTECTED_KINDS.has(slice.kind)) continue;
+      const condensed = condenseExtractive({ text: slice.content, mustKeep: [] }, true).after_text;
+      if (condensed !== slice.content) {
+        kept[index] = { ...slice, content: condensed };
+        changed = true;
+      }
+    }
+    if (changed) {
+      context_text = kept.map((s) => `--- path:${s.path} ---\n${s.content}`).join("\n");
+      const measured = countTokens(context_text);
+      tokens_measured = measured.tokens;
+      tokenizer = measured.tokenizer;
+      overflow = tokens_measured > maxTokens;
+    }
   }
 
   const paths_read = [...new Set(kept.map((s) => s.path))];

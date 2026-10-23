@@ -238,6 +238,7 @@ describe("V22-GAP-P0-1 baseline", () => {
         const allowed = new Set([
           "docs/v22/baseline/raw/p0-baseline-report.json",
           "docs/v22/baseline/raw/p0-handoff-report.json",
+          "docs/v22/baseline/raw/p0-compaction-report.json",
         ]);
         expect(names.filter((name) => !allowed.has(name))).toEqual([]);
       }

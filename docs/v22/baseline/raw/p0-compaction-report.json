@@ -1,0 +1,78 @@
+{
+  "schema_id": "v22-p0-compaction-report-1",
+  "task_id": "V22-GAP-P0-6",
+  "source_task": "restricoes_compactacao_handoff",
+  "evidence_class": "MEASURED_DETERMINISTIC_COMPACTION",
+  "condenser": "extractive-deterministic-1",
+  "flag": "EVOLVELOOP_COMPACTION",
+  "flag_default": "OFF",
+  "measurement_flag": "ON",
+  "tokenizer": "tiktoken:cl100k_base",
+  "path_normalization": "stable_relative",
+  "model_id": "deterministic-provider",
+  "tree_sha": "76cc11e6cf4eed30f6c6be68cc599eff8a7df88a",
+  "n": 3,
+  "n_status": "PASS",
+  "tokens_before": 22003,
+  "tokens_after": 10896,
+  "token_delta": -11107,
+  "fidelity_before": 1,
+  "fidelity": 1,
+  "fidelity_status": "PASS",
+  "lines_dropped": 854,
+  "savings_status": "PASS",
+  "savings_rule": "docs/v22/GOALS-OFFICIAL.md#5.3",
+  "tradeoff": null,
+  "unscored_loss": "prose_lines_outside_requirement_decision_restriction_evidence_next_step_path_negation_or_command",
+  "contract_status": "NOT_IMPLEMENTED",
+  "reinject_allowed": false,
+  "output_tokens": "NOT_MEASURED",
+  "cache_read_tokens": "NOT_MEASURED",
+  "cache_write_tokens": "NOT_MEASURED",
+  "cost": "NOT_MEASURED",
+  "model_latency_ms": "NOT_MEASURED",
+  "latency_ms": 1443.4655586666668,
+  "latency_ms_status": "LIMITED",
+  "dispersion": {
+    "tokens_after": {
+      "statistic": "sample_stddev",
+      "value": 0,
+      "n": 3,
+      "expectation": "zero_expected_deterministic",
+      "status": "PASS"
+    },
+    "model": "NOT_MEASURED"
+  },
+  "product_percent_gate": "NOT_MEASURED",
+  "limitation": "Uma tarefa, n=3, condenser extrativo com a flag ligada só nesta corrida. O default do produto continua OFF e o contrato de reinject continua NOT_IMPLEMENTED. Fidelidade é a fração de âncoras e restrições do cartão presentes depois. Prosa fora dessas classes, de paths, de negações e de comandos é perda não pontuada. Saída, cache, custo e latência de modelo são NOT_MEASURED. Dispersão 0 é a esperada no determinístico. tree_sha é o HEAD no momento da corrida.",
+  "measured_at": "2026-10-23T02:14:57.301Z",
+  "runs": [
+    {
+      "repetition": 1,
+      "tokens_before": 22003,
+      "tokens_after": 10896,
+      "fidelity": 1,
+      "lines_dropped": 854,
+      "latency_ms": 1455.3524400000001,
+      "missing": []
+    },
+    {
+      "repetition": 2,
+      "tokens_before": 22003,
+      "tokens_after": 10896,
+      "fidelity": 1,
+      "lines_dropped": 854,
+      "latency_ms": 1453.0444160000002,
+      "missing": []
+    },
+    {
+      "repetition": 3,
+      "tokens_before": 22003,
+      "tokens_after": 10896,
+      "fidelity": 1,
+      "lines_dropped": 854,
+      "latency_ms": 1421.9998199999995,
+      "missing": []
+    }
+  ]
+}

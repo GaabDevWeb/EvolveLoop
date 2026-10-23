@@ -159,7 +159,7 @@
         "compaction_tokens": "UNAVAILABLE",
         "source": "orchestrator/src/context/compaction-contract.ts",
         "cited_test": "orchestrator/tests/unit/context-ownership.test.ts — AC: contrato compaction/reinject fail-closed",
-        "note": "Handoff sem compactar. Não há número de token de compactação."
+        "note": "A corrida default mantém EVOLVELOOP_COMPACTION ausente, por isso estes campos ficam UNAVAILABLE. O condenser extrativo está em orchestrator/src/context/extractive-condenser.ts e a medição com a flag ligada está em raw/p0-compaction-report.json. Reinject continua recusado."
       }
     }
   ]

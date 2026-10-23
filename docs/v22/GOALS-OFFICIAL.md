@@ -94,7 +94,7 @@ Ficam `NOT_MEASURED` porque exigem modelo generativo ou chave de vendor: `output
 
 ### 3.5 Compactação
 
-O cartão `restricoes_compactacao_handoff` existe. Enquanto `orchestrator/src/context/compaction-contract.ts` reportar condenser `NOT_IMPLEMENTED` e `reinject_allowed: false`, os campos de compactação ficam `UNAVAILABLE`. Não há número de token de compactação. A corrida desse cartão é o handoff **sem** compactar: a negação e o critério de pronto têm de continuar no contexto montado. Não se implementa condenser, sumarizador nem reinject nesta baseline.
+O cartão `restricoes_compactacao_handoff` existe. A corrida default mantém `EVOLVELOOP_COMPACTION` ausente. Enquanto `orchestrator/src/context/compaction-contract.ts` reportar reinject `NOT_IMPLEMENTED` e `reinject_allowed: false`, os campos de compactação dessa corrida default ficam `UNAVAILABLE`. Não há reinject. P0-6 acrescenta um condenser extrativo determinístico, flag default OFF, em `orchestrator/src/context/extractive-condenser.ts`. A medição com a flag ligada está em `docs/v22/baseline/raw/p0-compaction-report.json`. Se a fidelidade das âncoras e restrições cair, a economia dessa corrida fica `NOT_MEASURED`.
 
 ## 4. GOAL-003 — integridade, proveniência, obsolescência e conflito
 
@@ -127,7 +127,7 @@ Uma corrida de laboratório que preserva a definição de pronto é evidência p
 
 ### 5.2 Compactação no handoff
 
-Enquanto o condenser não existir, o handoff medido é o pacote sem compactar. O campo de compactação fica `UNAVAILABLE`. Não se publica economia de compactação.
+O handoff medido por omissão é o pacote sem compactar (`EVOLVELOOP_COMPACTION` ausente). O campo de compactação dessa corrida fica `UNAVAILABLE`. A medição com o condenser ligado é outra corrida e não altera este default. Não se publica economia de compactação na corrida default.
 
 ### 5.3 Economia só com qualidade maior ou igual à do B0
 

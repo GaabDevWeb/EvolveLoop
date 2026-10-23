@@ -1,6 +1,7 @@
 export * from "./types.js";
 export * from "./ownership.js";
 export * from "./compaction-contract.js";
+export * from "./extractive-condenser.js";
 export * from "./tokenizer.js";
 export * from "./budget.js";
 export * from "./gate-bundle.js";

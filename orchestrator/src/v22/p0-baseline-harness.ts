@@ -4,7 +4,8 @@
  * B0 reads broad rg hits (45-path cap). V2.2 is the real pickup/handoff
  * prompt plus wiki/path retrieval under the canonical 22000-token budget.
  * Tiktoken is required. Generative output, vendor cache, cost, and Ollama
- * hybrid stay NOT_MEASURED. Compaction stays UNAVAILABLE.
+ * hybrid stay NOT_MEASURED. This default run keeps compaction UNAVAILABLE.
+ * The flag-on extractive measure is p0-compaction-measure.ts.
  */
 
 import { createHash } from "node:crypto";
@@ -918,6 +919,24 @@ async function runArm(
       verifier_pass: quality >= 1,
       rejected_source_refs: packed.rejected,
     };
+  } finally {
+    await rm(jobsDir, { recursive: true, force: true });
+  }
+}
+
+export async function measureP0V22Text(
+  taskId: P0TaskId,
+  repoRoot = repoRootFromModule(),
+): Promise<{ text: string; paths: string[] }> {
+  const loaded = loadFrozenTasks(repoRoot);
+  const task = loaded.tasks.find((item) => item.id === taskId);
+  if (!task) throw new Error(`missing frozen task ${taskId}`);
+  const cache = new CorpusCache(repoRoot);
+  const jobsDir = path.join(tmpdir(), "v22-p0-compaction", task.id);
+  await mkdir(jobsDir, { recursive: true });
+  try {
+    const packed = assembleV22(task, cache, repoRoot, jobsDir);
+    return { text: packed.text, paths: packed.paths };
   } finally {
     await rm(jobsDir, { recursive: true, force: true });
   }
