@@ -1,3 +1,4 @@
+import { spawnSync } from "node:child_process";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
@@ -80,6 +81,7 @@ describe("V22-GAP-P0-1 baseline", () => {
     expect(schema.properties.generative_token_reduction?.const).toBe("NOT_MEASURED");
     expect(schema.properties.compaction?.const).toBe("UNAVAILABLE");
     expect(schema.properties.tokenizer?.const).toBe("tiktoken:cl100k_base");
+    expect(schema.properties.path_normalization?.const).toBe("stable_relative");
     expect(schema.properties.ollama_hybrid?.const).toBe("NOT_MEASURED");
 
     const goals = readFileSync(path.join(repoRootFromModule(), "docs/v22/GOALS-OFFICIAL.md"), "utf-8");
@@ -108,6 +110,7 @@ describe("V22-GAP-P0-1 baseline", () => {
     expect(report.canonical_max_paths).toBe(45);
     expect(report.canonical_max_input_tokens).toBe(22_000);
     expect(report.dispersion_declaration).toBe("zero_expected_deterministic_for_input_tokens");
+    expect(report.path_normalization).toBe("stable_relative");
     expect(report.tasks.map((item) => item.id)).toEqual([...P0_TASK_IDS]);
 
     const compactionNumbers: string[] = [];
@@ -207,10 +210,37 @@ describe("V22-GAP-P0-1 baseline", () => {
     const compactChecks = compact.arms["V2.2"].runs[0]?.quality_checks ?? [];
     expect(compactChecks.filter((item) => item.id.startsWith("restriction:")).every((item) => item.pass)).toBe(true);
 
+    const out = path.join(repoRootFromModule(), "docs/v22/baseline/raw/p0-baseline-report.json");
     if (process.env.V22_P0_WRITE_REPORT === "1") {
-      const out = path.join(repoRootFromModule(), "docs/v22/baseline/raw/p0-baseline-report.json");
       mkdirSync(path.dirname(out), { recursive: true });
       writeFileSync(out, `${JSON.stringify(report, null, 2)}\n`);
+    } else {
+      const committed = JSON.parse(readFileSync(out, "utf-8")) as {
+        path_normalization?: string;
+        tree_sha?: string;
+        tasks?: Array<{ id: string; arms: { B0: { input_tokens: number }; "V2.2": { input_tokens: number; retrieval_input_tokens: number } } }>;
+      };
+      if (committed.path_normalization === "stable_relative" && committed.tree_sha && committed.tree_sha !== "NOT_MEASURED") {
+        for (const item of report.tasks) {
+          const saved = committed.tasks?.find((row) => row.id === item.id);
+          expect(saved?.arms.B0.input_tokens, item.id).toBe(item.arms.B0.input_tokens);
+          expect(saved?.arms["V2.2"].input_tokens, item.id).toBe(item.arms["V2.2"].input_tokens);
+          expect(saved?.arms["V2.2"].retrieval_input_tokens, item.id).toBe(item.arms["V2.2"].retrieval_input_tokens);
+        }
+        const diff = spawnSync("git", ["diff", "--name-only", committed.tree_sha, "HEAD"], {
+          cwd: repoRootFromModule(),
+          encoding: "utf-8",
+        });
+        const names = (diff.stdout ?? "")
+          .split("\n")
+          .map((line) => line.trim())
+          .filter(Boolean);
+        const allowed = new Set([
+          "docs/v22/baseline/raw/p0-baseline-report.json",
+          "docs/v22/baseline/raw/p0-handoff-report.json",
+        ]);
+        expect(names.filter((name) => !allowed.has(name))).toEqual([]);
+      }
     }
   }, 300_000);
 });
