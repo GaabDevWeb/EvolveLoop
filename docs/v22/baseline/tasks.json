@@ -2,16 +2,19 @@
   "schema_id": "v22-p0-baseline-tasks-1",
   "task_id": "V22-GAP-P0-1",
   "norm": "docs/v22/GOALS-OFFICIAL.md",
+  "corpus": "evolveloop-monorepo",
+  "corpus_note": "Mesmo corpus do benchmark oficial (git root). Não é o synth-repo.",
+  "canonical_budget": {
+    "scorer": "v22-anchor-scorer-1.0.0",
+    "scorer_mode": "file_evidence",
+    "max_paths": 45,
+    "max_input_tokens": 22000,
+    "source": "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/raw/battery-held-out-official-hybrid/OFFICIAL-MANIFEST.json"
+  },
   "n_min": 3,
   "arms": [
-    {
-      "id": "B0",
-      "role": "V2"
-    },
-    {
-      "id": "V2.2",
-      "role": "V2.2"
-    }
+    { "id": "B0", "role": "V2" },
+    { "id": "V2.2", "role": "V2.2" }
   ],
   "required_fields": [
     "input_tokens",
@@ -35,211 +38,121 @@
     "model_id": "deterministic-provider",
     "compaction": "UNAVAILABLE",
     "generative_token_reduction": "NOT_MEASURED",
-    "product_percent_gate": "NOT_MEASURED"
+    "product_percent_gate": "NOT_MEASURED",
+    "ollama_hybrid": "NOT_MEASURED"
   },
-  "limitation": "Contexto montado pelo DeterministicProvider (filesystem.search/read), sem modelo generativo. output_tokens, cache_read_tokens, cache_write_tokens e cost são NOT_MEASURED. Latência é a soma de duration_ms do provider local, não latência de modelo. Compactação é UNAVAILABLE: condenser NOT_IMPLEMENTED. O delta de input_tokens é MEASURED_DETERMINISTIC_CONTEXT e não é gate percentual de produto. Este B0 não é o retrieval híbrido de OFFICIAL-MANIFEST.json. tree_sha é o HEAD no momento da corrida; um commit posterior que só acrescenta o relatório não entra nesse SHA.",
+  "limitation": "input_tokens é o pacote montado no corpus oficial. B0 lê os hits de rg até 45 paths. V2.2 é o pickup/handoff real com retrieval e budget canónico de 22000 tokens. Tokenizer obrigatório: tiktoken:cl100k_base. output_tokens, cache e cost são NOT_MEASURED. Híbrido Ollama é NOT_MEASURED. Latência medida é a de retrieval, não de modelo. Dispersão 0 de input_tokens é a esperada nesta corrida determinística. Economia de input só conta quando a qualidade V2.2 >= B0 (GOALS-OFFICIAL seção 5.3). Compactação é UNAVAILABLE. tree_sha é o HEAD no momento da corrida.",
   "tasks": [
     {
       "id": "curta",
       "brief_name": "curta",
-      "query": "P0Q_CURTA",
-      "anchor_path": "src/answer.ts",
-      "budget": {
-        "max_paths": 15,
-        "max_pages": 5,
-        "max_tokens": 8000
-      },
-      "use_truth_fence": false,
-      "must_include": [
-        "RESPOSTA_CURTA_OK"
-      ],
-      "v22_must_exclude": [],
-      "b0_must_exclude": [],
-      "files": [
+      "source_task": "H05",
+      "source_file": "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-held-out-frozen.json",
+      "query": "Qual função trunca stdout para capabilities determinísticas?",
+      "b0_patterns": ["cleanOutput", "truncate"],
+      "anchors": [
         {
-          "path": "src/answer.ts",
-          "content": "P0Q_CURTA\nRESPOSTA_CURTA_OK\n",
-          "priority": 50,
-          "kind": "generic"
+          "path": "orchestrator/src/capabilities/results.ts",
+          "line": 14,
+          "substring": "export function cleanOutput"
         }
-      ]
+      ],
+      "restrictions": [],
+      "handoff": true
     },
     {
       "id": "projeto_grande",
       "brief_name": "projeto grande",
-      "query": "P0Q_GRANDE",
-      "anchor_path": "src/target.ts",
-      "budget": {
-        "max_paths": 1,
-        "max_pages": 1,
-        "max_tokens": 8000
-      },
-      "use_truth_fence": false,
-      "must_include": [
-        "FATO_ALVO_GRANDE"
-      ],
-      "v22_must_exclude": [
-        "NOISE_GRANDE_01"
-      ],
-      "b0_must_exclude": [],
-      "files": [
+      "source_task": "R01",
+      "source_file": "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-real-frozen.json",
+      "query": "Qual algoritmo de integridade o checkpoint do engine usa?",
+      "b0_patterns": ["checkpoint", "HMAC-SHA256"],
+      "b0_patterns_note": "No tree atual o padrão ALG de R01 acerta poucos ficheiros. checkpoint é o objeto de R01 e enche o cap de 45 paths.",
+      "anchors": [
         {
-          "path": "src/target.ts",
-          "content": "P0Q_GRANDE\nFATO_ALVO_GRANDE\n",
-          "priority": 100,
-          "kind": "generic"
+          "path": "orchestrator/src/jobs/checkpoint.ts",
+          "line": 10,
+          "substring": "HMAC-SHA256"
         }
       ],
-      "noise": {
-        "count": 8,
-        "path_template": "src/noise-{i}.ts",
-        "content_template": "P0Q_GRANDE\nNOISE_GRANDE_{i}\nvolume congelado de contexto sem segredo e sem chave. volume congelado de contexto sem segredo e sem chave. volume congelado de contexto sem segredo e sem chave. volume congelado de contexto sem segredo e sem chave. volume congelado de contexto sem segredo e sem chave. volume congelado de contexto sem segredo e sem chave. volume congelado de contexto sem segredo e sem chave. volume congelado de contexto sem segredo e sem chave. ",
-        "priority": 1,
-        "kind": "generic"
-      }
+      "restrictions": [],
+      "handoff": true
     },
     {
       "id": "retomada",
       "brief_name": "retomada",
-      "query": "P0Q_RETOMADA",
-      "anchor_path": ".ai/decisions/resume.md",
-      "budget": {
-        "max_paths": 1,
-        "max_pages": 1,
-        "max_tokens": 8000
-      },
-      "use_truth_fence": false,
-      "must_include": [
-        "DECISAO_RETOMADA_OK"
-      ],
-      "v22_must_exclude": [
-        "NOISE_RETOMADA_01"
-      ],
-      "b0_must_exclude": [],
-      "files": [
+      "source_task": "ADR-0013-q9",
+      "source_file": "docs/adr/0013-context-ownership-working-context.md",
+      "query": "O que sobrevive para resume do working context?",
+      "b0_patterns": ["sobrevive para resume", "working context"],
+      "anchors": [
         {
-          "path": ".ai/decisions/resume.md",
-          "content": "P0Q_RETOMADA\nDECISAO_RETOMADA_OK\n",
-          "priority": 100,
-          "kind": "knowledge"
+          "path": "docs/adr/0013-context-ownership-working-context.md",
+          "line": 37,
+          "substring": "O que sobrevive para resume?"
         }
       ],
-      "noise": {
-        "count": 8,
-        "path_template": "src/noise-{i}.ts",
-        "content_template": "P0Q_RETOMADA\nNOISE_RETOMADA_{i}\nvolume congelado de contexto sem segredo e sem chave. volume congelado de contexto sem segredo e sem chave. volume congelado de contexto sem segredo e sem chave. volume congelado de contexto sem segredo e sem chave. volume congelado de contexto sem segredo e sem chave. volume congelado de contexto sem segredo e sem chave. volume congelado de contexto sem segredo e sem chave. volume congelado de contexto sem segredo e sem chave. ",
-        "priority": 1,
-        "kind": "generic"
-      }
+      "restrictions": [],
+      "resume_marker": "O que sobrevive para resume?",
+      "handoff": true
     },
     {
       "id": "delegada",
       "brief_name": "delegada",
-      "query": "P0Q_DELEGADA",
-      "anchor_path": "src/work.ts",
-      "budget": {
-        "max_paths": 2,
-        "max_pages": 2,
-        "max_tokens": 8000
-      },
-      "use_truth_fence": false,
-      "must_include": [
-        "DOD_DELEGADA_VERBATIM"
-      ],
-      "v22_must_exclude": [
-        "NOISE_DELEGADA_01"
-      ],
-      "b0_must_exclude": [],
-      "files": [
+      "source_task": "R06",
+      "source_file": "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/tasks-real-frozen.json",
+      "query": "O que acontece se um spawn PDA não herdar GATE_BUNDLE completo?",
+      "b0_patterns": ["missing_gate_bundle", "GATE_BUNDLE"],
+      "anchors": [
         {
-          "path": "src/work.ts",
-          "content": "P0Q_DELEGADA\nTRABALHO_DELEGADO\n",
-          "priority": 80,
-          "kind": "generic"
+          "path": ".cursor/skills/orquestrar/references/gate-bundle.md",
+          "line": 4,
+          "substring": "missing_gate_bundle"
         }
       ],
-      "noise": {
-        "count": 8,
-        "path_template": "src/noise-{i}.ts",
-        "content_template": "P0Q_DELEGADA\nNOISE_DELEGADA_{i}\nvolume congelado de contexto sem segredo e sem chave. volume congelado de contexto sem segredo e sem chave. volume congelado de contexto sem segredo e sem chave. volume congelado de contexto sem segredo e sem chave. volume congelado de contexto sem segredo e sem chave. volume congelado de contexto sem segredo e sem chave. volume congelado de contexto sem segredo e sem chave. volume congelado de contexto sem segredo e sem chave. ",
-        "priority": 1,
-        "kind": "generic"
-      },
-      "handoff": {
-        "path": "handoff/dod.md",
-        "content": "definition_of_done: DOD_DELEGADA_VERBATIM\n",
-        "kind": "acceptance_criteria",
-        "priority": 100
-      }
+      "restrictions": ["Answer cites anchored file:line from repository"],
+      "handoff": true
     },
     {
       "id": "fontes_conflitantes",
       "brief_name": "fontes conflitantes",
-      "query": "P0Q_CONFLITO",
-      "anchor_path": "src/limit.ts",
-      "budget": {
-        "max_paths": 8,
-        "max_pages": 5,
-        "max_tokens": 8000
-      },
-      "use_truth_fence": true,
-      "must_include": [
-        "CODE_FACT_LIMIT_10"
-      ],
-      "v22_must_exclude": [
-        "WIKI_STALE_LIMIT_99",
-        "OBSOLETO_NAO_INJETAR"
-      ],
-      "b0_must_exclude": [],
-      "files": [
+      "source_task": "ADR-0013-vs-adr-compaction-defer",
+      "source_file": "docs/adr/0013-context-ownership-working-context.md",
+      "query": "ADR-DR-0005 compaction ownership NOT_IMPLEMENTED",
+      "b0_patterns": ["ADR-DR-0005", "NOT_IMPLEMENTED"],
+      "anchors": [
         {
-          "path": "src/limit.ts",
-          "content": "P0Q_CONFLITO\nCODE_FACT_LIMIT_10\n",
-          "priority": 100,
-          "kind": "generic",
-          "tier": "code",
-          "topic_key": "rate_limit",
-          "provenance_source_ref": "src/limit.ts"
-        },
-        {
-          "path": ".ai/limit.md",
-          "content": "P0Q_CONFLITO\nWIKI_STALE_LIMIT_99\n",
-          "priority": 50,
-          "kind": "knowledge",
-          "tier": "ai",
-          "topic_key": "rate_limit",
-          "ai_status": "atual",
-          "provenance_source_ref": ".ai/limit.md"
-        },
-        {
-          "path": ".ai/old-limit.md",
-          "content": "P0Q_CONFLITO\nOBSOLETO_NAO_INJETAR\n",
-          "priority": 40,
-          "kind": "knowledge",
-          "tier": "ai",
-          "topic_key": "old_limit",
-          "ai_status": "obsoleto",
-          "provenance_source_ref": ".ai/old-limit.md"
+          "path": "docs/adr/0013-context-ownership-working-context.md",
+          "line": 49,
+          "substring": "Compaction engine: **NOT_IMPLEMENTED**"
         }
-      ]
+      ],
+      "restrictions": [],
+      "conflict": {
+        "topic_key": "compaction_ownership",
+        "code_path": "docs/adr/0013-context-ownership-working-context.md",
+        "wiki_path": "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/fixtures/evolveloop-project-knowledge/.ai/pages/adr-compaction-defer.md",
+        "stale_marker": "ownership futuro"
+      },
+      "handoff": true
     },
     {
       "id": "restricoes_compactacao_handoff",
       "brief_name": "restrições sob compactação/handoff",
-      "query": "P0Q_COMPACT",
-      "anchor_path": "src/rule.ts",
-      "budget": {
-        "max_paths": 4,
-        "max_pages": 2,
-        "max_tokens": 8000
-      },
-      "use_truth_fence": false,
-      "must_include": [
-        "NAO_REMOVER_NEGACAO",
-        "DOD_COMPACTACAO_VERBATIM"
+      "source_task": "ADR-0013-q7",
+      "source_file": "docs/adr/0013-context-ownership-working-context.md",
+      "query": "Quando reinject é permitido e o que a compactação não pode apagar?",
+      "b0_patterns": ["reinject_allowed", "NOT_IMPLEMENTED"],
+      "anchors": [
+        {
+          "path": "docs/adr/0013-context-ownership-working-context.md",
+          "line": 35,
+          "substring": "reinject_allowed: false"
+        }
       ],
-      "v22_must_exclude": [],
-      "b0_must_exclude": [],
+      "restrictions": ["reinject_allowed: false", "No secret leakage in evidence payload"],
+      "security_restriction": "Nunca apagar paths, negações, comandos, DoD ou evidência. reinject_allowed: false.",
+      "handoff": true,
       "compaction_measurement": {
         "status": "UNAVAILABLE",
         "fidelity": "UNAVAILABLE",
@@ -247,20 +160,6 @@
         "source": "orchestrator/src/context/compaction-contract.ts",
         "cited_test": "orchestrator/tests/unit/context-ownership.test.ts — AC: contrato compaction/reinject fail-closed",
         "note": "Handoff sem compactar. Não há número de token de compactação."
-      },
-      "files": [
-        {
-          "path": "src/rule.ts",
-          "content": "P0Q_COMPACT\nNAO_REMOVER_NEGACAO\n",
-          "priority": 90,
-          "kind": "security_restriction"
-        }
-      ],
-      "handoff": {
-        "path": "handoff/dod.md",
-        "content": "definition_of_done: DOD_COMPACTACAO_VERBATIM\n",
-        "kind": "acceptance_criteria",
-        "priority": 100
       }
     }
   ]

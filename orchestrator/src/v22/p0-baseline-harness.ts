@@ -1,29 +1,33 @@
 /**
- * V22-GAP-P0-1 — six frozen tasks, B0 (V2) vs V2.2.
+ * V22-GAP-P0-1 — six baseline tasks on the official monorepo corpus.
  *
- * Uses DeterministicProvider only. Generative output, vendor cache, and cost
- * stay NOT_MEASURED. Compaction stays UNAVAILABLE: this module does not
- * compact, summarize, or reinject.
+ * B0 reads broad rg hits (45-path cap). V2.2 is the real pickup/handoff
+ * prompt plus wiki/path retrieval under the canonical 22000-token budget.
+ * Tiktoken is required. Generative output, vendor cache, cost, and Ollama
+ * hybrid stay NOT_MEASURED. Compaction stays UNAVAILABLE.
  */
 
 import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
-import { readFileSync } from "node:fs";
-import { mkdtemp, mkdir, rm, writeFile } from "node:fs/promises";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+import { mkdir, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
+import { performance } from "node:perf_hooks";
 import { fileURLToPath } from "node:url";
-import { applyContextBudget, sliceFromFile } from "../context/budget.js";
 import {
   assertReinjectAllowed,
   getCompactionReinjectContract,
 } from "../context/compaction-contract.js";
-import type { ContextSlice, ContextSliceKind } from "../context/types.js";
-import { countTokens, type TokenizerLabel } from "../context/tokenizer.js";
+import { rankRetrievalPaths, selectTopRankedPaths, tokenizeForRanking } from "../context/retrieval-ranking.js";
+import { requireTiktokenCounts } from "../context/tokenizer.js";
 import { applyTruthFence, codeOverridesWiki } from "../knowledge/truth-source/fence.js";
-import type { TruthSourcedItem, TruthSourceTier } from "../knowledge/truth-source/types.js";
-import { createDeterministicProvider } from "../providers/deterministic/index.js";
-import type { ExecuteRequest, ExecuteResult, GraphNode } from "../types/index.js";
+import type { TruthSourcedItem } from "../knowledge/truth-source/types.js";
+import { buildPickupPrompt } from "../jobs/job-pickup.js";
+import type { SkillJob } from "../jobs/job-store.js";
+import { preparePickupSpawnContext } from "../jobs/spawn-pickup-context.js";
+import { runRg } from "../context/bench-retrieval.js";
+import { buildBenchSkillJob } from "./bench-pickup-fixture.js";
 
 export const P0_TASK_IDS = [
   "curta",
@@ -36,101 +40,115 @@ export const P0_TASK_IDS = [
 
 export type P0TaskId = (typeof P0_TASK_IDS)[number];
 
-const SLICE_KINDS = new Set<ContextSliceKind>([
-  "acceptance_criteria",
-  "security_restriction",
-  "evidence",
-  "gate_bundle",
-  "knowledge",
-  "memory",
-  "checkpoint",
-  "working",
-  "generic",
-]);
+export const CANONICAL_MAX_PATHS = 45;
+export const CANONICAL_MAX_INPUT_TOKENS = 22_000;
+export const CANONICAL_SCORER = "v22-anchor-scorer-1.0.0";
 
-const TIERS = new Set<TruthSourceTier>(["code", "ai", "vault", "inferred"]);
+const REQUIRED_FIELDS = [
+  "input_tokens",
+  "output_tokens",
+  "cache_read_tokens",
+  "cache_write_tokens",
+  "cost",
+  "latency_ms",
+  "reread_count",
+  "n",
+  "dispersion",
+  "model_id",
+  "tree_sha",
+  "limitation",
+] as const;
 
-export interface FrozenFile {
+export interface AnchorSpec {
   path: string;
-  content: string;
-  priority: number;
-  kind: ContextSliceKind;
-  tier?: TruthSourceTier;
-  topic_key?: string;
-  ai_status?: "atual" | "obsoleto" | "draft" | "unknown";
+  line: number;
+  substring: string;
+}
+
+export interface ConflictSpec {
+  topic_key: string;
+  code_path: string;
+  wiki_path: string;
+  stale_marker: string;
 }
 
 export interface FrozenTask {
   id: P0TaskId;
   brief_name: string;
+  source_task: string;
   query: string;
-  anchor_path: string;
-  budget: { max_paths: number; max_pages: number; max_tokens: number };
-  use_truth_fence: boolean;
-  must_include: string[];
-  v22_must_exclude: string[];
-  b0_must_exclude: string[];
-  files: FrozenFile[];
+  b0_patterns: string[];
+  anchors: AnchorSpec[];
+  restrictions: string[];
+  resume_marker?: string;
+  conflict?: ConflictSpec;
+  security_restriction?: string;
+  handoff: boolean;
 }
 
-interface NoiseSpec {
-  count: number;
-  path_template: string;
-  content_template: string;
-  priority: number;
-  kind?: ContextSliceKind;
-}
-
-interface HandoffSpec {
-  path: string;
-  content: string;
-  kind: ContextSliceKind;
-  priority: number;
-}
-
-interface TaskCard extends FrozenTask {
-  noise?: NoiseSpec;
-  handoff?: HandoffSpec;
-}
-
-export interface TasksDocument {
+interface TasksDocument {
   schema_id: string;
   task_id: string;
   n_min: number;
   required_fields: string[];
   fixed_values: Record<string, string>;
   limitation: string;
-  tasks: TaskCard[];
+  tasks: FrozenTask[];
 }
 
-export interface ArmRun {
-  repetition: number;
-  input_tokens: number;
-  latency_ms: number;
-  reread_count: number;
-  paths_read: string[];
-  markers_present: string[];
-  verifier_pass: boolean;
-  rejected_source_refs?: string[];
-}
+export type MetricStatus = "PASS" | "LIMITED" | "NOT_MEASURED" | "UNAVAILABLE";
 
 export interface Dispersion {
   statistic: "sample_stddev";
   value: number;
   n: number;
+  expectation: "zero_expected_deterministic" | "retrieval_io_jitter";
+  status: MetricStatus;
+}
+
+export interface QualityCheck {
+  id: string;
+  pass: boolean;
+  note?: string;
+}
+
+export interface ArmRun {
+  repetition: number;
+  input_tokens: number;
+  retrieval_input_tokens: number;
+  latency_ms: number;
+  reread_count: number;
+  paths_read: string[];
+  quality: number;
+  quality_checks: QualityCheck[];
+  verifier_pass: boolean;
+  rejected_source_refs?: string[];
 }
 
 export interface ArmReport {
   arm: "B0" | "V2.2";
   role: "V2" | "V2.2";
+  evidence_class: "OFFICIAL_BASELINE" | "PROJECT_WIKI_PICKUP_BUDGET";
   input_tokens: number;
+  input_tokens_status: MetricStatus;
+  retrieval_input_tokens: number;
   output_tokens: "NOT_MEASURED";
+  output_tokens_status: "NOT_MEASURED";
   cache_read_tokens: "NOT_MEASURED";
+  cache_read_tokens_status: "NOT_MEASURED";
   cache_write_tokens: "NOT_MEASURED";
+  cache_write_tokens_status: "NOT_MEASURED";
   cost: "NOT_MEASURED";
+  cost_status: "NOT_MEASURED";
   latency_ms: number;
+  latency_ms_status: "LIMITED";
+  latency_kind: "retrieval";
+  model_latency_ms: "NOT_MEASURED";
+  model_latency_ms_status: "NOT_MEASURED";
   reread_count: number;
+  reread_count_status: MetricStatus;
   n: number;
+  n_status: "PASS";
   dispersion: {
     input_tokens: Dispersion;
     output_tokens: "NOT_MEASURED";
@@ -139,12 +157,14 @@ export interface ArmReport {
     cost: "NOT_MEASURED";
     latency_ms: Dispersion;
     reread_count: Dispersion;
+    model: "NOT_MEASURED";
   };
   model_id: "deterministic-provider";
   tree_sha: string;
   limitation: string;
-  tokenizer: TokenizerLabel;
-  evidence_class: "MEASURED_DETERMINISTIC_CONTEXT";
+  tokenizer: "tiktoken:cl100k_base";
+  quality: number;
+  quality_status: MetricStatus;
   verifier_pass: boolean;
   paths_read: string[];
   runs: ArmRun[];
@@ -166,13 +186,21 @@ export interface CompactionContractEvidence {
 export interface TaskReport {
   id: P0TaskId;
   brief_name: string;
+  source_task: string;
   compaction: "UNAVAILABLE";
   compaction_tokens: "UNAVAILABLE";
   compaction_fidelity: "UNAVAILABLE";
   generative_token_reduction: "NOT_MEASURED";
   product_percent_gate: "NOT_MEASURED";
-  deterministic_context_input_delta: number;
+  ollama_hybrid: "NOT_MEASURED";
+  quality_b0: number;
+  quality_v22: number;
+  quality_v22_gte_b0: boolean;
+  raw_input_delta: number;
+  savings_counted: boolean;
+  deterministic_context_savings_status: "PASS" | "LIMITED" | "NOT_MEASURED";
   deterministic_context_evidence_class: "MEASURED_DETERMINISTIC_CONTEXT";
+  savings_rule: "docs/v22/GOALS-OFFICIAL.md#5.3";
   compaction_contract?: CompactionContractEvidence;
   arms: { B0: ArmReport; "V2.2": ArmReport };
 }
@@ -184,8 +212,9 @@ export interface P0BaselineReport {
   generative_token_reduction: "NOT_MEASURED";
   product_percent_gate: "NOT_MEASURED";
   compaction: "UNAVAILABLE";
+  ollama_hybrid: "NOT_MEASURED";
   model_id: "deterministic-provider";
-  tokenizer: TokenizerLabel;
+  tokenizer: "tiktoken:cl100k_base";
   tree_sha: string;
   n: number;
   limitation: string;
@@ -193,25 +222,24 @@ export interface P0BaselineReport {
   norm: "docs/v22/GOALS-OFFICIAL.md";
   metrics_schema: "docs/v22/baseline/metrics.schema.json";
   tasks_file: "docs/v22/baseline/tasks.json";
+  canonical_scorer: typeof CANONICAL_SCORER;
+  canonical_max_paths: typeof CANONICAL_MAX_PATHS;
+  canonical_max_input_tokens: typeof CANONICAL_MAX_INPUT_TOKENS;
+  dispersion_declaration: "zero_expected_deterministic_for_input_tokens";
   measured_at: string;
   compaction_contract: CompactionContractEvidence;
   tasks: TaskReport[];
 }
 
-const REQUIRED_FIELDS = [
-  "input_tokens",
-  "output_tokens",
-  "cache_read_tokens",
-  "cache_write_tokens",
-  "cost",
-  "latency_ms",
-  "reread_count",
-  "n",
-  "dispersion",
-  "model_id",
-  "tree_sha",
-  "limitation",
-] as const;
+export function savingsStatus(
+  qualityV22: number,
+  qualityB0: number,
+  inputDelta: number,
+): "PASS" | "LIMITED" | "NOT_MEASURED" {
+  if (qualityV22 < qualityB0) return "NOT_MEASURED";
+  if (inputDelta < 0) return "PASS";
+  return "LIMITED";
+}
 
 export function repoRootFromModule(): string {
   return path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../..");
@@ -225,9 +253,7 @@ function asRecord(value: unknown, label: string): Record<string, unknown> {
 }
 
 function asString(value: unknown, label: string): string {
-  if (typeof value !== "string" || value.length === 0) {
-    throw new Error(`${label} must be a non-empty string`);
-  }
+  if (typeof value !== "string" || value.length === 0) throw new Error(`${label} must be a non-empty string`);
   return value;
 }
 
@@ -238,13 +264,6 @@ function asStringList(value: unknown, label: string): string[] {
   return value as string[];
 }
 
-function asKind(value: unknown, label: string): ContextSliceKind {
-  if (typeof value !== "string" || !SLICE_KINDS.has(value as ContextSliceKind)) {
-    throw new Error(`${label} is not a context slice kind`);
-  }
-  return value as ContextSliceKind;
-}
-
 function asPositiveInt(value: unknown, label: string): number {
   if (typeof value !== "number" || !Number.isInteger(value) || value <= 0) {
     throw new Error(`${label} must be a positive integer`);
@@ -252,116 +271,48 @@ function asPositiveInt(value: unknown, label: string): number {
   return value;
 }
 
-function parseFile(value: unknown, label: string): FrozenFile {
+function parseAnchor(value: unknown, label: string): AnchorSpec {
   const row = asRecord(value, label);
-  const tier = row.tier;
-  if (tier !== undefined && (typeof tier !== "string" || !TIERS.has(tier as TruthSourceTier))) {
-    throw new Error(`${label}.tier is invalid`);
-  }
-  const ai = row.ai_status;
-  if (
-    ai !== undefined &&
-    ai !== "atual" &&
-    ai !== "obsoleto" &&
-    ai !== "draft" &&
-    ai !== "unknown"
-  ) {
-    throw new Error(`${label}.ai_status is invalid`);
-  }
   return {
     path: asString(row.path, `${label}.path`),
-    content: asString(row.content, `${label}.content`),
-    priority: row.priority === undefined ? 10 : asPositiveInt(row.priority, `${label}.priority`),
-    kind: asKind(row.kind ?? "generic", `${label}.kind`),
-    tier: tier as TruthSourceTier | undefined,
-    topic_key: row.topic_key === undefined ? undefined : asString(row.topic_key, `${label}.topic_key`),
-    ai_status: ai,
+    line: asPositiveInt(row.line, `${label}.line`),
+    substring: asString(row.substring, `${label}.substring`),
   };
 }
 
-function expandTask(card: TaskCard): FrozenTask {
-  const files = card.files.map((file) => ({ ...file }));
-  if (card.noise) {
-    if (!card.noise.path_template.includes("{i}") || !card.noise.content_template.includes("{i}")) {
-      throw new Error(`${card.id}: noise templates must include {i}`);
-    }
-    for (let n = 1; n <= card.noise.count; n += 1) {
-      const i = String(n).padStart(2, "0");
-      files.push({
-        path: card.noise.path_template.replaceAll("{i}", i),
-        content: card.noise.content_template.replaceAll("{i}", i),
-        priority: card.noise.priority,
-        kind: card.noise.kind ?? "generic",
-      });
-    }
-  }
-  if (card.handoff) {
-    files.push({
-      path: card.handoff.path,
-      content: card.handoff.content,
-      priority: card.handoff.priority,
-      kind: card.handoff.kind,
-    });
-  }
-  const paths = new Set(files.map((file) => file.path));
-  if (paths.size !== files.length) {
-    throw new Error(`${card.id}: duplicate fixture path`);
-  }
-  if (!paths.has(card.anchor_path)) {
-    throw new Error(`${card.id}: anchor_path is not in the fixture`);
-  }
-  return { ...card, files };
-}
-
-function parseTask(value: unknown, index: number): TaskCard {
+function parseTask(value: unknown, index: number): FrozenTask {
   const row = asRecord(value, `tasks[${index}]`);
   const id = asString(row.id, `tasks[${index}].id`);
-  if (!P0_TASK_IDS.includes(id as P0TaskId)) {
-    throw new Error(`unknown baseline task id: ${id}`);
+  if (!P0_TASK_IDS.includes(id as P0TaskId)) throw new Error(`unknown baseline task id: ${id}`);
+  const anchorsRaw = row.anchors;
+  if (!Array.isArray(anchorsRaw) || anchorsRaw.length === 0) {
+    throw new Error(`tasks[${index}].anchors must be a non-empty array`);
   }
-  const budget = asRecord(row.budget, `tasks[${index}].budget`);
-  const filesRaw = row.files;
-  if (!Array.isArray(filesRaw) || filesRaw.length === 0) {
-    throw new Error(`tasks[${index}].files must be a non-empty array`);
-  }
-  let noise: NoiseSpec | undefined;
-  if (row.noise !== undefined) {
-    const noiseRow = asRecord(row.noise, `tasks[${index}].noise`);
-    noise = {
-      count: asPositiveInt(noiseRow.count, `tasks[${index}].noise.count`),
-      path_template: asString(noiseRow.path_template, `tasks[${index}].noise.path_template`),
-      content_template: asString(noiseRow.content_template, `tasks[${index}].noise.content_template`),
-      priority: noiseRow.priority === undefined ? 1 : asPositiveInt(noiseRow.priority, `tasks[${index}].noise.priority`),
-      kind: noiseRow.kind === undefined ? undefined : asKind(noiseRow.kind, `tasks[${index}].noise.kind`),
-    };
-  }
-  let handoff: HandoffSpec | undefined;
-  if (row.handoff !== undefined) {
-    const handoffRow = asRecord(row.handoff, `tasks[${index}].handoff`);
-    handoff = {
-      path: asString(handoffRow.path, `tasks[${index}].handoff.path`),
-      content: asString(handoffRow.content, `tasks[${index}].handoff.content`),
-      kind: asKind(handoffRow.kind, `tasks[${index}].handoff.kind`),
-      priority: handoffRow.priority === undefined ? 100 : asPositiveInt(handoffRow.priority, `tasks[${index}].handoff.priority`),
+  let conflict: ConflictSpec | undefined;
+  if (row.conflict !== undefined) {
+    const c = asRecord(row.conflict, `tasks[${index}].conflict`);
+    conflict = {
+      topic_key: asString(c.topic_key, "conflict.topic_key"),
+      code_path: asString(c.code_path, "conflict.code_path"),
+      wiki_path: asString(c.wiki_path, "conflict.wiki_path"),
+      stale_marker: asString(c.stale_marker, "conflict.stale_marker"),
     };
   }
   return {
     id: id as P0TaskId,
     brief_name: asString(row.brief_name, `tasks[${index}].brief_name`),
+    source_task: asString(row.source_task, `tasks[${index}].source_task`),
     query: asString(row.query, `tasks[${index}].query`),
-    anchor_path: asString(row.anchor_path, `tasks[${index}].anchor_path`),
-    budget: {
-      max_paths: asPositiveInt(budget.max_paths, `tasks[${index}].budget.max_paths`),
-      max_pages: asPositiveInt(budget.max_pages, `tasks[${index}].budget.max_pages`),
-      max_tokens: asPositiveInt(budget.max_tokens, `tasks[${index}].budget.max_tokens`),
-    },
-    use_truth_fence: row.use_truth_fence === true,
-    must_include: asStringList(row.must_include, `tasks[${index}].must_include`),
-    v22_must_exclude: asStringList(row.v22_must_exclude ?? [], `tasks[${index}].v22_must_exclude`),
-    b0_must_exclude: asStringList(row.b0_must_exclude ?? [], `tasks[${index}].b0_must_exclude`),
-    files: filesRaw.map((file, fileIndex) => parseFile(file, `tasks[${index}].files[${fileIndex}]`)),
-    noise,
-    handoff,
+    b0_patterns: asStringList(row.b0_patterns, `tasks[${index}].b0_patterns`),
+    anchors: anchorsRaw.map((anchor, anchorIndex) => parseAnchor(anchor, `tasks[${index}].anchors[${anchorIndex}]`)),
+    restrictions: asStringList(row.restrictions ?? [], `tasks[${index}].restrictions`),
+    resume_marker: row.resume_marker === undefined ? undefined : asString(row.resume_marker, "resume_marker"),
+    conflict,
+    security_restriction:
+      row.security_restriction === undefined
+        ? undefined
+        : asString(row.security_restriction, "security_restriction"),
+    handoff: row.handoff === true,
   };
 }
 
@@ -374,11 +325,11 @@ export function loadFrozenTasks(repoRoot = repoRootFromModule()): {
   const tasksPath = path.join(repoRoot, "docs/v22/baseline/tasks.json");
   const raw = readFileSync(tasksPath, "utf-8");
   const parsed = asRecord(JSON.parse(raw) as unknown, "tasks.json");
-  if (parsed.schema_id !== "v22-p0-baseline-tasks-1") {
-    throw new Error("tasks.json schema_id mismatch");
-  }
-  if (parsed.task_id !== "V22-GAP-P0-1") {
-    throw new Error("tasks.json task_id mismatch");
+  if (parsed.schema_id !== "v22-p0-baseline-tasks-1") throw new Error("tasks.json schema_id mismatch");
+  if (parsed.corpus !== "evolveloop-monorepo") throw new Error("tasks.json corpus must be the official monorepo");
+  const budget = asRecord(parsed.canonical_budget, "canonical_budget");
+  if (budget.max_input_tokens !== CANONICAL_MAX_INPUT_TOKENS || budget.max_paths !== CANONICAL_MAX_PATHS) {
+    throw new Error("tasks.json canonical budget does not match the scorer cap of 45 paths / 22000 tokens");
   }
   const required = asStringList(parsed.required_fields, "required_fields");
   for (const field of REQUIRED_FIELDS) {
@@ -386,9 +337,7 @@ export function loadFrozenTasks(repoRoot = repoRootFromModule()): {
   }
   const fixed = asRecord(parsed.fixed_values, "fixed_values");
   const fixedValues: Record<string, string> = {};
-  for (const [key, value] of Object.entries(fixed)) {
-    fixedValues[key] = asString(value, `fixed_values.${key}`);
-  }
+  for (const [key, value] of Object.entries(fixed)) fixedValues[key] = asString(value, `fixed_values.${key}`);
   for (const key of [
     "output_tokens",
     "cache_read_tokens",
@@ -398,37 +347,34 @@ export function loadFrozenTasks(repoRoot = repoRootFromModule()): {
     "compaction",
     "generative_token_reduction",
     "product_percent_gate",
+    "ollama_hybrid",
   ]) {
     if (!(key in fixedValues)) throw new Error(`fixed_values.${key} missing`);
   }
   if (!Array.isArray(parsed.tasks)) throw new Error("tasks must be an array");
-  const cards = parsed.tasks.map((task, index) => parseTask(task, index));
-  const ids = cards.map((card) => card.id);
+  const tasks = parsed.tasks.map((task, index) => parseTask(task, index));
+  const ids = tasks.map((task) => task.id);
   if (ids.length !== P0_TASK_IDS.length || P0_TASK_IDS.some((id) => !ids.includes(id))) {
     throw new Error(`tasks.json must contain exactly ${P0_TASK_IDS.join(", ")}`);
   }
-  const document: TasksDocument = {
-    schema_id: "v22-p0-baseline-tasks-1",
-    task_id: "V22-GAP-P0-1",
-    n_min: asPositiveInt(parsed.n_min, "n_min"),
-    required_fields: required,
-    fixed_values: fixedValues,
-    limitation: asString(parsed.limitation, "limitation"),
-    tasks: cards,
-  };
   return {
-    document,
-    tasks: cards.map((card) => expandTask(card)),
+    document: {
+      schema_id: "v22-p0-baseline-tasks-1",
+      task_id: "V22-GAP-P0-1",
+      n_min: asPositiveInt(parsed.n_min, "n_min"),
+      required_fields: required,
+      fixed_values: fixedValues,
+      limitation: asString(parsed.limitation, "limitation"),
+      tasks,
+    },
+    tasks,
     tasksPath,
     tasksSha256: createHash("sha256").update(raw, "utf8").digest("hex"),
   };
 }
 
 function readTreeSha(repoRoot: string): string {
-  const result = spawnSync("git", ["rev-parse", "HEAD"], {
-    cwd: repoRoot,
-    encoding: "utf-8",
-  });
+  const result = spawnSync("git", ["rev-parse", "HEAD"], { cwd: repoRoot, encoding: "utf-8" });
   const sha = result.stdout?.trim() ?? "";
   if (result.status !== 0 || !/^[0-9a-f]{40}$/.test(sha)) return "NOT_MEASURED";
   return sha;
@@ -438,7 +384,7 @@ function readCompactionContract(): CompactionContractEvidence {
   const contract = getCompactionReinjectContract();
   if (contract.status !== "NOT_IMPLEMENTED" || contract.reinject_allowed !== false) {
     throw new Error(
-      "P0 baseline refuses to invent compaction numbers, and the contract is no longer NOT_IMPLEMENTED with reinject disabled. Measure compaction in a later task.",
+      "P0 baseline refuses to invent compaction numbers, and the contract is no longer NOT_IMPLEMENTED with reinject disabled.",
     );
   }
   const passed = assertReinjectAllowed(true);
@@ -465,246 +411,353 @@ function normPath(filePath: string): string {
   return filePath.split(path.sep).join("/");
 }
 
-function makeRequest(capability: string, constraints: Record<string, string>, runId: string): ExecuteRequest {
-  const node: GraphNode = {
-    id: "p0",
-    capability,
-    type: "worker",
-    status: "running",
-    dependencies: [],
-    definition_of_done: [{ id: "d1", check: "ok", verification: "automated" }],
-    constraints,
-    metadata: {},
-    retry_count: 0,
-  };
-  return {
-    run_id: runId,
-    node_id: "p0",
-    capability,
-    inputs: [],
-    definition_of_done: node.definition_of_done,
-    policy: { retries_remaining: 0 },
-    memory_scope: "p0-baseline",
-    knowledge_hits: [],
-    briefing: "v22-gap-p0-1",
-    node,
-  };
-}
+class CorpusCache {
+  private text = new Map<string, string>();
 
-interface ReadHit {
-  path: string;
-  content: string;
-}
+  constructor(private root: string) {}
 
-async function providerCall(
-  provider: ReturnType<typeof createDeterministicProvider>,
-  capability: string,
-  constraints: Record<string, string>,
-  runId: string,
-): Promise<{ result: unknown; durationMs: number }> {
-  const response: ExecuteResult = await provider.execute(makeRequest(capability, constraints, runId));
-  if (!response.success) {
-    throw new Error(`${capability} failed: ${response.error?.code ?? "UNKNOWN"} ${response.error?.message ?? ""}`);
+  read(rel: string): string {
+    const key = normPath(rel);
+    const cached = this.text.get(key);
+    if (cached !== undefined) return cached;
+    const abs = path.join(this.root, key);
+    let body = "";
+    try {
+      if (existsSync(abs) && statSync(abs).isFile() && statSync(abs).size <= 1_000_000) {
+        body = readFileSync(abs, "utf-8");
+      }
+    } catch {
+      body = "";
+    }
+    this.text.set(key, body);
+    return body;
   }
-  const spec = response.evidence?.spec as { normalized?: unknown } | undefined;
-  return { result: spec?.normalized, durationMs: response.duration_ms };
 }
 
-function markersIn(text: string, markers: string[]): string[] {
-  return markers.filter((marker) => text.includes(marker));
+function isMeasurementArtifact(rel: string): boolean {
+  const key = normPath(rel);
+  return (
+    key.startsWith("docs/v22/baseline/") ||
+    key === "orchestrator/src/v22/p0-baseline-harness.ts" ||
+    key === "orchestrator/tests/unit/v22-p0-baseline.test.ts"
+  );
 }
 
-function verifier(
-  text: string,
-  mustInclude: string[],
-  mustExclude: string[],
-): { pass: boolean; missing: string[]; presentForbidden: string[] } {
-  const missing = mustInclude.filter((marker) => !text.includes(marker));
-  const presentForbidden = mustExclude.filter((marker) => text.includes(marker));
-  return { pass: missing.length === 0 && presentForbidden.length === 0, missing, presentForbidden };
+function rgHits(root: string, patterns: string[]): string[] {
+  const hits: string[] = [];
+  for (const pattern of patterns) {
+    if (!pattern.trim()) continue;
+    hits.push(...runRg(root, pattern));
+  }
+  return [...new Set(hits.map(normPath))]
+    .filter((rel) => !rel.startsWith("secrets/") && !isMeasurementArtifact(rel))
+    .sort();
 }
 
-function assemble(hits: ReadHit[]): { text: string; rereadCount: number; paths: string[] } {
+function queryPatterns(query: string): string[] {
+  const terms = tokenizeForRanking(query).filter((term) => term.length >= 4);
+  return [...new Set(terms)].slice(0, 6);
+}
+
+function wikiPages(root: string): string[] {
+  const dirs = [
+    path.join(root, ".ai/pages"),
+    path.join(
+      root,
+      "docs/internal/historical/evals/docs-evals/experiments/V22-BENCH/fixtures/evolveloop-project-knowledge/.ai/pages",
+    ),
+  ];
+  const out: string[] = [];
+  for (const dir of dirs) {
+    if (!existsSync(dir)) continue;
+    for (const name of readdirSync(dir)) {
+      if (!name.endsWith(".md")) continue;
+      const rel = normPath(path.relative(root, path.join(dir, name)));
+      if (!isMeasurementArtifact(rel)) out.push(rel);
+    }
+  }
+  return out;
+}
+
+function sourcePaths(text: string): string[] {
+  const paths: string[] = [];
+  let inBlock = false;
+  for (const line of text.split("\n")) {
+    if (line.trim() === "source_paths:") {
+      inBlock = true;
+      continue;
+    }
+    if (!inBlock) continue;
+    if (line.trim().startsWith("- ")) paths.push(line.trim().slice(2).trim());
+    else if (line.trim() && !line.startsWith(" ")) inBlock = false;
+  }
+  return paths;
+}
+
+function anchorCheck(cache: CorpusCache, assembled: string, pathsRead: string[], anchor: AnchorSpec): QualityCheck {
+  const pathRead = pathsRead.includes(anchor.path);
+  const fileText = cache.read(anchor.path);
+  const inFile = Boolean(anchor.substring) && fileText.includes(anchor.substring);
+  const inContext = Boolean(anchor.substring) && assembled.includes(anchor.substring);
+  const lines = fileText.split("\n");
+  const lineOk = anchor.line >= 1 && anchor.line <= lines.length && lines[anchor.line - 1]?.includes(anchor.substring);
+  let note: string | undefined;
+  if (!pathRead) note = "miss path not read";
+  else if (!inFile) note = "miss evidence in file";
+  else if (!inContext) note = "anchor absent from assembled context";
+  else if (!lineOk) note = `anchor line drift (file evidence): ${anchor.path}:${anchor.line}`;
+  return { id: `anchor:${anchor.path}`, pass: pathRead && inFile && inContext, note };
+}
+
+function qualityChecks(task: FrozenTask, cache: CorpusCache, text: string, pathsRead: string[]): QualityCheck[] {
+  const checks: QualityCheck[] = task.anchors.map((anchor) => anchorCheck(cache, text, pathsRead, anchor));
+  for (const restriction of task.restrictions) {
+    checks.push({
+      id: `restriction:${restriction.slice(0, 48)}`,
+      pass: text.includes(restriction),
+      note: text.includes(restriction) ? undefined : "missing restriction",
+    });
+  }
+  if (task.resume_marker) {
+    checks.push({
+      id: "resume",
+      pass: text.includes(task.resume_marker),
+      note: text.includes(task.resume_marker) ? undefined : "resume marker absent",
+    });
+  }
+  if (task.conflict) {
+    const signaled = text.includes("truth_fence code_authority_over_wiki");
+    checks.push({
+      id: "conflict_signaled",
+      pass: signaled,
+      note: signaled ? undefined : "fence did not signal code over wiki",
+    });
+    checks.push({
+      id: "stale_absent",
+      pass: !text.includes(task.conflict.stale_marker),
+      note: text.includes(task.conflict.stale_marker) ? "stale marker still in context" : undefined,
+    });
+  }
+  return checks;
+}
+
+function qualityScore(checks: QualityCheck[]): number {
+  if (checks.length === 0) return 0;
+  return checks.filter((check) => check.pass).length / checks.length;
+}
+
+function qualityStatus(score: number): MetricStatus {
+  if (score >= 1) return "PASS";
+  if (score > 0) return "LIMITED";
+  return "LIMITED";
+}
+
+interface Packed {
+  text: string;
+  paths: string[];
+  rereadCount: number;
+  retrievalTokens: number;
+  rejected: string[];
+}
+
+function packFiles(cache: CorpusCache, paths: string[]): { text: string; rereadCount: number } {
   const seen = new Set<string>();
   let rereadCount = 0;
   const parts: string[] = [];
-  const paths: string[] = [];
-  for (const hit of hits) {
-    const filePath = normPath(hit.path);
-    if (seen.has(filePath)) rereadCount += 1;
-    else {
-      seen.add(filePath);
-      paths.push(filePath);
-    }
-    parts.push(`--- path:${filePath} ---\n${hit.content}`);
+  for (const rel of paths) {
+    const key = normPath(rel);
+    if (seen.has(key)) rereadCount += 1;
+    else seen.add(key);
+    parts.push(`--- ${key} ---\n${cache.read(key)}`);
   }
-  return { text: parts.join("\n"), rereadCount, paths };
+  return { text: parts.join("\n"), rereadCount };
 }
 
-function fileByPath(task: FrozenTask): Map<string, FrozenFile> {
-  return new Map(task.files.map((file) => [normPath(file.path), file]));
+function countOne(text: string): number {
+  return requireTiktokenCounts([text])[0] ?? 0;
 }
 
-function fenceSlices(slices: ContextSlice[], task: FrozenTask): {
-  kept: ContextSlice[];
-  rejected: string[];
-} {
-  const meta = fileByPath(task);
-  const items: TruthSourcedItem[] = [];
-  const tiered = new Set<string>();
-  for (const slice of slices) {
-    const file = meta.get(normPath(slice.path));
-    if (!file?.tier || !file.topic_key) continue;
-    tiered.add(normPath(slice.path));
-    items.push({
-      topic_key: file.topic_key,
-      tier: file.tier,
-      provenance: { source_ref: normPath(slice.path) },
-      excerpt: slice.content,
-      ai_status: file.ai_status,
-    });
+function applyConflictFence(
+  task: FrozenTask,
+  cache: CorpusCache,
+  hits: string[],
+): { drop: Set<string>; rejected: string[]; note: string } {
+  const drop = new Set<string>();
+  if (!task.conflict) return { drop, rejected: [], note: "" };
+  const codePath = normPath(task.conflict.code_path);
+  const wikiPath = normPath(task.conflict.wiki_path);
+  if (!hits.includes(codePath) || !hits.includes(wikiPath)) {
+    return { drop, rejected: [], note: "conflict pair was not in the retrieval hit list" };
   }
+  const items: TruthSourcedItem[] = [
+    {
+      topic_key: task.conflict.topic_key,
+      tier: "code",
+      provenance: { source_ref: codePath },
+      excerpt: cache.read(codePath).slice(0, 500),
+    },
+    {
+      topic_key: task.conflict.topic_key,
+      tier: "ai",
+      ai_status: "atual",
+      provenance: { source_ref: wikiPath },
+      excerpt: cache.read(wikiPath).slice(0, 500),
+    },
+  ];
   const fence = applyTruthFence(items);
-  const accepted = new Set(fence.accepted.map((item) => item.provenance.source_ref));
   const overridden = codeOverridesWiki(
     items.filter((item) => item.tier === "code"),
     items.filter((item) => item.tier !== "code"),
   );
-  for (const item of overridden) {
-    if (item.superseded && item.provenance.source_ref) accepted.delete(item.provenance.source_ref);
+  const rejected = new Set<string>();
+  for (const item of fence.rejected) {
+    if (item.provenance.source_ref) rejected.add(item.provenance.source_ref);
   }
-  const rejected = [
-    ...fence.rejected.map((item) => item.provenance.source_ref),
-    ...overridden.filter((item) => item.superseded).map((item) => item.provenance.source_ref),
-  ].filter((ref): ref is string => Boolean(ref));
+  for (const item of overridden) {
+    if (item.superseded && item.provenance.source_ref) {
+      rejected.add(item.provenance.source_ref);
+      drop.add(item.provenance.source_ref);
+    }
+  }
   return {
-    kept: slices.filter((slice) => {
-      const filePath = normPath(slice.path);
-      return !tiered.has(filePath) || accepted.has(filePath);
-    }),
-    rejected: [...new Set(rejected)],
+    drop,
+    rejected: [...rejected],
+    note: overridden.some((item) => item.superseded) ? "code_authority_over_wiki" : "",
   };
 }
 
-async function materialize(task: FrozenTask, root: string): Promise<void> {
-  for (const file of task.files) {
-    const abs = path.join(root, file.path);
-    await mkdir(path.dirname(abs), { recursive: true });
-    await writeFile(abs, file.content, "utf-8");
+/** Tokens kept free inside the 22000 cap for DoD, gate bundle, and security slices. */
+const PICKUP_PROTECTED_HEADROOM = 800;
+
+function budgetPaths(
+  cache: CorpusCache,
+  ranked: Array<{ path: string; score: number }>,
+  reservedTokens: number,
+): string[] {
+  const pool = ranked.slice(0, CANONICAL_MAX_PATHS * 4);
+  const bodies = pool.map((item) => cache.read(item.path));
+  const counts = requireTiktokenCounts(bodies);
+  const tokens = new Map(pool.map((item, index) => [item.path, counts[index] ?? 0]));
+  const selected = selectTopRankedPaths(ranked, (rel) => tokens.get(rel) ?? 1, CANONICAL_MAX_PATHS);
+  const kept: string[] = [];
+  let used = reservedTokens;
+  for (const rel of selected) {
+    const next = tokens.get(rel) ?? countOne(cache.read(rel));
+    const separator = 8;
+    if (kept.length >= CANONICAL_MAX_PATHS) break;
+    if (used + next + separator > CANONICAL_MAX_INPUT_TOKENS) continue;
+    kept.push(rel);
+    used += next + separator;
   }
+  return kept;
 }
 
-async function searchAndRead(
-  provider: ReturnType<typeof createDeterministicProvider>,
-  task: FrozenTask,
-  runId: string,
-): Promise<{ hits: ReadHit[]; durationMs: number }> {
-  const search = await providerCall(
-    provider,
-    "filesystem.search",
-    { pattern: task.query, path: "." },
-    runId,
-  );
-  const matches = (search.result as { matches?: Array<{ path: string }> } | undefined)?.matches ?? [];
-  const ordered: string[] = [];
-  const seen = new Set<string>();
-  for (const match of matches) {
-    const filePath = normPath(match.path);
-    if (seen.has(filePath)) continue;
-    seen.add(filePath);
-    ordered.push(filePath);
-  }
-  if (!ordered.includes(normPath(task.anchor_path))) {
-    throw new Error(`${task.id}: search did not hit anchor ${task.anchor_path}`);
-  }
-  const handoff = task.files.find((file) => file.kind === "acceptance_criteria");
-  if (handoff && !ordered.includes(normPath(handoff.path))) ordered.push(normPath(handoff.path));
-
-  const hits: ReadHit[] = [];
-  let durationMs = search.durationMs;
-  for (const filePath of ordered) {
-    const read = await providerCall(provider, "filesystem.read", { path: filePath }, runId);
-    durationMs += read.durationMs;
-    const body = read.result as { content?: string; path?: string } | undefined;
-    if (typeof body?.content !== "string") throw new Error(`${task.id}: empty read ${filePath}`);
-    hits.push({ path: normPath(body.path ?? filePath), content: body.content });
-  }
-  return { hits, durationMs };
-}
-
-function sliceFor(hit: ReadHit, task: FrozenTask): ContextSlice {
-  const meta = fileByPath(task).get(normPath(hit.path));
-  return sliceFromFile(normPath(hit.path), hit.content, meta?.kind ?? "generic", meta?.priority ?? 10);
-}
-
-async function runArm(
-  arm: "B0" | "V2.2",
-  task: FrozenTask,
-  workspace: string,
-  repetition: number,
-): Promise<ArmRun & { tokenizer: TokenizerLabel }> {
-  const graphifyBefore = process.env.EVOLVELOOP_GRAPHIFY;
-  const provider = createDeterministicProvider("filesystem", workspace);
-  const runId = `p0-${task.id}-${arm}-${repetition}`;
-  const { hits, durationMs } = await searchAndRead(provider, task, runId);
-  let text: string;
-  let rereadCount: number;
-  let paths: string[];
-  let rejected: string[] | undefined;
-  let latencyMs = durationMs;
-
-  if (arm === "B0") {
-    const anchor = hits.find((hit) => normPath(hit.path) === normPath(task.anchor_path));
-    if (!anchor) throw new Error(`${task.id}: missing anchor hit`);
-    const reread = await providerCall(
-      provider,
-      "filesystem.read",
-      { path: normPath(task.anchor_path) },
-      runId,
-    );
-    latencyMs += reread.durationMs;
-    const body = reread.result as { content?: string; path?: string };
-    const assembled = assemble([
-      ...hits,
-      { path: normPath(body.path ?? task.anchor_path), content: body.content ?? "" },
-    ]);
-    text = assembled.text;
-    rereadCount = assembled.rereadCount;
-    paths = assembled.paths;
-  } else {
-    let slices = hits.map((hit) => sliceFor(hit, task));
-    if (task.use_truth_fence) {
-      const fenced = fenceSlices(slices, task);
-      slices = fenced.kept;
-      rejected = fenced.rejected;
-    }
-    const budget = applyContextBudget(slices, {
-      ownerId: `v22-p0-${task.id}`,
-      limits: task.budget,
-    });
-    text = budget.context_text;
-    rereadCount = 0;
-    paths = budget.paths_read.map(normPath);
-  }
-
-  if (process.env.EVOLVELOOP_GRAPHIFY !== graphifyBefore) {
-    throw new Error("harness mutated EVOLVELOOP_GRAPHIFY");
-  }
-
-  const counted = countTokens(text);
-  const observe = [...task.must_include, ...task.v22_must_exclude, ...task.b0_must_exclude];
-  const excludes = arm === "B0" ? task.b0_must_exclude : task.v22_must_exclude;
-  const checked = verifier(text, task.must_include, excludes);
+function assembleB0(task: FrozenTask, cache: CorpusCache, root: string): Packed {
+  const hits = rgHits(root, task.b0_patterns).slice(0, CANONICAL_MAX_PATHS);
+  const packed = packFiles(cache, hits);
   return {
-    repetition,
-    input_tokens: counted.tokens,
-    latency_ms: latencyMs,
-    reread_count: rereadCount,
-    paths_read: paths,
-    markers_present: markersIn(text, observe),
-    verifier_pass: checked.pass,
-    rejected_source_refs: rejected,
-    tokenizer: counted.tokenizer,
+    text: packed.text,
+    paths: hits,
+    rereadCount: packed.rereadCount,
+    retrievalTokens: countOne(packed.text),
+    rejected: [],
+  };
+}
+
+function extractBudgetedContext(block: string): string {
+  const marker = "### Context (budgeted retrieval)\n\n";
+  const start = block.indexOf(marker);
+  if (start === -1) return block.trim();
+  let inner = block.slice(start + marker.length);
+  if (inner.endsWith("\n")) inner = inner.slice(0, -1);
+  return inner;
+}
+
+function pathsFromBudgeted(inner: string): string[] {
+  const paths: string[] = [];
+  for (const match of inner.matchAll(/^--- path:(.+) ---$/gm)) {
+    const rel = match[1]?.trim();
+    if (rel && !rel.startsWith("spawn://")) paths.push(normPath(rel));
+  }
+  return [...new Set(paths)];
+}
+
+function assembleV22(task: FrozenTask, cache: CorpusCache, root: string, jobsDir: string): Packed {
+  const patterns = queryPatterns(task.query);
+  const hits = new Set(rgHits(root, patterns));
+  for (const page of wikiPages(root)) {
+    const text = cache.read(page);
+    const hay = text.toLowerCase();
+    if (patterns.some((pattern) => hay.includes(pattern.toLowerCase()))) {
+      hits.add(page);
+      for (const source of sourcePaths(text)) {
+        if (existsSync(path.join(root, source))) hits.add(normPath(source));
+      }
+    }
+  }
+  const hitList = [...hits].sort();
+  const fence = applyConflictFence(task, cache, hitList);
+  const candidates = hitList.filter((rel) => !fence.drop.has(rel));
+  const ranked = rankRetrievalPaths(candidates, (rel) => cache.read(rel), { query: task.query });
+  const fenceBody = fence.note ? `truth_fence ${fence.note}\nrejected: ${fence.rejected.join(", ")}` : "";
+  const fenceTokens = fenceBody ? countOne(fenceBody) + 8 : 0;
+  const paths = budgetPaths(cache, ranked, fenceTokens + PICKUP_PROTECTED_HEADROOM);
+  const retrieval: NonNullable<SkillJob["context_retrieval"]> = paths.map((rel) => ({
+    path: rel,
+    content: cache.read(rel),
+    kind: rel.includes(".ai/") ? "knowledge" : "generic",
+    priority: 10,
+  }));
+  if (fenceBody) {
+    retrieval.unshift({
+      path: "spawn://truth-fence",
+      content: fenceBody,
+      kind: "evidence",
+      priority: 1000,
+    });
+  }
+  const job: SkillJob = {
+    ...buildBenchSkillJob({
+      task: { id: task.id, query: task.query },
+      featureId: `p0-${task.id}`,
+      runId: `p0-${task.id}`,
+      nodeId: `p0-${task.id}`,
+    }),
+    feature_id: `p0-${task.id}`,
+    gate_bundle: {
+      parent_cycle_id: `p0-${task.id}`,
+      spawn_depth: 1,
+      max_spawn_depth: 3,
+      role: "exec",
+      context_budget: {
+        max_paths: CANONICAL_MAX_PATHS,
+        max_pages: 8,
+        max_tokens: CANONICAL_MAX_INPUT_TOKENS,
+      },
+    },
+    context_retrieval: retrieval,
+    spawn_metadata: task.security_restriction
+      ? { security_restrictions: task.security_restriction }
+      : undefined,
+  };
+  const spawn = preparePickupSpawnContext(job, jobsDir, { featureId: job.feature_id ?? job.node_id });
+  if (!spawn.validation_ok || !spawn.budgeted_context_block) {
+    throw new Error(`${task.id}: pickup context was not assembled (${spawn.validation_reason ?? "empty budget"})`);
+  }
+  const prompt = task.handoff
+    ? buildPickupPrompt(job, jobsDir, undefined, { caveman: false, spawnContext: spawn })
+    : extractBudgetedContext(spawn.budgeted_context_block);
+  const inner = extractBudgetedContext(spawn.budgeted_context_block);
+  const retrievalTokens = countOne(inner);
+  if (retrievalTokens > CANONICAL_MAX_INPUT_TOKENS) {
+    throw new Error(`${task.id}: V2.2 retrieval block exceeded the canonical ${CANONICAL_MAX_INPUT_TOKENS} token budget`);
+  }
+  return {
+    text: prompt,
+    paths: pathsFromBudgeted(inner),
+    rereadCount: 0,
+    retrievalTokens,
+    rejected: fence.rejected,
   };
 }
 
@@ -712,115 +765,166 @@ function mean(values: number[]): number {
   return values.reduce((sum, value) => sum + value, 0) / values.length;
 }
 
-function sampleStddev(values: number[]): Dispersion {
+function sampleStddev(values: number[], expectation: Dispersion["expectation"]): Dispersion {
   const center = mean(values);
   const square = values.reduce((sum, value) => sum + (value - center) ** 2, 0);
+  const value = Math.sqrt(square / (values.length - 1));
   return {
     statistic: "sample_stddev",
-    value: Math.sqrt(square / (values.length - 1)),
+    value,
     n: values.length,
+    expectation,
+    status: "PASS",
   };
 }
 
 function armReport(
   arm: "B0" | "V2.2",
-  runs: Array<ArmRun & { tokenizer: TokenizerLabel }>,
+  runs: ArmRun[],
   treeSha: string,
   limitation: string,
 ): ArmReport {
   const input = runs.map((run) => run.input_tokens);
   const latency = runs.map((run) => run.latency_ms);
   const rereads = runs.map((run) => run.reread_count);
-  const tokenizer = runs[0]?.tokenizer;
-  if (!tokenizer) throw new Error("arm has no runs");
+  const inputMean = mean(input);
+  const inputStatus: MetricStatus = inputMean >= 200 ? "PASS" : "LIMITED";
+  const quality = mean(runs.map((run) => run.quality));
   return {
     arm,
     role: arm === "B0" ? "V2" : "V2.2",
-    input_tokens: mean(input),
+    evidence_class: arm === "B0" ? "OFFICIAL_BASELINE" : "PROJECT_WIKI_PICKUP_BUDGET",
+    input_tokens: inputMean,
+    input_tokens_status: inputStatus,
+    retrieval_input_tokens: mean(runs.map((run) => run.retrieval_input_tokens)),
     output_tokens: "NOT_MEASURED",
+    output_tokens_status: "NOT_MEASURED",
     cache_read_tokens: "NOT_MEASURED",
+    cache_read_tokens_status: "NOT_MEASURED",
     cache_write_tokens: "NOT_MEASURED",
+    cache_write_tokens_status: "NOT_MEASURED",
     cost: "NOT_MEASURED",
+    cost_status: "NOT_MEASURED",
     latency_ms: mean(latency),
+    latency_ms_status: "LIMITED",
+    latency_kind: "retrieval",
+    model_latency_ms: "NOT_MEASURED",
+    model_latency_ms_status: "NOT_MEASURED",
     reread_count: mean(rereads),
+    reread_count_status: "PASS",
     n: runs.length,
+    n_status: "PASS",
     dispersion: {
-      input_tokens: sampleStddev(input),
+      input_tokens: sampleStddev(input, "zero_expected_deterministic"),
       output_tokens: "NOT_MEASURED",
       cache_read_tokens: "NOT_MEASURED",
       cache_write_tokens: "NOT_MEASURED",
       cost: "NOT_MEASURED",
-      latency_ms: sampleStddev(latency),
-      reread_count: sampleStddev(rereads),
+      latency_ms: sampleStddev(latency, "retrieval_io_jitter"),
+      reread_count: sampleStddev(rereads, "zero_expected_deterministic"),
+      model: "NOT_MEASURED",
     },
     model_id: "deterministic-provider",
     tree_sha: treeSha,
     limitation,
-    tokenizer,
-    evidence_class: "MEASURED_DETERMINISTIC_CONTEXT",
+    tokenizer: "tiktoken:cl100k_base",
+    quality,
+    quality_status: qualityStatus(quality),
     verifier_pass: runs.every((run) => run.verifier_pass),
     paths_read: runs[0]?.paths_read ?? [],
-    runs: runs.map((run) => ({
-      repetition: run.repetition,
-      input_tokens: run.input_tokens,
-      latency_ms: run.latency_ms,
-      reread_count: run.reread_count,
-      paths_read: run.paths_read,
-      markers_present: run.markers_present,
-      verifier_pass: run.verifier_pass,
-      rejected_source_refs: run.rejected_source_refs,
-    })),
+    runs,
   };
 }
 
-export async function runP0Baseline(options?: {
-  n?: number;
-  repoRoot?: string;
-}): Promise<P0BaselineReport> {
+async function runArm(
+  arm: "B0" | "V2.2",
+  task: FrozenTask,
+  root: string,
+  repetition: number,
+): Promise<ArmRun> {
+  const graphifyBefore = process.env.EVOLVELOOP_GRAPHIFY;
+  const cache = new CorpusCache(root);
+  const jobsDir = path.join(tmpdir(), "v22-p0-baseline", task.id, arm);
+  await mkdir(jobsDir, { recursive: true });
+  const started = performance.now();
+  try {
+    const packed = arm === "B0" ? assembleB0(task, cache, root) : assembleV22(task, cache, root, jobsDir);
+    const latencyMs = performance.now() - started;
+    if (process.env.EVOLVELOOP_GRAPHIFY !== graphifyBefore) {
+      throw new Error("harness mutated EVOLVELOOP_GRAPHIFY");
+    }
+    const inputTokens = countOne(packed.text);
+    const checks = qualityChecks(task, cache, packed.text, packed.paths);
+    const quality = qualityScore(checks);
+    if (!Number.isFinite(inputTokens) || inputTokens < 0) {
+      throw new Error(`${task.id}: tiktoken did not return a measured input count`);
+    }
+    return {
+      repetition,
+      input_tokens: inputTokens,
+      retrieval_input_tokens: packed.retrievalTokens,
+      latency_ms: latencyMs,
+      reread_count: packed.rereadCount,
+      paths_read: packed.paths,
+      quality,
+      quality_checks: checks,
+      verifier_pass: quality >= 1,
+      rejected_source_refs: packed.rejected,
+    };
+  } finally {
+    await rm(jobsDir, { recursive: true, force: true });
+  }
+}
+
+export async function runP0Baseline(options?: { n?: number; repoRoot?: string }): Promise<P0BaselineReport> {
   const repoRoot = options?.repoRoot ?? repoRootFromModule();
   const loaded = loadFrozenTasks(repoRoot);
   const n = options?.n ?? loaded.document.n_min;
-  if (!Number.isInteger(n) || n < loaded.document.n_min || n < 3) {
+  if (!Number.isInteger(n) || n < Math.max(3, loaded.document.n_min)) {
     throw new Error(`n must be an integer >= ${Math.max(3, loaded.document.n_min)}`);
   }
+  requireTiktokenCounts(["p0-baseline-tiktoken-probe"]);
   const compaction = readCompactionContract();
   const treeSha = readTreeSha(repoRoot);
   const taskReports: TaskReport[] = [];
-  let tokenizer: TokenizerLabel | undefined;
 
   for (const task of loaded.tasks) {
-    const b0Runs: Array<ArmRun & { tokenizer: TokenizerLabel }> = [];
-    const v22Runs: Array<ArmRun & { tokenizer: TokenizerLabel }> = [];
+    const b0Runs: ArmRun[] = [];
+    const v22Runs: ArmRun[] = [];
     for (let repetition = 1; repetition <= n; repetition += 1) {
-      const workspace = await mkdtemp(path.join(tmpdir(), "v22-p0-"));
-      try {
-        await materialize(task, workspace);
-        b0Runs.push(await runArm("B0", task, workspace, repetition));
-        v22Runs.push(await runArm("V2.2", task, workspace, repetition));
-      } finally {
-        await rm(workspace, { recursive: true, force: true });
-      }
+      b0Runs.push(await runArm("B0", task, repoRoot, repetition));
+      v22Runs.push(await runArm("V2.2", task, repoRoot, repetition));
     }
-    tokenizer = v22Runs[0]?.tokenizer ?? tokenizer;
     const b0 = armReport("B0", b0Runs, treeSha, loaded.document.limitation);
     const v22 = armReport("V2.2", v22Runs, treeSha, loaded.document.limitation);
-    const report: TaskReport = {
+    if (b0.dispersion.input_tokens.value !== 0 || v22.dispersion.input_tokens.value !== 0) {
+      throw new Error(`${task.id}: input token dispersion was not 0 on a deterministic corpus`);
+    }
+    const delta = v22.input_tokens - b0.input_tokens;
+    const counted = v22.quality >= b0.quality;
+    taskReports.push({
       id: task.id,
       brief_name: task.brief_name,
+      source_task: task.source_task,
       compaction: "UNAVAILABLE",
       compaction_tokens: "UNAVAILABLE",
       compaction_fidelity: "UNAVAILABLE",
       generative_token_reduction: "NOT_MEASURED",
       product_percent_gate: "NOT_MEASURED",
-      deterministic_context_input_delta: v22.input_tokens - b0.input_tokens,
+      ollama_hybrid: "NOT_MEASURED",
+      quality_b0: b0.quality,
+      quality_v22: v22.quality,
+      quality_v22_gte_b0: counted,
+      raw_input_delta: delta,
+      savings_counted: counted,
+      deterministic_context_savings_status: savingsStatus(v22.quality, b0.quality, delta),
       deterministic_context_evidence_class: "MEASURED_DETERMINISTIC_CONTEXT",
+      savings_rule: "docs/v22/GOALS-OFFICIAL.md#5.3",
+      compaction_contract: task.id === "restricoes_compactacao_handoff" ? compaction : undefined,
       arms: { B0: b0, "V2.2": v22 },
-    };
-    if (task.id === "restricoes_compactacao_handoff") report.compaction_contract = compaction;
-    taskReports.push(report);
+    });
   }
 
-  if (!tokenizer) throw new Error("tokenizer was not recorded");
   return {
     schema_id: "v22-p0-baseline-report-1",
     task_id: "V22-GAP-P0-1",
@@ -828,8 +932,9 @@ export async function runP0Baseline(options?: {
     generative_token_reduction: "NOT_MEASURED",
     product_percent_gate: "NOT_MEASURED",
     compaction: "UNAVAILABLE",
+    ollama_hybrid: "NOT_MEASURED",
     model_id: "deterministic-provider",
-    tokenizer,
+    tokenizer: "tiktoken:cl100k_base",
     tree_sha: treeSha,
     n,
     limitation: loaded.document.limitation,
@@ -837,6 +942,10 @@ export async function runP0Baseline(options?: {
     norm: "docs/v22/GOALS-OFFICIAL.md",
     metrics_schema: "docs/v22/baseline/metrics.schema.json",
     tasks_file: "docs/v22/baseline/tasks.json",
+    canonical_scorer: CANONICAL_SCORER,
+    canonical_max_paths: CANONICAL_MAX_PATHS,
+    canonical_max_input_tokens: CANONICAL_MAX_INPUT_TOKENS,
+    dispersion_declaration: "zero_expected_deterministic_for_input_tokens",
     measured_at: new Date().toISOString(),
     compaction_contract: compaction,
     tasks: taskReports,

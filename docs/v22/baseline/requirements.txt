@@ -1,0 +1,3 @@
+# Tokenizer da medição V22-GAP-P0-1. O harness recusa o proxy.
+# CI cria um venv e instala este ficheiro antes de npm test.
+tiktoken==0.8.0

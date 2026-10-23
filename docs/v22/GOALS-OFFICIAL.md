@@ -72,19 +72,23 @@ O conjunto congelado, e só este conjunto, satisfaz a lista do brief:
 
 Cartões: `docs/v22/baseline/tasks.json`. Esquema das grandezas: `docs/v22/baseline/metrics.schema.json`. Harness: `orchestrator/src/v22/p0-baseline-harness.ts`.
 
-Cada tarefa declara o verificador (`must_include` e, no braço V2.2, o que não pode permanecer). Os dois braços usam esse verificador. O braço `B0` é a linha de base V2 desta baseline: lê os hits e não aplica orçamento nem cerca. Não é o retrieval híbrido publicado noutro manifest.
+Cada tarefa declara âncoras, restrições e, quando cabe, marcador de retomada ou par de conflito. Os dois braços usam esse verificador. O braço `B0` é a linha de base V2 desta baseline: lê os hits e não aplica orçamento nem cerca. Não é o retrieval híbrido publicado noutro manifest.
 
 ### 3.3 Repetições e dispersão
 
 `n` mínimo desta baseline: 3. Para cada grandeza numérica medida, `dispersion` é o desvio-padrão amostral (divisor `n - 1`). Grandeza não medida leva `dispersion` = `NOT_MEASURED`, não um desvio inventado.
 
-Com o provedor determinístico, a dispersão de `input_tokens` e de `reread_count` deve ser 0 se o fixture não mudar. Isso não é dispersão de um modelo estocástico. O plano de investigação pede pelo menos 5 repetições quando o modelo não é determinístico; essa exigência continua de pé para uma corrida generativa e não é cumprida por `n = 3` neste provider.
+Com o provedor determinístico e o corpus congelado, a dispersão de `input_tokens` e de `reread_count` é 0 (`zero_expected_deterministic`). Isso é o resultado esperado dessa corrida, não uma prova de estabilidade de modelo. A dispersão de `latency_ms` pode ser maior que zero porque a montagem lê disco (`retrieval_io_jitter`). A dispersão de um modelo não determinístico continua `NOT_MEASURED`. O plano de investigação pede pelo menos 5 repetições quando o modelo não é determinístico; `n = 3` neste provider não cumpre essa exigência.
 
 ### 3.4 O que esta baseline pode e não pode afirmar
 
-O harness usa o `DeterministicProvider` local (sem LLM). Classe de evidência do delta de entrada: `MEASURED_DETERMINISTIC_CONTEXT`.
+O pacote medido em `input_tokens` é o contexto efetivamente montado. No B0 isso é a leitura ampla dos hits de `rg` no corpus oficial (monorepo, teto de 45 paths, o mesmo cap do harness B0). No V2.2 é o pickup/handoff real mais o retrieval de wiki de projeto e de paths, com o budget do scorer canônico `v22-anchor-scorer-1.0.0` (`file_evidence`, `V22_BENCH_MAX_INPUT_TOKENS` 22000, `V22_BENCH_MAX_PATHS` 45). O híbrido com Ollama não corre neste harness e fica `NOT_MEASURED`.
 
-Ficam `NOT_MEASURED` porque exigem modelo generativo ou chave de vendor: `output_tokens`, `cache_read_tokens`, `cache_write_tokens`, `cost`, e a frase de produto «a V2.2 gasta menos tokens». `latency_ms` mede a soma de `duration_ms` das chamadas ao provider local, não a latência de um modelo.
+O tokenizer da medição é `tiktoken:cl100k_base`. Se o contador cair no proxy de espaços, a medição falha. Não se publica esse proxy como número.
+
+A economia desse delta só conta na condição da seção 5.3. Classe de evidência, quando conta: `MEASURED_DETERMINISTIC_CONTEXT`.
+
+Ficam `NOT_MEASURED` porque exigem modelo generativo ou chave de vendor: `output_tokens`, `cache_read_tokens`, `cache_write_tokens`, `cost`, e a frase de produto «a V2.2 gasta menos tokens». Nesta baseline, `latency_ms` é o tempo de parede da montagem do contexto (rg, leitura, budget e pickup). O estado dessa grandeza é `LIMITED`: não é latência de modelo. `model_latency_ms` fica `NOT_MEASURED`.
 
 `product_percent_gate` fica `NOT_MEASURED`. Nenhum teste transforma um percentual de redução em critério de falha.
 
@@ -109,6 +113,8 @@ A cerca unitária não substitui, por si, o cartão `fontes_conflitantes` com re
 
 ## 5. GOAL-004 — handoff medido
 
+### 5.1 O que a corrida tem de publicar
+
 Um handoff entre agentes fica medido quando a corrida publica, no formato do GOAL-002:
 
 - tokens de entrada do briefing entregue;
@@ -118,6 +124,16 @@ Um handoff entre agentes fica medido quando a corrida publica, no formato do GOA
 - compactação `UNAVAILABLE` enquanto o condenser não existir.
 
 Uma corrida de laboratório que preserva a definição de pronto é evidência parcial. Sem `n`, sem dispersão e sem as grandezas separadas, o objetivo não está fechado.
+
+### 5.2 Compactação no handoff
+
+Enquanto o condenser não existir, o handoff medido é o pacote sem compactar. O campo de compactação fica `UNAVAILABLE`. Não se publica economia de compactação.
+
+### 5.3 Economia só com qualidade maior ou igual à do B0
+
+O mesmo verificador corre nos dois braços. A qualidade é a fração de checagens que passam: âncoras presentes no contexto (scorer `file_evidence`), restrições esperadas presentes, conflito sinalizado quando a tarefa o pede, retomada correta quando a tarefa o pede.
+
+A diferença de `input_tokens` só conta como economia quando a qualidade do braço V2.2 é maior ou igual à do B0. Se a qualidade cair, o delta pode ficar registado como observação, mas o estado da economia é `NOT_MEASURED`. Não se transforma esse delta num gate percentual de produto.
 
 ## 6. GOAL-005 — adoção ou rejeição rastreável de ferramentas
 

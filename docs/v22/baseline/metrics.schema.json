@@ -10,6 +10,7 @@
     "evidence_class",
     "generative_token_reduction",
     "product_percent_gate",
+    "ollama_hybrid",
     "compaction",
     "model_id",
     "tokenizer",
@@ -17,6 +18,10 @@
     "n",
     "limitation",
     "tasks_sha256",
+    "canonical_scorer",
+    "canonical_max_paths",
+    "canonical_max_input_tokens",
+    "dispersion_declaration",
     "tasks"
   ],
   "properties": {
@@ -25,11 +30,10 @@
     "evidence_class": { "const": "MEASURED_DETERMINISTIC_CONTEXT" },
     "generative_token_reduction": { "const": "NOT_MEASURED" },
     "product_percent_gate": { "const": "NOT_MEASURED" },
+    "ollama_hybrid": { "const": "NOT_MEASURED" },
     "compaction": { "const": "UNAVAILABLE" },
     "model_id": { "const": "deterministic-provider" },
-    "tokenizer": {
-      "enum": ["tiktoken:cl100k_base", "PROXY:whitespace_split"]
-    },
+    "tokenizer": { "const": "tiktoken:cl100k_base" },
     "tree_sha": {
       "anyOf": [
         { "type": "string", "pattern": "^[0-9a-f]{40}$" },
@@ -39,6 +43,10 @@
     "n": { "type": "integer", "minimum": 3 },
     "limitation": { "type": "string", "minLength": 1 },
     "tasks_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "canonical_scorer": { "const": "v22-anchor-scorer-1.0.0" },
+    "canonical_max_paths": { "const": 45 },
+    "canonical_max_input_tokens": { "const": 22000 },
+    "dispersion_declaration": { "const": "zero_expected_deterministic_for_input_tokens" },
     "tasks": {
       "type": "array",
       "minItems": 6,
@@ -47,8 +55,8 @@
     }
   },
   "$defs": {
-    "status": {
-      "enum": ["NOT_MEASURED", "UNAVAILABLE"]
+    "metric_status": {
+      "enum": ["PASS", "LIMITED", "NOT_MEASURED", "UNAVAILABLE"]
     },
     "dispersion": {
       "anyOf": [
@@ -56,35 +64,48 @@
         {
           "type": "object",
           "additionalProperties": false,
-          "required": ["statistic", "value", "n"],
+          "required": ["statistic", "value", "n", "expectation", "status"],
           "properties": {
             "statistic": { "const": "sample_stddev" },
             "value": { "type": "number", "minimum": 0 },
-            "n": { "type": "integer", "minimum": 3 }
+            "n": { "type": "integer", "minimum": 3 },
+            "expectation": {
+              "enum": ["zero_expected_deterministic", "retrieval_io_jitter"]
+            },
+            "status": { "$ref": "#/$defs/metric_status" }
           }
         }
       ]
     },
     "arm": {
       "type": "object",
-      "additionalProperties": false,
+      "additionalProperties": true,
       "required": [
         "arm",
         "role",
+        "evidence_class",
         "input_tokens",
+        "input_tokens_status",
+        "retrieval_input_tokens",
         "output_tokens",
+        "output_tokens_status",
         "cache_read_tokens",
         "cache_write_tokens",
         "cost",
         "latency_ms",
+        "latency_ms_status",
+        "latency_kind",
+        "model_latency_ms",
         "reread_count",
         "n",
+        "n_status",
         "dispersion",
         "model_id",
         "tree_sha",
         "limitation",
         "tokenizer",
-        "evidence_class",
+        "quality",
+        "quality_status",
         "verifier_pass",
         "paths_read",
         "runs"
@@ -92,17 +113,27 @@
       "properties": {
         "arm": { "enum": ["B0", "V2.2"] },
         "role": { "enum": ["V2", "V2.2"] },
+        "evidence_class": {
+          "enum": ["OFFICIAL_BASELINE", "PROJECT_WIKI_PICKUP_BUDGET"]
+        },
         "input_tokens": { "type": "number", "minimum": 0 },
+        "input_tokens_status": { "$ref": "#/$defs/metric_status" },
+        "retrieval_input_tokens": { "type": "number", "minimum": 0 },
         "output_tokens": { "const": "NOT_MEASURED" },
+        "output_tokens_status": { "const": "NOT_MEASURED" },
         "cache_read_tokens": { "const": "NOT_MEASURED" },
         "cache_write_tokens": { "const": "NOT_MEASURED" },
         "cost": { "const": "NOT_MEASURED" },
         "latency_ms": { "type": "number", "minimum": 0 },
+        "latency_ms_status": { "const": "LIMITED" },
+        "latency_kind": { "const": "retrieval" },
+        "model_latency_ms": { "const": "NOT_MEASURED" },
         "reread_count": { "type": "number", "minimum": 0 },
         "n": { "type": "integer", "minimum": 3 },
+        "n_status": { "const": "PASS" },
         "dispersion": {
           "type": "object",
-          "additionalProperties": false,
+          "additionalProperties": true,
           "required": [
             "input_tokens",
             "output_tokens",
@@ -110,7 +141,8 @@
             "cache_write_tokens",
             "cost",
             "latency_ms",
-            "reread_count"
+            "reread_count",
+            "model"
           ],
           "properties": {
             "input_tokens": { "$ref": "#/$defs/dispersion" },
@@ -119,86 +151,59 @@
             "cache_write_tokens": { "const": "NOT_MEASURED" },
             "cost": { "const": "NOT_MEASURED" },
             "latency_ms": { "$ref": "#/$defs/dispersion" },
-            "reread_count": { "$ref": "#/$defs/dispersion" }
+            "reread_count": { "$ref": "#/$defs/dispersion" },
+            "model": { "const": "NOT_MEASURED" }
           }
         },
         "model_id": { "const": "deterministic-provider" },
-        "tree_sha": {
-          "anyOf": [
-            { "type": "string", "pattern": "^[0-9a-f]{40}$" },
-            { "const": "NOT_MEASURED" }
-          ]
-        },
-        "limitation": { "type": "string", "minLength": 1 },
-        "tokenizer": {
-          "enum": ["tiktoken:cl100k_base", "PROXY:whitespace_split"]
-        },
-        "evidence_class": { "const": "MEASURED_DETERMINISTIC_CONTEXT" },
-        "verifier_pass": { "type": "boolean" },
-        "paths_read": {
-          "type": "array",
-          "items": { "type": "string" }
-        },
-        "runs": {
-          "type": "array",
-          "minItems": 3,
-          "items": {
-            "type": "object",
-            "additionalProperties": false,
-            "required": [
-              "repetition",
-              "input_tokens",
-              "latency_ms",
-              "reread_count",
-              "paths_read",
-              "markers_present",
-              "verifier_pass"
-            ],
-            "properties": {
-              "repetition": { "type": "integer", "minimum": 1 },
-              "input_tokens": { "type": "number", "minimum": 0 },
-              "latency_ms": { "type": "number", "minimum": 0 },
-              "reread_count": { "type": "number", "minimum": 0 },
-              "paths_read": { "type": "array", "items": { "type": "string" } },
-              "markers_present": { "type": "array", "items": { "type": "string" } },
-              "verifier_pass": { "type": "boolean" },
-              "rejected_source_refs": {
-                "type": "array",
-                "items": { "type": "string" }
-              }
-            }
-          }
-        }
+        "tokenizer": { "const": "tiktoken:cl100k_base" },
+        "quality": { "type": "number", "minimum": 0, "maximum": 1 },
+        "quality_status": { "$ref": "#/$defs/metric_status" },
+        "verifier_pass": { "type": "boolean" }
       }
     },
     "task": {
       "type": "object",
-      "additionalProperties": false,
+      "additionalProperties": true,
       "required": [
         "id",
         "brief_name",
+        "source_task",
         "compaction",
         "compaction_tokens",
         "compaction_fidelity",
         "generative_token_reduction",
         "product_percent_gate",
-        "deterministic_context_input_delta",
+        "ollama_hybrid",
+        "quality_b0",
+        "quality_v22",
+        "quality_v22_gte_b0",
+        "raw_input_delta",
+        "savings_counted",
+        "deterministic_context_savings_status",
         "deterministic_context_evidence_class",
+        "savings_rule",
         "arms"
       ],
       "properties": {
         "id": { "type": "string" },
-        "brief_name": { "type": "string" },
         "compaction": { "const": "UNAVAILABLE" },
         "compaction_tokens": { "const": "UNAVAILABLE" },
         "compaction_fidelity": { "const": "UNAVAILABLE" },
         "generative_token_reduction": { "const": "NOT_MEASURED" },
         "product_percent_gate": { "const": "NOT_MEASURED" },
-        "deterministic_context_input_delta": { "type": "number" },
+        "ollama_hybrid": { "const": "NOT_MEASURED" },
+        "quality_b0": { "type": "number", "minimum": 0, "maximum": 1 },
+        "quality_v22": { "type": "number", "minimum": 0, "maximum": 1 },
+        "savings_counted": { "type": "boolean" },
+        "deterministic_context_savings_status": {
+          "enum": ["PASS", "LIMITED", "NOT_MEASURED"]
+        },
         "deterministic_context_evidence_class": {
           "const": "MEASURED_DETERMINISTIC_CONTEXT"
         },
-        "compaction_contract": { "type": "object" },
+        "savings_rule": { "const": "docs/v22/GOALS-OFFICIAL.md#5.3" },
+        "raw_input_delta": { "type": "number" },
         "arms": {
           "type": "object",
           "additionalProperties": false,

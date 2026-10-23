@@ -75,3 +75,46 @@ export function resetTokenizerCache(): void {
   cachedCounter = null;
   cachedLabel = null;
 }
+
+/**
+ * Measurement counter. Throws if tiktoken is not importable.
+ * Never falls back to the whitespace proxy.
+ */
+export function requireTiktokenCounts(texts: string[]): number[] {
+  const script = `
+import json, sys
+try:
+    import tiktoken
+except Exception as e:
+    print(json.dumps({"error": "tiktoken_import:" + str(e)}))
+    sys.exit(2)
+enc = tiktoken.get_encoding("cl100k_base")
+data = json.load(sys.stdin)
+if not isinstance(data, list):
+    print(json.dumps({"error": "expected_list"}))
+    sys.exit(2)
+print(json.dumps({"tokens": [len(enc.encode(t)) for t in data], "tokenizer": "tiktoken:cl100k_base"}))
+`;
+  const run = spawnSync("python3", ["-c", script], {
+    input: JSON.stringify(texts),
+    encoding: "utf-8",
+    maxBuffer: 64 * 1024 * 1024,
+  });
+  let parsed: { tokens?: number[]; tokenizer?: string; error?: string } = {};
+  try {
+    parsed = JSON.parse((run.stdout ?? "").trim() || "{}") as typeof parsed;
+  } catch {
+    throw new Error(
+      `tiktoken measurement failed: ${run.stderr?.trim() || "unparseable tokenizer output"}`,
+    );
+  }
+  if (run.status !== 0 || parsed.error || !parsed.tokens || parsed.tokenizer !== "tiktoken:cl100k_base") {
+    throw new Error(
+      `tiktoken measurement refused proxy fallback: ${parsed.error || run.stderr?.trim() || "missing tiktoken:cl100k_base"}`,
+    );
+  }
+  if (parsed.tokens.length !== texts.length) {
+    throw new Error("tiktoken measurement returned a different count than the input batch");
+  }
+  return parsed.tokens;
+}
