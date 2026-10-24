@@ -10,6 +10,14 @@
 
 import { spawn } from "node:child_process";
 
+export interface CursorToolCallCounts {
+  started: number;
+  completed: number;
+  read_started: number;
+  write_started: number;
+  other_started: number;
+}
+
 export interface CursorCliMeasurement {
   text: string;
   model_id: string;
@@ -21,6 +29,7 @@ export interface CursorCliMeasurement {
   output_tokens: "NOT_MEASURED";
   cached_tokens: "NOT_MEASURED";
   cost_usd: "NOT_MEASURED";
+  tool_calls: CursorToolCallCounts;
   schema: "cursor-cli-output-format-2026-10-23";
 }
 
@@ -43,9 +52,32 @@ export function cursorAgentArgs(input?: { model?: string }): string[] {
   return args;
 }
 
+function emptyToolCounts(): CursorToolCallCounts {
+  return { started: 0, completed: 0, read_started: 0, write_started: 0, other_started: 0 };
+}
+
+function noteToolCall(counts: CursorToolCallCounts, event: Record<string, unknown>): void {
+  if (event.type !== "tool_call") return;
+  if (event.subtype === "completed") {
+    counts.completed += 1;
+    return;
+  }
+  if (event.subtype !== "started") return;
+  counts.started += 1;
+  const call = event.tool_call;
+  if (!call || typeof call !== "object") {
+    counts.other_started += 1;
+    return;
+  }
+  if ("readToolCall" in call) counts.read_started += 1;
+  else if ("writeToolCall" in call) counts.write_started += 1;
+  else counts.other_started += 1;
+}
+
 export function parseCursorAgentNdjson(stdout: string): CursorCliMeasurement {
   let model = "";
   let terminal: Record<string, unknown> | null = null;
+  const toolCalls = emptyToolCounts();
   for (const line of stdout.split("\n")) {
     const trimmed = line.trim();
     if (!trimmed) continue;
@@ -58,6 +90,7 @@ export function parseCursorAgentNdjson(stdout: string): CursorCliMeasurement {
     if (event.type === "system" && event.subtype === "init" && typeof event.model === "string") {
       model = event.model;
     }
+    noteToolCall(toolCalls, event);
     if (event.type === "result") terminal = event;
   }
   if (!terminal || terminal.subtype !== "success" || terminal.is_error !== false) {
@@ -81,6 +114,7 @@ export function parseCursorAgentNdjson(stdout: string): CursorCliMeasurement {
     output_tokens: "NOT_MEASURED",
     cached_tokens: "NOT_MEASURED",
     cost_usd: "NOT_MEASURED",
+    tool_calls: toolCalls,
     schema: "cursor-cli-output-format-2026-10-23",
   };
 }

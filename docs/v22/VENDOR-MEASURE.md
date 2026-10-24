@@ -11,7 +11,7 @@ O OpenRouter é secundário, compatível com OpenAI em `https://openrouter.ai/ap
 Dry-run do Cursor, sem chave e sem gasto:
 
 ```bash
-git clone --branch cursor/v22-gap-vendor-1a-8ae3 https://github.com/GaabDevWeb/EvolveLoop.git && cd EvolveLoop/orchestrator && npm ci && npm run v22:vendor-measure -- --provider cursor-agent --dry-run
+git clone --branch cursor/v22-gap-vendor-1b-8ae3 https://github.com/GaabDevWeb/EvolveLoop.git && cd EvolveLoop/orchestrator && npm ci && npm run v22:vendor-measure -- --provider cursor-agent --dry-run
 ```
 
 Depois do merge, troca o `--branch` para `release/v2.1-freeze-preparation`.
@@ -41,3 +41,42 @@ npm run v22:vendor-measure -- --provider openrouter --model <id> --input-usd-per
 ```
 
 O relatório fica em `docs/v22/baseline/raw/p0-vendor-report.json`. `N=5`. São 6 tarefas, dois braços, mais duas chamadas de probe com prefixo estável acima de 1024 tokens.
+
+HTTP 429 no OpenRouter espera o cabeçalho `Retry-After` (segundos ou data HTTP) e volta a chamar. Sem cabeçalho legível, a espera é 1s, 2s, 4s. São no máximo 4 tentativas. O corpo do erro não é impresso. Outros status não repetem.
+
+## V22-GAP-VENDOR-1b
+
+O JSON real do `cursor-agent` está em `docs/v22/baseline/raw/p0-vendor-cursor-agent-report.json`. Os prompts foram remontados neste tree e o sha256 dos doze braços coincidiu com essa corrida.
+
+### Latência
+
+O schema de `stream-json` em `https://cursor.com/docs/cli/reference/output-format` (relido em 2026-10-24) emite `tool_call` com `subtype` `started` e `completed`. O modo ask pesquisa o código e não edita. A corrida versionada não guardou o NDJSON. O parser da altura só ficou com `result` e as durações. A contagem de `tool_call` por braço nessa corrida é `NOT_MEASURED`. `duration_ms` iguala `duration_api_ms` nas 62 chamadas, e a doc diz que os dois campos estão iguais, por isso não isolam tempo de ferramenta.
+
+O prompt V2.2, o mesmo da corrida, inclui na linha 15 a ordem de ler `.cursor/skills/orquestrar/SKILL.md` e na linha 33 a ordem de ler o repositório, mais o caminho estável `jobs/v22-p0-baseline/<tarefa>/V2.2`. O B0 das quatro tarefas mais lentas não tem essas duas ordens. A doc headless diz que um caminho no prompt é lido por tool call. Isso é um mecanismo compatível com V2.2 2–4× mais lento apesar do prompt menor. Não substitui a contagem que o stream não guardou.
+
+Uma corrida futura grava, por chamada, `tool_calls_started`, `tool_calls_read_started`, `tool_calls_write_started` e `tool_calls_other_started`. O conteúdo devolvido pela ferramenta não entra no relatório.
+
+### Regressão da restrição
+
+Em `restricoes_compactacao_handoff` o contexto V2.2 tem 22062 tokens e contém `reinject_allowed: false` quatro vezes:
+
+| Onde | Token antes da frase |
+|------|----------------------|
+| slice `spawn://security_restrictions` | 671 |
+| `docs/architecture/v2.2/IMPLEMENTATION-ROADMAP.md` | 9159 |
+| `docs/adr/0013-context-ownership-working-context.md` | 13022 |
+| `docs/v22/GOALS-OFFICIAL.md` | 19493 |
+
+A frase não foi cortada pelo budget. O B0 dessa tarefa também a contém e não contém `No secret leakage in evidence payload`. O cartão lista `reinject_allowed: false` duas vezes, como âncora e como restrição. A quinta resposta V2.2 não trouxe essa substring; as outras quatro trouxeram. O scorer desta corrida olha a resposta, não o contexto. As âncoras do cartão ficam como estão.
+
+### Critério semântico, definido antes de olhar respostas
+
+Este protocolo não foi executado. Não altera `docs/v22/baseline/tasks.json`.
+
+O juiz recebe só o cartão congelado (pergunta, âncoras com path e substring, restrições) e uma resposta. Não recebe a resposta do outro braço nem o JSON desta corrida.
+
+Para cada âncora, 1 se a resposta afirma o mesmo facto que a substring e cita o path da âncora. Paráfrase conta. A substring exacta não é exigida. Para cada restrição, 1 se a resposta conserva a obrigação, incluindo a negação. Paráfrase conta. A qualidade é a média dessas decisões. Lista vazia vale 1, como o scorer actual. O juiz não edita o cartão. Este protocolo é outro instrumento. O número versionado continua a ser o da substring.
+
+### Efeito no corpus
+
+`docs/v22/FINAL-REPORT.md` já estava no B0 de `retomada`. O texto novo levou esse braço de 29649 para 30414 tokens. Na tarefa `restricoes_compactacao_handoff` o mesmo ficheiro passou a caber no retrieval: saiu `docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md` e entraram `docs/v22/FINAL-REPORT.md`, `docs/architecture/v2.2/V22-VENDOR-CACHE.md`, `docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md` e `global-skills/technical-library-dossier/references/dossier-template.md`. O input V2.2 passou de 22003 para 22054. A compactação foi remensurada em `76636adf6077cb956b748b5af4c1125269833be2`: 22054 para 11251, fidelidade 1, 1430 linhas retiradas. Antes era 22003 para 10896, fidelidade 1, 854 linhas. Os outros quatro cartões mantiveram os tokens. O prompt da corrida live não é este: o sha256 foi conferido antes desta edição.
