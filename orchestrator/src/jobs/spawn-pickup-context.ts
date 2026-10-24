@@ -17,6 +17,8 @@ import {
 export type { ContextRetrievalEntry };
 import type { EventBus } from "../events/event-bus.js";
 import { emitContextBudgetTelemetry } from "../context/telemetry.js";
+import { CAVEMAN_OPT_OUT, CAVEMAN_SKILL_REL } from "../v22/caveman-hard-gate.js";
+import { isCavemanOutputGateEnabled } from "../v22/feature-flags.js";
 
 export interface PickupContextPrepareResult {
   validation_ok: boolean;
@@ -118,6 +120,7 @@ export function protectedSlicesFromJob(job: SkillJob): ContextSlice[] {
 }
 
 export function formatGateBundleBlock(bundle: GateBundleFields): string {
+  const caveman = isCavemanOutputGateEnabled() ? "on" : "off";
   return `### GATE_BUNDLE
 parent_cycle_id: ${bundle.parent_cycle_id}
 spawn_depth: ${bundle.spawn_depth}
@@ -125,6 +128,9 @@ max_spawn_depth: ${bundle.max_spawn_depth}
 role: ${bundle.role}
 context_owner_id: ${bundle.context_owner_id ?? deriveContextOwnerId(bundle)}
 context_budget: ${JSON.stringify(bundle.context_budget ?? {})}
+caveman_output: ${caveman}
+caveman_skill: ${CAVEMAN_SKILL_REL}
+caveman_opt_out: ${CAVEMAN_OPT_OUT}
 `;
 }
 

@@ -37,6 +37,9 @@ context_budget:
   max_paths: <opcional — default engine 15; PENDING_BASELINE até B1 oficial>
   max_pages: <opcional — default 5>
   max_tokens: <opcional — default 128000; tokenizer tiktoken:cl100k_base ou PROXY>
+caveman_output: on | off
+caveman_skill: vendor/juliusbrussee-caveman/skills/caveman/SKILL.md
+caveman_opt_out: EVOLVELOOP_BREVITY_CAVEMAN=off
 ```
 
 ### Campos — regras
@@ -49,6 +52,7 @@ context_budget:
 | `image_attachment: true` | Filho visual **obrigado** a `image-to-code` |
 | `grill_me_required: true` | Filho `role: plan` **obrigado** a evidência `gate.grill-me.json` `satisfied|exempt` — senão `bloqueado: grill_me_gate` |
 | `wiki_register` | Qualquer edit de código no filho → registo wiki (ou handoff explícito ao raiz com lista de paths). **Executor:** `librarian` se spawnado; senão `exec` / raiz. Ver [pda-roles.md](pda-roles.md) |
+| `caveman_output` | `on` por omissão. O filho segue a skill vendorizada na prosa e não comprime as exceções. `off` só com `EVOLVELOOP_BREVITY_CAVEMAN=off`. Ver [caveman-hard-gate.md](caveman-hard-gate.md) |
 
 ---
 

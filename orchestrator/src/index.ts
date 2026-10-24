@@ -287,6 +287,8 @@ export {
 export {
   isGraphifyExperimentEnabled,
   isCavemanBrevityEnabled,
+  isCavemanBrevityExplicitlyOn,
+  isCavemanOutputGateEnabled,
   isPromptCacheEnabled,
 } from "./v22/feature-flags.js";
 export {

@@ -1,8 +1,10 @@
 /**
- * V22-GOAL-009 — opt-in Caveman-style brevity (voice only; preserves contracts verbatim).
+ * V22-GOAL-009 — explicit Caveman briefing compressor (bench arm only).
+ * The output hard gate does not call this. Explicit `EVOLVELOOP_BREVITY_CAVEMAN=on`
+ * still enables it for direct callers; unset does not.
  */
 
-import { isCavemanBrevityEnabled } from "./feature-flags.js";
+import { isCavemanBrevityExplicitlyOn } from "./feature-flags.js";
 import { countBenchTokens } from "./bench-tokenizer.js";
 
 const FENCE_RE = /```[\s\S]*?```/g;
@@ -49,7 +51,7 @@ function cavemanLine(line: string): string {
 }
 
 export function applyCavemanBrevity(text: string, options?: { force?: boolean }): BrevityResult {
-  const enabled = options?.force === true || isCavemanBrevityEnabled();
+  const enabled = options?.force === true || isCavemanBrevityExplicitlyOn();
   const input_tokens = countBenchTokens(text);
   if (!enabled) {
     return { enabled: false, text, input_tokens, output_tokens: input_tokens, preserved_blocks: 0 };
@@ -114,7 +116,7 @@ export function applyCavemanToBriefingSection(
   const head = fullPrompt.slice(0, bodyStart);
   const briefing = fullPrompt.slice(bodyStart, end);
   const tail = fullPrompt.slice(end);
-  const enabled = options?.enabled ?? isCavemanBrevityEnabled();
+  const enabled = options?.enabled ?? isCavemanBrevityExplicitlyOn();
   const compressedBriefing = enabled ? compressBriefingProse(briefing) : briefing;
   const text = head + compressedBriefing + tail;
   return {

@@ -15,6 +15,13 @@ rules:
     managed_by: agent-setup
     profiles: [minimal, standard, full]
 
+  - name: caveman-hard-gate
+    source: bundled:cursor/rules/caveman-hard-gate.mdc
+    destination: "~/.cursor/rules/caveman-hard-gate.mdc"
+    scope: global
+    managed_by: agent-setup
+    profiles: [minimal, standard, full]
+
 commands:
   - name: wiki
     source: bundled:cursor/commands/wiki.md
@@ -71,6 +78,13 @@ skills:
     install: symlink
     profiles: [standard, full]
 
+  - name: caveman
+    source: repo:${AGENTS_ROOT}/vendor/juliusbrussee-caveman/skills/caveman
+    destination: "~/.cursor/skills/caveman"
+    install: symlink
+    profiles: [standard, full]
+    also_link: "~/.agents/skills/caveman"
+
 worker_skills:
   repo_base: "${AGENTS_ROOT}/.cursor/skills"
   names:
@@ -85,6 +99,9 @@ worker_skills:
     - prd
     - security
     - testing
+    - agent-authoring
+    - code-reviewer
+    - validator
   global_skills_base: "${AGENTS_ROOT}/global-skills"
   global_names:
     - brainstorming
@@ -99,6 +116,7 @@ hooks:
   managed_keys:
     sessionStart:
       - ./hooks/wiki-mem/session-start.sh
+      - ./hooks/caveman-hard-gate.sh
     afterFileEdit:
       - ./hooks/wiki-mem/after-edit.sh
     stop:

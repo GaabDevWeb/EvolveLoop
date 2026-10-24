@@ -66,6 +66,17 @@ Sem excepções por provider/subagente (salvo `skipped_trivial` documentado). Ru
 
 Sem excepções por fase, provider ou subagente.
 
+## HARD-GATE — Caveman (saída)
+
+**Regra:** todo agente e worker do `/evolve` responde no modo **caveman** (voz oficial vendorizada). Default **ON**.
+
+1. Seguir `vendor/juliusbrussee-caveman/skills/caveman/SKILL.md` (bytes upstream, SHA em `PIN.json`). Não reescrever a skill. Não mudar para `ultracave`, `megacave` ou `caveman-compress`.
+2. Opt-out do processo: `EVOLVELOOP_BREVITY_CAVEMAN=off` (`0`, `false`, `no` também desligam). Variável ausente = ON.
+3. Exceções, verbatim, sem compressão nem alteração: code, commands, paths, evidence, SHAs, commit messages, user docs, task reports (structured fields), security content.
+4. O bloco entra no prompt de pickup e no `GATE_BUNDLE` (`caveman_output`). O compressor GOAL-009 do briefing **não** é este gate.
+
+Contrato: [references/caveman-hard-gate.md](references/caveman-hard-gate.md).
+
 **Contratos v2.1:** [references/ARCHITECTURAL-PRINCIPLES.md](references/ARCHITECTURAL-PRINCIPLES.md) · [references/contracts/README.md](references/contracts/README.md)
 
 ## Ponte Execution Engine (quando `ORCHESTRATOR_ROOT` definido)

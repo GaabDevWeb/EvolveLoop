@@ -45,6 +45,18 @@ describe("run-engine env defaults", () => {
     expect(paths.jobsDir).toBe("/cli/jobs");
   });
 
+  it("ignores unexpanded shell defaults from the install template", () => {
+    const envFile = join(tempDir, "agents.env");
+    writeFileSync(
+      envFile,
+      'export ORCHESTRATOR_JOBS_DIR="${ORCHESTRATOR_JOBS_DIR:-$ORCHESTRATOR_ROOT/jobs}"\n',
+    );
+    process.env.ORCHESTRATOR_AGENTS_ENV = envFile;
+    const paths = resolveOrchestratorCliPaths({}, true);
+    expect(paths.jobsDir).toBe("./jobs");
+    expect(process.env.ORCHESTRATOR_JOBS_DIR).toBeUndefined();
+  });
+
   it("does not override existing process.env keys", () => {
     const envFile = join(tempDir, "agents.env");
     writeFileSync(envFile, 'export ORCHESTRATOR_JOBS_DIR="/from-file"\n');

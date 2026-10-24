@@ -25,6 +25,9 @@ export function loadAgentsEnvFile(path?: string): void {
     ) {
       value = value.slice(1, -1);
     }
+    // The install template keeps shell defaults (`${VAR:-fallback}`). This loader
+    // does not expand them. Assigning the literal creates a junk jobs directory.
+    if (value.includes("${")) continue;
     if (process.env[key] === undefined) {
       process.env[key] = value;
     }

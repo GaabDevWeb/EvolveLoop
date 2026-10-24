@@ -17,7 +17,7 @@ profiles:
     description: minimal + MegaBrain, Wiki memory, hooks
     extends: minimal
     components:
-      skills: [wiki, wiki-mem, orquestrar, skill-authoring]
+      skills: [wiki, wiki-mem, orquestrar, skill-authoring, caveman]
       commands: [mem, planejar, testes, validar, seguranca, documentar]
       hooks: true
       megabrain: true

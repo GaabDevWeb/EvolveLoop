@@ -1,6 +1,12 @@
 {
   "version": 1,
   "hooks": {
+    "sessionStart": [
+      {
+        "command": "./hooks/caveman-hard-gate.sh",
+        "timeout": 15
+      }
+    ],
     "stop": [
       {
         "command": "./hooks/orchestrator-job-pickup.sh",

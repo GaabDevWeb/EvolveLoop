@@ -20,7 +20,8 @@
     "registry-builder": "node dist/cli/registry-builder.js",
     "registry-builder:ci": "bash scripts/registry-builder-ci.sh",
     "run-jobs": "node dist/cli/run-jobs.js",
-    "v22:vendor-measure": "vite-node src/v22/vendor-measure-cli.ts"
+    "v22:vendor-measure": "vite-node src/v22/vendor-measure-cli.ts",
+    "v22:caveman-measure": "vite-node src/v22/caveman-output-measure-cli.ts"
   },
   "bin": {
     "run-engine": "./dist/cli/run-engine.js",

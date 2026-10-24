@@ -32,7 +32,7 @@ import { loadAgentsEnvFile, resolveOrchestratorCliPaths } from "./run-engine-env
 import { serializeForPublish } from "../evidence/publish-sanitize.js";
 import {
   isGraphifyExperimentEnabled,
-  isCavemanBrevityEnabled,
+  isCavemanBrevityExplicitlyOn,
   isPromptCacheEnabled,
 } from "../v22/feature-flags.js";
 import { queryGraphifyCodeStructure, formatGraphifyContext } from "../v22/graphify-adapter.js";
@@ -306,7 +306,7 @@ async function main() {
   };
 
   const anyP2 =
-    isGraphifyExperimentEnabled() || isCavemanBrevityEnabled() || isPromptCacheEnabled();
+    isGraphifyExperimentEnabled() || isCavemanBrevityExplicitlyOn() || isPromptCacheEnabled();
   if (anyP2) {
     const graph = isGraphifyExperimentEnabled()
       ? queryGraphifyCodeStructure({
@@ -325,7 +325,7 @@ async function main() {
           }
         : undefined,
       bench:
-        isCavemanBrevityEnabled() || isPromptCacheEnabled()
+        isCavemanBrevityExplicitlyOn() || isPromptCacheEnabled()
           ? measureV22Goals009010({
               jobsDir: jobsDir ? resolve(jobsDir) : join(orchestratorRoot, "jobs"),
               orchestratorRoot,

@@ -29,4 +29,6 @@ Invocação **`/evolve`**.
 
 **HARD-GATE — Grill-me (design/planning):** após `/prd` aprovado, antes de `/planejar` quando Policy exige → `~/.agents/skills/grill-me/SKILL.md` + `grill-me-gate.md` (fail-closed)
 
+**HARD-GATE — Caveman (saída):** default ON em todo agente/worker. Skill vendorizada `vendor/juliusbrussee-caveman/skills/caveman/SKILL.md`. Opt-out `EVOLVELOOP_BREVITY_CAVEMAN=off`. Exceções verbatim. → `~/.cursor/skills/orquestrar/references/caveman-hard-gate.md`
+
 **Legacy:** o nome interno histórico *EvolveLoop* e o comando `/EvolveLoop` são aliases legados — não são a marca pública. O nome interno histórico *MegaBrain* e `/MegaBrain` são aliases legados. Use `/evolve`.
