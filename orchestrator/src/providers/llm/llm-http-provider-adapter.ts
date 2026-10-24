@@ -102,6 +102,23 @@ export function buildOpenRouterChatBody(input: {
   };
 }
 
+/** Retry-After as delta-seconds or HTTP-date. Unparseable values return null. */
+export function parseRetryAfterMs(header: string | null, nowMs: number): number | null {
+  if (header === null) return null;
+  const trimmed = header.trim();
+  if (trimmed.length === 0) return null;
+  if (/^\d+(\.\d+)?$/.test(trimmed)) return Math.max(0, Number(trimmed) * 1000);
+  const dated = Date.parse(trimmed);
+  if (Number.isNaN(dated)) return null;
+  return Math.max(0, dated - nowMs);
+}
+
+export function openRouterRetryDelayMs(header: string | null, attempt: number, nowMs: number): number {
+  const parsed = parseRetryAfterMs(header, nowMs);
+  if (parsed !== null) return parsed;
+  return 1000 * 2 ** Math.max(0, attempt - 1);
+}
+
 export function buildOpenAiChatBody(input: {
   model: string;
   stablePrefixParts: PromptCachePart[];
@@ -198,23 +215,45 @@ export class LlmHttpProviderAdapter {
     return { text: extractOpenAiText(raw), raw, usage, telemetry };
   }
 
-  async completeOpenRouter(input: OpenAiCompleteInput & { maxTokens?: number }): Promise<LlmAdapterResult & { openrouter: OpenRouterUsage }> {
+  async completeOpenRouter(input: OpenAiCompleteInput & {
+    maxTokens?: number;
+    maxAttempts?: number;
+    sleep?: (ms: number) => Promise<void>;
+    now?: () => number;
+  }): Promise<LlmAdapterResult & { openrouter: OpenRouterUsage }> {
     const body = buildOpenRouterChatBody({
       model: input.model,
       stablePrefix: buildStablePromptPrefix(input.stablePrefixParts),
       userMessage: input.userMessage,
       maxTokens: input.maxTokens,
     });
-    const res = await this.fetchImpl("https://openrouter.ai/api/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        authorization: `Bearer ${input.apiKey}`,
-      },
-      body: JSON.stringify(body),
-    });
-    const raw = (await res.json()) as unknown;
+    const maxAttempts = input.maxAttempts ?? 4;
+    const sleep = input.sleep ?? ((ms: number) => new Promise((resolve) => setTimeout(resolve, ms)));
+    const now = input.now ?? Date.now;
+    let res: Response | null = null;
+    for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+      res = await this.fetchImpl("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${input.apiKey}`,
+        },
+        body: JSON.stringify(body),
+      });
+      if (res.status !== 429 || attempt === maxAttempts) break;
+      const wait = openRouterRetryDelayMs(res.headers.get("retry-after"), attempt, now());
+      await res.text().catch(() => undefined);
+      await sleep(wait);
+    }
+    if (!res) throw new Error("openrouter_http_missing");
+    const rawText = await res.text();
     if (!res.ok) throw new Error(`openrouter_http_${res.status}`);
+    let raw: unknown;
+    try {
+      raw = JSON.parse(rawText) as unknown;
+    } catch {
+      throw new Error("openrouter_body_invalid");
+    }
     const openrouter = parseOpenRouterUsage(raw);
     const telemetry = buildVendorCacheTelemetry({
       vendor: "openrouter",

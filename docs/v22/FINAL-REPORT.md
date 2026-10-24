@@ -86,8 +86,8 @@ Estado: **`LIMITED`**.
 | Critério | Estado | Evidência | O que falta |
 |----------|--------|-----------|-------------|
 | Configuração da baseline | `PASS` | `docs/v22/baseline/tasks.json`: scorer `v22-anchor-scorer-1.0.0`, 45 paths, 22000 tokens, tiktoken | O manifest híbrido continua a ser outra corrida |
-| Modelo | `LIMITED` | `model_id` `deterministic-provider` na baseline e no handoff | Não há id de modelo generativo |
-| Repetições e dispersão | `LIMITED` | `n=3`. Dispersão 0 de entrada é a esperada no determinístico. Dispersão de modelo `NOT_MEASURED` | O plano pede ≥5 quando o modelo não é determinístico. `n=3` não cumpre essa regra |
+| Modelo | `LIMITED` | A baseline determinística usa `deterministic-provider`. A corrida live do CLI registou `model_id` `Auto` | Tokens de saída, cache e custo dessa corrida ficam `NOT_MEASURED` |
+| Repetições e dispersão | `LIMITED` | A baseline determinística continua `n=3`, com dispersão 0 de entrada. A corrida live do CLI tem `N=5` e dispersão de latência | Dispersão de tokens do modelo fica `NOT_MEASURED`. Três tarefas ficaram 0/0 nos dois braços |
 | Limitações escritas | `PASS` | Campo `limitation` nos dois JSON, com `tree_sha` | — |
 
 ## Entregáveis da seção 8
@@ -104,4 +104,22 @@ Estado: **`LIMITED`**.
 
 ## O que continua de fora
 
-P0-6 mede o condenser extrativo numa tarefa, com a flag ligada só nessa corrida. O default continua OFF. Reinject continua `NOT_IMPLEMENTED`. Graphify permanece OFF. Nenhuma chave de vendor entra no tree. Os números estão nos JSON. Este texto não os copia.
+P0-6 mede o condenser extrativo numa tarefa, com a flag ligada só nessa corrida. O default continua OFF. Reinject continua `NOT_IMPLEMENTED`. Graphify permanece OFF. Nenhuma chave de vendor entra no tree.
+
+## V22-GAP-VENDOR-1b
+
+A corrida real do `cursor-agent` está em `docs/v22/baseline/raw/p0-vendor-cursor-agent-report.json`. Modelo `Auto`, `N=5`, 62 chamadas, árvore `7b1e67aab8638248e95a9fd42403f470a712d983`. O OpenRouter respondeu HTTP 429 duas vezes. Essa corrida não tem números.
+
+O CLI não publica tokens nem custo. Entrada do provider, saída, cache e custo ficam `NOT_MEASURED`. `duration_ms` é igual a `duration_api_ms` nas 62 chamadas. A doc oficial diz que esses dois campos estão iguais, por isso não separam tempo de ferramenta.
+
+Qualidade por substring, B0 versus V2.2: `curta` 0/0, `retomada` 0/0, `fontes_conflitantes` 0/0, `delegada` 0,5/0,5, `projeto_grande` 1/1. Em `restricoes_compactacao_handoff` o B0 ficou 0,667 nas cinco repetições e o V2.2 ficou 0,533. Quatro respostas V2.2 repetiram 0,667. A quinta ficou 0 e perdeu `reinject_allowed: false`. As âncoras do cartão não foram alteradas.
+
+A latência média do V2.2, com prompt local menor, foi 2,99× em `projeto_grande`, 2,74× em `fontes_conflitantes`, 2,53× em `restricoes_compactacao_handoff` e 4,14× em `retomada`. `curta` e `delegada` não ficaram mais lentas.
+
+O stream-json dessa corrida não foi guardado. O JSON parseado não tem eventos `tool_call`, então a contagem por braço fica `NOT_MEASURED`. O prompt V2.2, com o mesmo sha256 da corrida, pede leitura de `.cursor/skills/orquestrar/SKILL.md` e do repositório. O modo ask pesquisa o código. Isso pode alongar a chamada. Não é uma contagem de ferramentas.
+
+A restrição `reinject_allowed: false` está no contexto V2.2 quatro vezes, num prompt de 22062 tokens: slice `spawn://security_restrictions` no token 671, `docs/architecture/v2.2/IMPLEMENTATION-ROADMAP.md` no token 9159, `docs/adr/0013-context-ownership-working-context.md` no token 13022 e `docs/v22/GOALS-OFFICIAL.md` no token 19493. A frase não foi cortada. A quinta resposta é que não a repetiu.
+
+O critério semântico para um juiz está em `docs/v22/VENDOR-MEASURE.md`. Não foi executado.
+
+Esta seção entra no corpus de `retomada` e sobe a pontuação de retrieval de `restricoes_compactacao_handoff`. O JSON de compactação foi remensurado por causa disso. Os paths e os tokens da corrida live do CLI não mudam: o sha256 do prompt continua o da árvore `7b1e67a`.

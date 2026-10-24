@@ -1,0 +1,1259 @@
+{
+  "schema_id": "v22-vendor-report-1",
+  "task_id": "V22-GAP-VENDOR-1a",
+  "status": "MEASURED",
+  "provider": "cursor-agent",
+  "model_id": "Auto",
+  "n": 5,
+  "max_output_tokens": 300,
+  "budget_usd": 2.5,
+  "tokenizer": "tiktoken:cl100k_base",
+  "tree_sha": "7b1e67aab8638248e95a9fd42403f470a712d983",
+  "estimate_usd": "NOT_MEASURED",
+  "estimate_note": "O JSON oficial do cursor-agent não tem custo. A estimativa em dólares fica NOT_MEASURED. O teto de US$2.50 aplica-se ao OpenRouter.",
+  "price_source": "NOT_MEASURED",
+  "local_input_tokens": 2831964,
+  "output_tokens_upper": 18600,
+  "calls": 62,
+  "spent_usd": "NOT_MEASURED",
+  "cache_probe": {
+    "prefix_tokens": 1681,
+    "prefix_over_1024": true,
+    "calls": [
+      {
+        "input_tokens": "NOT_MEASURED",
+        "output_tokens": "NOT_MEASURED",
+        "cached_tokens": "NOT_MEASURED",
+        "cost_usd": "NOT_MEASURED",
+        "latency_ms": 4395,
+        "duration_api_ms": 4395,
+        "model_id": "Auto"
+      },
+      {
+        "input_tokens": "NOT_MEASURED",
+        "output_tokens": "NOT_MEASURED",
+        "cached_tokens": "NOT_MEASURED",
+        "cost_usd": "NOT_MEASURED",
+        "latency_ms": 2498,
+        "duration_api_ms": 2498,
+        "model_id": "Auto"
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "id": "curta",
+      "arms": {
+        "B0": {
+          "arm": "B0",
+          "local_prompt_tokens": 136710,
+          "prompt_sha256": "dde315b890b6ac9927c3eb662114ba19b29311cc798725138db5048d607cff31",
+          "n": 5,
+          "input_tokens": "NOT_MEASURED",
+          "output_tokens": "NOT_MEASURED",
+          "cached_tokens": "NOT_MEASURED",
+          "cost_usd": "NOT_MEASURED",
+          "latency_ms": 12744,
+          "quality": 0,
+          "dispersion": {
+            "input_tokens": "NOT_MEASURED",
+            "output_tokens": "NOT_MEASURED",
+            "cached_tokens": "NOT_MEASURED",
+            "cost_usd": "NOT_MEASURED",
+            "latency_ms": {
+              "statistic": "sample_stddev",
+              "value": 4847.430556490727,
+              "n": 5
+            },
+            "quality": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 5
+            }
+          },
+          "runs": [
+            {
+              "repetition": 1,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 16403,
+              "duration_api_ms": 16403,
+              "quality": 0,
+              "missing": [
+                "export function cleanOutput"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 2,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 7523,
+              "duration_api_ms": 7523,
+              "quality": 0,
+              "missing": [
+                "export function cleanOutput"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 3,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 15452,
+              "duration_api_ms": 15452,
+              "quality": 0,
+              "missing": [
+                "export function cleanOutput"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 4,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 16933,
+              "duration_api_ms": 16933,
+              "quality": 0,
+              "missing": [
+                "export function cleanOutput"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 5,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 7409,
+              "duration_api_ms": 7409,
+              "quality": 0,
+              "missing": [
+                "export function cleanOutput"
+              ],
+              "model_id": "Auto"
+            }
+          ]
+        },
+        "V2.2": {
+          "arm": "V2.2",
+          "local_prompt_tokens": 21964,
+          "prompt_sha256": "fa36540d4dec191acca19627699e6176630096d6610578976a6b435517ad7ad2",
+          "n": 5,
+          "input_tokens": "NOT_MEASURED",
+          "output_tokens": "NOT_MEASURED",
+          "cached_tokens": "NOT_MEASURED",
+          "cost_usd": "NOT_MEASURED",
+          "latency_ms": 10431.2,
+          "quality": 0,
+          "dispersion": {
+            "input_tokens": "NOT_MEASURED",
+            "output_tokens": "NOT_MEASURED",
+            "cached_tokens": "NOT_MEASURED",
+            "cost_usd": "NOT_MEASURED",
+            "latency_ms": {
+              "statistic": "sample_stddev",
+              "value": 2695.382755751027,
+              "n": 5
+            },
+            "quality": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 5
+            }
+          },
+          "runs": [
+            {
+              "repetition": 1,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 12644,
+              "duration_api_ms": 12644,
+              "quality": 0,
+              "missing": [
+                "export function cleanOutput"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 2,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 7091,
+              "duration_api_ms": 7091,
+              "quality": 0,
+              "missing": [
+                "export function cleanOutput"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 3,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 7913,
+              "duration_api_ms": 7913,
+              "quality": 0,
+              "missing": [
+                "export function cleanOutput"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 4,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 12355,
+              "duration_api_ms": 12355,
+              "quality": 0,
+              "missing": [
+                "export function cleanOutput"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 5,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 12153,
+              "duration_api_ms": 12153,
+              "quality": 0,
+              "missing": [
+                "export function cleanOutput"
+              ],
+              "model_id": "Auto"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "projeto_grande",
+      "arms": {
+        "B0": {
+          "arm": "B0",
+          "local_prompt_tokens": 81486,
+          "prompt_sha256": "218f4c2c9290930e92865fd191122bd6d3f1c74b7bc1b7ff973b0cad39fe5b62",
+          "n": 5,
+          "input_tokens": "NOT_MEASURED",
+          "output_tokens": "NOT_MEASURED",
+          "cached_tokens": "NOT_MEASURED",
+          "cost_usd": "NOT_MEASURED",
+          "latency_ms": 9160.4,
+          "quality": 1,
+          "dispersion": {
+            "input_tokens": "NOT_MEASURED",
+            "output_tokens": "NOT_MEASURED",
+            "cached_tokens": "NOT_MEASURED",
+            "cost_usd": "NOT_MEASURED",
+            "latency_ms": {
+              "statistic": "sample_stddev",
+              "value": 2244.5122632768125,
+              "n": 5
+            },
+            "quality": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 5
+            }
+          },
+          "runs": [
+            {
+              "repetition": 1,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 11513,
+              "duration_api_ms": 11513,
+              "quality": 1,
+              "missing": [],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 2,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 10171,
+              "duration_api_ms": 10171,
+              "quality": 1,
+              "missing": [],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 3,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 7780,
+              "duration_api_ms": 7780,
+              "quality": 1,
+              "missing": [],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 4,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 10374,
+              "duration_api_ms": 10374,
+              "quality": 1,
+              "missing": [],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 5,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 5964,
+              "duration_api_ms": 5964,
+              "quality": 1,
+              "missing": [],
+              "model_id": "Auto"
+            }
+          ]
+        },
+        "V2.2": {
+          "arm": "V2.2",
+          "local_prompt_tokens": 22057,
+          "prompt_sha256": "c6b9866e6c78d08e3e84a0a4b5748f0ed6f05c4dea5e049da5cf873908e33f8a",
+          "n": 5,
+          "input_tokens": "NOT_MEASURED",
+          "output_tokens": "NOT_MEASURED",
+          "cached_tokens": "NOT_MEASURED",
+          "cost_usd": "NOT_MEASURED",
+          "latency_ms": 27418.6,
+          "quality": 1,
+          "dispersion": {
+            "input_tokens": "NOT_MEASURED",
+            "output_tokens": "NOT_MEASURED",
+            "cached_tokens": "NOT_MEASURED",
+            "cost_usd": "NOT_MEASURED",
+            "latency_ms": {
+              "statistic": "sample_stddev",
+              "value": 13364.316473355457,
+              "n": 5
+            },
+            "quality": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 5
+            }
+          },
+          "runs": [
+            {
+              "repetition": 1,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 41758,
+              "duration_api_ms": 41758,
+              "quality": 1,
+              "missing": [],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 2,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 9858,
+              "duration_api_ms": 9858,
+              "quality": 1,
+              "missing": [],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 3,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 30272,
+              "duration_api_ms": 30272,
+              "quality": 1,
+              "missing": [],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 4,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 37406,
+              "duration_api_ms": 37406,
+              "quality": 1,
+              "missing": [],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 5,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 17799,
+              "duration_api_ms": 17799,
+              "quality": 1,
+              "missing": [],
+              "model_id": "Auto"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "retomada",
+      "arms": {
+        "B0": {
+          "arm": "B0",
+          "local_prompt_tokens": 29702,
+          "prompt_sha256": "88e35ac2bf1c492b3b7f32e2adc67e9ba3625f4002e5a3b487c2c50f133d09d3",
+          "n": 5,
+          "input_tokens": "NOT_MEASURED",
+          "output_tokens": "NOT_MEASURED",
+          "cached_tokens": "NOT_MEASURED",
+          "cost_usd": "NOT_MEASURED",
+          "latency_ms": 7321.6,
+          "quality": 0,
+          "dispersion": {
+            "input_tokens": "NOT_MEASURED",
+            "output_tokens": "NOT_MEASURED",
+            "cached_tokens": "NOT_MEASURED",
+            "cost_usd": "NOT_MEASURED",
+            "latency_ms": {
+              "statistic": "sample_stddev",
+              "value": 1242.15550556281,
+              "n": 5
+            },
+            "quality": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 5
+            }
+          },
+          "runs": [
+            {
+              "repetition": 1,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 8888,
+              "duration_api_ms": 8888,
+              "quality": 0,
+              "missing": [
+                "O que sobrevive para resume?"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 2,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 7178,
+              "duration_api_ms": 7178,
+              "quality": 0,
+              "missing": [
+                "O que sobrevive para resume?"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 3,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 7299,
+              "duration_api_ms": 7299,
+              "quality": 0,
+              "missing": [
+                "O que sobrevive para resume?"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 4,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 5456,
+              "duration_api_ms": 5456,
+              "quality": 0,
+              "missing": [
+                "O que sobrevive para resume?"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 5,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 7787,
+              "duration_api_ms": 7787,
+              "quality": 0,
+              "missing": [
+                "O que sobrevive para resume?"
+              ],
+              "model_id": "Auto"
+            }
+          ]
+        },
+        "V2.2": {
+          "arm": "V2.2",
+          "local_prompt_tokens": 21972,
+          "prompt_sha256": "c9aee97446abc66773201ca57bb7ea3acccd214faa8dbef3241d0489c39b232b",
+          "n": 5,
+          "input_tokens": "NOT_MEASURED",
+          "output_tokens": "NOT_MEASURED",
+          "cached_tokens": "NOT_MEASURED",
+          "cost_usd": "NOT_MEASURED",
+          "latency_ms": 30290.6,
+          "quality": 0,
+          "dispersion": {
+            "input_tokens": "NOT_MEASURED",
+            "output_tokens": "NOT_MEASURED",
+            "cached_tokens": "NOT_MEASURED",
+            "cost_usd": "NOT_MEASURED",
+            "latency_ms": {
+              "statistic": "sample_stddev",
+              "value": 6295.789172137199,
+              "n": 5
+            },
+            "quality": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 5
+            }
+          },
+          "runs": [
+            {
+              "repetition": 1,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 34822,
+              "duration_api_ms": 34822,
+              "quality": 0,
+              "missing": [
+                "O que sobrevive para resume?"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 2,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 32621,
+              "duration_api_ms": 32621,
+              "quality": 0,
+              "missing": [
+                "O que sobrevive para resume?"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 3,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 19200,
+              "duration_api_ms": 19200,
+              "quality": 0,
+              "missing": [
+                "O que sobrevive para resume?"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 4,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 32971,
+              "duration_api_ms": 32971,
+              "quality": 0,
+              "missing": [
+                "O que sobrevive para resume?"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 5,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 31839,
+              "duration_api_ms": 31839,
+              "quality": 0,
+              "missing": [
+                "O que sobrevive para resume?"
+              ],
+              "model_id": "Auto"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "delegada",
+      "arms": {
+        "B0": {
+          "arm": "B0",
+          "local_prompt_tokens": 87534,
+          "prompt_sha256": "ce5288b28eb086c6b73d00ac3b26b18dd1dfb2b910a7d3273d918e94b0ba633c",
+          "n": 5,
+          "input_tokens": "NOT_MEASURED",
+          "output_tokens": "NOT_MEASURED",
+          "cached_tokens": "NOT_MEASURED",
+          "cost_usd": "NOT_MEASURED",
+          "latency_ms": 15998,
+          "quality": 0.5,
+          "dispersion": {
+            "input_tokens": "NOT_MEASURED",
+            "output_tokens": "NOT_MEASURED",
+            "cached_tokens": "NOT_MEASURED",
+            "cost_usd": "NOT_MEASURED",
+            "latency_ms": {
+              "statistic": "sample_stddev",
+              "value": 3774.687867890536,
+              "n": 5
+            },
+            "quality": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 5
+            }
+          },
+          "runs": [
+            {
+              "repetition": 1,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 17154,
+              "duration_api_ms": 17154,
+              "quality": 0.5,
+              "missing": [
+                "Answer cites anchored file:line from repository"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 2,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 16104,
+              "duration_api_ms": 16104,
+              "quality": 0.5,
+              "missing": [
+                "Answer cites anchored file:line from repository"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 3,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 21116,
+              "duration_api_ms": 21116,
+              "quality": 0.5,
+              "missing": [
+                "Answer cites anchored file:line from repository"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 4,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 14941,
+              "duration_api_ms": 14941,
+              "quality": 0.5,
+              "missing": [
+                "Answer cites anchored file:line from repository"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 5,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 10675,
+              "duration_api_ms": 10675,
+              "quality": 0.5,
+              "missing": [
+                "Answer cites anchored file:line from repository"
+              ],
+              "model_id": "Auto"
+            }
+          ]
+        },
+        "V2.2": {
+          "arm": "V2.2",
+          "local_prompt_tokens": 22056,
+          "prompt_sha256": "587358ea1d25d1a49e01a5a0ed3f38f403b078f6285a43bbe64648311a8c17ce",
+          "n": 5,
+          "input_tokens": "NOT_MEASURED",
+          "output_tokens": "NOT_MEASURED",
+          "cached_tokens": "NOT_MEASURED",
+          "cost_usd": "NOT_MEASURED",
+          "latency_ms": 15847.2,
+          "quality": 0.5,
+          "dispersion": {
+            "input_tokens": "NOT_MEASURED",
+            "output_tokens": "NOT_MEASURED",
+            "cached_tokens": "NOT_MEASURED",
+            "cost_usd": "NOT_MEASURED",
+            "latency_ms": {
+              "statistic": "sample_stddev",
+              "value": 5117.768673943753,
+              "n": 5
+            },
+            "quality": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 5
+            }
+          },
+          "runs": [
+            {
+              "repetition": 1,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 23157,
+              "duration_api_ms": 23157,
+              "quality": 0.5,
+              "missing": [
+                "Answer cites anchored file:line from repository"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 2,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 18815,
+              "duration_api_ms": 18815,
+              "quality": 0.5,
+              "missing": [
+                "Answer cites anchored file:line from repository"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 3,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 13196,
+              "duration_api_ms": 13196,
+              "quality": 0.5,
+              "missing": [
+                "Answer cites anchored file:line from repository"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 4,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 10243,
+              "duration_api_ms": 10243,
+              "quality": 0.5,
+              "missing": [
+                "Answer cites anchored file:line from repository"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 5,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 13825,
+              "duration_api_ms": 13825,
+              "quality": 0.5,
+              "missing": [
+                "Answer cites anchored file:line from repository"
+              ],
+              "model_id": "Auto"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "fontes_conflitantes",
+      "arms": {
+        "B0": {
+          "arm": "B0",
+          "local_prompt_tokens": 48077,
+          "prompt_sha256": "b49469b6d7e5c5b4422d454b21674a0da075ea592fc921c773d6b42f94344d20",
+          "n": 5,
+          "input_tokens": "NOT_MEASURED",
+          "output_tokens": "NOT_MEASURED",
+          "cached_tokens": "NOT_MEASURED",
+          "cost_usd": "NOT_MEASURED",
+          "latency_ms": 10969.8,
+          "quality": 0,
+          "dispersion": {
+            "input_tokens": "NOT_MEASURED",
+            "output_tokens": "NOT_MEASURED",
+            "cached_tokens": "NOT_MEASURED",
+            "cost_usd": "NOT_MEASURED",
+            "latency_ms": {
+              "statistic": "sample_stddev",
+              "value": 1269.4024972403354,
+              "n": 5
+            },
+            "quality": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 5
+            }
+          },
+          "runs": [
+            {
+              "repetition": 1,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 9651,
+              "duration_api_ms": 9651,
+              "quality": 0,
+              "missing": [
+                "Compaction engine: **NOT_IMPLEMENTED**"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 2,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 9972,
+              "duration_api_ms": 9972,
+              "quality": 0,
+              "missing": [
+                "Compaction engine: **NOT_IMPLEMENTED**"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 3,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 12843,
+              "duration_api_ms": 12843,
+              "quality": 0,
+              "missing": [
+                "Compaction engine: **NOT_IMPLEMENTED**"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 4,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 10964,
+              "duration_api_ms": 10964,
+              "quality": 0,
+              "missing": [
+                "Compaction engine: **NOT_IMPLEMENTED**"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 5,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 11419,
+              "duration_api_ms": 11419,
+              "quality": 0,
+              "missing": [
+                "Compaction engine: **NOT_IMPLEMENTED**"
+              ],
+              "model_id": "Auto"
+            }
+          ]
+        },
+        "V2.2": {
+          "arm": "V2.2",
+          "local_prompt_tokens": 22142,
+          "prompt_sha256": "3ee956a2f4e6fd54cc0eab8b0f54f13d55467e09246d05002702f14d3e0f5e09",
+          "n": 5,
+          "input_tokens": "NOT_MEASURED",
+          "output_tokens": "NOT_MEASURED",
+          "cached_tokens": "NOT_MEASURED",
+          "cost_usd": "NOT_MEASURED",
+          "latency_ms": 30048.4,
+          "quality": 0,
+          "dispersion": {
+            "input_tokens": "NOT_MEASURED",
+            "output_tokens": "NOT_MEASURED",
+            "cached_tokens": "NOT_MEASURED",
+            "cost_usd": "NOT_MEASURED",
+            "latency_ms": {
+              "statistic": "sample_stddev",
+              "value": 11208.747356417665,
+              "n": 5
+            },
+            "quality": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 5
+            }
+          },
+          "runs": [
+            {
+              "repetition": 1,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 16994,
+              "duration_api_ms": 16994,
+              "quality": 0,
+              "missing": [
+                "Compaction engine: **NOT_IMPLEMENTED**"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 2,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 25089,
+              "duration_api_ms": 25089,
+              "quality": 0,
+              "missing": [
+                "Compaction engine: **NOT_IMPLEMENTED**"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 3,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 47150,
+              "duration_api_ms": 47150,
+              "quality": 0,
+              "missing": [
+                "Compaction engine: **NOT_IMPLEMENTED**"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 4,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 27798,
+              "duration_api_ms": 27798,
+              "quality": 0,
+              "missing": [
+                "Compaction engine: **NOT_IMPLEMENTED**"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 5,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 33211,
+              "duration_api_ms": 33211,
+              "quality": 0,
+              "missing": [
+                "Compaction engine: **NOT_IMPLEMENTED**"
+              ],
+              "model_id": "Auto"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "restricoes_compactacao_handoff",
+      "arms": {
+        "B0": {
+          "arm": "B0",
+          "local_prompt_tokens": 49956,
+          "prompt_sha256": "d343a7ffcd4556d9a5605735ad3a22a66a8b6bfe454e7736d402cbc4fcadfb7e",
+          "n": 5,
+          "input_tokens": "NOT_MEASURED",
+          "output_tokens": "NOT_MEASURED",
+          "cached_tokens": "NOT_MEASURED",
+          "cost_usd": "NOT_MEASURED",
+          "latency_ms": 7275.4,
+          "quality": 0.6666666666666666,
+          "dispersion": {
+            "input_tokens": "NOT_MEASURED",
+            "output_tokens": "NOT_MEASURED",
+            "cached_tokens": "NOT_MEASURED",
+            "cost_usd": "NOT_MEASURED",
+            "latency_ms": {
+              "statistic": "sample_stddev",
+              "value": 1705.754759629883,
+              "n": 5
+            },
+            "quality": {
+              "statistic": "sample_stddev",
+              "value": 0,
+              "n": 5
+            }
+          },
+          "runs": [
+            {
+              "repetition": 1,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 7172,
+              "duration_api_ms": 7172,
+              "quality": 0.6666666666666666,
+              "missing": [
+                "No secret leakage in evidence payload"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 2,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 9277,
+              "duration_api_ms": 9277,
+              "quality": 0.6666666666666666,
+              "missing": [
+                "No secret leakage in evidence payload"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 3,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 5151,
+              "duration_api_ms": 5151,
+              "quality": 0.6666666666666666,
+              "missing": [
+                "No secret leakage in evidence payload"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 4,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 6147,
+              "duration_api_ms": 6147,
+              "quality": 0.6666666666666666,
+              "missing": [
+                "No secret leakage in evidence payload"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 5,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 8630,
+              "duration_api_ms": 8630,
+              "quality": 0.6666666666666666,
+              "missing": [
+                "No secret leakage in evidence payload"
+              ],
+              "model_id": "Auto"
+            }
+          ]
+        },
+        "V2.2": {
+          "arm": "V2.2",
+          "local_prompt_tokens": 22062,
+          "prompt_sha256": "fd372236e0f7403e27a1fe38a05930954bc477fa53f1bc4516475d1b64573c7d",
+          "n": 5,
+          "input_tokens": "NOT_MEASURED",
+          "output_tokens": "NOT_MEASURED",
+          "cached_tokens": "NOT_MEASURED",
+          "cost_usd": "NOT_MEASURED",
+          "latency_ms": 18389.2,
+          "quality": 0.5333333333333333,
+          "dispersion": {
+            "input_tokens": "NOT_MEASURED",
+            "output_tokens": "NOT_MEASURED",
+            "cached_tokens": "NOT_MEASURED",
+            "cost_usd": "NOT_MEASURED",
+            "latency_ms": {
+              "statistic": "sample_stddev",
+              "value": 5838.157346286584,
+              "n": 5
+            },
+            "quality": {
+              "statistic": "sample_stddev",
+              "value": 0.2981423969999719,
+              "n": 5
+            }
+          },
+          "runs": [
+            {
+              "repetition": 1,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 26228,
+              "duration_api_ms": 26228,
+              "quality": 0.6666666666666666,
+              "missing": [
+                "No secret leakage in evidence payload"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 2,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 15382,
+              "duration_api_ms": 15382,
+              "quality": 0.6666666666666666,
+              "missing": [
+                "No secret leakage in evidence payload"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 3,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 12452,
+              "duration_api_ms": 12452,
+              "quality": 0.6666666666666666,
+              "missing": [
+                "No secret leakage in evidence payload"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 4,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 15070,
+              "duration_api_ms": 15070,
+              "quality": 0.6666666666666666,
+              "missing": [
+                "No secret leakage in evidence payload"
+              ],
+              "model_id": "Auto"
+            },
+            {
+              "repetition": 5,
+              "input_tokens": "NOT_MEASURED",
+              "output_tokens": "NOT_MEASURED",
+              "cached_tokens": "NOT_MEASURED",
+              "cost_usd": "NOT_MEASURED",
+              "latency_ms": 22814,
+              "duration_api_ms": 22814,
+              "quality": 0,
+              "missing": [
+                "reinject_allowed: false",
+                "reinject_allowed: false",
+                "No secret leakage in evidence payload"
+              ],
+              "model_id": "Auto"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "limitation": "CI não chama o provider. cursor-agent: duração vem de duration_ms; tokens e custo do provider são NOT_MEASURED porque não estão no schema oficial. OpenRouter: prompt_tokens, completion_tokens, prompt_tokens_details.cached_tokens e usage.cost. Qualidade é a fração de âncoras e restrições do cartão presentes na resposta. Dispersão de modelo só existe quando o provider devolve o número.",
+  "measured_at": "2026-10-24T00:13:23.097Z"
+}

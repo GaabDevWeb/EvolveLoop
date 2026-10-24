@@ -423,6 +423,10 @@ export async function runVendorMeasure(options: {
           latency_ms: result.duration_ms,
           duration_api_ms: result.duration_api_ms,
           model_id: result.model_id,
+          tool_calls_started: result.tool_calls.started,
+          tool_calls_read_started: result.tool_calls.read_started,
+          tool_calls_write_started: result.tool_calls.write_started,
+          tool_calls_other_started: result.tool_calls.other_started,
         });
         if (result.model_id !== "cursor-cli-default") base.model_id = result.model_id;
       }
@@ -478,6 +482,10 @@ export async function runVendorMeasure(options: {
             quality: scored.quality,
             missing: scored.missing,
             model_id: result.model_id,
+            tool_calls_started: result.tool_calls.started,
+            tool_calls_read_started: result.tool_calls.read_started,
+            tool_calls_write_started: result.tool_calls.write_started,
+            tool_calls_other_started: result.tool_calls.other_started,
           });
           runs.set(key, bucket);
           if (result.model_id !== "cursor-cli-default") base.model_id = result.model_id;

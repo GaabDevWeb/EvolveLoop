@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { LlmHttpProviderAdapter, buildOpenRouterChatBody } from "../../src/providers/llm/llm-http-provider-adapter.js";
+import { LlmHttpProviderAdapter, buildOpenRouterChatBody, openRouterRetryDelayMs, parseRetryAfterMs } from "../../src/providers/llm/llm-http-provider-adapter.js";
 import { parseOpenRouterUsage } from "../../src/providers/llm/vendor-cache-usage.js";
 import {
   cursorAgentArgs,
@@ -109,6 +109,63 @@ describe("V22-GAP-VENDOR-1a", () => {
     expect(parsed.output_tokens).toBe("NOT_MEASURED");
     expect(parsed.cached_tokens).toBe("NOT_MEASURED");
     expect(parsed.cost_usd).toBe("NOT_MEASURED");
+    expect(parsed.tool_calls).toEqual({
+      started: 0,
+      completed: 0,
+      read_started: 0,
+      write_started: 0,
+      other_started: 0,
+    });
+    expect(JSON.stringify(parsed)).not.toContain(SECRET);
+  });
+
+  it("counts documented tool_call events and does not keep tool output", () => {
+    const stdout = [
+      JSON.stringify({ type: "system", subtype: "init", model: "Auto" }),
+      JSON.stringify({
+        type: "tool_call",
+        subtype: "started",
+        call_id: "a",
+        tool_call: { readToolCall: { args: { path: ".cursor/skills/orquestrar/SKILL.md" } } },
+      }),
+      JSON.stringify({
+        type: "tool_call",
+        subtype: "completed",
+        call_id: "a",
+        tool_call: { readToolCall: { result: { success: { content: SECRET } } } },
+      }),
+      JSON.stringify({
+        type: "tool_call",
+        subtype: "started",
+        call_id: "b",
+        tool_call: { writeToolCall: { args: { path: "out.txt" } } },
+      }),
+      JSON.stringify({
+        type: "tool_call",
+        subtype: "started",
+        call_id: "c",
+        tool_call: { function: { name: "shell" } },
+      }),
+      JSON.stringify({
+        type: "result",
+        subtype: "success",
+        is_error: false,
+        duration_ms: 10,
+        duration_api_ms: 10,
+        result: "answer",
+        usage: { inputTokens: 9, cost: 3 },
+      }),
+    ].join("\n");
+    const parsed = parseCursorAgentNdjson(stdout);
+    expect(parsed.tool_calls).toEqual({
+      started: 3,
+      completed: 1,
+      read_started: 1,
+      write_started: 1,
+      other_started: 1,
+    });
+    expect(parsed.input_tokens).toBe("NOT_MEASURED");
+    expect(parsed.cost_usd).toBe("NOT_MEASURED");
     expect(JSON.stringify(parsed)).not.toContain(SECRET);
   });
 
@@ -204,9 +261,74 @@ describe("V22-GAP-VENDOR-1a", () => {
     expect(report.tasks[0]?.arms.B0.input_tokens).toBe("NOT_MEASURED");
     expect(report.tasks[0]?.arms.B0.cost_usd).toBe("NOT_MEASURED");
     expect(report.tasks[0]?.arms.B0.quality).toBe(1);
+    expect(report.tasks[0]?.arms.B0.runs[0]?.tool_calls_started).toBe(0);
     expect(report.cache_probe.calls).toHaveLength(2);
     expect(seen.length).toBe(12);
     expect(estimateOpenRouterUsd({ inputTokens: 1_000_000, outputTokensUpper: 0, inputUsdPerMtok: 0.1, outputUsdPerMtok: 0.4 })).toBeCloseTo(0.1);
     expect(buildCacheProbePrefix().length).toBeGreaterThan(1000);
+  });
+
+  it("retries OpenRouter HTTP 429 and honors Retry-After", async () => {
+    expect(parseRetryAfterMs("Fri, 24 Oct 2026 00:00:03 GMT", Date.parse("2026-10-24T00:00:00.000Z"))).toBe(3000);
+    expect(parseRetryAfterMs("0", 0)).toBe(0);
+    expect(openRouterRetryDelayMs(null, 1, 0)).toBe(1000);
+    expect(openRouterRetryDelayMs(null, 3, 0)).toBe(4000);
+    const waits: number[] = [];
+    let called = 0;
+    const adapter = new LlmHttpProviderAdapter(async () => {
+      called += 1;
+      if (called === 1) {
+        return new Response(JSON.stringify({ error: SECRET }), {
+          status: 429,
+          headers: { "retry-after": "2" },
+        });
+      }
+      if (called === 2) return new Response(SECRET, { status: 429 });
+      return new Response(
+        JSON.stringify({
+          choices: [{ message: { content: "ok" } }],
+          usage: { prompt_tokens: 3, completion_tokens: 1, cost: 0.01 },
+        }),
+        { status: 200 },
+      );
+    });
+    const result = await adapter.completeOpenRouter({
+      apiKey: SECRET,
+      model: OPENROUTER_DEFAULT_MODEL,
+      stablePrefixParts: [{ role: "system", content: "prefix", cacheable: true }],
+      userMessage: "question",
+      sleep: async (ms) => {
+        waits.push(ms);
+      },
+    });
+    expect(called).toBe(3);
+    expect(waits).toEqual([2000, 2000]);
+    expect(result.openrouter.cost_usd).toBe(0.01);
+    expect(JSON.stringify(result.openrouter)).not.toContain(SECRET);
+  });
+
+  it("does not retry an OpenRouter status other than 429 and hides the body", async () => {
+    let called = 0;
+    const adapter = new LlmHttpProviderAdapter(async () => {
+      called += 1;
+      return new Response(SECRET, { status: 500 });
+    });
+    let message = "";
+    try {
+      await adapter.completeOpenRouter({
+        apiKey: SECRET,
+        model: OPENROUTER_DEFAULT_MODEL,
+        stablePrefixParts: [{ role: "system", content: "prefix", cacheable: true }],
+        userMessage: "question",
+        sleep: async () => {
+          throw new Error("sleep should not run");
+        },
+      });
+    } catch (error) {
+      message = error instanceof Error ? error.message : String(error);
+    }
+    expect(message).toBe("openrouter_http_500");
+    expect(message).not.toContain(SECRET);
+    expect(called).toBe(1);
   });
 });
