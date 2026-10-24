@@ -30,6 +30,9 @@ orchestrator/jobs/
 orchestrator/data/
 graphify-out/
 
+# Live cursor-agent NDJSON from v22:vendor-measure. Counts stay in the JSON report.
+docs/v22/baseline/raw/cursor-agent-streams/
+
 # Prune / scratch
 .prune-snapshots/
 *.log

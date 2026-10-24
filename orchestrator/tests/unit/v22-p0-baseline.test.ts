@@ -241,6 +241,8 @@ describe("V22-GAP-P0-1 baseline", () => {
           "docs/v22/baseline/raw/p0-compaction-report.json",
           "docs/v22/baseline/raw/p0-vendor-report.json",
           "docs/v22/baseline/raw/p0-vendor-cursor-agent-report.json",
+          "docs/v22/baseline/raw/p0-vendor-cursor-agent-live.json",
+          "docs/v22/baseline/raw/p0-vendor-cursor-agent-context-sufficient.json",
         ]);
         expect(names.filter((name) => name.startsWith("docs/v22/baseline/raw/") && !allowedRaw.has(name))).toEqual([]);
       }

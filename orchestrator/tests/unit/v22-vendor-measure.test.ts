@@ -1,10 +1,19 @@
+import { mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { LlmHttpProviderAdapter, buildOpenRouterChatBody, openRouterRetryDelayMs, parseRetryAfterMs } from "../../src/providers/llm/llm-http-provider-adapter.js";
 import { parseOpenRouterUsage } from "../../src/providers/llm/vendor-cache-usage.js";
 import {
   cursorAgentArgs,
   parseCursorAgentNdjson,
+  writeRedactedCursorStream,
 } from "../../src/providers/llm/cursor-agent-provider.js";
+import {
+  applyContextSufficientPickup,
+  PICKUP_READ_REPO_SENTENCE,
+} from "../../src/v22/context-sufficient-pickup.js";
+import { measureP0V22Text } from "../../src/v22/p0-baseline-harness.js";
 import {
   OPENROUTER_DEFAULT_MODEL,
   VENDOR_BUDGET_USD,
@@ -247,6 +256,7 @@ describe("V22-GAP-VENDOR-1a", () => {
       n: 5,
       packs: [pack()],
       apiKey: SECRET,
+      saveStreams: false,
       spawnImpl: async (_bin, args) => {
         seen.push(args);
         expect(args.join(" ")).not.toContain(SECRET);
@@ -262,6 +272,8 @@ describe("V22-GAP-VENDOR-1a", () => {
     expect(report.tasks[0]?.arms.B0.cost_usd).toBe("NOT_MEASURED");
     expect(report.tasks[0]?.arms.B0.quality).toBe(1);
     expect(report.tasks[0]?.arms.B0.runs[0]?.tool_calls_started).toBe(0);
+    expect(report.tasks[0]?.arms.B0.runs[0]?.stream_path).toBe("NOT_MEASURED");
+    expect(report.pickup_variant).toBe("default");
     expect(report.cache_probe.calls).toHaveLength(2);
     expect(seen.length).toBe(12);
     expect(estimateOpenRouterUsd({ inputTokens: 1_000_000, outputTokensUpper: 0, inputUsdPerMtok: 0.1, outputUsdPerMtok: 0.4 })).toBeCloseTo(0.1);
@@ -330,5 +342,84 @@ describe("V22-GAP-VENDOR-1a", () => {
     expect(message).toBe("openrouter_http_500");
     expect(message).not.toContain(SECRET);
     expect(called).toBe(1);
+  });
+
+  it("rewrites the two pickup read orders only when the retrieval block is present", () => {
+    const source = [
+      "1. **Ler skill:** `.cursor/skills/orquestrar/SKILL.md`",
+      PICKUP_READ_REPO_SENTENCE,
+      "### Context (budgeted retrieval)",
+      "--- path:docs/adr/0013-context-ownership-working-context.md ---",
+      "body",
+    ].join("\n");
+    const off = source;
+    expect(off).toContain("**Ler skill:**");
+    expect(off).toContain("Please carefully read the repository");
+    const on = applyContextSufficientPickup(source);
+    expect(on.replaced_skill_order).toBe(true);
+    expect(on.replaced_repo_order).toBe(true);
+    expect(on.text).not.toContain("Ler skill");
+    expect(on.text).not.toContain("Please carefully read the repository");
+    expect(on.text).toContain("Responder com o contexto fornecido");
+    expect(on.text).toContain("Read a file only when that context lacks the evidence");
+    expect(on.text).toContain("--- path:docs/adr/0013-context-ownership-working-context.md ---");
+    expect(applyContextSufficientPickup("1. **Ler skill:** `skill.md`").retrieval_present).toBe(false);
+  });
+
+  it("keeps the product pickup orders unless the measurement option is set", async () => {
+    const plain = await measureP0V22Text("curta");
+    const variant = await measureP0V22Text("curta", undefined, { contextSufficient: true });
+    expect(plain.text).toContain("**Ler skill:**");
+    expect(plain.text).toContain(PICKUP_READ_REPO_SENTENCE);
+    expect(variant.text).not.toContain("Ler skill");
+    expect(variant.text).not.toContain("Please carefully read the repository");
+    expect(variant.text).toContain("### Context (budgeted retrieval)");
+    expect(variant.paths).toEqual(plain.paths);
+  }, 60_000);
+
+  it("writes one redacted stream-json per cursor-agent call and counts tool_call", async () => {
+    const dir = mkdtempSync(path.join(tmpdir(), "v22-cursor-stream-"));
+    try {
+      const stdout = [
+        JSON.stringify({ type: "system", subtype: "init", model: "Auto" }),
+        JSON.stringify({
+          type: "tool_call",
+          subtype: "started",
+          tool_call: { readToolCall: { args: { path: ".cursor/skills/orquestrar/SKILL.md" } } },
+        }),
+        JSON.stringify({
+          type: "tool_call",
+          subtype: "completed",
+          tool_call: { readToolCall: { result: { success: { content: SECRET } } } },
+        }),
+        JSON.stringify({
+          type: "result",
+          subtype: "success",
+          is_error: false,
+          duration_ms: 5,
+          duration_api_ms: 5,
+          result: "answer",
+        }),
+      ].join("\n");
+      const file = writeRedactedCursorStream(dir, "curta-b0-r1.ndjson", stdout, [SECRET]);
+      const saved = readFileSync(file, "utf8");
+      expect(saved).not.toContain(SECRET);
+      expect(saved).toContain('"type":"tool_call"');
+      expect(parseCursorAgentNdjson(stdout).tool_calls).toMatchObject({ started: 1, read_started: 1, completed: 1 });
+      const adapter = new LlmHttpProviderAdapter();
+      const measured = await adapter.completeCursorAgent({
+        prompt: "prompt",
+        cwd: dir,
+        env: {},
+        streamDir: dir,
+        streamName: "probe-1.ndjson",
+        secrets: [SECRET],
+        spawnImpl: async () => ({ status: 0, stdout, stderr: "" }),
+      });
+      expect(measured.tool_calls.started).toBe(1);
+      expect(readFileSync(measured.stream_path ?? "", "utf8")).not.toContain(SECRET);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
   });
 });

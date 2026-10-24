@@ -45,10 +45,17 @@ try {
     inputUsdPerMtok: numberOption("--input-usd-per-mtok"),
     outputUsdPerMtok: numberOption("--output-usd-per-mtok"),
     apiKey,
+    contextSufficient: flag("--context-sufficient"),
     bin: process.env.CURSOR_AGENT_BIN,
     env: process.env,
   });
-  const out = path.join(repoRootFromModule(), "docs/v22/baseline/raw/p0-vendor-report.json");
+  const reportName =
+    provider === "cursor-agent"
+      ? flag("--context-sufficient")
+        ? "p0-vendor-cursor-agent-context-sufficient.json"
+        : "p0-vendor-cursor-agent-live.json"
+      : "p0-vendor-report.json";
+  const out = path.join(repoRootFromModule(), "docs/v22/baseline/raw", reportName);
   mkdirSync(path.dirname(out), { recursive: true });
   const body = `${JSON.stringify(report, null, 2)}\n`;
   writeFileSync(out, redactSecrets(body, { extraCanaries: apiKey ? [apiKey] : [] }));
