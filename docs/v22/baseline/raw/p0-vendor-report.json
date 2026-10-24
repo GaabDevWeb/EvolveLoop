@@ -1,0 +1,310 @@
+{
+  "schema_id": "v22-vendor-report-1",
+  "task_id": "V22-GAP-VENDOR-1a",
+  "status": "DRY_RUN",
+  "provider": "openrouter",
+  "model_id": "google/gemini-2.5-flash-lite",
+  "n": 5,
+  "max_output_tokens": 300,
+  "budget_usd": 2.5,
+  "tokenizer": "tiktoken:cl100k_base",
+  "tree_sha": "a11dc3cecaeb7e77f3e2bdbc878fdf310e441be0",
+  "estimate_usd": 0.2906364,
+  "estimate_note": "Estimativa = tokens locais tiktoken vezes o preço listado, com saída no teto de max_output_tokens. Não é usage.cost.",
+  "price_source": "https://openrouter.ai/google/gemini-2.5-flash-lite",
+  "local_input_tokens": 2831964,
+  "output_tokens_upper": 18600,
+  "calls": 62,
+  "spent_usd": 0,
+  "cache_probe": {
+    "prefix_tokens": 1681,
+    "prefix_over_1024": true,
+    "calls": []
+  },
+  "tasks": [
+    {
+      "id": "curta",
+      "arms": {
+        "B0": {
+          "arm": "B0",
+          "local_prompt_tokens": 136710,
+          "prompt_sha256": "dde315b890b6ac9927c3eb662114ba19b29311cc798725138db5048d607cff31",
+          "n": 5,
+          "input_tokens": "NOT_MEASURED",
+          "output_tokens": "NOT_MEASURED",
+          "cached_tokens": "NOT_MEASURED",
+          "cost_usd": "NOT_MEASURED",
+          "latency_ms": "NOT_MEASURED",
+          "quality": "NOT_MEASURED",
+          "dispersion": {
+            "input_tokens": "NOT_MEASURED",
+            "output_tokens": "NOT_MEASURED",
+            "cached_tokens": "NOT_MEASURED",
+            "cost_usd": "NOT_MEASURED",
+            "latency_ms": "NOT_MEASURED",
+            "quality": "NOT_MEASURED"
+          },
+          "runs": []
+        },
+        "V2.2": {
+          "arm": "V2.2",
+          "local_prompt_tokens": 21964,
+          "prompt_sha256": "fa36540d4dec191acca19627699e6176630096d6610578976a6b435517ad7ad2",
+          "n": 5,
+          "input_tokens": "NOT_MEASURED",
+          "output_tokens": "NOT_MEASURED",
+          "cached_tokens": "NOT_MEASURED",
+          "cost_usd": "NOT_MEASURED",
+          "latency_ms": "NOT_MEASURED",
+          "quality": "NOT_MEASURED",
+          "dispersion": {
+            "input_tokens": "NOT_MEASURED",
+            "output_tokens": "NOT_MEASURED",
+            "cached_tokens": "NOT_MEASURED",
+            "cost_usd": "NOT_MEASURED",
+            "latency_ms": "NOT_MEASURED",
+            "quality": "NOT_MEASURED"
+          },
+          "runs": []
+        }
+      }
+    },
+    {
+      "id": "projeto_grande",
+      "arms": {
+        "B0": {
+          "arm": "B0",
+          "local_prompt_tokens": 81486,
+          "prompt_sha256": "218f4c2c9290930e92865fd191122bd6d3f1c74b7bc1b7ff973b0cad39fe5b62",
+          "n": 5,
+          "input_tokens": "NOT_MEASURED",
+          "output_tokens": "NOT_MEASURED",
+          "cached_tokens": "NOT_MEASURED",
+          "cost_usd": "NOT_MEASURED",
+          "latency_ms": "NOT_MEASURED",
+          "quality": "NOT_MEASURED",
+          "dispersion": {
+            "input_tokens": "NOT_MEASURED",
+            "output_tokens": "NOT_MEASURED",
+            "cached_tokens": "NOT_MEASURED",
+            "cost_usd": "NOT_MEASURED",
+            "latency_ms": "NOT_MEASURED",
+            "quality": "NOT_MEASURED"
+          },
+          "runs": []
+        },
+        "V2.2": {
+          "arm": "V2.2",
+          "local_prompt_tokens": 22057,
+          "prompt_sha256": "c6b9866e6c78d08e3e84a0a4b5748f0ed6f05c4dea5e049da5cf873908e33f8a",
+          "n": 5,
+          "input_tokens": "NOT_MEASURED",
+          "output_tokens": "NOT_MEASURED",
+          "cached_tokens": "NOT_MEASURED",
+          "cost_usd": "NOT_MEASURED",
+          "latency_ms": "NOT_MEASURED",
+          "quality": "NOT_MEASURED",
+          "dispersion": {
+            "input_tokens": "NOT_MEASURED",
+            "output_tokens": "NOT_MEASURED",
+            "cached_tokens": "NOT_MEASURED",
+            "cost_usd": "NOT_MEASURED",
+            "latency_ms": "NOT_MEASURED",
+            "quality": "NOT_MEASURED"
+          },
+          "runs": []
+        }
+      }
+    },
+    {
+      "id": "retomada",
+      "arms": {
+        "B0": {
+          "arm": "B0",
+          "local_prompt_tokens": 29702,
+          "prompt_sha256": "88e35ac2bf1c492b3b7f32e2adc67e9ba3625f4002e5a3b487c2c50f133d09d3",
+          "n": 5,
+          "input_tokens": "NOT_MEASURED",
+          "output_tokens": "NOT_MEASURED",
+          "cached_tokens": "NOT_MEASURED",
+          "cost_usd": "NOT_MEASURED",
+          "latency_ms": "NOT_MEASURED",
+          "quality": "NOT_MEASURED",
+          "dispersion": {
+            "input_tokens": "NOT_MEASURED",
+            "output_tokens": "NOT_MEASURED",
+            "cached_tokens": "NOT_MEASURED",
+            "cost_usd": "NOT_MEASURED",
+            "latency_ms": "NOT_MEASURED",
+            "quality": "NOT_MEASURED"
+          },
+          "runs": []
+        },
+        "V2.2": {
+          "arm": "V2.2",
+          "local_prompt_tokens": 21972,
+          "prompt_sha256": "c9aee97446abc66773201ca57bb7ea3acccd214faa8dbef3241d0489c39b232b",
+          "n": 5,
+          "input_tokens": "NOT_MEASURED",
+          "output_tokens": "NOT_MEASURED",
+          "cached_tokens": "NOT_MEASURED",
+          "cost_usd": "NOT_MEASURED",
+          "latency_ms": "NOT_MEASURED",
+          "quality": "NOT_MEASURED",
+          "dispersion": {
+            "input_tokens": "NOT_MEASURED",
+            "output_tokens": "NOT_MEASURED",
+            "cached_tokens": "NOT_MEASURED",
+            "cost_usd": "NOT_MEASURED",
+            "latency_ms": "NOT_MEASURED",
+            "quality": "NOT_MEASURED"
+          },
+          "runs": []
+        }
+      }
+    },
+    {
+      "id": "delegada",
+      "arms": {
+        "B0": {
+          "arm": "B0",
+          "local_prompt_tokens": 87534,
+          "prompt_sha256": "ce5288b28eb086c6b73d00ac3b26b18dd1dfb2b910a7d3273d918e94b0ba633c",
+          "n": 5,
+          "input_tokens": "NOT_MEASURED",
+          "output_tokens": "NOT_MEASURED",
+          "cached_tokens": "NOT_MEASURED",
+          "cost_usd": "NOT_MEASURED",
+          "latency_ms": "NOT_MEASURED",
+          "quality": "NOT_MEASURED",
+          "dispersion": {
+            "input_tokens": "NOT_MEASURED",
+            "output_tokens": "NOT_MEASURED",
+            "cached_tokens": "NOT_MEASURED",
+            "cost_usd": "NOT_MEASURED",
+            "latency_ms": "NOT_MEASURED",
+            "quality": "NOT_MEASURED"
+          },
+          "runs": []
+        },
+        "V2.2": {
+          "arm": "V2.2",
+          "local_prompt_tokens": 22056,
+          "prompt_sha256": "587358ea1d25d1a49e01a5a0ed3f38f403b078f6285a43bbe64648311a8c17ce",
+          "n": 5,
+          "input_tokens": "NOT_MEASURED",
+          "output_tokens": "NOT_MEASURED",
+          "cached_tokens": "NOT_MEASURED",
+          "cost_usd": "NOT_MEASURED",
+          "latency_ms": "NOT_MEASURED",
+          "quality": "NOT_MEASURED",
+          "dispersion": {
+            "input_tokens": "NOT_MEASURED",
+            "output_tokens": "NOT_MEASURED",
+            "cached_tokens": "NOT_MEASURED",
+            "cost_usd": "NOT_MEASURED",
+            "latency_ms": "NOT_MEASURED",
+            "quality": "NOT_MEASURED"
+          },
+          "runs": []
+        }
+      }
+    },
+    {
+      "id": "fontes_conflitantes",
+      "arms": {
+        "B0": {
+          "arm": "B0",
+          "local_prompt_tokens": 48077,
+          "prompt_sha256": "b49469b6d7e5c5b4422d454b21674a0da075ea592fc921c773d6b42f94344d20",
+          "n": 5,
+          "input_tokens": "NOT_MEASURED",
+          "output_tokens": "NOT_MEASURED",
+          "cached_tokens": "NOT_MEASURED",
+          "cost_usd": "NOT_MEASURED",
+          "latency_ms": "NOT_MEASURED",
+          "quality": "NOT_MEASURED",
+          "dispersion": {
+            "input_tokens": "NOT_MEASURED",
+            "output_tokens": "NOT_MEASURED",
+            "cached_tokens": "NOT_MEASURED",
+            "cost_usd": "NOT_MEASURED",
+            "latency_ms": "NOT_MEASURED",
+            "quality": "NOT_MEASURED"
+          },
+          "runs": []
+        },
+        "V2.2": {
+          "arm": "V2.2",
+          "local_prompt_tokens": 22142,
+          "prompt_sha256": "3ee956a2f4e6fd54cc0eab8b0f54f13d55467e09246d05002702f14d3e0f5e09",
+          "n": 5,
+          "input_tokens": "NOT_MEASURED",
+          "output_tokens": "NOT_MEASURED",
+          "cached_tokens": "NOT_MEASURED",
+          "cost_usd": "NOT_MEASURED",
+          "latency_ms": "NOT_MEASURED",
+          "quality": "NOT_MEASURED",
+          "dispersion": {
+            "input_tokens": "NOT_MEASURED",
+            "output_tokens": "NOT_MEASURED",
+            "cached_tokens": "NOT_MEASURED",
+            "cost_usd": "NOT_MEASURED",
+            "latency_ms": "NOT_MEASURED",
+            "quality": "NOT_MEASURED"
+          },
+          "runs": []
+        }
+      }
+    },
+    {
+      "id": "restricoes_compactacao_handoff",
+      "arms": {
+        "B0": {
+          "arm": "B0",
+          "local_prompt_tokens": 49956,
+          "prompt_sha256": "d343a7ffcd4556d9a5605735ad3a22a66a8b6bfe454e7736d402cbc4fcadfb7e",
+          "n": 5,
+          "input_tokens": "NOT_MEASURED",
+          "output_tokens": "NOT_MEASURED",
+          "cached_tokens": "NOT_MEASURED",
+          "cost_usd": "NOT_MEASURED",
+          "latency_ms": "NOT_MEASURED",
+          "quality": "NOT_MEASURED",
+          "dispersion": {
+            "input_tokens": "NOT_MEASURED",
+            "output_tokens": "NOT_MEASURED",
+            "cached_tokens": "NOT_MEASURED",
+            "cost_usd": "NOT_MEASURED",
+            "latency_ms": "NOT_MEASURED",
+            "quality": "NOT_MEASURED"
+          },
+          "runs": []
+        },
+        "V2.2": {
+          "arm": "V2.2",
+          "local_prompt_tokens": 22062,
+          "prompt_sha256": "fd372236e0f7403e27a1fe38a05930954bc477fa53f1bc4516475d1b64573c7d",
+          "n": 5,
+          "input_tokens": "NOT_MEASURED",
+          "output_tokens": "NOT_MEASURED",
+          "cached_tokens": "NOT_MEASURED",
+          "cost_usd": "NOT_MEASURED",
+          "latency_ms": "NOT_MEASURED",
+          "quality": "NOT_MEASURED",
+          "dispersion": {
+            "input_tokens": "NOT_MEASURED",
+            "output_tokens": "NOT_MEASURED",
+            "cached_tokens": "NOT_MEASURED",
+            "cost_usd": "NOT_MEASURED",
+            "latency_ms": "NOT_MEASURED",
+            "quality": "NOT_MEASURED"
+          },
+          "runs": []
+        }
+      }
+    }
+  ],
+  "limitation": "CI não chama o provider. cursor-agent: duração vem de duration_ms; tokens e custo do provider são NOT_MEASURED porque não estão no schema oficial. OpenRouter: prompt_tokens, completion_tokens, prompt_tokens_details.cached_tokens e usage.cost. Qualidade é a fração de âncoras e restrições do cartão presentes na resposta. Dispersão de modelo só existe quando o provider devolve o número.",
+  "measured_at": "2026-10-24T00:09:57.015Z"
+}

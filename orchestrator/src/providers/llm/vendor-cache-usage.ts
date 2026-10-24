@@ -2,7 +2,7 @@
  * V22-GOAL-010-vendor — parse provider-reported prompt cache usage (no simulated hits).
  */
 
-export type LlmVendorId = "anthropic" | "openai";
+export type LlmVendorId = "anthropic" | "openai" | "openrouter";
 
 export interface VendorCacheUsage {
   vendor: LlmVendorId;
@@ -58,5 +58,24 @@ export function parseOpenAiCacheUsage(body: unknown): VendorCacheUsage {
     cache_creation_input_tokens: 0,
     openai_cached_prompt_tokens: cached,
     vendor_cache_hit: cached > 0,
+  };
+}
+
+export interface OpenRouterUsage extends VendorCacheUsage {
+  cost_usd: number | "NOT_MEASURED";
+}
+
+/** OpenAI-compatible usage plus OpenRouter `usage.cost`. Missing cost stays NOT_MEASURED. */
+export function parseOpenRouterUsage(body: unknown): OpenRouterUsage {
+  const base = parseOpenAiCacheUsage(body);
+  const usage =
+    body && typeof body === "object" && "usage" in body
+      ? (body as { usage?: Record<string, unknown> }).usage
+      : undefined;
+  const cost = usage?.cost;
+  return {
+    ...base,
+    vendor: "openrouter",
+    cost_usd: typeof cost === "number" && Number.isFinite(cost) ? cost : "NOT_MEASURED",
   };
 }

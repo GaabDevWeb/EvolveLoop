@@ -441,8 +441,13 @@ function isMeasurementArtifact(rel: string): boolean {
   const key = normPath(rel);
   return (
     key.startsWith("docs/v22/baseline/") ||
+    key === "docs/v22/VENDOR-MEASURE.md" ||
     key === "orchestrator/src/v22/p0-baseline-harness.ts" ||
-    key === "orchestrator/tests/unit/v22-p0-baseline.test.ts"
+    key === "orchestrator/src/v22/vendor-measure.ts" ||
+    key === "orchestrator/src/v22/vendor-measure-cli.ts" ||
+    key === "orchestrator/src/providers/llm/cursor-agent-provider.ts" ||
+    key === "orchestrator/tests/unit/v22-p0-baseline.test.ts" ||
+    key === "orchestrator/tests/unit/v22-vendor-measure.test.ts"
   );
 }
 
@@ -922,6 +927,17 @@ async function runArm(
   } finally {
     await rm(jobsDir, { recursive: true, force: true });
   }
+}
+
+export async function measureP0B0Text(
+  taskId: P0TaskId,
+  repoRoot = repoRootFromModule(),
+): Promise<{ text: string; paths: string[] }> {
+  const loaded = loadFrozenTasks(repoRoot);
+  const task = loaded.tasks.find((item) => item.id === taskId);
+  if (!task) throw new Error(`missing frozen task ${taskId}`);
+  const packed = assembleB0(task, new CorpusCache(repoRoot), repoRoot);
+  return { text: packed.text, paths: packed.paths };
 }
 
 export async function measureP0V22Text(
