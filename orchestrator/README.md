@@ -68,6 +68,14 @@ npm run run-engine -- --ir path/to/ir.yaml --jobs-dir ./jobs --discovery --wait-
 npm run run-engine -- --ir tests/fixtures/login-dashboard.ir.yaml --discovery --jobs-dir ./jobs --policy rapid-prototype
 ```
 
+## Caveman output hard gate
+
+Default ON. Opt-out: `EVOLVELOOP_BREVITY_CAVEMAN=off`. Contrato e comando de medição: `docs/v22/CAVEMAN-HARD-GATE.md`.
+
+```bash
+npm run v22:caveman-measure -- --provider cursor-agent --dry-run --n 5
+```
+
 ## Testes
 
 ```bash

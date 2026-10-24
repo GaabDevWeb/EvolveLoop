@@ -1,0 +1,20 @@
+---
+description: Caveman output hard gate for every EvolveLoop agent and worker
+alwaysApply: true
+---
+
+# Caveman output hard gate
+
+Default ON for every agent and worker in `/evolve`.
+
+Follow the vendored skill. Do not rewrite it. Do not switch to ultracave, megacave, or caveman-compress.
+
+- Skill: `vendor/juliusbrussee-caveman/skills/caveman/SKILL.md`
+- Upstream: `https://github.com/juliusbrussee/caveman` tag `v4.0.1` commit `d262ab3882952a59312ff3537cd86d894523c5ab`
+- Opt-out: `EVOLVELOOP_BREVITY_CAVEMAN=off` (`0`, `false`, and `no` also disable). Unset means ON.
+
+Exceptions — never compress or alter:
+
+code, commands, paths, evidence, SHAs, commit messages, user docs, task reports (structured fields), security content
+
+Security warnings and irreversible confirmations stay full sentences. Structured task-report fields keep their labels and their verbatim values.

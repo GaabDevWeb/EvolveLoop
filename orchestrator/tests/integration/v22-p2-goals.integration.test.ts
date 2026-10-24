@@ -91,7 +91,7 @@ describe("V22 P2 goals integration (run-engine / run-jobs)", () => {
     expect(bench?.goal_010_prefix?.vendor_http_cache_hit).toBe("NOT_MEASURED");
   });
 
-  it("run-jobs invoke path compresses briefing only when caveman flag on", () => {
+  it("run-jobs invoke injects the caveman hard gate by default and opt-out removes it", () => {
     const jobsDir = mkdtempSync(join(tmpdir(), "v22-p2-jobs-"));
     const job: SkillJob = {
       apiVersion: "capability-orchestrator.io/v2",
@@ -110,25 +110,45 @@ describe("V22 P2 goals integration (run-engine / run-jobs)", () => {
     writeFileSync(join(jobsDir, `${job.run_id}.json`), JSON.stringify(job));
 
     clearP2Env();
-    const offPrompt = buildPickupPrompt(job, jobsDir, orchestratorRoot);
-    process.env.EVOLVELOOP_BREVITY_CAVEMAN = "on";
     const onPrompt = buildPickupPrompt(job, jobsDir, orchestratorRoot);
+    process.env.EVOLVELOOP_BREVITY_CAVEMAN = "off";
+    const offPrompt = buildPickupPrompt(job, jobsDir, orchestratorRoot);
 
-    expect(estimateWhitespaceTokens(onPrompt)).toBeLessThan(estimateWhitespaceTokens(offPrompt));
+    expect(onPrompt).toContain("## Caveman output hard gate");
+    expect(offPrompt).not.toContain("## Caveman output hard gate");
+    expect(estimateWhitespaceTokens(onPrompt)).toBeGreaterThan(estimateWhitespaceTokens(offPrompt));
     expect(onPrompt).toContain("do not skip");
+    expect(offPrompt).toContain("do not skip");
     expect(onPrompt).toContain('"id": "d1"');
+    expect(offPrompt).toContain('"id": "d1"');
+    const dod = "## Definition of Done";
+    expect(onPrompt.slice(onPrompt.indexOf(dod))).toBe(offPrompt.slice(offPrompt.indexOf(dod)));
+    expect(onPrompt).toContain(job.briefing);
+    expect(offPrompt).toContain(job.briefing);
 
+    delete process.env.EVOLVELOOP_BREVITY_CAVEMAN;
     const promptDir = mkdtempSync(join(tmpdir(), "v22-p2-pickup-"));
     const invokeOut = runCli(
       "run-jobs",
       ["invoke", "--jobs-dir", jobsDir, "--prompt-dir", promptDir],
-      { EVOLVELOOP_BREVITY_CAVEMAN: "on" },
     );
     const plan = JSON.parse(invokeOut);
     expect(plan.status).toBe("ready");
     const written = readFileSync(join(promptDir, "current-job.md"), "utf-8");
+    expect(written).toContain("## Caveman output hard gate");
     expect(written).toContain("do not skip");
+
+    const offDir = mkdtempSync(join(tmpdir(), "v22-p2-pickup-off-"));
+    runCli(
+      "run-jobs",
+      ["invoke", "--jobs-dir", jobsDir, "--prompt-dir", offDir],
+      { EVOLVELOOP_BREVITY_CAVEMAN: "off" },
+    );
+    const writtenOff = readFileSync(join(offDir, "current-job.md"), "utf-8");
+    expect(writtenOff).not.toContain("## Caveman output hard gate");
+    expect(writtenOff).toContain("do not skip");
     rmSync(jobsDir, { recursive: true, force: true });
     rmSync(promptDir, { recursive: true, force: true });
+    rmSync(offDir, { recursive: true, force: true });
   });
 });

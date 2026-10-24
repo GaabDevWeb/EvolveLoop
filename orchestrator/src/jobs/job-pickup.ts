@@ -4,6 +4,8 @@ import { resolveOrchestratorRoot } from "../cli/run-engine-env.js";
 import { writeSanitizedJsonFile, writeSanitizedTextFile } from "../evidence/evidence-bus.js";
 import { redactSecrets } from "../evidence/secret-redaction.js";
 import { applyCavemanToBriefingSection } from "../v22/brevity-caveman.js";
+import { injectCavemanHardGate } from "../v22/caveman-hard-gate.js";
+import { isCavemanOutputGateEnabled } from "../v22/feature-flags.js";
 import { JobStore, type SkillJob } from "./job-store.js";
 import { preparePickupSpawnContext, type PickupContextPrepareResult } from "./spawn-pickup-context.js";
 import type { EventBus } from "../events/event-bus.js";
@@ -31,7 +33,11 @@ export function resolvePendingJob(
 }
 
 export interface BuildPickupPromptOptions {
-  /** When set, overrides EVOLVELOOP_BREVITY_CAVEMAN for this build. */
+  /**
+   * GOAL-009 bench arm. `true` compresses the briefing section only.
+   * The output hard gate follows `EVOLVELOOP_BREVITY_CAVEMAN` (default ON)
+   * and is not toggled by this field.
+   */
   caveman?: boolean;
   /** Precomputed spawn context (invoke path); omitted → computed per call. */
   spawnContext?: PickupContextPrepareResult;
@@ -95,10 +101,9 @@ ${JSON.stringify(job.inputs, null, 2)}
 ---
 *Gerado por @agents/orchestrator run-jobs invoke*
 `;
-  return applyCavemanToBriefingSection(
-    raw,
-    options?.caveman !== undefined ? { enabled: options.caveman } : undefined,
-  ).text;
+  const gated = injectCavemanHardGate(raw, isCavemanOutputGateEnabled());
+  if (options?.caveman !== true) return gated;
+  return applyCavemanToBriefingSection(gated, { enabled: true }).text;
 }
 
 export function writePickupArtifacts(

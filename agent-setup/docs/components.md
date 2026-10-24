@@ -10,8 +10,8 @@ Managed components are listed explicitly in `manifest/components.yaml`.
 
 ## Standard
 
-- Skills: `wiki-mem`, `orquestrar` (symlink)
-- Hooks: merge into `hooks.json` (wiki-mem only)
+- Skills: `wiki-mem`, `orquestrar`, `caveman` (symlink to the vendored voice skill)
+- Hooks: merge into `hooks.json` (wiki-mem and the caveman output hard gate)
 - Worker skills: PDA roles from CursorSKILLS
 
 ## Full
