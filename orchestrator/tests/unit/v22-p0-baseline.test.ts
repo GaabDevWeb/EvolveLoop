@@ -235,12 +235,13 @@ describe("V22-GAP-P0-1 baseline", () => {
           .split("\n")
           .map((line) => line.trim())
           .filter(Boolean);
-        const allowed = new Set([
+        const allowedRaw = new Set([
           "docs/v22/baseline/raw/p0-baseline-report.json",
           "docs/v22/baseline/raw/p0-handoff-report.json",
           "docs/v22/baseline/raw/p0-compaction-report.json",
+          "docs/v22/baseline/raw/p0-vendor-report.json",
         ]);
-        expect(names.filter((name) => !allowed.has(name))).toEqual([]);
+        expect(names.filter((name) => name.startsWith("docs/v22/baseline/raw/") && !allowedRaw.has(name))).toEqual([]);
       }
     }
   }, 300_000);

@@ -8,8 +8,17 @@ import { redactSecrets } from "../../evidence/secret-redaction.js";
 import {
   parseAnthropicCacheUsage,
   parseOpenAiCacheUsage,
+  parseOpenRouterUsage,
+  type OpenRouterUsage,
   type VendorCacheUsage,
 } from "./vendor-cache-usage.js";
+import {
+  cursorAgentArgs,
+  parseCursorAgentNdjson,
+  spawnCursorAgent,
+  type CursorAgentSpawn,
+  type CursorCliMeasurement,
+} from "./cursor-agent-provider.js";
 import {
   buildVendorCacheTelemetry,
   persistVendorCacheTelemetry,
@@ -67,6 +76,29 @@ export function buildAnthropicMessagesBody(input: {
       },
     ],
     messages: [{ role: "user", content: redactSecrets(input.userMessage) }],
+  };
+}
+
+export function buildOpenRouterChatBody(input: {
+  model: string;
+  stablePrefix: string;
+  userMessage: string;
+  maxTokens?: number;
+}): Record<string, unknown> {
+  const stableText = input.stablePrefix;
+  const anthropic = input.model.startsWith("anthropic/");
+  return {
+    model: input.model,
+    max_tokens: input.maxTokens ?? 300,
+    messages: [
+      {
+        role: "system",
+        content: anthropic
+          ? [{ type: "text", text: stableText, cache_control: { type: "ephemeral" } }]
+          : stableText,
+      },
+      { role: "user", content: redactSecrets(input.userMessage) },
+    ],
   };
 }
 
@@ -164,5 +196,58 @@ export class LlmHttpProviderAdapter {
       persistVendorCacheTelemetry(input.memoryRoot, input.featureId, telemetry);
     }
     return { text: extractOpenAiText(raw), raw, usage, telemetry };
+  }
+
+  async completeOpenRouter(input: OpenAiCompleteInput & { maxTokens?: number }): Promise<LlmAdapterResult & { openrouter: OpenRouterUsage }> {
+    const body = buildOpenRouterChatBody({
+      model: input.model,
+      stablePrefix: buildStablePromptPrefix(input.stablePrefixParts),
+      userMessage: input.userMessage,
+      maxTokens: input.maxTokens,
+    });
+    const res = await this.fetchImpl("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${input.apiKey}`,
+      },
+      body: JSON.stringify(body),
+    });
+    const raw = (await res.json()) as unknown;
+    if (!res.ok) throw new Error(`openrouter_http_${res.status}`);
+    const openrouter = parseOpenRouterUsage(raw);
+    const telemetry = buildVendorCacheTelemetry({
+      vendor: "openrouter",
+      usage: openrouter,
+      stablePrefixParts: input.stablePrefixParts,
+      callIndex: input.callIndex,
+      liveProbe: input.liveProbe,
+    });
+    if (input.memoryRoot && input.featureId) {
+      persistVendorCacheTelemetry(input.memoryRoot, input.featureId, telemetry);
+    }
+    return { text: extractOpenAiText(raw), raw, usage: openrouter, telemetry, openrouter };
+  }
+
+  async completeCursorAgent(input: {
+    prompt: string;
+    model?: string;
+    bin?: string;
+    cwd: string;
+    env: NodeJS.ProcessEnv;
+    spawnImpl?: CursorAgentSpawn;
+  }): Promise<CursorCliMeasurement> {
+    const bin = input.bin ?? "cursor-agent";
+    const args = cursorAgentArgs({ model: input.model });
+    const spawnImpl = input.spawnImpl ?? spawnCursorAgent;
+    const child = await spawnImpl(bin, args, {
+      input: input.prompt,
+      cwd: input.cwd,
+      env: input.env,
+    });
+    if (child.status !== 0) {
+      throw new Error(`cursor_agent_exit_${child.status}`);
+    }
+    return parseCursorAgentNdjson(child.stdout);
   }
 }
