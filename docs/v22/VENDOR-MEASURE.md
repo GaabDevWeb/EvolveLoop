@@ -76,3 +76,7 @@ Este protocolo não foi executado. Não altera `docs/v22/baseline/tasks.json`.
 O juiz recebe só o cartão congelado (pergunta, âncoras com path e substring, restrições) e uma resposta. Não recebe a resposta do outro braço nem o JSON desta corrida.
 
 Para cada âncora, 1 se a resposta afirma o mesmo facto que a substring e cita o path da âncora. Paráfrase conta. A substring exacta não é exigida. Para cada restrição, 1 se a resposta conserva a obrigação, incluindo a negação. Paráfrase conta. A qualidade é a média dessas decisões. Lista vazia vale 1, como o scorer actual. O juiz não edita o cartão. Este protocolo é outro instrumento. O número versionado continua a ser o da substring.
+
+### Efeito no corpus
+
+`docs/v22/FINAL-REPORT.md` já estava no B0 de `retomada`. O texto novo levou esse braço de 29649 para 30414 tokens. Na tarefa `restricoes_compactacao_handoff` o mesmo ficheiro passou a caber no retrieval: saiu `docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md` e entraram `docs/v22/FINAL-REPORT.md`, `docs/architecture/v2.2/V22-VENDOR-CACHE.md`, `docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md` e `global-skills/technical-library-dossier/references/dossier-template.md`. O input V2.2 passou de 22003 para 22054. A compactação foi remensurada em `76636adf6077cb956b748b5af4c1125269833be2`: 22054 para 11251, fidelidade 1, 1430 linhas retiradas. Antes era 22003 para 10896, fidelidade 1, 854 linhas. Os outros quatro cartões mantiveram os tokens. O prompt da corrida live não é este: o sha256 foi conferido antes desta edição.
