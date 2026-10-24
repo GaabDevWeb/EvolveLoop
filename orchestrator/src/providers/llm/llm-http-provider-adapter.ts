@@ -16,6 +16,7 @@ import {
   cursorAgentArgs,
   parseCursorAgentNdjson,
   spawnCursorAgent,
+  writeRedactedCursorStream,
   type CursorAgentSpawn,
   type CursorCliMeasurement,
 } from "./cursor-agent-provider.js";
@@ -275,6 +276,9 @@ export class LlmHttpProviderAdapter {
     cwd: string;
     env: NodeJS.ProcessEnv;
     spawnImpl?: CursorAgentSpawn;
+    streamDir?: string;
+    streamName?: string;
+    secrets?: string[];
   }): Promise<CursorCliMeasurement> {
     const bin = input.bin ?? "cursor-agent";
     const args = cursorAgentArgs({ model: input.model });
@@ -284,9 +288,13 @@ export class LlmHttpProviderAdapter {
       cwd: input.cwd,
       env: input.env,
     });
+    let streamPath: string | undefined;
+    if (input.streamDir && input.streamName) {
+      streamPath = writeRedactedCursorStream(input.streamDir, input.streamName, child.stdout, input.secrets ?? []);
+    }
     if (child.status !== 0) {
       throw new Error(`cursor_agent_exit_${child.status}`);
     }
-    return parseCursorAgentNdjson(child.stdout);
+    return { ...parseCursorAgentNdjson(child.stdout), stream_path: streamPath };
   }
 }

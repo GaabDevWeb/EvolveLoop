@@ -8,7 +8,10 @@
  * (CURSOR_API_KEY) and is never placed on argv.
  */
 
+import { mkdirSync, writeFileSync } from "node:fs";
+import path from "node:path";
 import { spawn } from "node:child_process";
+import { redactSecrets } from "../../evidence/secret-redaction.js";
 
 export interface CursorToolCallCounts {
   started: number;
@@ -30,6 +33,7 @@ export interface CursorCliMeasurement {
   cached_tokens: "NOT_MEASURED";
   cost_usd: "NOT_MEASURED";
   tool_calls: CursorToolCallCounts;
+  stream_path?: string;
   schema: "cursor-cli-output-format-2026-10-23";
 }
 
@@ -117,6 +121,27 @@ export function parseCursorAgentNdjson(stdout: string): CursorCliMeasurement {
     tool_calls: toolCalls,
     schema: "cursor-cli-output-format-2026-10-23",
   };
+}
+
+export function cursorStreamFileName(name: string): string {
+  if (!/^[A-Za-z0-9][A-Za-z0-9._-]{0,120}\.ndjson$/.test(name)) {
+    throw new Error("cursor_agent_stream_name_invalid");
+  }
+  return name;
+}
+
+/** Writes redacted NDJSON. The unredacted stdout is never written. */
+export function writeRedactedCursorStream(dir: string, name: string, stdout: string, secrets: string[]): string {
+  const safe = cursorStreamFileName(name);
+  const canaries = secrets.filter((item) => item.length >= 6);
+  const redacted = redactSecrets(stdout, { extraCanaries: canaries });
+  for (const secret of canaries) {
+    if (redacted.includes(secret)) throw new Error("cursor_agent_stream_secret");
+  }
+  mkdirSync(dir, { recursive: true });
+  const file = path.join(dir, safe);
+  writeFileSync(file, redacted.endsWith("\n") ? redacted : `${redacted}\n`);
+  return file;
 }
 
 export function spawnCursorAgent(

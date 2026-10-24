@@ -10,6 +10,7 @@
 
 import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
+import path from "node:path";
 import { performance } from "node:perf_hooks";
 import { redactSecrets } from "../evidence/secret-redaction.js";
 import { LlmHttpProviderAdapter } from "../providers/llm/llm-http-provider-adapter.js";
@@ -85,6 +86,8 @@ export interface VendorReport {
   output_tokens_upper: number;
   calls: number;
   spent_usd: NumOrNot;
+  pickup_variant: "default" | "context-sufficient";
+  stream_dir: string;
   cache_probe: {
     prefix_tokens: number;
     prefix_over_1024: boolean;
@@ -181,14 +184,14 @@ function qualityOf(text: string, needles: string[]): { quality: number; missing:
   return { quality: (needles.length - missing.length) / needles.length, missing };
 }
 
-export async function loadVendorPacks(repoRoot: string): Promise<VendorPack[]> {
+export async function loadVendorPacks(repoRoot: string, options?: { contextSufficient?: boolean }): Promise<VendorPack[]> {
   const loaded = loadFrozenTasks(repoRoot);
   const packs: VendorPack[] = [];
   for (const taskId of P0_TASK_IDS) {
     const task = loaded.tasks.find((item) => item.id === taskId);
     if (!task) throw new Error(`missing frozen task ${taskId}`);
     const b0 = await measureP0B0Text(taskId, repoRoot);
-    const v22 = await measureP0V22Text(taskId, repoRoot);
+    const v22 = await measureP0V22Text(taskId, repoRoot, { contextSufficient: options?.contextSufficient === true });
     packs.push({
       taskId,
       query: task.query,
@@ -261,8 +264,10 @@ export async function runVendorMeasure(options: {
   inputUsdPerMtok?: number;
   outputUsdPerMtok?: number;
   apiKey?: string;
+  contextSufficient?: boolean;
   adapter?: LlmHttpProviderAdapter;
   spawnImpl?: CursorAgentSpawn;
+  saveStreams?: boolean;
   bin?: string;
   cwd?: string;
   env?: NodeJS.ProcessEnv;
@@ -272,7 +277,10 @@ export async function runVendorMeasure(options: {
   if (!Number.isInteger(n) || n < 5) throw new Error("vendor n must be an integer >= 5");
   const maxOutputTokens = options.maxOutputTokens ?? VENDOR_MAX_OUTPUT_TOKENS;
   const repoRoot = options.repoRoot ?? repoRootFromModule();
-  const packs = options.packs ?? (await loadVendorPacks(repoRoot));
+  const contextSufficient = options.contextSufficient === true;
+  const packs = options.packs ?? (await loadVendorPacks(repoRoot, { contextSufficient }));
+  const streamDirRel = `docs/v22/baseline/raw/cursor-agent-streams/${contextSufficient ? "context-sufficient" : "default"}`;
+  const streamDir = path.join(repoRoot, streamDirRel);
   const model =
     options.model?.trim() ||
     (provider === "openrouter" ? OPENROUTER_DEFAULT_MODEL : "cursor-cli-default");
@@ -337,6 +345,8 @@ export async function runVendorMeasure(options: {
     output_tokens_upper: outputUpper,
     calls,
     spent_usd: provider === "openrouter" ? 0 : "NOT_MEASURED",
+    pickup_variant: contextSufficient ? "context-sufficient" : "default",
+    stream_dir: streamDirRel,
     cache_probe: {
       prefix_tokens: probeTokens ?? 0,
       prefix_over_1024: (probeTokens ?? 0) > 1024,
@@ -363,6 +373,7 @@ export async function runVendorMeasure(options: {
   if (!options.apiKey?.trim()) return { ...base, status: "ABORTED_MISSING_KEY" };
 
   const secrets = [options.apiKey];
+  const saveStreams = provider === "cursor-agent" && options.saveStreams !== false;
   const adapter = options.adapter ?? new LlmHttpProviderAdapter();
   let spent = 0;
   const runs = new Map<string, VendorArmPlan["runs"]>();
@@ -407,6 +418,7 @@ export async function runVendorMeasure(options: {
         const aborted = noteSpend(result.openrouter.cost_usd);
         if (aborted) return aborted;
       } else {
+        const probeName = user.endsWith("probe-1") ? "probe-1.ndjson" : "probe-2.ndjson";
         const result = await adapter.completeCursorAgent({
           prompt: `${probePrefix}\n${user}`,
           model: options.model?.trim() || undefined,
@@ -414,6 +426,7 @@ export async function runVendorMeasure(options: {
           cwd: options.cwd ?? repoRoot,
           env: options.env ?? process.env,
           spawnImpl: options.spawnImpl,
+          ...(saveStreams ? { streamDir, streamName: probeName, secrets } : {}),
         });
         base.cache_probe.calls.push({
           input_tokens: "NOT_MEASURED",
@@ -427,6 +440,7 @@ export async function runVendorMeasure(options: {
           tool_calls_read_started: result.tool_calls.read_started,
           tool_calls_write_started: result.tool_calls.write_started,
           tool_calls_other_started: result.tool_calls.other_started,
+          stream_path: result.stream_path ? path.relative(repoRoot, result.stream_path) : "NOT_MEASURED",
         });
         if (result.model_id !== "cursor-cli-default") base.model_id = result.model_id;
       }
@@ -462,6 +476,7 @@ export async function runVendorMeasure(options: {
           const aborted = noteSpend(result.openrouter.cost_usd);
           if (aborted) return aborted;
         } else {
+          const streamName = `${meta.taskId}-${meta.arm}-r${repetition}.ndjson`.replace("V2.2", "v22");
           const result = await adapter.completeCursorAgent({
             prompt: `${meta.system}\n${meta.user}`,
             model: options.model?.trim() || undefined,
@@ -469,6 +484,7 @@ export async function runVendorMeasure(options: {
             cwd: options.cwd ?? repoRoot,
             env: options.env ?? process.env,
             spawnImpl: options.spawnImpl,
+            ...(saveStreams ? { streamDir, streamName, secrets } : {}),
           });
           const scored = qualityOf(result.text, pack.needles);
           bucket.push({
@@ -486,6 +502,7 @@ export async function runVendorMeasure(options: {
             tool_calls_read_started: result.tool_calls.read_started,
             tool_calls_write_started: result.tool_calls.write_started,
             tool_calls_other_started: result.tool_calls.other_started,
+            stream_path: result.stream_path ? path.relative(repoRoot, result.stream_path) : "NOT_MEASURED",
           });
           runs.set(key, bucket);
           if (result.model_id !== "cursor-cli-default") base.model_id = result.model_id;

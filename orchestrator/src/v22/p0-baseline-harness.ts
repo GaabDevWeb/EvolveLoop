@@ -26,6 +26,7 @@ import { applyTruthFence, codeOverridesWiki } from "../knowledge/truth-source/fe
 import type { TruthSourcedItem } from "../knowledge/truth-source/types.js";
 import { resolveOrchestratorRoot } from "../cli/run-engine-env.js";
 import { buildPickupPrompt } from "../jobs/job-pickup.js";
+import { applyContextSufficientPickup } from "./context-sufficient-pickup.js";
 import { normalizeMeasurementPaths, stableJobsLabel } from "./measurement-paths.js";
 import type { SkillJob } from "../jobs/job-store.js";
 import { preparePickupSpawnContext } from "../jobs/spawn-pickup-context.js";
@@ -447,7 +448,8 @@ function isMeasurementArtifact(rel: string): boolean {
     key === "orchestrator/src/v22/vendor-measure-cli.ts" ||
     key === "orchestrator/src/providers/llm/cursor-agent-provider.ts" ||
     key === "orchestrator/tests/unit/v22-p0-baseline.test.ts" ||
-    key === "orchestrator/tests/unit/v22-vendor-measure.test.ts"
+    key === "orchestrator/tests/unit/v22-vendor-measure.test.ts" ||
+    key === "orchestrator/src/v22/context-sufficient-pickup.ts"
   );
 }
 
@@ -730,7 +732,13 @@ function pathsFromBudgeted(inner: string): string[] {
   return [...new Set(paths)];
 }
 
-function assembleV22(task: FrozenTask, cache: CorpusCache, root: string, jobsDir: string): Packed {
+function assembleV22(
+  task: FrozenTask,
+  cache: CorpusCache,
+  root: string,
+  jobsDir: string,
+  options?: { contextSufficient?: boolean },
+): Packed {
   const patterns = queryPatterns(task.query);
   const hits = new Set(rgHits(root, patterns));
   for (const page of wikiPages(root)) {
@@ -795,11 +803,18 @@ function assembleV22(task: FrozenTask, cache: CorpusCache, root: string, jobsDir
   const promptRaw = task.handoff
     ? buildPickupPrompt(job, jobsDir, undefined, { caveman: false, spawnContext: spawn })
     : extractBudgetedContext(spawn.budgeted_context_block);
-  const prompt = normalizeMeasurementPaths(promptRaw, {
+  let prompt = normalizeMeasurementPaths(promptRaw, {
     jobsDir,
     jobsLabel: stableJobsLabel(task.id, "V2.2"),
     orchestratorRoot: resolveOrchestratorRoot(),
   });
+  if (options?.contextSufficient) {
+    const rewritten = applyContextSufficientPickup(prompt);
+    if (!rewritten.retrieval_present || !rewritten.replaced_skill_order || !rewritten.replaced_repo_order) {
+      throw new Error(`${task.id}: context-sufficient pickup was not applied`);
+    }
+    prompt = rewritten.text;
+  }
   const inner = extractBudgetedContext(spawn.budgeted_context_block);
   const retrievalTokens = countOne(inner);
   if (retrievalTokens > CANONICAL_MAX_INPUT_TOKENS) {
@@ -943,6 +958,7 @@ export async function measureP0B0Text(
 export async function measureP0V22Text(
   taskId: P0TaskId,
   repoRoot = repoRootFromModule(),
+  options?: { contextSufficient?: boolean },
 ): Promise<{ text: string; paths: string[] }> {
   const loaded = loadFrozenTasks(repoRoot);
   const task = loaded.tasks.find((item) => item.id === taskId);
@@ -951,7 +967,7 @@ export async function measureP0V22Text(
   const jobsDir = path.join(tmpdir(), "v22-p0-compaction", task.id);
   await mkdir(jobsDir, { recursive: true });
   try {
-    const packed = assembleV22(task, cache, repoRoot, jobsDir);
+    const packed = assembleV22(task, cache, repoRoot, jobsDir, options);
     return { text: packed.text, paths: packed.paths };
   } finally {
     await rm(jobsDir, { recursive: true, force: true });

@@ -11,18 +11,26 @@ O OpenRouter é secundário, compatível com OpenAI em `https://openrouter.ai/ap
 Dry-run do Cursor, sem chave e sem gasto:
 
 ```bash
-git clone --branch cursor/v22-gap-vendor-1b-8ae3 https://github.com/GaabDevWeb/EvolveLoop.git && cd EvolveLoop/orchestrator && npm ci && npm run v22:vendor-measure -- --provider cursor-agent --dry-run
+git clone --branch cursor/v22-gap-vendor-1c-8ae3 https://github.com/GaabDevWeb/EvolveLoop.git && cd EvolveLoop/orchestrator && npm ci && npm run v22:vendor-measure -- --provider cursor-agent --dry-run
 ```
 
 Depois do merge, troca o `--branch` para `release/v2.1-freeze-preparation`.
 
 ## Cursor, corrida real
 
+Pickup atual, N=5:
+
 ```bash
-cd orchestrator && npm ci && CURSOR_API_KEY="$CURSOR_API_KEY" npm run v22:vendor-measure -- --provider cursor-agent
+cd orchestrator && npm ci && CURSOR_API_KEY="$CURSOR_API_KEY" npm run v22:vendor-measure -- --provider cursor-agent --n 5
 ```
 
-A chave fica só na env. O argv é `cursor-agent -p --output-format stream-json --mode ask --trust`. O prompt vai no stdin. `--mode ask` evita escrita no repo.
+Variante context-sufficient, N=5:
+
+```bash
+cd orchestrator && npm ci && CURSOR_API_KEY="$CURSOR_API_KEY" npm run v22:vendor-measure -- --provider cursor-agent --context-sufficient --n 5
+```
+
+A chave fica só na env. O argv é `cursor-agent -p --output-format stream-json --mode ask --trust`. O prompt vai no stdin. `--mode ask` evita escrita no repo. O primeiro comando grava `docs/v22/baseline/raw/p0-vendor-cursor-agent-live.json`. O segundo grava `docs/v22/baseline/raw/p0-vendor-cursor-agent-context-sufficient.json`.
 
 ## OpenRouter, dry-run e corrida real
 
@@ -80,3 +88,14 @@ Para cada âncora, 1 se a resposta afirma o mesmo facto que a substring e cita o
 ### Efeito no corpus
 
 `docs/v22/FINAL-REPORT.md` já estava no B0 de `retomada`. O texto novo levou esse braço de 29649 para 30414 tokens. Na tarefa `restricoes_compactacao_handoff` o mesmo ficheiro passou a caber no retrieval: saiu `docs/architecture/v2.2/EVOLVELOOP_V2.2_GOALS.md` e entraram `docs/v22/FINAL-REPORT.md`, `docs/architecture/v2.2/V22-VENDOR-CACHE.md`, `docs/architecture/finalization/adrs/ADR-DR-0005-context-ownership-before-compaction.md` e `global-skills/technical-library-dossier/references/dossier-template.md`. O input V2.2 passou de 22003 para 22054. A compactação foi remensurada em `76636adf6077cb956b748b5af4c1125269833be2`: 22054 para 11251, fidelidade 1, 1430 linhas retiradas. Antes era 22003 para 10896, fidelidade 1, 854 linhas. Os outros quatro cartões mantiveram os tokens. O prompt da corrida live não é este: o sha256 foi conferido antes desta edição.
+
+## V22-GAP-VENDOR-1c
+
+As duas ordens que a hipótese aponta estão no prompt V2.2 porque a montagem do harness reutiliza boilerplate. Não são texto do retrieval.
+
+1. `1. **Ler skill:**` vem de `buildPickupPrompt` em `orchestrator/src/jobs/job-pickup.ts`. É a instrução 1 de todo pickup de SkillJob. O path é `job.skill_path`, e o bench põe `.cursor/skills/orquestrar/SKILL.md`.
+2. `Please carefully read the repository and produce an evidence-backed answer.` vem de `buildBenchPickupBriefing` em `orchestrator/src/v22/bench-pickup-fixture.ts`. É o briefing que o harness coloca dentro desse pickup.
+
+O default desses dois ficheiros não muda. `--context-sufficient` é só do harness de medição. Com o bloco `### Context (budgeted retrieval)` e pelo menos um `--- path: ---`, as duas frases passam a pedir resposta com o contexto fornecido e leitura de arquivo só se faltar evidência. Sem esse bloco, o harness recusa a variante em vez de medir o pickup antigo.
+
+Cada chamada live do `cursor-agent` grava o NDJSON redigido em `docs/v22/baseline/raw/cursor-agent-streams/default/` ou `context-sufficient/`. Essa pasta está no `.gitignore`. O relatório traz, por chamada, `tool_calls_started`, `tool_calls_read_started`, `tool_calls_write_started`, `tool_calls_other_started` e `stream_path`. Tokens e custo do provider continuam `NOT_MEASURED`.
